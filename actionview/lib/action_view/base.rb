@@ -95,13 +95,13 @@ module ActionView # :nodoc:
   #   Headline: <%= headline %>
   #   <% end %>
   #
-  # Read more about strict locals in {Action View Overview}[https://guides.rubyonrails.org/action_view_overview.html#strict-locals]
+  # Read more about strict locals in {Action View Overview}[https://guides.zoisite-rb.org/action_view_overview.html#strict-locals]
   # in the guides.
   #
   # === Template caching
   #
-  # By default, \Rails will compile each template to a method in order to render it. When you alter a template,
-  # \Rails will check the file's modification time and recompile it in development mode.
+  # By default, \Zoisite will compile each template to a method in order to render it. When you alter a template,
+  # \Zoisite will check the file's modification time and recompile it in development mode.
   #
   # == Builder
   #
@@ -154,7 +154,7 @@ module ActionView # :nodoc:
   #     end
   #   end
   #
-  # For more information on Builder please consult the {source code}[https://github.com/rails/builder].
+  # For more information on Builder please consult the {source code}[https://github.com/zoisite/builder].
   class Base
     include Helpers, ::ERB::Util, Context
 

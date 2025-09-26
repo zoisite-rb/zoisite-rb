@@ -11,7 +11,7 @@
 #
 #   arbitrary_object.dup rescue object
 #
-# Rails dups objects in a few critical spots where they are not that arbitrary.
+# Zoisite dups objects in a few critical spots where they are not that arbitrary.
 # That rescue is very expensive (like 40 times slower than a predicate), and it
 # is often triggered.
 #

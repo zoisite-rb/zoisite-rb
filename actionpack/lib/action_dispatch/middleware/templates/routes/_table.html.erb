@@ -175,7 +175,7 @@
       if (!query)
         return searchElem.onblur();
 
-      getJSON('/rails/info/routes?query=' + query, function(matches){
+      getJSON('/zoisite/info/routes?query=' + query, function(matches){
         // Clear out results section
         exactSection.replaceChildren(defaultExactMatch);
         fuzzySection.replaceChildren(defaultFuzzyMatch);

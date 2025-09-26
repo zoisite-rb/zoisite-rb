@@ -14,7 +14,7 @@ class LoadingTest < ActiveSupport::TestCase
   end
 
   def app
-    @app ||= Rails.application
+    @app ||= Zoisite.application
   end
 
   test "constants in app are autoloaded" do
@@ -24,7 +24,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MODEL
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
     setup_ar!
 
     p = Post.create(title: "omg")
@@ -71,7 +71,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     CONCERN
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     assert_nothing_raised { Trackable }
     assert_nothing_raised { EmailLoggable }
@@ -86,7 +86,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MODEL
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
     setup_ar!
 
     assert_nothing_raised do
@@ -96,7 +96,7 @@ class LoadingTest < ActiveSupport::TestCase
 
   test "load config/environments/environment before Bootstrap initializers" do
     app_file "config/environments/development.rb", <<-RUBY
-      Rails.application.configure do
+      Zoisite.application.configure do
         config.development_environment_loaded = true
       end
     RUBY
@@ -108,7 +108,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     require "#{app_path}/config/environment"
-    assert ::Rails.application.config.loaded
+    assert ::Zoisite.application.config.loaded
   end
 
   test "descendants loaded after framework initialization are cleaned on each request if reloading is enabled" do
@@ -123,7 +123,7 @@ class LoadingTest < ActiveSupport::TestCase
     MODEL
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/load',   to: lambda { |env| Post.all.to_a; [200, {}, [ActiveRecord::Base.descendants.collect(&:to_s).sort.uniq.to_json]] }
         get '/unload', to: lambda { |env| [200, {}, [ActiveRecord::Base.descendants.collect(&:to_s).sort.uniq.to_json]] }
       end
@@ -132,7 +132,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
     setup_ar!
 
     initial = [
@@ -150,7 +150,7 @@ class LoadingTest < ActiveSupport::TestCase
 
   test "initialize can't be called twice" do
     require "#{app_path}/config/environment"
-    assert_raise(RuntimeError) { Rails.application.initialize! }
+    assert_raise(RuntimeError) { Zoisite.application.initialize! }
   end
 
   test "reload constants on development" do
@@ -159,7 +159,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/c', to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [User.counter.to_s]] }
       end
     RUBY
@@ -173,7 +173,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -200,7 +200,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/c', to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [User.counter.to_s]] }
       end
     RUBY
@@ -214,7 +214,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -236,7 +236,7 @@ class LoadingTest < ActiveSupport::TestCase
 
     app_file "config/routes.rb", <<-RUBY
       $counter ||= 0
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/c', to: lambda { |env| User.name; [200, {"Content-Type" => "text/plain"}, [$counter.to_s]] }
       end
     RUBY
@@ -250,7 +250,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -269,7 +269,7 @@ class LoadingTest < ActiveSupport::TestCase
     app_file "config/routes.rb", <<-RUBY
       $counter ||= 1
       $counter  *= 2
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/c', to: lambda { |env| User.name; [200, {"Content-Type" => "text/plain"}, [$counter.to_s]] }
       end
     RUBY
@@ -283,7 +283,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "3", last_response.body
@@ -303,13 +303,13 @@ class LoadingTest < ActiveSupport::TestCase
     app_file "config/routes.rb", <<-RUBY
       $counter ||= 1
       $counter  *= 2
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/c', to: lambda { |env| User.name; [200, {"Content-Type" => "text/plain"}, [$counter.to_s]] }
       end
     RUBY
 
     app_file "config/initializers/after_routes_loaded.rb", <<-RUBY
-      Rails.configuration.after_routes_loaded do
+      Zoisite.configuration.after_routes_loaded do
         $counter *= 3
       end
     RUBY
@@ -323,7 +323,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "7", last_response.body
@@ -342,7 +342,7 @@ class LoadingTest < ActiveSupport::TestCase
     app_file "config/routes.rb", <<-RUBY
       $counter ||= 0
       $counter += 1
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/c', to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [$counter.to_s]] }
       end
     RUBY
@@ -352,7 +352,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -366,13 +366,13 @@ class LoadingTest < ActiveSupport::TestCase
     app_file "config/routes.rb", <<-RUBY
       $counter ||= 0
       $counter += 1
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/c', to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [$counter.to_s]] }
       end
     RUBY
 
     app_file "config/initializers/after_routes_loaded.rb", <<-RUBY
-      Rails.configuration.after_routes_loaded do
+      Zoisite.configuration.after_routes_loaded do
         $counter *= 3
       end
     RUBY
@@ -382,7 +382,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "3", last_response.body
@@ -395,7 +395,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/title', to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [Post.new.title]] }
         get '/body',  to: lambda { |env| [200, {"Content-Type" => "text/plain"}, [Post.new.body]] }
       end
@@ -419,8 +419,8 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MIGRATION
 
-    rails("db:migrate")
-    require "#{rails_root}/config/environment"
+    zoisite("db:migrate")
+    require "#{zoisite_root}/config/environment"
 
     get "/title"
     assert_equal "TITLE", last_response.body
@@ -433,7 +433,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MIGRATION
 
-    rails("db:migrate")
+    zoisite("db:migrate")
 
     get "/body"
     assert_equal "BODY", last_response.body
@@ -454,12 +454,12 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/:controller(/:action)"
       end
     RUBY
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     require "rack/test"
     extend Rack::Test::Methods
@@ -471,11 +471,11 @@ class LoadingTest < ActiveSupport::TestCase
   def test_initialize_can_be_called_at_any_time
     require "#{app_path}/config/application"
 
-    assert_not_predicate Rails, :initialized?
-    assert_not_predicate Rails.application, :initialized?
-    Rails.initialize!
-    assert_predicate Rails, :initialized?
-    assert_predicate Rails.application, :initialized?
+    assert_not_predicate Zoisite, :initialized?
+    assert_not_predicate Zoisite.application, :initialized?
+    Zoisite.initialize!
+    assert_predicate Zoisite, :initialized?
+    assert_predicate Zoisite.application, :initialized?
   end
 
   test "frameworks aren't loaded during initialization" do
@@ -509,7 +509,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/:controller(/:action)"
       end
     RUBY
@@ -542,7 +542,7 @@ class LoadingTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/:controller(/:action)"
       end
     RUBY

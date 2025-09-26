@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/migration/migration_generator"
+require "zoisite/generators/zoisite/migration/migration_generator"
 
-class CreateMigrationTest < Rails::Generators::TestCase
+class CreateMigrationTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
-  class Migrator < Rails::Generators::MigrationGenerator
-    include Rails::Generators::Migration
+  class Migrator < Zoisite::Generators::MigrationGenerator
+    include Zoisite::Generators::Migration
 
     def self.next_migration_number(dirname)
       current_migration_number(dirname) + 1
@@ -28,7 +28,7 @@ class CreateMigrationTest < Rails::Generators::TestCase
     dir, base = File.split(destination_path)
     timestamped_destination_path = File.join(dir, ["%migration_number%", base].join("_"))
 
-    @migration = Rails::Generators::Actions::CreateMigration.new(generator, timestamped_destination_path, block || "contents", config)
+    @migration = Zoisite::Generators::Actions::CreateMigration.new(generator, timestamped_destination_path, block || "contents", config)
   end
 
   def migration_exists!(*args)
@@ -88,7 +88,7 @@ class CreateMigrationTest < Rails::Generators::TestCase
     migration_exists!
     create_migration { "different content" }
 
-    assert_raise(Rails::Generators::Error) { invoke! }
+    assert_raise(Zoisite::Generators::Error) { invoke! }
   end
 
   def test_invoke_forced_when_exists_not_identical

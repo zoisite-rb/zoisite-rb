@@ -12,7 +12,7 @@ class RailtieTest < ActiveModel::TestCase
     # Set a fake logger to avoid creating the log directory automatically
     fake_logger = Logger.new(nil)
 
-    @app ||= Class.new(::Rails::Application) do
+    @app ||= Class.new(::Zoisite::Application) do
       config.eager_load = false
       config.logger = fake_logger
       config.active_support.cache_format_version = 7.1
@@ -20,14 +20,14 @@ class RailtieTest < ActiveModel::TestCase
   end
 
   test "secure password min_cost is false in the development environment" do
-    Rails.env = "development"
+    Zoisite.env = "development"
     @app.initialize!
 
     assert_equal false, ActiveModel::SecurePassword.min_cost
   end
 
   test "secure password min_cost is true in the test environment" do
-    Rails.env = "test"
+    Zoisite.env = "test"
     @app.initialize!
 
     assert_equal true, ActiveModel::SecurePassword.min_cost

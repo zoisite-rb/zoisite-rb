@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Basics
 ====================
@@ -9,7 +9,7 @@ After reading this guide, you will know:
 
 * How Active Record fits into the Model-View-Controller (MVC) paradigm.
 * What Object Relational Mapping and Active Record patterns are and how
-  they are used in Rails.
+  they are used in Zoisite.
 * How to use Active Record models to manipulate data stored in a relational
   database.
 * Active Record schema naming conventions.
@@ -28,11 +28,11 @@ storage to a database.
 NOTE: What is the difference between Active Record and Active Model? It's
 possible to model data with Ruby objects that do *not* need to be backed by a
 database. [Active Model](active_model_basics.html) is commonly used for that in
-Rails, making Active Record and Active Model both part of the M in MVC, as well
+Zoisite, making Active Record and Active Model both part of the M in MVC, as well
 as your own plain Ruby objects.
 
 The term "Active Record" also refers to a software architecture pattern. Active
-Record in Rails is an implementation of that pattern. It's also a description of
+Record in Zoisite is an implementation of that pattern. It's also a description of
 something called an [Object Relational Mapping][ORM] system. The below sections
 explain these terms.
 
@@ -50,7 +50,7 @@ in the examples below.
 
 Object Relational Mapping, commonly referred to as ORM, is a technique that
 connects the rich objects of a programming language to tables in a relational
-database management system (RDBMS). In the case of a Rails application, these
+database management system (RDBMS). In the case of a Zoisite application, these
 are Ruby objects. Using an ORM, the attributes of Ruby objects, as well as the
 relationship between objects, can be easily stored and retrieved from a database
 without writing SQL statements directly. Overall, ORMs minimize the amount of
@@ -84,10 +84,10 @@ Convention over Configuration in Active Record
 When writing applications using other programming languages or frameworks, it
 may be necessary to write a lot of configuration code. This is particularly true
 for ORM frameworks in general. However, if you follow the conventions adopted by
-Rails, you'll write very little to no configuration code when creating Active
+Zoisite, you'll write very little to no configuration code when creating Active
 Record models.
 
-Rails adopts the idea that if you configure your applications in the same way
+Zoisite adopts the idea that if you configure your applications in the same way
 most of the time, then that way should be the default. Explicit configuration
 should be needed only in those cases where you can't follow the convention.
 
@@ -100,12 +100,12 @@ possible to [override naming conventions](#overriding-the-naming-conventions).
 Active Record uses this naming convention to map between models (represented by
 Ruby objects) and database tables:
 
-Rails will pluralize your model's class names to find the respective database
+Zoisite will pluralize your model's class names to find the respective database
 table. For example, a class named `Book` maps to a database table named `books`.
-The Rails pluralization mechanisms are very powerful and capable of pluralizing
+The Zoisite pluralization mechanisms are very powerful and capable of pluralizing
 (and singularizing) both regular and irregular words in the English language.
 This uses the [Active Support](active_support_core_extensions.html#pluralize)
-[pluralize](https://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-pluralize) method.
+[pluralize](https://api.zoisite-rb.org/classes/ActiveSupport/Inflector.html#method-i-pluralize) method.
 
 For class names composed of two or more words, the model class name will follow
 the Ruby conventions of using an UpperCamelCase name. The database table name, in
@@ -147,10 +147,10 @@ Active Record instances:
 * `updated_at` - Automatically gets set to the current date and time whenever
   the record is created or updated.
 * `lock_version` - Adds [optimistic
-  locking](https://api.rubyonrails.org/classes/ActiveRecord/Locking.html) to a
+  locking](https://api.zoisite-rb.org/classes/ActiveRecord/Locking.html) to a
   model.
 * `type` - Specifies that the model uses [Single Table
-  Inheritance](https://api.rubyonrails.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
+  Inheritance](https://api.zoisite-rb.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
 * `(association_name)_type` - Stores the type for [polymorphic
   associations](association_basics.html#polymorphic-associations).
 * `(table_name)_count` - Used to cache the number of belonging objects on
@@ -167,10 +167,10 @@ describe the data you are modeling.
 Creating Active Record Models
 -----------------------------
 
-When generating a Rails application, an abstract `ApplicationRecord` class will
+When generating a Zoisite application, an abstract `ApplicationRecord` class will
 be created in `app/models/application_record.rb`. The `ApplicationRecord` class
 inherits from
-[`ActiveRecord::Base`](https://api.rubyonrails.org/classes/ActiveRecord/Base.html)
+[`ActiveRecord::Base`](https://api.zoisite-rb.org/classes/ActiveRecord/Base.html)
 and it's what turns a regular Ruby class into an Active Record model.
 
 `ApplicationRecord` is the base class for all Active Record models in your app.
@@ -197,12 +197,12 @@ CREATE TABLE books (
 );
 ```
 
-However, that is not how you do it normally in Rails. Database tables in Rails
+However, that is not how you do it normally in Zoisite. Database tables in Zoisite
 are typically created using [Active Record Migrations](#migrations) and not raw
 SQL. A migration for the `books` table above can be generated like this:
 
 ```bash
-$ bin/rails generate migration CreateBooks title:string author:string
+$ bin/zoisite generate migration CreateBooks title:string author:string
 ```
 
 and results in this:
@@ -241,7 +241,7 @@ irb> book.title
 ```
 
 NOTE: You can generate the Active Record model class as well as a matching
-migration with the command `bin/rails generate model Book title:string
+migration with the command `bin/zoisite generate model Book title:string
 author:string`. This creates the files `app/models/book.rb`,
 `db/migrate/20240220143807_create_books.rb`, and a couple others for testing
 purposes.
@@ -258,7 +258,7 @@ In the case where the `Book` module does not already exist, the `generate`
 command will create everything like this:
 
 ```bash
-$ bin/rails generate model Book::Order
+$ bin/zoisite generate model Book::Order
       invoke  active_record
       create    db/migrate/20240306194227_create_book_orders.rb
       create    app/models/book/order.rb
@@ -272,12 +272,12 @@ If the `Book` module already exists, you will be asked to resolve
 the conflict:
 
 ```bash
-$ bin/rails generate model Book::Order
+$ bin/zoisite generate model Book::Order
       invoke  active_record
       create    db/migrate/20240305140356_create_book_orders.rb
       create    app/models/book/order.rb
     conflict    app/models/book.rb
-  Overwrite /Users/bhumi/Code/rails_guides/app/models/book.rb? (enter "h" for help) [Ynaqdhm]
+  Overwrite /Users/bhumi/Code/zoisite_guides/app/models/book.rb? (enter "h" for help) [Ynaqdhm]
 ```
 
 Once the namespaced model generation is successful, the `Book` and `Order`
@@ -297,7 +297,7 @@ end
 ```
 
 Setting the
-[table_name_prefix](https://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-c-table_name_prefix-3D)
+[table_name_prefix](https://api.zoisite-rb.org/classes/ActiveRecord/ModelSchema.html#method-c-table_name_prefix-3D)
 in `Book` will allow `Order` model's database table to be named
 `book_orders`, instead of plain `orders`.
 
@@ -322,7 +322,7 @@ Overriding the Naming Conventions
 ---------------------------------
 
 What if you need to follow a different naming convention or need to use your
-Rails application with a legacy database? No problem, you can easily override
+Zoisite application with a legacy database? No problem, you can easily override
 the default conventions.
 
 Since `ApplicationRecord` inherits from `ActiveRecord::Base`, your application's
@@ -363,10 +363,10 @@ NOTE: **Active Record does not recommend using non-primary key columns named
 complicates the access to the column value. The application will have to use the
 [`id_value`][] alias attribute to access the value of the non-PK `id` column.
 
-[`id_value`]: https://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-i-id_value
+[`id_value`]: https://api.zoisite-rb.org/classes/ActiveRecord/ModelSchema.html#method-i-id_value
 
 NOTE: If you try to create a column named `id` which is not the primary key,
-Rails will throw an error during migrations such as: `you can't redefine the
+Zoisite will throw an error during migrations such as: `you can't redefine the
 primary key column 'id' on 'my_books'.` `To define a custom primary key, pass {
 id: false } to create_table.`
 
@@ -666,7 +666,7 @@ guide](active_record_callbacks.html).
 Migrations
 ----------
 
-Rails provides a convenient way to manage changes to a database schema via
+Zoisite provides a convenient way to manage changes to a database schema via
 migrations. Migrations are written in a domain-specific language and stored in
 files which are executed against any database that Active Record supports.
 
@@ -691,12 +691,12 @@ end
 Note that the above code is database-agnostic: it will run in MySQL, MariaDB,
 PostgreSQL, SQLite, and others.
 
-Rails keeps track of which migrations have been committed to the database and
+Zoisite keeps track of which migrations have been committed to the database and
 stores them in a neighboring table in that same database called
 `schema_migrations`.
 
-To run the migration and create the table, you'd run `bin/rails db:migrate`, and
-to roll it back and delete the table, `bin/rails db:rollback`.
+To run the migration and create the table, you'd run `bin/zoisite db:migrate`, and
+to roll it back and delete the table, `bin/zoisite db:rollback`.
 
 You can learn more about migrations in the [Active Record Migrations
 guide](active_record_migrations.html).

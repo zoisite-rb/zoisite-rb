@@ -1,7 +1,7 @@
 <% names = traces.keys %>
 <% error_index = local_assigns[:error_index] || 0 %>
 
-<p><code>Rails.root: <%= defined?(Rails) && Rails.respond_to?(:root) ? Rails.root : "unset" %></code></p>
+<p><code>Zoisite.root: <%= defined?(Zoisite) && Zoisite.respond_to?(:root) ? Zoisite.root : "unset" %></code></p>
 
 <div id="traces-<%= error_index %>">
   <% names.each do |name| %>

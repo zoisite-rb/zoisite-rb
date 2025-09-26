@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/engine"
+require "zoisite/engine"
 require "capybara/minitest"
 
 module ActionView
@@ -262,7 +262,7 @@ module ActionView
 
     test "is able to use mounted routes" do
       with_routing do |set|
-        app = Class.new(Rails::Engine) do
+        app = Class.new(Zoisite::Engine) do
           def self.routes
             @routes ||= ActionDispatch::Routing::RouteSet.new
           end

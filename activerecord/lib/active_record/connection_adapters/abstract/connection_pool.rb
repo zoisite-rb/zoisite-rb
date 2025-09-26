@@ -93,7 +93,7 @@ module ActiveRecord
     # While a thread has a connection checked out from the pool using one of the
     # above three methods, that connection will automatically be the one used
     # by ActiveRecord queries executing on that thread. It is not required to
-    # explicitly pass the checked out connection to \Rails models or queries, for
+    # explicitly pass the checked out connection to \Zoisite models or queries, for
     # example.
     #
     # == Options
@@ -134,7 +134,7 @@ module ActiveRecord
       else
         class WeakThreadKeyMap # :nodoc:
           # FIXME: On 3.3 we could use ObjectSpace::WeakKeyMap
-          # but it currently causes GC crashes: https://github.com/byroot/rails/pull/3
+          # but it currently causes GC crashes: https://github.com/byroot/zoisite/pull/3
           def initialize
             @map = {}
           end

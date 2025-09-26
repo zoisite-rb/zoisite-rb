@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/app/app_generator"
-require "rails/generators/rails/authentication/authentication_generator"
+require "zoisite/generators/zoisite/app/app_generator"
+require "zoisite/generators/zoisite/authentication/authentication_generator"
 
-class AuthenticationGeneratorTest < Rails::Generators::TestCase
+class AuthenticationGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   def setup
@@ -15,7 +15,7 @@ class AuthenticationGeneratorTest < Rails::Generators::TestCase
     RUBY
     FileUtils.mkdir_p("#{destination_root}/test")
     File.write("#{destination_root}/test/test_helper.rb", <<~RUBY)
-      require "rails/test_help"
+      require "zoisite/test_help"
       module ActiveSupport
         class TestCase
         end
@@ -55,8 +55,8 @@ class AuthenticationGeneratorTest < Rails::Generators::TestCase
       assert_match(/resource :session/, content)
     end
 
-    assert_includes @rails_commands, "generate migration CreateUsers email_address:string!:uniq password_digest:string! --force"
-    assert_includes @rails_commands, "generate migration CreateSessions user:references ip_address:string user_agent:string --force"
+    assert_includes @zoisite-rb.orgmands, "generate migration CreateUsers email_address:string!:uniq password_digest:string! --force"
+    assert_includes @zoisite-rb.orgmands, "generate migration CreateSessions user:references ip_address:string user_agent:string --force"
 
     assert_file "test/models/user_test.rb"
     assert_file "test/fixtures/users.yml"
@@ -109,8 +109,8 @@ class AuthenticationGeneratorTest < Rails::Generators::TestCase
       assert_match(/resource :session/, content)
     end
 
-    assert_includes @rails_commands, "generate migration CreateUsers email_address:string!:uniq password_digest:string! --force"
-    assert_includes @rails_commands, "generate migration CreateSessions user:references ip_address:string user_agent:string --force"
+    assert_includes @zoisite-rb.orgmands, "generate migration CreateUsers email_address:string!:uniq password_digest:string! --force"
+    assert_includes @zoisite-rb.orgmands, "generate migration CreateSessions user:references ip_address:string user_agent:string --force"
 
     assert_file "test/models/user_test.rb"
     assert_file "test/fixtures/users.yml"
@@ -189,12 +189,12 @@ class AuthenticationGeneratorTest < Rails::Generators::TestCase
       @bundle_commands = []
       command_stub ||= -> (command, *args) { @bundle_commands << [command, *args] }
 
-      @rails_commands = []
-      @rails_command_stub ||= -> (command, *_) { @rails_commands << command }
+      @zoisite-rb.orgmands = []
+      @zoisite-rb.orgmand_stub ||= -> (command, *_) { @zoisite-rb.orgmands << command }
 
       content = nil
       generator.stub(:bundle_command, command_stub) do
-        generator.stub(:rails_command, @rails_command_stub) do
+        generator.stub(:zoisite-rb.orgmand, @zoisite-rb.orgmand_stub) do
           content = super
         end
       end

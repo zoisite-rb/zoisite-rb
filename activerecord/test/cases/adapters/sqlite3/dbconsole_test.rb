@@ -40,14 +40,14 @@ module ActiveRecord
         end
       end
 
-      def test_sqlite3_db_with_defined_rails_root
+      def test_sqlite3_db_with_defined_zoisite_root
         config = make_db_config(adapter: "sqlite3", database: "config/db.sqlite3")
 
         root = method(:root)
         mod = Module.new { define_singleton_method(:root, &root) }
 
-        stub_const(Object, :Rails, mod, exists: defined?(Rails)) do
-          assert_find_cmd_and_exec_called_with(["sqlite3", Rails.root.join("config/db.sqlite3").to_s]) do
+        stub_const(Object, :Zoisite, mod, exists: defined?(Zoisite)) do
+          assert_find_cmd_and_exec_called_with(["sqlite3", Zoisite.root.join("config/db.sqlite3").to_s]) do
             SQLite3Adapter.dbconsole(config)
           end
         end

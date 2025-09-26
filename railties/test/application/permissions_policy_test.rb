@@ -22,13 +22,13 @@ module ApplicationTests
       controller :pages, <<-RUBY
         class PagesController < ApplicationController
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -43,19 +43,19 @@ module ApplicationTests
       controller :pages, <<-RUBY
         class PagesController < ApplicationController
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/permissions_policy.rb", <<-RUBY
-        Rails.application.config.permissions_policy do |p|
+        Zoisite.application.config.permissions_policy do |p|
           p.geolocation :none
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -74,19 +74,19 @@ module ApplicationTests
           end
 
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/permissions_policy.rb", <<-RUBY
-        Rails.application.config.permissions_policy do |p|
+        Zoisite.application.config.permissions_policy do |p|
           p.geolocation :none
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -105,19 +105,19 @@ module ApplicationTests
           end
 
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/permissions_policy.rb", <<-RUBY
-        Rails.application.config.permissions_policy do |p|
+        Zoisite.application.config.permissions_policy do |p|
           p.geolocation :none
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -139,19 +139,19 @@ module ApplicationTests
           end
 
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/permissions_policy.rb", <<-RUBY
-        Rails.application.config.permissions_policy do |p|
+        Zoisite.application.config.permissions_policy do |p|
           p.geolocation :none
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -164,13 +164,13 @@ module ApplicationTests
 
     test "global permissions policy added to rack app" do
       app_file "config/initializers/permissions_policy.rb", <<-RUBY
-        Rails.application.config.permissions_policy do |p|
+        Zoisite.application.config.permissions_policy do |p|
           p.payment :none
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           app = ->(env) {
             [200, { Rack::CONTENT_TYPE => "text/html" }, ["<p>Hello, World!</p>"]]
           }

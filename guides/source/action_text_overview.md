@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Text Overview
 ====================
@@ -57,12 +57,12 @@ control over what happens after every keystroke and avoids the need to use
 To install Action Text and start working with rich text content, run:
 
 ```bash
-$ bin/rails action_text:install
+$ bin/zoisite action_text:install
 ```
 
 It will do the following:
 
-- Installs the JavaScript packages for `trix` and `@rails/actiontext` and adds
+- Installs the JavaScript packages for `trix` and `@zoisite/actiontext` and adds
   them to the `application.js`.
 - Adds the `image_processing` gem for analysis and transformations of the
   embedded images and other attachments with Active Storage. Please refer to the
@@ -79,7 +79,7 @@ Thereafter, executing the migrations will add the new `action_text_*` and
 `active_storage_*` tables to your app:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 When the Action Text installation creates the `action_text_rich_texts` table, it
@@ -90,7 +90,7 @@ which store the ClassName of the model, and ID of the record, respectively.
 INFO: With polymorphic associations, a model can belong to more than one other
 model, on a single association. Read more about it in the [Active Record
 Associations
-guide](https://guides.rubyonrails.org/association_basics.html#polymorphic-associations).
+guide](https://guides.zoisite-rb.org/association_basics.html#polymorphic-associations).
 
 Hence, if your models containing Action Text content use UUID values as
 identifiers, then all models that use Action Text attributes will need to use
@@ -129,7 +129,7 @@ name the attribute to be something different from `content`.
 Once you have added the `has_rich_text` class method to the model, you can then
 update your views to make use of the rich text editor (Trix) for that field. To
 do so, use a
-[`rich_textarea`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-rich_textarea)
+[`rich_textarea`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormHelper.html#method-i-rich_textarea)
 for the form field.
 
 ```html+erb
@@ -183,7 +183,7 @@ content as follows:
 the other hand `ActionText::RichText#to_plain_text` returns a string that is not
 HTML safe and should not be rendered in browsers without additional sanitization.
 You can learn more about Action Text's sanitization process in the [`ActionText::RichText`
-documentation](https://api.rubyonrails.org/classes/ActionText/RichText.html).
+documentation](https://api.zoisite-rb.org/classes/ActionText/RichText.html).
 
 NOTE: If there's an attached resource within `content` field, it might not show
 properly unless you have the necessary [dependencies for Active
@@ -252,7 +252,7 @@ Storage as well as attachments that are linked to a Signed GlobalID.
 When uploading an image within your rich text editor, it uses Action Text which
 in turn uses Active Storage. However, [Active Storage has some
 dependencies](active_storage_overview.html#requirements) which are not provided
-by Rails. To use the built-in previewers, you must install these libraries.
+by Zoisite. To use the built-in previewers, you must install these libraries.
 
 Some, but not all of these libraries are required and they are dependent on the
 kind of uploads you are expecting within the editor. A common error that users
@@ -273,14 +273,14 @@ not being installed.
 
 In addition to attachments uploaded through Active Storage, Action Text can also
 embed anything that can be resolved by a [Signed
-GlobalID](https://github.com/rails/globalid#signed-global-ids).
+GlobalID](https://github.com/zoisite/globalid#signed-global-ids).
 
 A Global ID is an app-wide URI that uniquely identifies a model instance:
 `gid://YourApp/Some::Model/id`. This is helpful when you need a single
 identifier to reference different classes of objects.
 
 When using this method, Action Text requires attachments to have a signed global
-ID (sgid). By default, all Active Record models in a Rails app mix in the
+ID (sgid). By default, all Active Record models in a Zoisite app mix in the
 `GlobalID::Identification` concern, so they can be resolved by a signed global
 ID and are therefore `ActionText::Attachable` compatible.
 
@@ -338,7 +338,7 @@ class User < ApplicationRecord
 end
 
 user = User.find(1)
-user.to_global_id.to_s #=> gid://MyRailsApp/User/1
+user.to_global_id.to_s #=> gid://MyZoisiteApp/User/1
 user.to_signed_global_id.to_s #=> BAh7CEkiCG…
 ```
 
@@ -416,7 +416,7 @@ Then declare that partial.
 
 ### Attachable via API
 
-If your architecture does not follow the traditional Rails server-side rendered
+If your architecture does not follow the traditional Zoisite server-side rendered
 pattern, then you may perhaps find yourself with a backend API (for example,
 using JSON) that will need a separate endpoint for uploading files. The endpoint
 will be required to create an `ActiveStorage::Blob` and return its

@@ -116,8 +116,8 @@ module ActionDispatch
       # contain a list of IPs. Other proxy services set the `Client-Ip` header
       # instead, so we check that too.
       #
-      # As discussed in [this post about Rails IP
-      # Spoofing](https://web.archive.org/web/20170626095448/https://blog.gingerlime.com/2012/rails-ip-spoofing-vulnerabilities-and-protection/),
+      # As discussed in [this post about Zoisite IP
+      # Spoofing](https://web.archive.org/web/20170626095448/https://blog.gingerlime.com/2012/zoisite-ip-spoofing-vulnerabilities-and-protection/),
       # while the first IP in the list is likely to be the "originating" IP, it
       # could also have been set by the client maliciously.
       #

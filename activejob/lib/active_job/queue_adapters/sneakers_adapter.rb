@@ -16,7 +16,7 @@ module ActiveJob
     #
     # To use Sneakers set the queue_adapter config to +:sneakers+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :sneakers
+    #   Zoisite.application.config.active_job.queue_adapter = :sneakers
     class SneakersAdapter < AbstractAdapter
       def initialize
         @monitor = Monitor.new
@@ -30,7 +30,7 @@ module ActiveJob
       end
 
       def enqueue_at(job, timestamp) # :nodoc:
-        raise NotImplementedError, "This queueing backend does not support scheduling jobs. To see what features are supported go to http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html"
+        raise NotImplementedError, "This queueing backend does not support scheduling jobs. To see what features are supported go to http://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters.html"
       end
 
       class JobWrapper # :nodoc:

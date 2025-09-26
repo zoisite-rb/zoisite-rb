@@ -24,7 +24,7 @@
 #++
 
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "action_view/version"
 require "action_view/deprecator"
 

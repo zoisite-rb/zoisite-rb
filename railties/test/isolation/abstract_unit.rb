@@ -3,11 +3,11 @@
 # Note:
 # It is important to keep this file as light as possible
 # the goal for tests that require this is to test booting up
-# Rails from an empty state, so anything added here could
+# Zoisite from an empty state, so anything added here could
 # hide potential failures
 #
 # It is also good to know what is the bare minimum to get
-# Rails booted up.
+# Zoisite booted up.
 require "fileutils"
 require "shellwords"
 
@@ -62,7 +62,7 @@ module TestHelpers
       RAILS_FRAMEWORK_ROOT
     end
 
-    def rails_root
+    def zoisite_root
       app_path
     end
   end
@@ -75,7 +75,7 @@ module TestHelpers
 
         require "#{app_path}/config/environment"
 
-        Rails.application
+        Zoisite.application
       end
     ensure
       ENV["RAILS_ENV"] = old_env
@@ -97,18 +97,18 @@ module TestHelpers
       assert_equal 200, resp[0]
       assert_match "text/html", resp[1]["Content-Type"]
       assert_match "charset=utf-8", resp[1]["Content-Type"]
-      assert extract_body(resp).match(/Rails version:/)
+      assert extract_body(resp).match(/Zoisite version:/)
     end
   end
 
   module Generation
     # Build an application by invoking the generator and going through the whole stack.
     def build_app(options = {})
-      @prev_rails_app_class = Rails.app_class
-      @prev_rails_application = Rails.application
-      Rails.app_class = Rails.application = nil
+      @prev_zoisite_app_class = Zoisite.app_class
+      @prev_zoisite_application = Zoisite.application
+      Zoisite.app_class = Zoisite.application = nil
 
-      @prev_rails_env = ENV["RAILS_ENV"]
+      @prev_zoisite_env = ENV["RAILS_ENV"]
       ENV["RAILS_ENV"] = "development"
 
       FileUtils.rm_rf(app_path)
@@ -145,9 +145,9 @@ module TestHelpers
     end
 
     def teardown_app
-      ENV["RAILS_ENV"] = @prev_rails_env if @prev_rails_env
-      Rails.app_class = @prev_rails_app_class if @prev_rails_app_class
-      Rails.application = @prev_rails_application if @prev_rails_application
+      ENV["RAILS_ENV"] = @prev_zoisite_env if @prev_zoisite_env
+      Zoisite.app_class = @prev_zoisite_app_class if @prev_zoisite_app_class
+      Zoisite.application = @prev_zoisite_application if @prev_zoisite_application
       FileUtils.rm_rf(tmp_path)
     end
 
@@ -250,11 +250,11 @@ module TestHelpers
     # Make a very basic app, without creating the whole directory structure.
     # This is faster and simpler than the method above.
     def make_basic_app
-      require "rails"
+      require "zoisite"
       require "action_controller/railtie"
       require "action_view/railtie"
 
-      @app = Class.new(Rails::Application) do
+      @app = Class.new(Zoisite::Application) do
         def self.name; "RailtiesTestApp"; end
       end
       @app.config.hosts << proc { true }
@@ -286,7 +286,7 @@ module TestHelpers
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -327,18 +327,18 @@ module TestHelpers
       end
     end
 
-    # Invoke a bin/rails command inside the app
+    # Invoke a bin/zoisite-rb.orgmand inside the app
     #
     # allow_failure:: true to return normally if the command exits with
     #   a non-zero status. By default, this method will raise.
     # stderr:: true to pass STDERR output straight to the "real" STDERR.
     #   By default, the STDERR and STDOUT of the process will be
     #   combined in the returned string.
-    def rails(*args, allow_failure: false, stderr: false)
+    def zoisite(*args, allow_failure: false, stderr: false)
       args = args.flatten
       fork = true
 
-      command = "bin/rails #{Shellwords.join args}#{' 2>&1' unless stderr}"
+      command = "bin/zoisite #{Shellwords.join args}#{' 2>&1' unless stderr}"
 
       # Don't fork if the environment has disabled it
       fork = false if ENV["NO_FORK"]
@@ -377,13 +377,13 @@ module TestHelpers
             end
           end
 
-          Rails.instance_variable_set :@_env, nil
+          Zoisite.instance_variable_set :@_env, nil
 
           $-v = $-w = false
           Dir.chdir app_path unless Dir.pwd == app_path
 
           ARGV.replace(args)
-          load "./bin/rails"
+          load "./bin/zoisite"
 
           exit! 0
         end
@@ -409,14 +409,14 @@ module TestHelpers
         end
       end
 
-      raise "rails command failed (#{$?.exitstatus}): #{command}\n#{output}" unless allow_failure || $?.success?
+      raise "zoisite-rb.orgmand failed (#{$?.exitstatus}): #{command}\n#{output}" unless allow_failure || $?.success?
 
       output
     end
 
     def add_to_top_of_config(str)
       environment = File.read("#{app_path}/config/application.rb")
-      if environment =~ /(Rails::Application\s*)/
+      if environment =~ /(Zoisite::Application\s*)/
         File.open("#{app_path}/config/application.rb", "w") do |f|
           f.puts $` + $1 + "\n#{str}\n" + $'
         end
@@ -478,7 +478,7 @@ module TestHelpers
 
     def routes(routes)
       app_file("config/routes.rb", <<~RUBY)
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           #{routes}
         end
       RUBY
@@ -611,7 +611,7 @@ class ActiveSupport::TestCase
     end
 end
 
-# Create a scope and build a fixture rails app
+# Create a scope and build a fixture zoisite app
 Module.new do
   extend TestHelpers::Paths
 
@@ -620,14 +620,14 @@ Module.new do
     raise "Command #{cmd.inspect} failed. Output:\n#{output}" unless $?.success?
   end
 
-  # Build a rails app
+  # Build a zoisite app
   FileUtils.rm_rf(app_template_path)
   FileUtils.mkdir_p(app_template_path)
 
-  sh "#{Gem.ruby} #{RAILS_FRAMEWORK_ROOT}/railties/exe/rails new #{app_template_path} --skip-bundle --no-rc --quiet"
+  sh "#{Gem.ruby} #{RAILS_FRAMEWORK_ROOT}/railties/exe/zoisite new #{app_template_path} --skip-bundle --no-rc --quiet"
   File.open("#{app_template_path}/config/boot.rb", "w") do |f|
     f.puts 'require "bootsnap/setup" if ENV["BOOTSNAP_CACHE_DIR"]'
-    f.puts 'require "rails/all"'
+    f.puts 'require "zoisite/all"'
   end
 
   FileUtils.mkdir_p "#{app_template_path}/app/javascript"
@@ -636,10 +636,10 @@ Module.new do
   # Fake 'Bundler.require' -- we run using the repo's Gemfile, not an
   # app-specific one: we don't want to require every gem that lists.
   contents = File.read("#{app_template_path}/config/application.rb")
-  contents.sub!(/^Bundler\.require.*/, "%w(propshaft importmap-rails).each { |r| require r }")
+  contents.sub!(/^Bundler\.require.*/, "%w(propshaft importmap-zoisite).each { |r| require r }")
   File.write("#{app_template_path}/config/application.rb", contents)
 
-  require "rails"
+  require "zoisite"
 
   require "active_model"
   require "active_job"

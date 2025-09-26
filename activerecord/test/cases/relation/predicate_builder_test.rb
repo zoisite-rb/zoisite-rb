@@ -16,17 +16,17 @@ module ActiveRecord
     end
 
     def test_registering_new_handlers
-      assert_match %r{#{Regexp.escape(quote_table_name("topics.title"))} ~ 'rails'}i, Topic.where(title: /rails/).to_sql
+      assert_match %r{#{Regexp.escape(quote_table_name("topics.title"))} ~ 'zoisite'}i, Topic.where(title: /zoisite/).to_sql
     end
 
     def test_registering_new_handlers_for_association
-      assert_match %r{#{Regexp.escape(quote_table_name("topics.title"))} ~ 'rails'}i, Reply.joins(:topic).where(topics: { title: /rails/ }).to_sql
+      assert_match %r{#{Regexp.escape(quote_table_name("topics.title"))} ~ 'zoisite'}i, Reply.joins(:topic).where(topics: { title: /zoisite/ }).to_sql
     end
 
     def test_registering_new_handlers_for_joins
-      Reply.belongs_to :regexp_topic, -> { where(title: /rails/) }, class_name: "Topic", foreign_key: "parent_id"
+      Reply.belongs_to :regexp_topic, -> { where(title: /zoisite/) }, class_name: "Topic", foreign_key: "parent_id"
 
-      assert_match %r{#{Regexp.escape(quote_table_name("regexp_topic.title"))} ~ 'rails'}i, Reply.joins(:regexp_topic).references(Arel.sql("regexp_topic")).to_sql
+      assert_match %r{#{Regexp.escape(quote_table_name("regexp_topic.title"))} ~ 'zoisite'}i, Reply.joins(:regexp_topic).references(Arel.sql("regexp_topic")).to_sql
     end
 
     def test_references_with_schema
@@ -38,9 +38,9 @@ module ActiveRecord
     end
 
     def test_does_not_mutate
-      defaults = { topics: { title: "rails" }, "topics.approved" => true }
+      defaults = { topics: { title: "zoisite" }, "topics.approved" => true }
       Topic.where(defaults).to_sql
-      assert_equal({ topics: { title: "rails" }, "topics.approved" => true }, defaults)
+      assert_equal({ topics: { title: "zoisite" }, "topics.approved" => true }, defaults)
     end
   end
 end

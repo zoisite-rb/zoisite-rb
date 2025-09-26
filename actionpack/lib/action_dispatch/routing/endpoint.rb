@@ -12,7 +12,7 @@ module ActionDispatch
       def rack_app;        app; end
 
       def engine?
-        rack_app.is_a?(Class) && rack_app < Rails::Engine
+        rack_app.is_a?(Class) && rack_app < Zoisite::Engine
       end
     end
   end

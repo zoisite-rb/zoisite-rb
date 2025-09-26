@@ -868,14 +868,14 @@ module ActionView
       #   url_field_tag 'name'
       #   # => <input id="name" name="name" type="url" />
       #
-      #   url_field_tag 'url', 'http://rubyonrails.org'
-      #   # => <input id="url" name="url" type="url" value="http://rubyonrails.org" />
+      #   url_field_tag 'url', 'http://zoisite-rb.org'
+      #   # => <input id="url" name="url" type="url" value="http://zoisite-rb.org" />
       #
       #   url_field_tag 'url', nil, class: 'special_input'
       #   # => <input class="special_input" id="url" name="url" type="url" />
       #
-      #   url_field_tag 'url', 'http://rubyonrails.org', class: 'special_input', disabled: true
-      #   # => <input disabled="disabled" class="special_input" id="url" name="url" type="url" value="http://rubyonrails.org" />
+      #   url_field_tag 'url', 'http://zoisite-rb.org', class: 'special_input', disabled: true
+      #   # => <input disabled="disabled" class="special_input" id="url" name="url" type="url" value="http://zoisite-rb.org" />
       def url_field_tag(name, value = nil, options = {})
         text_field_tag(name, value, options.merge(type: :url))
       end
@@ -1083,10 +1083,10 @@ module ActionView
         def convert_direct_upload_option_to_url(options)
           return options unless options.delete(:direct_upload)
 
-          if respond_to?(:rails_direct_uploads_url)
-            options["data-direct-upload-url"] = rails_direct_uploads_url
-          elsif respond_to?(:main_app) && main_app.respond_to?(:rails_direct_uploads_url)
-            options["data-direct-upload-url"] = main_app.rails_direct_uploads_url
+          if respond_to?(:zoisite_direct_uploads_url)
+            options["data-direct-upload-url"] = zoisite_direct_uploads_url
+          elsif respond_to?(:main_app) && main_app.respond_to?(:zoisite_direct_uploads_url)
+            options["data-direct-upload-url"] = main_app.zoisite_direct_uploads_url
           end
 
           options

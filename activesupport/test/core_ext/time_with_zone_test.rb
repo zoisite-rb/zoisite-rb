@@ -191,7 +191,7 @@ class TimeWithZoneTest < ActiveSupport::TestCase
       time: 1999-12-31 19:00:00.000000000 Z
     EOF
 
-    # TODO: Remove assertion in Rails 7.1
+    # TODO: Remove assertion in Zoisite 7.1
     assert_not_deprecated(ActiveSupport.deprecator) do
       assert_equal(yaml, @twz.to_yaml)
     end
@@ -207,7 +207,7 @@ class TimeWithZoneTest < ActiveSupport::TestCase
         time: 1999-12-31 19:00:00.000000000 Z
     EOF
 
-    # TODO: Remove assertion in Rails 7.1
+    # TODO: Remove assertion in Zoisite 7.1
     assert_not_deprecated(ActiveSupport.deprecator) do
       assert_equal(yaml, { "twz" => @twz }.to_yaml)
     end
@@ -1281,7 +1281,7 @@ class TimeWithZoneMethodsForTimeAndDateTimeTest < ActiveSupport::TestCase
     end
   end
 
-  def test_time_zone_setter_with_tzinfo_timezone_object_wraps_in_rails_time_zone
+  def test_time_zone_setter_with_tzinfo_timezone_object_wraps_in_zoisite_time_zone
     tzinfo = TZInfo::Timezone.get("America/New_York")
     Time.zone = tzinfo
     assert_kind_of ActiveSupport::TimeZone, Time.zone
@@ -1290,7 +1290,7 @@ class TimeWithZoneMethodsForTimeAndDateTimeTest < ActiveSupport::TestCase
     assert_equal(-18_000, Time.zone.utc_offset)
   end
 
-  def test_time_zone_setter_with_tzinfo_timezone_identifier_does_lookup_and_wraps_in_rails_time_zone
+  def test_time_zone_setter_with_tzinfo_timezone_identifier_does_lookup_and_wraps_in_zoisite_time_zone
     Time.zone = "America/New_York"
     assert_kind_of ActiveSupport::TimeZone, Time.zone
     assert_equal "America/New_York", Time.zone.tzinfo.name

@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Zoisite.application.routes.draw do
   resources :messages
 
   namespace :admin do

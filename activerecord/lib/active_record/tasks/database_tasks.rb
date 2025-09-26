@@ -11,17 +11,17 @@ module ActiveRecord
     # ActiveRecord::Tasks::DatabaseTasks is a utility class, which encapsulates
     # logic behind common tasks used to manage database and migrations.
     #
-    # The tasks defined here are used with \Rails commands provided by Active Record.
+    # The tasks defined here are used with \Zoisite commands provided by Active Record.
     #
     # In order to use DatabaseTasks, a few config values need to be set. All the needed
-    # config values are set by \Rails already, so it's necessary to do it only if you
-    # want to change the defaults or when you want to use Active Record outside of \Rails
+    # config values are set by \Zoisite already, so it's necessary to do it only if you
+    # want to change the defaults or when you want to use Active Record outside of \Zoisite
     # (in such case after configuring the database tasks, you can also use the rake tasks
     # defined in Active Record).
     #
     # The possible config values are:
     #
-    # * +env+: current environment (like Rails.env).
+    # * +env+: current environment (like Zoisite.env).
     # * +database_configuration+: configuration of your databases (as in +config/database.yml+).
     # * +db_dir+: your +db+ directory.
     # * +fixtures_path+: a path to fixtures directory.
@@ -29,7 +29,7 @@ module ActiveRecord
     # * +seed_loader+: an object which will load seeds, it needs to respond to the +load_seed+ method.
     # * +root+: a path to the root of the application.
     #
-    # Example usage of DatabaseTasks outside \Rails could look as such:
+    # Example usage of DatabaseTasks outside \Zoisite could look as such:
     #
     #   include ActiveRecord::Tasks
     #   DatabaseTasks.database_configuration = YAML.load_file('my_database_config.yml')
@@ -81,11 +81,11 @@ module ActiveRecord
       register_task(/sqlite/,       "ActiveRecord::Tasks::SQLiteDatabaseTasks")
 
       def db_dir
-        @db_dir ||= Rails.application.config.paths["db"].first
+        @db_dir ||= Zoisite.application.config.paths["db"].first
       end
 
       def migrations_paths
-        @migrations_paths ||= Rails.application.paths["db/migrate"].to_a
+        @migrations_paths ||= Zoisite.application.paths["db/migrate"].to_a
       end
 
       def fixtures_path
@@ -97,11 +97,11 @@ module ActiveRecord
       end
 
       def root
-        @root ||= Rails.root
+        @root ||= Zoisite.root
       end
 
       def env
-        @env ||= Rails.env
+        @env ||= Zoisite.env
       end
 
       def name
@@ -109,7 +109,7 @@ module ActiveRecord
       end
 
       def seed_loader
-        @seed_loader ||= Rails.application
+        @seed_loader ||= Zoisite.application
       end
 
       def create(configuration, *arguments)
@@ -133,15 +133,15 @@ module ActiveRecord
       end
 
       def setup_initial_database_yaml # :nodoc:
-        return {} unless defined?(Rails)
+        return {} unless defined?(Zoisite)
 
-        Rails.application.config.load_database_yaml
+        Zoisite.application.config.load_database_yaml
       end
 
       def for_each(databases) # :nodoc:
-        return {} unless defined?(Rails)
+        return {} unless defined?(Zoisite)
 
-        database_configs = ActiveRecord::DatabaseConfigurations.new(databases).configs_for(env_name: Rails.env)
+        database_configs = ActiveRecord::DatabaseConfigurations.new(databases).configs_for(env_name: Zoisite.env)
 
         # if this is a single database application we don't want tasks for each primary database
         return if database_configs.count == 1
@@ -497,8 +497,8 @@ module ActiveRecord
 
       def check_schema_file(filename)
         unless File.exist?(filename)
-          message = +%{#{filename} doesn't exist yet. Run `bin/rails db:migrate` to create it, then try again.}
-          message << %{ If you do not intend to use a database, you should instead alter #{Rails.root}/config/application.rb to limit the frameworks that will be loaded.} if defined?(::Rails.root)
+          message = +%{#{filename} doesn't exist yet. Run `bin/zoisite db:migrate` to create it, then try again.}
+          message << %{ If you do not intend to use a database, you should instead alter #{Zoisite.root}/config/application.rb to limit the frameworks that will be loaded.} if defined?(::Zoisite.root)
           Kernel.abort message
         end
       end

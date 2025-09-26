@@ -18,7 +18,7 @@ module ActionController # :nodoc:
   # Controller actions are protected from Cross-Site Request Forgery (CSRF)
   # attacks by including a token in the rendered HTML for your application. This
   # token is stored as a random string in the session, to which an attacker does
-  # not have access. When a request reaches your application, Rails verifies the
+  # not have access. When a request reaches your application, Zoisite verifies the
   # received token with the token in the session. All requests are checked except
   # GET requests as these should be idempotent. Keep in mind that all
   # session-oriented requests are CSRF protected by default, including JavaScript
@@ -44,7 +44,7 @@ module ActionController # :nodoc:
   #
   # APIs may want to disable this behavior since they are typically designed to be
   # state-less: that is, the request API client handles the session instead of
-  # Rails. One way to achieve this is to use the `:null_session` strategy instead,
+  # Zoisite. One way to achieve this is to use the `:null_session` strategy instead,
   # which allows unverified requests to be handled, but with an empty session:
   #
   #     class ApplicationController < ActionController::Base
@@ -59,7 +59,7 @@ module ActionController # :nodoc:
   # including `csrf_meta_tags` in the HTML `head`.
   #
   # Learn more about CSRF attacks and securing your application in the [Ruby on
-  # Rails Security Guide](https://guides.rubyonrails.org/security.html).
+  # Zoisite Security Guide](https://guides.zoisite-rb.org/security.html).
   module RequestForgeryProtection
     CSRF_TOKEN = "action_controller.csrf_token"
 
@@ -144,7 +144,7 @@ module ActionController # :nodoc:
       #     If you need to add verification to the beginning of the callback chain,
       #     use `prepend: true`.
       # *   `:with` - Set the method to handle unverified request. Note if
-      #     `default_protect_from_forgery` is true, Rails call protect_from_forgery
+      #     `default_protect_from_forgery` is true, Zoisite call protect_from_forgery
       #     with `with :exception`.
       #
       #
@@ -623,10 +623,10 @@ module ActionController # :nodoc:
       NULL_ORIGIN_MESSAGE = <<~MSG
         The browser returned a 'null' origin for a request with origin-based forgery protection turned on. This usually
         means you have the 'no-referrer' Referrer-Policy header enabled, or that the request came from a site that
-        refused to give its origin. This makes it impossible for Rails to verify the source of the requests. Likely the
+        refused to give its origin. This makes it impossible for Zoisite to verify the source of the requests. Likely the
         best solution is to change your referrer policy to something less strict like same-origin or strict-origin.
         If you cannot change the referrer policy, you can disable origin checking with the
-        Rails.application.config.action_controller.forgery_protection_origin_check setting.
+        Zoisite.application.config.action_controller.forgery_protection_origin_check setting.
       MSG
       private_constant :NULL_ORIGIN_MESSAGE
 

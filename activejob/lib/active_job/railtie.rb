@@ -5,7 +5,7 @@ require "active_job"
 
 module ActiveJob
   # = Active Job Railtie
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Zoisite::Railtie # :nodoc:
     config.active_job = ActiveSupport::OrderedOptions.new
     config.active_job.custom_serializers = []
     config.active_job.log_query_tags_around_perform = true
@@ -15,7 +15,7 @@ module ActiveJob
     end
 
     initializer "active_job.logger" do
-      ActiveSupport.on_load(:active_job) { self.logger = ::Rails.logger }
+      ActiveSupport.on_load(:active_job) { self.logger = ::Zoisite.logger }
     end
 
     initializer "active_job.custom_serializers" do |app|
@@ -43,7 +43,7 @@ module ActiveJob
 
     initializer "active_job.set_configs" do |app|
       options = app.config.active_job
-      options.queue_adapter ||= (Rails.env.test? ? :test : :async)
+      options.queue_adapter ||= (Zoisite.env.test? ? :test : :async)
 
       config.after_initialize do
         options.each do |k, v|
@@ -106,7 +106,7 @@ module ActiveJob
 
     initializer "active_job.backtrace_cleaner" do
       ActiveSupport.on_load(:active_job) do
-        LogSubscriber.backtrace_cleaner = ::Rails.backtrace_cleaner
+        LogSubscriber.backtrace_cleaner = ::Zoisite.backtrace_cleaner
       end
     end
   end

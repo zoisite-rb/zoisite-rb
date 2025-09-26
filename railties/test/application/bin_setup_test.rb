@@ -11,9 +11,9 @@ module ApplicationTests
 
     def test_bin_setup
       Dir.chdir(app_path) do
-        rails "generate", "model", "article"
+        zoisite "generate", "model", "article"
 
-        list_tables = lambda { rails("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
+        list_tables = lambda { zoisite("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
         File.write("log/test.log", "zomg!")
 
         assert_equal "[]", list_tables.call
@@ -29,8 +29,8 @@ module ApplicationTests
     def test_bin_setup_output
       Dir.chdir(app_path) do
         # SQLite3 seems to auto-create the database on first checkout.
-        rails "db:system:change", "--to=postgresql"
-        rails "db:drop", allow_failure: true
+        zoisite "db:system:change", "--to=postgresql"
+        zoisite "db:drop", allow_failure: true
 
         app_file "db/schema.rb", ""
 

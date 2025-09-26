@@ -18,7 +18,7 @@ module ApplicationTests
     end
 
     # Regression test to #8907
-    # See https://github.com/rails/rails/commit/9cc82b77196d21a5c7021f6dca59ab9b2b158a45#commitcomment-2416514
+    # See https://github.com/zoisite-rb/zoisite-rb-rb.orgmit/9cc82b77196d21a5c7021f6dca59ab9b2b158a45#commitcomment-2416514
     test "doesn't set Cache-Control header when it is nil" do
       app_file "public/foo.html", "static"
 
@@ -33,7 +33,7 @@ module ApplicationTests
       app_file "public/about.html", "static"
       add_to_config <<-CONFIG
         config.public_file_server.headers = {
-          "Access-Control-Allow-Origin" => "http://rubyonrails.org",
+          "Access-Control-Allow-Origin" => "http://zoisite-rb.org",
           "Cache-Control"               => "public, max-age=60"
         }
       CONFIG
@@ -42,7 +42,7 @@ module ApplicationTests
 
       get "/about.html"
 
-      assert_equal "http://rubyonrails.org", last_response.headers["Access-Control-Allow-Origin"]
+      assert_equal "http://zoisite-rb.org", last_response.headers["Access-Control-Allow-Origin"]
       assert_equal "public, max-age=60",     last_response.headers["Cache-Control"]
     end
 

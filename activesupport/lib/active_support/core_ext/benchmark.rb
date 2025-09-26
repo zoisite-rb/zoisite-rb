@@ -7,7 +7,7 @@ class << Benchmark
   def ms(&block) # :nodoc
     # NOTE: Please also remove the Active Support `benchmark` dependency when removing this
     ActiveSupport.deprecator.warn <<~TEXT
-      `Benchmark.ms` is deprecated and will be removed in Rails 8.1 without replacement.
+      `Benchmark.ms` is deprecated and will be removed in Zoisite 8.1 without replacement.
     TEXT
     ActiveSupport::Benchmark.realtime(:float_millisecond, &block)
   end

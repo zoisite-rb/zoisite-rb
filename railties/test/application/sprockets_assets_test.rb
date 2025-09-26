@@ -23,7 +23,7 @@ module ApplicationTests
       File.write("#{app_path}/config/application.rb", contents)
 
       contents = File.read("#{app_path}/Gemfile")
-      contents.gsub!(/propshaft/, "sprockets-rails")
+      contents.gsub!(/propshaft/, "sprockets-zoisite")
       File.write("#{app_path}/Gemfile", contents)
 
       remove_from_env_config :development, "config.assets.digest = false"
@@ -45,20 +45,20 @@ module ApplicationTests
     def precompile!(env = nil)
       with_env env.to_h do
         quietly do
-          rails ["assets:precompile", "--trace"]
+          zoisite ["assets:precompile", "--trace"]
         end
       end
     end
 
     def run_app_update
       quietly do
-        rails ["app:update"]
+        zoisite ["app:update"]
       end
     end
 
     def clean_assets!
       quietly do
-        rails ["assets:clobber"]
+        zoisite ["assets:clobber"]
       end
     end
 
@@ -73,11 +73,11 @@ module ApplicationTests
     end
 
     test "assets routes have higher priority" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
-      app_file "app/assets/javascripts/demo.js.erb", "a = <%= image_path('rails.png').inspect %>;"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
+      app_file "app/assets/javascripts/demo.js.erb", "a = <%= image_path('zoisite.png').inspect %>;"
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '*path', to: lambda { |env| [200, { "Content-Type" => "text/html" }, ["Not an asset"]] }
         end
       RUBY
@@ -87,7 +87,7 @@ module ApplicationTests
       require "#{app_path}/config/environment"
 
       get "/assets/demo.js"
-      assert_equal 'a = "/assets/rails.png";', last_response.body.strip
+      assert_equal 'a = "/assets/zoisite.png";', last_response.body.strip
     end
 
     test "precompile creates the file, gives it the original asset's content and run in production as default" do
@@ -199,9 +199,9 @@ module ApplicationTests
     end
 
     test "sprockets cache is not shared between environments" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css.erb", "body { background: '<%= asset_path('rails.png') %>'; }"
+      app_file "app/assets/stylesheets/application.css.erb", "body { background: '<%= asset_path('zoisite.png') %>'; }"
       add_to_env_config "production", 'config.assets.prefix = "production_assets"'
 
       precompile!
@@ -209,14 +209,14 @@ module ApplicationTests
       assert_file_exists("#{app_path}/public/assets/application-*.css")
 
       file = Dir["#{app_path}/public/assets/application-*.css"].first
-      assert_match(/assets\/rails-([0-z]+)\.png/, File.read(file))
+      assert_match(/assets\/zoisite-([0-z]+)\.png/, File.read(file))
 
       precompile! RAILS_ENV: "production"
 
       assert_file_exists("#{app_path}/public/production_assets/application-*.css")
 
       file = Dir["#{app_path}/public/production_assets/application-*.css"].first
-      assert_match(/production_assets\/rails-([0-z]+)\.png/, File.read(file))
+      assert_match(/production_assets\/zoisite-([0-z]+)\.png/, File.read(file))
     end
 
     test "precompile use assets defined in app config and reassigned in app env config" do
@@ -244,20 +244,20 @@ module ApplicationTests
       # Load app env
       app "production"
 
-      assert_equal Sprockets::CachedEnvironment, Rails.application.assets.class
+      assert_equal Sprockets::CachedEnvironment, Zoisite.application.assets.class
     end
 
     test "precompile creates a manifest file with all the assets listed" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css.erb", "<%= asset_path('rails.png') %>"
+      app_file "app/assets/stylesheets/application.css.erb", "<%= asset_path('zoisite.png') %>"
 
       precompile!
 
       manifest = Dir["#{app_path}/public/assets/.sprockets-manifest-*.json"].first
       assets = ActiveSupport::JSON.decode(File.read(manifest))
       assert_match(/application-([0-z]+)\.css/, assets["assets"]["application.css"])
-      assert_match(/rails-([0-z]+)\.png/, assets["assets"]["rails.png"])
+      assert_match(/zoisite-([0-z]+)\.png/, assets["assets"]["zoisite.png"])
     end
 
     test "the manifest file should be saved by default in the same assets folder" do
@@ -292,21 +292,21 @@ module ApplicationTests
     end
 
     test "precompile properly refers files referenced with asset_path" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css.erb", "p { background-image: url(<%= asset_path('rails.png') %>) }"
+      app_file "app/assets/stylesheets/application.css.erb", "p { background-image: url(<%= asset_path('zoisite.png') %>) }"
 
       precompile!
 
       file = Dir["#{app_path}/public/assets/application-*.css"].first
-      assert_match(/\/assets\/rails-([0-z]+)\.png/, File.read(file))
+      assert_match(/\/assets\/zoisite-([0-z]+)\.png/, File.read(file))
     end
 
     test "precompile shouldn't use the digests present in manifest.json" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
 
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css.erb", "p { background-image: url(<%= asset_path('rails.png') %>) }"
+      app_file "app/assets/stylesheets/application.css.erb", "p { background-image: url(<%= asset_path('zoisite.png') %>) }"
 
       precompile! RAILS_ENV: "production"
 
@@ -314,7 +314,7 @@ module ApplicationTests
       assets = ActiveSupport::JSON.decode(File.read(manifest))
       asset_path = assets["assets"]["application.css"]
 
-      app_file "app/assets/images/rails.png", "p { url: change }"
+      app_file "app/assets/images/zoisite.png", "p { url: change }"
 
       precompile!
 
@@ -323,14 +323,14 @@ module ApplicationTests
     end
 
     test "precompile appends the MD5 hash to files referenced with asset_path and run in production with digest true" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css.erb", "p { background-image: url(<%= asset_path('rails.png') %>) }"
+      app_file "app/assets/stylesheets/application.css.erb", "p { background-image: url(<%= asset_path('zoisite.png') %>) }"
 
       precompile! RAILS_ENV: "production"
 
       file = Dir["#{app_path}/public/assets/application-*.css"].first
-      assert_match(/\/assets\/rails-([0-z]+)\.png/, File.read(file))
+      assert_match(/\/assets\/zoisite-([0-z]+)\.png/, File.read(file))
     end
 
     test "precompile should handle utf8 filenames" do
@@ -379,7 +379,7 @@ module ApplicationTests
       app_file "app/assets/javascripts/demo.js.erb", "<%= :alert %>();"
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/omg', :to => "omg#index"
         end
       RUBY
@@ -452,8 +452,8 @@ module ApplicationTests
 
     test "initialization on the assets group should set assets_dir" do
       require "#{app_path}/config/application"
-      Rails.application.initialize!(:assets)
-      assert_not_nil Rails.application.config.action_controller.assets_dir
+      Zoisite.application.initialize!(:assets)
+      assert_not_nil Zoisite.application.config.action_controller.assets_dir
     end
 
     test "enhancements to assets:precompile should only run once" do
@@ -501,27 +501,27 @@ module ApplicationTests
     end
 
     test "asset URLs should be protocol-relative if no request is in scope" do
-      app_file "app/assets/images/rails.png", "notreallyapng"
-      app_file "app/assets/javascripts/image_loader.js.erb", "var src='<%= image_path('rails.png') %>';"
-      add_to_config "config.assets.precompile = %w{rails.png image_loader.js}"
+      app_file "app/assets/images/zoisite.png", "notreallyapng"
+      app_file "app/assets/javascripts/image_loader.js.erb", "var src='<%= image_path('zoisite.png') %>';"
+      add_to_config "config.assets.precompile = %w{zoisite.png image_loader.js}"
       add_to_config "config.asset_host = 'example.com'"
       add_to_env_config "development", "config.assets.digest = false"
 
       precompile!
 
-      assert_match "src='//example.com/assets/rails.png'", File.read(Dir["#{app_path}/public/assets/image_loader-*.js"].first)
+      assert_match "src='//example.com/assets/zoisite.png'", File.read(Dir["#{app_path}/public/assets/image_loader-*.js"].first)
     end
 
     test "asset paths should use RAILS_RELATIVE_URL_ROOT by default" do
       ENV["RAILS_RELATIVE_URL_ROOT"] = "/sub/uri"
-      app_file "app/assets/images/rails.png", "notreallyapng"
-      app_file "app/assets/javascripts/app.js.erb", "var src='<%= image_path('rails.png') %>';"
-      add_to_config "config.assets.precompile = %w{rails.png app.js}"
+      app_file "app/assets/images/zoisite.png", "notreallyapng"
+      app_file "app/assets/javascripts/app.js.erb", "var src='<%= image_path('zoisite.png') %>';"
+      add_to_config "config.assets.precompile = %w{zoisite.png app.js}"
       add_to_env_config "development", "config.assets.digest = false"
 
       precompile!
 
-      assert_match "src='/sub/uri/assets/rails.png'", File.read(Dir["#{app_path}/public/assets/app-*.js"].first)
+      assert_match "src='/sub/uri/assets/zoisite.png'", File.read(Dir["#{app_path}/public/assets/app-*.js"].first)
     end
 
     test "app:update removes_sprockets" do
@@ -548,7 +548,7 @@ module ApplicationTests
       @blog = engine "blog" do |plugin|
         plugin.write "lib/blog.rb", <<-RUBY
           module Blog
-            class Engine < ::Rails::Engine
+            class Engine < ::Zoisite::Engine
             end
           end
         RUBY
@@ -556,7 +556,7 @@ module ApplicationTests
 
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Zoisite::Engine
             isolate_namespace Bukkits
           end
         end
@@ -572,7 +572,7 @@ module ApplicationTests
         end
       RUBY
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/foo" => "main#foo"
           get "/bar" => "main#bar"
         end
@@ -630,7 +630,7 @@ module ApplicationTests
         JS
 
         app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/posts', :to => "posts#index"
         end
         RUBY
@@ -640,7 +640,7 @@ module ApplicationTests
         engine "bukkits" do |plugin|
           plugin.write "lib/bukkits.rb", <<-RUBY
             module Bukkits
-              class Engine < ::Rails::Engine
+              class Engine < ::Zoisite::Engine
                 railtie_name "bukkits"
               end
             end

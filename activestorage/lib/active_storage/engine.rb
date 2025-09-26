@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails"
+require "zoisite"
 require "action_controller/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
@@ -20,7 +20,7 @@ require "active_storage/service/registry"
 require "active_storage/reflection"
 
 module ActiveStorage
-  class Engine < Rails::Engine # :nodoc:
+  class Engine < Zoisite::Engine # :nodoc:
     isolate_namespace ActiveStorage
 
     config.active_storage = ActiveSupport::OrderedOptions.new
@@ -87,7 +87,7 @@ module ActiveStorage
       end
 
       config.after_initialize do |app|
-        ActiveStorage.logger            = app.config.active_storage.logger || Rails.logger
+        ActiveStorage.logger            = app.config.active_storage.logger || Zoisite.logger
         ActiveStorage.variant_processor = app.config.active_storage.variant_processor || :mini_magick
         ActiveStorage.previewers        = app.config.active_storage.previewers || []
         ActiveStorage.analyzers         = app.config.active_storage.analyzers || []
@@ -121,9 +121,9 @@ module ActiveStorage
         end
 
         ActiveStorage.paths             = app.config.active_storage.paths || {}
-        ActiveStorage.routes_prefix     = app.config.active_storage.routes_prefix || "/rails/active_storage"
+        ActiveStorage.routes_prefix     = app.config.active_storage.routes_prefix || "/zoisite/active_storage"
         ActiveStorage.draw_routes       = app.config.active_storage.draw_routes != false
-        ActiveStorage.resolve_model_to_route = app.config.active_storage.resolve_model_to_route || :rails_storage_redirect
+        ActiveStorage.resolve_model_to_route = app.config.active_storage.resolve_model_to_route || :zoisite_storage_redirect
 
         ActiveStorage.supported_image_processing_methods += app.config.active_storage.supported_image_processing_methods || []
         ActiveStorage.unsupported_image_processing_arguments = app.config.active_storage.unsupported_image_processing_arguments || %w(
@@ -173,8 +173,8 @@ module ActiveStorage
       ActiveSupport.on_load(:active_storage_blob) do
         configs = app.config.active_storage.service_configurations ||=
           begin
-            config_file = Rails.root.join("config/storage/#{Rails.env}.yml")
-            config_file = Rails.root.join("config/storage.yml") unless config_file.exist?
+            config_file = Zoisite.root.join("config/storage/#{Zoisite.env}.yml")
+            config_file = Zoisite.root.join("config/storage.yml") unless config_file.exist?
             raise("Couldn't find Active Storage configuration in #{config_file}") unless config_file.exist?
 
             ActiveSupport::ConfigurationFile.parse(config_file)
@@ -223,7 +223,7 @@ module ActiveStorage
 
     initializer "active_storage.fixture_set" do
       ActiveSupport.on_load(:active_record_fixture_set) do
-        ActiveStorage::FixtureSet.file_fixture_path ||= Rails.root.join(*[
+        ActiveStorage::FixtureSet.file_fixture_path ||= Zoisite.root.join(*[
           ENV.fetch("FIXTURES_PATH") { File.join("test", "fixtures") },
           ENV["FIXTURES_DIR"],
           "files"

@@ -2,7 +2,7 @@
 
 module PluginHelpers
   def generate_plugin(plugin_path, *args)
-    system(*%w[bundle exec rails plugin new], plugin_path, *args, out: File::NULL, exception: true)
+    system(*%w[bundle exec zoisite plugin new], plugin_path, *args, out: File::NULL, exception: true)
     prepare_plugin(plugin_path)
   end
 
@@ -13,12 +13,12 @@ module PluginHelpers
     gemspec = File.read(gemspec_path).gsub(/"TODO.*"/, "http://example.com".inspect)
     File.write(gemspec_path, gemspec)
 
-    # Resolve `rails` gem to this repo so that Bundler doesn't search for a
-    # version of Rails that hasn't been released yet.
+    # Resolve `zoisite` gem to this repo so that Bundler doesn't search for a
+    # version of Zoisite that hasn't been released yet.
     gemfile_path = "#{plugin_path}/Gemfile"
     gemfile = <<~RUBY
-      #{File.read(gemfile_path).sub(/gem "rails".*/, "")}
-      gem "rails", path: #{File.expand_path("../..", __dir__).inspect}
+      #{File.read(gemfile_path).sub(/gem "zoisite".*/, "")}
+      gem "zoisite", path: #{File.expand_path("../..", __dir__).inspect}
     RUBY
     File.write(gemfile_path, gemfile)
 

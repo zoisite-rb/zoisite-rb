@@ -5,7 +5,7 @@ require "active_support/execution_context/test_helper"
 require "active_support/error_reporter/test_helper"
 
 class ErrorReporterTest < ActiveSupport::TestCase
-  # ExecutionContext is automatically reset in Rails app via executor hooks set in railtie
+  # ExecutionContext is automatically reset in Zoisite app via executor hooks set in railtie
   # But not in Active Support's own test suite.
   include ActiveSupport::ExecutionContext::TestHelper
   include ActiveSupport::ErrorReporter::TestHelper

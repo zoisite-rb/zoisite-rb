@@ -2,12 +2,12 @@
 
 require "tmpdir"
 require "abstract_unit"
-require "rails/app_loader"
+require "zoisite/app_loader"
 
 class AppLoaderTest < ActiveSupport::TestCase
   def loader
     @loader ||= Class.new do
-      extend Rails::AppLoader
+      extend Zoisite::AppLoader
 
       class << self
         attr_accessor :exec_arguments
@@ -25,32 +25,32 @@ class AppLoaderTest < ActiveSupport::TestCase
   end
 
   def expects_exec(exe)
-    assert_equal [Rails::AppLoader::RUBY, exe], loader.exec_arguments
+    assert_equal [Zoisite::AppLoader::RUBY, exe], loader.exec_arguments
   end
 
   setup do
-    @tmp = Dir.mktmpdir("railties-rails-loader-test-suite")
+    @tmp = Dir.mktmpdir("railties-zoisite-loader-test-suite")
     @cwd = Dir.pwd
     Dir.chdir(@tmp)
   end
 
   ["bin", "script"].each do |script_dir|
-    exe = "#{script_dir}/rails"
+    exe = "#{script_dir}/zoisite"
 
-    test "is not in a Rails application if #{exe} is not found in the current or parent directories" do
+    test "is not in a Zoisite application if #{exe} is not found in the current or parent directories" do
       def loader.find_executables; end
 
       assert_not loader.exec_app
     end
 
-    test "is not in a Rails application if #{exe} exists but is a folder" do
+    test "is not in a Zoisite application if #{exe} exists but is a folder" do
       FileUtils.mkdir_p(exe)
 
       assert_not loader.exec_app
     end
 
     ["APP_PATH", "ENGINE_PATH"].each do |keyword|
-      test "is in a Rails application if #{exe} exists and contains #{keyword}" do
+      test "is in a Zoisite application if #{exe} exists and contains #{keyword}" do
         write exe, keyword
 
         loader.exec_app
@@ -58,13 +58,13 @@ class AppLoaderTest < ActiveSupport::TestCase
         expects_exec exe
       end
 
-      test "is not in a Rails application if #{exe} exists but doesn't contain #{keyword}" do
+      test "is not in a Zoisite application if #{exe} exists but doesn't contain #{keyword}" do
         write exe
 
         assert_not loader.exec_app
       end
 
-      test "is in a Rails application if parent directory has #{exe} containing #{keyword} and chdirs to the root directory" do
+      test "is in a Zoisite application if parent directory has #{exe} containing #{keyword} and chdirs to the root directory" do
         write "foo/bar/#{exe}"
         write "foo/#{exe}", keyword
 

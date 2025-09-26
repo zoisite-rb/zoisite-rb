@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/migration/migration_generator"
+require "zoisite/generators/zoisite/migration/migration_generator"
 require "active_record/migration"
 
-class MigrationGeneratorTest < Rails::Generators::TestCase
+class MigrationGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   def setup
-    @old_belongs_to_required_by_default = Rails.application.config.active_record.belongs_to_required_by_default
+    @old_belongs_to_required_by_default = Zoisite.application.config.active_record.belongs_to_required_by_default
 
-    Rails.application.config.active_record.belongs_to_required_by_default = true
+    Zoisite.application.config.active_record.belongs_to_required_by_default = true
   end
 
   def teardown
-    Rails.application.config.active_record.belongs_to_required_by_default = @old_belongs_to_required_by_default
+    Zoisite.application.config.active_record.belongs_to_required_by_default = @old_belongs_to_required_by_default
   end
 
   def test_migration
@@ -220,7 +220,7 @@ class MigrationGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_add_migration_with_references_does_not_add_belongs_to_when_required_by_default_global_config_is_false
-    Rails.application.config.active_record.belongs_to_required_by_default = false
+    Zoisite.application.config.active_record.belongs_to_required_by_default = false
 
     migration = "add_references_to_books"
 
@@ -407,14 +407,14 @@ class MigrationGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_add_migration_to_configured_path
-    old_paths = Rails.application.config.paths["db/migrate"]
-    Rails.application.config.paths.add "db/migrate", with: "db2/migrate"
+    old_paths = Zoisite.application.config.paths["db/migrate"]
+    Zoisite.application.config.paths.add "db/migrate", with: "db2/migrate"
 
     migration = "migration_in_custom_path"
     run_generator [migration]
     assert_migration "db2/migrate/#{migration}.rb", /.*/
   ensure
-    Rails.application.config.paths["db/migrate"] = old_paths
+    Zoisite.application.config.paths["db/migrate"] = old_paths
   end
 
   def test_add_migration_ignores_virtual_attributes

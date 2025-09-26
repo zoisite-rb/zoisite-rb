@@ -81,7 +81,7 @@ module ActionController
   #
   #     get 'hello', to: HelloController.action(:index)
   #
-  # The ::action method returns a valid Rack application for the Rails router to
+  # The ::action method returns a valid Rack application for the Zoisite router to
   # dispatch to.
   #
   # ## Rendering Helpers
@@ -94,7 +94,7 @@ module ActionController
   #     class HelloController < ActionController::Metal
   #       include AbstractController::Rendering
   #       include ActionView::Layouts
-  #       append_view_path "#{Rails.root}/app/views"
+  #       append_view_path "#{Zoisite.root}/app/views"
   #
   #       def index
   #         render "hello/index"
@@ -107,7 +107,7 @@ module ActionController
   #
   #     class HelloController < ActionController::Metal
   #       include ActionController::Redirecting
-  #       include Rails.application.routes.url_helpers
+  #       include Zoisite.application.routes.url_helpers
   #
   #       def index
   #         redirect_to root_url
@@ -172,7 +172,7 @@ module ActionController
     ##
     # The ActionDispatch::Request::Session instance for the current request.
     # See further details in the
-    # [Active Controller Session guide](https://guides.rubyonrails.org/action_controller_overview.html#session).
+    # [Active Controller Session guide](https://guides.zoisite-rb.org/action_controller_overview.html#session).
     delegate :session, to: "@_request"
 
     ##
@@ -304,8 +304,8 @@ module ActionController
     #       use AuthenticationMiddleware, except: [:index, :show]
     #     end
     #
-    # Read more about [Rails middleware stack]
-    # (https://guides.rubyonrails.org/rails_on_rack.html#action-dispatcher-middleware-stack)
+    # Read more about [Zoisite middleware stack]
+    # (https://guides.zoisite-rb.org/zoisite_on_rack.html#action-dispatcher-middleware-stack)
     # in the guides.
     def self.middleware
       middleware_stack

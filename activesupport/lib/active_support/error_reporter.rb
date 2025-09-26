@@ -7,7 +7,7 @@ module ActiveSupport
   #
   # To rescue and report any unhandled error, you can use the #handle method:
   #
-  #   Rails.error.handle do
+  #   Zoisite.error.handle do
   #     do_something!
   #   end
   #
@@ -15,13 +15,13 @@ module ActiveSupport
   #
   # Alternatively, if you want to report the error but not swallow it, you can use #record:
   #
-  #   Rails.error.record do
+  #   Zoisite.error.record do
   #     do_something!
   #   end
   #
   # Both methods can be restricted to handle only a specific error class:
   #
-  #   maybe_tags = Rails.error.handle(Redis::BaseError) { redis.get("tags") }
+  #   maybe_tags = Zoisite.error.handle(Redis::BaseError) { redis.get("tags") }
   #
   class ErrorReporter
     SEVERITIES = %i(error warning info)
@@ -45,13 +45,13 @@ module ActiveSupport
     # specified.
     #
     #   # Will report a TypeError to all subscribers and return nil.
-    #   Rails.error.handle do
+    #   Zoisite.error.handle do
     #     1 + '1'
     #   end
     #
     # Can be restricted to handle only specific error classes:
     #
-    #   maybe_tags = Rails.error.handle(Redis::BaseError) { redis.get("tags") }
+    #   maybe_tags = Zoisite.error.handle(Redis::BaseError) { redis.get("tags") }
     #
     # ==== Options
     #
@@ -62,14 +62,14 @@ module ActiveSupport
     # * +:context+ - Extra information that is passed along to subscribers. For
     #   example:
     #
-    #     Rails.error.handle(context: { section: "admin" }) do
+    #     Zoisite.error.handle(context: { section: "admin" }) do
     #       # ...
     #     end
     #
     # * +:fallback+ - A callable that provides +handle+'s return value when an
     #   unhandled error is raised. For example:
     #
-    #     user = Rails.error.handle(fallback: -> { User.anonymous }) do
+    #     user = Zoisite.error.handle(fallback: -> { User.anonymous }) do
     #       User.find_by(params)
     #     end
     #
@@ -88,13 +88,13 @@ module ActiveSupport
     # If no error is raised, returns the return value of the block.
     #
     #   # Will report a TypeError to all subscribers and re-raise it.
-    #   Rails.error.record do
+    #   Zoisite.error.record do
     #     1 + '1'
     #   end
     #
     # Can be restricted to handle only specific error classes:
     #
-    #   tags = Rails.error.record(Redis::BaseError) { redis.get("tags") }
+    #   tags = Zoisite.error.record(Redis::BaseError) { redis.get("tags") }
     #
     # ==== Options
     #
@@ -105,7 +105,7 @@ module ActiveSupport
     # * +:context+ - Extra information that is passed along to subscribers. For
     #   example:
     #
-    #     Rails.error.record(context: { section: "admin" }) do
+    #     Zoisite.error.record(context: { section: "admin" }) do
     #       # ...
     #     end
     #
@@ -137,7 +137,7 @@ module ActiveSupport
     #
     #     def edit
     #       if published?
-    #         Rails.error.unexpected("[BUG] Attempting to edit a published article, that shouldn't be possible")
+    #         Zoisite.error.unexpected("[BUG] Attempting to edit a published article, that shouldn't be possible")
     #         return false
     #       end
     #       # ...
@@ -169,11 +169,11 @@ module ActiveSupport
     # Unregister an error subscriber. Accepts either a subscriber or a class.
     #
     #   subscriber = MyErrorSubscriber.new
-    #   Rails.error.subscribe(subscriber)
+    #   Zoisite.error.subscribe(subscriber)
     #
-    #   Rails.error.unsubscribe(subscriber)
+    #   Zoisite.error.unsubscribe(subscriber)
     #   # or
-    #   Rails.error.unsubscribe(MyErrorSubscriber)
+    #   Zoisite.error.unsubscribe(MyErrorSubscriber)
     def unsubscribe(subscriber)
       @subscribers.delete_if { |s| subscriber === s }
     end
@@ -197,7 +197,7 @@ module ActiveSupport
     # context passed to #handle, #record, or #report will be merged with the
     # context set here.
     #
-    #   Rails.error.set_context(section: "checkout", user_id: @user.id)
+    #   Zoisite.error.set_context(section: "checkout", user_id: @user.id)
     #
     def set_context(...)
       ActiveSupport::ExecutionContext.set(...)
@@ -213,7 +213,7 @@ module ActiveSupport
     # It must return a hash - the middleware stack returns the hash after it has
     # run through all middlewares. A middleware can mutate or replace the hash.
     #
-    #   Rails.error.add_middleware(-> (error, context) { context.merge({ foo: :bar }) })
+    #   Zoisite.error.add_middleware(-> (error, context) { context.merge({ foo: :bar }) })
     #
     def add_middleware(middleware)
       @context_middlewares.use(middleware)
@@ -222,16 +222,16 @@ module ActiveSupport
     # Report an error directly to subscribers. You can use this method when the
     # block-based #handle and #record methods are not suitable.
     #
-    #   Rails.error.report(error)
+    #   Zoisite.error.report(error)
     #
     # The +error+ argument must be an instance of Exception.
     #
-    #   Rails.error.report(Exception.new("Something went wrong"))
+    #   Zoisite.error.report(Exception.new("Something went wrong"))
     #
     # Otherwise you can use #unexpected to report an error which does accept a
     # string argument.
     def report(error, handled: true, severity: handled ? :warning : :error, context: {}, source: DEFAULT_SOURCE)
-      return if error.instance_variable_defined?(:@__rails_error_reported)
+      return if error.instance_variable_defined?(:@__zoisite_error_reported)
       raise ArgumentError, "Reported error must be an Exception, got: #{error.inspect}" unless error.is_a?(Exception)
 
       ensure_backtrace(error)
@@ -266,7 +266,7 @@ module ActiveSupport
 
       while error
         unless error.frozen?
-          error.instance_variable_set(:@__rails_error_reported, true)
+          error.instance_variable_set(:@__zoisite_error_reported, true)
         end
         error = error.cause
       end

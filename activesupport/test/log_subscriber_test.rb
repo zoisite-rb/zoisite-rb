@@ -48,7 +48,7 @@ class SyncLogSubscriberTest < ActiveSupport::TestCase
     ActiveSupport::LogSubscriber.log_subscribers.clear
   end
 
-  def test_proxies_method_to_rails_logger
+  def test_proxies_method_to_zoisite_logger
     @log_subscriber.foo(nil)
     assert_equal %w(debug), @logger.logged(:debug)
     assert_equal %w(info), @logger.logged(:info)

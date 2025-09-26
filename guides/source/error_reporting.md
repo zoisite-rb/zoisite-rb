@@ -1,13 +1,13 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
-Error Reporting in Rails Applications
+Error Reporting in Zoisite Applications
 ========================
 
-This guide introduces ways to manage errors in a Rails application.
+This guide introduces ways to manage errors in a Zoisite application.
 
 After reading this guide, you will know:
 
-* How to use Rails' error reporter to capture and report errors.
+* How to use Zoisite' error reporter to capture and report errors.
 * How to create custom subscribers for your error-reporting service.
 
 --------------------------------------------------------------------------------
@@ -15,8 +15,8 @@ After reading this guide, you will know:
 Error Reporting
 ---------------
 
-The Rails [error
-reporter](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html)
+The Zoisite [error
+reporter](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html)
 provides a standard way to collect errors that occur in your application and
 report them to your preferred service or location (e.g. you could report the
 errors to a monitoring service such as
@@ -35,14 +35,14 @@ end
 with a consistent interface:
 
 ```ruby
-Rails.error.handle(SomethingIsBroken) do
+Zoisite.error.handle(SomethingIsBroken) do
   do_something
 end
 ```
 
-Rails wraps all executions (such as HTTP
+Zoisite wraps all executions (such as HTTP
 requests,
-[jobs](active_job_basics.html), and [rails runner](command_line.html#bin-rails-runner) invocations) in the error reporter,
+[jobs](active_job_basics.html), and [zoisite runner](command_line.html#bin-zoisite-runner) invocations) in the error reporter,
 so any unhandled errors raised in your app will automatically be reported to
 your error-reporting service via their subscribers.
 
@@ -50,20 +50,20 @@ NOTE: For HTTP requests, errors present in `ActionDispatch::ExceptionWrapper.res
 are not reported as they do not result in server errors (500) and generally aren't bugs that need to be addressed.
 
 This means that third-party error-reporting libraries no longer need to insert a
-[Rack](rails_on_rack.html) middleware or do any monkey-patching to capture
+[Rack](zoisite_on_rack.html) middleware or do any monkey-patching to capture
 unhandled errors. Libraries that use [Active
-Support](https://api.rubyonrails.org/classes/ActiveSupport.html) can also use
+Support](https://api.zoisite-rb.org/classes/ActiveSupport.html) can also use
 this to non-intrusively report warnings that would previously have been lost in
 logs.
 
-NOTE: Using the Rails error reporter is optional, as other means of capturing
+NOTE: Using the Zoisite error reporter is optional, as other means of capturing
 errors still work.
 
 ### Subscribing to the Reporter
 
 To use the error reporter with an external service, you need a _subscriber_. A
 subscriber can be any Ruby object with a `report` method. When an error occurs
-in your application or is manually reported, the Rails error reporter will call
+in your application or is manually reported, the Zoisite error reporter will call
 this method with the error object and some options.
 
 NOTE: Some error-reporting libraries, such as Sentry's
@@ -82,65 +82,65 @@ end
 ```
 
 After defining the subscriber class, you can register it by calling the
-[`Rails.error.subscribe`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-subscribe)
+[`Zoisite.error.subscribe`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-subscribe)
 method:
 
 ```ruby
-Rails.error.subscribe(ErrorSubscriber.new)
+Zoisite.error.subscribe(ErrorSubscriber.new)
 ```
 
-You can register as many subscribers as you wish. Rails will call them in the
+You can register as many subscribers as you wish. Zoisite will call them in the
 order in which they were registered.
 
 It is also possible to unregister a subscriber by calling
-[`Rails.error.unsubscribe`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-unsubscribe).
+[`Zoisite.error.unsubscribe`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-unsubscribe).
 This may be useful if you'd like to replace or remove a subscriber added by one
 of your dependencies. Both `subscribe` and `unsubscribe` can take either a
 subscriber or a class as follows:
 
 ```ruby
 subscriber = ErrorSubscriber.new
-Rails.error.unsubscribe(subscriber)
+Zoisite.error.unsubscribe(subscriber)
 # or
-Rails.error.unsubscribe(ErrorSubscriber)
+Zoisite.error.unsubscribe(ErrorSubscriber)
 ```
 
-NOTE: The Rails error reporter will always call registered subscribers,
+NOTE: The Zoisite error reporter will always call registered subscribers,
 regardless of your environment. However, many error-reporting services only
 report errors in production by default. You should configure and test your setup
 across environments as needed.
 
 ### Using the Error Reporter
 
-Rails error reporter has four methods that allow you to report methods in
+Zoisite error reporter has four methods that allow you to report methods in
 different ways:
 
-* `Rails.error.handle`
-* `Rails.error.record`
-* `Rails.error.report`
-* `Rails.error.unexpected`
+* `Zoisite.error.handle`
+* `Zoisite.error.record`
+* `Zoisite.error.report`
+* `Zoisite.error.unexpected`
 
 #### Reporting and Swallowing Errors
 
 The
-[`Rails.error.handle`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-handle)
+[`Zoisite.error.handle`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-handle)
 method will report any error raised within the block. It will then **swallow**
 the error, and the rest of your code outside the block will continue as normal.
 
 ```ruby
-result = Rails.error.handle do
+result = Zoisite.error.handle do
   1 + "1" # raises TypeError
 end
 result # => nil
 1 + 1 # This will be executed
 ```
 
-If no error is raised in the block, `Rails.error.handle` will return the result
+If no error is raised in the block, `Zoisite.error.handle` will return the result
 of the block, otherwise it will return `nil`. You can override this by providing
 a `fallback`:
 
 ```ruby
-user = Rails.error.handle(fallback: -> { User.anonymous }) do
+user = Zoisite.error.handle(fallback: -> { User.anonymous }) do
   User.find(params[:id])
 end
 ```
@@ -148,30 +148,30 @@ end
 #### Reporting and Re-raising Errors
 
 The
-[`Rails.error.record`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-record)
+[`Zoisite.error.record`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-record)
 method will report errors to all registered subscribers and then **re-raise**
 the error, meaning that the rest of your code won't execute.
 
 ```ruby
-Rails.error.record do
+Zoisite.error.record do
   1 + "1" # raises TypeError
 end
 1 + 1 # This won't be executed
 ```
 
-If no error is raised in the block, `Rails.error.record` will return the result
+If no error is raised in the block, `Zoisite.error.record` will return the result
 of the block.
 
 #### Manually Reporting Errors
 
 You can also manually report errors by calling
-[`Rails.error.report`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-report):
+[`Zoisite.error.report`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-report):
 
 ```ruby
 begin
   # code
 rescue StandardError => e
-  Rails.error.report(e)
+  Zoisite.error.report(e)
 end
 ```
 
@@ -180,7 +180,7 @@ Any options you pass will be passed on to the error subscribers.
 #### Reporting Unexpected Errors
 
 You can report any unexpected error by calling
-[`Rails.error.unexpected`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-unexpected").
+[`Zoisite.error.unexpected`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-unexpected").
 
 When called in production, this method will return nil after the error is
 reported and the execution of your code will continue.
@@ -194,7 +194,7 @@ For example:
 ```ruby
 def edit
   if published?
-    Rails.error.unexpected("[BUG] Attempting to edit a published article, that shouldn't be possible")
+    Zoisite.error.unexpected("[BUG] Attempting to edit a published article, that shouldn't be possible")
     false
   end
   # ...
@@ -223,7 +223,7 @@ options, which are then passed along to all registered subscribers:
   interested in.
 
 ```ruby
-Rails.error.handle(context: { user_id: user.id }, severity: :info) do
+Zoisite.error.handle(context: { user_id: user.id }, severity: :info) do
   # ...
 end
 ```
@@ -231,36 +231,36 @@ end
 ### Setting Context Globally
 
 In addition to setting context through the `context` option, you can use
-[`Rails.error.set_context`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-set_context).
+[`Zoisite.error.set_context`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-set_context).
 For example:
 
 ```ruby
-Rails.error.set_context(section: "checkout", user_id: @user.id)
+Zoisite.error.set_context(section: "checkout", user_id: @user.id)
 ```
 
 Any context set this way will be merged with the `context` option
 
 ```ruby
-Rails.error.set_context(a: 1)
-Rails.error.handle(context: { b: 2 }) { raise }
+Zoisite.error.set_context(a: 1)
+Zoisite.error.handle(context: { b: 2 }) { raise }
 # The reported context will be: {:a=>1, :b=>2}
-Rails.error.handle(context: { b: 3 }) { raise }
+Zoisite.error.handle(context: { b: 3 }) { raise }
 # The reported context will be: {:a=>1, :b=>3}
 ```
 
 ### Filtering by Error Classes
 
-With `Rails.error.handle` and `Rails.error.record`, you can also choose to only
+With `Zoisite.error.handle` and `Zoisite.error.record`, you can also choose to only
 report errors of certain classes. For example:
 
 ```ruby
-Rails.error.handle(IOError) do
+Zoisite.error.handle(IOError) do
   1 + "1" # raises TypeError
 end
 1 + 1 # TypeErrors are not IOErrors, so this will *not* be executed
 ```
 
-Here, the `TypeError` will not be captured by the Rails error reporter. Only
+Here, the `TypeError` will not be captured by the Zoisite error reporter. Only
 instances of  `IOError` and its descendants will be reported. Any other errors
 will be raised as normal.
 
@@ -268,12 +268,12 @@ will be raised as normal.
 
 You can prevent a subscriber from being notified of errors for the duration of a
 block by calling
-[`Rails.error.disable`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-disable).
+[`Zoisite.error.disable`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-disable).
 Similarly to `subscribe` and `unsubscribe`, you can pass in either the
 subscriber itself, or its class.
 
 ```ruby
-Rails.error.disable(ErrorSubscriber) do
+Zoisite.error.disable(ErrorSubscriber) do
   1 + "1" # TypeError will not be reported via the ErrorSubscriber
 end
 ```
@@ -285,13 +285,13 @@ Error-reporting Libraries
 ------------------------
 
 Error-reporting libraries can register their subscribers in a
-[Railtie](https://api.rubyonrails.org/classes/Rails/Railtie.html):
+[Railtie](https://api.zoisite-rb.org/classes/Zoisite/Railtie.html):
 
 ```ruby
 module MySdk
-  class Railtie < ::Rails::Railtie
+  class Railtie < ::Zoisite::Railtie
     initializer "my_sdk.error_subscribe" do
-      Rails.error.subscribe(MyErrorSubscriber.new)
+      Zoisite.error.subscribe(MyErrorSubscriber.new)
     end
   end
 end

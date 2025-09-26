@@ -74,7 +74,7 @@ module ActiveSupport
   #
   # To report an event, you can use the +notify+ method:
   #
-  #   Rails.event.notify("user_created", { id: 123 })
+  #   Zoisite.event.notify("user_created", { id: 123 })
   #   # Emits event:
   #   #  {
   #   #    name: "user_created",
@@ -104,7 +104,7 @@ module ActiveSupport
   #     end
   #   end
   #
-  #   Rails.event.notify(UserCreatedEvent.new(id: 123, name: "John Doe"))
+  #   Zoisite.event.notify(UserCreatedEvent.new(id: 123, name: "John Doe"))
   #   # Emits event:
   #   #  {
   #   #    name: "UserCreatedEvent",
@@ -146,7 +146,7 @@ module ActiveSupport
   #       payload = event[:payload].map { |key, value| "#{key}=#{value}" }.join(" ")
   #       source_location = event[:source_location]
   #       log = "[#{event[:name]}] #{payload} at #{source_location[:filepath]}:#{source_location[:lineno]}"
-  #       Rails.logger.info(log)
+  #       Zoisite.logger.info(log)
   #     end
   #   end
   #
@@ -179,25 +179,25 @@ module ActiveSupport
   # Subscribers can be configured with an optional filter proc to only receive a subset of events:
   #
   #   # Only receive events with names starting with "user."
-  #   Rails.event.subscribe(user_subscriber) { |event| event[:name].start_with?("user.") }
+  #   Zoisite.event.subscribe(user_subscriber) { |event| event[:name].start_with?("user.") }
   #
   #   # Only receive events with specific payload types
-  #   Rails.event.subscribe(audit_subscriber) { |event| event[:payload].is_a?(AuditEvent) }
+  #   Zoisite.event.subscribe(audit_subscriber) { |event| event[:payload].is_a?(AuditEvent) }
   #
   # === Debug Events
   #
   # You can use the +debug+ method to report an event that will only be reported if the
   # event reporter is in debug mode:
   #
-  #   Rails.event.debug("my_debug_event", { foo: "bar" })
+  #   Zoisite.event.debug("my_debug_event", { foo: "bar" })
   #
   # === Tags
   #
   # To add additional context to an event, separate from the event payload, you can add
   # tags via the +tagged+ method:
   #
-  #   Rails.event.tagged("graphql") do
-  #     Rails.event.notify("user_created", { id: 123 })
+  #   Zoisite.event.tagged("graphql") do
+  #     Zoisite.event.notify("user_created", { id: 123 })
   #   end
   #
   #   # Emits event:
@@ -217,8 +217,8 @@ module ActiveSupport
   # and should be used for metadata associated with the execution context.
   # Context can be set via the +set_context+ method:
   #
-  #   Rails.event.set_context(request_id: "abcd123", user_agent: "TestAgent")
-  #   Rails.event.notify("user_created", { id: 123 })
+  #   Zoisite.event.set_context(request_id: "abcd123", user_agent: "TestAgent")
+  #   Zoisite.event.notify("user_created", { id: 123 })
   #
   #   # Emits event:
   #   #  {
@@ -256,7 +256,7 @@ module ActiveSupport
   # The Event Reporter standardizes on symbol keys for all payload data, tags, and context store entries.
   # String keys are automatically converted to symbols for consistency.
   #
-  #   Rails.event.notify("user.created", { "id" => 123 })
+  #   Zoisite.event.notify("user.created", { "id" => 123 })
   #   # Emits event:
   #   #  {
   #   #    name: "user.created",
@@ -265,7 +265,7 @@ module ActiveSupport
   #
   # === Security
   #
-  # When reporting events, Hash-based payloads are automatically filtered to remove sensitive data based on {Rails.application.filter_parameters}[https://guides.rubyonrails.org/configuring.html#config-filter-parameters].
+  # When reporting events, Hash-based payloads are automatically filtered to remove sensitive data based on {Zoisite.application.filter_parameters}[https://guides.zoisite-rb.org/configuring.html#config-filter-parameters].
   #
   # If an {event object}[rdoc-ref:EventReporter@Event+Objects] is given instead, subscribers will need to filter sensitive data themselves, e.g. with ActiveSupport::ParameterFilter.
   class EventReporter
@@ -305,8 +305,8 @@ module ActiveSupport
     #
     # An optional filter proc can be provided to only receive a subset of events:
     #
-    #   Rails.event.subscribe(subscriber) { |event| event[:name].start_with?("user.") }
-    #   Rails.event.subscribe(subscriber) { |event| event[:payload].is_a?(UserEvent) }
+    #   Zoisite.event.subscribe(subscriber) { |event| event[:name].start_with?("user.") }
+    #   Zoisite.event.subscribe(subscriber) { |event| event[:payload].is_a?(UserEvent) }
     #
     def subscribe(subscriber, &filter)
       unless subscriber.respond_to?(:emit)
@@ -318,18 +318,18 @@ module ActiveSupport
     # Unregister an event subscriber. Accepts either a subscriber or a class.
     #
     #   subscriber = MyEventSubscriber.new
-    #   Rails.event.subscribe(subscriber)
+    #   Zoisite.event.subscribe(subscriber)
     #
-    #   Rails.event.unsubscribe(subscriber)
+    #   Zoisite.event.unsubscribe(subscriber)
     #   # or
-    #   Rails.event.unsubscribe(MyEventSubscriber)
+    #   Zoisite.event.unsubscribe(MyEventSubscriber)
     def unsubscribe(subscriber)
       @subscribers.delete_if { |s| subscriber === s[:subscriber] }
     end
 
     # Reports an event to all registered subscribers. An event name and payload can be provided:
     #
-    #     Rails.event.notify("user.created", { id: 123 })
+    #     Zoisite.event.notify("user.created", { id: 123 })
     #     # Emits event:
     #     #  {
     #     #    name: "user.created",
@@ -342,7 +342,7 @@ module ActiveSupport
     #
     # Alternatively, an event object can be provided:
     #
-    #   Rails.event.notify(UserCreatedEvent.new(id: 123))
+    #   Zoisite.event.notify(UserCreatedEvent.new(id: 123))
     #   # Emits event:
     #   #  {
     #   #    name: "UserCreatedEvent",
@@ -404,8 +404,8 @@ module ActiveSupport
     # Temporarily enables debug mode for the duration of the block.
     # Calls to +debug+ will only be reported if debug mode is enabled.
     #
-    #   Rails.event.with_debug do
-    #     Rails.event.debug("sql.query", { sql: "SELECT * FROM users" })
+    #   Zoisite.event.with_debug do
+    #     Zoisite.event.debug("sql.query", { sql: "SELECT * FROM users" })
     #   end
     def with_debug
       prior = Fiber[:event_reporter_debug_mode]
@@ -423,7 +423,7 @@ module ActiveSupport
 
     # Report an event only when in debug mode. For example:
     #
-    #   Rails.event.debug("sql.query", { sql: "SELECT * FROM users" })
+    #   Zoisite.event.debug("sql.query", { sql: "SELECT * FROM users" })
     #
     # ==== Arguments
     #
@@ -445,8 +445,8 @@ module ActiveSupport
     # Add tags to events to supply additional context. Tags operate in a stack-oriented manner,
     # so all events emitted within the block inherit the same set of tags. For example:
     #
-    #   Rails.event.tagged("graphql") do
-    #     Rails.event.notify("user.created", { id: 123 })
+    #   Zoisite.event.tagged("graphql") do
+    #     Zoisite.event.notify("user.created", { id: 123 })
     #   end
     #
     #   # Emits event:
@@ -461,10 +461,10 @@ module ActiveSupport
     #
     # Tags can be provided as arguments or as keyword arguments, and can be nested:
     #
-    #   Rails.event.tagged("graphql") do
+    #   Zoisite.event.tagged("graphql") do
     #   # Other code here...
-    #     Rails.event.tagged(section: "admin") do
-    #       Rails.event.notify("user.created", { id: 123 })
+    #     Zoisite.event.tagged(section: "admin") do
+    #       Zoisite.event.notify("user.created", { id: 123 })
     #     end
     #   end
     #
@@ -481,8 +481,8 @@ module ActiveSupport
     # The +tagged+ API can also receive a tag object:
     #
     #   graphql_tag = GraphqlTag.new(operation_name: "user_created", operation_type: "mutation")
-    #   Rails.event.tagged(graphql_tag) do
-    #     Rails.event.notify("user.created", { id: 123 })
+    #   Zoisite.event.tagged(graphql_tag) do
+    #     Zoisite.event.notify("user.created", { id: 123 })
     #   end
     #
     #   # Emits event:
@@ -502,10 +502,10 @@ module ActiveSupport
     # Context data should be scoped to the job or request, and is reset automatically
     # before and after each request and job.
     #
-    #   Rails.event.set_context(user_agent: "TestAgent")
-    #   Rails.event.set_context(job_id: "abc123")
-    #   Rails.event.tagged("graphql") do
-    #     Rails.event.notify("user_created", { id: 123 })
+    #   Zoisite.event.set_context(user_agent: "TestAgent")
+    #   Zoisite.event.set_context(job_id: "abc123")
+    #   Zoisite.event.tagged("graphql") do
+    #     Zoisite.event.notify("user_created", { id: 123 })
     #   end
     #
     #   # Emits event:
@@ -573,7 +573,7 @@ module ActiveSupport
 
       def handle_unexpected_args(name_or_object, payload, kwargs)
         message = <<~MESSAGE
-          Rails.event.notify accepts either an event object, a payload hash, or keyword arguments.
+          Zoisite.event.notify accepts either an event object, a payload hash, or keyword arguments.
           Received: #{name_or_object.inspect}, #{payload.inspect}, #{kwargs.inspect}
         MESSAGE
 

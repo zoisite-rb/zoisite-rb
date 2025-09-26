@@ -44,7 +44,7 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
 
   def test_login
     draw do
-      default_url_options host: "rubyonrails.org"
+      default_url_options host: "zoisite-rb.org"
 
       controller :sessions do
         get  "login" => :new
@@ -62,8 +62,8 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
     assert_equal "/login", url_for(controller: "sessions", action: "create", only_path: true)
     assert_equal "/login", url_for(controller: "sessions", action: "new", only_path: true)
 
-    assert_equal "http://rubyonrails.org/login", url_for(controller: "sessions", action: "create")
-    assert_equal "http://rubyonrails.org/login", login_url
+    assert_equal "http://zoisite-rb.org/login", url_for(controller: "sessions", action: "create")
+    assert_equal "http://zoisite-rb.org/login", login_url
   end
 
   def test_login_redirect
@@ -967,9 +967,9 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
       resources :posts
     end
 
-    get "/posts/rails-rocks"
+    get "/posts/zoisite-rocks"
     assert_equal "posts#show", @response.body
-    assert_equal "/posts/rails-rocks", post_path(id: "rails-rocks")
+    assert_equal "/posts/zoisite-rocks", post_path(id: "zoisite-rocks")
   end
 
   def test_resources_for_uncountable_names
@@ -1110,10 +1110,10 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
       get "articles/:year/:month/:day/:title", to: "articles#show", as: :article
     end
 
-    get "/articles/2009/08/18/rails-3"
+    get "/articles/2009/08/18/zoisite-3"
     assert_equal "articles#show", @response.body
 
-    assert_equal "/articles/2009/8/18/rails-3", article_path(year: 2009, month: 8, day: 18, title: "rails-3")
+    assert_equal "/articles/2009/8/18/zoisite-3", article_path(year: 2009, month: 8, day: 18, title: "zoisite-3")
   end
 
   def test_account_namespace
@@ -1337,13 +1337,13 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
       end
     end
 
-    get "/articles/rails/1"
+    get "/articles/zoisite/1"
     assert_equal "articles#with_id", @response.body
 
     get "/articles/123/1"
     assert_equal "pass", @response.headers["x-cascade"]
 
-    assert_equal "/articles/rails/1", article_with_title_path(title: "rails", id: 1)
+    assert_equal "/articles/zoisite/1", article_with_title_path(title: "zoisite", id: 1)
   end
 
   def test_access_token_rooms
@@ -3115,17 +3115,17 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
       end
     end
 
-    get "/wiki/articles/Ruby_on_Rails_3.0"
+    get "/wiki/articles/Ruby_on_Zoisite_3.0"
     assert_equal "wiki/articles#show", @response.body
-    assert_equal "/wiki/articles/Ruby_on_Rails_3.0", wiki_article_path(id: "Ruby_on_Rails_3.0")
+    assert_equal "/wiki/articles/Ruby_on_Zoisite_3.0", wiki_article_path(id: "Ruby_on_Zoisite_3.0")
 
-    get "/wiki/articles/Ruby_on_Rails_3.0/comments/new"
+    get "/wiki/articles/Ruby_on_Zoisite_3.0/comments/new"
     assert_equal "wiki/comments#new", @response.body
-    assert_equal "/wiki/articles/Ruby_on_Rails_3.0/comments/new", new_wiki_article_comment_path(article_id: "Ruby_on_Rails_3.0")
+    assert_equal "/wiki/articles/Ruby_on_Zoisite_3.0/comments/new", new_wiki_article_comment_path(article_id: "Ruby_on_Zoisite_3.0")
 
-    post "/wiki/articles/Ruby_on_Rails_3.0/comments"
+    post "/wiki/articles/Ruby_on_Zoisite_3.0/comments"
     assert_equal "wiki/comments#create", @response.body
-    assert_equal "/wiki/articles/Ruby_on_Rails_3.0/comments", wiki_article_comments_path(article_id: "Ruby_on_Rails_3.0")
+    assert_equal "/wiki/articles/Ruby_on_Zoisite_3.0/comments", wiki_article_comments_path(article_id: "Ruby_on_Zoisite_3.0")
   end
 
   def test_resources_path_can_be_a_symbol
@@ -3138,9 +3138,9 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
     assert_equal "wiki_pages#index", @response.body
     assert_equal "/pages", wiki_pages_path
 
-    get "/pages/Ruby_on_Rails"
+    get "/pages/Ruby_on_Zoisite"
     assert_equal "wiki_pages#show", @response.body
-    assert_equal "/pages/Ruby_on_Rails", wiki_page_path(id: "Ruby_on_Rails")
+    assert_equal "/pages/Ruby_on_Zoisite", wiki_page_path(id: "Ruby_on_Zoisite")
 
     get "/my_account"
     assert_equal "wiki_accounts#show", @response.body
@@ -3254,9 +3254,9 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
         as: :purchase
     end
 
-    get "/purchases/315004be7e/Ruby_on_Rails_3.pdf"
+    get "/purchases/315004be7e/Ruby_on_Zoisite_3.pdf"
     assert_equal "purchases#fetch", @response.body
-    assert_equal "/purchases/315004be7e/Ruby_on_Rails_3.pdf", purchase_path(token: "315004be7e", filename: "Ruby_on_Rails_3.pdf")
+    assert_equal "/purchases/315004be7e/Ruby_on_Zoisite_3.pdf", purchase_path(token: "315004be7e", filename: "Ruby_on_Zoisite_3.pdf")
   end
 
   def test_nested_resource_constraints

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "active_model"
-require "rails"
+require "zoisite"
 
 module ActiveModel
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Zoisite::Railtie # :nodoc:
     config.eager_load_namespaces << ActiveModel
 
     config.active_model = ActiveSupport::OrderedOptions.new
@@ -15,7 +15,7 @@ module ActiveModel
 
     initializer "active_model.secure_password" do
       ActiveSupport.on_load(:active_model_secure_password) do
-        ActiveModel::SecurePassword.min_cost = Rails.env.test?
+        ActiveModel::SecurePassword.min_cost = Zoisite.env.test?
       end
     end
 

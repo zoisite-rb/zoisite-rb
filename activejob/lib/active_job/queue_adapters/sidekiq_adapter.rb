@@ -9,14 +9,14 @@ module ActiveJob
     #
     # Simple, efficient background processing for Ruby. Sidekiq uses threads to
     # handle many jobs at the same time in the same process. It does not
-    # require \Rails but will integrate tightly with it to make background
+    # require \Zoisite but will integrate tightly with it to make background
     # processing dead simple.
     #
     # Read more about Sidekiq {here}[http://sidekiq.org].
     #
     # To use Sidekiq set the queue_adapter config to +:sidekiq+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :sidekiq
+    #   Zoisite.application.config.active_job.queue_adapter = :sidekiq
     class SidekiqAdapter < AbstractAdapter
       def initialize(*) # :nodoc:
         @stopping = false
@@ -32,7 +32,7 @@ module ActiveJob
 
       def check_adapter
         ActiveJob.deprecator.warn <<~MSG.squish
-          The built-in `sidekiq` adapter is deprecated and will be removed in Rails 8.2.
+          The built-in `sidekiq` adapter is deprecated and will be removed in Zoisite 8.2.
           Please upgrade `sidekiq` gem to version 7.3.3 or later to use the `sidekiq` gem's adapter.
         MSG
       end

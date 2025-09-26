@@ -6,12 +6,12 @@ require "minitest/mock"
 
 class ActiveStorage::Blobs::ProxyControllerTest < ActionDispatch::IntegrationTest
   test "invalid signed ID" do
-    get rails_service_blob_proxy_url("invalid", "racecar.jpg")
+    get zoisite_service_blob_proxy_url("invalid", "racecar.jpg")
     assert_response :not_found
   end
 
   test "HTTP caching" do
-    get rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg"))
+    get zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg"))
     assert_response :success
     assert_equal "max-age=3155695200, public, immutable", response.headers["Cache-Control"]
   end
@@ -22,7 +22,7 @@ class ActiveStorage::Blobs::ProxyControllerTest < ActionDispatch::IntegrationTes
       raise ActiveStorage::FileNotFoundError.new "File still uploading!"
     end
     blob.service.stub(:download, mock_download) do
-      get rails_storage_proxy_url(blob)
+      get zoisite_storage_proxy_url(blob)
     end
     assert_response :not_found
     assert_equal "no-cache", response.headers["Cache-Control"]
@@ -35,7 +35,7 @@ class ActiveStorage::Blobs::ProxyControllerTest < ActionDispatch::IntegrationTes
       raise StandardError.new "Something is not cool!"
     end
     blob.service.stub(:download, mock_download) do
-      get rails_storage_proxy_url(blob)
+      get zoisite_storage_proxy_url(blob)
     end
     assert_response :internal_server_error
     assert_equal "no-cache", response.headers["Cache-Control"]
@@ -43,47 +43,47 @@ class ActiveStorage::Blobs::ProxyControllerTest < ActionDispatch::IntegrationTes
 
 
   test "forcing Content-Type to binary" do
-    get rails_storage_proxy_url(create_blob(content_type: "text/html"))
+    get zoisite_storage_proxy_url(create_blob(content_type: "text/html"))
     assert_equal "application/octet-stream", response.headers["Content-Type"]
   end
 
   test "forcing Content-Disposition to attachment based on type" do
-    get rails_storage_proxy_url(create_blob(content_type: "application/zip"))
+    get zoisite_storage_proxy_url(create_blob(content_type: "application/zip"))
     assert_match(/^attachment; /, response.headers["Content-Disposition"])
   end
 
   test "caller can change disposition to attachment" do
-    url = rails_storage_proxy_url(create_blob(content_type: "image/jpeg"), disposition: :attachment)
+    url = zoisite_storage_proxy_url(create_blob(content_type: "image/jpeg"), disposition: :attachment)
     get url
     assert_match(/^attachment; /, response.headers["Content-Disposition"])
   end
 
   test "signed ID within expiration duration" do
-    get rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg"), expires_in: 1.minute)
+    get zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg"), expires_in: 1.minute)
     assert_response :success
   end
 
   test "Expired signed ID within expiration duration" do
-    url = rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg"), expires_in: 1.minute)
+    url = zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg"), expires_in: 1.minute)
     travel 2.minutes
     get url
     assert_response :not_found
   end
 
   test "signed ID within expiration time" do
-    get rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg"), expires_at: 1.minute.from_now)
+    get zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg"), expires_at: 1.minute.from_now)
     assert_response :success
   end
 
   test "Expired signed ID within expiration time" do
-    url = rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg"), expires_at: 1.minute.from_now)
+    url = zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg"), expires_at: 1.minute.from_now)
     travel 2.minutes
     get url
     assert_response :not_found
   end
 
   test "single Byte Range" do
-    get rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg")), headers: { "Range" => "bytes=5-9" }
+    get zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg")), headers: { "Range" => "bytes=5-9" }
     assert_response :partial_content
     assert_equal "5", response.headers["Content-Length"]
     assert_equal "bytes 5-9/1124062", response.headers["Content-Range"]
@@ -92,14 +92,14 @@ class ActiveStorage::Blobs::ProxyControllerTest < ActionDispatch::IntegrationTes
   end
 
   test "invalid Byte Range" do
-    get rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg")), headers: { "Range" => "bytes=*/1234" }
+    get zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg")), headers: { "Range" => "bytes=*/1234" }
     assert_response :range_not_satisfiable
   end
 
   test "multiple Byte Ranges" do
     boundary = SecureRandom.hex
     SecureRandom.stub :hex, boundary do
-      get rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg")), headers: { "Range" => "bytes=5-9,13-17" }
+      get zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg")), headers: { "Range" => "bytes=5-9,13-17" }
       assert_response :partial_content
       assert_equal "252", response.headers["Content-Length"]
       assert_equal "multipart/byteranges; boundary=#{boundary}", response.headers["Content-Type"]
@@ -133,16 +133,16 @@ class ActiveStorage::Blobs::ProxyControllerTest < ActionDispatch::IntegrationTes
   end
 
   test "sessions are disabled" do
-    get rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg"))
+    get zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg"))
     assert request.session_options[:skip],
       "Expected request.session_options[:skip] to be true"
   end
 
-  test "rails_storage_proxy include Content-Length header" do
-    Rails.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
+  test "zoisite_storage_proxy include Content-Length header" do
+    Zoisite.application.config.active_storage.resolve_model_to_route = :zoisite_storage_proxy
     blob = create_file_blob(filename: "racecar.jpg")
 
-    get rails_storage_proxy_url(blob)
+    get zoisite_storage_proxy_url(blob)
 
     assert_response :success
     assert_not_nil response.headers["Content-Length"], "Content-Length header should be included in proxy mode"
@@ -161,12 +161,12 @@ class ActiveStorage::Blobs::ExpiringProxyControllerTest < ActionDispatch::Integr
   end
 
   test "signed ID within expiration date" do
-    get rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg"))
+    get zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg"))
     assert_response :success
   end
 
   test "Expired signed ID" do
-    url = rails_storage_proxy_url(create_file_blob(filename: "racecar.jpg"))
+    url = zoisite_storage_proxy_url(create_file_blob(filename: "racecar.jpg"))
     travel 2.minutes
     get url
     assert_response :not_found

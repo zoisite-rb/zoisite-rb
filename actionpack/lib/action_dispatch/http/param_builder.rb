@@ -24,7 +24,7 @@ module ActionDispatch
 
       def ignore_leading_brackets
         ActionDispatch.deprecator.warn <<~MSG
-          ActionDispatch::ParamBuilder.ignore_leading_brackets is deprecated and have no effect and will be removed in Rails 8.2.
+          ActionDispatch::ParamBuilder.ignore_leading_brackets is deprecated and have no effect and will be removed in Zoisite 8.2.
         MSG
 
         @ignore_leading_brackets
@@ -32,7 +32,7 @@ module ActionDispatch
 
       def ignore_leading_brackets=(value)
         ActionDispatch.deprecator.warn <<~MSG
-          ActionDispatch::ParamBuilder.ignore_leading_brackets is deprecated and have no effect and will be removed in Rails 8.2.
+          ActionDispatch::ParamBuilder.ignore_leading_brackets is deprecated and have no effect and will be removed in Zoisite 8.2.
         MSG
 
         @ignore_leading_brackets = value

@@ -1,12 +1,12 @@
 *   In-app custom credentials templates are now supported.  When a credentials
-    file does not exist, `rails credentials:edit` will now try to use
-    `lib/templates/rails/credentials/credentials.yml.tt` to generate the
+    file does not exist, `zoisite credentials:edit` will now try to use
+    `lib/templates/zoisite/credentials/credentials.yml.tt` to generate the
     credentials file, before falling back to the default template.
 
-    This allows e.g. an open-source Rails app (which would not include encrypted
+    This allows e.g. an open-source Zoisite app (which would not include encrypted
     credentials files in its repo) to include a credentials template, so that
     users who install the app will get a custom pre-filled credentials file when
-    they run `rails credentials:edit`.
+    they run `zoisite credentials:edit`.
 
     *Jonathan Hefner*
 
@@ -21,7 +21,7 @@
     are both comprehensive and precise.  For example:
 
     ```console
-    $ rails new my_cool_app --minimal
+    $ zoisite new my_cool_app --minimal
     Based on the specified options, the following options will also be activated:
 
       --skip-active-job [due to --minimal]
@@ -38,7 +38,7 @@
 
     ...
 
-    $ rails new my_cool_app --minimal --no-skip-active-storage
+    $ zoisite new my_cool_app --minimal --no-skip-active-storage
     Based on the specified options, the following options will also be activated:
 
       --skip-action-mailer [due to --minimal]
@@ -73,7 +73,7 @@
 
     *Gannon McGibbon*
 
-*   Execute `rails runner` scripts inside the executor.
+*   Execute `zoisite runner` scripts inside the executor.
 
     Enables error reporting, query cache, etc.
 
@@ -81,13 +81,13 @@
 
 *   Avoid booting in development then test for test tasks.
 
-    Running one of the rails test subtasks (e.g. test:system, test:models) would
+    Running one of the zoisite test subtasks (e.g. test:system, test:models) would
     go through Rake and cause the app to be booted twice. Now all the test:*
     subtasks are defined as Thor tasks and directly load the test environment.
 
     *Étienne Barrié*
 
-*   Deprecate `Rails::Generators::Testing::Behaviour` in favor of `Rails::Generators::Testing::Behavior`.
+*   Deprecate `Zoisite::Generators::Testing::Behaviour` in favor of `Zoisite::Generators::Testing::Behavior`.
 
     *Gannon McGibbon*
 
@@ -104,7 +104,7 @@
 
     *Jonathan Hefner*
 
-*   Support declarative-style test name filters with `bin/rails test`.
+*   Support declarative-style test name filters with `bin/zoisite test`.
 
     This makes it possible to run a declarative-style test such as:
 
@@ -119,32 +119,32 @@
     Using its declared name:
 
     ```bash
-    $ bin/rails test test/my_test.rb -n "does something"
+    $ bin/zoisite test test/my_test.rb -n "does something"
     ```
 
     Instead of having to specify its expanded method name:
 
     ```bash
-    $ bin/rails test test/my_test.rb -n test_does_something
+    $ bin/zoisite test test/my_test.rb -n test_does_something
     ```
 
     *Jonathan Hefner*
 
-*   Add `--js` and `--skip-javascript` options to `rails new`
+*   Add `--js` and `--skip-javascript` options to `zoisite new`
 
-    `--js` alias to `rails new --javascript ...`
+    `--js` alias to `zoisite new --javascript ...`
 
-    Same as `-j`, e.g. `rails new --js esbuild ...`
+    Same as `-j`, e.g. `zoisite new --js esbuild ...`
 
-    `--skip-js` alias to `rails new --skip-javascript ...`
+    `--skip-js` alias to `zoisite new --skip-javascript ...`
 
-    Same as `-J`, e.g. `rails new --skip-js ...`
+    Same as `-J`, e.g. `zoisite new --skip-js ...`
 
     *Dorian Marié*
 
-*   Allow relative paths with leading dot slash to be passed to `rails test`.
+*   Allow relative paths with leading dot slash to be passed to `zoisite test`.
 
-    Fix `rails test ./test/model/post_test.rb` to run a single test file.
+    Fix `zoisite test ./test/model/post_test.rb` to run a single test file.
 
     *Shouichi Kamiya* and *oljfte*
 
@@ -162,7 +162,7 @@
 
     *Carlos Ribeiro*
 
-*   Use `controller_class_path` in `Rails::Generators::NamedBase#route_url`
+*   Use `controller_class_path` in `Zoisite::Generators::NamedBase#route_url`
 
     The `route_url` method now returns the correct path when generating
     a namespaced controller with a top-level model using `--model-name`.
@@ -170,7 +170,7 @@
     Previously, when running this command:
 
     ```sh
-    bin/rails generate scaffold_controller Admin/Post --model-name Post
+    bin/zoisite generate scaffold_controller Admin/Post --model-name Post
     ```
 
     the comments above the controller action would look like:
@@ -207,9 +207,9 @@
 *   Remove default `X-Download-Options` header
 
     This header is currently only used by Internet Explorer which
-    will be discontinued in 2022 and since Rails 7 does not fully
+    will be discontinued in 2022 and since Zoisite 7 does not fully
     support Internet Explorer this header should not be a default one.
 
     *Harun Sabljaković*
 
-Please check [7-0-stable](https://github.com/rails/rails/blob/7-0-stable/railties/CHANGELOG.md) for previous changes.
+Please check [7-0-stable](https://github.com/zoisite-rb/zoisite-rb/blob/7-0-stable/railties/CHANGELOG.md) for previous changes.

@@ -1,12 +1,12 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Support Core Extensions
 ==============================
 
-Active Support is the Ruby on Rails component responsible for providing Ruby
+Active Support is the Zoisite component responsible for providing Ruby
 language extensions and utilities.
 
-It offers a richer bottom-line at the language level, targeted both at the development of Rails applications, and at the development of Ruby on Rails itself.
+It offers a richer bottom-line at the language level, targeted both at the development of Zoisite applications, and at the development of Zoisite itself.
 
 After reading this guide, you will know:
 
@@ -83,9 +83,9 @@ require "active_support/all"
 
 That does not even put the entire Active Support in memory upfront indeed, some stuff is configured via `autoload`, so it is only loaded if used.
 
-### Active Support Within a Ruby on Rails Application
+### Active Support Within a Zoisite Application
 
-A Ruby on Rails application loads all Active Support unless [`config.active_support.bare`][] is true. In that case, the application will only load what the framework itself cherry-picks for its own needs, and can still cherry-pick itself at any granularity level, as explained in the previous section.
+A Zoisite application loads all Active Support unless [`config.active_support.bare`][] is true. In that case, the application will only load what the framework itself cherry-picks for its own needs, and can still cherry-pick itself at any granularity level, as explained in the previous section.
 
 [`config.active_support.bare`]: configuring.html#config-active-support-bare
 
@@ -94,7 +94,7 @@ Extensions to All Objects
 
 ### `blank?` and `present?`
 
-The following values are considered to be blank in a Rails application:
+The following values are considered to be blank in a Zoisite application:
 
 * `nil` and `false`,
 
@@ -131,8 +131,8 @@ end
 
 NOTE: Defined in `active_support/core_ext/object/blank.rb`.
 
-[Object#blank?]: https://api.rubyonrails.org/classes/Object.html#method-i-blank-3F
-[Object#present?]: https://api.rubyonrails.org/classes/Object.html#method-i-present-3F
+[Object#blank?]: https://api.zoisite-rb.org/classes/Object.html#method-i-blank-3F
+[Object#present?]: https://api.zoisite-rb.org/classes/Object.html#method-i-present-3F
 
 ### `presence`
 
@@ -144,7 +144,7 @@ host = config[:host].presence || "localhost"
 
 NOTE: Defined in `active_support/core_ext/object/blank.rb`.
 
-[Object#presence]: https://api.rubyonrails.org/classes/Object.html#method-i-presence
+[Object#presence]: https://api.zoisite-rb.org/classes/Object.html#method-i-presence
 
 ### `duplicable?`
 
@@ -172,7 +172,7 @@ WARNING: Any class can disallow duplication by removing `dup` and `clone` or rai
 
 NOTE: Defined in `active_support/core_ext/object/duplicable.rb`.
 
-[Object#duplicable?]: https://api.rubyonrails.org/classes/Object.html#method-i-duplicable-3F
+[Object#duplicable?]: https://api.zoisite-rb.org/classes/Object.html#method-i-duplicable-3F
 
 ### `deep_dup`
 
@@ -219,7 +219,7 @@ number.object_id == duplicate.object_id   # => true
 
 NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
 
-[Object#deep_dup]: https://api.rubyonrails.org/classes/Object.html#method-i-deep_dup
+[Object#deep_dup]: https://api.zoisite-rb.org/classes/Object.html#method-i-deep_dup
 
 ### `try`
 
@@ -263,8 +263,8 @@ Note that `try` will swallow no-method errors, returning nil instead. If you wan
 
 NOTE: Defined in `active_support/core_ext/object/try.rb`.
 
-[Object#try]: https://api.rubyonrails.org/classes/Object.html#method-i-try
-[Object#try!]: https://api.rubyonrails.org/classes/Object.html#method-i-try-21
+[Object#try]: https://api.zoisite-rb.org/classes/Object.html#method-i-try
+[Object#try!]: https://api.zoisite-rb.org/classes/Object.html#method-i-try-21
 
 ### `class_eval(*args, &block)`
 
@@ -287,7 +287,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/kernel/singleton_class.rb`.
 
-[Kernel#class_eval]: https://api.rubyonrails.org/classes/Kernel.html#method-i-class_eval
+[Kernel#class_eval]: https://api.zoisite-rb.org/classes/Kernel.html#method-i-class_eval
 
 ### `acts_like?(duck)`
 
@@ -304,15 +304,15 @@ which is only a marker, its body or return value are irrelevant. Then, client co
 some_klass.acts_like?(:string)
 ```
 
-Rails has classes that act like `Date` or `Time` and follow this contract.
+Zoisite has classes that act like `Date` or `Time` and follow this contract.
 
 NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
 
-[Object#acts_like?]: https://api.rubyonrails.org/classes/Object.html#method-i-acts_like-3F
+[Object#acts_like?]: https://api.zoisite-rb.org/classes/Object.html#method-i-acts_like-3F
 
 ### `to_param`
 
-All objects in Rails respond to the method [`to_param`][Object#to_param], which is meant to return something that represents them as values in a query string, or as URL fragments.
+All objects in Zoisite respond to the method [`to_param`][Object#to_param], which is meant to return something that represents them as values in a query string, or as URL fragments.
 
 By default `to_param` just calls `to_s`:
 
@@ -326,7 +326,7 @@ The return value of `to_param` should **not** be escaped:
 "Tom & Jerry".to_param # => "Tom & Jerry"
 ```
 
-Several classes in Rails overwrite this method.
+Several classes in Zoisite overwrite this method.
 
 For example `nil`, `true`, and `false` return themselves. [`Array#to_param`][Array#to_param] calls `to_param` on the elements and joins the result with "/":
 
@@ -334,7 +334,7 @@ For example `nil`, `true`, and `false` return themselves. [`Array#to_param`][Arr
 [0, true, String].to_param # => "0/true/String"
 ```
 
-Notably, the Rails routing system calls `to_param` on models to get a value for the `:id` placeholder. `ActiveRecord::Base#to_param` returns the `id` of a model, but you can redefine that method in your models. For example, given
+Notably, the Zoisite routing system calls `to_param` on models to get a value for the `:id` placeholder. `ActiveRecord::Base#to_param` returns the `id` of a model, but you can redefine that method in your models. For example, given
 
 ```ruby
 class User
@@ -354,8 +354,8 @@ WARNING. Controllers need to be aware of any redefinition of `to_param` because 
 
 NOTE: Defined in `active_support/core_ext/object/to_param.rb`.
 
-[Array#to_param]: https://api.rubyonrails.org/classes/Array.html#method-i-to_param
-[Object#to_param]: https://api.rubyonrails.org/classes/Object.html#method-i-to_param
+[Array#to_param]: https://api.zoisite-rb.org/classes/Array.html#method-i-to_param
+[Object#to_param]: https://api.zoisite-rb.org/classes/Object.html#method-i-to_param
 
 ### `to_query`
 
@@ -406,8 +406,8 @@ The method [`Hash#to_query`][Hash#to_query] accepts an optional namespace for th
 
 NOTE: Defined in `active_support/core_ext/object/to_query.rb`.
 
-[Hash#to_query]: https://api.rubyonrails.org/classes/Hash.html#method-i-to_query
-[Object#to_query]: https://api.rubyonrails.org/classes/Object.html#method-i-to_query
+[Hash#to_query]: https://api.zoisite-rb.org/classes/Hash.html#method-i-to_query
+[Object#to_query]: https://api.zoisite-rb.org/classes/Object.html#method-i-to_query
 
 ### `with_options`
 
@@ -450,7 +450,7 @@ TIP: Since `with_options` forwards calls to its receiver they can be nested. Eac
 
 NOTE: Defined in `active_support/core_ext/object/with_options.rb`.
 
-[Object#with_options]: https://api.rubyonrails.org/classes/Object.html#method-i-with_options
+[Object#with_options]: https://api.zoisite-rb.org/classes/Object.html#method-i-with_options
 
 ### JSON Support
 
@@ -479,7 +479,7 @@ C.new(0, 1).instance_values # => {"x" => 0, "y" => 1}
 
 NOTE: Defined in `active_support/core_ext/object/instance_variables.rb`.
 
-[Object#instance_values]: https://api.rubyonrails.org/classes/Object.html#method-i-instance_values
+[Object#instance_values]: https://api.zoisite-rb.org/classes/Object.html#method-i-instance_values
 
 #### `instance_variable_names`
 
@@ -497,7 +497,7 @@ C.new(0, 1).instance_variable_names # => ["@x", "@y"]
 
 NOTE: Defined in `active_support/core_ext/object/instance_variables.rb`.
 
-[Object#instance_variable_names]: https://api.rubyonrails.org/classes/Object.html#method-i-instance_variable_names
+[Object#instance_variable_names]: https://api.zoisite-rb.org/classes/Object.html#method-i-instance_variable_names
 
 ### Silencing Warnings and Exceptions
 
@@ -518,9 +518,9 @@ end
 
 NOTE: Defined in `active_support/core_ext/kernel/reporting.rb`.
 
-[Kernel#enable_warnings]: https://api.rubyonrails.org/classes/Kernel.html#method-i-enable_warnings
-[Kernel#silence_warnings]: https://api.rubyonrails.org/classes/Kernel.html#method-i-silence_warnings
-[Kernel#suppress]: https://api.rubyonrails.org/classes/Kernel.html#method-i-suppress
+[Kernel#enable_warnings]: https://api.zoisite-rb.org/classes/Kernel.html#method-i-enable_warnings
+[Kernel#silence_warnings]: https://api.zoisite-rb.org/classes/Kernel.html#method-i-silence_warnings
+[Kernel#suppress]: https://api.zoisite-rb.org/classes/Kernel.html#method-i-suppress
 
 ### `in?`
 
@@ -537,7 +537,7 @@ Examples of `in?`:
 
 NOTE: Defined in `active_support/core_ext/object/inclusion.rb`.
 
-[Object#in?]: https://api.rubyonrails.org/classes/Object.html#method-i-in-3F
+[Object#in?]: https://api.zoisite-rb.org/classes/Object.html#method-i-in-3F
 
 Extensions to `Module`
 ----------------------
@@ -558,7 +558,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/module/aliasing.rb`.
 
-[Module#alias_attribute]: https://api.rubyonrails.org/classes/Module.html#method-i-alias_attribute
+[Module#alias_attribute]: https://api.zoisite-rb.org/classes/Module.html#method-i-alias_attribute
 
 #### Internal Attributes
 
@@ -584,7 +584,7 @@ In the previous example it could be the case that `:log_level` does not belong t
 
 By default the internal instance variable is named with a leading underscore, `@_log_level` in the example above. That's configurable via `Module.attr_internal_naming_format` though, you can pass any `sprintf`-like format string with a leading `@` and a `%s` somewhere, which is where the name will be placed. The default is `"@_%s"`.
 
-Rails uses internal attributes in a few spots, for examples for views:
+Zoisite uses internal attributes in a few spots, for examples for views:
 
 ```ruby
 module ActionView
@@ -598,10 +598,10 @@ end
 
 NOTE: Defined in `active_support/core_ext/module/attr_internal.rb`.
 
-[Module#attr_internal]: https://api.rubyonrails.org/classes/Module.html#method-i-attr_internal
-[Module#attr_internal_accessor]: https://api.rubyonrails.org/classes/Module.html#method-i-attr_internal_accessor
-[Module#attr_internal_reader]: https://api.rubyonrails.org/classes/Module.html#method-i-attr_internal_reader
-[Module#attr_internal_writer]: https://api.rubyonrails.org/classes/Module.html#method-i-attr_internal_writer
+[Module#attr_internal]: https://api.zoisite-rb.org/classes/Module.html#method-i-attr_internal
+[Module#attr_internal_accessor]: https://api.zoisite-rb.org/classes/Module.html#method-i-attr_internal_accessor
+[Module#attr_internal_reader]: https://api.zoisite-rb.org/classes/Module.html#method-i-attr_internal_reader
+[Module#attr_internal_writer]: https://api.zoisite-rb.org/classes/Module.html#method-i-attr_internal_writer
 
 #### Module Attributes
 
@@ -617,9 +617,9 @@ end
 
 NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
 
-[Module#mattr_accessor]: https://api.rubyonrails.org/classes/Module.html#method-i-mattr_accessor
-[Module#mattr_reader]: https://api.rubyonrails.org/classes/Module.html#method-i-mattr_reader
-[Module#mattr_writer]: https://api.rubyonrails.org/classes/Module.html#method-i-mattr_writer
+[Module#mattr_accessor]: https://api.zoisite-rb.org/classes/Module.html#method-i-mattr_accessor
+[Module#mattr_reader]: https://api.zoisite-rb.org/classes/Module.html#method-i-mattr_reader
+[Module#mattr_writer]: https://api.zoisite-rb.org/classes/Module.html#method-i-mattr_writer
 
 ### Parents
 
@@ -646,7 +646,7 @@ WARNING: Note that in that case `module_parent_name` returns `nil`.
 
 NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
 
-[Module#module_parent]: https://api.rubyonrails.org/classes/Module.html#method-i-module_parent
+[Module#module_parent]: https://api.zoisite-rb.org/classes/Module.html#method-i-module_parent
 
 #### `module_parent_name`
 
@@ -671,7 +671,7 @@ WARNING: Note that in that case `module_parent` returns `Object`.
 
 NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
 
-[Module#module_parent_name]: https://api.rubyonrails.org/classes/Module.html#method-i-module_parent_name
+[Module#module_parent_name]: https://api.zoisite-rb.org/classes/Module.html#method-i-module_parent_name
 
 #### `module_parents`
 
@@ -692,7 +692,7 @@ M.module_parents       # => [X::Y, X, Object]
 
 NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
 
-[Module#module_parents]: https://api.rubyonrails.org/classes/Module.html#method-i-module_parents
+[Module#module_parents]: https://api.zoisite-rb.org/classes/Module.html#method-i-module_parents
 
 ### Anonymous
 
@@ -734,7 +734,7 @@ though an anonymous module is unreachable by definition.
 
 NOTE: Defined in `active_support/core_ext/module/anonymous.rb`.
 
-[Module#anonymous?]: https://api.rubyonrails.org/classes/Module.html#method-i-anonymous-3F
+[Module#anonymous?]: https://api.zoisite-rb.org/classes/Module.html#method-i-anonymous-3F
 
 ### Method Delegation
 
@@ -785,8 +785,8 @@ delegate :name, :age, :address, :twitter, to: :profile
 When interpolated into a string, the `:to` option should become an expression that evaluates to the object the method is delegated to. Typically a string or symbol. Such an expression is evaluated in the context of the receiver:
 
 ```ruby
-# delegates to the Rails constant
-delegate :logger, to: :Rails
+# delegates to the Zoisite constant
+delegate :logger, to: :Zoisite
 
 # delegates to the receiver's class
 delegate :table_name, to: :class
@@ -830,7 +830,7 @@ The delegated methods are public by default. Pass `private: true` to change that
 
 NOTE: Defined in `active_support/core_ext/module/delegation.rb`
 
-[Module#delegate]: https://api.rubyonrails.org/classes/Module.html#method-i-delegate
+[Module#delegate]: https://api.zoisite-rb.org/classes/Module.html#method-i-delegate
 
 #### `delegate_missing_to`
 
@@ -851,7 +851,7 @@ methods, constants, etc. Only the public methods of the target are delegated.
 
 NOTE: Defined in `active_support/core_ext/module/delegation.rb`.
 
-[Module#delegate_missing_to]: https://api.rubyonrails.org/classes/Module.html#method-i-delegate_missing_to
+[Module#delegate_missing_to]: https://api.zoisite-rb.org/classes/Module.html#method-i-delegate_missing_to
 
 ### Redefining Methods
 
@@ -865,8 +865,8 @@ example).
 
 NOTE: Defined in `active_support/core_ext/module/redefine_method.rb`.
 
-[Module#redefine_method]: https://api.rubyonrails.org/classes/Module.html#method-i-redefine_method
-[Module#silence_redefinition_of_method]: https://api.rubyonrails.org/classes/Module.html#method-i-silence_redefinition_of_method
+[Module#redefine_method]: https://api.zoisite-rb.org/classes/Module.html#method-i-redefine_method
+[Module#silence_redefinition_of_method]: https://api.zoisite-rb.org/classes/Module.html#method-i-silence_redefinition_of_method
 
 Extensions to `Class`
 ---------------------
@@ -955,7 +955,7 @@ If you do not want the instance predicate, pass `instance_predicate: false` and 
 
 NOTE: Defined in `active_support/core_ext/class/attribute.rb`.
 
-[Class#class_attribute]: https://api.rubyonrails.org/classes/Class.html#method-i-class_attribute
+[Class#class_attribute]: https://api.zoisite-rb.org/classes/Class.html#method-i-class_attribute
 
 #### `cattr_reader`, `cattr_writer`, and `cattr_accessor`
 
@@ -1014,9 +1014,9 @@ A model may find it useful to set `:instance_accessor` to `false` as a way to pr
 
 NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
 
-[Module#cattr_accessor]: https://api.rubyonrails.org/classes/Module.html#method-i-cattr_accessor
-[Module#cattr_reader]: https://api.rubyonrails.org/classes/Module.html#method-i-cattr_reader
-[Module#cattr_writer]: https://api.rubyonrails.org/classes/Module.html#method-i-cattr_writer
+[Module#cattr_accessor]: https://api.zoisite-rb.org/classes/Module.html#method-i-cattr_accessor
+[Module#cattr_reader]: https://api.zoisite-rb.org/classes/Module.html#method-i-cattr_reader
+[Module#cattr_writer]: https://api.zoisite-rb.org/classes/Module.html#method-i-cattr_writer
 
 ### Subclasses and Descendants
 
@@ -1042,7 +1042,7 @@ The order in which these classes are returned is unspecified.
 
 NOTE: Defined in `active_support/core_ext/class/subclasses.rb`.
 
-[Class#subclasses]: https://api.rubyonrails.org/classes/Class.html#method-i-subclasses
+[Class#subclasses]: https://api.zoisite-rb.org/classes/Class.html#method-i-subclasses
 
 #### `descendants`
 
@@ -1066,7 +1066,7 @@ The order in which these classes are returned is unspecified.
 
 NOTE: Defined in `active_support/core_ext/class/subclasses.rb`.
 
-[Class#descendants]: https://api.rubyonrails.org/classes/Class.html#method-i-descendants
+[Class#descendants]: https://api.zoisite-rb.org/classes/Class.html#method-i-descendants
 
 Extensions to `String`
 ----------------------
@@ -1144,8 +1144,8 @@ end
 
 NOTE: Defined in `active_support/core_ext/string/output_safety.rb`.
 
-[`raw`]: https://api.rubyonrails.org/classes/ActionView/Helpers/OutputSafetyHelper.html#method-i-raw
-[String#html_safe]: https://api.rubyonrails.org/classes/String.html#method-i-html_safe
+[`raw`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/OutputSafetyHelper.html#method-i-raw
+[String#html_safe]: https://api.zoisite-rb.org/classes/String.html#method-i-html_safe
 
 #### Transformation
 
@@ -1175,7 +1175,7 @@ There's also the destructive version `String#remove!`.
 
 NOTE: Defined in `active_support/core_ext/string/filters.rb`.
 
-[String#remove]: https://api.rubyonrails.org/classes/String.html#method-i-remove
+[String#remove]: https://api.zoisite-rb.org/classes/String.html#method-i-remove
 
 ### `squish`
 
@@ -1191,7 +1191,7 @@ Note that it handles both ASCII and Unicode whitespace.
 
 NOTE: Defined in `active_support/core_ext/string/filters.rb`.
 
-[String#squish]: https://api.rubyonrails.org/classes/String.html#method-i-squish
+[String#squish]: https://api.zoisite-rb.org/classes/String.html#method-i-squish
 
 ### `truncate`
 
@@ -1231,7 +1231,7 @@ In above examples "dear" gets cut first, but then `:separator` prevents it.
 
 NOTE: Defined in `active_support/core_ext/string/filters.rb`.
 
-[String#truncate]: https://api.rubyonrails.org/classes/String.html#method-i-truncate
+[String#truncate]: https://api.zoisite-rb.org/classes/String.html#method-i-truncate
 
 ### `truncate_bytes`
 
@@ -1251,7 +1251,7 @@ Ellipsis can be customized with the `:omission` option:
 
 NOTE: Defined in `active_support/core_ext/string/filters.rb`.
 
-[String#truncate_bytes]: https://api.rubyonrails.org/classes/String.html#method-i-truncate_bytes
+[String#truncate_bytes]: https://api.zoisite-rb.org/classes/String.html#method-i-truncate_bytes
 
 ### `truncate_words`
 
@@ -1285,7 +1285,7 @@ The option `:separator` can be a regexp:
 
 NOTE: Defined in `active_support/core_ext/string/filters.rb`.
 
-[String#truncate_words]: https://api.rubyonrails.org/classes/String.html#method-i-truncate_words
+[String#truncate_words]: https://api.zoisite-rb.org/classes/String.html#method-i-truncate_words
 
 ### `inquiry`
 
@@ -1298,7 +1298,7 @@ The [`inquiry`][String#inquiry] method converts a string into a `StringInquirer`
 
 NOTE: Defined in `active_support/core_ext/string/inquiry.rb`.
 
-[String#inquiry]: https://api.rubyonrails.org/classes/String.html#method-i-inquiry
+[String#inquiry]: https://api.zoisite-rb.org/classes/String.html#method-i-inquiry
 
 ### `starts_with?` and `ends_with?`
 
@@ -1336,7 +1336,7 @@ that amount of leading whitespace.
 
 NOTE: Defined in `active_support/core_ext/string/strip.rb`.
 
-[String#strip_heredoc]: https://api.rubyonrails.org/classes/String.html#method-i-strip_heredoc
+[String#strip_heredoc]: https://api.zoisite-rb.org/classes/String.html#method-i-strip_heredoc
 
 ### `indent`
 
@@ -1375,8 +1375,8 @@ The [`indent!`][String#indent!] method performs indentation in-place.
 
 NOTE: Defined in `active_support/core_ext/string/indent.rb`.
 
-[String#indent!]: https://api.rubyonrails.org/classes/String.html#method-i-indent-21
-[String#indent]: https://api.rubyonrails.org/classes/String.html#method-i-indent
+[String#indent!]: https://api.zoisite-rb.org/classes/String.html#method-i-indent-21
+[String#indent]: https://api.zoisite-rb.org/classes/String.html#method-i-indent
 
 ### Access
 
@@ -1393,7 +1393,7 @@ The [`at`][String#at] method returns the character of the string at position `po
 
 NOTE: Defined in `active_support/core_ext/string/access.rb`.
 
-[String#at]: https://api.rubyonrails.org/classes/String.html#method-i-at
+[String#at]: https://api.zoisite-rb.org/classes/String.html#method-i-at
 
 #### `from(position)`
 
@@ -1408,7 +1408,7 @@ The [`from`][String#from] method returns the substring of the string starting at
 
 NOTE: Defined in `active_support/core_ext/string/access.rb`.
 
-[String#from]: https://api.rubyonrails.org/classes/String.html#method-i-from
+[String#from]: https://api.zoisite-rb.org/classes/String.html#method-i-from
 
 #### `to(position)`
 
@@ -1423,7 +1423,7 @@ The [`to`][String#to] method returns the substring of the string up to position 
 
 NOTE: Defined in `active_support/core_ext/string/access.rb`.
 
-[String#to]: https://api.rubyonrails.org/classes/String.html#method-i-to
+[String#to]: https://api.zoisite-rb.org/classes/String.html#method-i-to
 
 #### `first(limit = 1)`
 
@@ -1433,7 +1433,7 @@ The call `str.first(n)` is equivalent to `str.to(n-1)` if `n` > 0, and returns a
 
 NOTE: Defined in `active_support/core_ext/string/access.rb`.
 
-[String#first]: https://api.rubyonrails.org/classes/String.html#method-i-first
+[String#first]: https://api.zoisite-rb.org/classes/String.html#method-i-first
 
 #### `last(limit = 1)`
 
@@ -1443,7 +1443,7 @@ The call `str.last(n)` is equivalent to `str.from(-n)` if `n` > 0, and returns a
 
 NOTE: Defined in `active_support/core_ext/string/access.rb`.
 
-[String#last]: https://api.rubyonrails.org/classes/String.html#method-i-last
+[String#last]: https://api.zoisite-rb.org/classes/String.html#method-i-last
 
 ### Inflections
 
@@ -1457,7 +1457,7 @@ The method [`pluralize`][String#pluralize] returns the plural of its receiver:
 "equipment".pluralize # => "equipment"
 ```
 
-As the previous example shows, Active Support knows some irregular plurals and uncountable nouns. Built-in rules can be extended in `config/initializers/inflections.rb`. This file is generated by default, by the `rails new` command and has instructions in comments.
+As the previous example shows, Active Support knows some irregular plurals and uncountable nouns. Built-in rules can be extended in `config/initializers/inflections.rb`. This file is generated by default, by the `zoisite new` command and has instructions in comments.
 
 `pluralize` can also take an optional `count` parameter. If `count == 1` the singular form will be returned. For any other value of `count` the plural form will be returned:
 
@@ -1479,7 +1479,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#pluralize]: https://api.rubyonrails.org/classes/String.html#method-i-pluralize
+[String#pluralize]: https://api.zoisite-rb.org/classes/String.html#method-i-pluralize
 
 #### `singularize`
 
@@ -1504,7 +1504,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#singularize]: https://api.rubyonrails.org/classes/String.html#method-i-singularize
+[String#singularize]: https://api.zoisite-rb.org/classes/String.html#method-i-singularize
 
 #### `camelize`
 
@@ -1554,8 +1554,8 @@ end
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#camelcase]: https://api.rubyonrails.org/classes/String.html#method-i-camelcase
-[String#camelize]: https://api.rubyonrails.org/classes/String.html#method-i-camelize
+[String#camelcase]: https://api.zoisite-rb.org/classes/String.html#method-i-camelcase
+[String#camelize]: https://api.zoisite-rb.org/classes/String.html#method-i-camelize
 
 #### `underscore`
 
@@ -1580,7 +1580,7 @@ and understands strings that start with lowercase:
 
 `underscore` accepts no argument though.
 
-Rails uses `underscore` to get a lowercased name for controller classes:
+Zoisite uses `underscore` to get a lowercased name for controller classes:
 
 ```ruby
 # actionpack/lib/abstract_controller/base.rb
@@ -1595,7 +1595,7 @@ INFO: As a rule of thumb you can think of `underscore` as the inverse of `cameli
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#underscore]: https://api.rubyonrails.org/classes/String.html#method-i-underscore
+[String#underscore]: https://api.zoisite-rb.org/classes/String.html#method-i-underscore
 
 #### `titleize`
 
@@ -1610,8 +1610,8 @@ The method [`titleize`][String#titleize] capitalizes the words in the receiver:
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#titlecase]: https://api.rubyonrails.org/classes/String.html#method-i-titlecase
-[String#titleize]: https://api.rubyonrails.org/classes/String.html#method-i-titleize
+[String#titlecase]: https://api.zoisite-rb.org/classes/String.html#method-i-titlecase
+[String#titleize]: https://api.zoisite-rb.org/classes/String.html#method-i-titleize
 
 #### `dasherize`
 
@@ -1634,7 +1634,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#dasherize]: https://api.rubyonrails.org/classes/String.html#method-i-dasherize
+[String#dasherize]: https://api.zoisite-rb.org/classes/String.html#method-i-dasherize
 
 #### `demodulize`
 
@@ -1663,7 +1663,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#demodulize]: https://api.rubyonrails.org/classes/String.html#method-i-demodulize
+[String#demodulize]: https://api.zoisite-rb.org/classes/String.html#method-i-demodulize
 
 #### `deconstantize`
 
@@ -1677,7 +1677,7 @@ Given a string with a qualified constant reference expression, [`deconstantize`]
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#deconstantize]: https://api.rubyonrails.org/classes/String.html#method-i-deconstantize
+[String#deconstantize]: https://api.zoisite-rb.org/classes/String.html#method-i-deconstantize
 
 #### `parameterize`
 
@@ -1704,7 +1704,7 @@ To use a custom separator, override the `separator` argument.
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#parameterize]: https://api.rubyonrails.org/classes/String.html#method-i-parameterize
+[String#parameterize]: https://api.zoisite-rb.org/classes/String.html#method-i-parameterize
 
 #### `tableize`
 
@@ -1720,7 +1720,7 @@ As a rule of thumb, `tableize` returns the table name that corresponds to a give
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#tableize]: https://api.rubyonrails.org/classes/String.html#method-i-tableize
+[String#tableize]: https://api.zoisite-rb.org/classes/String.html#method-i-tableize
 
 #### `classify`
 
@@ -1742,7 +1742,7 @@ Note that `classify` returns a class name as a string. You can get the actual cl
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#classify]: https://api.rubyonrails.org/classes/String.html#method-i-classify
+[String#classify]: https://api.zoisite-rb.org/classes/String.html#method-i-classify
 
 #### `constantize`
 
@@ -1787,7 +1787,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#constantize]: https://api.rubyonrails.org/classes/String.html#method-i-constantize
+[String#constantize]: https://api.zoisite-rb.org/classes/String.html#method-i-constantize
 
 #### `humanize`
 
@@ -1837,7 +1837,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#humanize]: https://api.rubyonrails.org/classes/String.html#method-i-humanize
+[String#humanize]: https://api.zoisite-rb.org/classes/String.html#method-i-humanize
 
 #### `foreign_key`
 
@@ -1864,7 +1864,7 @@ foreign_key = options[:foreign_key] || reflection.active_record.name.foreign_key
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#foreign_key]: https://api.rubyonrails.org/classes/String.html#method-i-foreign_key
+[String#foreign_key]: https://api.zoisite-rb.org/classes/String.html#method-i-foreign_key
 
 #### `upcase_first`
 
@@ -1877,7 +1877,7 @@ The method [`upcase_first`][String#upcase_first] capitalizes the first letter of
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#upcase_first]: https://api.rubyonrails.org/classes/String.html#method-i-upcase_first
+[String#upcase_first]: https://api.zoisite-rb.org/classes/String.html#method-i-upcase_first
 
 #### `downcase_first`
 
@@ -1890,7 +1890,7 @@ The method [`downcase_first`][String#downcase_first] converts the first letter o
 
 NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
-[String#downcase_first]: https://api.rubyonrails.org/classes/String.html#method-i-downcase_first
+[String#downcase_first]: https://api.zoisite-rb.org/classes/String.html#method-i-downcase_first
 
 ### Conversions
 
@@ -1919,9 +1919,9 @@ INFO: The three of them return `nil` for blank receivers.
 
 NOTE: Defined in `active_support/core_ext/string/conversions.rb`.
 
-[String#to_date]: https://api.rubyonrails.org/classes/String.html#method-i-to_date
-[String#to_datetime]: https://api.rubyonrails.org/classes/String.html#method-i-to_datetime
-[String#to_time]: https://api.rubyonrails.org/classes/String.html#method-i-to_time
+[String#to_date]: https://api.zoisite-rb.org/classes/String.html#method-i-to_date
+[String#to_datetime]: https://api.zoisite-rb.org/classes/String.html#method-i-to_datetime
+[String#to_time]: https://api.zoisite-rb.org/classes/String.html#method-i-to_time
 
 Extensions to `Symbol`
 ----------------------
@@ -1970,14 +1970,14 @@ Singular forms are aliased so you are able to say:
 
 NOTE: Defined in `active_support/core_ext/numeric/bytes.rb`.
 
-[Numeric#bytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-bytes
-[Numeric#exabytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-exabytes
-[Numeric#gigabytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-gigabytes
-[Numeric#kilobytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-kilobytes
-[Numeric#megabytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-megabytes
-[Numeric#petabytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-petabytes
-[Numeric#terabytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-terabytes
-[Numeric#zettabytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-zettabytes
+[Numeric#bytes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-bytes
+[Numeric#exabytes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-exabytes
+[Numeric#gigabytes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-gigabytes
+[Numeric#kilobytes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-kilobytes
+[Numeric#megabytes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-megabytes
+[Numeric#petabytes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-petabytes
+[Numeric#terabytes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-terabytes
+[Numeric#zettabytes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-zettabytes
 
 ### Time
 
@@ -2009,14 +2009,14 @@ WARNING. For other durations please refer to the time extensions to `Integer`.
 
 NOTE: Defined in `active_support/core_ext/numeric/time.rb`.
 
-[Duration#ago]: https://api.rubyonrails.org/classes/ActiveSupport/Duration.html#method-i-ago
-[Duration#from_now]: https://api.rubyonrails.org/classes/ActiveSupport/Duration.html#method-i-from_now
-[Numeric#days]: https://api.rubyonrails.org/classes/Numeric.html#method-i-days
-[Numeric#fortnights]: https://api.rubyonrails.org/classes/Numeric.html#method-i-fortnights
-[Numeric#hours]: https://api.rubyonrails.org/classes/Numeric.html#method-i-hours
-[Numeric#minutes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-minutes
-[Numeric#seconds]: https://api.rubyonrails.org/classes/Numeric.html#method-i-seconds
-[Numeric#weeks]: https://api.rubyonrails.org/classes/Numeric.html#method-i-weeks
+[Duration#ago]: https://api.zoisite-rb.org/classes/ActiveSupport/Duration.html#method-i-ago
+[Duration#from_now]: https://api.zoisite-rb.org/classes/ActiveSupport/Duration.html#method-i-from_now
+[Numeric#days]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-days
+[Numeric#fortnights]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-fortnights
+[Numeric#hours]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-hours
+[Numeric#minutes]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-minutes
+[Numeric#seconds]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-seconds
+[Numeric#weeks]: https://api.zoisite-rb.org/classes/Numeric.html#method-i-weeks
 
 ### Formatting
 
@@ -2121,7 +2121,7 @@ The method [`multiple_of?`][Integer#multiple_of?] tests whether an integer is mu
 
 NOTE: Defined in `active_support/core_ext/integer/multiple.rb`.
 
-[Integer#multiple_of?]: https://api.rubyonrails.org/classes/Integer.html#method-i-multiple_of-3F
+[Integer#multiple_of?]: https://api.zoisite-rb.org/classes/Integer.html#method-i-multiple_of-3F
 
 ### `ordinal`
 
@@ -2138,7 +2138,7 @@ The method [`ordinal`][Integer#ordinal] returns the ordinal suffix string corres
 
 NOTE: Defined in `active_support/core_ext/integer/inflections.rb`.
 
-[Integer#ordinal]: https://api.rubyonrails.org/classes/Integer.html#method-i-ordinal
+[Integer#ordinal]: https://api.zoisite-rb.org/classes/Integer.html#method-i-ordinal
 
 ### `ordinalize`
 
@@ -2155,7 +2155,7 @@ The method [`ordinalize`][Integer#ordinalize] returns the ordinal string corresp
 
 NOTE: Defined in `active_support/core_ext/integer/inflections.rb`.
 
-[Integer#ordinalize]: https://api.rubyonrails.org/classes/Integer.html#method-i-ordinalize
+[Integer#ordinalize]: https://api.zoisite-rb.org/classes/Integer.html#method-i-ordinalize
 
 ### Time
 
@@ -2183,8 +2183,8 @@ WARNING. For other durations please refer to the time extensions to `Numeric`.
 
 NOTE: Defined in `active_support/core_ext/integer/time.rb`.
 
-[Integer#months]: https://api.rubyonrails.org/classes/Integer.html#method-i-months
-[Integer#years]: https://api.rubyonrails.org/classes/Integer.html#method-i-years
+[Integer#months]: https://api.zoisite-rb.org/classes/Integer.html#method-i-months
+[Integer#years]: https://api.zoisite-rb.org/classes/Integer.html#method-i-years
 
 Extensions to `BigDecimal`
 --------------------------
@@ -2221,7 +2221,7 @@ WARNING. Keys should normally be unique. If the block returns the same value for
 
 NOTE: Defined in `active_support/core_ext/enumerable.rb`.
 
-[Enumerable#index_by]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-index_by
+[Enumerable#index_by]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-index_by
 
 ### `index_with`
 
@@ -2240,7 +2240,7 @@ WEEKDAYS.index_with(Interval.all_day)
 
 NOTE: Defined in `active_support/core_ext/enumerable.rb`.
 
-[Enumerable#index_with]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-index_with
+[Enumerable#index_with]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-index_with
 
 ### `many?`
 
@@ -2260,7 +2260,7 @@ If an optional block is given, `many?` only takes into account those elements th
 
 NOTE: Defined in `active_support/core_ext/enumerable.rb`.
 
-[Enumerable#many?]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-many-3F
+[Enumerable#many?]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-many-3F
 
 ### `exclude?`
 
@@ -2272,7 +2272,7 @@ to_visit << node if visited.exclude?(node)
 
 NOTE: Defined in `active_support/core_ext/enumerable.rb`.
 
-[Enumerable#exclude?]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-exclude-3F
+[Enumerable#exclude?]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-exclude-3F
 
 ### `including`
 
@@ -2285,7 +2285,7 @@ The method [`including`][Enumerable#including] returns a new enumerable that inc
 
 NOTE: Defined in `active_support/core_ext/enumerable.rb`.
 
-[Enumerable#including]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-including
+[Enumerable#including]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-including
 
 ### `excluding`
 
@@ -2300,8 +2300,8 @@ removed:
 
 NOTE: Defined in `active_support/core_ext/enumerable.rb`.
 
-[Enumerable#excluding]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-excluding
-[Enumerable#without]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-without
+[Enumerable#excluding]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-excluding
+[Enumerable#without]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-without
 
 ### `pluck`
 
@@ -2314,7 +2314,7 @@ The method [`pluck`][Enumerable#pluck] extracts the given key from each element:
 
 NOTE: Defined in `active_support/core_ext/enumerable.rb`.
 
-[Enumerable#pluck]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pluck
+[Enumerable#pluck]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-pluck
 
 ### `pick`
 
@@ -2327,7 +2327,7 @@ The method [`pick`][Enumerable#pick] extracts the given key from the first eleme
 
 NOTE: Defined in `active_support/core_ext/enumerable.rb`.
 
-[Enumerable#pick]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pick
+[Enumerable#pick]: https://api.zoisite-rb.org/classes/Enumerable.html#method-i-pick
 
 Extensions to `Array`
 ---------------------
@@ -2374,17 +2374,17 @@ The methods [`second`][Array#second], [`third`][Array#third], [`fourth`][Array#f
 
 NOTE: Defined in `active_support/core_ext/array/access.rb`.
 
-[Array#excluding]: https://api.rubyonrails.org/classes/Array.html#method-i-excluding
-[Array#fifth]: https://api.rubyonrails.org/classes/Array.html#method-i-fifth
-[Array#forty_two]: https://api.rubyonrails.org/classes/Array.html#method-i-forty_two
-[Array#fourth]: https://api.rubyonrails.org/classes/Array.html#method-i-fourth
-[Array#from]: https://api.rubyonrails.org/classes/Array.html#method-i-from
-[Array#including]: https://api.rubyonrails.org/classes/Array.html#method-i-including
-[Array#second]: https://api.rubyonrails.org/classes/Array.html#method-i-second
-[Array#second_to_last]: https://api.rubyonrails.org/classes/Array.html#method-i-second_to_last
-[Array#third]: https://api.rubyonrails.org/classes/Array.html#method-i-third
-[Array#third_to_last]: https://api.rubyonrails.org/classes/Array.html#method-i-third_to_last
-[Array#to]: https://api.rubyonrails.org/classes/Array.html#method-i-to
+[Array#excluding]: https://api.zoisite-rb.org/classes/Array.html#method-i-excluding
+[Array#fifth]: https://api.zoisite-rb.org/classes/Array.html#method-i-fifth
+[Array#forty_two]: https://api.zoisite-rb.org/classes/Array.html#method-i-forty_two
+[Array#fourth]: https://api.zoisite-rb.org/classes/Array.html#method-i-fourth
+[Array#from]: https://api.zoisite-rb.org/classes/Array.html#method-i-from
+[Array#including]: https://api.zoisite-rb.org/classes/Array.html#method-i-including
+[Array#second]: https://api.zoisite-rb.org/classes/Array.html#method-i-second
+[Array#second_to_last]: https://api.zoisite-rb.org/classes/Array.html#method-i-second_to_last
+[Array#third]: https://api.zoisite-rb.org/classes/Array.html#method-i-third
+[Array#third_to_last]: https://api.zoisite-rb.org/classes/Array.html#method-i-third_to_last
+[Array#to]: https://api.zoisite-rb.org/classes/Array.html#method-i-to
 
 ### Extracting
 
@@ -2399,7 +2399,7 @@ numbers # => [0, 2, 4, 6, 8]
 
 NOTE: Defined in `active_support/core_ext/array/extract.rb`.
 
-[Array#extract!]: https://api.rubyonrails.org/classes/Array.html#method-i-extract-21
+[Array#extract!]: https://api.zoisite-rb.org/classes/Array.html#method-i-extract-21
 
 ### Options Extraction
 
@@ -2409,7 +2409,7 @@ When the last argument in a method call is a hash, except perhaps for a `&block`
 User.exists?(email: params[:email])
 ```
 
-That syntactic sugar is used a lot in Rails to avoid positional arguments where there would be too many, offering instead interfaces that emulate named parameters. In particular it is very idiomatic to use a trailing hash for options.
+That syntactic sugar is used a lot in Zoisite to avoid positional arguments where there would be too many, offering instead interfaces that emulate named parameters. In particular it is very idiomatic to use a trailing hash for options.
 
 If a method expects a variable number of arguments and uses `*` in its declaration, however, such an options hash ends up being an item of the array of arguments, where it loses its role.
 
@@ -2429,7 +2429,7 @@ This method receives an arbitrary number of action names, and an optional hash o
 
 NOTE: Defined in `active_support/core_ext/array/extract_options.rb`.
 
-[Array#extract_options!]: https://api.rubyonrails.org/classes/Array.html#method-i-extract_options-21
+[Array#extract_options!]: https://api.zoisite-rb.org/classes/Array.html#method-i-extract_options-21
 
 ### Conversions
 
@@ -2460,7 +2460,7 @@ The defaults for these options can be localized, their keys are:
 
 NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
 
-[Array#to_sentence]: https://api.rubyonrails.org/classes/Array.html#method-i-to_sentence
+[Array#to_sentence]: https://api.zoisite-rb.org/classes/Array.html#method-i-to_sentence
 
 #### `to_fs`
 
@@ -2480,7 +2480,7 @@ Integers in the example above are supposed to come from the respective calls to 
 
 NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
 
-[Array#to_fs]: https://api.rubyonrails.org/classes/Array.html#method-i-to_fs
+[Array#to_fs]: https://api.zoisite-rb.org/classes/Array.html#method-i-to_fs
 
 #### `to_xml`
 
@@ -2583,7 +2583,7 @@ Contributor.limit(2).order(:rank).to_xml(skip_types: true)
 
 NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
 
-[Array#to_xml]: https://api.rubyonrails.org/classes/Array.html#method-i-to_xml
+[Array#to_xml]: https://api.zoisite-rb.org/classes/Array.html#method-i-to_xml
 
 ### Wrapping
 
@@ -2622,7 +2622,7 @@ There's also a related idiom that uses the splat operator:
 
 NOTE: Defined in `active_support/core_ext/array/wrap.rb`.
 
-[Array.wrap]: https://api.rubyonrails.org/classes/Array.html#method-c-wrap
+[Array.wrap]: https://api.zoisite-rb.org/classes/Array.html#method-c-wrap
 
 ### Duplicating
 
@@ -2638,7 +2638,7 @@ array[1][2] == nil   # => true
 
 NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
 
-[Array#deep_dup]: https://api.rubyonrails.org/classes/Array.html#method-i-deep_dup
+[Array#deep_dup]: https://api.zoisite-rb.org/classes/Array.html#method-i-deep_dup
 
 ### Grouping
 
@@ -2678,7 +2678,7 @@ As a consequence `false` can't be used as a padding value.
 
 NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
 
-[Array#in_groups_of]: https://api.rubyonrails.org/classes/Array.html#method-i-in_groups_of
+[Array#in_groups_of]: https://api.zoisite-rb.org/classes/Array.html#method-i-in_groups_of
 
 #### `in_groups(number, fill_with = nil)`
 
@@ -2718,7 +2718,7 @@ As a consequence `false` can't be used as a padding value.
 
 NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
 
-[Array#in_groups]: https://api.rubyonrails.org/classes/Array.html#method-i-in_groups
+[Array#in_groups]: https://api.zoisite-rb.org/classes/Array.html#method-i-in_groups
 
 #### `split(value = nil)`
 
@@ -2742,7 +2742,7 @@ TIP: Observe in the previous example that consecutive separators result in empty
 
 NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
 
-[Array#split]: https://api.rubyonrails.org/classes/Array.html#method-i-split
+[Array#split]: https://api.zoisite-rb.org/classes/Array.html#method-i-split
 
 Extensions to `Hash`
 --------------------
@@ -2795,7 +2795,7 @@ The default XML builder is a fresh instance of `Builder::XmlMarkup`. You can con
 
 NOTE: Defined in `active_support/core_ext/hash/conversions.rb`.
 
-[Hash#to_xml]: https://api.rubyonrails.org/classes/Hash.html#method-i-to_xml
+[Hash#to_xml]: https://api.zoisite-rb.org/classes/Hash.html#method-i-to_xml
 
 ### Merging
 
@@ -2832,8 +2832,8 @@ WARNING. Take into account that `reverse_merge!` may change the hash in the call
 
 NOTE: Defined in `active_support/core_ext/hash/reverse_merge.rb`.
 
-[Hash#reverse_merge!]: https://api.rubyonrails.org/classes/Hash.html#method-i-reverse_merge-21
-[Hash#reverse_merge]: https://api.rubyonrails.org/classes/Hash.html#method-i-reverse_merge
+[Hash#reverse_merge!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-reverse_merge-21
+[Hash#reverse_merge]: https://api.zoisite-rb.org/classes/Hash.html#method-i-reverse_merge
 
 #### `reverse_update`
 
@@ -2843,7 +2843,7 @@ WARNING. Note that `reverse_update` has no bang.
 
 NOTE: Defined in `active_support/core_ext/hash/reverse_merge.rb`.
 
-[Hash#reverse_update]: https://api.rubyonrails.org/classes/Hash.html#method-i-reverse_update
+[Hash#reverse_update]: https://api.zoisite-rb.org/classes/Hash.html#method-i-reverse_update
 
 #### `deep_merge` and `deep_merge!`
 
@@ -2860,8 +2860,8 @@ The method [`deep_merge!`][Hash#deep_merge!] performs a deep merge in place.
 
 NOTE: Defined in `active_support/core_ext/hash/deep_merge.rb`.
 
-[Hash#deep_merge!]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_merge-21
-[Hash#deep_merge]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_merge
+[Hash#deep_merge!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_merge-21
+[Hash#deep_merge]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_merge
 
 ### Deep Duplicating
 
@@ -2881,7 +2881,7 @@ hash[:b][:d] == [3, 4]   # => true
 
 NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
 
-[Hash#deep_dup]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_dup
+[Hash#deep_dup]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_dup
 
 ### Working with Keys
 
@@ -2903,7 +2903,7 @@ If the receiver responds to `convert_key`, the method is called on each of the a
 
 NOTE: Defined in `active_support/core_ext/hash/except.rb`.
 
-[Hash#except!]: https://api.rubyonrails.org/classes/Hash.html#method-i-except-21
+[Hash#except!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-except-21
 
 #### `stringify_keys` and `stringify_keys!`
 
@@ -2945,10 +2945,10 @@ Besides that, one can use [`deep_stringify_keys`][Hash#deep_stringify_keys] and 
 
 NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
 
-[Hash#deep_stringify_keys!]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_stringify_keys-21
-[Hash#deep_stringify_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_stringify_keys
-[Hash#stringify_keys!]: https://api.rubyonrails.org/classes/Hash.html#method-i-stringify_keys-21
-[Hash#stringify_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-stringify_keys
+[Hash#deep_stringify_keys!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_stringify_keys-21
+[Hash#deep_stringify_keys]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_stringify_keys
+[Hash#stringify_keys!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-stringify_keys-21
+[Hash#stringify_keys]: https://api.zoisite-rb.org/classes/Hash.html#method-i-stringify_keys
 
 #### `symbolize_keys` and `symbolize_keys!`
 
@@ -2992,10 +2992,10 @@ Besides that, one can use [`deep_symbolize_keys`][Hash#deep_symbolize_keys] and 
 
 NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
 
-[Hash#deep_symbolize_keys!]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_symbolize_keys-21
-[Hash#deep_symbolize_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_symbolize_keys
-[Hash#symbolize_keys!]: https://api.rubyonrails.org/classes/Hash.html#method-i-symbolize_keys-21
-[Hash#symbolize_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-symbolize_keys
+[Hash#deep_symbolize_keys!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_symbolize_keys-21
+[Hash#deep_symbolize_keys]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_symbolize_keys
+[Hash#symbolize_keys!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-symbolize_keys-21
+[Hash#symbolize_keys]: https://api.zoisite-rb.org/classes/Hash.html#method-i-symbolize_keys
 
 #### `to_options` and `to_options!`
 
@@ -3003,8 +3003,8 @@ The methods [`to_options`][Hash#to_options] and [`to_options!`][Hash#to_options!
 
 NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
 
-[Hash#to_options!]: https://api.rubyonrails.org/classes/Hash.html#method-i-to_options-21
-[Hash#to_options]: https://api.rubyonrails.org/classes/Hash.html#method-i-to_options
+[Hash#to_options!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-to_options-21
+[Hash#to_options]: https://api.zoisite-rb.org/classes/Hash.html#method-i-to_options
 
 #### `assert_valid_keys`
 
@@ -3019,7 +3019,7 @@ Active Record does not accept unknown options when building associations, for ex
 
 NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
 
-[Hash#assert_valid_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-assert_valid_keys
+[Hash#assert_valid_keys]: https://api.zoisite-rb.org/classes/Hash.html#method-i-assert_valid_keys
 
 ### Working with Values
 
@@ -3038,8 +3038,8 @@ There's also the bang variant [`deep_transform_values!`][Hash#deep_transform_val
 
 NOTE: Defined in `active_support/core_ext/hash/deep_transform_values.rb`.
 
-[Hash#deep_transform_values!]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_transform_values-21
-[Hash#deep_transform_values]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_transform_values
+[Hash#deep_transform_values!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_transform_values-21
+[Hash#deep_transform_values]: https://api.zoisite-rb.org/classes/Hash.html#method-i-deep_transform_values
 
 ### Slicing
 
@@ -3053,7 +3053,7 @@ hash                   # => {:a=>1}
 
 NOTE: Defined in `active_support/core_ext/hash/slice.rb`.
 
-[Hash#slice!]: https://api.rubyonrails.org/classes/Hash.html#method-i-slice-21
+[Hash#slice!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-slice-21
 
 ### Extracting
 
@@ -3075,7 +3075,7 @@ rest = hash.extract!(:a).class
 
 NOTE: Defined in `active_support/core_ext/hash/slice.rb`.
 
-[Hash#extract!]: https://api.rubyonrails.org/classes/Hash.html#method-i-extract-21
+[Hash#extract!]: https://api.zoisite-rb.org/classes/Hash.html#method-i-extract-21
 
 ### Indifferent Access
 
@@ -3087,8 +3087,8 @@ The method [`with_indifferent_access`][Hash#with_indifferent_access] returns an 
 
 NOTE: Defined in `active_support/core_ext/hash/indifferent_access.rb`.
 
-[ActiveSupport::HashWithIndifferentAccess]: https://api.rubyonrails.org/classes/ActiveSupport/HashWithIndifferentAccess.html
-[Hash#with_indifferent_access]: https://api.rubyonrails.org/classes/Hash.html#method-i-with_indifferent_access
+[ActiveSupport::HashWithIndifferentAccess]: https://api.zoisite-rb.org/classes/ActiveSupport/HashWithIndifferentAccess.html
+[Hash#with_indifferent_access]: https://api.zoisite-rb.org/classes/Hash.html#method-i-with_indifferent_access
 
 Extensions to `Regexp`
 ----------------------
@@ -3105,7 +3105,7 @@ Regexp.new(".").multiline?                    # => false
 Regexp.new(".", Regexp::MULTILINE).multiline? # => true
 ```
 
-Rails uses this method in a single place, also in the routing code. Multiline regexps are disallowed for route requirements and this flag eases enforcing that constraint.
+Zoisite uses this method in a single place, also in the routing code. Multiline regexps are disallowed for route requirements and this flag eases enforcing that constraint.
 
 ```ruby
 def verify_regexp_requirements(requirements)
@@ -3119,7 +3119,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/regexp.rb`.
 
-[Regexp#multiline?]: https://api.rubyonrails.org/classes/Regexp.html#method-i-multiline-3F
+[Regexp#multiline?]: https://api.zoisite-rb.org/classes/Regexp.html#method-i-multiline-3F
 
 Extensions to `Range`
 ---------------------
@@ -3176,7 +3176,7 @@ The method [`Range#overlap?`][Range#overlap?] says whether any two given ranges 
 
 NOTE: Defined in `active_support/core_ext/range/overlap.rb`.
 
-[Range#overlap?]: https://api.rubyonrails.org/classes/Range.html#method-i-overlaps-3F
+[Range#overlap?]: https://api.zoisite-rb.org/classes/Range.html#method-i-overlaps-3F
 
 Extensions to `Date`
 --------------------
@@ -3193,13 +3193,13 @@ When making Date comparisons using methods which honor the user time zone, make 
 
 NOTE: Defined in `active_support/core_ext/date/calculations.rb`.
 
-[Date.current]: https://api.rubyonrails.org/classes/Date.html#method-c-current
-[Date.tomorrow]: https://api.rubyonrails.org/classes/Date.html#method-c-tomorrow
-[Date.yesterday]: https://api.rubyonrails.org/classes/Date.html#method-c-yesterday
-[DateAndTime::Calculations#future?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-future-3F
-[DateAndTime::Calculations#on_weekday?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-on_weekday-3F
-[DateAndTime::Calculations#on_weekend?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-on_weekend-3F
-[DateAndTime::Calculations#past?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-past-3F
+[Date.current]: https://api.zoisite-rb.org/classes/Date.html#method-c-current
+[Date.tomorrow]: https://api.zoisite-rb.org/classes/Date.html#method-c-tomorrow
+[Date.yesterday]: https://api.zoisite-rb.org/classes/Date.html#method-c-yesterday
+[DateAndTime::Calculations#future?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-future-3F
+[DateAndTime::Calculations#on_weekday?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-on_weekday-3F
+[DateAndTime::Calculations#on_weekend?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-on_weekend-3F
+[DateAndTime::Calculations#past?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-past-3F
 
 #### Named Dates
 
@@ -3223,10 +3223,10 @@ d.end_of_week(:sunday)       # => Sat, 08 May 2010
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
 [`config.beginning_of_week`]: configuring.html#config-beginning-of-week
-[DateAndTime::Calculations#at_beginning_of_week]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-at_beginning_of_week
-[DateAndTime::Calculations#at_end_of_week]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-at_end_of_week
-[DateAndTime::Calculations#beginning_of_week]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-beginning_of_week
-[DateAndTime::Calculations#end_of_week]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-end_of_week
+[DateAndTime::Calculations#at_beginning_of_week]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-at_beginning_of_week
+[DateAndTime::Calculations#at_end_of_week]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-at_end_of_week
+[DateAndTime::Calculations#beginning_of_week]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-beginning_of_week
+[DateAndTime::Calculations#end_of_week]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-end_of_week
 
 ##### `monday`, `sunday`
 
@@ -3247,8 +3247,8 @@ d.sunday                     # => Sun, 16 Sep 2012
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#monday]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-monday
-[DateAndTime::Calculations#sunday]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-sunday
+[DateAndTime::Calculations#monday]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-monday
+[DateAndTime::Calculations#sunday]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-sunday
 
 ##### `prev_week`, `next_week`
 
@@ -3274,10 +3274,10 @@ Both `next_week` and `prev_week` work as expected when `Date.beginning_of_week` 
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[Date.beginning_of_week]: https://api.rubyonrails.org/classes/Date.html#method-c-beginning_of_week
-[DateAndTime::Calculations#last_week]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-last_week
-[DateAndTime::Calculations#next_week]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-next_week
-[DateAndTime::Calculations#prev_week]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-prev_week
+[Date.beginning_of_week]: https://api.zoisite-rb.org/classes/Date.html#method-c-beginning_of_week
+[DateAndTime::Calculations#last_week]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-last_week
+[DateAndTime::Calculations#next_week]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-next_week
+[DateAndTime::Calculations#prev_week]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-prev_week
 
 ##### `beginning_of_month`, `end_of_month`
 
@@ -3293,10 +3293,10 @@ d.end_of_month           # => Mon, 31 May 2010
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#at_beginning_of_month]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-at_beginning_of_month
-[DateAndTime::Calculations#at_end_of_month]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-at_end_of_month
-[DateAndTime::Calculations#beginning_of_month]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-beginning_of_month
-[DateAndTime::Calculations#end_of_month]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-end_of_month
+[DateAndTime::Calculations#at_beginning_of_month]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-at_beginning_of_month
+[DateAndTime::Calculations#at_end_of_month]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-at_end_of_month
+[DateAndTime::Calculations#beginning_of_month]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-beginning_of_month
+[DateAndTime::Calculations#end_of_month]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-end_of_month
 
 ##### `quarter`, `beginning_of_quarter`, `end_of_quarter`
 
@@ -3319,11 +3319,11 @@ d.end_of_quarter         # => Wed, 30 Jun 2010
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-quarter
-[DateAndTime::Calculations#at_beginning_of_quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-at_beginning_of_quarter
-[DateAndTime::Calculations#at_end_of_quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-at_end_of_quarter
-[DateAndTime::Calculations#beginning_of_quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-beginning_of_quarter
-[DateAndTime::Calculations#end_of_quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-end_of_quarter
+[DateAndTime::Calculations#quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-quarter
+[DateAndTime::Calculations#at_beginning_of_quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-at_beginning_of_quarter
+[DateAndTime::Calculations#at_end_of_quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-at_end_of_quarter
+[DateAndTime::Calculations#beginning_of_quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-beginning_of_quarter
+[DateAndTime::Calculations#end_of_quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-end_of_quarter
 
 ##### `beginning_of_year`, `end_of_year`
 
@@ -3339,10 +3339,10 @@ d.end_of_year            # => Fri, 31 Dec 2010
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#at_beginning_of_year]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-at_beginning_of_year
-[DateAndTime::Calculations#at_end_of_year]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-at_end_of_year
-[DateAndTime::Calculations#beginning_of_year]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-beginning_of_year
-[DateAndTime::Calculations#end_of_year]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-end_of_year
+[DateAndTime::Calculations#at_beginning_of_year]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-at_beginning_of_year
+[DateAndTime::Calculations#at_end_of_year]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-at_end_of_year
+[DateAndTime::Calculations#beginning_of_year]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-beginning_of_year
+[DateAndTime::Calculations#end_of_year]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-end_of_year
 
 #### Other Date Computations
 
@@ -3373,9 +3373,9 @@ Date.new(2012, 2, 29).years_since(3)   # => Sat, 28 Feb 2015
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#last_year]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-last_year
-[DateAndTime::Calculations#years_ago]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-years_ago
-[DateAndTime::Calculations#years_since]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-years_since
+[DateAndTime::Calculations#last_year]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-last_year
+[DateAndTime::Calculations#years_ago]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-years_ago
+[DateAndTime::Calculations#years_since]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-years_since
 
 ##### `months_ago`, `months_since`
 
@@ -3397,9 +3397,9 @@ Date.new(2009, 12, 31).months_since(2) # => Sun, 28 Feb 2010
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#last_month]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-last_month
-[DateAndTime::Calculations#months_ago]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-months_ago
-[DateAndTime::Calculations#months_since]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-months_since
+[DateAndTime::Calculations#last_month]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-last_month
+[DateAndTime::Calculations#months_ago]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-months_ago
+[DateAndTime::Calculations#months_since]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-months_since
 
 ##### `weeks_ago`, `weeks_since`
 
@@ -3412,8 +3412,8 @@ Date.new(2010, 5, 24).weeks_since(2) # => Mon, 07 Jun 2010
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#weeks_ago]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-weeks_ago
-[DateAndTime::Calculations#weeks_since]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-weeks_since
+[DateAndTime::Calculations#weeks_ago]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-weeks_ago
+[DateAndTime::Calculations#weeks_since]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-weeks_since
 
 ##### `advance`
 
@@ -3429,7 +3429,7 @@ Note in the previous example that increments may be negative.
 
 NOTE: Defined in `active_support/core_ext/date/calculations.rb`.
 
-[Date#advance]: https://api.rubyonrails.org/classes/Date.html#method-i-advance
+[Date#advance]: https://api.zoisite-rb.org/classes/Date.html#method-i-advance
 
 #### Changing Components
 
@@ -3449,7 +3449,7 @@ Date.new(2010, 1, 31).change(month: 2)
 
 NOTE: Defined in `active_support/core_ext/date/calculations.rb`.
 
-[Date#change]: https://api.rubyonrails.org/classes/Date.html#method-i-change
+[Date#change]: https://api.zoisite-rb.org/classes/Date.html#method-i-change
 
 #### Durations
 
@@ -3471,7 +3471,7 @@ Date.new(1582, 10, 4) + 1.day
 # => Fri, 15 Oct 1582
 ```
 
-[ActiveSupport::Duration]: https://api.rubyonrails.org/classes/ActiveSupport/Duration.html
+[ActiveSupport::Duration]: https://api.zoisite-rb.org/classes/ActiveSupport/Duration.html
 
 #### Timestamps
 
@@ -3497,11 +3497,11 @@ date.end_of_day # => Mon Jun 07 23:59:59 +0200 2010
 
 NOTE: Defined in `active_support/core_ext/date/calculations.rb`.
 
-[Date#at_beginning_of_day]: https://api.rubyonrails.org/classes/Date.html#method-i-at_beginning_of_day
-[Date#at_midnight]: https://api.rubyonrails.org/classes/Date.html#method-i-at_midnight
-[Date#beginning_of_day]: https://api.rubyonrails.org/classes/Date.html#method-i-beginning_of_day
-[Date#end_of_day]: https://api.rubyonrails.org/classes/Date.html#method-i-end_of_day
-[Date#midnight]: https://api.rubyonrails.org/classes/Date.html#method-i-midnight
+[Date#at_beginning_of_day]: https://api.zoisite-rb.org/classes/Date.html#method-i-at_beginning_of_day
+[Date#at_midnight]: https://api.zoisite-rb.org/classes/Date.html#method-i-at_midnight
+[Date#beginning_of_day]: https://api.zoisite-rb.org/classes/Date.html#method-i-beginning_of_day
+[Date#end_of_day]: https://api.zoisite-rb.org/classes/Date.html#method-i-end_of_day
+[Date#midnight]: https://api.zoisite-rb.org/classes/Date.html#method-i-midnight
 
 ##### `beginning_of_hour`, `end_of_hour`
 
@@ -3545,9 +3545,9 @@ INFO: `beginning_of_hour`, `end_of_hour`, `beginning_of_minute`, and `end_of_min
 
 NOTE: Defined in `active_support/core_ext/date_time/calculations.rb`.
 
-[DateTime#at_beginning_of_minute]: https://api.rubyonrails.org/classes/DateTime.html#method-i-at_beginning_of_minute
-[DateTime#beginning_of_minute]: https://api.rubyonrails.org/classes/DateTime.html#method-i-beginning_of_minute
-[DateTime#end_of_minute]: https://api.rubyonrails.org/classes/DateTime.html#method-i-end_of_minute
+[DateTime#at_beginning_of_minute]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-at_beginning_of_minute
+[DateTime#beginning_of_minute]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-beginning_of_minute
+[DateTime#end_of_minute]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-end_of_minute
 
 ##### `ago`, `since`
 
@@ -3567,8 +3567,8 @@ date.since(1)       # => Fri, 11 Jun 2010 00:00:01 EDT -04:00
 
 NOTE: Defined in `active_support/core_ext/date/calculations.rb`.
 
-[Date#ago]: https://api.rubyonrails.org/classes/Date.html#method-i-ago
-[Date#since]: https://api.rubyonrails.org/classes/Date.html#method-i-since
+[Date#ago]: https://api.zoisite-rb.org/classes/Date.html#method-i-ago
+[Date#since]: https://api.zoisite-rb.org/classes/Date.html#method-i-since
 
 Extensions to `DateTime`
 ------------------------
@@ -3593,16 +3593,16 @@ The following methods are only implemented in `active_support/core_ext/date_time
 * [`beginning_of_hour`][DateTime#beginning_of_hour] / [`at_beginning_of_hour`][DateTime#at_beginning_of_hour]
 * [`end_of_hour`][DateTime#end_of_hour]
 
-[DateTime#ago]: https://api.rubyonrails.org/classes/DateTime.html#method-i-ago
-[DateTime#at_beginning_of_day]: https://api.rubyonrails.org/classes/DateTime.html#method-i-at_beginning_of_day
-[DateTime#at_beginning_of_hour]: https://api.rubyonrails.org/classes/DateTime.html#method-i-at_beginning_of_hour
-[DateTime#at_midnight]: https://api.rubyonrails.org/classes/DateTime.html#method-i-at_midnight
-[DateTime#beginning_of_day]: https://api.rubyonrails.org/classes/DateTime.html#method-i-beginning_of_day
-[DateTime#beginning_of_hour]: https://api.rubyonrails.org/classes/DateTime.html#method-i-beginning_of_hour
-[DateTime#end_of_day]: https://api.rubyonrails.org/classes/DateTime.html#method-i-end_of_day
-[DateTime#end_of_hour]: https://api.rubyonrails.org/classes/DateTime.html#method-i-end_of_hour
-[DateTime#in]: https://api.rubyonrails.org/classes/DateTime.html#method-i-in
-[DateTime#midnight]: https://api.rubyonrails.org/classes/DateTime.html#method-i-midnight
+[DateTime#ago]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-ago
+[DateTime#at_beginning_of_day]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-at_beginning_of_day
+[DateTime#at_beginning_of_hour]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-at_beginning_of_hour
+[DateTime#at_midnight]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-at_midnight
+[DateTime#beginning_of_day]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-beginning_of_day
+[DateTime#beginning_of_hour]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-beginning_of_hour
+[DateTime#end_of_day]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-end_of_day
+[DateTime#end_of_hour]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-end_of_hour
+[DateTime#in]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-in
+[DateTime#midnight]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-midnight
 
 #### Named Datetimes
 
@@ -3612,7 +3612,7 @@ Active Support defines [`DateTime.current`][DateTime.current] to be like `Time.n
 
 NOTE: Defined in `active_support/core_ext/date_time/calculations.rb`.
 
-[DateTime.current]: https://api.rubyonrails.org/classes/DateTime.html#method-c-current
+[DateTime.current]: https://api.zoisite-rb.org/classes/DateTime.html#method-c-current
 
 #### Other Extensions
 
@@ -3627,7 +3627,7 @@ now.seconds_since_midnight # => 73596
 
 NOTE: Defined in `active_support/core_ext/date_time/calculations.rb`.
 
-[DateTime#seconds_since_midnight]: https://api.rubyonrails.org/classes/DateTime.html#method-i-seconds_since_midnight
+[DateTime#seconds_since_midnight]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-seconds_since_midnight
 
 ##### `utc`
 
@@ -3642,8 +3642,8 @@ This method is also aliased as [`getutc`][DateTime#getutc].
 
 NOTE: Defined in `active_support/core_ext/date_time/calculations.rb`.
 
-[DateTime#getutc]: https://api.rubyonrails.org/classes/DateTime.html#method-i-getutc
-[DateTime#utc]: https://api.rubyonrails.org/classes/DateTime.html#method-i-utc
+[DateTime#getutc]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-getutc
+[DateTime#utc]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-utc
 
 ##### `utc?`
 
@@ -3657,7 +3657,7 @@ now.utc.utc?       # => true
 
 NOTE: Defined in `active_support/core_ext/date_time/calculations.rb`.
 
-[DateTime#utc?]: https://api.rubyonrails.org/classes/DateTime.html#method-i-utc-3F
+[DateTime#utc?]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-utc-3F
 
 ##### `advance`
 
@@ -3692,8 +3692,8 @@ WARNING: Since `DateTime` is not DST-aware you can end up in a non-existing poin
 
 NOTE: Defined in `active_support/core_ext/date_time/calculations.rb`.
 
-[DateTime#advance]: https://api.rubyonrails.org/classes/DateTime.html#method-i-advance
-[DateTime#since]: https://api.rubyonrails.org/classes/DateTime.html#method-i-since
+[DateTime#advance]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-advance
+[DateTime#since]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-since
 
 #### Changing Components
 
@@ -3729,7 +3729,7 @@ DateTime.current.change(month: 2, day: 30)
 
 NOTE: Defined in `active_support/core_ext/date_time/calculations.rb`.
 
-[DateTime#change]: https://api.rubyonrails.org/classes/DateTime.html#method-i-change
+[DateTime#change]: https://api.zoisite-rb.org/classes/DateTime.html#method-i-change
 
 #### Durations
 
@@ -3774,9 +3774,9 @@ t.advance(seconds: 1)
 
 * If [`since`][Time#since] or [`ago`][Time#ago] jumps to a time that can't be expressed with `Time` a `DateTime` object is returned instead.
 
-[Time#ago]: https://api.rubyonrails.org/classes/Time.html#method-i-ago
-[Time#change]: https://api.rubyonrails.org/classes/Time.html#method-i-change
-[Time#since]: https://api.rubyonrails.org/classes/Time.html#method-i-since
+[Time#ago]: https://api.zoisite-rb.org/classes/Time.html#method-i-ago
+[Time#change]: https://api.zoisite-rb.org/classes/Time.html#method-i-change
+[Time#since]: https://api.zoisite-rb.org/classes/Time.html#method-i-since
 
 #### `Time.current`
 
@@ -3786,11 +3786,11 @@ When making Time comparisons using methods which honor the user time zone, make 
 
 NOTE: Defined in `active_support/core_ext/time/calculations.rb`.
 
-[DateAndTime::Calculations#next_day?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-next_day-3F
-[DateAndTime::Calculations#prev_day?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-prev_day-3F
-[DateAndTime::Calculations#today?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-today-3F
-[DateAndTime::Calculations#tomorrow?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-tomorrow-3F
-[DateAndTime::Calculations#yesterday?]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-yesterday-3F
+[DateAndTime::Calculations#next_day?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-next_day-3F
+[DateAndTime::Calculations#prev_day?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-prev_day-3F
+[DateAndTime::Calculations#today?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-today-3F
+[DateAndTime::Calculations#tomorrow?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-tomorrow-3F
+[DateAndTime::Calculations#yesterday?]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-yesterday-3F
 
 #### `all_day`, `all_week`, `all_month`, `all_quarter`, and `all_year`
 
@@ -3822,12 +3822,12 @@ now.all_year
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#all_day]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-all_day
-[DateAndTime::Calculations#all_month]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-all_month
-[DateAndTime::Calculations#all_quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-all_quarter
-[DateAndTime::Calculations#all_week]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-all_week
-[DateAndTime::Calculations#all_year]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-all_year
-[Time.current]: https://api.rubyonrails.org/classes/Time.html#method-c-current
+[DateAndTime::Calculations#all_day]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-all_day
+[DateAndTime::Calculations#all_month]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-all_month
+[DateAndTime::Calculations#all_quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-all_quarter
+[DateAndTime::Calculations#all_week]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-all_week
+[DateAndTime::Calculations#all_year]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-all_year
+[Time.current]: https://api.zoisite-rb.org/classes/Time.html#method-c-current
 
 #### `prev_day`, `next_day`
 
@@ -3841,8 +3841,8 @@ t.next_day               # => 2010-05-09 00:00:00 +0900
 
 NOTE: Defined in `active_support/core_ext/time/calculations.rb`.
 
-[Time#next_day]: https://api.rubyonrails.org/classes/Time.html#method-i-next_day
-[Time#prev_day]: https://api.rubyonrails.org/classes/Time.html#method-i-prev_day
+[Time#next_day]: https://api.zoisite-rb.org/classes/Time.html#method-i-next_day
+[Time#prev_day]: https://api.zoisite-rb.org/classes/Time.html#method-i-prev_day
 
 #### `prev_month`, `next_month`
 
@@ -3865,8 +3865,8 @@ Time.new(2000, 1, 31).next_month # => 2000-02-29 00:00:00 +0900
 
 NOTE: Defined in `active_support/core_ext/time/calculations.rb`.
 
-[Time#next_month]: https://api.rubyonrails.org/classes/Time.html#method-i-next_month
-[Time#prev_month]: https://api.rubyonrails.org/classes/Time.html#method-i-prev_month
+[Time#next_month]: https://api.zoisite-rb.org/classes/Time.html#method-i-next_month
+[Time#prev_month]: https://api.zoisite-rb.org/classes/Time.html#method-i-prev_month
 
 #### `prev_year`, `next_year`
 
@@ -3888,8 +3888,8 @@ t.next_year               # => 2001-02-28 00:00:00 +0900
 
 NOTE: Defined in `active_support/core_ext/time/calculations.rb`.
 
-[Time#next_year]: https://api.rubyonrails.org/classes/Time.html#method-i-next_year
-[Time#prev_year]: https://api.rubyonrails.org/classes/Time.html#method-i-prev_year
+[Time#next_year]: https://api.zoisite-rb.org/classes/Time.html#method-i-next_year
+[Time#prev_year]: https://api.zoisite-rb.org/classes/Time.html#method-i-prev_year
 
 #### `prev_quarter`, `next_quarter`
 
@@ -3914,9 +3914,9 @@ Time.local(2000, 11, 31).next_quarter # => 2001-03-01 00:00:00 +0200
 
 NOTE: Defined in `active_support/core_ext/date_and_time/calculations.rb`.
 
-[DateAndTime::Calculations#last_quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-last_quarter
-[DateAndTime::Calculations#next_quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-next_quarter
-[DateAndTime::Calculations#prev_quarter]: https://api.rubyonrails.org/classes/DateAndTime/Calculations.html#method-i-prev_quarter
+[DateAndTime::Calculations#last_quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-last_quarter
+[DateAndTime::Calculations#next_quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-next_quarter
+[DateAndTime::Calculations#prev_quarter]: https://api.zoisite-rb.org/classes/DateAndTime/Calculations.html#method-i-prev_quarter
 
 ### Time Constructors
 
@@ -3980,7 +3980,7 @@ The auxiliary file is written in a standard directory for temporary files, but y
 
 NOTE: Defined in `active_support/core_ext/file/atomic.rb`.
 
-[File.atomic_write]: https://api.rubyonrails.org/classes/File.html#method-c-atomic_write
+[File.atomic_write]: https://api.zoisite-rb.org/classes/File.html#method-c-atomic_write
 
 Extensions to `NameError`
 -------------------------
@@ -3991,7 +3991,7 @@ The name may be given as a symbol or string. A symbol is tested against the bare
 
 TIP: A symbol can represent a fully qualified constant name as in `:"ActiveRecord::Base"`, so the behavior for symbols is defined for convenience, not because it has to be that way technically.
 
-For example, when an action of `ArticlesController` is called Rails tries optimistically to use `ArticlesHelper`. It is OK that the helper module does not exist, so if an exception for that constant name is raised it should be silenced. But it could be the case that `articles_helper.rb` raises a `NameError` due to an actual unknown constant. That should be reraised. The method `missing_name?` provides a way to distinguish both cases:
+For example, when an action of `ArticlesController` is called Zoisite tries optimistically to use `ArticlesHelper`. It is OK that the helper module does not exist, so if an exception for that constant name is raised it should be silenced. But it could be the case that `articles_helper.rb` raises a `NameError` due to an actual unknown constant. That should be reraised. The method `missing_name?` provides a way to distinguish both cases:
 
 ```ruby
 def default_helper_module!
@@ -4007,7 +4007,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/name_error.rb`.
 
-[NameError#missing_name?]: https://api.rubyonrails.org/classes/NameError.html#method-i-missing_name-3F
+[NameError#missing_name?]: https://api.zoisite-rb.org/classes/NameError.html#method-i-missing_name-3F
 
 Extensions to `LoadError`
 -------------------------
@@ -4016,7 +4016,7 @@ Active Support adds [`is_missing?`][LoadError#is_missing?] to `LoadError`.
 
 Given a path name `is_missing?` tests whether the exception was raised due to that particular file (except perhaps for the ".rb" extension).
 
-For example, when an action of `ArticlesController` is called Rails tries to load `articles_helper.rb`, but that file may not exist. That's fine, the helper module is not mandatory so Rails silences a load error. But it could be the case that the helper module does exist and in turn requires another library that is missing. In that case Rails must reraise the exception. The method `is_missing?` provides a way to distinguish both cases:
+For example, when an action of `ArticlesController` is called Zoisite tries to load `articles_helper.rb`, but that file may not exist. That's fine, the helper module is not mandatory so Zoisite silences a load error. But it could be the case that the helper module does exist and in turn requires another library that is missing. In that case Zoisite must reraise the exception. The method `is_missing?` provides a way to distinguish both cases:
 
 ```ruby
 def default_helper_module!
@@ -4032,7 +4032,7 @@ end
 
 NOTE: Defined in `active_support/core_ext/load_error.rb`.
 
-[LoadError#is_missing?]: https://api.rubyonrails.org/classes/LoadError.html#method-i-is_missing-3F
+[LoadError#is_missing?]: https://api.zoisite-rb.org/classes/LoadError.html#method-i-is_missing-3F
 
 Extensions to Pathname
 -------------------------
@@ -4047,4 +4047,4 @@ content = Pathname.new("file").existence&.read
 
 NOTE: Defined in `active_support/core_ext/pathname/existence.rb`.
 
-[Pathname#existence]: https://api.rubyonrails.org/classes/Pathname.html#method-i-existence
+[Pathname#existence]: https://api.zoisite-rb.org/classes/Pathname.html#method-i-existence

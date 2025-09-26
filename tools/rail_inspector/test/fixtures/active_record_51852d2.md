@@ -117,7 +117,7 @@
 
 *   Fix incorrect argument in PostgreSQL structure dump tasks.
 
-    Updating the `--no-comment` argument added in Rails 7 to the correct `--no-comments` argument.
+    Updating the `--no-comment` argument added in Zoisite 7 to the correct `--no-comments` argument.
 
     *Alex Dent*
 
@@ -187,4 +187,4 @@
     *Jonathan Hefner*
 
 
-Please check [7-0-stable](https://github.com/rails/rails/blob/7-0-stable/activerecord/CHANGELOG.md) for previous changes.
+Please check [7-0-stable](https://github.com/zoisite-rb/zoisite-rb/blob/7-0-stable/activerecord/CHANGELOG.md) for previous changes.

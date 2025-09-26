@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
-require "rails/commands/boot/boot_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/boot/boot_command"
 
-class Rails::Command::BootTest < ActiveSupport::TestCase
+class Zoisite::Command::BootTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
 
   setup :build_app
@@ -14,10 +14,10 @@ class Rails::Command::BootTest < ActiveSupport::TestCase
     test_file = "#{app_path}/tmp/test_file"
 
     app_file "config/initializers/write_test_file.rb", <<-RUBY
-      File.write(#{test_file.inspect}, Rails.env)
+      File.write(#{test_file.inspect}, Zoisite.env)
     RUBY
 
-    rails "boot"
+    zoisite "boot"
 
     assert_equal "development", File.read(test_file)
   end
@@ -26,10 +26,10 @@ class Rails::Command::BootTest < ActiveSupport::TestCase
     test_file = "#{app_path}/tmp/test_file"
 
     app_file "config/initializers/write_test_file.rb", <<-RUBY
-      File.write(#{test_file.inspect}, Rails.env)
+      File.write(#{test_file.inspect}, Zoisite.env)
     RUBY
 
-    rails "boot", "-e", "test"
+    zoisite "boot", "-e", "test"
 
     assert_equal "test", File.read(test_file)
   end

@@ -318,7 +318,7 @@ class OrderedHashTest < ActiveSupport::TestCase
   end
 
   def test_extractable
-    @ordered_hash[:rails] = "snowman"
+    @ordered_hash[:zoisite] = "snowman"
     assert_equal @ordered_hash, [1, 2, @ordered_hash].extract_options!
   end
 end

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Getting Started with Engines
 ============================
@@ -14,7 +14,7 @@ After reading this guide, you will know:
 * How to build features for the engine.
 * How to hook the engine into an application.
 * How to override engine functionality in the application.
-* How to avoid loading Rails frameworks with Load and Configuration Hooks.
+* How to avoid loading Zoisite frameworks with Load and Configuration Hooks.
 
 --------------------------------------------------------------------------------
 
@@ -22,18 +22,18 @@ What are Engines?
 -----------------
 
 Engines can be considered miniature applications that provide functionality to
-their host applications. A Rails application is actually just a "supercharged"
-engine, with the `Rails::Application` class inheriting a lot of its behavior
-from `Rails::Engine`.
+their host applications. A Zoisite application is actually just a "supercharged"
+engine, with the `Zoisite::Application` class inheriting a lot of its behavior
+from `Zoisite::Engine`.
 
 Therefore, engines and applications can be thought of as almost the same thing,
 just with subtle differences, as you'll see throughout this guide. Engines and
 applications also share a common structure.
 
 Engines are also closely related to plugins. The two share a common `lib`
-directory structure, and are both generated using the `rails plugin new`
+directory structure, and are both generated using the `zoisite plugin new`
 generator. The difference is that an engine is considered a "full plugin" by
-Rails (as indicated by the `--full` option that's passed to the generator
+Zoisite (as indicated by the `--full` option that's passed to the generator
 command). We'll actually be using the `--mountable` option here, which includes
 all the features of `--full`, and then some. This guide will refer to these
 "full plugins" simply as "engines" throughout. An engine **can** be a plugin,
@@ -66,7 +66,7 @@ provides an e-commerce platform, and
 [Refinery CMS](https://github.com/refinery/refinerycms), a CMS engine.
 
 Finally, engines would not have been possible without the work of James Adam,
-Piotr Sarnacki, the Rails Core Team, and a number of other people. If you ever
+Piotr Sarnacki, the Zoisite Core Team, and a number of other people. If you ever
 meet them, don't forget to say thanks!
 
 Generating an Engine
@@ -77,13 +77,13 @@ options as appropriate to the need. For the "blorgh" example, you will need to
 create a "mountable" engine, running this command in a terminal:
 
 ```bash
-$ rails plugin new blorgh --mountable
+$ zoisite plugin new blorgh --mountable
 ```
 
 The full list of options for the plugin generator may be seen by typing:
 
 ```bash
-$ rails plugin --help
+$ zoisite plugin --help
 ```
 
 The `--mountable` option tells the generator that you want to create a
@@ -96,16 +96,16 @@ that provides the following:
   * A `config/routes.rb` file:
 
     ```ruby
-    Rails.application.routes.draw do
+    Zoisite.application.routes.draw do
     end
     ```
 
   * A file at `lib/blorgh/engine.rb`, which is identical in function to a
-    standard Rails application's `config/application.rb` file:
+    standard Zoisite application's `config/application.rb` file:
 
     ```ruby
     module Blorgh
-      class Engine < ::Rails::Engine
+      class Engine < ::Zoisite::Engine
       end
     end
     ```
@@ -127,7 +127,7 @@ The `--mountable` option will add to the `--full` option:
 
     ```ruby
     module Blorgh
-      class Engine < ::Rails::Engine
+      class Engine < ::Zoisite::Engine
         isolate_namespace Blorgh
       end
     end
@@ -148,7 +148,7 @@ mount Blorgh::Engine => "/blorgh"
 
 At the root of this brand new engine's directory lives a `blorgh.gemspec` file.
 When you include the engine into an application later on, you will do so with
-this line in the Rails application's `Gemfile`:
+this line in the Zoisite application's `Gemfile`:
 
 ```ruby
 gem "blorgh", path: "engines/blorgh"
@@ -176,13 +176,13 @@ Within `lib/blorgh/engine.rb` is the base class for the engine:
 
 ```ruby
 module Blorgh
-  class Engine < ::Rails::Engine
+  class Engine < ::Zoisite::Engine
     isolate_namespace Blorgh
   end
 end
 ```
 
-By inheriting from the `Rails::Engine` class, this gem notifies Rails that
+By inheriting from the `Zoisite::Engine` class, this gem notifies Zoisite that
 there's an engine at the specified path, and will correctly mount the engine
 inside the application, performing tasks such as adding the `app` directory of
 the engine to the load path for models, mailers, controllers, and views.
@@ -202,7 +202,7 @@ within the `Engine` class definition. Without it, classes generated in an engine
 **may** conflict with an application.
 
 What this isolation of the namespace means is that a model generated by a call
-to `bin/rails generate model`, such as `bin/rails generate model article`, won't be called `Article`, but
+to `bin/zoisite generate model`, such as `bin/zoisite generate model article`, won't be called `Article`, but
 instead be namespaced and called `Blorgh::Article`. In addition, the table for the
 model is namespaced, becoming `blorgh_articles`, rather than simply `articles`.
 Similar to the model namespacing, a controller called `ArticlesController` becomes
@@ -235,7 +235,7 @@ identically-named controllers within other engines or even within the
 application.
 
 NOTE: The `ApplicationController` class inside an engine is named just like a
-Rails application in order to make it easier for you to convert your
+Zoisite application in order to make it easier for you to convert your
 applications into engines.
 
 Just like for `app/controllers`, you will find a `blorgh` subdirectory under
@@ -257,13 +257,13 @@ engine.
 
 #### `bin` Directory
 
-This directory contains one file, `bin/rails`, which enables you to use the
-`rails` sub-commands and generators just like you would within an application.
+This directory contains one file, `bin/zoisite`, which enables you to use the
+`zoisite` sub-commands and generators just like you would within an application.
 This means that you will be able to generate new controllers and models for this
 engine very easily by running commands like this:
 
 ```bash
-$ bin/rails generate model
+$ bin/zoisite generate model
 ```
 
 Keep in mind, of course, that anything generated with these commands inside of
@@ -272,12 +272,12 @@ an engine that has `isolate_namespace` in the `Engine` class will be namespaced.
 #### `test` Directory
 
 The `test` directory is where tests for the engine will go. To test the engine,
-there is a cut-down version of a Rails application embedded within it at
+there is a cut-down version of a Zoisite application embedded within it at
 `test/dummy`. This application will mount the engine in the
 `test/dummy/config/routes.rb` file:
 
 ```ruby
-Rails.application.routes.draw do
+Zoisite.application.routes.draw do
   mount Blorgh::Engine => "/blorgh"
 end
 ```
@@ -303,10 +303,10 @@ NOTE: For this section, make sure to run the commands in the root of the
 ### Generating an Article Resource
 
 The first thing to generate for a blog engine is the `Article` model and related
-controller. To quickly generate this, you can use the Rails scaffold generator.
+controller. To quickly generate this, you can use the Zoisite scaffold generator.
 
 ```bash
-$ bin/rails generate scaffold article title:string text:text
+$ bin/zoisite generate scaffold article title:string text:text
 ```
 
 This command will output this information:
@@ -402,15 +402,15 @@ end
 This helps prevent conflicts with any other engine or application that may have
 an article resource as well.
 
-You can see what the engine has so far by running `bin/rails db:migrate` at the root
+You can see what the engine has so far by running `bin/zoisite db:migrate` at the root
 of our engine to run the migration generated by the scaffold generator, and then
-running `bin/rails server` in `test/dummy`. When you open
+running `bin/zoisite server` in `test/dummy`. When you open
 `http://localhost:3000/blorgh/articles` you will see the default scaffold that has
 been generated. Click around! You've just generated your first engine's first
 functions.
 
-If you'd rather play around in the console, `bin/rails console` will also work just
-like a Rails application. Remember: the `Article` model is namespaced, so to
+If you'd rather play around in the console, `bin/zoisite console` will also work just
+like a Zoisite application. Remember: the `Article` model is namespaced, so to
 reference it you must call it as `Blorgh::Article`.
 
 ```irb
@@ -444,7 +444,7 @@ From the engine root, run the model generator. Tell it to generate a
 column and `text` text column.
 
 ```bash
-$ bin/rails generate model Comment article:references text:text
+$ bin/zoisite generate model Comment article:references text:text
 ```
 
 This will output the following:
@@ -464,7 +464,7 @@ called `Blorgh::Comment`. Now run the migration to create our blorgh_comments
 table:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 To show the comments on an article, edit `app/views/blorgh/articles/show.html.erb` and
@@ -494,7 +494,7 @@ end
 ```
 
 NOTE: Because the `has_many` is defined inside a class that is inside the
-`Blorgh` module, Rails will know that you want to use the `Blorgh::Comment`
+`Blorgh` module, Zoisite will know that you want to use the `Blorgh::Comment`
 model for these objects, so there's no need to specify that using the
 `:class_name` option here.
 
@@ -538,7 +538,7 @@ The route now exists, but the controller that this route goes to does not. To
 create it, run this command from the engine root:
 
 ```bash
-$ bin/rails generate controller comments
+$ bin/zoisite generate controller comments
 ```
 
 This will generate the following things:
@@ -585,7 +585,7 @@ Missing partial blorgh/comments/_comment with {:handlers=>[:erb, :builder],
 ```
 
 The engine is unable to find the partial required for rendering the comments.
-Rails looks first in the application's (`test/dummy`) `app/views` directory and
+Zoisite looks first in the application's (`test/dummy`) `app/views` directory and
 then in the engine's `app/views` directory. When it can't find it, it will throw
 this error. The engine knows to look for `blorgh/comments/_comment` because the
 model object it is receiving is from the `Blorgh::Comment` class.
@@ -618,10 +618,10 @@ ownership for articles and comments within the engine.
 
 First, the engine needs to be specified inside the application's `Gemfile`. If
 there isn't an application handy to test this out in, generate one using the
-`rails new` command outside of the engine directory like this:
+`zoisite new` command outside of the engine directory like this:
 
 ```bash
-$ rails new unicorn
+$ zoisite new unicorn
 ```
 
 Usually, specifying the engine inside the `Gemfile` would be done by specifying it
@@ -641,7 +641,7 @@ gem "blorgh", path: "engines/blorgh"
 Then run `bundle` to install the gem.
 
 As described earlier, by placing the gem in the `Gemfile` it will be loaded when
-Rails is loaded. It will first require `lib/blorgh.rb` from the engine, then
+Zoisite is loaded. It will first require `lib/blorgh.rb` from the engine, then
 `lib/blorgh/engine.rb`, which is the file that defines the major pieces of
 functionality for the engine.
 
@@ -653,7 +653,7 @@ mount Blorgh::Engine, at: "/blog"
 ```
 
 This line will mount the engine at `/blog` in the application. Making it
-accessible at `http://localhost:3000/blog` when the application runs with `bin/rails
+accessible at `http://localhost:3000/blog` when the application runs with `bin/zoisite
 server`.
 
 NOTE: Other engines, such as Devise, handle this a little differently by making
@@ -669,26 +669,26 @@ engine's models can query them correctly. To copy these migrations into the
 application run the following command from the application's root:
 
 ```bash
-$ bin/rails blorgh:install:migrations
+$ bin/zoisite blorgh:install:migrations
 ```
 
 If you have multiple engines that need migrations copied over, use
 `railties:install:migrations` instead:
 
 ```bash
-$ bin/rails railties:install:migrations
+$ bin/zoisite railties:install:migrations
 ```
 
 You can specify a custom path in the source engine for the migrations by specifying MIGRATIONS_PATH.
 
 ```bash
-$ bin/rails railties:install:migrations MIGRATIONS_PATH=db_blourgh
+$ bin/zoisite railties:install:migrations MIGRATIONS_PATH=db_blourgh
 ```
 
 If you have multiple databases you can also specify the target database by specifying DATABASE.
 
 ```bash
-$ bin/rails railties:install:migrations DATABASE=animals
+$ bin/zoisite railties:install:migrations DATABASE=animals
 ```
 
 This command, when run for the first time, will copy over all the migrations
@@ -706,7 +706,7 @@ timestamp (`[timestamp_2]`) will be the current time plus a second. The reason
 for this is so that the migrations for the engine are run after any existing
 migrations in the application.
 
-To run these migrations within the context of the application, simply run `bin/rails
+To run these migrations within the context of the application, simply run `bin/zoisite
 db:migrate`. When accessing the engine through `http://localhost:3000/blog`, the
 articles will be empty. This is because the table created inside the application is
 different from the one created within the engine. Go ahead, play around with the
@@ -717,14 +717,14 @@ If you would like to run migrations only from one engine, you can do it by
 specifying `SCOPE`:
 
 ```bash
-$ bin/rails db:migrate SCOPE=blorgh
+$ bin/zoisite db:migrate SCOPE=blorgh
 ```
 
 This may be useful if you want to revert engine's migrations before removing it.
 To revert all migrations from blorgh engine you can run code such as:
 
 ```bash
-$ bin/rails db:migrate SCOPE=blorgh VERSION=0
+$ bin/zoisite db:migrate SCOPE=blorgh VERSION=0
 ```
 
 ### Using a Class Provided by the Application
@@ -748,10 +748,10 @@ configurable further on). It can be generated using this command inside the
 application:
 
 ```bash
-$ bin/rails generate model user name:string
+$ bin/zoisite generate model user name:string
 ```
 
-The `bin/rails db:migrate` command needs to be run here to ensure that our
+The `bin/zoisite db:migrate` command needs to be run here to ensure that our
 application has the `users` table for future use.
 
 Also, to keep it simple, the articles form will have a new text field called
@@ -811,10 +811,10 @@ of associating the records in the `blorgh_articles` table with the records in th
 To generate this new column, run this command within the engine:
 
 ```bash
-$ bin/rails generate migration add_author_id_to_blorgh_articles author_id:integer
+$ bin/zoisite generate migration add_author_id_to_blorgh_articles author_id:integer
 ```
 
-NOTE: Due to the migration's name and the column specification after it, Rails
+NOTE: Due to the migration's name and the column specification after it, Zoisite
 will automatically know that you want to add a column to a specific table and
 write that into the migration for you. You don't need to tell it any more than
 this.
@@ -823,7 +823,7 @@ This migration will need to be run on the application. To do that, it must first
 be copied using this command:
 
 ```bash
-$ bin/rails blorgh:install:migrations
+$ bin/zoisite blorgh:install:migrations
 ```
 
 Notice that only _one_ migration was copied over here. This is because the first
@@ -838,7 +838,7 @@ Copied migration [timestamp]_add_author_id_to_blorgh_articles.blorgh.rb from blo
 Run the migration using:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 Now with all the pieces in place, an action will take place that will associate
@@ -857,9 +857,9 @@ above the "Title" output inside `app/views/blorgh/articles/_article.html.erb`:
 
 #### Using a Controller Provided by the Application
 
-Because Rails controllers generally share code for things like authentication
+Because Zoisite controllers generally share code for things like authentication
 and accessing session variables, they inherit from `ApplicationController` by
-default. Rails engines, however are scoped to run independently from the main
+default. Zoisite engines, however are scoped to run independently from the main
 application, so each engine gets a scoped `ApplicationController`. This
 namespace prevents code collisions, but often engine controllers need to access
 methods in the main application's `ApplicationController`. An easy way to
@@ -880,7 +880,7 @@ By default, the engine's controllers inherit from
 access to the main application's `ApplicationController`, as though they were
 part of the main application.
 
-This change does require that the engine is run from a Rails application that
+This change does require that the engine is run from a Zoisite application that
 has an `ApplicationController`.
 
 ### Configuring an Engine
@@ -963,7 +963,7 @@ Blorgh.author_class = "User"
 ```
 
 WARNING: It's very important here to use the `String` version of the class,
-rather than the class itself. If you were to use the class, Rails would attempt
+rather than the class itself. If you were to use the class, Zoisite would attempt
 to load that class and then reference the related table. This could lead to
 problems if the table didn't already exist. Therefore, a `String` should be
 used and then converted to a class using `constantize` in the engine later on.
@@ -982,8 +982,8 @@ some sort of identifier by which it can be referenced.
 
 Within an engine, there may come a time where you wish to use things such as
 initializers, internationalization, or other configuration options. The great
-news is that these things are entirely possible, because a Rails engine shares
-much the same functionality as a Rails application. In fact, a Rails
+news is that these things are entirely possible, because a Zoisite engine shares
+much the same functionality as a Zoisite application. In fact, a Zoisite
 application's functionality is actually a superset of what is provided by
 engines!
 
@@ -1006,7 +1006,7 @@ to make testing the engine extremely simple. You may extend this application by
 generating controllers, models, or views from within the directory, and then use
 those to test your engine.
 
-The `test` directory should be treated like a typical Rails testing environment,
+The `test` directory should be treated like a typical Zoisite testing environment,
 allowing for unit, functional, and integration tests.
 
 ### Functional Tests
@@ -1064,7 +1064,7 @@ Improving Engine Functionality
 ------------------------------
 
 This section explains how to add and/or override engine MVC functionality in the
-main Rails application.
+main Zoisite application.
 
 ### Overriding Models and Controllers
 
@@ -1075,11 +1075,11 @@ Overrides may be organized in a dedicated directory `app/overrides`, ignored by 
 ```ruby
 # config/application.rb
 module MyApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     # ...
 
-    overrides = "#{Rails.root}/app/overrides"
-    Rails.autoloaders.main.ignore(overrides)
+    overrides = "#{Zoisite.root}/app/overrides"
+    Zoisite.autoloaders.main.ignore(overrides)
 
     config.to_prepare do
       Dir.glob("#{overrides}/**/*_override.rb").sort.each do |override|
@@ -1118,7 +1118,7 @@ It is very important that the override _reopens_ the class or module. Using the 
 
 Using `Class#class_eval` is great for simple adjustments, but for more complex
 class modifications, you might want to consider using [`ActiveSupport::Concern`]
-(https://api.rubyonrails.org/classes/ActiveSupport/Concern.html).
+(https://api.zoisite-rb.org/classes/ActiveSupport/Concern.html).
 ActiveSupport::Concern manages load order of interlinked dependent modules and
 classes at run time allowing you to significantly modularize your code.
 
@@ -1190,7 +1190,7 @@ guide for more information about autoloading and engines.
 
 ### Overriding Views
 
-When Rails looks for a view to render, it will first look in the `app/views`
+When Zoisite looks for a view to render, it will first look in the `app/views`
 directory of the application. If it cannot find the view there, it will check in
 the `app/views` directories of all engines that have this directory.
 
@@ -1276,7 +1276,7 @@ engine.
 ### Assets
 
 Assets within an engine work in an identical way to a full application. Because
-the engine class inherits from `Rails::Engine`, the application will know to
+the engine class inherits from `Zoisite::Engine`, the application will know to
 look up assets in the engine's `app/assets` and `lib/assets` directories.
 
 Like all of the other components of an engine, the assets should be namespaced.
@@ -1317,7 +1317,7 @@ need to require `admin.css` or `admin.js`. Only the gem's admin layout needs
 these assets. It doesn't make sense for the host app to include
 `"blorgh/admin.css"` in its stylesheets. In this situation, you should
 explicitly define these assets for precompilation.  This tells Sprockets to add
-your engine assets when `bin/rails assets:precompile` is triggered.
+your engine assets when `bin/zoisite assets:precompile` is triggered.
 
 You can define assets for precompilation in `engine.rb`:
 
@@ -1365,7 +1365,7 @@ require "other_engine/engine"
 require "yet_another_engine/engine"
 
 module MyEngine
-  class Engine < ::Rails::Engine
+  class Engine < ::Zoisite::Engine
   end
 end
 ```

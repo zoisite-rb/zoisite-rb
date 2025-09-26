@@ -7,7 +7,7 @@ class ActionMailbox::Ingresses::Postmark::InboundEmailsControllerTest < ActionDi
 
   test "receiving an inbound email from Postmark" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-      post rails_postmark_inbound_emails_url,
+      post zoisite_postmark_inbound_emails_url,
         headers: { authorization: credentials }, params: { RawEmail: file_fixture("../files/welcome.eml").read }
     end
 
@@ -20,7 +20,7 @@ class ActionMailbox::Ingresses::Postmark::InboundEmailsControllerTest < ActionDi
 
   test "receiving an inbound email from Postmark with non UTF-8 characters" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-      post rails_postmark_inbound_emails_url,
+      post zoisite_postmark_inbound_emails_url,
            headers: { authorization: credentials }, params: { RawEmail: file_fixture("../files/invalid_utf.eml").read }
     end
 
@@ -33,7 +33,7 @@ class ActionMailbox::Ingresses::Postmark::InboundEmailsControllerTest < ActionDi
 
   test "add X-Original-To to email from Postmark" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-      post rails_postmark_inbound_emails_url,
+      post zoisite_postmark_inbound_emails_url,
         headers: { authorization: credentials }, params: {
           RawEmail: file_fixture("../files/welcome.eml").read,
           OriginalRecipient: "thisguy@domain.abcd",
@@ -49,7 +49,7 @@ class ActionMailbox::Ingresses::Postmark::InboundEmailsControllerTest < ActionDi
 
   test "rejecting when RawEmail param is missing" do
     assert_no_difference -> { ActionMailbox::InboundEmail.count } do
-      post rails_postmark_inbound_emails_url,
+      post zoisite_postmark_inbound_emails_url,
         headers: { authorization: credentials }, params: { From: "someone@example.com" }
     end
 
@@ -58,7 +58,7 @@ class ActionMailbox::Ingresses::Postmark::InboundEmailsControllerTest < ActionDi
 
   test "rejecting an unauthorized inbound email from Postmark" do
     assert_no_difference -> { ActionMailbox::InboundEmail.count } do
-      post rails_postmark_inbound_emails_url, params: { RawEmail: file_fixture("../files/welcome.eml").read }
+      post zoisite_postmark_inbound_emails_url, params: { RawEmail: file_fixture("../files/welcome.eml").read }
     end
 
     assert_response :unauthorized
@@ -67,7 +67,7 @@ class ActionMailbox::Ingresses::Postmark::InboundEmailsControllerTest < ActionDi
   test "raising when the configured password is nil" do
     switch_password_to nil do
       assert_raises ArgumentError do
-        post rails_postmark_inbound_emails_url,
+        post zoisite_postmark_inbound_emails_url,
           headers: { authorization: credentials }, params: { RawEmail: file_fixture("../files/welcome.eml").read }
       end
     end
@@ -76,7 +76,7 @@ class ActionMailbox::Ingresses::Postmark::InboundEmailsControllerTest < ActionDi
   test "raising when the configured password is blank" do
     switch_password_to "" do
       assert_raises ArgumentError do
-        post rails_postmark_inbound_emails_url,
+        post zoisite_postmark_inbound_emails_url,
           headers: { authorization: credentials }, params: { RawEmail: file_fixture("../files/welcome.eml").read }
       end
     end

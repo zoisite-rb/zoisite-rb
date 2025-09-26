@@ -25,7 +25,7 @@ module ActionDispatch
       #
       # Then the following will return the Route for the `show` action:
       #
-      #   Rails.application.routes.from_requirements(controller: "posts", action: "show")
+      #   Zoisite.application.routes.from_requirements(controller: "posts", action: "show")
       def from_requirements(requirements)
         routes.find { |route| route.requirements == requirements }
       end
@@ -541,7 +541,7 @@ module ActionDispatch
           include UrlFor
 
           # Define url_for in the singleton level so one can do:
-          # Rails.application.routes.url_helpers.url_for(args)
+          # Zoisite.application.routes.url_helpers.url_for(args)
           proxy_class = Class.new do
             include UrlFor
             include routes.named_routes.path_helpers_module
@@ -592,7 +592,7 @@ module ActionDispatch
           url_helpers = routes.named_routes.url_helpers_module
 
           # Make named_routes available in the module singleton as well, so one can do:
-          # Rails.application.routes.url_helpers.posts_path
+          # Zoisite.application.routes.url_helpers.posts_path
           extend url_helpers
 
           # Any class that includes this module will get all named routes...
@@ -648,7 +648,7 @@ module ActionDispatch
             "You may have defined two routes with the same name using the `:as` option, or " \
             "you may be overriding a route already defined by a resource with the same naming. " \
             "For the latter, you can restrict the routes created with `resources` as explained here: \n" \
-            "https://guides.rubyonrails.org/routing.html#restricting-the-routes-created"
+            "https://guides.zoisite-rb.org/routing.html#restricting-the-routes-created"
         end
 
         route = @set.add_route(name, mapping)
@@ -657,14 +657,14 @@ module ActionDispatch
         if route.segment_keys.include?(:controller)
           ActionDispatch.deprecator.warn(<<-MSG.squish)
             Using a dynamic :controller segment in a route is deprecated and
-            will be removed in Rails 9.0.
+            will be removed in Zoisite 9.0.
           MSG
         end
 
         if route.segment_keys.include?(:action)
           ActionDispatch.deprecator.warn(<<-MSG.squish)
             Using a dynamic :action segment in a route is deprecated and
-            will be removed in Rails 9.0.
+            will be removed in Zoisite 9.0.
           MSG
         end
 

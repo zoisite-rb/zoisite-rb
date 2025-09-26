@@ -7,7 +7,7 @@ class ActionMailbox::Ingresses::Sendgrid::InboundEmailsControllerTest < ActionDi
 
   test "receiving an inbound email from Sendgrid" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-      post rails_sendgrid_inbound_emails_url,
+      post zoisite_sendgrid_inbound_emails_url,
         headers: { authorization: credentials }, params: { email: file_fixture("../files/welcome.eml").read }
     end
 
@@ -20,7 +20,7 @@ class ActionMailbox::Ingresses::Sendgrid::InboundEmailsControllerTest < ActionDi
 
   test "receiving an inbound email from Sendgrid with non UTF-8 characters" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-      post rails_sendgrid_inbound_emails_url,
+      post zoisite_sendgrid_inbound_emails_url,
            headers: { authorization: credentials }, params: { email: file_fixture("../files/invalid_utf.eml").read }
     end
 
@@ -33,7 +33,7 @@ class ActionMailbox::Ingresses::Sendgrid::InboundEmailsControllerTest < ActionDi
 
   test "add X-Original-To to email from Sendgrid" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-      post rails_sendgrid_inbound_emails_url,
+      post zoisite_sendgrid_inbound_emails_url,
         headers: { authorization: credentials }, params: {
           email: file_fixture("../files/welcome.eml").read,
           envelope: "{\"to\":[\"replies@example.com\"],\"from\":\"jason@37signals.com\"}",
@@ -49,7 +49,7 @@ class ActionMailbox::Ingresses::Sendgrid::InboundEmailsControllerTest < ActionDi
 
   test "rejecting an unauthorized inbound email from Sendgrid" do
     assert_no_difference -> { ActionMailbox::InboundEmail.count } do
-      post rails_sendgrid_inbound_emails_url, params: { email: file_fixture("../files/welcome.eml").read }
+      post zoisite_sendgrid_inbound_emails_url, params: { email: file_fixture("../files/welcome.eml").read }
     end
 
     assert_response :unauthorized
@@ -58,7 +58,7 @@ class ActionMailbox::Ingresses::Sendgrid::InboundEmailsControllerTest < ActionDi
   test "raising when the configured password is nil" do
     switch_password_to nil do
       assert_raises ArgumentError do
-        post rails_sendgrid_inbound_emails_url,
+        post zoisite_sendgrid_inbound_emails_url,
           headers: { authorization: credentials }, params: { email: file_fixture("../files/welcome.eml").read }
       end
     end
@@ -67,7 +67,7 @@ class ActionMailbox::Ingresses::Sendgrid::InboundEmailsControllerTest < ActionDi
   test "raising when the configured password is blank" do
     switch_password_to "" do
       assert_raises ArgumentError do
-        post rails_sendgrid_inbound_emails_url,
+        post zoisite_sendgrid_inbound_emails_url,
           headers: { authorization: credentials }, params: { email: file_fixture("../files/welcome.eml").read }
       end
     end

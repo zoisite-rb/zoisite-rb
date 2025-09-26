@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/controller/controller_generator"
-require "rails/generators/rails/model/model_generator"
-require "rails/generators/mailer/mailer_generator"
-require "rails/generators/rails/scaffold/scaffold_generator"
-require "rails/generators/rails/application_record/application_record_generator"
+require "zoisite/generators/zoisite/controller/controller_generator"
+require "zoisite/generators/zoisite/model/model_generator"
+require "zoisite/generators/mailer/mailer_generator"
+require "zoisite/generators/zoisite/scaffold/scaffold_generator"
+require "zoisite/generators/zoisite/application_record/application_record_generator"
 
-class NamespacedGeneratorTestCase < Rails::Generators::TestCase
+class NamespacedGeneratorTestCase < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   def setup
     super
-    @old_namespace = Rails::Generators.namespace
-    Rails::Generators.namespace = TestApp
+    @old_namespace = Zoisite::Generators.namespace
+    Zoisite::Generators.namespace = TestApp
   end
 
   def teardown
     super
-    Rails::Generators.namespace = @old_namespace
+    Zoisite::Generators.namespace = @old_namespace
   end
 end
 
 class NamespacedControllerGeneratorTest < NamespacedGeneratorTestCase
   arguments %w(Account foo bar)
-  tests Rails::Generators::ControllerGenerator
+  tests Zoisite::Generators::ControllerGenerator
 
   setup :copy_routes
 
@@ -88,7 +88,7 @@ end
 
 class NamespacedModelGeneratorTest < NamespacedGeneratorTestCase
   arguments %w(Account name:string age:integer)
-  tests Rails::Generators::ModelGenerator
+  tests Zoisite::Generators::ModelGenerator
 
   def test_module_file_is_not_created
     run_generator
@@ -148,7 +148,7 @@ end
 
 class NamespacedMailerGeneratorTest < NamespacedGeneratorTestCase
   arguments %w(notifier foo bar)
-  tests Rails::Generators::MailerGenerator
+  tests Zoisite::Generators::MailerGenerator
 
   def test_mailer_skeleton_is_created
     run_generator
@@ -199,7 +199,7 @@ end
 class NamespacedScaffoldGeneratorTest < NamespacedGeneratorTestCase
   include GeneratorsTestHelper
   arguments %w(product_line title:string price:integer)
-  tests Rails::Generators::ScaffoldGenerator
+  tests Zoisite::Generators::ScaffoldGenerator
 
   setup :copy_routes
 
@@ -409,7 +409,7 @@ end
 
 class NamespacedApplicationRecordGeneratorTest < NamespacedGeneratorTestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::ApplicationRecordGenerator
+  tests Zoisite::Generators::ApplicationRecordGenerator
 
   def test_adds_namespace_to_application_record
     run_generator

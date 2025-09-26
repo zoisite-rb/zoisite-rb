@@ -621,7 +621,7 @@ module ActiveRecord
       end
     end
 
-    def test_creates_test_and_development_databases_when_rails_env_is_development
+    def test_creates_test_and_development_databases_when_zoisite_env_is_development
       old_env = ENV["RAILS_ENV"]
       ENV["RAILS_ENV"] = "development"
 
@@ -744,7 +744,7 @@ module ActiveRecord
       end
     end
 
-    def test_creates_test_and_development_databases_when_rails_env_is_development
+    def test_creates_test_and_development_databases_when_zoisite_env_is_development
       old_env = ENV["RAILS_ENV"]
       ENV["RAILS_ENV"] = "development"
 
@@ -927,7 +927,7 @@ module ActiveRecord
       end
     end
 
-    def test_drops_testand_development_databases_when_rails_env_is_development
+    def test_drops_testand_development_databases_when_zoisite_env_is_development
       old_env = ENV["RAILS_ENV"]
       ENV["RAILS_ENV"] = "development"
 
@@ -1019,7 +1019,7 @@ module ActiveRecord
       end
     end
 
-    def test_drops_testand_development_databases_when_rails_env_is_development
+    def test_drops_testand_development_databases_when_zoisite_env_is_development
       old_env = ENV["RAILS_ENV"]
       ENV["RAILS_ENV"] = "development"
 

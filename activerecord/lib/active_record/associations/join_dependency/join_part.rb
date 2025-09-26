@@ -47,7 +47,7 @@ module ActiveRecord
 
         def extract_record(row, column_names_with_alias)
           # This code is performance critical as it is called per row.
-          # see: https://github.com/rails/rails/pull/12185
+          # see: https://github.com/zoisite-rb/zoisite-rb/pull/12185
           hash = {}
 
           index = 0

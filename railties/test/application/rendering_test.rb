@@ -18,7 +18,7 @@ module ApplicationTests
 
     test "Unknown format falls back to HTML template" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'pages/:id', to: 'pages#show'
         end
       RUBY
@@ -45,7 +45,7 @@ module ApplicationTests
 
     test "New formats and handlers are detected from initializers" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: 'pages#show'
         end
       RUBY
@@ -89,7 +89,7 @@ module ApplicationTests
 
     test "template content is dumped if rendered inline and a syntax error is encountered" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: 'pages#show'
         end
       RUBY
@@ -118,7 +118,7 @@ module ApplicationTests
 
     test "template content is not dumped when rendered from file and a syntax error is encountered" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: 'pages#show'
         end
       RUBY

@@ -20,25 +20,25 @@ module ActiveRecord
     # :singleton-method:
     # Specify a custom regular expression matching foreign keys which name
     # should not be dumped to db/schema.rb.
-    cattr_accessor :fk_ignore_pattern, default: /^fk_rails_[0-9a-f]{10}$/
+    cattr_accessor :fk_ignore_pattern, default: /^fk_zoisite_[0-9a-f]{10}$/
 
     ##
     # :singleton-method:
     # Specify a custom regular expression matching check constraints which name
     # should not be dumped to db/schema.rb.
-    cattr_accessor :chk_ignore_pattern, default: /^chk_rails_[0-9a-f]{10}$/
+    cattr_accessor :chk_ignore_pattern, default: /^chk_zoisite_[0-9a-f]{10}$/
 
     ##
     # :singleton-method:
     # Specify a custom regular expression matching exclusion constraints which name
     # should not be dumped to db/schema.rb.
-    cattr_accessor :excl_ignore_pattern, default: /^excl_rails_[0-9a-f]{10}$/
+    cattr_accessor :excl_ignore_pattern, default: /^excl_zoisite_[0-9a-f]{10}$/
 
     ##
     # :singleton-method:
     # Specify a custom regular expression matching unique constraints which name
     # should not be dumped to db/schema.rb.
-    cattr_accessor :unique_ignore_pattern, default: /^uniq_rails_[0-9a-f]{10}$/
+    cattr_accessor :unique_ignore_pattern, default: /^uniq_zoisite_[0-9a-f]{10}$/
 
     class << self
       def dump(pool = ActiveRecord::Base.connection_pool, stream = $stdout, config = ActiveRecord::Base)
@@ -99,8 +99,8 @@ module ActiveRecord
           # of editing this file, please use the migrations feature of Active Record to
           # incrementally modify your database, and then regenerate this schema definition.
           #
-          # This file is the source Rails uses to define your schema when running `bin/rails
-          # db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+          # This file is the source Zoisite uses to define your schema when running `bin/zoisite
+          # db:schema:load`. When creating a new database, `bin/zoisite db:schema:load` tends to
           # be faster and is potentially less error prone than running all of your
           # migrations from scratch. Old migrations may fail to apply correctly if those
           # migrations use external dependencies or application code.

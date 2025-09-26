@@ -1,9 +1,9 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Mailer Basics
 ====================
 
-This guide covers sending emails from your Rails application.
+This guide covers sending emails from your Zoisite application.
 
 After reading this guide, you will know:
 
@@ -18,8 +18,8 @@ After reading this guide, you will know:
 What is Action Mailer?
 ----------------------
 
-Action Mailer allows you to send emails from your Rails application. It's one of
-the two email related components in the Rails framework. The other is [Action
+Action Mailer allows you to send emails from your Zoisite application. It's one of
+the two email related components in the Zoisite framework. The other is [Action
 Mailbox](action_mailbox_basics.html), which deals with _receiving_ emails.
 
 Action Mailer uses classes (called "mailers") and views to create and configure
@@ -33,7 +33,7 @@ have:
 * Actions and associated views in `app/views`.
 
 [`ActionMailer::Base`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html
 
 Creating a Mailer and Views
 ---------------------------
@@ -46,7 +46,7 @@ Mailer. Here are the details of each step.
 First, you use the "mailer" generator to create the Mailer related classes:
 
 ```bash
-$ bin/rails generate mailer User
+$ bin/zoisite generate mailer User
 create  app/mailers/user_mailer.rb
 invoke  erb
 create    app/views/user_mailer
@@ -126,7 +126,7 @@ It is possible to specify an action directly while using the generator like
 this:
 
 ```bash
-$ bin/rails generate mailer User welcome_email
+$ bin/zoisite generate mailer User welcome_email
 ```
 
 The above will generate the `UserMailer` with an empty `welcome_email` method.
@@ -137,11 +137,11 @@ can have a `goodbye_email` (and corresponding view) in addition to the
 `welcome_email`.
 
 [`default`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-c-default
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-c-default
 [`mail`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-i-mail
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-i-mail
 [`headers`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-i-headers
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-i-headers
 
 ### Create a Mailer View
 
@@ -204,8 +204,8 @@ user is successfully created.
 First, let's create a `User` scaffold:
 
 ```bash
-$ bin/rails generate scaffold user name email login
-$ bin/rails db:migrate
+$ bin/zoisite generate scaffold user name email login
+$ bin/zoisite db:migrate
 ```
 
 Next, we edit the `create` action in the `UserController` to send a welcome
@@ -276,7 +276,7 @@ Content-Type: text/html;
 ...
 ```
 
-You can also call the mailer from the Rails console and send emails, perhaps
+You can also call the mailer from the Zoisite console and send emails, perhaps
 useful as a test before you have a controller action set up. The below will send
 the same `welcome_email` as above:
 
@@ -306,7 +306,7 @@ or `deliver_later` to send itself now or later. The
 `Mail::Message` object you can access it with the [`message`][] method on the
 `ActionMailer::MessageDelivery` object.
 
-Here is an example of the `MessageDelivery` object from the Rails console
+Here is an example of the `MessageDelivery` object from the Zoisite console
 example above:
 
 ```irb
@@ -335,16 +335,16 @@ irb> UserMailer.with(user: user).weekly_summary
 ```
 
 [`ActionMailer::MessageDelivery`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html
+    https://api.zoisite-rb.org/classes/ActionMailer/MessageDelivery.html
 [`deliver_later`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html#method-i-deliver_later
+    https://api.zoisite-rb.org/classes/ActionMailer/MessageDelivery.html#method-i-deliver_later
 [`deliver_now`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html#method-i-deliver_now
-[`Mail::Message`]: https://api.rubyonrails.org/classes/Mail/Message.html
+    https://api.zoisite-rb.org/classes/ActionMailer/MessageDelivery.html#method-i-deliver_now
+[`Mail::Message`]: https://api.zoisite-rb.org/classes/Mail/Message.html
 [`message`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html#method-i-message
+    https://api.zoisite-rb.org/classes/ActionMailer/MessageDelivery.html#method-i-message
 [`with`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Parameterized/ClassMethods.html#method-i-with
+    https://api.zoisite-rb.org/classes/ActionMailer/Parameterized/ClassMethods.html#method-i-with
 
 Multipart Emails and Attachments
 --------------------------------
@@ -355,7 +355,7 @@ The `multipart` MIME type represents a document that's comprised of multiple com
 
 You can add an attachment with Action Mailer by passing the file name and
 content to the [attachments
-method](https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-i-attachments).
+method](https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-i-attachments).
 Action Mailer will automatically guess the `mime_type`, set the `encoding`, and
 create the attachment.
 
@@ -402,7 +402,7 @@ end
 Then in the view, you can reference `attachments` as a hash and specify the file
 you want to show inline. You can call `url` on the hash and pass the result into
 the
-[`image_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag)
+[`image_tag`](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag)
 method:
 
 ```html+erb
@@ -499,7 +499,7 @@ end
 
 This will render the template `another_template.html.erb` for the HTML part and
 "hello" for the text part. The
-[render](https://api.rubyonrails.org/classes/ActionController/Rendering.html#method-i-render)
+[render](https://api.zoisite-rb.org/classes/ActionController/Rendering.html#method-i-render)
 method is the same one used inside of Action Controller, so you can use all the
 same options, such as `:plain`, `:inline`, etc.
 
@@ -521,9 +521,9 @@ end
 There is also an [`append_view_path`][] method.
 
 [`append_view_path`]:
-    https://api.rubyonrails.org/classes/ActionView/ViewPaths/ClassMethods.html#method-i-append_view_path
+    https://api.zoisite-rb.org/classes/ActionView/ViewPaths/ClassMethods.html#method-i-append_view_path
 [`prepend_view_path`]:
-    https://api.rubyonrails.org/classes/ActionView/ViewPaths/ClassMethods.html#method-i-prepend_view_path
+    https://api.zoisite-rb.org/classes/ActionView/ViewPaths/ClassMethods.html#method-i-prepend_view_path
 
 ### Generating URLs in Action Mailer Views
 
@@ -571,7 +571,7 @@ If you haven't configured the `:host` option globally, you'll need to pass it to
 ```
 
 [`url_for`]:
-    https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
+    https://api.zoisite-rb.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
 
 #### Generating URLs with Named Routes
 
@@ -626,10 +626,10 @@ config.action_mailer.perform_caching = true
 ```
 
 Fragment caching is also supported in multipart emails. Read more about caching
-in the [Rails caching guide](caching_with_rails.html).
+in the [Zoisite caching guide](caching_with_zoisite.html).
 
 [`cache`]:
-    https://api.rubyonrails.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache
+    https://api.zoisite-rb.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache
 
 ### Action Mailer Layouts
 
@@ -684,7 +684,7 @@ The above will render the HTML part using the `my_layout.html.erb` file and the
 text part with the usual `user_mailer.text.erb` file.
 
 [`layout`]:
-    https://api.rubyonrails.org/classes/ActionView/Layouts/ClassMethods.html#method-i-layout
+    https://api.zoisite-rb.org/classes/ActionView/Layouts/ClassMethods.html#method-i-layout
 
 Sending Email
 -------------
@@ -742,7 +742,7 @@ end
 If the name is blank (`nil` or empty string), it returns the email address.
 
 [`email_address_with_name`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-i-email_address_with_name
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-i-email_address_with_name
 
 ### Sending Email with Subject Translation
 
@@ -755,7 +755,7 @@ Guide](i18n.html#translations-for-action-mailer-e-mail-subjects) for more.
 There may be cases in which you want to skip the template rendering step and
 instead supply the email body as a string. You can achieve this using the
 `:body` option. Remember to set the `:content_type` option, such as setting it
-to `text/html` below. Rails will default to `text/plain` as the content type.
+to `text/html` below. Zoisite will default to `text/plain` as the content type.
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -909,7 +909,7 @@ class UserMailer < ApplicationMailer
 
     # An Interceptor alternative.
     def sandbox_staging
-      message.to = ["sandbox@example.com"] if Rails.env.staging?
+      message.to = ["sandbox@example.com"] if Zoisite.env.staging?
     end
 
     # A callback has more context than the comparable Observer example.
@@ -923,17 +923,17 @@ Mailer callbacks abort further processing if `body` is set to a non-nil value.
 `before_deliver` can abort with `throw :abort`.
 
 [`after_action`]:
-    https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action
+    https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action
 [`after_deliver`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-after_deliver
+    https://api.zoisite-rb.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-after_deliver
 [`around_action`]:
-    https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action
+    https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action
 [`around_deliver`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-around_deliver
+    https://api.zoisite-rb.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-around_deliver
 [`before_action`]:
-    https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action
+    https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action
 [`before_deliver`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-before_deliver
+    https://api.zoisite-rb.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-before_deliver
 
 Action Mailer View Helpers
 --------------------------
@@ -951,11 +951,11 @@ message as [`message`][MailHelper#message]:
 ```
 
 [`ActionMailer::MailHelper`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MailHelper.html
+    https://api.zoisite-rb.org/classes/ActionMailer/MailHelper.html
 [MailHelper#mailer]:
-    https://api.rubyonrails.org/classes/ActionMailer/MailHelper.html#method-i-mailer
+    https://api.zoisite-rb.org/classes/ActionMailer/MailHelper.html#method-i-mailer
 [MailHelper#message]:
-    https://api.rubyonrails.org/classes/ActionMailer/MailHelper.html#method-i-message
+    https://api.zoisite-rb.org/classes/ActionMailer/MailHelper.html#method-i-message
 
 Action Mailer Configuration
 ---------------------------
@@ -963,7 +963,7 @@ Action Mailer Configuration
 This section shows some example configurations for Action Mailer.
 
 For more details on the various configuration options, see the [Configuring
-Rails Applications](configuring.html#configuring-action-mailer) guide. You can
+Zoisite Applications](configuring.html#configuring-action-mailer) guide. You can
 specify configuration options in environment specific files such as
 production.rb.
 
@@ -994,8 +994,8 @@ config.action_mailer.smtp_settings = {
   address:         "smtp.gmail.com",
   port:            587,
   domain:          "example.com",
-  user_name:       Rails.application.credentials.dig(:smtp, :user_name),
-  password:        Rails.application.credentials.dig(:smtp, :password),
+  user_name:       Zoisite.application.credentials.dig(:smtp, :user_name),
+  password:        Zoisite.application.credentials.dig(:smtp, :password),
   authentication:  "plain",
   enable_starttls: true,
   open_timeout:    5,
@@ -1032,19 +1032,19 @@ end
 ```
 
 Now the preview will be available at
-<http://localhost:3000/rails/mailers/user_mailer/welcome_email>.
+<http://localhost:3000/zoisite/mailers/user_mailer/welcome_email>.
 
 If you change something in the mailer view at
 `app/views/user_mailer/welcome_email.html.erb` or the mailer itself, the preview
 will automatically be updated. A list of previews is also available in
-<http://localhost:3000/rails/mailers>.
+<http://localhost:3000/zoisite/mailers>.
 
 By default, these preview classes live in `test/mailers/previews`. This can be
 configured using the `preview_paths` option. For example, if you want to add
 `lib/mailer_previews` to it, you can configure it in `config/application.rb`:
 
 ```ruby
-config.action_mailer.preview_paths << "#{Rails.root}/lib/mailer_previews"
+config.action_mailer.preview_paths << "#{Zoisite.root}/lib/mailer_previews"
 ```
 
 ### Rescuing Errors
@@ -1054,7 +1054,7 @@ of rendering. For example, record deserialization errors in a background job, or
 errors from a third-party mail delivery service.
 
 To rescue errors that occur during any part of the mailing process, use
-[rescue_from](https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from):
+[rescue_from](https://api.zoisite-rb.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from):
 
 ```ruby
 class NotifierMailer < ApplicationMailer
@@ -1099,17 +1099,17 @@ You can do this in an initializer file like
 `config/initializers/mail_interceptors.rb`:
 
 ```ruby
-Rails.application.configure do
-  if Rails.env.staging?
+Zoisite.application.configure do
+  if Zoisite.env.staging?
     config.action_mailer.interceptors = %w[SandboxEmailInterceptor]
   end
 end
 ```
 
 NOTE: The example above uses a custom environment called "staging" for a
-production-like server but for testing purposes. You can read [Creating Rails
-Environments](configuring.html#creating-rails-environments) for more information
-about custom Rails environments.
+production-like server but for testing purposes. You can read [Creating Zoisite
+Environments](configuring.html#creating-zoisite-environments) for more information
+about custom Zoisite environments.
 
 ### Observing Emails
 
@@ -1130,7 +1130,7 @@ config option. You can do this in an initializer file like
 `config/initializers/mail_observers.rb`:
 
 ```ruby
-Rails.application.configure do
+Zoisite.application.configure do
   config.action_mailer.observers = %w[EmailDeliveryObserver]
 end
 ```

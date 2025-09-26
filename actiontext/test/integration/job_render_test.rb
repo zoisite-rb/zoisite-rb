@@ -3,7 +3,7 @@
 require "test_helper"
 
 class ActionText::JobRenderTest < ActiveJob::TestCase
-  include Rails::Dom::Testing::Assertions::SelectorAssertions
+  include Zoisite::Dom::Testing::Assertions::SelectorAssertions
 
   test "uses app default_url_options" do
     blob = create_file_blob(filename: "racecar.jpg", content_type: "image/jpeg")

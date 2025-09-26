@@ -9,7 +9,7 @@ module ActionMailer
     included do
       # Add the location of mailer previews through app configuration:
       #
-      #     config.action_mailer.preview_paths << "#{Rails.root}/lib/mailer_previews"
+      #     config.action_mailer.preview_paths << "#{Zoisite.root}/lib/mailer_previews"
       #
       mattr_accessor :preview_paths, instance_writer: false, default: []
 

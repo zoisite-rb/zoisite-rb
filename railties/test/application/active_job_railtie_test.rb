@@ -18,7 +18,7 @@ module ApplicationTests
         end
       RUBY
 
-      assert_equal "false", rails("runner", "p FooJob.enqueue_after_transaction_commit").strip
+      assert_equal "false", zoisite("runner", "p FooJob.enqueue_after_transaction_commit").strip
     end
   end
 end

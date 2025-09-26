@@ -38,9 +38,9 @@ class TestGeneralConfiguration < ActiveSupport::TestCase
     end
 
     HEADER = [
-      "### Rails General Configuration",
+      "### Zoisite General Configuration",
       "",
-      "The following configuration methods are to be called on a `Rails::Railtie` object, such as a subclass of `Rails::Engine` or `Rails::Application`.",
+      "The following configuration methods are to be called on a `Zoisite::Railtie` object, such as a subclass of `Zoisite::Engine` or `Zoisite::Application`.",
       "",
     ].freeze
 

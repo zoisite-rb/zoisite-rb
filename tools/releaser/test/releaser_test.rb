@@ -91,21 +91,21 @@ class TestReleaser < Minitest::Test
 
   def test_gem_file_returns_the_gem_file_name
     releaser = Releaser.new(__dir__, "5.0.0")
-    assert_equal "rails-5.0.0.gem", releaser.gem_file("rails")
+    assert_equal "zoisite-5.0.0.gem", releaser.gem_file("zoisite")
   end
 
   def test_gem_path_returns_the_gem_name
     releaser = Releaser.new(__dir__, "5.0.0")
-    assert_equal "pkg/rails-5.0.0.gem", releaser.gem_path("rails")
+    assert_equal "pkg/zoisite-5.0.0.gem", releaser.gem_path("zoisite")
   end
 
   def test_gemspect_returns_the_gemspec_name
     releaser = Releaser.new(__dir__, "5.0.0")
-    assert_equal "rails.gemspec", releaser.gemspec("rails")
+    assert_equal "zoisite.gemspec", releaser.gemspec("zoisite")
   end
 
   def test_update_versions_updates_the_version_of_a_gem_and_the_npm_package
-    Dir.mktmpdir("rails") do |root|
+    Dir.mktmpdir("zoisite") do |root|
       FileUtils.cp_r(File.expand_path("fixtures", __dir__), root)
 
       root = "#{root}/fixtures"
@@ -134,21 +134,21 @@ class TestReleaser < Minitest::Test
     end
   end
 
-  def test_update_versions_with_rails_does_nothing
-    Dir.mktmpdir("rails") do |root|
+  def test_update_versions_with_zoisite_does_nothing
+    Dir.mktmpdir("zoisite") do |root|
       FileUtils.cp_r(File.expand_path("fixtures", __dir__), root)
 
       root = "#{root}/fixtures"
 
       releaser = Releaser.new(root, "5.0.0")
-      releaser.update_versions("rails")
+      releaser.update_versions("zoisite")
 
-      assert_equal false, File.exist?("#{root}/rails/lib/rails/gem_version.rb")
+      assert_equal false, File.exist?("#{root}/zoisite/lib/zoisite/gem_version.rb")
     end
   end
 
   def test_release_notes_returns_the_release_notes_for_a_framework
-    Dir.mktmpdir("rails") do |root|
+    Dir.mktmpdir("zoisite") do |root|
       FileUtils.cp_r(File.expand_path("fixtures", __dir__), root)
 
       root = "#{root}/fixtures"

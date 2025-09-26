@@ -4,7 +4,7 @@ require "abstract_unit"
 
 class EngineTest < ActiveSupport::TestCase
   test "reports routes as available only if they're actually present" do
-    engine = Class.new(Rails::Engine) do
+    engine = Class.new(Zoisite::Engine) do
       def initialize(*args)
         @routes = nil
         super
@@ -15,7 +15,7 @@ class EngineTest < ActiveSupport::TestCase
   end
 
   def test_application_can_be_subclassed
-    klass = Class.new(Rails::Application) do
+    klass = Class.new(Zoisite::Application) do
       attr_reader :hello
       def initialize
         @hello = "world"

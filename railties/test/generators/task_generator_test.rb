@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/task/task_generator"
+require "zoisite/generators/zoisite/task/task_generator"
 
-class TaskGeneratorTest < Rails::Generators::TestCase
+class TaskGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(feeds foo bar)
 

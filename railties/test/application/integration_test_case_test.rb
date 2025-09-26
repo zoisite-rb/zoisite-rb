@@ -16,7 +16,7 @@ module ApplicationTests
     end
 
     test "resets Action Mailer test deliveries" do
-      rails "generate", "mailer", "BaseMailer", "welcome"
+      zoisite "generate", "mailer", "BaseMailer", "welcome"
 
       app_file "test/integration/mailer_integration_test.rb", <<-RUBY
         require "test_helper"
@@ -40,8 +40,8 @@ module ApplicationTests
         end
       RUBY
 
-      with_rails_env("test") { rails("db:migrate") }
-      output = rails("test")
+      with_zoisite_env("test") { zoisite("db:migrate") }
+      output = zoisite("test")
       assert_match(/0 failures, 0 errors/, output)
     end
   end
@@ -68,20 +68,20 @@ module ApplicationTests
         end
       RUBY
 
-      with_rails_env("test") { rails("db:migrate") }
-      output = rails("test")
+      with_zoisite_env("test") { zoisite("db:migrate") }
+      output = zoisite("test")
       assert_match(/0 failures, 0 errors/, output)
     end
 
     test "routes are loaded before inserting test routes" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/c", as: :c, to: "users#show"
         end
       RUBY
 
       app_file "config/initializers/after_routes_loaded.rb", <<-RUBY
-        Rails.configuration.after_routes_loaded do
+        Zoisite.configuration.after_routes_loaded do
           $after_routes_loaded = true
         end
       RUBY
@@ -112,7 +112,7 @@ module ApplicationTests
         end
       RUBY
 
-      output = rails("test")
+      output = zoisite("test")
       assert_match(/0 failures, 0 errors/, output)
     end
   end

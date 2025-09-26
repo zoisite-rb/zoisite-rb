@@ -3,7 +3,7 @@
 require "abstract_unit"
 
 class ZeitwerkInflectorTest < ActiveSupport::TestCase
-  INFLECTOR = Rails::Autoloaders::Inflector
+  INFLECTOR = Zoisite::Autoloaders::Inflector
 
   def reset_overrides
     INFLECTOR.instance_variable_get(:@overrides).clear

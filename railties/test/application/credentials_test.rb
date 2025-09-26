@@ -3,7 +3,7 @@
 require "isolation/abstract_unit"
 require "env_helpers"
 
-class Rails::CredentialsTest < ActiveSupport::TestCase
+class Zoisite::CredentialsTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation, EnvHelpers
 
   setup :build_app
@@ -14,7 +14,7 @@ class Rails::CredentialsTest < ActiveSupport::TestCase
 
     app("production")
 
-    assert_equal "revealed", Rails.application.credentials.mystery
+    assert_equal "revealed", Zoisite.application.credentials.mystery
   end
 
   test "reads credentials from customized path and key" do
@@ -24,7 +24,7 @@ class Rails::CredentialsTest < ActiveSupport::TestCase
 
     app("production")
 
-    assert_equal "revealed", Rails.application.credentials.mystery
+    assert_equal "revealed", Zoisite.application.credentials.mystery
   end
 
   test "reads credentials using environment variable key" do
@@ -33,7 +33,7 @@ class Rails::CredentialsTest < ActiveSupport::TestCase
     switch_env("RAILS_MASTER_KEY", credentials_key) do
       app("production")
 
-      assert_equal "revealed", Rails.application.credentials.mystery
+      assert_equal "revealed", Zoisite.application.credentials.mystery
     end
   end
 

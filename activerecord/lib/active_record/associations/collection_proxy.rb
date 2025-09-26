@@ -1132,7 +1132,7 @@ module ActiveRecord
               association_name = @association.reflection.name
               ActiveRecord.deprecator.warn(<<~MSG)
                 Using #{method} on association \#{association_name} with unpersisted records
-                is deprecated and will be removed in Rails 8.2.
+                is deprecated and will be removed in Zoisite 8.2.
                 The unpersisted records will be lost after this operation.
                 Please either persist your records first or store them separately before
                 calling #{method}.

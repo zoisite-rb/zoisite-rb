@@ -6,7 +6,7 @@ require "action_mailbox/relayer"
 
 module ActionMailbox
   class RelayerTest < ActiveSupport::TestCase
-    URL = "https://example.com/rails/action_mailbox/relay/inbound_emails"
+    URL = "https://example.com/zoisite/action_mailbox/relay/inbound_emails"
     INGRESS_PASSWORD = "secret"
 
     setup do

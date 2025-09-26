@@ -56,7 +56,7 @@ class TestAutosaveAssociationsInGeneral < ActiveRecord::TestCase
       def self.name; "Person"; end
 
       # It is necessary that the after_create is before the has_many _and_ that it updates the model.
-      # This replicates a bug found in https://github.com/rails/rails/issues/38120
+      # This replicates a bug found in https://github.com/zoisite-rb/zoisite-rb/issues/38120
       after_create { update(first_name: "first name") }
       has_many :references, autosave: true, anonymous_class: reference
     end

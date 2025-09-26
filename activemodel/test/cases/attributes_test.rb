@@ -54,13 +54,13 @@ module ActiveModel
     test "properties assignment" do
       data = ModelForAttributesTest.new(
         integer_field: "2.3",
-        string_field: "Rails FTW",
+        string_field: "Zoisite FTW",
         decimal_field: "12.3",
         boolean_field: "0"
       )
 
       assert_equal 2, data.integer_field
-      assert_equal "Rails FTW", data.string_field
+      assert_equal "Zoisite FTW", data.string_field
       assert_equal BigDecimal("12.3"), data.decimal_field
       assert_equal "default string", data.string_with_default
       assert_equal Date.new(2016, 1, 1), data.date_field

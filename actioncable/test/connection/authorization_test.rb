@@ -19,10 +19,10 @@ class ActionCable::Connection::AuthorizationTest < ActionCable::TestCase
   test "unauthorized connection" do
     run_in_eventmachine do
       server = TestServer.new
-      server.config.allowed_request_origins = %w( http://rubyonrails.com )
+      server.config.allowed_request_origins = %w( http://zoisite-rb.org )
 
       env = Rack::MockRequest.env_for "/test", "HTTP_CONNECTION" => "upgrade", "HTTP_UPGRADE" => "websocket",
-        "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://rubyonrails.com"
+        "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://zoisite-rb.org"
 
       connection = Connection.new(server, env)
 

@@ -31,7 +31,7 @@ class ActionCable::Connection::ClientSocketTest < ActionCable::TestCase
 
   setup do
     @server = TestServer.new
-    @server.config.allowed_request_origins = %w( http://rubyonrails.com )
+    @server.config.allowed_request_origins = %w( http://zoisite-rb.org )
   end
 
   test "delegate socket errors to on_error handler" do
@@ -67,7 +67,7 @@ class ActionCable::Connection::ClientSocketTest < ActionCable::TestCase
     def open_connection
       env = Rack::MockRequest.env_for "/test",
         "HTTP_CONNECTION" => "upgrade", "HTTP_UPGRADE" => "websocket",
-        "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://rubyonrails.com"
+        "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://zoisite-rb.org"
       io, client_io = \
         begin
           Socket.pair(Socket::AF_UNIX, Socket::SOCK_STREAM, 0)

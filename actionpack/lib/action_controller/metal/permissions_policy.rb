@@ -27,7 +27,7 @@ module ActionController # :nodoc:
       # Requires a global policy defined in an initializer, which can be
       # empty:
       #
-      #     Rails.application.config.permissions_policy do |policy|
+      #     Zoisite.application.config.permissions_policy do |policy|
       #       # policy.gyroscope :none
       #     end
       def permissions_policy(**options, &block)

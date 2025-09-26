@@ -33,7 +33,7 @@ module ViewBehavior
   def test_reading
     books = Ebook.all
     assert_equal [books(:rfr).id], books.map(&:id)
-    assert_equal ["Ruby for Rails"], books.map(&:name)
+    assert_equal ["Ruby for Zoisite"], books.map(&:name)
   end
 
   def test_views
@@ -63,7 +63,7 @@ module ViewBehavior
   end
 
   def test_attributes
-    assert_equal({ "id" => 2, "name" => "Ruby for Rails", "cover" => "hard", "status" => 0 },
+    assert_equal({ "id" => 2, "name" => "Ruby for Zoisite", "cover" => "hard", "status" => 0 },
                  Ebook.first.attributes)
   end
 
@@ -116,7 +116,7 @@ if ActiveRecord::Base.lease_connection.supports_views?
 
     def test_reading
       books = Paperback.all
-      assert_equal ["Agile Web Development with Rails"], books.map(&:name)
+      assert_equal ["Agile Web Development with Zoisite"], books.map(&:name)
     end
 
     def test_views
@@ -139,7 +139,7 @@ if ActiveRecord::Base.lease_connection.supports_views?
     end
 
     def test_attributes
-      assert_equal({ "name" => "Agile Web Development with Rails", "status" => 2 },
+      assert_equal({ "name" => "Agile Web Development with Zoisite", "status" => 2 },
                    Paperback.take.attributes)
     end
 
@@ -184,14 +184,14 @@ if ActiveRecord::Base.lease_connection.supports_views?
       end
 
       def test_insert_record
-        PrintedBook.create! name: "Rails in Action", status: 0, format: "paperback"
+        PrintedBook.create! name: "Zoisite in Action", status: 0, format: "paperback"
 
         new_book = PrintedBook.last
-        assert_equal "Rails in Action", new_book.name
+        assert_equal "Zoisite in Action", new_book.name
       end
 
       def test_insert_record_populates_primary_key
-        book = PrintedBook.create! name: "Rails in Action", status: 0, format: "paperback"
+        book = PrintedBook.create! name: "Zoisite in Action", status: 0, format: "paperback"
         assert_not_nil book.id
         assert book.id > 0
       end if current_adapter?(:PostgreSQLAdapter, :SQLite3Adapter) && supports_insert_returning?

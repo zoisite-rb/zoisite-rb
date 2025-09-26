@@ -107,7 +107,7 @@ if ActiveRecord::Base.lease_connection.supports_check_constraints?
 
           constraint = check_constraints.first
           assert_equal "trades", constraint.table_name
-          assert_equal "chk_rails_2189e9f96c", constraint.name
+          assert_equal "chk_zoisite_2189e9f96c", constraint.name
 
           if current_adapter?(:Mysql2Adapter, :TrilogyAdapter)
             assert_equal "`quantity` > 0", constraint.expression

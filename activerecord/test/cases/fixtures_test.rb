@@ -1557,12 +1557,12 @@ class IgnoreFixturesTest < ActiveRecord::TestCase
     assert_raise(StandardError) { other_books(:published_ebook) }
 
     assert_equal 2, Book.count
-    assert_equal "Agile Web Development with Rails", other_books(:awdr).name
+    assert_equal "Agile Web Development with Zoisite", other_books(:awdr).name
     assert_equal "published", other_books(:awdr).status
     assert_equal "paperback", other_books(:awdr).format
     assert_equal "english", other_books(:awdr).language
 
-    assert_equal "Ruby for Rails", other_books(:rfr).name
+    assert_equal "Ruby for Zoisite", other_books(:rfr).name
     assert_equal "ebook", other_books(:rfr).format
     assert_equal "published", other_books(:rfr).status
   end
@@ -1780,7 +1780,7 @@ class MultipleFixtureConnectionsTest < ActiveRecord::TestCase
     fixtures :cpk_orders, :cpk_books, :cpk_posts, :cpk_tags, :cpk_authors, :cpk_reviews, :cpk_order_agreements
 
     def test_supports_inline_habtm
-      assert_includes cpk_posts(:welcome).tags, cpk_tags(:cpk_tag_ruby_on_rails)
+      assert_includes cpk_posts(:welcome).tags, cpk_tags(:cpk_tag_zoisite)
       assert_includes cpk_posts(:welcome).tags, cpk_tags(:cpk_tag_digital_product)
       assert_not_includes cpk_posts(:welcome).tags, cpk_tags(:cpk_tag_loyal_customer)
 

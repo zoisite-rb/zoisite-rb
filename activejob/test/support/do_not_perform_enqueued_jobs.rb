@@ -5,7 +5,7 @@ module DoNotPerformEnqueuedJobs
 
   included do
     setup do
-      # /rails/activejob/test/adapters/test.rb sets these configs to true, but
+      # /zoisite/activejob/test/adapters/test.rb sets these configs to true, but
       # in this specific case we want to test enqueueing behavior.
       @perform_enqueued_jobs = queue_adapter.perform_enqueued_jobs
       @perform_enqueued_at_jobs = queue_adapter.perform_enqueued_at_jobs

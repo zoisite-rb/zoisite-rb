@@ -3,16 +3,16 @@
 require "abstract_unit"
 require "active_support/testing/autorun"
 require "active_support/test_case"
-require "rails/rack/logger"
+require "zoisite/rack/logger"
 require "logger"
 require "active_support/log_subscriber/test_helper"
 
-module Rails
+module Zoisite
   module Rack
     class LoggerTest < ActiveSupport::TestCase
       include ActiveSupport::LogSubscriber::TestHelper
 
-      class TestLogger < Rails::Rack::Logger
+      class TestLogger < Zoisite::Rack::Logger
         NULL = ::Logger.new File::NULL
 
         attr_reader :logger

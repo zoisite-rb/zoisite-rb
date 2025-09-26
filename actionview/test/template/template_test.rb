@@ -250,36 +250,36 @@ class TestERBTemplate < ActiveSupport::TestCase
     assert_instance_of ArgumentError, error.cause
   end
 
-  def test_rails_injected_locals_does_not_raise_error_if_not_passed
+  def test_zoisite_injected_locals_does_not_raise_error_if_not_passed
     @template = new_template("<%# locals: (message:) -%>")
     assert_nothing_raised do
       render(message: "Hi", message_counter: 1, message_iteration: 1, implicit_locals: %i[message_counter message_iteration])
     end
   end
 
-  def test_rails_injected_locals_can_be_specified
+  def test_zoisite_injected_locals_can_be_specified
     @template = new_template("<%# locals: (message: 'Hello') -%>\n<%= message %>")
     assert_equal "Hello", render(message: "Hello", implicit_locals: %i[message])
   end
 
-  def test_rails_local_assigns_and_strict_locals
+  def test_zoisite_local_assigns_and_strict_locals
     @template = new_template("<%# locals: (class: ) -%>\n<%= local_assigns[:class] %>")
     assert_equal "some-class", render(class: "some-class", implicit_locals: %i[message])
   end
 
-  def test_rails_injected_locals_can_be_specified_as_kwargs
+  def test_zoisite_injected_locals_can_be_specified_as_kwargs
     @template = new_template("<%# locals: (message: 'Hello', **kwargs) -%>\n<%= kwargs[:message_counter] %>-<%= kwargs[:message_iteration] %>")
     assert_equal "1-2", render(message: "Hello", message_counter: 1, message_iteration: 2, implicit_locals: %i[message_counter message_iteration])
   end
 
-  def test_rails_injected_locals_can_be_specified_as_required_argument
+  def test_zoisite_injected_locals_can_be_specified_as_required_argument
     @template = new_template("<%# locals: (message: 'Hello', message_iteration:) -%>\n<%= message %>-<%= message_iteration %>")
     assert_equal "Hello-2", render(message: "Hello", message_counter: 1, message_iteration: 2, implicit_locals: %i[message_counter message_iteration])
   end
 
   # TODO: This is currently handled inside ERB. The case of explicitly
-  # lying about encodings via the normal Rails API should be handled
-  # inside Rails.
+  # lying about encodings via the normal Zoisite API should be handled
+  # inside Zoisite.
   def test_lying_with_magic_comment
     assert_raises(ActionView::Template::Error) do
       @template = new_template("# encoding: UTF-8\nhello \xFCmlat", virtual_path: nil)

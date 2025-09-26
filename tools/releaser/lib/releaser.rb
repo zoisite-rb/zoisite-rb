@@ -34,7 +34,7 @@ class Releaser < Rake::TaskLib
   def define
     directory "#{root}/pkg"
 
-    (FRAMEWORKS + ["rails"]).each do |framework|
+    (FRAMEWORKS + ["zoisite"]).each do |framework|
       namespace framework do
         task :clean do
           Dir.chdir(root) do
@@ -47,7 +47,7 @@ class Releaser < Rake::TaskLib
         end
 
         task gem_path(framework) => [:update_versions, "#{root}/pkg"] do
-          dir = if framework == "rails"
+          dir = if framework == "zoisite"
             root
           else
             root + framework
@@ -80,7 +80,7 @@ class Releaser < Rake::TaskLib
     end
 
     desc "Install gems for all projects."
-    task install: FRAMEWORKS.map { |f| "#{f}:install" } + ["rails:install"]
+    task install: FRAMEWORKS.map { |f| "#{f}:install" } + ["zoisite:install"]
 
     task :ensure_clean_state do
       if tree_dirty?
@@ -101,7 +101,7 @@ class Releaser < Rake::TaskLib
           fname = File.join root, fw, "CHANGELOG.md"
           current_contents = File.read(fname)
 
-          header = "## Rails #{version} (#{Date.today.strftime('%B %d, %Y')}) ##\n\n"
+          header = "## Zoisite #{version} (#{Date.today.strftime('%B %d, %Y')}) ##\n\n"
           header += "*   No changes.\n\n\n" if current_contents.start_with?("##")
           contents = header + current_contents
           File.write(fname, contents)
@@ -110,15 +110,15 @@ class Releaser < Rake::TaskLib
     end
 
     desc "Update version of the frameworks"
-    task update_versions: FRAMEWORKS.map { |f| "#{f}:update_versions" } + ["rails:update_versions"]
+    task update_versions: FRAMEWORKS.map { |f| "#{f}:update_versions" } + ["zoisite:update_versions"]
 
     desc "Build gem files for all projects"
-    task build: FRAMEWORKS.map { |f| "#{f}:build" } + ["rails:build"]
+    task build: FRAMEWORKS.map { |f| "#{f}:build" } + ["zoisite:build"]
 
     task checksums: :build do
       Dir.chdir(root) do
         puts
-        [*FRAMEWORKS, "rails"].each do |fw|
+        [*FRAMEWORKS, "zoisite"].each do |fw|
           path = gem_path(fw)
           sha = ::Digest::SHA256.file(path)
           puts "#{sha}  #{path}"
@@ -142,7 +142,7 @@ class Releaser < Rake::TaskLib
       end
       default_repo = `git config --local --get-regexp '\.gh-resolved$'`.strip
       if !$?.success? || default_repo.empty?
-        raise "GitHub CLI does not have a default repo configured. Please run `gh repo set-default rails/rails`"
+        raise "GitHub CLI does not have a default repo configured. Please run `gh repo set-default zoisite-rb/zoisite-rb`"
       end
     end
 
@@ -182,7 +182,7 @@ class Releaser < Rake::TaskLib
     task pre_push: [:build, :checksums]
 
     desc "Push the gem to rubygems.org and the npm package to npmjs.com"
-    task push: [:pre_push] + FRAMEWORKS.map { |f| "#{f}:push" } + ["rails:push"]
+    task push: [:pre_push] + FRAMEWORKS.map { |f| "#{f}:push" } + ["zoisite:push"]
   end
 
   def pre_release?
@@ -229,7 +229,7 @@ class Releaser < Rake::TaskLib
   end
 
   def update_versions(framework)
-    return if framework == "rails"
+    return if framework == "zoisite"
 
     Dir.chdir(root) do
       glob = "#{framework}/lib/*/gem_version.rb"
@@ -258,7 +258,7 @@ class Releaser < Rake::TaskLib
           if sh("which npm > /dev/null 2>&1", verbose: false)
             sh "npm version #{npm_version} --no-git-tag-version > /dev/null 2>&1", verbose: false
           else
-            raise "You must have npm installed to release Rails."
+            raise "You must have npm installed to release Zoisite."
           end
         end
       end
@@ -328,7 +328,7 @@ class Releaser < Rake::TaskLib
     def end_of_notes?(contents)
       line = contents.first
 
-      line =~ /^## Rails \d+\.\d+\.\d+.*$/ ||
+      line =~ /^## Zoisite \d+\.\d+\.\d+.*$/ ||
         line =~ /^Please check.*for previous changes\.$/ ||
         contents.empty?
     end

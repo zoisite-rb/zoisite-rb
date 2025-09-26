@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 
 require "action_text/version"
 require "action_text/deprecator"

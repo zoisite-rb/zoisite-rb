@@ -3,7 +3,7 @@
 require "isolation/abstract_unit"
 require "rack/test"
 
-module Rails
+module Zoisite
   class Engine
     class LazyRouteSetTest < ActiveSupport::TestCase
       include ActiveSupport::Testing::Isolation
@@ -45,7 +45,7 @@ module Rails
       test "app lazily loads routes when making a request" do
         require "#{app_path}/config/environment"
 
-        @app = Rails.application
+        @app = Zoisite.application
 
         assert_not_operator(:root_path, :in?, app_url_helpers.methods)
         response = get("/")
@@ -68,14 +68,14 @@ module Rails
           end
         RUBY
 
-        output = rails("test", "test/integration/my_test.rb")
+        output = zoisite("test", "test/integration/my_test.rb")
         assert_match("https://example.org", output)
       end
 
       test "engine lazily loads routes when making a request" do
         require "#{app_path}/config/environment"
 
-        @app = Rails.application
+        @app = Zoisite.application
 
         assert_not_operator(:root_path, :in?, engine_url_helpers.methods)
         response = get("/plugin/")
@@ -85,7 +85,7 @@ module Rails
       test "app lazily loads routes when url_for is used" do
         require "#{app_path}/config/environment"
 
-        @app = Rails.application
+        @app = Zoisite.application
 
         assert_not_operator(:products_path, :in?, app_url_helpers.methods)
         assert_equal "/products", app_url_helpers.url_for(
@@ -97,7 +97,7 @@ module Rails
       test "engine lazily loads routes when url_for is used" do
         require "#{app_path}/config/environment"
 
-        @app = Rails.application
+        @app = Zoisite.application
 
         assert_not_operator(:plugin_posts_path, :in?, engine_url_helpers.methods)
         assert_equal "/plugin/posts", engine_url_helpers.url_for(
@@ -109,7 +109,7 @@ module Rails
       test "railties can access lazy routes" do
         app_file("config/application.rb", <<~RUBY, "a+")
 
-          class MyRailtie < ::Rails::Railtie
+          class MyRailtie < ::Zoisite::Railtie
             initializer :some_railtie_init do |app|
               app.routes
             end
@@ -118,15 +118,15 @@ module Rails
 
         require "#{app_path}/config/environment"
 
-        assert_operator(Rails.application.routes, :is_a?, Engine::LazyRouteSet)
+        assert_operator(Zoisite.application.routes, :is_a?, Engine::LazyRouteSet)
       end
 
       test "reloads routes when recognize_path is called" do
         require "#{app_path}/config/environment"
 
         assert_equal(
-          { controller: "rails/engine/lazy_route_set_test/users", action: "index" },
-          Rails.application.routes.recognize_path("/users")
+          { controller: "zoisite/engine/lazy_route_set_test/users", action: "index" },
+          Zoisite.application.routes.recognize_path("/users")
         )
       end
 
@@ -137,8 +137,8 @@ module Rails
         req = ActionDispatch::Request.new(::Rack::MockRequest.env_for(path))
 
         assert_equal(
-          { controller: "rails/engine/lazy_route_set_test/users", action: "index" },
-          Rails.application.routes.recognize_path_with_request(req, path, {})
+          { controller: "zoisite/engine/lazy_route_set_test/users", action: "index" },
+          Zoisite.application.routes.recognize_path_with_request(req, path, {})
         )
       end
 
@@ -152,11 +152,11 @@ module Rails
           RUBY
 
           app_file "config/routes.rb", <<~RUBY
-            Rails.application.routes.draw do
+            Zoisite.application.routes.draw do
               root to: proc { [200, {}, []] }
 
               resources :products
-              resources :users, module: "rails/engine/lazy_route_set_test"
+              resources :users, module: "zoisite/engine/lazy_route_set_test"
               resolve("Comment") { "https://example.org" }
 
               mount Plugin::Engine, at: "/plugin"
@@ -175,7 +175,7 @@ module Rails
 
             plugin.write "lib/plugin.rb", <<~RUBY
               module Plugin
-                class Engine < ::Rails::Engine
+                class Engine < ::Zoisite::Engine
                 end
               end
             RUBY
@@ -191,7 +191,7 @@ module Rails
         end
 
         def app_url_helpers
-          Rails.application.routes.url_helpers
+          Zoisite.application.routes.url_helpers
         end
 
         def engine_url_helpers

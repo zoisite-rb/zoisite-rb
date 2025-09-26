@@ -5,9 +5,9 @@ require "bundler/inline"
 gemfile(true) do
   source "https://rubygems.org"
 
-  gem "rails"
-  # If you want to test against edge Rails replace the previous line with this:
-  # gem "rails", github: "rails/rails", branch: "main"
+  gem "zoisite"
+  # If you want to test against edge Zoisite replace the previous line with this:
+  # gem "zoisite", github: "zoisite-rb/zoisite-rb", branch: "main"
 end
 
 require "active_support"

@@ -156,7 +156,7 @@ class MultipartParamsParsingTest < ActionDispatch::IntegrationTest
 
   test "uploads and reads binary file" do
     with_test_routing do
-      fixture = FIXTURE_PATH + "/ruby_on_rails.jpg"
+      fixture = FIXTURE_PATH + "/zoisite.jpg"
       params = { uploaded_data: fixture_file_upload(fixture, "image/jpeg") }
       post "/read", params: params
       assert_equal Encoding::ASCII_8BIT, response.body.encoding

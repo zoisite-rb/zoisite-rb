@@ -18,14 +18,14 @@ class TestJob < ActiveJob::Base
   queue_as :integration_tests
 
   def perform(x)
-    File.open(Rails.root.join("tmp/\#{x}.new"), "wb+") do |f|
+    File.open(Zoisite.root.join("tmp/\#{x}.new"), "wb+") do |f|
       f.write Marshal.dump({
         "locale" => I18n.locale.to_s || "en",
         "timezone" => Time.zone&.name || "UTC",
         "executed_at" => Time.now.to_r
       })
     end
-    File.rename(Rails.root.join("tmp/\#{x}.new"), Rails.root.join("tmp/\#{x}"))
+    File.rename(Zoisite.root.join("tmp/\#{x}.new"), Zoisite.root.join("tmp/\#{x}"))
   end
 end
 CODE
@@ -40,15 +40,15 @@ class ContinuableTestJob < ActiveJob::Base
 
   def perform(x)
     step :step_one do
-      raise "Rerunning step one!" if File.exist?(Rails.root.join("tmp/\#{x}.started"))
-      File.open(Rails.root.join("tmp/\#{x}.new"), "wb+") do |f|
+      raise "Rerunning step one!" if File.exist?(Zoisite.root.join("tmp/\#{x}.started"))
+      File.open(Zoisite.root.join("tmp/\#{x}.new"), "wb+") do |f|
         f.write Marshal.dump({
           "locale" => I18n.locale.to_s || "en",
           "timezone" => Time.zone&.name || "UTC",
           "executed_at" => Time.now.to_r
         })
       end
-      File.rename(Rails.root.join("tmp/\#{x}.new"), Rails.root.join("tmp/\#{x}.started"))
+      File.rename(Zoisite.root.join("tmp/\#{x}.new"), Zoisite.root.join("tmp/\#{x}.started"))
     end
     step :step_two do |step|
       8.times do |i|
@@ -57,7 +57,7 @@ class ContinuableTestJob < ActiveJob::Base
       end
     end
     step :step_three do
-      File.rename(Rails.root.join("tmp/\#{x}.started"), Rails.root.join("tmp/\#{x}"))
+      File.rename(Zoisite.root.join("tmp/\#{x}.started"), Zoisite.root.join("tmp/\#{x}"))
     end
   end
 end

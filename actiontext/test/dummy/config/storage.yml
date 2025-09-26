@@ -1,25 +1,25 @@
 test:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Zoisite.root.join("tmp/storage") %>
 
 local:
   service: Disk
-  root: <%= Rails.root.join("storage") %>
+  root: <%= Zoisite.root.join("storage") %>
 
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
-#   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-#   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+#   access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+#   secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
 #   region: us-east-1
-#   bucket: your_own_bucket-<%= Rails.env %>
+#   bucket: your_own_bucket-<%= Zoisite.env %>
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS
 #   project: your_project
-#   credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
-#   bucket: your_own_bucket-<%= Rails.env %>
+#   credentials: <%= Zoisite.root.join("path/to/gcs.keyfile") %>
+#   bucket: your_own_bucket-<%= Zoisite.env %>
 
 # mirror:
 #   service: Mirror

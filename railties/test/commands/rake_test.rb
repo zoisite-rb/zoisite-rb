@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite-rb.orgmand"
 
-class Rails::Command::RakeTest < ActiveSupport::TestCase
+class Zoisite::Command::RakeTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
@@ -30,6 +30,6 @@ class Rails::Command::RakeTest < ActiveSupport::TestCase
 
   private
     def run_rake_command(*args, **options)
-      rails args, **options
+      zoisite args, **options
     end
 end

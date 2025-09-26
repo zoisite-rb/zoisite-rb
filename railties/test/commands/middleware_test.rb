@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite-rb.orgmand"
 
-class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
+class Zoisite::Command::MiddlewareTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
 
   def setup
@@ -16,7 +16,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
   end
 
   def app
-    @app ||= Rails.application
+    @app ||= Zoisite.application
   end
 
   test "default middleware stack" do
@@ -37,7 +37,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
       "Rack::MethodOverride",
       "ActionDispatch::RequestId",
       "ActionDispatch::RemoteIp",
-      "Rails::Rack::Logger",
+      "Zoisite::Rack::Logger",
       "ActionDispatch::ShowExceptions",
       "ActionDispatch::DebugExceptions",
       "ActionDispatch::Reloader",
@@ -73,7 +73,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
       "Rack::MethodOverride",
       "ActionDispatch::RequestId",
       "ActionDispatch::RemoteIp",
-      "Rails::Rack::Logger",
+      "Zoisite::Rack::Logger",
       "ActionDispatch::ShowExceptions",
       "ActionDispatch::DebugExceptions",
       "ActionDispatch::ActionableExceptions",
@@ -106,7 +106,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
       "Rack::Runtime",
       "ActionDispatch::RequestId",
       "ActionDispatch::RemoteIp",
-      "Rails::Rack::Logger",
+      "Zoisite::Rack::Logger",
       "ActionDispatch::ShowExceptions",
       "ActionDispatch::DebugExceptions",
       "ActionDispatch::Reloader",
@@ -127,7 +127,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
 
     dependencies = [
       # Logger needs a fully "corrected" request environment
-      %w(Rails::Rack::Logger Rack::MethodOverride ActionDispatch::RequestId ActionDispatch::RemoteIp),
+      %w(Zoisite::Rack::Logger Rack::MethodOverride ActionDispatch::RequestId ActionDispatch::RemoteIp),
 
       # Serving public/ doesn't invoke user code, so it should skip
       # locks etc
@@ -206,7 +206,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
   test "silence healthcheck" do
     add_to_config "config.silence_healthcheck_path = '/up'"
     boot!
-    assert_includes middleware, "Rails::Rack::SilenceRequest"
+    assert_includes middleware, "Zoisite::Rack::SilenceRequest"
   end
 
   test "ActionDispatch::SSL is configured with options when given" do
@@ -214,7 +214,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
     add_to_config "config.ssl_options = { redirect: { host: 'example.com' } }"
     boot!
 
-    assert_equal [{ redirect: { host: "example.com" }, ssl_default_redirect_status: 308 }], Rails.application.middleware[1].args
+    assert_equal [{ redirect: { host: "example.com" }, ssl_default_redirect_status: 308 }], Zoisite.application.middleware[1].args
   end
 
   test "ActionDispatch::PermissionsPolicy::MiddlewareStack is included if permissions_policy set" do
@@ -314,14 +314,14 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
     assert_equal "Rack::Config", middleware.first
   end
 
-  test "Rails.cache does not respond to middleware" do
+  test "Zoisite.cache does not respond to middleware" do
     add_to_config "config.cache_store = :memory_store, { timeout: 10 }"
     boot!
     assert_equal "Rack::Runtime", middleware[5]
-    assert_instance_of ActiveSupport::Cache::MemoryStore, Rails.cache
+    assert_instance_of ActiveSupport::Cache::MemoryStore, Zoisite.cache
   end
 
-  test "Rails.cache does respond to middleware" do
+  test "Zoisite.cache does respond to middleware" do
     boot!
     assert_equal "ActiveSupport::Cache::Strategy::LocalCache", middleware[5]
     assert_equal "Rack::Runtime", middleware[6]
@@ -381,7 +381,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
   test "ORIGINAL_FULLPATH is passed to env" do
     boot!
     env = ::Rack::MockRequest.env_for("/foo/?something")
-    Rails.application.call(env)
+    Zoisite.application.call(env)
 
     assert_equal "/foo/?something", env["ORIGINAL_FULLPATH"]
   end
@@ -396,7 +396,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
 
   test "database selector middleware is installed from config/initializers" do
     app_file "config/initializers/multi_db.rb", <<-RUBY
-      Rails.application.configure do
+      Zoisite.application.configure do
         config.active_record.database_selector = { delay: 15.seconds }
         config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
         config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
@@ -418,7 +418,7 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
 
   test "shard selector middleware is installed from config/initializers" do
     app_file "config/initializers/multi_db.rb", <<-RUBY
-      Rails.application.configure do
+      Zoisite.application.configure do
         config.active_record.shard_selector = { lock: true }
         config.active_record.shard_resolver = ->(request) { Tenant.find_by!(host: request.host).shard }
       end
@@ -435,6 +435,6 @@ class Rails::Command::MiddlewareTest < ActiveSupport::TestCase
     end
 
     def middleware
-      Rails.application.middleware.map(&:klass).map(&:name)
+      Zoisite.application.middleware.map(&:klass).map(&:name)
     end
 end

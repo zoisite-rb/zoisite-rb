@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite-rb.orgmand"
 
-class Rails::Command::TestTest < ActiveSupport::TestCase
+class Zoisite::Command::TestTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
@@ -92,7 +92,7 @@ class Rails::Command::TestTest < ActiveSupport::TestCase
 
   private
     def run_test_command(subcommand = "test", *args, **options)
-      rails subcommand, args, **options
+      zoisite subcommand, args, **options
     end
 
     def enhance_prepare_task_with_output(output)

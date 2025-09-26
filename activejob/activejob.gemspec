@@ -15,22 +15,22 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "https://rubyonrails.org"
+  s.homepage = "https://zoisite-rb.org"
 
   s.files        = Dir["CHANGELOG.md", "MIT-LICENSE", "README.md", "lib/**/*"]
   s.require_path = "lib"
 
   s.metadata = {
-    "bug_tracker_uri"   => "https://github.com/rails/rails/issues",
-    "changelog_uri"     => "https://github.com/rails/rails/blob/v#{version}/activejob/CHANGELOG.md",
-    "documentation_uri" => "https://api.rubyonrails.org/v#{version}/",
-    "mailing_list_uri"  => "https://discuss.rubyonrails.org/c/rubyonrails-talk",
-    "source_code_uri"   => "https://github.com/rails/rails/tree/v#{version}/activejob",
+    "bug_tracker_uri"   => "https://github.com/zoisite-rb/zoisite-rb/issues",
+    "changelog_uri"     => "https://github.com/zoisite-rb/zoisite-rb/blob/v#{version}/activejob/CHANGELOG.md",
+    "documentation_uri" => "https://api.zoisite-rb.org/v#{version}/",
+    "mailing_list_uri"  => "https://discuss.zoisite-rb.org/c/zoisite-talk",
+    "source_code_uri"   => "https://github.com/zoisite-rb/zoisite-rb/tree/v#{version}/activejob",
     "rubygems_mfa_required" => "true",
   }
 
   # NOTE: Please read our dependency guidelines before updating versions:
-  # https://edgeguides.rubyonrails.org/security.html#dependency-management-and-cves
+  # https://edgeguides.zoisite-rb.org/security.html#dependency-management-and-cves
 
   s.add_dependency "activesupport", version
   s.add_dependency "globalid", ">= 0.3.6"

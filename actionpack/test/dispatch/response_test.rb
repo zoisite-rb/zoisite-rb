@@ -475,7 +475,7 @@ class ResponseHeadersTest < ActiveSupport::TestCase
 end
 
 class ResponseIntegrationTest < ActionDispatch::IntegrationTest
-  test "response cache control from railsish app" do
+  test "response cache control from zoisiteish app" do
     @app = lambda { |env|
       ActionDispatch::Response.new.tap { |resp|
         resp.cache_control[:public] = true
@@ -512,7 +512,7 @@ class ResponseIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal({ public: true }, @response.cache_control)
   end
 
-  test "response charset and content type from railsish app" do
+  test "response charset and content type from zoisiteish app" do
     @app = lambda { |env|
       ActionDispatch::Response.new.tap { |resp|
         resp.charset = "utf-16"

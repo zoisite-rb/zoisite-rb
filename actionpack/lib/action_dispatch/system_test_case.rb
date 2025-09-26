@@ -108,7 +108,7 @@ module ActionDispatch
   #       end
   #     end
   #
-  # Because `ActionDispatch::SystemTestCase` is a shim between Capybara and Rails,
+  # Because `ActionDispatch::SystemTestCase` is a shim between Capybara and Zoisite,
   # any driver that is supported by Capybara is supported by system tests as long
   # as you include the required gems and files.
   class SystemTestCase < ActiveSupport::TestCase
@@ -128,7 +128,7 @@ module ActionDispatch
     def self.start_application # :nodoc:
       Capybara.app = Rack::Builder.new do
         map "/" do
-          run Rails.application
+          run Zoisite.application
         end
       end
 

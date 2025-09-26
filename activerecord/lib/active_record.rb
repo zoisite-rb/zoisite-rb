@@ -24,7 +24,7 @@
 #++
 
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "active_support/ordered_options"
 require "active_support/core_ext/array/conversions"
 require "active_model"
@@ -248,7 +248,7 @@ module ActiveRecord
       when :raise
         ->(warning) { raise warning }
       when :report
-        ->(warning) { Rails.error.report(warning, handled: true) }
+        ->(warning) { Zoisite.error.report(warning, handled: true) }
       when Proc
         action
       else
@@ -372,7 +372,7 @@ module ActiveRecord
 
   ##
   # :singleton-method: schema_format
-  # Specifies the format to use when dumping the database schema with Rails'
+  # Specifies the format to use when dumping the database schema with Zoisite'
   # Rakefile. If :sql, the schema is dumped as (potentially database-
   # specific) SQL statements. If :ruby, the schema is dumped as an
   # ActiveRecord::Schema file which can be loaded into any database that
@@ -419,7 +419,7 @@ module ActiveRecord
   ##
   # :singleton-method: dump_schema_after_migration
   # Specify whether schema dump should happen at the end of the
-  # bin/rails db:migrate command. This is true by default, which is useful for the
+  # bin/zoisite db:migrate command. This is true by default, which is useful for the
   # development environment. This should ideally be false in the production
   # environment where dumping schema is rarely needed.
   singleton_class.attr_accessor :dump_schema_after_migration
@@ -437,7 +437,7 @@ module ActiveRecord
 
   ##
   # :singleton-method: verify_foreign_keys_for_fixtures
-  # If true, Rails will verify all foreign keys in the database after loading fixtures.
+  # If true, Zoisite will verify all foreign keys in the database after loading fixtures.
   # An error will be raised if there are any foreign key violations, indicating incorrectly
   # written fixtures.
   # Supported by PostgreSQL and SQLite.
@@ -539,7 +539,7 @@ module ActiveRecord
   # :singleton-method: message_verifiers
   #
   # ActiveSupport::MessageVerifiers instance for Active Record. If you are using
-  # Rails, this will be set to +Rails.application.message_verifiers+.
+  # Zoisite, this will be set to +Zoisite.application.message_verifiers+.
   singleton_class.attr_accessor :message_verifiers
 
   def self.eager_load!

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Encryption
 ========================
@@ -23,16 +23,16 @@ Active Record Encryption exists to protect sensitive information in your applica
 
 As an immediate practical benefit, encrypting sensitive attributes adds an additional security layer. For example, if an attacker gained access to your database, a snapshot of it, or your application logs, they wouldn't be able to make sense of the encrypted information. Additionally, encryption can prevent developers from unintentionally exposing users' sensitive data in application logs.
 
-But more importantly, by using Active Record Encryption, you define what constitutes sensitive information in your application at the code level. Active Record Encryption enables granular control of data access in your application and services consuming data from your application. For example, consider [auditable Rails consoles that protect encrypted data](https://github.com/basecamp/console1984) or check the built-in system to [filter controller params automatically](#filtering-params-named-as-encrypted-columns).
+But more importantly, by using Active Record Encryption, you define what constitutes sensitive information in your application at the code level. Active Record Encryption enables granular control of data access in your application and services consuming data from your application. For example, consider [auditable Zoisite consoles that protect encrypted data](https://github.com/basecamp/console1984) or check the built-in system to [filter controller params automatically](#filtering-params-named-as-encrypted-columns).
 
 ## Basic Usage
 
 ### Setup
 
-Run `bin/rails db:encryption:init` to generate a random key set:
+Run `bin/zoisite db:encryption:init` to generate a random key set:
 
 ```bash
-$ bin/rails db:encryption:init
+$ bin/zoisite db:encryption:init
 Add this entry to the credentials of the target environment:
 
 active_record_encryption:
@@ -41,7 +41,7 @@ active_record_encryption:
   key_derivation_salt: xEY0dt6TZcAMg52K7O84wYzkjvbA62Hz
 ```
 
-These values can be stored by copying and pasting the generated values into your existing [Rails credentials](/security.html#custom-credentials). Alternatively, these values can be configured from other sources, such as environment variables:
+These values can be stored by copying and pasting the generated values into your existing [Zoisite credentials](/security.html#custom-credentials). Alternatively, these values can be configured from other sources, such as environment variables:
 
 ```ruby
 config.active_record.encryption.primary_key = ENV["ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY"]
@@ -131,7 +131,7 @@ NOTE: Passing individual encryption options to Action Text attributes is not sup
 
 ### Fixtures
 
-You can get Rails fixtures encrypted automatically by adding this option to your `test.rb`:
+You can get Zoisite fixtures encrypted automatically by adding this option to your `test.rb`:
 
 ```ruby
 config.active_record.encryption.encrypt_fixtures = true
@@ -147,7 +147,7 @@ To encrypt Action Text fixtures, you should place them in `fixtures/action_text/
 
 `active_record.encryption` will serialize values using the underlying type before encrypting them, but, unless using a custom `message_serializer`, *they must be serializable as strings*. Structured types like `serialized` are supported out of the box.
 
-If you need to support a custom type, the recommended way is to use a [serialized attribute](https://api.rubyonrails.org/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html). The declaration of the serialized attribute should go **before** the encryption declaration:
+If you need to support a custom type, the recommended way is to use a [serialized attribute](https://api.zoisite-rb.org/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html). The declaration of the serialized attribute should go **before** the encryption declaration:
 
 ```ruby
 # CORRECT
@@ -266,7 +266,7 @@ end
 
 ### Filtering Params Named as Encrypted Columns
 
-By default, encrypted columns are configured to be [automatically filtered in Rails logs](configuring.html#config-filter-parameters). You can disable this behavior by adding the following to your `application.rb`:
+By default, encrypted columns are configured to be [automatically filtered in Zoisite logs](configuring.html#config-filter-parameters). You can disable this behavior by adding the following to your `application.rb`:
 
 ```ruby
 config.active_record.encryption.add_to_filter_parameters = false
@@ -278,7 +278,7 @@ If filtering is enabled, but you want to exclude specific columns from automatic
 config.active_record.encryption.excluded_from_filter_parameters = [:catchphrase]
 ```
 
-When generating the filter parameter, Rails will use the model name as a prefix. E.g: For `Person#name`, the filter parameter will be `person.name`.
+When generating the filter parameter, Zoisite will use the model name as a prefix. E.g: For `Person#name`, the filter parameter will be `person.name`.
 
 ### Encoding
 
@@ -476,7 +476,7 @@ article.encrypted_attribute?(:title)
 
 You can configure Active Record Encryption options in your `application.rb` (most common scenario) or in a specific environment config file `config/environments/<env name>.rb` if you want to set them on a per-environment basis.
 
-WARNING: It's recommended to use Rails built-in credentials support to store keys. If you prefer to set them manually via config properties, make sure you don't commit them with your code (e.g. use environment variables).
+WARNING: It's recommended to use Zoisite built-in credentials support to store keys. If you prefer to set them manually via config properties, make sure you don't commit them with your code (e.g. use environment variables).
 
 #### `config.active_record.encryption.support_unencrypted_data`
 
@@ -605,4 +605,4 @@ ActiveRecord::Encryption.protecting_encrypted_data do
 end
 ```
 
-This can be handy if you want to protect encrypted data while still running arbitrary code against it (e.g. in a Rails console).
+This can be handy if you want to protect encrypted data while still running arbitrary code against it (e.g. in a Zoisite console).

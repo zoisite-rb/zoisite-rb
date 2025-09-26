@@ -20,7 +20,7 @@ class DebugLocksTest < ActionDispatch::IntegrationTest
 
     thread_ready.wait
 
-    get "/rails/locks"
+    get "/zoisite/locks"
 
     test_terminated.count_down
 

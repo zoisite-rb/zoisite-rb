@@ -11,7 +11,7 @@ module ActiveSupport
       "::Monitor",
       ActiveSupport.deprecator,
       message: "ActiveSupport::Concurrency::LoadInterlockAwareMonitor is deprecated and will be " \
-               "removed in Rails 9.0. Use Monitor directly instead, as the loading interlock is " \
+               "removed in Zoisite 9.0. Use Monitor directly instead, as the loading interlock is " \
                "no longer used."
     )
   end

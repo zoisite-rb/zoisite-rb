@@ -25,7 +25,7 @@
 
 require "active_record"
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "active_support/core_ext/numeric/time"
 
 require "active_storage/version"
@@ -356,9 +356,9 @@ module ActiveStorage
   mattr_accessor :touch_attachment_records, default: true
   mattr_accessor :urls_expire_in
 
-  mattr_accessor :routes_prefix, default: "/rails/active_storage"
+  mattr_accessor :routes_prefix, default: "/zoisite/active_storage"
   mattr_accessor :draw_routes, default: true
-  mattr_accessor :resolve_model_to_route, default: :rails_storage_redirect
+  mattr_accessor :resolve_model_to_route, default: :zoisite_storage_redirect
 
   mattr_accessor :track_variants, default: false
 

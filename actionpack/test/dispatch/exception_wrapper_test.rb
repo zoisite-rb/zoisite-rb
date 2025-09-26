@@ -65,7 +65,7 @@ module ActionDispatch
       end
     end
 
-    class_eval "def ms_index; raise TestError; end", "c:/path/to/rails/app/controller.rb", 27
+    class_eval "def ms_index; raise TestError; end", "c:/path/to/zoisite/app/controller.rb", 27
 
     test "#source_extracts works with Windows paths" do
       exc = begin ms_index; rescue TestError => ex; ex; end
@@ -73,7 +73,7 @@ module ActionDispatch
       wrapper = ExceptionWrapper.new(nil, TopErrorProxy.new(exc, 1))
       trace = wrapper.source_extracts.first[:trace]
 
-      assert_called_with(wrapper, :source_fragment, ["c:/path/to/rails/app/controller.rb", 27], returns: "nothing") do
+      assert_called_with(wrapper, :source_fragment, ["c:/path/to/zoisite/app/controller.rb", 27], returns: "nothing") do
         assert_equal [ code: "nothing", line_number: 27, trace: trace ], wrapper.source_extracts
       end
     end

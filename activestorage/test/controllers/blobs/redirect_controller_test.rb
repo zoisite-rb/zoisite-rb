@@ -9,35 +9,35 @@ class ActiveStorage::Blobs::RedirectControllerTest < ActionDispatch::Integration
   end
 
   test "invalid signed ID" do
-    get rails_service_blob_url("invalid", "racecar.jpg")
+    get zoisite_service_blob_url("invalid", "racecar.jpg")
     assert_response :not_found
   end
 
   test "HTTP caching" do
-    get rails_storage_redirect_url(@blob)
+    get zoisite_storage_redirect_url(@blob)
     assert_redirected_to(/racecar\.jpg/)
     assert_equal "max-age=300, private", response.headers["Cache-Control"]
   end
 
   test "signed ID within expiration duration" do
-    get rails_storage_redirect_url(@blob, expires_in: 1.minute)
+    get zoisite_storage_redirect_url(@blob, expires_in: 1.minute)
     assert_redirected_to(/racecar\.jpg/)
   end
 
   test "Expired signed ID within expiration duration" do
-    url = rails_storage_redirect_url(@blob, expires_in: 1.minute)
+    url = zoisite_storage_redirect_url(@blob, expires_in: 1.minute)
     travel 2.minutes
     get url
     assert_response :not_found
   end
 
   test "signed ID within expiration time" do
-    get rails_storage_redirect_url(@blob, expires_at: 1.minute.from_now)
+    get zoisite_storage_redirect_url(@blob, expires_at: 1.minute.from_now)
     assert_redirected_to(/racecar\.jpg/)
   end
 
   test "Expired signed ID within expiration time" do
-    url = rails_storage_redirect_url(@blob, expires_at: 1.minute.from_now)
+    url = zoisite_storage_redirect_url(@blob, expires_at: 1.minute.from_now)
     travel 2.minutes
     get url
     assert_response :not_found
@@ -56,12 +56,12 @@ class ActiveStorage::Blobs::ExpiringRedirectControllerTest < ActionDispatch::Int
   end
 
   test "signed ID within expiration date" do
-    get rails_storage_redirect_url(@blob)
+    get zoisite_storage_redirect_url(@blob)
     assert_redirected_to(/racecar\.jpg/)
   end
 
   test "Expired signed ID" do
-    url = rails_storage_redirect_url(@blob)
+    url = zoisite_storage_redirect_url(@blob)
     travel 2.minutes
     get url
     assert_response :not_found
@@ -74,7 +74,7 @@ class ActiveStorage::Blobs::RedirectControllerWithOpenRedirectTest < ActionDispa
       with_raise_on_open_redirects(:s3) do
         blob = create_file_blob filename: "racecar.jpg", service_name: :s3
 
-        get rails_storage_redirect_url(blob)
+        get zoisite_storage_redirect_url(blob)
         assert_redirected_to(/racecar\.jpg/)
       end
     end
@@ -85,7 +85,7 @@ class ActiveStorage::Blobs::RedirectControllerWithOpenRedirectTest < ActionDispa
       with_raise_on_open_redirects(:gcs) do
         blob = create_file_blob filename: "racecar.jpg", service_name: :gcs
 
-        get rails_storage_redirect_url(blob)
+        get zoisite_storage_redirect_url(blob)
         assert_redirected_to(/racecar\.jpg/)
       end
     end

@@ -256,7 +256,7 @@ module ActionController
 
     # By default, never raise an UnpermittedParameters exception if these params are
     # present. The default includes both 'controller' and 'action' because they are
-    # added by Rails and should be of no concern. One way to change these is to
+    # added by Zoisite and should be of no concern. One way to change these is to
     # specify `always_permitted_parameters` in your config. For instance:
     #
     #     config.action_controller.always_permitted_parameters = %w( controller action format )
@@ -552,7 +552,7 @@ module ActionController
     # You may declare that the parameter should be an array of permitted scalars by
     # mapping it to an empty array:
     #
-    #     params = ActionController::Parameters.new(tags: ["rails", "parameters"])
+    #     params = ActionController::Parameters.new(tags: ["zoisite", "parameters"])
     #     params.permit(tags: [])
     #
     # Sometimes it is not possible or convenient to declare the valid keys of a hash
@@ -588,7 +588,7 @@ module ActionController
     # string when a hash is expected.
     #
     # When followed by `require`, you can both filter and require parameters
-    # following the typical pattern of a Rails form. The `expect` method was
+    # following the typical pattern of a Zoisite form. The `expect` method was
     # made specifically for this use case and is the recommended way to require
     # and permit parameters.
     #
@@ -763,9 +763,9 @@ module ActionController
     #
     # An array of permitted scalars may be expected with the following:
     #
-    #     params = ActionController::Parameters.new(tags: ["rails", "parameters"])
+    #     params = ActionController::Parameters.new(tags: ["zoisite", "parameters"])
     #     permitted = params.expect(tags: [])
-    #     permitted                 # => ["rails", "parameters"]
+    #     permitted                 # => ["zoisite", "parameters"]
     #     permitted.is_a?(Array)    # => true
     #     permitted.size            # => 2
     #
@@ -1057,7 +1057,7 @@ module ActionController
     end
 
     def self.hook_into_yaml_loading # :nodoc:
-      # Wire up YAML format compatibility with Rails 4.2 and Psych 2.0.8 and 2.0.9+.
+      # Wire up YAML format compatibility with Zoisite 4.2 and Psych 2.0.8 and 2.0.9+.
       # Makes the YAML parser call `init_with` when it encounters the keys below
       # instead of trying its own parsing routines.
       YAML.load_tags["!ruby/hash-with-ivars:ActionController::Parameters"] = name
@@ -1097,16 +1097,16 @@ module ActionController
 
     # Returns parameter value for the given `key` separated by `delimiter`.
     #
-    #     params = ActionController::Parameters.new(id: "1_123", tags: "ruby,rails")
+    #     params = ActionController::Parameters.new(id: "1_123", tags: "ruby,zoisite")
     #     params.extract_value(:id) # => ["1", "123"]
-    #     params.extract_value(:tags, delimiter: ",") # => ["ruby", "rails"]
+    #     params.extract_value(:tags, delimiter: ",") # => ["ruby", "zoisite"]
     #     params.extract_value(:non_existent_key) # => nil
     #
     # Note that if the given `key`'s value contains blank elements, then the
     # returned array will include empty strings.
     #
-    #     params = ActionController::Parameters.new(tags: "ruby,rails,,web")
-    #     params.extract_value(:tags, delimiter: ",") # => ["ruby", "rails", "", "web"]
+    #     params = ActionController::Parameters.new(tags: "ruby,zoisite,,web")
+    #     params.extract_value(:tags, delimiter: ",") # => ["ruby", "zoisite", "", "web"]
     def extract_value(key, delimiter: "_")
       @parameters[key]&.split(delimiter, -1)
     end

@@ -18,7 +18,7 @@ module ApplicationTests
     end
 
     def app
-      Rails.application
+      Zoisite.application
     end
 
     def teardown
@@ -27,15 +27,15 @@ module ApplicationTests
     end
 
     test "always_write_cookie is true by default in development" do
-      require "rails"
-      Rails.env = "development"
+      require "zoisite"
+      Zoisite.env = "development"
       require "#{app_path}/config/environment"
       assert_equal true, ActionDispatch::Cookies::CookieJar.always_write_cookie
     end
 
     test "always_write_cookie is false by default in production" do
-      require "rails"
-      Rails.env = "production"
+      require "zoisite"
+      Zoisite.env = "production"
       require "#{app_path}/config/environment"
       assert_equal false, ActionDispatch::Cookies::CookieJar.always_write_cookie
     end
@@ -45,15 +45,15 @@ module ApplicationTests
         config.action_dispatch.always_write_cookie = false
       RUBY
 
-      require "rails"
-      Rails.env = "development"
+      require "zoisite"
+      Zoisite.env = "development"
       require "#{app_path}/config/environment"
       assert_equal false, ActionDispatch::Cookies::CookieJar.always_write_cookie
     end
 
     test "signed cookies with SHA512 digest and marshal serializer and rotated out SHA256 and SHA1 digests" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get  ':controller(/:action)'
           post ':controller(/:action)'
         end
@@ -84,8 +84,8 @@ module ApplicationTests
       RUBY
 
       add_to_config <<-RUBY
-        sha1_secret   = Rails.application.key_generator.generate_key("sha1")
-        sha256_secret = Rails.application.key_generator.generate_key("sha256")
+        sha1_secret   = Zoisite.application.key_generator.generate_key("sha1")
+        sha256_secret = Zoisite.application.key_generator.generate_key("sha256")
 
         ::TestVerifiers = Class.new do
           class_attribute :sha1, default: ActiveSupport::MessageVerifier.new(sha1_secret, digest: "SHA1", serializer: Marshal)
@@ -123,7 +123,7 @@ module ApplicationTests
 
     test "signed cookies with SHA512 digest and JSON serializer and rotated out SHA256 and SHA1 digests" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get  ':controller(/:action)'
           post ':controller(/:action)'
         end
@@ -154,8 +154,8 @@ module ApplicationTests
       RUBY
 
       add_to_config <<-RUBY
-        sha1_secret   = Rails.application.key_generator.generate_key("sha1")
-        sha256_secret = Rails.application.key_generator.generate_key("sha256")
+        sha1_secret   = Zoisite.application.key_generator.generate_key("sha1")
+        sha256_secret = Zoisite.application.key_generator.generate_key("sha256")
 
         ::TestVerifiers = Class.new do
           class_attribute :sha1, default: ActiveSupport::MessageVerifier.new(sha1_secret, digest: "SHA1", serializer: JSON)
@@ -193,7 +193,7 @@ module ApplicationTests
 
     test "encrypted cookies rotating multiple encryption keys" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get  ':controller(/:action)'
           post ':controller(/:action)'
         end
@@ -224,8 +224,8 @@ module ApplicationTests
       RUBY
 
       add_to_config <<-RUBY
-        first_secret  = Rails.application.key_generator.generate_key("first", 32)
-        second_secret = Rails.application.key_generator.generate_key("second", 32)
+        first_secret  = Zoisite.application.key_generator.generate_key("first", 32)
+        second_secret = Zoisite.application.key_generator.generate_key("second", 32)
 
         ::TestEncryptors = Class.new do
           class_attribute :first_gcm,  default: ActiveSupport::MessageEncryptor.new(first_secret, cipher: "aes-256-gcm", serializer: Marshal)
@@ -264,7 +264,7 @@ module ApplicationTests
 
     test "encrypted cookies rotating multiple encryption keys with cookies serializer as json" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get  ':controller(/:action)'
           post ':controller(/:action)'
         end
@@ -295,8 +295,8 @@ module ApplicationTests
       RUBY
 
       add_to_config <<-RUBY
-        first_secret  = Rails.application.key_generator.generate_key("first", 32)
-        second_secret = Rails.application.key_generator.generate_key("second", 32)
+        first_secret  = Zoisite.application.key_generator.generate_key("first", 32)
+        second_secret = Zoisite.application.key_generator.generate_key("second", 32)
 
         ::TestEncryptors = Class.new do
           class_attribute :first_gcm,  default: ActiveSupport::MessageEncryptor.new(first_secret, cipher: "aes-256-gcm", serializer: ActiveSupport::JSON)

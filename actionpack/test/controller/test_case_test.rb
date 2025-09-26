@@ -3,7 +3,7 @@
 require "abstract_unit"
 require "controller/fake_controllers"
 require "active_support/json/decoding"
-require "rails/engine"
+require "zoisite/engine"
 
 class TestCaseTest < ActionController::TestCase
   def self.fixture_paths
@@ -908,7 +908,7 @@ class TestCaseTest < ActionController::TestCase
   READ_PLAIN = "r:binary"
 
   def test_test_uploaded_file
-    filename = "ruby_on_rails.jpg"
+    filename = "zoisite.jpg"
     path = "#{FILES_DIR}/#{filename}"
     content_type = "image/png"
     expected = File.read(path)
@@ -926,7 +926,7 @@ class TestCaseTest < ActionController::TestCase
   end
 
   def test_test_uploaded_file_with_binary
-    filename = "ruby_on_rails.jpg"
+    filename = "zoisite.jpg"
     path = "#{FILES_DIR}/#{filename}"
     content_type = "image/png"
 
@@ -938,7 +938,7 @@ class TestCaseTest < ActionController::TestCase
   end
 
   def test_fixture_file_upload_with_binary
-    filename = "ruby_on_rails.jpg"
+    filename = "zoisite.jpg"
     path = "#{FILES_DIR}/#{filename}"
     content_type = "image/jpeg"
 
@@ -950,32 +950,32 @@ class TestCaseTest < ActionController::TestCase
   end
 
   def test_fixture_file_upload_should_be_able_access_to_tempfile
-    file = fixture_file_upload(FILES_DIR + "/ruby_on_rails.jpg", "image/jpeg")
+    file = fixture_file_upload(FILES_DIR + "/zoisite.jpg", "image/jpeg")
     assert_respond_to file, :tempfile
   end
 
   def test_fixture_file_upload
     post :test_file_upload,
       params: {
-        file: fixture_file_upload(FILES_DIR + "/ruby_on_rails.jpg", "image/jpeg")
+        file: fixture_file_upload(FILES_DIR + "/zoisite.jpg", "image/jpeg")
       }
     assert_equal "45142", @response.body
   end
 
   def test_fixture_file_upload_ignores_fixture_paths_given_full_path
     TestCaseTest.stub :fixture_paths, __dir__ do
-      uploaded_file = fixture_file_upload("#{FILES_DIR}/ruby_on_rails.jpg", "image/jpeg")
-      assert_equal File.open("#{FILES_DIR}/ruby_on_rails.jpg", READ_PLAIN).read, uploaded_file.read
+      uploaded_file = fixture_file_upload("#{FILES_DIR}/zoisite.jpg", "image/jpeg")
+      assert_equal File.open("#{FILES_DIR}/zoisite.jpg", READ_PLAIN).read, uploaded_file.read
     end
   end
 
   def test_fixture_file_upload_ignores_empty_fixture_paths
-    uploaded_file = fixture_file_upload("#{FILES_DIR}/ruby_on_rails.jpg", "image/jpeg")
-    assert_equal File.open("#{FILES_DIR}/ruby_on_rails.jpg", READ_PLAIN).read, uploaded_file.read
+    uploaded_file = fixture_file_upload("#{FILES_DIR}/zoisite.jpg", "image/jpeg")
+    assert_equal File.open("#{FILES_DIR}/zoisite.jpg", READ_PLAIN).read, uploaded_file.read
   end
 
   def test_action_dispatch_uploaded_file_upload
-    filename = "ruby_on_rails.jpg"
+    filename = "zoisite.jpg"
     path = "#{FILES_DIR}/#{filename}"
     post :test_file_upload, params: {
       file: Rack::Test::UploadedFile.new(path, "image/jpeg", true)
@@ -1147,7 +1147,7 @@ class ResponseDefaultHeadersTest < ActionController::TestCase
 end
 
 module EngineControllerTests
-  class Engine < ::Rails::Engine
+  class Engine < ::Zoisite::Engine
     isolate_namespace EngineControllerTests
 
     routes.draw do

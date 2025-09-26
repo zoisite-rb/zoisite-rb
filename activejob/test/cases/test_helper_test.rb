@@ -593,7 +593,7 @@ class EnqueuedJobsTest < ActiveJob::TestCase
     def test_assert_enqueued_with_supports_matcher_procs
       facets = {
         job: HelloJob,
-        args: ["Rails"],
+        args: ["Zoisite"],
         at: Date.tomorrow.noon,
         queue: "important",
       }
@@ -1939,7 +1939,7 @@ class PerformedJobsTest < ActiveJob::TestCase
     def test_assert_performed_with_supports_matcher_procs
       facets = {
         job: HelloJob,
-        args: ["Rails"],
+        args: ["Zoisite"],
         at: Date.tomorrow.noon,
         queue: "important",
       }

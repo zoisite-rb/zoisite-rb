@@ -7,8 +7,8 @@ module ActionView
     extend ActiveSupport::Concern
 
     included do
-      # Fallback cache store if Action View is used without Rails.
-      # Otherwise overridden in Railtie to use Rails.cache.
+      # Fallback cache store if Action View is used without Zoisite.
+      # Otherwise overridden in Railtie to use Zoisite.cache.
       mattr_accessor :collection_cache, default: ActiveSupport::Cache::MemoryStore.new
     end
 

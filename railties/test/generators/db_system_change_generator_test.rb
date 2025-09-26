@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/db/system/change/change_generator"
+require "zoisite/generators/zoisite/db/system/change/change_generator"
 
-module Rails
+module Zoisite
   module Generators
     module Db
       module System
-        class ChangeGeneratorTest < Rails::Generators::TestCase
+        class ChangeGeneratorTest < Zoisite::Generators::TestCase
           include GeneratorsTestHelper
 
           setup do
@@ -53,12 +53,12 @@ module Rails
 
             assert_devcontainer_json_file do |content|
               assert_equal "postgres", content["containerEnv"]["DB_HOST"]
-              assert_includes content["features"].keys, "ghcr.io/rails/devcontainer/features/postgres-client"
-              assert_not_includes content["features"].keys, "ghcr.io/rails/devcontainer/features/sqlite"
+              assert_includes content["features"].keys, "ghcr.io/zoisite/devcontainer/features/postgres-client"
+              assert_not_includes content["features"].keys, "ghcr.io/zoisite/devcontainer/features/sqlite"
             end
 
             assert_compose_file do |compose_config|
-              assert_includes compose_config["services"]["rails-app"]["depends_on"], "postgres"
+              assert_includes compose_config["services"]["zoisite-app"]["depends_on"], "postgres"
 
               expected_postgres_config = {
                 "image" => "postgres:16.1",
@@ -96,11 +96,11 @@ module Rails
 
             assert_devcontainer_json_file do |content|
               assert_equal "mysql", content["containerEnv"]["DB_HOST"]
-              assert_equal({}, content["features"]["ghcr.io/rails/devcontainer/features/mysql-client"])
+              assert_equal({}, content["features"]["ghcr.io/zoisite/devcontainer/features/mysql-client"])
             end
 
             assert_compose_file do |compose_config|
-              assert_includes compose_config["services"]["rails-app"]["depends_on"], "mysql"
+              assert_includes compose_config["services"]["zoisite-app"]["depends_on"], "mysql"
 
               expected_mysql_config = {
                 "image" => "mysql/mysql-server:8.0",
@@ -169,7 +169,7 @@ module Rails
             end
 
             assert_compose_file do |compose_config|
-              assert_includes compose_config["services"]["rails-app"]["depends_on"], "mariadb"
+              assert_includes compose_config["services"]["zoisite-app"]["depends_on"], "mariadb"
 
               expected_mariadb_config = {
                 "image" => "mariadb:10.5",
@@ -209,11 +209,11 @@ module Rails
 
             assert_devcontainer_json_file do |content|
               assert_not_includes content["containerEnv"].keys, "DB_HOST"
-              assert_not_includes content["features"].keys, "ghcr.io\/rails\/devcontainer\/features\/mysql-client"
+              assert_not_includes content["features"].keys, "ghcr.io\/zoisite\/devcontainer\/features\/mysql-client"
             end
 
             assert_compose_file do |compose_config|
-              assert_not_includes compose_config["services"]["rails-app"].keys, "depends_on"
+              assert_not_includes compose_config["services"]["zoisite-app"].keys, "depends_on"
               assert_not_includes compose_config["services"].keys, "mysql"
               assert_not_includes compose_config.keys, "volumes"
             end

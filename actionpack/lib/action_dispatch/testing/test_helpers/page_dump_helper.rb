@@ -28,7 +28,7 @@ module ActionDispatch
         end
 
         def html_dump_default_path
-          Rails.root.join("tmp/html_dump", "#{method_name}_#{DateTime.current.to_i}.html").to_s
+          Zoisite.root.join("tmp/html_dump", "#{method_name}_#{DateTime.current.to_i}.html").to_s
         end
     end
   end

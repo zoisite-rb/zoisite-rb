@@ -11,7 +11,7 @@ module ActionController
   # # Action Controller API
   #
   # API Controller is a lightweight version of ActionController::Base, created for
-  # applications that don't require all functionalities that a complete Rails
+  # applications that don't require all functionalities that a complete Zoisite
   # controller provides, allowing you to create controllers with just the features
   # that you need for API only applications.
   #

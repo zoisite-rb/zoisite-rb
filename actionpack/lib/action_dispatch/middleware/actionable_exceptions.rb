@@ -7,7 +7,7 @@ require "active_support/actionable_error"
 
 module ActionDispatch
   class ActionableExceptions # :nodoc:
-    cattr_accessor :endpoint, default: "/rails/actions"
+    cattr_accessor :endpoint, default: "/zoisite/actions"
 
     def initialize(app)
       @app = app

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/resource/resource_generator"
+require "zoisite/generators/zoisite/resource/resource_generator"
 
-class ResourceGeneratorTest < Rails::Generators::TestCase
+class ResourceGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(account)
 
   def setup
     super
     copy_routes
-    Rails::Generators::ModelHelpers.skip_warn = false
+    Zoisite::Generators::ModelHelpers.skip_warn = false
   end
 
   def test_help_with_usage_description

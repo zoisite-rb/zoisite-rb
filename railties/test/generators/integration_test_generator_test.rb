@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/integration_test/integration_test_generator"
+require "zoisite/generators/zoisite/integration_test/integration_test_generator"
 
-class IntegrationTestGeneratorTest < Rails::Generators::TestCase
+class IntegrationTestGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   def test_integration_test_skeleton_is_created

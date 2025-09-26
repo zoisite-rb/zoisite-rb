@@ -82,7 +82,7 @@ module ActiveSupport
       #   end
       #   # => nil
       #
-      #   deprecator.allow ['something broke'], if: Rails.env.production? do
+      #   deprecator.allow ['something broke'], if: Zoisite.env.production? do
       #     deprecator.warn('something broke!')
       #   end
       #   # => ActiveSupport::DeprecationException for dev/test, nil for production
@@ -107,11 +107,11 @@ module ActiveSupport
         # Outputs a deprecation warning message
         #
         #   deprecated_method_warning(:method_name)
-        #   # => "method_name is deprecated and will be removed from Rails #{deprecation_horizon}"
+        #   # => "method_name is deprecated and will be removed from Zoisite #{deprecation_horizon}"
         #   deprecated_method_warning(:method_name, :another_method)
-        #   # => "method_name is deprecated and will be removed from Rails #{deprecation_horizon} (use another_method instead)"
+        #   # => "method_name is deprecated and will be removed from Zoisite #{deprecation_horizon} (use another_method instead)"
         #   deprecated_method_warning(:method_name, "Optional message")
-        #   # => "method_name is deprecated and will be removed from Rails #{deprecation_horizon} (Optional message)"
+        #   # => "method_name is deprecated and will be removed from Zoisite #{deprecation_horizon} (Optional message)"
         def deprecated_method_warning(method_name, message = nil)
           warning = "#{method_name} is deprecated and will be removed from #{gem_name} #{deprecation_horizon}"
           case message

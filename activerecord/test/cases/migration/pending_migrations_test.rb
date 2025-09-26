@@ -53,7 +53,7 @@ module ActiveRecord
           assert_no_pending_migrations
         end
 
-        # Regression test for https://github.com/rails/rails/pull/29759
+        # Regression test for https://github.com/zoisite-rb/zoisite-rb/pull/29759
         def test_understands_migrations_created_out_of_order
           # With a prior file before even initialization
           create_migration "05", "create_bar"

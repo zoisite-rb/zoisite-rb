@@ -1,11 +1,11 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action View Overview
 ====================
 
 After reading this guide, you will know:
 
-* What Action View is and how to use it with Rails.
+* What Action View is and how to use it with Zoisite.
 * How best to use templates, partials, and layouts.
 * How to use localized views.
 
@@ -31,13 +31,13 @@ HTML tags for forms, dates, and strings. It's also possible to add custom
 helpers to your application as needed.
 
 NOTE: Action View can make use of Active Model features like
-[`to_param`](https://api.rubyonrails.org/classes/ActiveModel/Conversion.html#method-i-to_param)
+[`to_param`](https://api.zoisite-rb.org/classes/ActiveModel/Conversion.html#method-i-to_param)
 and
-[`to_partial_path`](https://api.rubyonrails.org/classes/ActiveModel/Conversion.html#method-i-to_partial_path)
+[`to_partial_path`](https://api.zoisite-rb.org/classes/ActiveModel/Conversion.html#method-i-to_partial_path)
 to simplify code. That doesn't mean Action View depends on Active Model. Action
 View is an independent package that can be used with any Ruby library.
 
-Using Action View with Rails
+Using Action View with Zoisite
 ----------------------------
 
 Action View templates (aka "views") are stored in subdirectories in the
@@ -45,11 +45,11 @@ Action View templates (aka "views") are stored in subdirectories in the
 controller. The view files inside that subdirectory are used to render specific
 views as a response to controller actions.
 
-For example, when you use scaffolding to generate an `article` resource, Rails
+For example, when you use scaffolding to generate an `article` resource, Zoisite
 generates the following files in `app/views/articles`:
 
 ```bash
-$ bin/rails generate scaffold article
+$ bin/zoisite generate scaffold article
       [...]
       invoke  scaffold_controller
       create    app/controllers/articles_controller.rb
@@ -63,11 +63,11 @@ $ bin/rails generate scaffold article
       [...]
 ```
 
-The file names follow a Rails naming convention. They share their name with the
+The file names follow a Zoisite naming convention. They share their name with the
 associated controller action. For example the `index.html.erb`, `edit.html.erb`,
 etc.
 
-By following this naming convention, Rails will automatically find and render
+By following this naming convention, Zoisite will automatically find and render
 the matching view at the end of a controller action, without you having to
 specify it. For example, the `index` action in the `articles_controller.rb` will
 automatically render the `index.html.erb` view inside the `app/views/articles/`
@@ -84,12 +84,12 @@ Templates
 Action View templates can be written in different formats. If the template file
 has a `.erb` extension, it uses embedded Ruby to build an HTML response. If the
 template has a `.jbuilder` extension, it uses the
-[Jbuilder](https://github.com/rails/jbuilder) gem to build a JSON response. And
+[Jbuilder](https://github.com/zoisite/jbuilder) gem to build a JSON response. And
 a template with a `.builder` extension uses the
-[`Builder::XmlMarkup`](https://github.com/rails/builder) library to build an XML
+[`Builder::XmlMarkup`](https://github.com/zoisite/builder) library to build an XML
 response.
 
-Rails uses the file extension to distinguish among multiple template systems.
+Zoisite uses the file extension to distinguish among multiple template systems.
 For example, an HTML file using the ERB template system will have `.html.erb` as
 a file extension, and a JSON file using the Jbuilder template system will have
 the `.json.jbuilder` file extension. Other libraries may add other template
@@ -100,7 +100,7 @@ types and file extensions as well.
 An ERB template is a way to sprinkle Ruby code within static HTML using special
 ERB tags like `<% %>` and `<%= %>`.
 
-When Rails processes the ERB view templates ending with `.html.erb`, it
+When Zoisite processes the ERB view templates ending with `.html.erb`, it
 evaluates the embedded Ruby code and replaces the ERB tags with the dynamic
 output. That dynamic content is combined with the static HTML markup to form the
 final HTML response.
@@ -137,8 +137,8 @@ interchangeably with `<%` and `%>`.
 
 ### Jbuilder
 
-`Jbuilder` is a gem that's maintained by the Rails team and included in the
-default Rails `Gemfile`. It is used to build JSON responses using templates.
+`Jbuilder` is a gem that's maintained by the Zoisite team and included in the
+default Zoisite `Gemfile`. It is used to build JSON responses using templates.
 
 If you don't have it, you can add the following to your `Gemfile`:
 
@@ -165,7 +165,7 @@ would produce:
 }
 ```
 
-See the [Jbuilder documentation](https://github.com/rails/jbuilder#jbuilder) for
+See the [Jbuilder documentation](https://github.com/zoisite/jbuilder#jbuilder) for
 more examples.
 
 ### Builder
@@ -181,7 +181,7 @@ Here is a basic examples:
 ```ruby
 xml.em("emphasized")
 xml.em { xml.b("emph & bold") }
-xml.a("A Link", "href" => "https://rubyonrails.org")
+xml.a("A Link", "href" => "https://zoisite-rb.org")
 xml.target("name" => "compile", "option" => "fast")
 ```
 
@@ -190,7 +190,7 @@ which would produce:
 ```html
 <em>emphasized</em>
 <em><b>emph &amp; bold</b></em>
-<a href="https://rubyonrails.org">A link</a>
+<a href="https://zoisite-rb.org">A link</a>
 <target option="fast" name="compile" />
 ```
 
@@ -213,17 +213,17 @@ would produce something like:
 </div>
 ```
 
-See [Builder documentation](https://github.com/rails/builder) for more examples.
+See [Builder documentation](https://github.com/zoisite/builder) for more examples.
 
 ### Template Compilation
 
-By default, Rails will compile each template to a method to render it. In the
-development environment, when you alter a template, Rails will check the file's
+By default, Zoisite will compile each template to a method to render it. In the
+development environment, when you alter a template, Zoisite will check the file's
 modification time and recompile it.
 
 There is also Fragment Caching for when different parts of the page need to be
 cached and expired separately. Learn more about it in the [caching
-guide](caching_with_rails.html#fragment-caching).
+guide](caching_with_zoisite.html#fragment-caching).
 
 Partials
 --------
@@ -239,7 +239,7 @@ Let's see this in action with some examples:
 ### Rendering Partials
 
 To render a partial as part of a view, you use the
-[`render`](https://api.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render)
+[`render`](https://api.zoisite-rb.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render)
 method within the view:
 
 ```erb
@@ -483,11 +483,11 @@ collections.
 <%= render @products %>
 ```
 
-The above assumes that `@products` is a collection of `Product` instances. Rails
+The above assumes that `@products` is a collection of `Product` instances. Zoisite
 uses naming conventions to determine the name of the partial to use by looking
 at the model name in the collection, `Product` in this case. In fact, you can
 even render a collection made up of instances of different models using this
-shorthand, and Rails will choose the proper partial for each member of the
+shorthand, and Zoisite will choose the proper partial for each member of the
 collection.
 
 ### Spacer Templates
@@ -499,12 +499,12 @@ main partial by using the `:spacer_template` option:
 <%= render partial: @products, spacer_template: "product_ruler" %>
 ```
 
-Rails will render the `_product_ruler.html.erb` partial (with no data passed to
+Zoisite will render the `_product_ruler.html.erb` partial (with no data passed to
 it) between each pair of `_product.html.erb` partials.
 
 ### Counter Variables
 
-Rails also makes a counter variable available within a partial called by the
+Zoisite also makes a counter variable available within a partial called by the
 collection. The variable is named after the title of the partial followed by
 `_counter`. For example, when rendering a collection `@products` the partial
 `_product.html.erb` can access the variable `product_counter`. The variable
@@ -584,7 +584,7 @@ when the key isn't part of the `locals:` options, using `fetch`:
 ```
 
 Combining Ruby 3.1's pattern matching assignment with calls to
-[Hash#with_defaults](https://api.rubyonrails.org/classes/Hash.html#method-i-with_defaults)
+[Hash#with_defaults](https://api.zoisite-rb.org/classes/Hash.html#method-i-with_defaults)
 enables compact partial-local default variable assignments:
 
 ```html+erb
@@ -602,7 +602,7 @@ enables compact partial-local default variable assignments:
 ```
 
 [local_assigns]:
-    https://api.rubyonrails.org/classes/ActionView/Template.html#method-i-local_assigns
+    https://api.zoisite-rb.org/classes/ActionView/Template.html#method-i-local_assigns
 
 ### Strict Locals
 
@@ -729,8 +729,8 @@ can be accessed through `binding.local_variable_get`:
 Layouts
 -------
 
-Layouts can be used to render a common view template around the results of Rails
-controller actions. A Rails application can have multiple layouts that pages can
+Layouts can be used to render a common view template around the results of Zoisite
+controller actions. A Zoisite application can have multiple layouts that pages can
 be rendered within.
 
 For example, an application might have one layout for a logged in user and
@@ -740,12 +740,12 @@ actions. The sales layout for a SaaS app might include top-level navigation for
 things like "Pricing" and "Contact Us" pages. Different layouts can have a
 different header and footer content.
 
-To find the layout for the current controller action, Rails first looks for a
+To find the layout for the current controller action, Zoisite first looks for a
 file in `app/views/layouts` with the same base name as the controller. For
 example, rendering actions from the `ProductsController` class will use
 `app/views/layouts/products.html.erb`.
 
-Rails will use `app/views/layouts/application.html.erb` if a controller-specific layout does not exist.
+Zoisite will use `app/views/layouts/application.html.erb` if a controller-specific layout does not exist.
 
 Here is an example of a simple layout in `application.html.erb` file:
 
@@ -753,7 +753,7 @@ Here is an example of a simple layout in `application.html.erb` file:
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= "Your Rails App" %></title>
+  <title><%= "Your Zoisite App" %></title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -779,9 +779,9 @@ Here is an example of a simple layout in `application.html.erb` file:
 In the above example layout, view content will be rendered in place of `<%=
 yield %>`, and surrounded by the same `<head>`, `<nav>`, and `<footer>` content.
 
-Rails provides more ways to assign specific layouts to individual controllers
+Zoisite provides more ways to assign specific layouts to individual controllers
 and actions. You can learn more about layouts in general in the [Layouts and
-Rendering in Rails](layouts_and_rendering.html) guide.
+Rendering in Zoisite](layouts_and_rendering.html) guide.
 
 ### Partial Layouts
 
@@ -851,7 +851,7 @@ the same way they are within the partial.
 Helpers
 -------
 
-Rails provides many helper methods to use with Action View. These include
+Zoisite provides many helper methods to use with Action View. These include
 methods for:
 
 * Formatting dates, strings and numbers
@@ -883,5 +883,5 @@ directory. For example, setting `I18n.locale = :de` and creating
 `public/500.de.html` and `public/404.de.html` would allow you to have localized
 rescue pages.
 
-See the [Rails Internationalization (I18n) API documentation](i18n.html) for
+See the [Zoisite Internationalization (I18n) API documentation](i18n.html) for
 more details.

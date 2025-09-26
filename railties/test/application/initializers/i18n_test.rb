@@ -9,7 +9,7 @@ module ApplicationTests
     def setup
       build_app
       FileUtils.rm_rf "#{app_path}/config/environments"
-      require "rails/all"
+      require "zoisite/all"
     end
 
     def teardown
@@ -21,7 +21,7 @@ module ApplicationTests
     end
 
     def app
-      @app ||= Rails.application
+      @app ||= Zoisite.application
     end
 
     def assert_fallbacks(fallbacks)
@@ -49,7 +49,7 @@ module ApplicationTests
     test "no config locales directory present should return empty load path" do
       FileUtils.rm_rf "#{app_path}/config/locales"
       load_app
-      assert_equal [], Rails.application.config.i18n.load_path
+      assert_equal [], Zoisite.application.config.i18n.load_path
     end
 
     test "locale files should be added to the load path" do
@@ -62,7 +62,7 @@ module ApplicationTests
       load_app
       assert_equal [
         "#{app_path}/config/locales/en.yml", "#{app_path}/config/another_locale.yml"
-      ], Rails.application.config.i18n.load_path
+      ], Zoisite.application.config.i18n.load_path
 
       assert_includes I18n.load_path, "#{app_path}/config/locales/en.yml"
       assert_includes I18n.load_path, "#{app_path}/config/another_locale.yml"
@@ -78,7 +78,7 @@ module ApplicationTests
       load_app
       assert_equal [
         "#{app_path}/config/locales/en.yml", Pathname.new("#{app_path}/config/another_locale.yml")
-      ], Rails.application.config.i18n.load_path
+      ], Zoisite.application.config.i18n.load_path
 
       assert_includes I18n.load_path, "#{app_path}/config/locales/en.yml"
       assert_includes I18n.load_path, Pathname.new("#{app_path}/config/another_locale.yml")
@@ -101,7 +101,7 @@ en:
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/i18n',   :to => lambda { |env| [200, {}, [Foo.instance_variable_get('@foo')]] }
         end
       RUBY
@@ -125,7 +125,7 @@ en:
       YAML
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/i18n',   :to => lambda { |env| [200, {}, [I18n.t(:foo)]] }
         end
       RUBY
@@ -160,7 +160,7 @@ en:
       YAML
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/i18n',   :to => lambda { |env| [200, {}, [I18n.t(:foo)]] }
         end
       RUBY
@@ -196,7 +196,7 @@ en:
       YAML
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/i18n',   :to => lambda { |env| [200, {}, [I18n.load_path.inspect]] }
         end
       RUBY

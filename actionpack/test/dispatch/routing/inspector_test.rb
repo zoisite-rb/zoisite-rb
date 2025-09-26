@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/engine"
+require "zoisite/engine"
 require "action_dispatch/routing/inspector"
 require "io/console/size"
 
@@ -10,7 +10,7 @@ class MountedRackApp
   end
 end
 
-class Rails::DummyController
+class Zoisite::DummyController
 end
 
 module ActionDispatch
@@ -21,7 +21,7 @@ module ActionDispatch
       end
 
       def test_displaying_routes_for_engines
-        engine = Class.new(Rails::Engine) do
+        engine = Class.new(Zoisite::Engine) do
           def self.inspect
             "Blog::Engine"
           end
@@ -48,7 +48,7 @@ module ActionDispatch
       end
 
       def test_displaying_routes_for_engines_without_routes
-        engine = Class.new(Rails::Engine) do
+        engine = Class.new(Zoisite::Engine) do
           def self.inspect
             "Blog::Engine"
           end
@@ -171,7 +171,7 @@ module ActionDispatch
         ], output
       end
 
-      def test_rails_routes_shows_route_with_defaults
+      def test_zoisite_routes_shows_route_with_defaults
         output = draw do
           get "photos/:id" => "photos#show", :defaults => { format: "jpg" }
         end
@@ -182,7 +182,7 @@ module ActionDispatch
         ], output
       end
 
-      def test_rails_routes_shows_route_with_constraints
+      def test_zoisite_routes_shows_route_with_constraints
         output = draw do
           get "photos/:id" => "photos#show", :id => /[A-Z]\d{5}/
         end
@@ -193,7 +193,7 @@ module ActionDispatch
         ], output
       end
 
-      def test_rails_routes_shows_routes_with_dashes
+      def test_zoisite_routes_shows_routes_with_dashes
         output = draw do
           get "about-us" => "pages#about_us"
           get "our-work/latest"
@@ -216,7 +216,7 @@ module ActionDispatch
         ], output
       end
 
-      def test_rails_routes_shows_route_with_rack_app
+      def test_zoisite_routes_shows_route_with_rack_app
         output = draw do
           get "foo/:id" => MountedRackApp, :id => /[A-Z]\d{5}/
         end
@@ -227,7 +227,7 @@ module ActionDispatch
         ], output
       end
 
-      def test_rails_routes_shows_named_route_with_mounted_rack_app
+      def test_zoisite_routes_shows_named_route_with_mounted_rack_app
         output = draw do
           mount MountedRackApp => "/foo"
         end
@@ -238,7 +238,7 @@ module ActionDispatch
         ], output
       end
 
-      def test_rails_routes_shows_overridden_named_route_with_mounted_rack_app_with_name
+      def test_zoisite_routes_shows_overridden_named_route_with_mounted_rack_app_with_name
         output = draw do
           mount MountedRackApp => "/foo", as: "blog"
         end
@@ -249,7 +249,7 @@ module ActionDispatch
         ], output
       end
 
-      def test_rails_routes_shows_route_with_rack_app_nested_with_dynamic_constraints
+      def test_zoisite_routes_shows_route_with_rack_app_nested_with_dynamic_constraints
         constraint = Class.new do
           def inspect
             "( my custom constraint )"
@@ -268,7 +268,7 @@ module ActionDispatch
         ], output
       end
 
-      def test_rails_routes_dont_show_app_mounted_in_assets_prefix
+      def test_zoisite_routes_dont_show_app_mounted_in_assets_prefix
         output = draw do
           get "/sprockets" => MountedRackApp
         end
@@ -276,7 +276,7 @@ module ActionDispatch
         assert_no_match(/\/sprockets/, output.first)
       end
 
-      def test_rails_routes_shows_route_defined_in_under_assets_prefix
+      def test_zoisite_routes_shows_route_defined_in_under_assets_prefix
         output = draw do
           scope "/sprockets" do
             get "/foo" => "foo#bar"
@@ -322,7 +322,7 @@ module ActionDispatch
 
       def test_routes_when_expanded
         ActionDispatch::Routing::Mapper.route_source_locations = true
-        engine = Class.new(Rails::Engine) do
+        engine = Class.new(Zoisite::Engine) do
           def self.inspect
             "Blog::Engine"
           end
@@ -373,13 +373,13 @@ module ActionDispatch
       end
 
       def test_no_routes_matched_filter_when_expanded
-        output = draw(grep: "rails/dummy", formatter: ActionDispatch::Routing::ConsoleFormatter::Expanded.new) do
+        output = draw(grep: "zoisite/dummy", formatter: ActionDispatch::Routing::ConsoleFormatter::Expanded.new) do
           get "photos/:id" => "photos#show", :id => /[A-Z]\d{5}/
         end
 
         assert_equal [
           "No routes were found for this grep pattern.",
-          "For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
@@ -391,7 +391,7 @@ module ActionDispatch
           "",
           "Please add some routes in config/routes.rb.",
           "",
-          "For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
@@ -426,24 +426,24 @@ module ActionDispatch
       end
 
       def test_routes_with_undefined_filter
-        output = draw(controller: "Rails::MissingController") do
+        output = draw(controller: "Zoisite::MissingController") do
           get "photos/:id" => "photos#show", :id => /[A-Z]\d{5}/
         end
 
         assert_equal [
           "No routes were found for this controller.",
-          "For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
       def test_no_routes_matched_filter
-        output = draw(grep: "rails/dummy") do
+        output = draw(grep: "zoisite/dummy") do
           get "photos/:id" => "photos#show", :id => /[A-Z]\d{5}/
         end
 
         assert_equal [
           "No routes were found for this grep pattern.",
-          "For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
@@ -455,12 +455,12 @@ module ActionDispatch
           "",
           "Please add some routes in config/routes.rb.",
           "",
-          "For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
       def test_displaying_routes_for_internal_engines
-        engine = Class.new(Rails::Engine) do
+        engine = Class.new(Zoisite::Engine) do
           def self.inspect
             "Blog::Engine"
           end
@@ -493,7 +493,7 @@ module ActionDispatch
       end
 
       def test_displaying_routes_for_engines_with_filter
-        engine = Class.new(Rails::Engine) do
+        engine = Class.new(Zoisite::Engine) do
           def self.inspect
             "Blog::Engine"
           end
@@ -510,7 +510,7 @@ module ActionDispatch
         assert_equal [
           "Routes for application:",
           "No routes were found for this grep pattern.",
-          "For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html.",
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html.",
           "",
           "Routes for Blog::Engine:",
           "Prefix Verb URI Pattern     Controller#Action",
@@ -519,7 +519,7 @@ module ActionDispatch
       end
 
       def test_displaying_routes_for_engines_with_filter_not_matched
-        engine = Class.new(Rails::Engine) do
+        engine = Class.new(Zoisite::Engine) do
           def self.inspect
             "Blog::Engine"
           end
@@ -536,7 +536,7 @@ module ActionDispatch
         assert_equal [
           "Routes for application:",
           "No routes were found for this grep pattern.",
-          "For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html.",
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html.",
           "",
           "Routes for Blog::Engine:",
           "No routes were found for this grep pattern.",

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails-html-sanitizer"
+require "zoisite-html-sanitizer"
 
 module ActionView
   module Helpers # :nodoc:
@@ -9,7 +9,7 @@ module ActionView
     # The SanitizeHelper module provides a set of methods for scrubbing text of undesired HTML elements.
     # These helper methods extend Action View making them callable within your template files.
     module SanitizeHelper
-      mattr_accessor :sanitizer_vendor, default: Rails::HTML4::Sanitizer
+      mattr_accessor :sanitizer_vendor, default: Zoisite::HTML4::Sanitizer
 
       extend ActiveSupport::Concern
 
@@ -19,16 +19,16 @@ module ActionView
       # also protecting against attempts to use Unicode, ASCII, and hex character references to work
       # around these protocol filters.
       #
-      # The default sanitizer is +Rails::HTML5::SafeListSanitizer+. See {Rails HTML
-      # Sanitizers}[https://github.com/rails/rails-html-sanitizer] for more information.
+      # The default sanitizer is +Zoisite::HTML5::SafeListSanitizer+. See {Zoisite HTML
+      # Sanitizers}[https://github.com/zoisite-rb/zoisite-rb-html-sanitizer] for more information.
       #
       # Custom sanitization rules can also be provided.
       #
       # <b>Warning</b>: Adding disallowed tags or attributes to the allowlists may introduce
       # vulnerabilities into your application. Please rely on the default allowlists whenever
       # possible, because they are curated to maintain security and safety. If you think that the
-      # default allowlists should be expanded, please {open an issue on the rails-html-sanitizer
-      # project}[https://github.com/rails/rails-html-sanitizer/issues].
+      # default allowlists should be expanded, please {open an issue on the zoisite-html-sanitizer
+      # project}[https://github.com/zoisite-rb/zoisite-rb-html-sanitizer/issues].
       #
       # Please note that sanitizing user-provided text does not guarantee that the
       # resulting markup is valid or even well-formed.
@@ -42,7 +42,7 @@ module ActionView
       #   An array of allowed attributes.
       #
       # [+:scrubber+]
-      #   A {Rails::HTML scrubber}[https://github.com/rails/rails-html-sanitizer]
+      #   A {Zoisite::HTML scrubber}[https://github.com/zoisite-rb/zoisite-rb-html-sanitizer]
       #   or {Loofah::Scrubber}[https://github.com/flavorjones/loofah] object that
       #   defines custom sanitization rules. A custom scrubber takes precedence over
       #   custom tags and attributes.
@@ -57,9 +57,9 @@ module ActionView
       #
       #   <%= sanitize @comment.body, tags: %w(strong em a), attributes: %w(href) %>
       #
-      # ===== Providing a custom +Rails::HTML+ scrubber
+      # ===== Providing a custom +Zoisite::HTML+ scrubber
       #
-      #   class CommentScrubber < Rails::HTML::PermitScrubber
+      #   class CommentScrubber < Zoisite::HTML::PermitScrubber
       #     def initialize
       #       super
       #       self.tags = %w( form script comment blockquote )
@@ -75,8 +75,8 @@ module ActionView
       #
       #   <%= sanitize @comment.body, scrubber: CommentScrubber.new %>
       #
-      # See {Rails HTML Sanitizer}[https://github.com/rails/rails-html-sanitizer] for
-      # documentation about +Rails::HTML+ scrubbers.
+      # See {Zoisite HTML Sanitizer}[https://github.com/zoisite-rb/zoisite-rb-html-sanitizer] for
+      # documentation about +Zoisite::HTML+ scrubbers.
       #
       # ===== Providing a custom +Loofah::Scrubber+
       #
@@ -99,21 +99,21 @@ module ActionView
       #   config.action_view.sanitized_allowed_tags = ['strong', 'em', 'a']
       #   config.action_view.sanitized_allowed_attributes = ['href', 'title']
       #
-      # The default, starting in \Rails 7.1, is to use an HTML5 parser for sanitization (if it is
+      # The default, starting in \Zoisite 7.1, is to use an HTML5 parser for sanitization (if it is
       # available, see NOTE below). If you wish to revert back to the previous HTML4 behavior, you
       # can do so by setting the following in your application configuration:
       #
       #   # In config/application.rb
-      #   config.action_view.sanitizer_vendor = Rails::HTML4::Sanitizer
+      #   config.action_view.sanitizer_vendor = Zoisite::HTML4::Sanitizer
       #
-      # Or, if you're upgrading from a previous version of \Rails and wish to opt into the HTML5
+      # Or, if you're upgrading from a previous version of \Zoisite and wish to opt into the HTML5
       # behavior:
       #
       #   # In config/application.rb
-      #   config.action_view.sanitizer_vendor = Rails::HTML5::Sanitizer
+      #   config.action_view.sanitizer_vendor = Zoisite::HTML5::Sanitizer
       #
-      # NOTE: +Rails::HTML5::Sanitizer+ is not supported on JRuby, so on JRuby platforms \Rails will
-      # fall back to using +Rails::HTML4::Sanitizer+.
+      # NOTE: +Zoisite::HTML5::Sanitizer+ is not supported on JRuby, so on JRuby platforms \Zoisite will
+      # fall back to using +Zoisite::HTML4::Sanitizer+.
       def sanitize(html, options = {})
         self.class.safe_list_sanitizer.sanitize(html, options)&.html_safe
       end
@@ -142,8 +142,8 @@ module ActionView
 
       # Strips all link tags from +html+ leaving just the link text.
       #
-      #   strip_links('<a href="http://www.rubyonrails.org">Ruby on Rails</a>')
-      #   # => Ruby on Rails
+      #   strip_links('<a href="http://www.zoisite-rb.org">Ruby on Zoisite</a>')
+      #   # => Ruby on Zoisite
       #
       #   strip_links('Please e-mail me at <a href="mailto:me@email.com">me@email.com</a>.')
       #   # => Please e-mail me at me@email.com.
@@ -172,30 +172,30 @@ module ActionView
           sanitizer_vendor.safe_list_sanitizer.allowed_attributes
         end
 
-        # Gets the Rails::HTML::FullSanitizer instance used by +strip_tags+. Replace with
+        # Gets the Zoisite::HTML::FullSanitizer instance used by +strip_tags+. Replace with
         # any object that responds to +sanitize+.
         #
-        #   class Application < Rails::Application
+        #   class Application < Zoisite::Application
         #     config.action_view.full_sanitizer = MySpecialSanitizer.new
         #   end
         def full_sanitizer
           @full_sanitizer ||= sanitizer_vendor.full_sanitizer.new
         end
 
-        # Gets the Rails::HTML::LinkSanitizer instance used by +strip_links+.
+        # Gets the Zoisite::HTML::LinkSanitizer instance used by +strip_links+.
         # Replace with any object that responds to +sanitize+.
         #
-        #   class Application < Rails::Application
+        #   class Application < Zoisite::Application
         #     config.action_view.link_sanitizer = MySpecialSanitizer.new
         #   end
         def link_sanitizer
           @link_sanitizer ||= sanitizer_vendor.link_sanitizer.new
         end
 
-        # Gets the Rails::HTML::SafeListSanitizer instance used by sanitize and +sanitize_css+.
+        # Gets the Zoisite::HTML::SafeListSanitizer instance used by sanitize and +sanitize_css+.
         # Replace with any object that responds to +sanitize+.
         #
-        #   class Application < Rails::Application
+        #   class Application < Zoisite::Application
         #     config.action_view.safe_list_sanitizer = MySpecialSanitizer.new
         #   end
         def safe_list_sanitizer

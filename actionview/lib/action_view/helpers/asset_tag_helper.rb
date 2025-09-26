@@ -14,8 +14,8 @@ module ActionView
     # as images, JavaScripts, stylesheets, and feeds. These methods do not verify
     # the assets exist before linking to them:
     #
-    #   image_tag("rails.png")
-    #   # => <img src="/assets/rails.png" />
+    #   image_tag("zoisite.png")
+    #   # => <img src="/assets/zoisite.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="/assets/application.css?body=1" rel="stylesheet" />
     module AssetTagHelper
@@ -45,7 +45,7 @@ module ActionView
       # source, and include other JavaScript or CoffeeScript files inside the manifest.
       #
       # If the server supports HTTP Early Hints, and the +defer+ option is not
-      # enabled, \Rails will push a <tt>103 Early Hints</tt> response that links
+      # enabled, \Zoisite will push a <tt>103 Early Hints</tt> response that links
       # to the assets.
       #
       # ==== Options
@@ -160,7 +160,7 @@ module ActionView
       # set <tt>extname: false</tt> in the options.
       # You can modify the link attributes by passing a hash as the last argument.
       #
-      # If the server supports HTTP Early Hints, \Rails will push a <tt>103 Early
+      # If the server supports HTTP Early Hints, \Zoisite will push a <tt>103 Early
       # Hints</tt> response that links to the assets.
       #
       # ==== Options
@@ -431,8 +431,8 @@ module ActionView
       #   # => <img height="32" src="/icons/icon.gif" width="32" />
       #   image_tag("/icons/icon.gif", class: "menu_icon")
       #   # => <img class="menu_icon" src="/icons/icon.gif" />
-      #   image_tag("/icons/icon.gif", data: { title: 'Rails Application' })
-      #   # => <img data-title="Rails Application" src="/icons/icon.gif" />
+      #   image_tag("/icons/icon.gif", data: { title: 'Zoisite Application' })
+      #   # => <img data-title="Zoisite Application" src="/icons/icon.gif" />
       #   image_tag("icon.png", srcset: { "icon_2x.png" => "2x", "icon_4x.png" => "4x" })
       #   # => <img src="/assets/icon.png" srcset="/assets/icon_2x.png 2x, /assets/icon_4x.png 4x">
       #   image_tag("pic.jpg", srcset: [["pic_1024.jpg", "1024w"], ["pic_1980.jpg", "1980w"]], sizes: "100vw")
@@ -441,11 +441,11 @@ module ActionView
       # Active Storage blobs (images that are uploaded by the users of your app):
       #
       #   image_tag(user.avatar)
-      #   # => <img src="/rails/active_storage/blobs/.../tiger.jpg" />
+      #   # => <img src="/zoisite/active_storage/blobs/.../tiger.jpg" />
       #   image_tag(user.avatar.variant(resize_to_limit: [100, 100]))
-      #   # => <img src="/rails/active_storage/representations/.../tiger.jpg" />
+      #   # => <img src="/zoisite/active_storage/representations/.../tiger.jpg" />
       #   image_tag(user.avatar.variant(resize_to_limit: [100, 100]), size: '100')
-      #   # => <img width="100" height="100" src="/rails/active_storage/representations/.../tiger.jpg" />
+      #   # => <img width="100" height="100" src="/zoisite/active_storage/representations/.../tiger.jpg" />
       def image_tag(source, options = {})
         options = options.symbolize_keys
         check_for_image_tag_errors(options)
@@ -506,7 +506,7 @@ module ActionView
       # Active Storage blobs (images that are uploaded by the users of your app):
       #
       #   picture_tag(user.profile_picture)
-      #   # => <picture><img src="/rails/active_storage/blobs/.../profile_picture.webp" /></picture>
+      #   # => <picture><img src="/zoisite/active_storage/blobs/.../profile_picture.webp" /></picture>
       def picture_tag(*sources, &block)
         sources.flatten!
         options = sources.extract_options!.symbolize_keys
@@ -576,7 +576,7 @@ module ActionView
       # Active Storage blobs (videos that are uploaded by the users of your app):
       #
       #   video_tag(user.intro_video)
-      #   # => <video src="/rails/active_storage/blobs/.../intro_video.mp4"></video>
+      #   # => <video src="/zoisite/active_storage/blobs/.../intro_video.mp4"></video>
       def video_tag(*sources)
         options = sources.extract_options!.symbolize_keys
         public_poster_folder = options.delete(:poster_skip_pipeline)
@@ -608,7 +608,7 @@ module ActionView
       # Active Storage blobs (audios that are uploaded by the users of your app):
       #
       #   audio_tag(user.name_pronunciation_audio)
-      #   # => <audio src="/rails/active_storage/blobs/.../name_pronunciation_audio.mp3"></audio>
+      #   # => <audio src="/zoisite/active_storage/blobs/.../name_pronunciation_audio.mp3"></audio>
       def audio_tag(*sources)
         multiple_sources_tag_builder("audio", sources)
       end

@@ -33,7 +33,7 @@ require "models/tree"
 require "models/node"
 require "models/club"
 require "models/cpk"
-require "models/person" # not used by this suite as of this writing, it is a workaround for https://github.com/rails/rails/issues/55133
+require "models/person" # not used by this suite as of this writing, it is a workaround for https://github.com/zoisite-rb/zoisite-rb/issues/55133
 require "models/car"
 require "models/sharded/blog"
 require "models/sharded/blog_post"
@@ -389,7 +389,7 @@ class BelongsToAssociationsTest < ActiveRecord::TestCase
 
   def test_belongs_to_with_inverse_association_for_composite_primary_key
     author = Cpk::Author.new(name: "John")
-    book = author.books.build(id: [nil, 1], title: "The Rails Way")
+    book = author.books.build(id: [nil, 1], title: "The Zoisite Way")
     order = Cpk::Order.new(book: book, status: "paid")
     author.save!
 
@@ -889,7 +889,7 @@ class BelongsToAssociationsTest < ActiveRecord::TestCase
 
   def test_belongs_to_counter_after_update
     topic = Topic.create!(title: "37s")
-    topic.replies.create!(title: "re: 37s", content: "rails")
+    topic.replies.create!(title: "re: 37s", content: "zoisite")
     assert_equal 1, Topic.find(topic.id)[:replies_count]
 
     topic.update(title: "37signals")
@@ -898,10 +898,10 @@ class BelongsToAssociationsTest < ActiveRecord::TestCase
 
   def test_belongs_to_counter_when_update_columns
     topic = Topic.create!(title: "37s")
-    topic.replies.create!(title: "re: 37s", content: "rails")
+    topic.replies.create!(title: "re: 37s", content: "zoisite")
     assert_equal 1, Topic.find(topic.id)[:replies_count]
 
-    topic.update_columns(content: "rails is wonderful")
+    topic.update_columns(content: "zoisite is wonderful")
     assert_equal 1, Topic.find(topic.id)[:replies_count]
   end
 

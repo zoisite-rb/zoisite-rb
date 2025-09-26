@@ -249,7 +249,7 @@ class StaticTest < ActiveSupport::TestCase
 
   def test_serves_files_with_headers
     headers = {
-      "access-control-allow-origin" => "http://rubyonrails.org",
+      "access-control-allow-origin" => "http://zoisite-rb.org",
       "cache-control"               => "public, max-age=60",
       "x-custom-header"             => "I'm a teapot"
     }
@@ -258,7 +258,7 @@ class StaticTest < ActiveSupport::TestCase
 
     response = get("/foo/bar.html")
 
-    assert_equal "http://rubyonrails.org", response.headers["access-control-allow-origin"]
+    assert_equal "http://zoisite-rb.org", response.headers["access-control-allow-origin"]
     assert_equal "public, max-age=60",     response.headers["cache-control"]
     assert_equal "I'm a teapot",           response.headers["x-custom-header"]
   end

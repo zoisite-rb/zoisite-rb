@@ -2,14 +2,14 @@
 
 require "plugin_helpers"
 require "generators/generators_test_helper"
-require "rails/generators/rails/scaffold_controller/scaffold_controller_generator"
+require "zoisite/generators/zoisite/scaffold_controller/scaffold_controller_generator"
 
 module Unknown
   module Generators
   end
 end
 
-class ScaffoldControllerGeneratorTest < Rails::Generators::TestCase
+class ScaffoldControllerGeneratorTest < Zoisite::Generators::TestCase
   include PluginHelpers
   include GeneratorsTestHelper
   arguments %w(User name:string age:integer)
@@ -190,7 +190,7 @@ class ScaffoldControllerGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_customized_orm_is_used
-    klass = Class.new(Rails::Generators::ActiveModel) do
+    klass = Class.new(Zoisite::Generators::ActiveModel) do
       def self.all(klass)
         "#{klass}.find(:all)"
       end
@@ -280,9 +280,9 @@ class ScaffoldControllerGeneratorTest < Rails::Generators::TestCase
     engine_path = File.join(destination_root, "bukkits")
 
     with_new_plugin(engine_path, "--mountable") do
-      quietly { `bin/rails g controller dashboard foo` }
-      quietly { `bin/rails db:migrate RAILS_ENV=test` }
-      assert_match(/2 runs, 2 assertions, 0 failures, 0 errors/, `bin/rails test 2>&1`)
+      quietly { `bin/zoisite g controller dashboard foo` }
+      quietly { `bin/zoisite db:migrate RAILS_ENV=test` }
+      assert_match(/2 runs, 2 assertions, 0 failures, 0 errors/, `bin/zoisite test 2>&1`)
     end
   end
 
@@ -290,9 +290,9 @@ class ScaffoldControllerGeneratorTest < Rails::Generators::TestCase
     engine_path = File.join(destination_root, "bukkits")
 
     with_new_plugin(engine_path, "--full") do
-      quietly { `bin/rails g controller dashboard foo` }
-      quietly { `bin/rails db:migrate RAILS_ENV=test` }
-      assert_match(/2 runs, 2 assertions, 0 failures, 0 errors/, `bin/rails test 2>&1`)
+      quietly { `bin/zoisite g controller dashboard foo` }
+      quietly { `bin/zoisite db:migrate RAILS_ENV=test` }
+      assert_match(/2 runs, 2 assertions, 0 failures, 0 errors/, `bin/zoisite test 2>&1`)
     end
   end
 

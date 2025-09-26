@@ -1,15 +1,15 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
-Securing Rails Applications
+Securing Zoisite Applications
 ===========================
 
-This guide describes common security problems in web applications and how to avoid them with Rails.
+This guide describes common security problems in web applications and how to avoid them with Zoisite.
 
 After reading this guide, you will know:
 
 * How to use the built-in authentication generator.
 * All countermeasures _that are highlighted_.
-* The concept of sessions in Rails, what to put in there and popular attack methods.
+* The concept of sessions in Zoisite, what to put in there and popular attack methods.
 * How just visiting a site can be a security problem (with CSRF).
 * What you have to pay attention to when working with files or providing an administration interface.
 * How to manage users: Logging in and out and attack methods on all layers.
@@ -20,7 +20,7 @@ After reading this guide, you will know:
 Introduction
 ------------
 
-Web application frameworks are made to help developers build web applications. Some of them also help you with securing the web application. In fact one framework is not more secure than another: If you use it correctly, you will be able to build secure apps with many frameworks. Ruby on Rails has some clever helper methods, for example against SQL injection, so this is hardly a problem.
+Web application frameworks are made to help developers build web applications. Some of them also help you with securing the web application. In fact one framework is not more secure than another: If you use it correctly, you will be able to build secure apps with many frameworks. Zoisite has some clever helper methods, for example against SQL injection, so this is hardly a problem.
 
 In general there is no such thing as plug-n-play security. Security depends on the people using the framework, and sometimes on the development method. And it depends on all layers of a web application environment: The back-end storage, the web server, and the web application itself (and possibly other layers or applications).
 
@@ -37,7 +37,7 @@ Authentication is often one of the first features implemented in a web
 application. It serves as the foundation for securing user data and is part of
 most modern web applications.
 
-Starting with version 8.0, Rails comes with a default authentication generator,
+Starting with version 8.0, Zoisite comes with a default authentication generator,
 which provides a solid starting point for securing your application by only
 allowing access to verified users.
 
@@ -45,12 +45,12 @@ The authentication generator adds all of the relevant models, controllers,
 views, routes, and migrations needed for basic authentication and password reset
 functionality.
 
-To use this feature in your application, you can run `bin/rails generate
+To use this feature in your application, you can run `bin/zoisite generate
 authentication`. Here are all of the files the generator modifies and new files
 it adds:
 
 ```bash
-$ bin/rails generate authentication
+$ bin/zoisite generate authentication
       invoke  erb
       create    app/views/passwords/new.html.erb
       create    app/views/passwords/edit.html.erb
@@ -71,11 +71,11 @@ $ bin/rails generate authentication
         gsub  Gemfile
       bundle  install --quiet
     generate  migration CreateUsers email_address:string!:uniq password_digest:string! --force
-       rails  generate migration CreateUsers email_address:string!:uniq password_digest:string! --force
+       zoisite  generate migration CreateUsers email_address:string!:uniq password_digest:string! --force
       invoke  active_record
       create    db/migrate/20241010215312_create_users.rb
     generate  migration CreateSessions user:references ip_address:string user_agent:string --force
-       rails  generate migration CreateSessions user:references ip_address:string user_agent:string --force
+       zoisite  generate migration CreateSessions user:references ip_address:string user_agent:string --force
       invoke  active_record
       create    db/migrate/20241010215314_create_sessions.rb
 ```
@@ -92,7 +92,7 @@ The generator adds two migration files for creating `user` and `session` tables.
 Next step is to run the migrations:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 Then, if you visit `/session/new` in your browser (you will see this route has
@@ -166,7 +166,7 @@ the `authenticate_by` method, and the `Authentication` concern.
 #### `has_secure_password`
 
 The
-[`has_secure_password`](https://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password)
+[`has_secure_password`](https://api.zoisite-rb.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password)
 method is added to the `user` model and takes care of storing a hashed password
 using the `bcrypt` algorithm:
 
@@ -182,7 +182,7 @@ end
 #### `authenticate_by`
 
 The
-[`authenticate_by`](https://api.rubyonrails.org/classes/ActiveRecord/SecurePassword/ClassMethods.html)
+[`authenticate_by`](https://api.zoisite-rb.org/classes/ActiveRecord/SecurePassword/ClassMethods.html)
 method is used in the `SessionsController` while creating a new session to
 validate that the credentials provided by the user match the credentials stored
 in the database (e.g. password) for that user:
@@ -210,7 +210,7 @@ The core functionality around session management is implemented in the
 `Authentication` controller concern, which is included by the
 `ApplicationController` in your application. You can explore details of the
 [authentication
-concern](https://github.com/rails/rails/blob/main/railties/lib/rails/generators/rails/authentication/templates/app/controllers/concerns/authentication.rb.tt)
+concern](https://github.com/zoisite-rb/zoisite-rb/blob/main/railties/lib/zoisite/generators/zoisite/authentication/templates/app/controllers/concerns/authentication.rb.tt)
 in the source code.
 
 One method to note in the `Authentication` concern is `authenticated?`, a helper
@@ -227,7 +227,7 @@ For example:
 ```
 
 TIP: You can find all of the details for the Authentication generator in the
-Rails source code. You are encouraged to explore the implementation details and
+Zoisite source code. You are encouraged to explore the implementation details and
 not treat authentication as a black box.
 
 With the authentication generator configured as above, your application is ready
@@ -245,7 +245,7 @@ INFO: Sessions enable the application to maintain user-specific state, while use
 
 Most applications need to keep track of state for users that interact with the application. This could be the contents of a shopping basket, or the user id of the currently logged in user. This kind of user-specific state can be stored in the session.
 
-Rails provides a session object for each user that accesses the application. If the user already has an active session, Rails uses the existing session. Otherwise a new session is created.
+Zoisite provides a session object for each user that accesses the application. If the user already has an active session, Zoisite uses the existing session. Otherwise a new session is created.
 
 NOTE: Read more about sessions and how to use them in [Action Controller Overview Guide](action_controller_overview.html#session).
 
@@ -257,7 +257,7 @@ Many web applications have an authentication system: a user provides a username 
 
 Hence, the cookie serves as temporary authentication for the web application. Anyone who seizes a cookie from someone else, may use the web application as this user - with possibly severe consequences. Here are some ways to hijack a session, and their countermeasures:
 
-* Sniff the cookie in an insecure network. A wireless LAN can be an example of such a network. In an unencrypted wireless LAN, it is especially easy to listen to the traffic of all connected clients. For the web application builder this means to _provide a secure connection over SSL_. In Rails 3.1 and later, this could be accomplished by always forcing SSL connection in your application config file:
+* Sniff the cookie in an insecure network. A wireless LAN can be an example of such a network. In an unencrypted wireless LAN, it is especially easy to listen to the traffic of all connected clients. For the web application builder this means to _provide a secure connection over SSL_. In Zoisite 3.1 and later, this could be accomplished by always forcing SSL connection in your application config file:
 
     ```ruby
     config.force_ssl = true
@@ -271,11 +271,11 @@ Hence, the cookie serves as temporary authentication for the web application. An
 
 ### Session Storage
 
-NOTE: Rails uses `ActionDispatch::Session::CookieStore` as the default session storage.
+NOTE: Zoisite uses `ActionDispatch::Session::CookieStore` as the default session storage.
 
 TIP: Learn more about other session storages in [Action Controller Overview Guide](action_controller_overview.html#session).
 
-Rails `CookieStore` saves the session hash in a cookie on the client-side.
+Zoisite `CookieStore` saves the session hash in a cookie on the client-side.
 The server retrieves the session hash from the cookie and
 eliminates the need for a session ID. That will greatly increase the
 speed of the application, but it is a controversial storage option and
@@ -292,18 +292,18 @@ limitations of it:
   reused. It may be a good idea to have your application invalidate old
   session cookies using a stored timestamp.
 
-* Rails encrypts cookies by default. The client cannot read or edit the contents of the cookie, without breaking encryption. If you take appropriate care of your secrets, you can consider your cookies to be generally secured.
+* Zoisite encrypts cookies by default. The client cannot read or edit the contents of the cookie, without breaking encryption. If you take appropriate care of your secrets, you can consider your cookies to be generally secured.
 
 The `CookieStore` uses the
-[encrypted](https://api.rubyonrails.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-encrypted)
+[encrypted](https://api.zoisite-rb.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-encrypted)
 cookie jar to provide a secure, encrypted location to store session
 data. Cookie-based sessions thus provide both integrity as well as
 confidentiality to their contents. The encryption key, as well as the
 verification key used for
-[signed](https://api.rubyonrails.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed)
+[signed](https://api.zoisite-rb.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed)
 cookies, is derived from the `secret_key_base` configuration value.
 
-TIP: Secrets must be long and random. Use `bin/rails secret` to get new unique secrets.
+TIP: Secrets must be long and random. Use `bin/zoisite secret` to get new unique secrets.
 
 INFO: Learn more about [managing credentials later in this guide](security.html#custom-credentials)
 
@@ -334,14 +334,14 @@ For instance to change the digest used for signed cookies from SHA1 to SHA256,
 you would first assign the new configuration value:
 
 ```ruby
-Rails.application.config.action_dispatch.signed_cookie_digest = "SHA256"
+Zoisite.application.config.action_dispatch.signed_cookie_digest = "SHA256"
 ```
 
 Now add a rotation for the old SHA1 digest so existing cookies are
 seamlessly upgraded to the new SHA256 digest.
 
 ```ruby
-Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
+Zoisite.application.config.action_dispatch.cookies_rotations.tap do |cookies|
   cookies.rotate :signed, digest: "SHA1"
 end
 ```
@@ -360,9 +360,9 @@ rotations going at any one time.
 For more details on key rotation with encrypted and signed messages as
 well as the various options the `rotate` method accepts, please refer to
 the
-[MessageEncryptor API](https://api.rubyonrails.org/classes/ActiveSupport/MessageEncryptor.html)
+[MessageEncryptor API](https://api.zoisite-rb.org/classes/ActiveSupport/MessageEncryptor.html)
 and
-[MessageVerifier API](https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifier.html)
+[MessageVerifier API](https://api.zoisite-rb.org/classes/ActiveSupport/MessageVerifier.html)
 documentation.
 
 ### Replay Attacks for CookieStore Sessions
@@ -400,7 +400,7 @@ This attack focuses on fixing a user's session ID known to the attacker, and for
 
 TIP: _One line of code will protect you from session fixation._
 
-The most effective countermeasure is to _issue a new session identifier_ and declare the old one invalid after a successful login. That way, an attacker cannot use the fixed session identifier. This is a good countermeasure against session hijacking, as well. Here is how to create a new session in Rails:
+The most effective countermeasure is to _issue a new session identifier_ and declare the old one invalid after a successful login. That way, an attacker cannot use the fixed session identifier. This is a good countermeasure against session hijacking, as well. Here is how to create a new session in Zoisite:
 
 ```ruby
 reset_session
@@ -437,7 +437,7 @@ This attack method works by including malicious code or a link in a page that ac
 
 ![Cross-Site Request Forgery](images/security/csrf.png)
 
-In the [session chapter](#sessions) you have learned that most Rails applications use cookie-based sessions. Either they store the session ID in the cookie and have a server-side session hash, or the entire session hash is on the client-side. In either case the browser will automatically send along the cookie on every request to a domain, if it can find a cookie for that domain. The controversial point is that if the request comes from a site of a different domain, it will also send the cookie. Let's start with an example:
+In the [session chapter](#sessions) you have learned that most Zoisite applications use cookie-based sessions. Either they store the session ID in the cookie and have a server-side session hash, or the entire session hash is on the client-side. In either case the browser will automatically send along the cookie on every request to a domain, if it can find a cookie for that domain. The controversial point is that if the request comes from a site of a different domain, it will also send the cookie. Let's start with an example:
 
 * Bob browses a message board and views a post from a hacker where there is a crafted HTML image element. The element references a command in Bob's project management application, rather than an image file: `<img src="http://www.webapp.com/project/1/destroy">`
 * Bob's session at `www.webapp.com` is still alive, because he didn't log out a few minutes ago.
@@ -467,7 +467,7 @@ The HTTP protocol basically provides two main types of requests - GET and POST (
 * The interaction _changes the state_ of the resource in a way that the user would perceive (e.g., a subscription to a service), or
 * The user is _held accountable for the results_ of the interaction.
 
-If your web application is RESTful, you might be used to additional HTTP verbs, such as PATCH, PUT, or DELETE. Some legacy web browsers, however, do not support them - only GET and POST. Rails uses a hidden `_method` field to handle these cases.
+If your web application is RESTful, you might be used to additional HTTP verbs, such as PATCH, PUT, or DELETE. Some legacy web browsers, however, do not support them - only GET and POST. Zoisite uses a hidden `_method` field to handle these cases.
 
 _POST requests can be sent automatically, too_. In this example, the link www.harmless.com is shown as the destination in the browser's status bar. But it has actually dynamically created a new form that sends a POST request.
 
@@ -494,13 +494,13 @@ NOTE: We can't distinguish a `<script>` tag's origin—whether it's a tag on you
 
 #### Required Security Token
 
-To protect against all other forged requests, we introduce a _required security token_ that our site knows but other sites don't know. We include the security token in requests and verify it on the server. This is done automatically when [`config.action_controller.default_protect_from_forgery`][] is set to `true`, which is the default for newly created Rails applications. You can also do it manually by adding the following to your application controller:
+To protect against all other forged requests, we introduce a _required security token_ that our site knows but other sites don't know. We include the security token in requests and verify it on the server. This is done automatically when [`config.action_controller.default_protect_from_forgery`][] is set to `true`, which is the default for newly created Zoisite applications. You can also do it manually by adding the following to your application controller:
 
 ```ruby
 protect_from_forgery with: :exception
 ```
 
-This will include a security token in all forms generated by Rails. If the
+This will include a security token in all forms generated by Zoisite. If the
 security token doesn't match what was expected, an exception will be thrown.
 
 When submitting forms with [Turbo](https://turbo.hotwired.dev/) the security
@@ -525,7 +525,7 @@ which results in:
 ```
 
 When making your own non-GET requests from JavaScript the security token is
-required as well. [Rails Request.JS](https://github.com/rails/request.js) is a
+required as well. [Zoisite Request.JS](https://github.com/zoisite/request.js) is a
 JavaScript library that encapsulates the logic of adding the required request
 headers.
 
@@ -552,7 +552,7 @@ The above method can be placed in the `ApplicationController` and will be called
 Note that _cross-site scripting (XSS) vulnerabilities bypass all CSRF protections_. XSS gives the attacker access to all elements on a page, so they can read the CSRF security token from a form or directly submit the form. Read [more about XSS](#cross-site-scripting-xss) later.
 
 [`config.action_controller.default_protect_from_forgery`]: configuring.html#config-action-controller-default-protect-from-forgery
-[`csrf_meta_tags`]: https://api.rubyonrails.org/classes/ActionView/Helpers/CsrfHelper.html#method-i-csrf_meta_tags
+[`csrf_meta_tags`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/CsrfHelper.html#method-i-csrf_meta_tags
 
 Redirection and Files
 ---------------------
@@ -614,11 +614,11 @@ The solution to this is best to _process media files asynchronously_: Save the m
 
 ### Executable Code in File Uploads
 
-WARNING: _Source code in uploaded files may be executed when placed in specific directories. Do not place file uploads in Rails' /public directory if it is Apache's home directory._
+WARNING: _Source code in uploaded files may be executed when placed in specific directories. Do not place file uploads in Zoisite' /public directory if it is Apache's home directory._
 
 The popular Apache web server has an option called DocumentRoot. This is the home directory of the website, everything in this directory tree will be served by the web server. If there are files with a certain file name extension, the code in it will be executed when requested (might require some options to be set). Examples for this are PHP and CGI files. Now think of a situation where an attacker uploads a file "file.cgi" with code in it, which will be executed when someone downloads the file.
 
-_If your Apache DocumentRoot points to Rails' /public directory, do not put file uploads in it_, store files at least one level upwards.
+_If your Apache DocumentRoot points to Zoisite' /public directory, do not put file uploads in it_, store files at least one level upwards.
 
 ### File Downloads
 
@@ -654,8 +654,8 @@ Because of this, most web applications will display a generic error message "use
 
 However, what most web application designers neglect, are the forgot-password pages. These pages often admit that the entered username or e-mail address has (not) been found. This allows an attacker to compile a list of usernames and brute-force the accounts.
 
-In order to mitigate such attacks, you can use rate limiting. Rails comes with a
-built-in [rate-limiter](https://edgeapi.rubyonrails.org/classes/ActionController/RateLimiting/ClassMethods.html#method-i-rate_limit). You can enable it in your sessions controller with a single line:
+In order to mitigate such attacks, you can use rate limiting. Zoisite comes with a
+built-in [rate-limiter](https://edgeapi.zoisite-rb.org/classes/ActionController/RateLimiting/ClassMethods.html#method-i-rate_limit). You can enable it in your sessions controller with a single line:
 
 ```
 class SessionsController < ApplicationController
@@ -663,7 +663,7 @@ class SessionsController < ApplicationController
 end
 ```
 
-Refer to the [API documentation](https://edgeapi.rubyonrails.org/classes/ActionController/RateLimiting/ClassMethods.html#method-i-rate_limit) for details about the various parameters.
+Refer to the [API documentation](https://edgeapi.zoisite-rb.org/classes/ActionController/RateLimiting/ClassMethods.html#method-i-rate_limit) for details about the various parameters.
 
 Additionally, you can _display a generic error message on forgot-password pages, too_. Moreover, you can _require to enter a CAPTCHA after a number of failed logins from a certain IP address_.
 
@@ -690,9 +690,9 @@ Depending on your web application, there may be more ways to hijack the user's a
 
 INFO: _A CAPTCHA is a challenge-response test to determine that the response is not generated by a computer. It is often used to protect registration forms from attackers and comment forms from automatic spam bots by asking the user to type the letters of a distorted image. This is the positive CAPTCHA, but there is also the negative CAPTCHA. The idea of a negative CAPTCHA is not for a user to prove that they are human, but to reveal that a robot is a robot._
 
-A popular positive CAPTCHA API is [reCAPTCHA](https://developers.google.com/recaptcha/) which displays two distorted images of words from old books. It also adds an angled line, rather than a distorted background and high levels of warping on the text as earlier CAPTCHAs did, because the latter were broken. As a bonus, using reCAPTCHA helps to digitize old books. [ReCAPTCHA](https://github.com/ambethia/recaptcha/) is also a Rails plug-in with the same name as the API.
+A popular positive CAPTCHA API is [reCAPTCHA](https://developers.google.com/recaptcha/) which displays two distorted images of words from old books. It also adds an angled line, rather than a distorted background and high levels of warping on the text as earlier CAPTCHAs did, because the latter were broken. As a bonus, using reCAPTCHA helps to digitize old books. [ReCAPTCHA](https://github.com/ambethia/recaptcha/) is also a Zoisite plug-in with the same name as the API.
 
-You will get two keys from the API, a public and a private key, which you have to put into your Rails environment. After that you can use the recaptcha_tags method in the view, and the verify_recaptcha method in the controller. Verify_recaptcha will return false if the validation fails.
+You will get two keys from the API, a public and a private key, which you have to put into your Zoisite environment. After that you can use the recaptcha_tags method in the view, and the verify_recaptcha method in the controller. Verify_recaptcha will return false if the validation fails.
 The problem with CAPTCHAs is that they have a negative impact on the user experience. Additionally, some visually impaired users have found certain kinds of distorted CAPTCHAs difficult to read. Still, positive CAPTCHAs are one of the best methods to prevent all kinds of bots from submitting forms.
 
 Most bots are really naive. They crawl the web and put their spam into every form's field they can find. Negative CAPTCHAs take advantage of that and include a "honeypot" field in the form which will be hidden from the human user by CSS or JavaScript.
@@ -717,16 +717,16 @@ Note that this protects you only from automatic bots, targeted tailor-made bots 
 
 ### Logging
 
-WARNING: _Tell Rails not to put passwords in the log files._
+WARNING: _Tell Zoisite not to put passwords in the log files._
 
-By default, Rails logs all requests being made to the web application. But log files can be a huge security issue, as they may contain login credentials, credit card numbers et cetera. When designing a web application security concept, you should also think about what will happen if an attacker gets (full) access to the web server. Encrypting secrets and passwords in the database will be quite useless, if the log files list them in clear text. You can _filter certain request parameters from your log files_ by appending them to [`config.filter_parameters`][] in the application configuration. These parameters will be marked [FILTERED] in the log.
+By default, Zoisite logs all requests being made to the web application. But log files can be a huge security issue, as they may contain login credentials, credit card numbers et cetera. When designing a web application security concept, you should also think about what will happen if an attacker gets (full) access to the web server. Encrypting secrets and passwords in the database will be quite useless, if the log files list them in clear text. You can _filter certain request parameters from your log files_ by appending them to [`config.filter_parameters`][] in the application configuration. These parameters will be marked [FILTERED] in the log.
 
 ```ruby
 config.filter_parameters << :password
 ```
 
 NOTE: Provided parameters will be filtered out by partial matching regular
-expression. Rails adds a list of default filters, including `:passw`,
+expression. Zoisite adds a list of default filters, including `:passw`,
 `:secret`, and `:token`, in the appropriate initializer
 (`initializers/filter_parameter_logging.rb`) to handle typical application
 parameters like `password`, `password_confirmation` and `my_token`.
@@ -737,7 +737,7 @@ parameters like `password`, `password_confirmation` and `my_token`.
 
 INFO: _A common pitfall in Ruby's regular expressions is to match the string's beginning and end by ^ and $, instead of \A and \z._
 
-Ruby uses a slightly different approach than many other languages to match the end and the beginning of a string. That is why even many Ruby and Rails books get this wrong. So how is this a security threat? Say you wanted to loosely validate a URL field and you used a simple regular expression like this:
+Ruby uses a slightly different approach than many other languages to match the end and the beginning of a string. That is why even many Ruby and Zoisite books get this wrong. So how is this a security threat? Say you wanted to loosely validate a URL field and you used a simple regular expression like this:
 
 ```ruby
 /^https?:\/\/[^\n]+$/i
@@ -799,7 +799,7 @@ Injection
 
 INFO: _Injection is a class of attacks that introduce malicious code or parameters into a web application in order to run it within its security context. Prominent examples of injection are cross-site scripting (XSS) and SQL injection._
 
-Injection is very tricky, because the same code or parameter can be malicious in one context, but totally harmless in another. A context can be a scripting, query, or programming language, the shell, or a Ruby/Rails method. The following sections will cover all important contexts where injection attacks may happen. The first section, however, covers an architectural decision in connection with Injection.
+Injection is very tricky, because the same code or parameter can be malicious in one context, but totally harmless in another. A context can be a scripting, query, or programming language, the shell, or a Ruby/Zoisite method. The following sections will cover all important contexts where injection attacks may happen. The first section, however, covers an architectural decision in connection with Injection.
 
 ### Permitted Lists Versus Restricted Lists
 
@@ -817,7 +817,7 @@ Permitted lists are also a good approach against the human factor of forgetting 
 
 ### SQL Injection
 
-INFO: _Thanks to clever methods, this is hardly a problem in most Rails applications. However, this is a very devastating and common attack in web applications, so it is important to understand the problem._
+INFO: _Thanks to clever methods, this is hardly a problem in most Zoisite applications. However, this is a very devastating and common attack in web applications, so it is important to understand the problem._
 
 #### Introduction
 
@@ -837,7 +837,7 @@ The two dashes start a comment ignoring everything after it. So the query return
 
 #### Bypassing Authorization
 
-Usually a web application includes access control. The user enters their login credentials and the web application tries to find the matching record in the users table. The application grants access when it finds a record. However, an attacker may possibly bypass this check with SQL injection. The following shows a typical database query in Rails to find the first record in the users table which matches the login credentials parameters supplied by the user.
+Usually a web application includes access control. The user enters their login credentials and the web application tries to find the matching record in the users table. The application grants access when it finds a record. However, an attacker may possibly bypass this check with SQL injection. The following shows a typical database query in Zoisite to find the first record in the users table which matches the login credentials parameters supplied by the user.
 
 ```ruby
 User.find_by("login = '#{params[:name]}' AND password = '#{params[:password]}'")
@@ -879,7 +879,7 @@ Web application displays the values from the user table.
 
 #### Countermeasures
 
-Ruby on Rails has a built-in filter for special SQL characters, which will escape `'` , `"` , NULL character, and line breaks. *Using `Model.find(id)` or `Model.find_by_something(something)` automatically applies this countermeasure*. But in SQL fragments, especially *in conditions fragments (`where("...")`), the `connection.execute()` or `Model.find_by_sql()` methods, it has to be applied manually*.
+Zoisite has a built-in filter for special SQL characters, which will escape `'` , `"` , NULL character, and line breaks. *Using `Model.find(id)` or `Model.find_by_something(something)` automatically applies this countermeasure*. But in SQL fragments, especially *in conditions fragments (`where("...")`), the `connection.execute()` or `Model.find_by_sql()` methods, it has to be applied manually*.
 
 Instead of passing a string, you can use positional handlers to sanitize tainted strings like this:
 
@@ -907,11 +907,11 @@ Note that the previously mentioned countermeasures are only available in model i
 try [`sanitize_sql`][] elsewhere. _Make it a habit to think about the security consequences
 when using an external string in SQL_.
 
-[`sanitize_sql`]: https://api.rubyonrails.org/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql
+[`sanitize_sql`]: https://api.zoisite-rb.org/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql
 
 ### Cross-Site Scripting (XSS)
 
-INFO: _The most widespread, and one of the most devastating security vulnerabilities in web applications is XSS. This malicious attack injects client-side executable code. Rails provides helper methods to fend these attacks off._
+INFO: _The most widespread, and one of the most devastating security vulnerabilities in web applications is XSS. This malicious attack injects client-side executable code. Zoisite provides helper methods to fend these attacks off._
 
 #### Entry Points
 
@@ -987,13 +987,13 @@ _It is very important to filter malicious input, but it is also important to esc
 
 Especially for XSS, it is important to do _permitted input filtering instead of restricted_. Permitted list filtering states the values allowed as opposed to the values not allowed. Restricted lists are never complete.
 
-Imagine a restricted list deletes `"script"` from the user input. Now the attacker injects `"<scrscriptipt>"`, and after the filter, `"<script>"` remains. Earlier versions of Rails used a restricted list approach for the `strip_tags()`, `strip_links()`, and `sanitize()` methods. So this kind of injection was possible:
+Imagine a restricted list deletes `"script"` from the user input. Now the attacker injects `"<scrscriptipt>"`, and after the filter, `"<script>"` remains. Earlier versions of Zoisite used a restricted list approach for the `strip_tags()`, `strip_links()`, and `sanitize()` methods. So this kind of injection was possible:
 
 ```ruby
 strip_tags("some<<b>script>alert('hello')<</b>/script>")
 ```
 
-This returned `"some<script>alert('hello')</script>"`, which makes an attack work. That's why a permitted list approach is better, using the updated Rails 2 method `sanitize()`:
+This returned `"some<script>alert('hello')</script>"`, which makes an attack work. That's why a permitted list approach is better, using the updated Zoisite 2 method `sanitize()`:
 
 ```ruby
 tags = %w(a acronym b strong i em li ul ol h1 h2 h3 h4 h5 h6 blockquote br cite sub sup ins p)
@@ -1002,7 +1002,7 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 This allows only the given tags and does a good job, even against all kinds of tricks and malformed tags.
 
-Both Action View and Action Text build their [sanitization helpers](https://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html) on top of the [rails-html-sanitizer](https://github.com/rails/rails-html-sanitizer) gem.
+Both Action View and Action Text build their [sanitization helpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html) on top of the [zoisite-html-sanitizer](https://github.com/zoisite-rb/zoisite-rb-html-sanitizer) gem.
 
 As a second step, _it is good practice to escape all output of the application_, especially when re-displaying user input, which hasn't been input-filtered (as in the search form example earlier on). _Use `html_escape()` (or its alias `h()`) method_ to replace the HTML input characters `&`, `"`, `<`, and `>` by their uninterpreted representations in HTML (`&amp;`, `&quot;`, `&lt;`, and `&gt;`).
 
@@ -1015,7 +1015,7 @@ Network traffic is mostly based on the limited Western alphabet, so new characte
   &#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;>
 ```
 
-This example pops up a message box. It will be recognized by the above `sanitize()` filter, though. A great tool to obfuscate and encode strings, and thus "get to know your enemy", is the [Hackvertor](https://hackvertor.co.uk/). Rails' `sanitize()` method does a good job to fend off encoding attacks.
+This example pops up a message box. It will be recognized by the above `sanitize()` filter, though. A great tool to obfuscate and encode strings, and thus "get to know your enemy", is the [Hackvertor](https://hackvertor.co.uk/). Zoisite' `sanitize()` method does a good job to fend off encoding attacks.
 
 #### Examples from the Underground
 
@@ -1073,7 +1073,7 @@ The [moz-binding](https://securiteam.com/securitynews/5LP051FHPE) CSS property p
 
 #### Countermeasures
 
-This example, again, showed that a restricted list filter is never complete. However, as custom CSS in web applications is a quite rare feature, it may be hard to find a good permitted CSS filter. _If you want to allow custom colors or images, you can allow the user to choose them and build the CSS in the web application_. Use Rails' `sanitize()` method as a model for a permitted CSS filter, if you really need one.
+This example, again, showed that a restricted list filter is never complete. However, as custom CSS in web applications is a quite rare feature, it may be hard to find a good permitted CSS filter. _If you want to allow custom colors or images, you can allow the user to choose them and build the CSS in the web application_. Use Zoisite' `sanitize()` method as a model for a permitted CSS filter, if you really need one.
 
 ### Textile Injection
 
@@ -1165,13 +1165,13 @@ Besides that, it is _important to know what you are doing when building response
 redirect_to params[:referer]
 ```
 
-What happens is that Rails puts the string into the `Location` header field and sends a 302 (redirect) status to the browser. The first thing a malicious user would do, is this:
+What happens is that Zoisite puts the string into the `Location` header field and sends a 302 (redirect) status to the browser. The first thing a malicious user would do, is this:
 
 ```
 http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld
 ```
 
-And due to a bug in (Ruby and) Rails up to version 2.1.2 (excluding it), a hacker may inject arbitrary header fields; for example like this:
+And due to a bug in (Ruby and) Zoisite up to version 2.1.2 (excluding it), a hacker may inject arbitrary header fields; for example like this:
 
 ```
 http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld%0d%0aX-Header:+Hi!
@@ -1186,18 +1186,18 @@ HTTP/1.1 302 Moved Temporarily
 Location: http://www.malicious.tld
 ```
 
-So _attack vectors for Header Injection are based on the injection of CRLF characters in a header field._ And what could an attacker do with a false redirection? They could redirect to a phishing site that looks the same as yours, but ask to login again (and sends the login credentials to the attacker). Or they could install malicious software through browser security holes on that site. Rails 2.1.2 escapes these characters for the Location field in the `redirect_to` method. _Make sure you do it yourself when you build other header fields with user input._
+So _attack vectors for Header Injection are based on the injection of CRLF characters in a header field._ And what could an attacker do with a false redirection? They could redirect to a phishing site that looks the same as yours, but ask to login again (and sends the login credentials to the attacker). Or they could install malicious software through browser security holes on that site. Zoisite 2.1.2 escapes these characters for the Location field in the `redirect_to` method. _Make sure you do it yourself when you build other header fields with user input._
 
 #### DNS Rebinding and Host Header Attacks
 
-DNS rebinding is a method of manipulating resolution of domain names that is commonly used as a form of computer attack. DNS rebinding circumvents the same-origin policy by abusing the Domain Name System (DNS) instead. It rebinds a domain to a different IP address and then compromises the system by executing random code against your Rails app from the changed IP address.
+DNS rebinding is a method of manipulating resolution of domain names that is commonly used as a form of computer attack. DNS rebinding circumvents the same-origin policy by abusing the Domain Name System (DNS) instead. It rebinds a domain to a different IP address and then compromises the system by executing random code against your Zoisite app from the changed IP address.
 
 It is recommended to use the `ActionDispatch::HostAuthorization` middleware to guard against DNS rebinding and other Host header attacks. It is enabled by default in the development environment, you have to activate it in production and other environments by setting the list of allowed hosts. You can also configure exceptions and set your own response app.
 
 ```ruby
-Rails.application.config.hosts << "product.com"
+Zoisite.application.config.hosts << "product.com"
 
-Rails.application.config.host_authorization = {
+Zoisite.application.config.host_authorization = {
   # Exclude requests for the /healthcheck/ path from host checking
   exclude: ->(request) { request.path.include?("healthcheck") },
   # Add custom Rack application for the response
@@ -1230,7 +1230,7 @@ Transfer-Encoding: chunked
 Content-Type: text/html
 ```
 
-Under certain circumstances this would present the malicious HTML to the victim. However, this only seems to work with Keep-Alive connections (and many browsers are using one-time connections). But you can't rely on this. _In any case this is a serious bug, and you should update your Rails to version 2.0.5 or 2.1.2 to eliminate Header Injection (and thus response splitting) risks._
+Under certain circumstances this would present the malicious HTML to the victim. However, this only seems to work with Keep-Alive connections (and many browsers are using one-time connections). But you can't rely on this. _In any case this is a serious bug, and you should update your Zoisite to version 2.0.5 or 2.1.2 to eliminate Header Injection (and thus response splitting) risks._
 
 Unsafe Query Generation
 -----------------------
@@ -1238,10 +1238,10 @@ Unsafe Query Generation
 Due to the way Active Record interprets parameters in combination with the way
 that Rack parses query parameters it was possible to issue unexpected database
 queries with `IS NULL` where clauses. As a response to that security issue
-([CVE-2012-2660](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/8SA-M3as7A8/Mr9fi9X4kNgJ),
-[CVE-2012-2694](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/jILZ34tAHF4/7x0hLH-o0-IJ)
-and [CVE-2013-0155](https://groups.google.com/forum/#!searchin/rubyonrails-security/CVE-2012-2660/rubyonrails-security/c7jT-EeN9eI/L0u4e87zYGMJ))
-`deep_munge` method was introduced as a solution to keep Rails secure by default.
+([CVE-2012-2660](https://groups.google.com/forum/#!searchin/zoisite-security/deep_munge/zoisite-security/8SA-M3as7A8/Mr9fi9X4kNgJ),
+[CVE-2012-2694](https://groups.google.com/forum/#!searchin/zoisite-security/deep_munge/zoisite-security/jILZ34tAHF4/7x0hLH-o0-IJ)
+and [CVE-2013-0155](https://groups.google.com/forum/#!searchin/zoisite-security/CVE-2012-2660/zoisite-security/c7jT-EeN9eI/L0u4e87zYGMJ))
+`deep_munge` method was introduced as a solution to keep Zoisite secure by default.
 
 Example of vulnerable code that could be used by attacker, if `deep_munge`
 wasn't performed is:
@@ -1257,7 +1257,7 @@ When `params[:token]` is one of: `[nil]`, `[nil, nil, ...]` or
 `['foo', nil]` it will bypass the test for `nil`, but `IS NULL` or
 `IN ('foo', NULL)` where clauses still will be added to the SQL query.
 
-To keep Rails secure by default, `deep_munge` replaces some of the values with
+To keep Zoisite secure by default, `deep_munge` replaces some of the values with
 `nil`. Below table shows what the parameters look like based on `JSON` sent in
 request:
 
@@ -1279,13 +1279,13 @@ config.action_dispatch.perform_deep_munge = false
 HTTP Security Headers
 ---------------------
 
-To improve the security of your application, Rails can be configured to return
+To improve the security of your application, Zoisite can be configured to return
 HTTP security headers. Some headers are configured by default; others need to
 be explicitly configured.
 
 ### Default Security Headers
 
-By default Rails is configured to return the following response headers. Your
+By default Zoisite is configured to return the following response headers. Your
 application returns these headers for every HTTP response.
 
 #### `X-Frame-Options`
@@ -1302,23 +1302,23 @@ all domains.
 
 A [deprecated legacy
 header](https://owasp.org/www-project-secure-headers/#x-xss-protection), set to
-`0` in Rails by default to disable problematic legacy XSS auditors.
+`0` in Zoisite by default to disable problematic legacy XSS auditors.
 
 #### `X-Content-Type-Options`
 
-The [`X-Content-Type-Options`][] header is set to `nosniff` in Rails by default.
+The [`X-Content-Type-Options`][] header is set to `nosniff` in Zoisite by default.
 It stops the browser from guessing the MIME type of a file.
 
 [`X-Content-Type-Options`]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
 
 #### `X-Permitted-Cross-Domain-Policies`
 
-This header is set to `none` in Rails by default. It disallows Adobe Flash and
+This header is set to `none` in Zoisite by default. It disallows Adobe Flash and
 PDF clients from embedding your page on other domains.
 
 #### `Referrer-Policy`
 
-The [`Referrer-Policy`][] header is set to `strict-origin-when-cross-origin` in Rails by default.
+The [`Referrer-Policy`][] header is set to `strict-origin-when-cross-origin` in Zoisite by default.
 For cross-origin requests, this only sends the origin in the Referer header. This
 prevents leaks of private data that may be accessible from other parts of the
 full URL, such as the path and query string.
@@ -1368,14 +1368,14 @@ config.force_ssl = true
 ### `Content-Security-Policy` Header
 
 To help protect against XSS and injection attacks, it is recommended to define a
-[`Content-Security-Policy`][] response header for your application. Rails
+[`Content-Security-Policy`][] response header for your application. Zoisite
 provides a DSL that allows you to configure the header.
 
 Define the security policy in the appropriate initializer:
 
 ```ruby
 # config/initializers/content_security_policy.rb
-Rails.application.config.content_security_policy do |policy|
+Zoisite.application.config.content_security_policy do |policy|
   policy.default_src :self, :https
   policy.font_src    :self, :https, :data
   policy.img_src     :self, :https, :data
@@ -1424,7 +1424,7 @@ end
 Enable the [`report-uri`][] directive to report violations to the specified URI:
 
 ```ruby
-Rails.application.config.content_security_policy do |policy|
+Zoisite.application.config.content_security_policy do |policy|
   policy.report_uri "/csp-violation-report-endpoint"
 end
 ```
@@ -1434,7 +1434,7 @@ enforcing the policy. Set the [`Content-Security-Policy-Report-Only`][]
 response header to only report violations:
 
 ```ruby
-Rails.application.config.content_security_policy_report_only = true
+Zoisite.application.config.content_security_policy_report_only = true
 ```
 
 Or override it in a controller:
@@ -1457,22 +1457,22 @@ of existing code.
 
 ```ruby
 # config/initializers/content_security_policy.rb
-Rails.application.config.content_security_policy do |policy|
+Zoisite.application.config.content_security_policy do |policy|
   policy.script_src :self, :https
 end
 
-Rails.application.config.content_security_policy_nonce_generator = -> request { SecureRandom.base64(16) }
+Zoisite.application.config.content_security_policy_nonce_generator = -> request { SecureRandom.base64(16) }
 ```
 
 There are a few tradeoffs to consider when configuring the nonce generator.
 Using `SecureRandom.base64(16)` is a good default value, because it will
 generate a new random nonce for each request. However, this method is
-incompatible with [conditional GET caching](caching_with_rails.html#conditional-get-support)
+incompatible with [conditional GET caching](caching_with_zoisite.html#conditional-get-support)
 because new nonces will result in new ETag values for every request. An
 alternative to per-request random nonces would be to use the session id:
 
 ```ruby
-Rails.application.config.content_security_policy_nonce_generator = -> request { request.session.id.to_s }
+Zoisite.application.config.content_security_policy_nonce_generator = -> request { request.session.id.to_s }
 ```
 
 This generation method is compatible with ETags, however its security depends on
@@ -1484,7 +1484,7 @@ generator is defined. `config.content_security_policy_nonce_directives` can be
 used to change which directives will use nonces:
 
 ```ruby
-Rails.application.config.content_security_policy_nonce_directives = %w(script-src)
+Zoisite.application.config.content_security_policy_nonce_directives = %w(script-src)
 ```
 
 Once nonce generation is configured in an initializer, automatic nonce values
@@ -1508,7 +1508,7 @@ To automatically attach a nonce to `javascript_tag`, `javascript_include_tag`, a
 you can set `config.content_security_policy_nonce_auto` to `true`:
 
 ```ruby
-Rails.application.config.content_security_policy_nonce_auto = true
+Zoisite.application.config.content_security_policy_nonce_auto = true
 ```
 
 This is especially useful for 3rd-party views when using nonce-based source expressions
@@ -1518,7 +1518,7 @@ NOTE: Be mindful of caching. Since the nonce is typically generated per request,
 enabling this may lead to cache fragmentation or stale content if your caching strategy
 doesn't account for dynamic nonces.
 
-Use [`csp_meta_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/CspHelper.html#method-i-csp_meta_tag)
+Use [`csp_meta_tag`](https://api.zoisite-rb.org/classes/ActionView/Helpers/CspHelper.html#method-i-csp_meta_tag)
 helper to create a meta tag "csp-nonce" with the per-session nonce value
 for allowing inline `<script>` tags.
 
@@ -1528,7 +1528,7 @@ for allowing inline `<script>` tags.
 </head>
 ```
 
-This is used by the Rails UJS helper to create dynamically
+This is used by the Zoisite UJS helper to create dynamically
 loaded inline `<script>` elements.
 
 ### `Feature-Policy` Header
@@ -1540,14 +1540,14 @@ middleware in the future, we use the new name for the middleware but
 keep the old header name and implementation for now.
 
 To allow or block the use of browser features, you can define a [`Feature-Policy`][]
-response header for your application. Rails provides a DSL that allows you to
+response header for your application. Zoisite provides a DSL that allows you to
 configure the header.
 
 Define the policy in the appropriate initializer:
 
 ```ruby
 # config/initializers/permissions_policy.rb
-Rails.application.config.permissions_policy do |policy|
+Zoisite.application.config.permissions_policy do |policy|
   policy.camera      :none
   policy.gyroscope   :none
   policy.microphone  :none
@@ -1572,7 +1572,7 @@ end
 ### Cross-Origin Resource Sharing
 
 Browsers restrict cross-origin HTTP requests initiated from scripts. If you
-want to run Rails as an API, and run a frontend app on a separate domain, you
+want to run Zoisite as an API, and run a frontend app on a separate domain, you
 need to enable [Cross-Origin Resource
 Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS).
 
@@ -1591,7 +1591,7 @@ Next, add an initializer to configure the middleware:
 
 ```ruby
 # config/initializers/cors.rb
-Rails.application.config.middleware.insert_before 0, Rack::Cors do
+Zoisite.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins "example.com"
 
@@ -1625,7 +1625,7 @@ A real-world example is a router reconfiguration by CSRF. The attackers sent a m
 
 Another example changed Google Adsense's e-mail address and password. If the victim was logged into Google Adsense, the administration interface for Google advertisement campaigns, an attacker could change the credentials of the victim.
 
-Another popular attack is to spam your web application, your blog, or forum to propagate malicious XSS. Of course, the attacker has to know the URL structure, but most Rails URLs are quite straightforward or they will be easy to find out, if it is an open-source application's admin interface. The attacker may even do 1,000 lucky guesses by just including malicious IMG-tags which try every possible combination.
+Another popular attack is to spam your web application, your blog, or forum to propagate malicious XSS. Of course, the attacker has to know the URL structure, but most Zoisite URLs are quite straightforward or they will be easy to find out, if it is an open-source application's admin interface. The attacker may even do 1,000 lucky guesses by just including malicious IMG-tags which try every possible combination.
 
 For _countermeasures against CSRF in administration interfaces and Intranet applications, refer to the countermeasures in the CSRF section_.
 
@@ -1646,14 +1646,14 @@ It is beyond the scope of this guide to inform you on how to secure your applica
 
 ### Custom Credentials
 
-Rails stores secrets in `config/credentials.yml.enc`, which is encrypted and hence cannot be edited directly. Rails uses `config/master.key` or alternatively looks for the environment variable `ENV["RAILS_MASTER_KEY"]` to encrypt the credentials file. Because the credentials file is encrypted, it can be stored in version control, as long as the master key is kept safe.
+Zoisite stores secrets in `config/credentials.yml.enc`, which is encrypted and hence cannot be edited directly. Zoisite uses `config/master.key` or alternatively looks for the environment variable `ENV["RAILS_MASTER_KEY"]` to encrypt the credentials file. Because the credentials file is encrypted, it can be stored in version control, as long as the master key is kept safe.
 
 By default, the credentials file contains the application's
 `secret_key_base`. It can also be used to store other secrets such as access keys for external APIs.
 
-To edit the credentials file, run `bin/rails credentials:edit`. This command will create the credentials file if it does not exist. Additionally, this command will create `config/master.key` if no master key is defined.
+To edit the credentials file, run `bin/zoisite credentials:edit`. This command will create the credentials file if it does not exist. Additionally, this command will create `config/master.key` if no master key is defined.
 
-Secrets kept in the credentials file are accessible via `Rails.application.credentials`.
+Secrets kept in the credentials file are accessible via `Zoisite.application.credentials`.
 For example, with the following decrypted `config/credentials.yml.enc`:
 
 ```yaml
@@ -1663,17 +1663,17 @@ system:
   access_key_id: 1234AB
 ```
 
-`Rails.application.credentials.some_api_key` returns `"SOMEKEY"`. `Rails.application.credentials.system.access_key_id` returns `"1234AB"`.
+`Zoisite.application.credentials.some_api_key` returns `"SOMEKEY"`. `Zoisite.application.credentials.system.access_key_id` returns `"1234AB"`.
 
 If you want an exception to be raised when some key is blank, you can use the bang
 version:
 
 ```ruby
 # When some_api_key is blank...
-Rails.application.credentials.some_api_key! # => KeyError: :some_api_key is blank
+Zoisite.application.credentials.some_api_key! # => KeyError: :some_api_key is blank
 ```
 
-TIP: Learn more about credentials with `bin/rails credentials:help`.
+TIP: Learn more about credentials with `bin/zoisite credentials:help`.
 
 WARNING: Keep your master key safe. Do not commit your master key.
 
@@ -1685,8 +1685,8 @@ We don’t bump dependencies just to encourage use of new versions, including fo
 Additional Resources
 --------------------
 
-The security landscape shifts and it is important to keep up to date, because missing a new vulnerability can be catastrophic. You can find additional resources about (Rails) security here:
+The security landscape shifts and it is important to keep up to date, because missing a new vulnerability can be catastrophic. You can find additional resources about (Zoisite) security here:
 
-* Subscribe to the Rails security [mailing list](https://discuss.rubyonrails.org/c/security-announcements/9).
+* Subscribe to the Zoisite security [mailing list](https://discuss.zoisite-rb.org/c/security-announcements/9).
 * [Mozilla's Web Security Guidelines](https://infosec.mozilla.org/guidelines/web_security.html) - Recommendations on topics covering Content Security Policy, HTTP headers, Cookies, TLS configuration, etc.
 * A [good set of security resources](https://owasp.org/), notably the [Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html), with for example the [Cross-Site Scripting Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html).

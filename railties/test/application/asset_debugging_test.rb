@@ -21,7 +21,7 @@ module ApplicationTests
       app_file "app/views/posts/index.html.erb", "<%= javascript_include_tag 'application' %>"
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/posts', to: "posts#index"
         end
       RUBY
@@ -41,7 +41,7 @@ module ApplicationTests
     test "assets are concatenated when debug is off and compile is off either if debug_assets param is provided" do
       # config.assets.debug and config.assets.compile are false for production environment
       ENV["RAILS_ENV"] = "production"
-      rails "assets:precompile", "--trace"
+      zoisite "assets:precompile", "--trace"
 
       # Load app env
       app "production"

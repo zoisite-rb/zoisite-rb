@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Associations
 ==========================
@@ -20,14 +20,14 @@ Associations Overview
 
 Active Record associations allow you to define relationships between models.
 _Associations_ are implemented as special macro style calls that make it easy to
-tell Rails how your models relate to each other, which helps you manage your
+tell Zoisite how your models relate to each other, which helps you manage your
 data more effectively, and makes common operations simpler and easier to read.
 
 INFO: A macro-style call is a method that generates or modifies other methods at
 runtime, allowing for concise and expressive declarations of functionality, such
-as defining model associations in Rails. For example, `has_many :comments`.
+as defining model associations in Zoisite. For example, `has_many :comments`.
 
-When you set up an association, Rails helps define and manage the [Primary
+When you set up an association, Zoisite helps define and manage the [Primary
 Key](https://en.wikipedia.org/wiki/Primary_key) and [Foreign
 Key](https://en.wikipedia.org/wiki/Foreign_key) relationships between instances
 of the two models, while the database ensures that your data stays consistent
@@ -36,7 +36,7 @@ and properly linked.
 This makes it easy to keep track of which records are related. It also adds
 useful methods to your models so you can work with related data more easily.
 
-Consider a simple Rails application with models for authors and books.
+Consider a simple Zoisite application with models for authors and books.
 
 ### Without Associations
 
@@ -90,7 +90,7 @@ end
 ### Using Associations
 
 However, with associations, we can streamline these operations, as well as
-others, by explicitly informing Rails about the relationship between the two
+others, by explicitly informing Zoisite about the relationship between the two
 models. Here's the revised code for setting up authors and books using
 associations:
 
@@ -116,7 +116,7 @@ Deleting an author and all of its books is much easier:
 @author.destroy
 ```
 
-When you set up an association in Rails, you still need to create a
+When you set up an association in Zoisite, you still need to create a
 [migration](active_record_migrations.html) to ensure that the database is
 properly configured to handle the association. This migration will need to add
 the necessary foreign key columns to your database tables.
@@ -126,7 +126,7 @@ model, you would create a migration to add the `author_id` column to the `books`
 table:
 
 ```bash
-rails generate migration AddAuthorToBooks author:references
+zoisite generate migration AddAuthorToBooks author:references
 ```
 
 This migration will add the `author_id` column and set up the foreign key
@@ -136,12 +136,12 @@ sync.
 To learn more about the different types of associations, you can read the next
 section of this guide. Following that, you'll find some tips and tricks for
 working with associations. Finally, there's a complete reference to the methods
-and options for associations in Rails.
+and options for associations in Zoisite.
 
 Types of Associations
 ---------------------
 
-Rails supports six types of associations, each with a particular use-case in
+Zoisite supports six types of associations, each with a particular use-case in
 mind.
 
 Here is a list of all of the supported types with a link to their API docs for
@@ -159,13 +159,13 @@ forms of associations. First, let's take a quick look at the situations where
 each association type is appropriate.
 
 [`belongs_to`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to
 [`has_and_belongs_to_many`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many
 [`has_many`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many
 [`has_one`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one
 
 ### `belongs_to`
 
@@ -185,10 +185,10 @@ end
 
 NOTE: A `belongs_to` association _must_ use the singular term. If you use the
 plural form, like `belongs_to :authors` in the `Book` model, and try to create a
-book with `Book.create(authors: @author)`, Rails will give you an "uninitialized
-constant Book::Authors" error. This happens because Rails automatically infers
+book with `Book.create(authors: @author)`, Zoisite will give you an "uninitialized
+constant Book::Authors" error. This happens because Zoisite automatically infers
 the class name from the association name. If the association name is `:authors`,
-Rails will look for a class named `Authors` instead of `Author`.
+Zoisite will look for a class named `Authors` instead of `Author`.
 
 The corresponding migration might look like this:
 
@@ -263,7 +263,7 @@ gains numerous methods related to the association. Some of these are:
 
 We'll discuss some of the common methods, but you can find an exhaustive list in
 the [ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to).
 
 In all of the above methods, `association` is replaced with the symbol passed as
 the first argument to `belongs_to`. For example, given the declaration:
@@ -488,7 +488,7 @@ gains numerous methods related to the association. Some of these are:
 
 We'll discuss some of the common methods, but you can find an exhaustive list in
 the [ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one).
 
 Like with the [`belongs_to` references](#methods-added-by-belongs-to), in all of
 these methods, `association` is replaced with the symbol passed as the first
@@ -730,7 +730,7 @@ methods related to the association. Some of these are:
 
 We'll discuss some of the common methods, but you can find an exhaustive list in
 the [ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many).
 
 In all of these methods, `collection` is replaced with the symbol passed as the
 first argument to `has_many`, and `collection_singular` is replaced with the
@@ -765,31 +765,31 @@ books.reload
 ```
 
 [`collection<<`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-3C-3C
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-3C-3C
 [`collection.build`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-build
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-build
 [`collection.clear`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-clear
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-clear
 [`collection.create`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create
 [`collection.create!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create-21
 [`collection.delete`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-delete
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-delete
 [`collection.destroy`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-destroy
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-destroy
 [`collection.empty?`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-empty-3F
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-empty-3F
 [`collection.exists?`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F
+    https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F
 [`collection.find`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-find
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-find
 [`collection.reload`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-reload
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-reload
 [`collection.size`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-size
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-size
 [`collection.where`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-where
+    https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-where
 
 ##### Managing the Collection
 
@@ -1046,7 +1046,7 @@ patients to a physician like this:
 physician.patients = patients
 ```
 
-Rails will automatically create new join models for any patients in the new list
+Zoisite will automatically create new join models for any patients in the new list
 that were not previously associated with the physician. Additionally, if any
 patients that were previously associated with the physician are not included in
 the new list, their join records will be automatically deleted. This simplifies
@@ -1084,7 +1084,7 @@ class Paragraph < ApplicationRecord
 end
 ```
 
-With `through: :sections` specified, Rails will now understand:
+With `through: :sections` specified, Zoisite will now understand:
 
 ```ruby
 @document.paragraphs
@@ -1229,7 +1229,7 @@ classes.
 If the join table for a `has_and_belongs_to_many` association has additional
 columns beyond the two foreign keys, these columns will be added as attributes
 to records retrieved via that association. Records returned with additional
-attributes will always be read-only, because Rails cannot save changes to those
+attributes will always be read-only, because Zoisite cannot save changes to those
 attributes.
 
 WARNING: The use of extra attributes on the join table in a
@@ -1263,7 +1263,7 @@ gains numerous methods related to the association. Some of these are:
 
 We'll discuss some of the common methods, but you can find an exhaustive list in
 the [ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many).
 
 In all of these methods, `collection` is replaced with the symbol passed as the
 first argument to `has_and_belongs_to_many`, and `collection_singular` is
@@ -1467,7 +1467,7 @@ associations would be:
 - A supplier has one account.
 - An account belongs to one supplier.
 
-Here is how you can define these associations in Rails:
+Here is how you can define these associations in Zoisite:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -1506,7 +1506,7 @@ belongs_to association. In this case the `account` table.
 
 ### `has_many :through` vs `has_and_belongs_to_many`
 
-Rails offers two different ways to declare a many-to-many relationship between
+Zoisite offers two different ways to declare a many-to-many relationship between
 models: `has_many :through` and `has_and_belongs_to_many`. Understanding the
 differences and use cases for each can help you choose the best approach for
 your application's needs.
@@ -1571,7 +1571,7 @@ Advanced Associations
 ### Polymorphic Associations
 
 A slightly more advanced twist on associations is the _polymorphic association_.
-Polymorphic associations in Rails allow a model to belong to multiple other
+Polymorphic associations in Zoisite allow a model to belong to multiple other
 models through a single association. This can be particularly useful when you
 have a model that needs to be linked to different types of models.
 
@@ -1639,7 +1639,7 @@ either `Employee` or `Product`.
 
 While creating the polymorphic association manually is acceptable, it is instead
 recommended to use `t.references` or its alias `t.belongs_to` and specify
-`polymorphic: true` so that Rails knows that the association is polymorphic, and
+`polymorphic: true` so that Zoisite knows that the association is polymorphic, and
 it automatically adds both the foreign key and type columns to the table.
 
 ```ruby
@@ -1667,17 +1667,17 @@ throughout your application code to reflect the change.
 
 ### Models with Composite Primary Keys
 
-Rails can often infer primary key-foreign key relationships between associated
-models, but when dealing with composite primary keys, Rails typically defaults
+Zoisite can often infer primary key-foreign key relationships between associated
+models, but when dealing with composite primary keys, Zoisite typically defaults
 to using only part of the composite key, often the id column, unless explicitly
 instructed otherwise.
 
-If you're working with composite primary keys in your Rails models and need to
+If you're working with composite primary keys in your Zoisite models and need to
 ensure the correct handling of associations, please refer to the [Associations
 section of the Composite Primary Keys
 guide](active_record_composite_primary_keys.html#associations-between-models-with-composite-primary-keys).
 This section provides comprehensive guidance on setting up and using
-associations with composite primary keys in Rails, including how to specify
+associations with composite primary keys in Zoisite, including how to specify
 composite foreign keys when necessary.
 
 ### Self Joins
@@ -1690,7 +1690,7 @@ have a manager, and that manager is also an employee.
 Consider an organization where employees can be managers of other employees. We
 want to track this relationship using a single `employees` table.
 
-In your Rails model, you define the `Employee` class to reflect these
+In your Zoisite model, you define the `Employee` class to reflect these
 relationships:
 
 ```ruby
@@ -1735,7 +1735,7 @@ NOTE: The `to_table` option passed to `foreign_key` and more are explained in
 [`SchemaStatements#add_reference`][connection.add_reference].
 
 With this setup, you can easily access an employee's subordinates and manager in
-your Rails application.
+your Zoisite application.
 
 To get an employee's subordinates:
 
@@ -1751,12 +1751,12 @@ manager = employee.manager
 ```
 
 [connection.add_reference]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference
 
 Single Table Inheritance (STI)
 ------------------------------
 
-Single Table Inheritance (STI) is a pattern in Rails that allows multiple models
+Single Table Inheritance (STI) is a pattern in Zoisite that allows multiple models
 to be stored in a single database table. This is useful when you have different
 types of entities that share common attributes and behavior but also have
 specific behaviors.
@@ -1770,7 +1770,7 @@ behaviors. They will also each have their own controller.
 First, we generate the base `Vehicle` model with shared fields:
 
 ```bash
-$ bin/rails generate model vehicle type:string color:string price:decimal{10.2}
+$ bin/zoisite generate model vehicle type:string color:string price:decimal{10.2}
 ```
 
 Here, the `type` field is crucial for STI as it stores the model name (`Car`,
@@ -1786,7 +1786,7 @@ the `vehicles` table.
 To generate the `Car` model:
 
 ```bash
-$ bin/rails generate model car --parent=Vehicle
+$ bin/zoisite generate model car --parent=Vehicle
 ```
 
 For this, we can use the `--parent=PARENT` option, which will generate a model
@@ -1888,7 +1888,7 @@ Car.create(color: "Red", price: 10000)
 # => #<Car kind: "Car", color: "Red", price: 10000>
 ```
 
-In this setup, Rails will use the `kind` column to store the model type,
+In this setup, Zoisite will use the `kind` column to store the model type,
 allowing STI to function correctly with the custom column name.
 
 ### Disabling the inheritance column
@@ -1909,17 +1909,17 @@ Vehicle.create!(type: "Car", color: "Red", price: 10000)
 # => #<Vehicle type: "Car", color: "Red", price: 10000>
 ```
 
-In this configuration, Rails will treat the type column as a normal attribute
+In this configuration, Zoisite will treat the type column as a normal attribute
 and will not use it for STI purposes. This is useful if you need to work with a
 legacy schema that does not follow the STI pattern.
 
-These adjustments provide flexibility when integrating Rails with existing
+These adjustments provide flexibility when integrating Zoisite with existing
 databases or when specific customization is required for your models.
 
 [inheritance_column]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-c-inheritance_column
+    https://api.zoisite-rb.org/classes/ActiveRecord/ModelSchema.html#method-c-inheritance_column
 [`ActiveRecord::SubclassNotFound`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/SubclassNotFound.html
+    https://api.zoisite-rb.org/classes/ActiveRecord/SubclassNotFound.html
 
 ### Considerations
 
@@ -1938,7 +1938,7 @@ referential integrity because the association logic must handle different types
 correctly.
 
 Finally, if you have specific data integrity checks or validations that differ
-between subclasses, you need to ensure these are correctly handled by Rails or
+between subclasses, you need to ensure these are correctly handled by Zoisite or
 the database, especially when setting up foreign key constraints.
 
 Delegated Types
@@ -1968,14 +1968,14 @@ In order to apply this to our example above, we need to regenerate our models.
 First, let's generate the base `Entry` model which will act as our superclass:
 
 ```bash
-$ bin/rails generate model entry entryable_type:string entryable_id:integer
+$ bin/zoisite generate model entry entryable_type:string entryable_id:integer
 ```
 
 Then, we will generate new `Message` and `Comment` models for delegation:
 
 ```bash
-$ bin/rails generate model message subject:string body:string
-$ bin/rails generate model comment content:string
+$ bin/zoisite generate model message subject:string body:string
+$ bin/zoisite generate model comment content:string
 ```
 
 After running the generators, our models should look like this:
@@ -2099,7 +2099,7 @@ Tips, Tricks, and Warnings
 --------------------------
 
 Here are a few things you should know to make efficient use of Active Record
-associations in your Rails applications:
+associations in your Zoisite applications:
 
 * Controlling caching
 * Avoiding name collisions
@@ -2135,7 +2135,7 @@ triggered as you work with the association.
 
 But what if you want to reload the cache, because data might have been changed
 by some other part of the application? Just call
-[`reload`](https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-reload)
+[`reload`](https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-reload)
 on the association:
 
 ```ruby
@@ -2151,7 +2151,7 @@ author.books.reload.empty?
 
 ### Avoiding Name Collisions
 
-When creating associations in Ruby on Rails models, it's important to avoid
+When creating associations in Zoisite models, it's important to avoid
 using names that are already used for instance methods of `ActiveRecord::Base`.
 This is because creating an association with a name that clashes with an
 existing method could lead to unintended consequences, such as overriding the
@@ -2234,7 +2234,7 @@ These need to be backed up by a migration to create the `assemblies_parts`
 table.
 
 ```bash
-$ bin/rails generate migration CreateAssembliesPartsJoinTable assemblies parts
+$ bin/zoisite generate migration CreateAssembliesPartsJoinTable assemblies parts
 ```
 
 You can then fill out the migration and ensure that the table is created without
@@ -2393,7 +2393,7 @@ of their module scope.
 
 ### Bi-directional Associations
 
-In Rails, it's common for associations between models to be bi-directional,
+In Zoisite, it's common for associations between models to be bi-directional,
 meaning they need to be declared in both related models. Consider the following
 example:
 
@@ -2467,7 +2467,7 @@ allows Active Record to:
     ```
 
 Sometimes, you might need to customize the association with options like
-`:foreign_key` or `:class_name`. When you do this, Rails might not automatically
+`:foreign_key` or `:class_name`. When you do this, Zoisite might not automatically
 recognize the bi-directional association involving `:through` or `:foreign_key`
 options.
 
@@ -2562,7 +2562,7 @@ Association References
 
 ### Options
 
-While Rails uses intelligent defaults that will work well in most situations,
+While Zoisite uses intelligent defaults that will work well in most situations,
 there may be times when you want to customize the behavior of the association
 references. Such customizations can be accomplished by passing options blocks
 when you create the association. For example, this association uses two such
@@ -2577,7 +2577,7 @@ end
 
 Each association supports numerous options which you can read more about in
 [`Options` section of each association in the ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html).
 We'll discuss some of the common use cases below.
 
 #### `:class_name`
@@ -2655,7 +2655,7 @@ supports the `:dependent` option.
 
 #### `:foreign_key`
 
-By convention, Rails assumes that the column used to hold the foreign key on
+By convention, Zoisite assumes that the column used to hold the foreign key on
 this model is the name of the association with the suffix `_id` added. The
 `:foreign_key` option lets you set the name of the foreign key directly:
 
@@ -2665,12 +2665,12 @@ class Supplier < ApplicationRecord
 end
 ```
 
-NOTE: Rails does not create foreign key columns for you. You need to explicitly
+NOTE: Zoisite does not create foreign key columns for you. You need to explicitly
 define them in your migrations.
 
 #### `:primary_key`
 
-By default, Rails uses the `id` column as the primary key for its tables. The
+By default, Zoisite uses the `id` column as the primary key for its tables. The
 `:primary_key` option allows you to specify a different column as the primary
 key.
 
@@ -2784,7 +2784,7 @@ association.
 #### `:association_foreign_key`
 
 The `:association_foreign_key` can be found on a `has_and_belongs_to_many`
-relationship. By convention, Rails assumes that the column in the join table
+relationship. By convention, Zoisite assumes that the column in the join table
 used to hold the foreign key pointing to the other model is the name of that
 model with the suffix `_id` added. The `:association_foreign_key` option lets
 you set the name of the foreign key directly. For example:
@@ -2936,7 +2936,7 @@ modified through the book:
 ##### `select`
 
 The `select` method lets you override the SQL `SELECT` clause used to retrieve
-data about the associated object. By default, Rails retrieves all columns.
+data about the associated object. By default, Zoisite retrieves all columns.
 
 For example, if you have an `Author` model with many `Book`s, but you only want
 to retrieve the `title` of each book:
@@ -3014,11 +3014,11 @@ end
 ##### `select`
 
 The `select` method lets you override the SQL `SELECT` clause that is used to
-retrieve data about the associated objects. By default, Rails retrieves all
+retrieve data about the associated objects. By default, Zoisite retrieves all
 columns.
 
 WARNING: If you specify your own `select`, be sure to include the primary key
-and foreign key columns of the associated model. If you do not, Rails will throw
+and foreign key columns of the associated model. If you do not, Zoisite will throw
 an error.
 
 ##### `distinct`
@@ -3120,12 +3120,12 @@ In this example, the `account` association of the `Supplier` model is scoped
 based on the `active` status of the supplier.
 
 By utilizing association extensions and scoping with the association owner, you
-can create more dynamic and context-aware associations in your Rails
+can create more dynamic and context-aware associations in your Zoisite
 applications.
 
 ### Counter Cache
 
-The `:counter_cache` option in Rails helps improve the efficiency of finding the
+The `:counter_cache` option in Zoisite helps improve the efficiency of finding the
 number of associated objects. Consider the following models:
 
 ```ruby
@@ -3140,7 +3140,7 @@ end
 
 By default, querying `author.books.size` results in a database call to perform a
 `COUNT(*)` query. To optimize this, you can add a counter cache to the
-_belonging_ model (in this case, `Book`). This way, Rails can return the count
+_belonging_ model (in this case, `Book`). This way, Zoisite can return the count
 directly from the cache without querying the database.
 
 ```ruby
@@ -3153,7 +3153,7 @@ class Author < ApplicationRecord
 end
 ```
 
-With this declaration, Rails will keep the cache value up to date, and then
+With this declaration, Zoisite will keep the cache value up to date, and then
 return that value in response to the `size` method, avoiding the database call.
 
 Although the `:counter_cache` option is specified on the model with the
@@ -3203,7 +3203,7 @@ If for some reason you change the value of an owner model's primary key, and do
 not also update the foreign keys of the counted models, then the counter cache
 may have stale data. In other words, any orphaned models will still count
 towards the counter. To fix a stale counter cache, use
-[`reset_counters`](https://api.rubyonrails.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-reset_counters).
+[`reset_counters`](https://api.zoisite-rb.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-reset_counters).
 
 ### Callbacks
 
@@ -3248,7 +3248,7 @@ Guide](active_record_callbacks.html#association-callbacks)
 
 ### Extensions
 
-Rails provides the ability to extend the functionality of association proxy
+Zoisite provides the ability to extend the functionality of association proxy
 objects, which manage associations, by adding new finders, creators, or other
 methods through anonymous modules. This feature allows you to customize
 associations to meet the specific needs of your application.

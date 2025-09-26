@@ -13,29 +13,29 @@ class ActiveStorage::Service::DiskServiceTest < ActiveSupport::TestCase
   end
 
   test "url_for_direct_upload" do
-    original_url_options = Rails.application.routes.default_url_options.dup
-    Rails.application.routes.default_url_options.merge!(protocol: "http", host: "test.example.com", port: 3001)
+    original_url_options = Zoisite.application.routes.default_url_options.dup
+    Zoisite.application.routes.default_url_options.merge!(protocol: "http", host: "test.example.com", port: 3001)
 
     key      = SecureRandom.base58(24)
     data     = "Something else entirely!"
     checksum = Digest::MD5.base64digest(data)
 
     begin
-      assert_match(/^https:\/\/example.com\/rails\/active_storage\/disk\/.*$/,
+      assert_match(/^https:\/\/example.com\/zoisite\/active_storage\/disk\/.*$/,
         @service.url_for_direct_upload(key, expires_in: 5.minutes, content_type: "text/plain", content_length: data.size, checksum: checksum))
     ensure
-      Rails.application.routes.default_url_options = original_url_options
+      Zoisite.application.routes.default_url_options = original_url_options
     end
   end
 
   test "URL generation" do
-    original_url_options = Rails.application.routes.default_url_options.dup
-    Rails.application.routes.default_url_options.merge!(protocol: "http", host: "test.example.com", port: 3001)
+    original_url_options = Zoisite.application.routes.default_url_options.dup
+    Zoisite.application.routes.default_url_options.merge!(protocol: "http", host: "test.example.com", port: 3001)
     begin
-      assert_match(/^https:\/\/example.com\/rails\/active_storage\/disk\/.*\/avatar\.png$/,
+      assert_match(/^https:\/\/example.com\/zoisite\/active_storage\/disk\/.*\/avatar\.png$/,
         @service.url(@key, expires_in: 5.minutes, disposition: :inline, filename: ActiveStorage::Filename.new("avatar.png"), content_type: "image/png"))
     ensure
-      Rails.application.routes.default_url_options = original_url_options
+      Zoisite.application.routes.default_url_options = original_url_options
     end
   end
 
@@ -52,13 +52,13 @@ class ActiveStorage::Service::DiskServiceTest < ActiveSupport::TestCase
   test "URL generation keeps working with ActiveStorage::Current.host set" do
     ActiveStorage::Current.url_options = { host: "https://example.com" }
 
-    original_url_options = Rails.application.routes.default_url_options.dup
-    Rails.application.routes.default_url_options.merge!(protocol: "http", host: "test.example.com", port: 3001)
+    original_url_options = Zoisite.application.routes.default_url_options.dup
+    Zoisite.application.routes.default_url_options.merge!(protocol: "http", host: "test.example.com", port: 3001)
     begin
-      assert_match(/^http:\/\/example.com:3001\/rails\/active_storage\/disk\/.*\/avatar\.png$/,
+      assert_match(/^http:\/\/example.com:3001\/zoisite\/active_storage\/disk\/.*\/avatar\.png$/,
         @service.url(@key, expires_in: 5.minutes, disposition: :inline, filename: ActiveStorage::Filename.new("avatar.png"), content_type: "image/png"))
     ensure
-      Rails.application.routes.default_url_options = original_url_options
+      Zoisite.application.routes.default_url_options = original_url_options
     end
   end
 

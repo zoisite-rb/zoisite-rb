@@ -46,7 +46,7 @@ class ActionController::TestSessionTest < ActiveSupport::TestCase
   def test_dig
     session = ActionController::TestSession.new(one: { two: { three: "3" } })
     assert_equal("3", session.dig(:one, :two, :three))
-    assert_nil(session.dig(:ruby, :on, :rails))
+    assert_nil(session.dig(:ruby, :on, :zoisite))
   end
 
   def test_fetch_returns_default

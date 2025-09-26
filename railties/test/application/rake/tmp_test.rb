@@ -29,7 +29,7 @@ module ApplicationTests
           FileUtils.mkdir_p("tmp/storage/6h/np")
           FileUtils.touch("tmp/storage/6h/np/6hnp81jvgt42pcfqtlpoy8qshfb0")
 
-          rails "tmp:clear"
+          zoisite "tmp:clear"
 
           assert_not File.exist?("tmp/cache/cache_file")
           assert_not File.exist?("tmp/sockets/socket_file")
@@ -41,7 +41,7 @@ module ApplicationTests
       test "tmp:clear should work if folder missing" do
         FileUtils.remove_dir("#{app_path}/tmp")
         assert_nothing_raised do
-          rails "tmp:clear"
+          zoisite "tmp:clear"
         end
       end
     end

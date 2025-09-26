@@ -1,10 +1,10 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Cable Overview
 =====================
 
 In this guide, you will learn how Action Cable works and how to use WebSockets to
-incorporate real-time features into your Rails application.
+incorporate real-time features into your Zoisite application.
 
 After reading this guide, you will know:
 
@@ -20,8 +20,8 @@ What is Action Cable?
 
 Action Cable seamlessly integrates
 [WebSockets](https://en.wikipedia.org/wiki/WebSocket) with the rest of your
-Rails application. It allows for real-time features to be written in Ruby in the
-same style and form as the rest of your Rails application, while still being
+Zoisite application. It allows for real-time features to be written in Ruby in the
+same style and form as the rest of your Zoisite application, while still being
 performant and scalable. It's a full-stack offering that provides both a
 client-side JavaScript framework and a server-side Ruby framework. You have
 access to your entire domain model written with Active Record or your ORM of
@@ -139,12 +139,12 @@ can use this approach:
 verified_user = User.find_by(id: cookies.encrypted["_session"]["user_id"])
 ```
 
-[`ActionCable::Connection::Base`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Base.html
-[`identified_by`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Identification/ClassMethods.html#method-i-identified_by
+[`ActionCable::Connection::Base`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Base.html
+[`identified_by`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Identification/ClassMethods.html#method-i-identified_by
 
 #### Exception Handling
 
-By default, unhandled exceptions are caught and logged to Rails' logger. If you would like to
+By default, unhandled exceptions are caught and logged to Zoisite' logger. If you would like to
 globally intercept these exceptions and report them to an external bug tracking service, for
 example, you can do so with [`rescue_from`][]:
 
@@ -162,7 +162,7 @@ module ApplicationCable
 end
 ```
 
-[`rescue_from`]: https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
+[`rescue_from`]: https://api.zoisite-rb.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
 
 #### Connection Callbacks
 
@@ -174,15 +174,15 @@ unsubscribing, or performing an action:
 * [`after_command`][]
 * [`around_command`][]
 
-[`ActionCable::Connection::Callbacks`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Callbacks.html
-[`after_command`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-after_command
-[`around_command`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-around_command
-[`before_command`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-before_command
+[`ActionCable::Connection::Callbacks`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Callbacks.html
+[`after_command`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-after_command
+[`around_command`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-around_command
+[`before_command`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-before_command
 
 ### Channels
 
 A *channel* encapsulates a logical unit of work, similar to what a controller does in a
-typical MVC setup. By default, Rails creates a parent `ApplicationCable::Channel` class
+typical MVC setup. By default, Zoisite creates a parent `ApplicationCable::Channel` class
 (which extends [`ActionCable::Channel::Base`][]) for encapsulating shared logic between your channels,
 when you use the channel generator for the first time.
 
@@ -210,7 +210,7 @@ class AppearanceChannel < ApplicationCable::Channel
 end
 ```
 
-[`ActionCable::Channel::Base`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Base.html
+[`ActionCable::Channel::Base`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Base.html
 
 A consumer could then be subscribed to either or both of these channels.
 
@@ -257,29 +257,29 @@ during the life cycle of a channel:
 * [`before_unsubscribe`][]
 * [`after_unsubscribe`][] (aliased as [`on_unsubscribe`][])
 
-[`ActionCable::Channel::Callbacks`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks.html
-[`after_subscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-after_subscribe
-[`after_unsubscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-after_unsubscribe
-[`before_subscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-before_subscribe
-[`before_unsubscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-before_unsubscribe
-[`on_subscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-on_subscribe
-[`on_unsubscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-on_unsubscribe
+[`ActionCable::Channel::Callbacks`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks.html
+[`after_subscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-after_subscribe
+[`after_unsubscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-after_unsubscribe
+[`before_subscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-before_subscribe
+[`before_unsubscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-before_unsubscribe
+[`on_subscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-on_subscribe
+[`on_unsubscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-on_unsubscribe
 
 ## Client-Side Components
 
 ### Connections
 
 Consumers require an instance of the connection on their side. This can be
-established using the following JavaScript, which is generated by default by Rails:
+established using the following JavaScript, which is generated by default by Zoisite:
 
 #### Connect Consumer
 
 ```js
 // app/javascript/channels/consumer.js
-// Action Cable provides the framework to deal with WebSockets in Rails.
-// You can generate new channels where WebSocket features live using the `bin/rails generate channel` command.
+// Action Cable provides the framework to deal with WebSockets in Zoisite.
+// You can generate new channels where WebSocket features live using the `bin/zoisite generate channel` command.
 
-import { createConsumer } from "@rails/actioncable"
+import { createConsumer } from "@zoisite/actioncable"
 
 export default createConsumer()
 ```
@@ -355,7 +355,7 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-Then, elsewhere in your Rails application, you can broadcast to such a room by
+Then, elsewhere in your Zoisite application, you can broadcast to such a room by
 calling [`broadcast`][]:
 
 ```ruby
@@ -383,10 +383,10 @@ You can then broadcast to this channel by calling [`broadcast_to`][]:
 PostsChannel.broadcast_to(@post, @comment)
 ```
 
-[`broadcast`]: https://api.rubyonrails.org/classes/ActionCable/Server/Broadcasting.html#method-i-broadcast
-[`broadcast_to`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Broadcasting/ClassMethods.html#method-i-broadcast_to
-[`stream_for`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
-[`stream_from`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
+[`broadcast`]: https://api.zoisite-rb.org/classes/ActionCable/Server/Broadcasting.html#method-i-broadcast
+[`broadcast_to`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Broadcasting/ClassMethods.html#method-i-broadcast_to
+[`stream_for`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
+[`stream_from`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
 
 ### Broadcastings
 
@@ -715,8 +715,8 @@ and unpacked for the data argument arriving as `received`.
 
 ### More Complete Examples
 
-See the [rails/actioncable-examples](https://github.com/rails/actioncable-examples)
-repository for a full example of how to set up Action Cable in a Rails app and adding channels.
+See the [zoisite/actioncable-examples](https://github.com/zoisite/actioncable-examples)
+repository for a full example of how to set up Action Cable in a Zoisite app and adding channels.
 
 ## Configuration
 
@@ -725,7 +725,7 @@ Action Cable has two required configurations: a subscription adapter and allowed
 ### Subscription Adapter
 
 By default, Action Cable looks for a configuration file in `config/cable.yml`.
-The file must specify an adapter for each Rails environment. See the
+The file must specify an adapter for each Zoisite environment. See the
 [Dependencies](#dependencies) section for additional information on adapters.
 
 ```yaml
@@ -749,11 +749,11 @@ Below is a list of the subscription adapters available for end-users.
 
 The async adapter is intended for development/testing and should not be used in production.
 
-NOTE: The async adapter only works within the same process, so for manually triggering cable updates from a console and seeing results in the browser, you must do so from the web console (running inside the dev process), not a terminal started via `bin/rails console`! Add `console` to any action or any ERB template view to make the web console appear.
+NOTE: The async adapter only works within the same process, so for manually triggering cable updates from a console and seeing results in the browser, you must do so from the web console (running inside the dev process), not a terminal started via `bin/zoisite console`! Add `console` to any action or any ERB template view to make the web console appear.
 
 ##### Solid Cable Adapter
 
-The Solid Cable adapter is a database-backed solution that uses Active Record. It has been tested with MySQL, SQLite, and PostgreSQL. Running `bin/rails solid_cable:install` will automatically set up `config/cable.yml` and create `db/cable_schema.rb`. After that, you must manually update `config/database.yml`, adjusting it based on your database. See [Solid Cable Installation](https://github.com/rails/solid_cable?tab=readme-ov-file#installation).
+The Solid Cable adapter is a database-backed solution that uses Active Record. It has been tested with MySQL, SQLite, and PostgreSQL. Running `bin/zoisite solid_cable:install` will automatically set up `config/cable.yml` and create `db/cable_schema.rb`. After that, you must manually update `config/database.yml`, adjusting it based on your database. See [Solid Cable Installation](https://github.com/zoisite/solid_cable?tab=readme-ov-file#installation).
 
 ##### Redis Adapter
 
@@ -783,7 +783,7 @@ WARNING: It is not recommended to use `VERIFY_NONE` in production unless you abs
 
 The PostgreSQL adapter uses Active Record's connection pool, and thus the
 application's `config/database.yml` database configuration, for its connection.
-This may change in the future. [#27214](https://github.com/rails/rails/issues/27214)
+This may change in the future. [#27214](https://github.com/zoisite-rb/zoisite-rb/issues/27214)
 
 NOTE: PostgreSQL has a [8000 bytes limit](https://www.postgresql.org/docs/current/sql-notify.html) on `NOTIFY` (the command used under the hood for sending notifications) which might be a constraint when dealing with large payloads.
 
@@ -794,7 +794,7 @@ passed to the server config as an array. The origins can be instances of
 strings or regular expressions, against which a check for the match will be performed.
 
 ```ruby
-config.action_cable.allowed_request_origins = ["https://rubyonrails.com", %r{http://ruby.*}]
+config.action_cable.allowed_request_origins = ["https://zoisite-rb.org", %r{http://ruby.*}]
 ```
 
 To disable and allow requests from any origin:
@@ -813,7 +813,7 @@ HEAD. This uses a URL or path typically set via [`config.action_cable.url`][] in
 environment configuration files.
 
 [`config.action_cable.url`]: configuring.html#config-action-cable-url
-[`action_cable_meta_tag`]: https://api.rubyonrails.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
+[`action_cable_meta_tag`]: https://api.zoisite-rb.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
 
 ### Worker Pool Configuration
 
@@ -835,7 +835,7 @@ You can change that in `config/database.yml` through the `pool` attribute.
 Client-side logging is disabled by default. You can enable this by setting the `ActionCable.logger.enabled` to true.
 
 ```js
-import * as ActionCable from '@rails/actioncable'
+import * as ActionCable from '@zoisite/actioncable'
 
 ActionCable.logger.enabled = true
 ```
@@ -859,19 +859,19 @@ For a full list of all configuration options, see the
 
 ## Running Standalone Cable Servers
 
-Action Cable can either run as part of your Rails application, or as
-a standalone server. In development, running as part of your Rails app
+Action Cable can either run as part of your Zoisite application, or as
+a standalone server. In development, running as part of your Zoisite app
 is generally fine, but in production you should run it as a standalone.
 
 ### In App
 
-Action Cable can run alongside your Rails application. For example, to
+Action Cable can run alongside your Zoisite application. For example, to
 listen for WebSocket requests on `/websocket`, specify that path to
 [`config.action_cable.mount_path`][]:
 
 ```ruby
 # config/application.rb
-class Application < Rails::Application
+class Application < Zoisite::Application
   config.action_cable.mount_path = "/websocket"
 end
 ```
@@ -885,7 +885,7 @@ spawns, you will also have a new instance of Action Cable, but the Redis or
 PostgreSQL adapter keeps messages synced across connections.
 
 [`config.action_cable.mount_path`]: configuring.html#config-action-cable-mount-path
-[`action_cable_meta_tag`]: https://api.rubyonrails.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
+[`action_cable_meta_tag`]: https://api.zoisite-rb.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
 
 ### Standalone
 
@@ -896,7 +896,7 @@ basic setup is as follows:
 ```ruby
 # cable/config.ru
 require_relative "../config/environment"
-Rails.application.eager_load!
+Zoisite.application.eager_load!
 
 run ActionCable.server
 ```
@@ -907,12 +907,12 @@ Then to start the server:
 $ bundle exec puma -p 28080 cable/config.ru
 ```
 
-This starts a cable server on port 28080. To tell Rails to use this
+This starts a cable server on port 28080. To tell Zoisite to use this
 server, update your config:
 
 ```ruby
 # config/environments/development.rb
-Rails.application.configure do
+Zoisite.application.configure do
   config.action_cable.mount_path = nil
   config.action_cable.url = "ws://localhost:28080" # use wss:// in production
 end
@@ -931,7 +931,7 @@ authentication. You can see one way of doing that with Devise in this [article](
 Action Cable provides a subscription adapter interface to process its
 pubsub internals. By default, asynchronous, inline, PostgreSQL, and Redis
 adapters are included. The default adapter
-in new Rails applications is the asynchronous (`async`) adapter.
+in new Zoisite applications is the asynchronous (`async`) adapter.
 
 The Ruby side of things is built on top of [websocket-driver](https://github.com/faye/websocket-driver-ruby),
 [nio4r](https://github.com/celluloid/nio4r), and [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
@@ -941,7 +941,7 @@ The Ruby side of things is built on top of [websocket-driver](https://github.com
 Action Cable is powered by a combination of WebSockets and threads. Both the
 framework plumbing and user-specified channel work are handled internally by
 utilizing Ruby's native thread support. This means you can use all your existing
-Rails models with no problem, as long as you haven't committed any thread-safety sins.
+Zoisite models with no problem, as long as you haven't committed any thread-safety sins.
 
 The Action Cable server implements the Rack socket hijacking API,
 thereby allowing the use of a multi-threaded pattern for managing connections

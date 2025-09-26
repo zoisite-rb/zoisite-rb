@@ -2,21 +2,21 @@
 
 require "abstract_unit"
 require "minitest/mock"
-require "rails/command"
-require "rails/commands/dbconsole/dbconsole_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/dbconsole/dbconsole_command"
 require "active_record/database_configurations"
 require "active_support/testing/method_call_assertions"
 require "active_record/connection_adapters/sqlite3_adapter"
 
-class Rails::DBConsoleTest < ActiveSupport::TestCase
+class Zoisite::DBConsoleTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::MethodCallAssertions
 
   def setup
-    Rails::DBConsole.const_set("APP_PATH", "rails/all")
+    Zoisite::DBConsole.const_set("APP_PATH", "zoisite/all")
   end
 
   def teardown
-    Rails::DBConsole.send(:remove_const, "APP_PATH")
+    Zoisite::DBConsole.send(:remove_const, "APP_PATH")
     %w[DATABASE_URL].each { |key| ENV.delete(key) }
   end
 
@@ -34,14 +34,14 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
       }
     }
     app_db_config(config_sample) do
-      assert_equal config_sample["test"].symbolize_keys, Rails::DBConsole.new.db_config.configuration_hash
+      assert_equal config_sample["test"].symbolize_keys, Zoisite::DBConsole.new.db_config.configuration_hash
     end
   end
 
   def test_config_with_no_db_config
     app_db_config(nil) do
       assert_raise(ActiveRecord::AdapterNotSpecified) {
-        Rails::DBConsole.new.db_config.configuration_hash
+        Zoisite::DBConsole.new.db_config.configuration_hash
       }
     end
   end
@@ -60,7 +60,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     }.sort
 
     app_db_config(nil) do
-      assert_equal expected, Rails::DBConsole.new.db_config.configuration_hash.sort
+      assert_equal expected, Zoisite::DBConsole.new.db_config.configuration_hash.sort
     end
   end
 
@@ -80,31 +80,31 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
       }
     }
     app_db_config(sample_config) do
-      assert_equal host, Rails::DBConsole.new.db_config.configuration_hash[:host]
+      assert_equal host, Zoisite::DBConsole.new.db_config.configuration_hash[:host]
     end
   end
 
   def test_env
-    assert_equal "test", Rails::DBConsole.new.environment
+    assert_equal "test", Zoisite::DBConsole.new.environment
 
     ENV["RAILS_ENV"] = nil
     ENV["RACK_ENV"] = nil
 
-    Rails.stub(:respond_to?, false) do
-      assert_equal "development", Rails::DBConsole.new.environment
+    Zoisite.stub(:respond_to?, false) do
+      assert_equal "development", Zoisite::DBConsole.new.environment
 
       ENV["RACK_ENV"] = "rack_env"
-      assert_equal "rack_env", Rails::DBConsole.new.environment
+      assert_equal "rack_env", Zoisite::DBConsole.new.environment
 
-      ENV["RAILS_ENV"] = "rails_env"
-      assert_equal "rails_env", Rails::DBConsole.new.environment
+      ENV["RAILS_ENV"] = "zoisite_env"
+      assert_equal "zoisite_env", Zoisite::DBConsole.new.environment
     end
   ensure
     ENV["RAILS_ENV"] = "test"
     ENV["RACK_ENV"] = nil
   end
 
-  def test_rails_env_is_development_when_environment_option_is_dev
+  def test_zoisite_env_is_development_when_environment_option_is_dev
     stub_available_environments([ "development", "test" ]) do
       assert_match("development", parse_arguments([ "-e", "dev" ])[:environment])
     end
@@ -133,7 +133,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     }
 
     app_db_config(sample_config) do
-      assert_equal "postgresql", Rails::DBConsole.new.db_config.configuration_hash[:adapter]
+      assert_equal "postgresql", Zoisite::DBConsole.new.db_config.configuration_hash[:adapter]
     end
   end
 
@@ -162,14 +162,14 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     }
 
     app_db_config(sample_config) do
-      assert_equal "primary_replica", Rails::DBConsole.new(options).db_config.name
+      assert_equal "primary_replica", Zoisite::DBConsole.new(options).db_config.name
     end
   end
 
   def test_specifying_a_missing_database
     app_db_config({}) do
       e = assert_raises(ActiveRecord::AdapterNotSpecified) do
-        Rails::Command.invoke(:dbconsole, ["--db", "i_do_not_exist"])
+        Zoisite::Command.invoke(:dbconsole, ["--db", "i_do_not_exist"])
       end
 
       assert_includes e.message, "'i_do_not_exist' database is not configured for 'test'."
@@ -179,7 +179,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
   def test_specifying_a_missing_environment
     app_db_config({}) do
       e = assert_raises(ActiveRecord::AdapterNotSpecified) do
-        Rails::Command.invoke(:dbconsole)
+        Zoisite::Command.invoke(:dbconsole)
       end
 
       assert_includes e.message, "No databases are configured for 'test'."
@@ -188,16 +188,16 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
 
   def test_print_help_short
     stdout = capture(:stdout) do
-      Rails::Command.invoke(:dbconsole, ["-h"])
+      Zoisite::Command.invoke(:dbconsole, ["-h"])
     end
-    assert_match %r"bin/rails dbconsole", stdout
+    assert_match %r"bin/zoisite dbconsole", stdout
   end
 
   def test_print_help_long
     stdout = capture(:stdout) do
-      Rails::Command.invoke(:dbconsole, ["--help"])
+      Zoisite::Command.invoke(:dbconsole, ["--help"])
     end
-    assert_match %r"bin/rails dbconsole", stdout
+    assert_match %r"bin/zoisite dbconsole", stdout
   end
 
   attr_reader :aborted, :output
@@ -205,13 +205,13 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
 
   private
     def app_db_config(results, &block)
-      Rails.application.config.stub(:database_configuration, results || {}, &block)
+      Zoisite.application.config.stub(:database_configuration, results || {}, &block)
     end
 
     attr_reader :dbconsole
 
     def start(config = {}, argv = [])
-      @dbconsole = Rails::DBConsole.new(parse_arguments(argv))
+      @dbconsole = Zoisite::DBConsole.new(parse_arguments(argv))
       hash_config = nil
       @dbconsole.stub(:db_config, -> { hash_config ||= ActiveRecord::DatabaseConfigurations::HashConfig.new("test", "primary", config) }) do
         capture_abort { @dbconsole.start }
@@ -228,7 +228,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     end
 
     def stub_available_environments(environments)
-      Rails::Command::DbconsoleCommand.class_eval do
+      Zoisite::Command::DbconsoleCommand.class_eval do
         alias_method :old_environments, :available_environments
 
         define_method :available_environments do
@@ -238,7 +238,7 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
 
       yield
     ensure
-      Rails::Command::DbconsoleCommand.class_eval do
+      Zoisite::Command::DbconsoleCommand.class_eval do
         undef_method :available_environments
         alias_method :available_environments, :old_environments
         undef_method :old_environments
@@ -246,6 +246,6 @@ class Rails::DBConsoleTest < ActiveSupport::TestCase
     end
 
     def parse_arguments(args)
-      Rails::Command::DbconsoleCommand.new([], args).options
+      Zoisite::Command::DbconsoleCommand.new([], args).options
     end
 end

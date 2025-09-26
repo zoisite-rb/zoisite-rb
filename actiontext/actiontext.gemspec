@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "actiontext"
   s.version     = version
   s.summary     = "Rich text framework."
-  s.description = "Edit and display rich text in Rails applications."
+  s.description = "Edit and display rich text in Zoisite applications."
 
   s.required_ruby_version = ">= 3.2.0"
 
@@ -15,22 +15,22 @@ Gem::Specification.new do |s|
 
   s.authors  = ["Javan Makhmali", "Sam Stephenson", "David Heinemeier Hansson"]
   s.email    = ["javan@javan.us", "sstephenson@gmail.com", "david@loudthinking.com"]
-  s.homepage = "https://rubyonrails.org"
+  s.homepage = "https://zoisite-rb.org"
 
   s.files        = Dir["CHANGELOG.md", "MIT-LICENSE", "README.md", "lib/**/*", "app/**/*", "config/**/*", "db/**/*", "package.json"]
   s.require_path = "lib"
 
   s.metadata = {
-    "bug_tracker_uri"   => "https://github.com/rails/rails/issues",
-    "changelog_uri"     => "https://github.com/rails/rails/blob/v#{version}/actiontext/CHANGELOG.md",
-    "documentation_uri" => "https://api.rubyonrails.org/v#{version}/",
-    "mailing_list_uri"  => "https://discuss.rubyonrails.org/c/rubyonrails-talk",
-    "source_code_uri"   => "https://github.com/rails/rails/tree/v#{version}/actiontext",
+    "bug_tracker_uri"   => "https://github.com/zoisite-rb/zoisite-rb/issues",
+    "changelog_uri"     => "https://github.com/zoisite-rb/zoisite-rb/blob/v#{version}/actiontext/CHANGELOG.md",
+    "documentation_uri" => "https://api.zoisite-rb.org/v#{version}/",
+    "mailing_list_uri"  => "https://discuss.zoisite-rb.org/c/zoisite-talk",
+    "source_code_uri"   => "https://github.com/zoisite-rb/zoisite-rb/tree/v#{version}/actiontext",
     "rubygems_mfa_required" => "true",
   }
 
   # NOTE: Please read our dependency guidelines before updating versions:
-  # https://edgeguides.rubyonrails.org/security.html#dependency-management-and-cves
+  # https://edgeguides.zoisite-rb.org/security.html#dependency-management-and-cves
 
   s.add_dependency "activesupport", version
   s.add_dependency "activerecord",  version

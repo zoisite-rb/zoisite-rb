@@ -13,27 +13,27 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   end
 
   test "image path is saved in tmp directory" do
-    Rails.stub :root, Pathname.getwd do
-      assert_equal Rails.root.join("tmp/screenshots/0_x.png").to_s, @new_test.send(:image_path)
+    Zoisite.stub :root, Pathname.getwd do
+      assert_equal Zoisite.root.join("tmp/screenshots/0_x.png").to_s, @new_test.send(:image_path)
     end
   end
 
   test "image path unique counter is changed when incremented" do
     @new_test.send(:increment_unique)
 
-    Rails.stub :root, Pathname.getwd do
-      assert_equal Rails.root.join("tmp/screenshots/1_x.png").to_s, @new_test.send(:image_path)
+    Zoisite.stub :root, Pathname.getwd do
+      assert_equal Zoisite.root.join("tmp/screenshots/1_x.png").to_s, @new_test.send(:image_path)
     end
   end
 
   # To allow multiple screenshots in same test
   test "image path unique counter generates different path in same test" do
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.send(:increment_unique)
-      assert_equal Rails.root.join("tmp/screenshots/1_x.png").to_s, @new_test.send(:image_path)
+      assert_equal Zoisite.root.join("tmp/screenshots/1_x.png").to_s, @new_test.send(:image_path)
 
       @new_test.send(:increment_unique)
-      assert_equal Rails.root.join("tmp/screenshots/2_x.png").to_s, @new_test.send(:image_path)
+      assert_equal Zoisite.root.join("tmp/screenshots/2_x.png").to_s, @new_test.send(:image_path)
     end
   end
 
@@ -41,28 +41,28 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
     original_save_path = Capybara.save_path
     Capybara.save_path = "custom_dir"
 
-    Rails.stub :root, Pathname.getwd do
-      assert_equal Rails.root.join("custom_dir/0_x.png").to_s, @new_test.send(:image_path)
+    Zoisite.stub :root, Pathname.getwd do
+      assert_equal Zoisite.root.join("custom_dir/0_x.png").to_s, @new_test.send(:image_path)
     end
   ensure
     Capybara.save_path = original_save_path
   end
 
   test "image path includes failures text if test did not pass" do
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.stub :passed?, false do
-        assert_equal Rails.root.join("tmp/screenshots/failures_x.png").to_s, @new_test.send(:image_path)
-        assert_equal Rails.root.join("tmp/screenshots/failures_x.html").to_s, @new_test.send(:html_path)
+        assert_equal Zoisite.root.join("tmp/screenshots/failures_x.png").to_s, @new_test.send(:image_path)
+        assert_equal Zoisite.root.join("tmp/screenshots/failures_x.html").to_s, @new_test.send(:html_path)
       end
     end
   end
 
   test "image path does not include failures text if test skipped" do
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.stub :passed?, false do
         @new_test.stub :skipped?, true do
-          assert_equal Rails.root.join("tmp/screenshots/0_x.png").to_s, @new_test.send(:image_path)
-          assert_equal Rails.root.join("tmp/screenshots/0_x.html").to_s, @new_test.send(:html_path)
+          assert_equal Zoisite.root.join("tmp/screenshots/0_x.png").to_s, @new_test.send(:image_path)
+          assert_equal Zoisite.root.join("tmp/screenshots/0_x.html").to_s, @new_test.send(:html_path)
         end
       end
     end
@@ -71,9 +71,9 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   test "image name truncates names over 225 characters including counter" do
     long_test = DrivenBySeleniumWithChrome.new("x" * 400)
 
-    Rails.stub :root, Pathname.getwd do
-      assert_equal Rails.root.join("tmp/screenshots/0_#{"x" * 223}.png").to_s, long_test.send(:image_path)
-      assert_equal Rails.root.join("tmp/screenshots/0_#{"x" * 223}.html").to_s, long_test.send(:html_path)
+    Zoisite.stub :root, Pathname.getwd do
+      assert_equal Zoisite.root.join("tmp/screenshots/0_#{"x" * 223}.png").to_s, long_test.send(:image_path)
+      assert_equal Zoisite.root.join("tmp/screenshots/0_#{"x" * 223}.html").to_s, long_test.send(:html_path)
     end
   end
 
@@ -84,7 +84,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   test "take_screenshot saves image and shows link to it" do
     display_image_actual = nil
 
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.stub :save_image, nil do
         @new_test.stub :show, -> (img) { display_image_actual = img } do
           @new_test.take_screenshot
@@ -101,7 +101,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
     display_image_actual = nil
     called_save_html = false
 
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.stub :save_image, nil do
         @new_test.stub :show, -> (img) { display_image_actual = img } do
           @new_test.stub :save_html, -> { called_save_html = true } do
@@ -120,7 +120,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
     display_image_actual = nil
     called_save_html = false
 
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.stub :save_image, nil do
         @new_test.stub :show, -> (img) { display_image_actual = img } do
           @new_test.stub :save_html, -> { called_save_html = true } do
@@ -139,7 +139,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
 
     display_image_actual = nil
 
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.stub :save_image, nil do
         @new_test.stub :show, -> (img) { display_image_actual = img } do
           @new_test.take_screenshot
@@ -155,7 +155,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   test "take_screenshot allows changing screenshot display format via screenshot: kwarg" do
     display_image_actual = nil
 
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.stub :save_image, nil do
         @new_test.stub :show, -> (img) { display_image_actual = img } do
           @new_test.take_screenshot(screenshot: "artifact")
@@ -167,7 +167,7 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   end
 
   test "take_failed_screenshot persists the image path in the test metadata" do
-    Rails.stub :root, Pathname.getwd do
+    Zoisite.stub :root, Pathname.getwd do
       @new_test.stub :passed?, false do
         Capybara::Session.stub :instance_created?, true do
           @new_test.stub :save_image, nil do
@@ -183,17 +183,17 @@ class ScreenshotHelperTest < ActiveSupport::TestCase
   end
 
   test "image path returns the absolute path from root" do
-    Rails.stub :root, Pathname.getwd.join("..") do
-      assert_equal Rails.root.join("tmp/screenshots/0_x.png").to_s, @new_test.send(:image_path)
+    Zoisite.stub :root, Pathname.getwd.join("..") do
+      assert_equal Zoisite.root.join("tmp/screenshots/0_x.png").to_s, @new_test.send(:image_path)
     end
   end
 
   test "Non word characters are replaced with dashes in paths" do
     non_word_chars_test = DrivenBySeleniumWithChrome.new("x/y\\z?<br>-span")
 
-    Rails.stub :root, Pathname.getwd do
-      assert_equal Rails.root.join("tmp/screenshots/0_x-y-z-br-span.png").to_s, non_word_chars_test.send(:image_path)
-      assert_equal Rails.root.join("tmp/screenshots/0_x-y-z-br-span.html").to_s, non_word_chars_test.send(:html_path)
+    Zoisite.stub :root, Pathname.getwd do
+      assert_equal Zoisite.root.join("tmp/screenshots/0_x-y-z-br-span.png").to_s, non_word_chars_test.send(:image_path)
+      assert_equal Zoisite.root.join("tmp/screenshots/0_x-y-z-br-span.html").to_s, non_word_chars_test.send(:html_path)
     end
   end
 end

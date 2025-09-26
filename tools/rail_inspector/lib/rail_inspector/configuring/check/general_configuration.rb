@@ -18,7 +18,7 @@ module RailInspector
           end
 
           private
-            APP_CONFIG_CONST = "Rails::Application::Configuration"
+            APP_CONFIG_CONST = "Zoisite::Application::Configuration"
 
             def app_config_tree
               @checker.files.application_configuration.parse

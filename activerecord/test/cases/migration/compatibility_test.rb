@@ -581,7 +581,7 @@ module ActiveRecord
         assert_includes e.message, "change_column_null expects a boolean value (true for NULL, false for NOT NULL). Got: #{{ from: true, to: false }}"
       end
 
-      def test_change_column_null_with_non_boolean_arguments_does_not_raise_in_old_rails_versions
+      def test_change_column_null_with_non_boolean_arguments_does_not_raise_in_old_zoisite_versions
         migration = Class.new(ActiveRecord::Migration[7.0]) do
           def up
             add_column :testings, :name, :string
@@ -596,7 +596,7 @@ module ActiveRecord
         end
       end
 
-      def test_change_column_null_with_boolean_arguments_does_not_raise_in_old_rails_versions
+      def test_change_column_null_with_boolean_arguments_does_not_raise_in_old_zoisite_versions
         migration = Class.new(ActiveRecord::Migration[7.0]) do
           def up
             add_column :testings, :name, :string

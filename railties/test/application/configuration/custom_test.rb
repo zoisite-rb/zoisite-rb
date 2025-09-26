@@ -26,7 +26,7 @@ module ApplicationTests
         RUBY
         require_environment
 
-        x = Rails.configuration.x
+        x = Zoisite.configuration.x
         assert_equal :daily, x.payment_processing.schedule
         assert_equal 3, x.payment_processing.retries
         assert_equal true, x.super_debugger

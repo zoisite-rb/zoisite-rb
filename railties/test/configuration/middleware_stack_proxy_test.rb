@@ -2,11 +2,11 @@
 
 require "active_support"
 require "active_support/testing/autorun"
-require "rails/configuration"
+require "zoisite/configuration"
 require "active_support/test_case"
 require "minitest/mock"
 
-module Rails
+module Zoisite
   module Configuration
     class MiddlewareStackProxyTest < ActiveSupport::TestCase
       def setup

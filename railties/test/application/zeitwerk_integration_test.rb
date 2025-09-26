@@ -24,10 +24,10 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
   test "The integration is minimally looking good" do
     boot
 
-    assert_predicate Rails.autoloaders, :zeitwerk_enabled?
-    assert_instance_of Zeitwerk::Loader, Rails.autoloaders.main
-    assert_instance_of Zeitwerk::Loader, Rails.autoloaders.once
-    assert_equal [Rails.autoloaders.main, Rails.autoloaders.once], Rails.autoloaders.to_a
+    assert_predicate Zoisite.autoloaders, :zeitwerk_enabled?
+    assert_instance_of Zeitwerk::Loader, Zoisite.autoloaders.main
+    assert_instance_of Zeitwerk::Loader, Zoisite.autoloaders.once
+    assert_equal [Zoisite.autoloaders.main, Zoisite.autoloaders.once], Zoisite.autoloaders.to_a
   end
 
   test "autoloaders inflect with Active Support" do
@@ -45,10 +45,10 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
     boot
 
     basename  = "restful_controller"
-    abspath   = "#{Rails.root}/app/controllers/#{basename}.rb"
+    abspath   = "#{Zoisite.root}/app/controllers/#{basename}.rb"
     camelized = "RESTfulController"
 
-    Rails.autoloaders.each do |autoloader|
+    Zoisite.autoloaders.each do |autoloader|
       assert_equal camelized, autoloader.inflector.camelize(basename, abspath)
     end
 
@@ -60,14 +60,14 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
     app_file "extras2/y.rb", "ZeitwerkIntegrationTestExtras::Y = true"
 
     add_to_env_config "development", <<~'RUBY'
-      config.autoload_once_paths << "#{Rails.root}/extras1"
-      config.autoload_once_paths << Rails.root.join("extras2")
+      config.autoload_once_paths << "#{Zoisite.root}/extras1"
+      config.autoload_once_paths << Zoisite.root.join("extras2")
 
       module ZeitwerkIntegrationTestExtras; end
 
-      autoloader = Rails.autoloaders.once
-      autoloader.push_dir("#{Rails.root}/extras1", namespace: ZeitwerkIntegrationTestExtras)
-      autoloader.push_dir("#{Rails.root}/extras2", namespace: ZeitwerkIntegrationTestExtras)
+      autoloader = Zoisite.autoloaders.once
+      autoloader.push_dir("#{Zoisite.root}/extras1", namespace: ZeitwerkIntegrationTestExtras)
+      autoloader.push_dir("#{Zoisite.root}/extras2", namespace: ZeitwerkIntegrationTestExtras)
     RUBY
 
     boot
@@ -84,11 +84,11 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
       module ZeitwerkIntegrationTestServices; end
       module ZeitwerkIntegrationTestExtras; end
 
-      ActiveSupport::Dependencies.autoload_paths << Rails.root.join("extras")
+      ActiveSupport::Dependencies.autoload_paths << Zoisite.root.join("extras")
 
-      Rails.autoloaders.main.tap do |main|
-        main.push_dir("#{Rails.root}/app/services", namespace: ZeitwerkIntegrationTestServices)
-        main.push_dir("#{Rails.root}/extras", namespace: ZeitwerkIntegrationTestExtras)
+      Zoisite.autoloaders.main.tap do |main|
+        main.push_dir("#{Zoisite.root}/app/services", namespace: ZeitwerkIntegrationTestServices)
+        main.push_dir("#{Zoisite.root}/extras", namespace: ZeitwerkIntegrationTestExtras)
       end
     RUBY
 
@@ -104,8 +104,8 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
 
     # We should be able to configure autoload_once_paths in
     # config/application.rb and in config/environments/*.rb.
-    add_to_config 'config.autoload_once_paths << "#{Rails.root}/extras0"'
-    add_to_env_config "development", 'config.autoload_once_paths << "#{Rails.root}/extras1"'
+    add_to_config 'config.autoload_once_paths << "#{Zoisite.root}/extras0"'
+    add_to_env_config "development", 'config.autoload_once_paths << "#{Zoisite.root}/extras1"'
 
     # Collections should br frozen after bootstrap, and you are ready to
     # autoload with the once autoloader. In particular, from initializers.
@@ -136,8 +136,8 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
   test "the once autoloader can eager load" do
     app_file "app/serializers/money_serializer.rb", "MoneySerializer = :dummy_value"
 
-    add_to_config 'config.autoload_once_paths << "#{Rails.root}/app/serializers"'
-    add_to_config 'config.eager_load_paths << "#{Rails.root}/app/serializers"'
+    add_to_config 'config.autoload_once_paths << "#{Zoisite.root}/app/serializers"'
+    add_to_config 'config.eager_load_paths << "#{Zoisite.root}/app/serializers"'
 
     assert_not Object.const_defined?(:MoneySerializer)
 
@@ -172,7 +172,7 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
     assert_not $zeitwerk_integration_test_user
     assert_not $zeitwerk_integration_test_post
 
-    Rails.application.eager_load!
+    Zoisite.application.eager_load!
 
     # Postconditions.
     assert $zeitwerk_integration_test_user
@@ -184,8 +184,8 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
 
     boot
 
-    assert_predicate Rails.autoloaders.main, :reloading_enabled?
-    assert_not Rails.autoloaders.once.reloading_enabled?
+    assert_predicate Zoisite.autoloaders.main, :reloading_enabled?
+    assert_not Zoisite.autoloaders.once.reloading_enabled?
   end
 
   test "reloading is disabled if config.enable_reloading is false" do
@@ -193,15 +193,15 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
 
     boot
 
-    assert_not Rails.autoloaders.main.reloading_enabled?
-    assert_not Rails.autoloaders.once.reloading_enabled?
+    assert_not Zoisite.autoloaders.main.reloading_enabled?
+    assert_not Zoisite.autoloaders.once.reloading_enabled?
   end
 
   test "eager loading loads code in engines" do
     $test_blog_engine_eager_loaded = false
 
     engine("blog") do |bukkit|
-      bukkit.write("lib/blog.rb", "class BlogEngine < Rails::Engine; end")
+      bukkit.write("lib/blog.rb", "class BlogEngine < Zoisite::Engine; end")
       bukkit.write("app/models/post.rb", "Post = $test_blog_engine_eager_loaded = true")
     end
 
@@ -253,26 +253,26 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
     existing_autoload_paths = \
       deps.autoload_paths.select { |dir| File.directory?(dir) } -
       deps.autoload_once_paths
-    assert_equal existing_autoload_paths, Rails.autoloaders.main.dirs
+    assert_equal existing_autoload_paths, Zoisite.autoloaders.main.dirs
   end
 
   test "autoload_once_paths go to the once autoloader, and in the same order" do
     extras = %w(e1 e2 e3)
     extras.each do |extra|
       app_dir extra
-      add_to_config %(config.autoload_once_paths << "\#{Rails.root}/#{extra}")
+      add_to_config %(config.autoload_once_paths << "\#{Zoisite.root}/#{extra}")
     end
 
     boot
 
     extras = extras.map { |extra| "#{app_path}/#{extra}" }
     extras.each do |extra|
-      assert_not_includes Rails.autoloaders.main.dirs, extra
+      assert_not_includes Zoisite.autoloaders.main.dirs, extra
     end
 
-    e1_index = Rails.autoloaders.once.dirs.index(extras.first)
+    e1_index = Zoisite.autoloaders.once.dirs.index(extras.first)
     assert e1_index
-    assert_equal extras, Rails.autoloaders.once.dirs.slice(e1_index, extras.length)
+    assert_equal extras, Zoisite.autoloaders.once.dirs.slice(e1_index, extras.length)
   end
 
   test "clear reloads the main autoloader, and does not reload the once one" do
@@ -280,13 +280,13 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
 
     $zeitwerk_integration_reload_test = []
 
-    main_autoloader = Rails.autoloaders.main
+    main_autoloader = Zoisite.autoloaders.main
     def main_autoloader.reload
       $zeitwerk_integration_reload_test << :main_autoloader
       super
     end
 
-    once_autoloader = Rails.autoloaders.once
+    once_autoloader = Zoisite.autoloaders.once
     def once_autoloader.reload
       $zeitwerk_integration_reload_test << :once_autoloader
       super
@@ -306,7 +306,7 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
     boot
     assert_equal 1, $zeitwerk_integration_test_eager_load_count
 
-    Rails.application.reloader.reload!
+    Zoisite.application.reloader.reload!
     assert_equal 2, $zeitwerk_integration_test_eager_load_count
   end
 
@@ -334,7 +334,7 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
     assert_equal Set[Child, Grandchild], ActiveSupport::Dependencies._autoloaded_tracked_classes
     assert_equal [Child, Grandchild], Parent.descendants
 
-    Rails.application.reloader.reload!
+    Zoisite.application.reloader.reload!
 
     assert_empty ActiveSupport::Dependencies._autoloaded_tracked_classes
     assert_equal [], Parent.descendants
@@ -344,21 +344,21 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
     boot
 
     logger = ->(_msg) { }
-    Rails.autoloaders.logger = logger
+    Zoisite.autoloaders.logger = logger
 
-    Rails.autoloaders.each do |autoloader|
+    Zoisite.autoloaders.each do |autoloader|
       assert_same logger, autoloader.logger
     end
 
-    Rails.autoloaders.logger = Rails.logger
+    Zoisite.autoloaders.logger = Zoisite.logger
 
-    Rails.autoloaders.each do |autoloader|
-      assert_same Rails.logger, autoloader.logger
+    Zoisite.autoloaders.each do |autoloader|
+      assert_same Zoisite.logger, autoloader.logger
     end
 
-    Rails.autoloaders.logger = nil
+    Zoisite.autoloaders.logger = nil
 
-    Rails.autoloaders.each do |autoloader|
+    Zoisite.autoloaders.each do |autoloader|
       assert_nil autoloader.logger
     end
   end
@@ -366,12 +366,12 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
   test "autoloaders.log!" do
     app_file "extras/utils.rb", "module Utils; end"
 
-    add_to_config %(config.autoload_once_paths << "\#{Rails.root}/extras")
-    add_to_config "Rails.autoloaders.log!"
+    add_to_config %(config.autoload_once_paths << "\#{Zoisite.root}/extras")
+    add_to_config "Zoisite.autoloaders.log!"
 
     out, _err = capture_io { boot }
 
-    assert_match %r/^Zeitwerk@rails.main: autoload set for ApplicationRecord/, out
-    assert_match %r/^Zeitwerk@rails.once: autoload set for Utils/, out
+    assert_match %r/^Zeitwerk@zoisite.main: autoload set for ApplicationRecord/, out
+    assert_match %r/^Zeitwerk@zoisite.once: autoload set for Utils/, out
   end
 end

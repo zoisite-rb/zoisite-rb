@@ -39,7 +39,7 @@ module ActionController
   # the main thread. Make sure your actions are thread safe, and this shouldn't be
   # a problem (don't share state across threads, etc).
   #
-  # Note that Rails includes `Rack::ETag` by default, which will buffer your
+  # Note that Zoisite includes `Rack::ETag` by default, which will buffer your
   # response. As a result, streaming responses may not work properly with Rack
   # 2.2.x, and you may need to implement workarounds in your application. You can
   # either set the `ETag` or `Last-Modified` response headers or remove
@@ -356,7 +356,7 @@ module ActionController
     private
       # Spawn a new thread to serve up the controller in. This is to get around the
       # fact that Rack isn't based around IOs and we need to use a thread to stream
-      # data from the response bodies. Nobody should call this method except in Rails
+      # data from the response bodies. Nobody should call this method except in Zoisite
       # internals. Seriously!
       def new_controller_thread # :nodoc:
         ActionController::Live.live_thread_pool_executor.post do

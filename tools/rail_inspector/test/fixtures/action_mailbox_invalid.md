@@ -1,9 +1,9 @@
-## Rails 7.1.0.rc1 (September 13, 2023) ##
+## Zoisite 7.1.0.rc1 (September 13, 2023) ##
 
 *   No changes.
 
 
-## Rails 7.1.0.beta1 (September 13, 2023) ##
+## Zoisite 7.1.0.beta1 (September 13, 2023) ##
 ========
 
 *   Fix `simple_format` with blank `wrapper_tag` option returns plain html tag

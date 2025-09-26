@@ -78,7 +78,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
 
     ActiveRecord::Base.transaction do |transaction|
       expected_transaction = transaction
-      topic.update(title: "Ruby on Rails")
+      topic.update(title: "Ruby on Zoisite")
     end
 
     assert notified
@@ -101,7 +101,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
 
     ActiveRecord::Base.transaction do |transaction|
       expected_transaction = transaction
-      topic.update(title: "Ruby on Rails")
+      topic.update(title: "Ruby on Zoisite")
       raise ActiveRecord::Rollback
     end
 
@@ -124,7 +124,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
       topic.update(title: "Sinatra")
       ActiveRecord::Base.transaction(requires_new: true) do |transaction|
         savepoint_transaction = transaction
-        topic.update(title: "Ruby on Rails")
+        topic.update(title: "Ruby on Zoisite")
       end
     end
 
@@ -150,7 +150,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
 
     ActiveRecord::Base.transaction do
       ActiveRecord::Base.transaction(requires_new: true) do
-        topic.update(title: "Ruby on Rails")
+        topic.update(title: "Ruby on Zoisite")
       end
     end
 
@@ -169,7 +169,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
 
     ActiveRecord::Base.transaction do
       ActiveRecord::Base.transaction(requires_new: true) do
-        topic.update(title: "Ruby on Rails")
+        topic.update(title: "Ruby on Zoisite")
         raise ActiveRecord::Rollback
       end
       raise ActiveRecord::Rollback
@@ -233,7 +233,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
       topic.update(title: "Sinatry")
       ActiveRecord::Base.transaction(requires_new: true) do
         ActiveRecord::Base.transaction(requires_new: true) do
-          topic.update(title: "Ruby on Rails")
+          topic.update(title: "Ruby on Zoisite")
           raise ActiveRecord::Rollback
         end
       end
@@ -378,7 +378,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
     assert_raises error do
       ActiveRecord::Base.lease_connection.stub(:commit_db_transaction, -> (*) { raise error }) do
         ActiveRecord::Base.transaction do
-          topic.update(title: "Ruby on Rails")
+          topic.update(title: "Ruby on Zoisite")
         end
       end
     end
@@ -402,7 +402,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
       assert_raises error do
         ActiveRecord::Base.lease_connection.stub(:rollback_db_transaction, -> (*) { raise error }) do
           ActiveRecord::Base.transaction do
-            topic.update(title: "Ruby on Rails")
+            topic.update(title: "Ruby on Zoisite")
             raise ActiveRecord::Rollback
           end
         end
@@ -444,7 +444,7 @@ class TransactionInstrumentationTest < ActiveRecord::TestCase
 
     assert_raises(error) do
       ActiveRecord::Base.transaction do
-        topic.update(title: "Ruby on Rails")
+        topic.update(title: "Ruby on Zoisite")
       end
     end
   ensure

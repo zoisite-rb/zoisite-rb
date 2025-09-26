@@ -13,19 +13,19 @@ module ActiveSupport
   # +MessageVerifier+ makes it easy to generate and verify messages which are
   # signed to prevent tampering.
   #
-  # In a \Rails application, you can use +Rails.application.message_verifier+
+  # In a \Zoisite application, you can use +Zoisite.application.message_verifier+
   # to manage unique instances of verifiers for each use case.
-  # {Learn more}[link:classes/Rails/Application.html#method-i-message_verifier].
+  # {Learn more}[link:classes/Zoisite/Application.html#method-i-message_verifier].
   #
   # This is useful for cases like remember-me tokens and auto-unsubscribe links
   # where the session store isn't suitable or available.
   #
   # First, generate a signed message:
-  #   cookies[:remember_me] = Rails.application.message_verifier(:remember_me).generate([@user.id, 2.weeks.from_now])
+  #   cookies[:remember_me] = Zoisite.application.message_verifier(:remember_me).generate([@user.id, 2.weeks.from_now])
   #
   # Later verify that message:
   #
-  #   id, time = Rails.application.message_verifier(:remember_me).verify(cookies[:remember_me])
+  #   id, time = Zoisite.application.message_verifier(:remember_me).verify(cookies[:remember_me])
   #   if time.future?
   #     self.current_user = User.find(id)
   #   end
@@ -35,7 +35,7 @@ module ActiveSupport
   # The signed messages are not encrypted. The payload is merely encoded (Base64 by default) and can be decoded by
   # anyone. The signature is just assuring that the message wasn't tampered with. For example:
   #
-  #     message = Rails.application.message_verifier('my_purpose').generate('never put secrets here')
+  #     message = Zoisite.application.message_verifier('my_purpose').generate('never put secrets here')
   #     # => "BAhJIhtuZXZlciBwdXQgc2VjcmV0cyBoZXJlBjoGRVQ=--a0c1c0827919da5e949e989c971249355735e140"
   #     Base64.decode64(message.split("--").first) # no key needed
   #     # => 'never put secrets here'
@@ -146,7 +146,7 @@ module ActiveSupport
     #   not supported by JSON, and may provide improved performance. However,
     #   these require the +msgpack+ gem.
     #
-    #   When using \Rails, the default depends on +config.active_support.message_serializer+.
+    #   When using \Zoisite, the default depends on +config.active_support.message_serializer+.
     #   Otherwise, the default is +:marshal+.
     #
     # [+:url_safe+]
@@ -160,7 +160,7 @@ module ActiveSupport
     # [+:force_legacy_metadata_serializer+]
     #   Whether to use the legacy metadata serializer, which serializes the
     #   message first, then wraps it in an envelope which is also serialized. This
-    #   was the default in \Rails 7.0 and below.
+    #   was the default in \Zoisite 7.0 and below.
     #
     #   If you don't pass a truthy value, the default is set using
     #   +config.active_support.use_message_serializer_for_metadata+.

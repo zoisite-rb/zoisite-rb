@@ -2,11 +2,11 @@
 
 require "active_job/railtie"
 require "action_mailer"
-require "rails"
+require "zoisite"
 require "abstract_controller/railties/routes_helpers"
 
 module ActionMailer
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Zoisite::Railtie # :nodoc:
     config.action_mailer = ActiveSupport::OrderedOptions.new
     config.action_mailer.preview_paths = []
     config.eager_load_namespaces << ActionMailer
@@ -16,7 +16,7 @@ module ActionMailer
     end
 
     initializer "action_mailer.logger" do
-      ActiveSupport.on_load(:action_mailer) { self.logger ||= Rails.logger }
+      ActiveSupport.on_load(:action_mailer) { self.logger ||= Zoisite.logger }
     end
 
     initializer "action_mailer.set_configs" do |app|
@@ -26,9 +26,9 @@ module ActionMailer
       options.assets_dir      ||= paths["public"].first
       options.javascripts_dir ||= paths["public/javascripts"].first
       options.stylesheets_dir ||= paths["public/stylesheets"].first
-      options.show_previews = Rails.env.development? if options.show_previews.nil?
-      options.cache_store ||= Rails.cache
-      options.preview_paths |= ["#{Rails.root}/test/mailers/previews"]
+      options.show_previews = Zoisite.env.development? if options.show_previews.nil?
+      options.cache_store ||= Zoisite.cache
+      options.preview_paths |= ["#{Zoisite.root}/test/mailers/previews"]
 
       # make sure readers methods get compiled
       options.asset_host          ||= app.config.asset_host
@@ -78,9 +78,9 @@ module ActionMailer
 
       if options.show_previews
         app.routes.prepend do
-          get "/rails/mailers" => "rails/mailers#index", internal: true
-          get "/rails/mailers/download/*path" => "rails/mailers#download", internal: true
-          get "/rails/mailers/*path" => "rails/mailers#preview", internal: true
+          get "/zoisite/mailers" => "zoisite/mailers#index", internal: true
+          get "/zoisite/mailers/download/*path" => "zoisite/mailers#download", internal: true
+          get "/zoisite/mailers/*path" => "zoisite/mailers#preview", internal: true
         end
       end
     end

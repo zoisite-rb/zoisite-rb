@@ -18,13 +18,13 @@ module ActiveStorage
   # * +S3+, to manage attachments through Amazon S3.
   # * +Mirror+, to be able to use several services to manage attachments.
   #
-  # Inside a \Rails application, you can set-up your services through the
+  # Inside a \Zoisite application, you can set-up your services through the
   # generated <tt>config/storage.yml</tt> file and reference one
   # of the aforementioned constant under the +service+ key. For example:
   #
   #   local:
   #     service: Disk
-  #     root: <%= Rails.root.join("storage") %>
+  #     root: <%= Zoisite.root.join("storage") %>
   #
   # You can checkout the service's constructor to know which keys are required.
   #
@@ -33,7 +33,7 @@ module ActiveStorage
   #
   #   config.active_storage.service = :local
   #
-  # If you are using Active Storage outside of a Ruby on \Rails application, you
+  # If you are using Active Storage outside of a Ruby on \Zoisite application, you
   # can configure the service to use like this:
   #
   #   ActiveStorage::Blob.service = ActiveStorage::Service.configure(

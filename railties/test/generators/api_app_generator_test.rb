@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/app/app_generator"
+require "zoisite/generators/zoisite/app/app_generator"
 
-class ApiAppGeneratorTest < Rails::Generators::TestCase
+class ApiAppGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::AppGenerator
+  tests Zoisite::Generators::AppGenerator
 
   arguments [destination_root, "--api"]
 
   def setup
-    Rails.application = TestApp::Application
+    Zoisite.application = TestApp::Application
     super
 
     Kernel.silence_warnings do
@@ -22,7 +22,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
 
   def teardown
     super
-    Rails.application = TestApp::Application.instance
+    Zoisite.application = TestApp::Application.instance
   end
 
   def test_skeleton_is_created
@@ -43,7 +43,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
     end
 
     assert_file "Gemfile" do |content|
-      assert_no_match(/gem "sass-rails"/, content)
+      assert_no_match(/gem "sass-zoisite"/, content)
       assert_no_match(/gem "web-console"/, content)
       assert_no_match(/gem "capybara"/, content)
       assert_no_match(/gem "selenium-webdriver"/, content)
@@ -107,7 +107,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
     run_generator [destination_root, "--api", "--css=tailwind"]
 
     assert_file "Gemfile" do |content|
-      assert_no_match(%r/gem "tailwindcss-rails"/, content)
+      assert_no_match(%r/gem "tailwindcss-zoisite"/, content)
     end
 
     assert_no_file "app/views/layouts/application.html.erb"
@@ -116,7 +116,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
   def test_app_update_does_not_generate_unnecessary_config_files
     run_generator
 
-    generator = Rails::Generators::AppGenerator.new ["rails"],
+    generator = Zoisite::Generators::AppGenerator.new ["zoisite"],
       { api: true, update: true }, { destination_root: destination_root, shell: @shell }
     quietly { generator.update_config_files }
 
@@ -127,7 +127,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
   def test_app_update_does_not_generate_unnecessary_bin_files
     run_generator
 
-    generator = Rails::Generators::AppGenerator.new ["rails"],
+    generator = Zoisite::Generators::AppGenerator.new ["zoisite"],
       { api: true, update: true }, { destination_root: destination_root, shell: @shell }
     quietly { generator.update_bin_files }
     pass
@@ -168,7 +168,7 @@ class ApiAppGeneratorTest < Rails::Generators::TestCase
         app/views/layouts/mailer.text.erb
         bin/dev
         bin/docker-entrypoint
-        bin/rails
+        bin/zoisite
         bin/rake
         bin/setup
         config/application.rb

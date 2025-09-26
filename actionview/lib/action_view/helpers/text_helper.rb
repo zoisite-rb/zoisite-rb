@@ -151,26 +151,26 @@ module ActionView
       #
       # ==== Examples
       #
-      #   highlight('You searched for: rails', 'rails')
-      #   # => "You searched for: <mark>rails</mark>"
+      #   highlight('You searched for: zoisite', 'zoisite')
+      #   # => "You searched for: <mark>zoisite</mark>"
       #
-      #   highlight('You searched for: rails', /for|rails/)
-      #   # => "You searched <mark>for</mark>: <mark>rails</mark>"
+      #   highlight('You searched for: zoisite', /for|zoisite/)
+      #   # => "You searched <mark>for</mark>: <mark>zoisite</mark>"
       #
-      #   highlight('You searched for: ruby, rails, dhh', 'actionpack')
-      #   # => "You searched for: ruby, rails, dhh"
+      #   highlight('You searched for: ruby, zoisite, dhh', 'actionpack')
+      #   # => "You searched for: ruby, zoisite, dhh"
       #
-      #   highlight('You searched for: rails', ['for', 'rails'], highlighter: '<em>\1</em>')
-      #   # => "You searched <em>for</em>: <em>rails</em>"
+      #   highlight('You searched for: zoisite', ['for', 'zoisite'], highlighter: '<em>\1</em>')
+      #   # => "You searched <em>for</em>: <em>zoisite</em>"
       #
-      #   highlight('You searched for: rails', 'rails', highlighter: '<a href="search?q=\1">\1</a>')
-      #   # => "You searched for: <a href=\"search?q=rails\">rails</a>"
+      #   highlight('You searched for: zoisite', 'zoisite', highlighter: '<a href="search?q=\1">\1</a>')
+      #   # => "You searched for: <a href=\"search?q=zoisite\">zoisite</a>"
       #
-      #   highlight('You searched for: rails', 'rails') { |match| link_to(search_path(q: match)) }
-      #   # => "You searched for: <a href=\"search?q=rails\">rails</a>"
+      #   highlight('You searched for: zoisite', 'zoisite') { |match| link_to(search_path(q: match)) }
+      #   # => "You searched for: <a href=\"search?q=zoisite\">zoisite</a>"
       #
-      #   highlight('<a href="javascript:alert(\'no!\')">ruby</a> on rails', 'rails', sanitize: false)
-      #   # => "<a href=\"javascript:alert('no!')\">ruby</a> on <mark>rails</mark>"
+      #   highlight('<a href="javascript:alert(\'no!\')">ruby</a> on zoisite', 'zoisite', sanitize: false)
+      #   # => "<a href=\"javascript:alert('no!')\">ruby</a> on <mark>zoisite</mark>"
       def highlight(text, phrases, options = {}, &block)
         text = sanitize(text) if options.fetch(:sanitize, true)
 

@@ -70,7 +70,7 @@ class RedirectController < ActionController::Base
   end
 
   def redirect_back_with_status_and_fallback_location_to_another_host
-    redirect_back_or_to "http://www.rubyonrails.org/", status: 307
+    redirect_back_or_to "http://www.zoisite-rb.org/", status: 307
   end
 
   def safe_redirect_back_with_status
@@ -78,7 +78,7 @@ class RedirectController < ActionController::Base
   end
 
   def safe_redirect_back_with_status_and_fallback_location_to_another_host
-    redirect_back_or_to "http://www.rubyonrails.org/", status: 307, allow_other_host: false
+    redirect_back_or_to "http://www.zoisite-rb.org/", status: 307, allow_other_host: false
   end
 
   def safe_redirect_to_root
@@ -86,23 +86,23 @@ class RedirectController < ActionController::Base
   end
 
   def unsafe_redirect
-    redirect_to "http://www.rubyonrails.org/"
+    redirect_to "http://www.zoisite-rb.org/"
   end
 
   def unsafe_redirect_back
-    redirect_back_or_to "http://www.rubyonrails.org/"
+    redirect_back_or_to "http://www.zoisite-rb.org/"
   end
 
   def unsafe_redirect_malformed
-    redirect_to "http:///www.rubyonrails.org/"
+    redirect_to "http:///www.zoisite-rb.org/"
   end
 
   def unsafe_redirect_protocol_relative_double_slash
-    redirect_to "//www.rubyonrails.org/"
+    redirect_to "//www.zoisite-rb.org/"
   end
 
   def unsafe_redirect_protocol_relative_triple_slash
-    redirect_to "///www.rubyonrails.org/"
+    redirect_to "///www.zoisite-rb.org/"
   end
 
   def unsafe_redirect_with_illegal_http_header_value_character
@@ -130,14 +130,14 @@ class RedirectController < ActionController::Base
   end
 
   def redirect_to_url
-    redirect_to "http://www.rubyonrails.org/"
+    redirect_to "http://www.zoisite-rb.org/"
   end
 
   def redirect_to_url_with_stringlike
     stringlike = Object.new
 
     def stringlike.to_str
-      "http://www.rubyonrails.org/"
+      "http://www.zoisite-rb.org/"
     end
 
     redirect_to stringlike
@@ -152,7 +152,7 @@ class RedirectController < ActionController::Base
   end
 
   def redirect_to_url_with_network_path_reference
-    redirect_to "//www.rubyonrails.org/"
+    redirect_to "//www.zoisite-rb.org/"
   end
 
   def redirect_to_path_relative_url
@@ -192,11 +192,11 @@ class RedirectController < ActionController::Base
   end
 
   def redirect_to_with_block
-    redirect_to proc { "http://www.rubyonrails.org/" }
+    redirect_to proc { "http://www.zoisite-rb.org/" }
   end
 
   def redirect_to_with_block_and_assigns
-    @url = "http://www.rubyonrails.org/"
+    @url = "http://www.zoisite-rb.org/"
     redirect_to proc { @url }
   end
 
@@ -217,7 +217,7 @@ class RedirectController < ActionController::Base
   end
 
   def redirect_to_external_with_rescue
-    redirect_to "http://www.rubyonrails.org/", allow_other_host: false
+    redirect_to "http://www.zoisite-rb.org/", allow_other_host: false
   rescue ActionController::Redirecting::UnsafeRedirectError
     render plain: "caught error"
   end
@@ -327,13 +327,13 @@ class RedirectTest < ActionController::TestCase
   def test_redirect_to_url
     get :redirect_to_url
     assert_response :redirect
-    assert_redirected_to "http://www.rubyonrails.org/"
+    assert_redirected_to "http://www.zoisite-rb.org/"
   end
 
   def test_redirect_to_url_with_stringlike
     get :redirect_to_url_with_stringlike
     assert_response :redirect
-    assert_redirected_to "http://www.rubyonrails.org/"
+    assert_redirected_to "http://www.zoisite-rb.org/"
   end
 
   def test_redirect_to_url_with_unescaped_query_string
@@ -369,7 +369,7 @@ class RedirectTest < ActionController::TestCase
   def test_redirect_to_url_with_network_path_reference
     get :redirect_to_url_with_network_path_reference
     assert_response :redirect
-    assert_equal "//www.rubyonrails.org/", redirect_to_url
+    assert_equal "//www.zoisite-rb.org/", redirect_to_url
   end
 
   def test_redirect_back
@@ -393,7 +393,7 @@ class RedirectTest < ActionController::TestCase
     get :redirect_back_with_status_and_fallback_location_to_another_host
 
     assert_response 307
-    assert_equal "http://www.rubyonrails.org/", redirect_to_url
+    assert_equal "http://www.zoisite-rb.org/", redirect_to_url
   end
 
   def test_safe_redirect_back_from_other_host
@@ -424,7 +424,7 @@ class RedirectTest < ActionController::TestCase
     get :safe_redirect_back_with_status_and_fallback_location_to_another_host
 
     assert_response 307
-    assert_equal "http://www.rubyonrails.org/", redirect_to_url
+    assert_equal "http://www.zoisite-rb.org/", redirect_to_url
   end
 
   def test_safe_redirect_to_root
@@ -517,13 +517,13 @@ class RedirectTest < ActionController::TestCase
   def test_redirect_to_with_block
     get :redirect_to_with_block
     assert_response :redirect
-    assert_redirected_to "http://www.rubyonrails.org/"
+    assert_redirected_to "http://www.zoisite-rb.org/"
   end
 
   def test_redirect_to_with_block_and_assigns
     get :redirect_to_with_block_and_assigns
     assert_response :redirect
-    assert_redirected_to "http://www.rubyonrails.org/"
+    assert_redirected_to "http://www.zoisite-rb.org/"
   end
 
   def test_redirect_to_out_of_scope_block
@@ -553,7 +553,7 @@ class RedirectTest < ActionController::TestCase
         get :unsafe_redirect
       end
 
-      assert_equal "Unsafe redirect to \"http://www.rubyonrails.org/\", pass allow_other_host: true to redirect anyway.", error.message
+      assert_equal "Unsafe redirect to \"http://www.zoisite-rb.org/\", pass allow_other_host: true to redirect anyway.", error.message
     end
   end
 
@@ -563,7 +563,7 @@ class RedirectTest < ActionController::TestCase
         get :unsafe_redirect_back
       end
 
-      assert_equal "Unsafe redirect to \"http://www.rubyonrails.org/\", pass allow_other_host: true to redirect anyway.", error.message
+      assert_equal "Unsafe redirect to \"http://www.zoisite-rb.org/\", pass allow_other_host: true to redirect anyway.", error.message
     end
   end
 
@@ -573,7 +573,7 @@ class RedirectTest < ActionController::TestCase
         get :unsafe_redirect_malformed
       end
 
-      assert_equal "Unsafe redirect to \"http:///www.rubyonrails.org/\", pass allow_other_host: true to redirect anyway.", error.message
+      assert_equal "Unsafe redirect to \"http:///www.zoisite-rb.org/\", pass allow_other_host: true to redirect anyway.", error.message
     end
   end
 
@@ -583,7 +583,7 @@ class RedirectTest < ActionController::TestCase
         get :unsafe_redirect_protocol_relative_double_slash
       end
 
-      assert_equal "Unsafe redirect to \"//www.rubyonrails.org/\", pass allow_other_host: true to redirect anyway.", error.message
+      assert_equal "Unsafe redirect to \"//www.zoisite-rb.org/\", pass allow_other_host: true to redirect anyway.", error.message
     end
   end
 
@@ -593,7 +593,7 @@ class RedirectTest < ActionController::TestCase
         get :unsafe_redirect_protocol_relative_triple_slash
       end
 
-      assert_equal "Unsafe redirect to \"///www.rubyonrails.org/\", pass allow_other_host: true to redirect anyway.", error.message
+      assert_equal "Unsafe redirect to \"///www.zoisite-rb.org/\", pass allow_other_host: true to redirect anyway.", error.message
     end
   end
 
@@ -628,7 +628,7 @@ class RedirectTest < ActionController::TestCase
 
   def test_url_from_fallback
     with_raise_on_open_redirects do
-      get :safe_redirect_with_fallback, params: { redirect_url: "http://www.rubyonrails.org/" }
+      get :safe_redirect_with_fallback, params: { redirect_url: "http://www.zoisite-rb.org/" }
       assert_response :redirect
       assert_redirected_to "http://test.host/fallback"
 
@@ -744,7 +744,7 @@ class RedirectTest < ActionController::TestCase
       with_logger do |logger|
         get :redirect_to_url
         assert_response :redirect
-        assert_equal "http://www.rubyonrails.org/", redirect_to_url
+        assert_equal "http://www.zoisite-rb.org/", redirect_to_url
         assert_not_logged(/Path relative URL redirect detected/, logger)
       end
 
@@ -766,7 +766,7 @@ class RedirectTest < ActionController::TestCase
 
       get :redirect_to_url
       assert_response :redirect
-      assert_equal "http://www.rubyonrails.org/", redirect_to_url
+      assert_equal "http://www.zoisite-rb.org/", redirect_to_url
       assert_empty events
 
       get :relative_url_redirect_with_status
@@ -782,7 +782,7 @@ class RedirectTest < ActionController::TestCase
     with_path_relative_redirect(:raise) do
       get :redirect_to_url
       assert_response :redirect
-      assert_equal "http://www.rubyonrails.org/", redirect_to_url
+      assert_equal "http://www.zoisite-rb.org/", redirect_to_url
 
       get :relative_url_redirect_with_status
       assert_response :redirect
@@ -790,7 +790,7 @@ class RedirectTest < ActionController::TestCase
 
       get :redirect_to_url_with_network_path_reference
       assert_response :redirect
-      assert_equal "//www.rubyonrails.org/", redirect_to_url
+      assert_equal "//www.zoisite-rb.org/", redirect_to_url
     end
   end
 
@@ -832,10 +832,10 @@ class RedirectTest < ActionController::TestCase
 
   def test_redirect_with_allowed_redirect_hosts
     with_raise_on_open_redirects do
-      with_allowed_redirect_hosts(hosts: ["www.rubyonrails.org"]) do
+      with_allowed_redirect_hosts(hosts: ["www.zoisite-rb.org"]) do
         get :redirect_to_url
         assert_response :redirect
-        assert_redirected_to "http://www.rubyonrails.org/"
+        assert_redirected_to "http://www.zoisite-rb.org/"
       end
     end
   end
@@ -855,8 +855,8 @@ class RedirectTest < ActionController::TestCase
       with_logger do |logger|
         get :redirect_to_url
         assert_response :redirect
-        assert_equal "http://www.rubyonrails.org/", redirect_to_url
-        assert_logged(/Open redirect to "http:\/\/www.rubyonrails.org\/" detected/, logger)
+        assert_equal "http://www.zoisite-rb.org/", redirect_to_url
+        assert_logged(/Open redirect to "http:\/\/www.zoisite-rb.org\/" detected/, logger)
       end
     end
   end
@@ -870,11 +870,11 @@ class RedirectTest < ActionController::TestCase
 
       get :redirect_to_url
       assert_response :redirect
-      assert_equal "http://www.rubyonrails.org/", redirect_to_url
+      assert_equal "http://www.zoisite-rb.org/", redirect_to_url
 
       assert_equal 1, events.size
       event = events.first
-      assert_equal "http://www.rubyonrails.org/", event.payload[:location]
+      assert_equal "http://www.zoisite-rb.org/", event.payload[:location]
       assert_kind_of ActionDispatch::Request, event.payload[:request]
       assert_kind_of Array, event.payload[:stack_trace]
     ensure
@@ -887,7 +887,7 @@ class RedirectTest < ActionController::TestCase
       error = assert_raise(ActionController::Redirecting::UnsafeRedirectError) do
         get :redirect_to_url
       end
-      assert_equal "Unsafe redirect to \"http://www.rubyonrails.org/\", pass allow_other_host: true to redirect anyway.", error.message
+      assert_equal "Unsafe redirect to \"http://www.zoisite-rb.org/\", pass allow_other_host: true to redirect anyway.", error.message
     end
   end
 
@@ -913,25 +913,25 @@ class RedirectTest < ActionController::TestCase
 
   def test_redirect_back_with_external_referer_and_action_on_open_redirect_log
     with_action_on_open_redirect(:log) do
-      @request.env["HTTP_REFERER"] = "http://www.rubyonrails.org/"
+      @request.env["HTTP_REFERER"] = "http://www.zoisite-rb.org/"
       get :redirect_back_with_status
       assert_response 307
-      assert_equal "http://www.rubyonrails.org/", redirect_to_url
+      assert_equal "http://www.zoisite-rb.org/", redirect_to_url
     end
   end
 
   def test_redirect_back_with_external_referer_and_action_on_open_redirect_notify
     with_action_on_open_redirect(:notify) do
-      @request.env["HTTP_REFERER"] = "http://www.rubyonrails.org/"
+      @request.env["HTTP_REFERER"] = "http://www.zoisite-rb.org/"
       get :redirect_back_with_status
       assert_response 307
-      assert_equal "http://www.rubyonrails.org/", redirect_to_url
+      assert_equal "http://www.zoisite-rb.org/", redirect_to_url
     end
   end
 
   def test_redirect_back_with_external_referer_and_action_on_open_redirect_raise
     with_action_on_open_redirect(:raise) do
-      @request.env["HTTP_REFERER"] = "http://www.rubyonrails.org/"
+      @request.env["HTTP_REFERER"] = "http://www.zoisite-rb.org/"
       get :redirect_back_with_status
       assert_response 307
       assert_equal "http://test.host/things/stuff", redirect_to_url
@@ -968,10 +968,10 @@ class RedirectTest < ActionController::TestCase
 
   def test_action_on_open_redirect_with_allowed_redirect_hosts
     with_action_on_open_redirect(:raise) do
-      with_allowed_redirect_hosts(hosts: ["www.rubyonrails.org"]) do
+      with_allowed_redirect_hosts(hosts: ["www.zoisite-rb.org"]) do
         get :redirect_to_url
         assert_response :redirect
-        assert_redirected_to "http://www.rubyonrails.org/"
+        assert_redirected_to "http://www.zoisite-rb.org/"
       end
     end
   end

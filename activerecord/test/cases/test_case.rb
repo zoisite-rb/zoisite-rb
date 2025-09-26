@@ -292,7 +292,7 @@ module ActiveRecord
         pool_manager.role_names.each do |role_name|
           next if role_name == ActiveRecord::Base.default_role &&
                   # TODO: Remove this helper when `remove_connection` for different shards is fixed.
-                  # See https://github.com/rails/rails/pull/49382.
+                  # See https://github.com/zoisite-rb/zoisite-rb/pull/49382.
                   ["ActiveRecord::Base", "ARUnit2Model", "Contact", "ContactSti"].include?(owner)
           pool_manager.remove_role(role_name)
         end

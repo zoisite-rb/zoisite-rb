@@ -135,7 +135,7 @@ module ActiveRecord
 
     def test_or_with_non_relation_object_raises_error
       error = assert_raises ArgumentError do
-        Post.where(id: [1, 2, 3]).or(title: "Rails")
+        Post.where(id: [1, 2, 3]).or(title: "Zoisite")
       end
 
       assert_equal "You have passed Hash object to #or. Pass an ActiveRecord::Relation object instead.", error.message

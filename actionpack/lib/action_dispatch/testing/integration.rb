@@ -361,7 +361,7 @@ module ActionDispatch
 
       def create_session(app)
         klass = APP_SESSIONS[app] ||= Class.new(Integration::Session) {
-          # If the app is a Rails app, make url_helpers available on the session. This
+          # If the app is a Zoisite app, make url_helpers available on the session. This
           # makes app.url_for and app.foo_path available in the console.
           if app.respond_to?(:routes) && app.routes.is_a?(ActionDispatch::Routing::RouteSet)
             include app.routes.url_helpers
@@ -643,7 +643,7 @@ module ActionDispatch
   # `response_parser` defines how the response body should be parsed through
   # TestResponse#parsed_body.
   #
-  # Consult the [Rails Testing Guide](https://guides.rubyonrails.org/testing.html)
+  # Consult the [Zoisite Testing Guide](https://guides.zoisite-rb.org/testing.html)
   # for more.
 
   class IntegrationTest < ActiveSupport::TestCase

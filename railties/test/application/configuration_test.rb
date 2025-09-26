@@ -22,9 +22,9 @@ end
 
 class ::MyOtherMailObserver < ::MyMailObserver; end
 
-class ::MySafeListSanitizer < Rails::HTML4::SafeListSanitizer; end
+class ::MySafeListSanitizer < Zoisite::HTML4::SafeListSanitizer; end
 
-class ::MySanitizerVendor < ::Rails::HTML::Sanitizer
+class ::MySanitizerVendor < ::Zoisite::HTML::Sanitizer
   def self.safe_list_sanitizer
     ::MySafeListSanitizer
   end
@@ -57,7 +57,7 @@ module ApplicationTests
 
         require "#{app_path}/config/environment"
 
-        Rails.application
+        Zoisite.application
       ensure
         ENV.delete "RAILS_ENV"
       end
@@ -91,43 +91,43 @@ module ApplicationTests
       remove_from_env_config "production", "config.log_level = :error"
     end
 
-    test "Rails.env does not set the RAILS_ENV environment variable which would leak out into rake tasks" do
-      require "rails"
+    test "Zoisite.env does not set the RAILS_ENV environment variable which would leak out into rake tasks" do
+      require "zoisite"
 
       switch_env "RAILS_ENV", nil do
-        Rails.env = "development"
-        assert_equal "development", Rails.env
+        Zoisite.env = "development"
+        assert_equal "development", Zoisite.env
         assert_nil ENV["RAILS_ENV"]
       end
     end
 
-    test "Rails.env falls back to development if RAILS_ENV is blank and RACK_ENV is nil" do
-      with_rails_env("") do
-        assert_equal "development", Rails.env
+    test "Zoisite.env falls back to development if RAILS_ENV is blank and RACK_ENV is nil" do
+      with_zoisite_env("") do
+        assert_equal "development", Zoisite.env
       end
     end
 
-    test "Rails.env falls back to development if RACK_ENV is blank and RAILS_ENV is nil" do
+    test "Zoisite.env falls back to development if RACK_ENV is blank and RAILS_ENV is nil" do
       with_rack_env("") do
-        assert_equal "development", Rails.env
+        assert_equal "development", Zoisite.env
       end
     end
 
     test "By default logs tags are not set in development" do
       restore_default_config
 
-      with_rails_env "development" do
+      with_zoisite_env "development" do
         app "development"
-        assert_predicate Rails.application.config.log_tags, :blank?
+        assert_predicate Zoisite.application.config.log_tags, :blank?
       end
     end
 
     test "By default logs are tagged with :request_id in production" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_zoisite_env "production" do
         app "production"
-        assert_equal [:request_id], Rails.application.config.log_tags
+        assert_equal [:request_id], Zoisite.application.config.log_tags
       end
     end
 
@@ -144,7 +144,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal "MyLogger", Rails.application.config.logger.class.name
+      assert_equal "MyLogger", Zoisite.application.config.logger.class.name
     end
 
     test "raises an error if cache does not support recyclable cache keys" do
@@ -185,7 +185,7 @@ module ApplicationTests
 
         assert_changes -> { File.exist?(File.join(app_path, "db", "schema.rb")) }, from: false, to: true do
           output = capture(:stdout) do
-            post "/rails/actions", { error: "ActiveRecord::PendingMigrationError", action: "Run pending migrations", location: "/foo" }
+            post "/zoisite/actions", { error: "ActiveRecord::PendingMigrationError", action: "Run pending migrations", location: "/foo" }
           end
 
           assert_match(/\d{14}\s+CreateUser/, output)
@@ -208,7 +208,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/database.yml", <<-YAML
-        <%= Rails.env %>:
+        <%= Zoisite.env %>:
           primary:
             adapter: sqlite3
             database: 'dev_db'
@@ -245,7 +245,7 @@ module ApplicationTests
 
         assert_changes -> { File.exist?(File.join(app_path, "db", "schema.rb")) }, from: false, to: true do
           output = capture(:stdout) do
-            post "/rails/actions", { error: "ActiveRecord::PendingMigrationError", action: "Run pending migrations", location: "/foo" }
+            post "/zoisite/actions", { error: "ActiveRecord::PendingMigrationError", action: "Run pending migrations", location: "/foo" }
           end
 
           assert_match(/\d{14}\s+CreateUsers/, output)
@@ -261,43 +261,43 @@ module ApplicationTests
       end
     end
 
-    test "Rails.groups returns available groups" do
-      require "rails"
+    test "Zoisite.groups returns available groups" do
+      require "zoisite"
 
-      Rails.env = "development"
-      assert_equal [:default, "development"], Rails.groups
-      assert_equal [:default, "development", :assets], Rails.groups(assets: [:development])
-      assert_equal [:default, "development", :another, :assets], Rails.groups(:another, assets: %w(development))
+      Zoisite.env = "development"
+      assert_equal [:default, "development"], Zoisite.groups
+      assert_equal [:default, "development", :assets], Zoisite.groups(assets: [:development])
+      assert_equal [:default, "development", :another, :assets], Zoisite.groups(:another, assets: %w(development))
 
-      Rails.env = "test"
-      assert_equal [:default, "test"], Rails.groups(assets: [:development])
+      Zoisite.env = "test"
+      assert_equal [:default, "test"], Zoisite.groups(assets: [:development])
 
       ENV["RAILS_GROUPS"] = "javascripts,stylesheets"
-      assert_equal [:default, "test", "javascripts", "stylesheets"], Rails.groups
+      assert_equal [:default, "test", "javascripts", "stylesheets"], Zoisite.groups
     end
 
-    test "Rails.application is nil until app is initialized" do
-      require "rails"
-      assert_nil Rails.application
+    test "Zoisite.application is nil until app is initialized" do
+      require "zoisite"
+      assert_nil Zoisite.application
       app "development"
-      assert_equal AppTemplate::Application.instance, Rails.application
+      assert_equal AppTemplate::Application.instance, Zoisite.application
     end
 
-    test "Rails.application responds to all instance methods" do
+    test "Zoisite.application responds to all instance methods" do
       app "development"
-      assert_equal Rails.application.routes_reloader, AppTemplate::Application.routes_reloader
-      assert_kind_of ActiveSupport::MessageVerifiers, Rails.application.message_verifiers
-      assert_kind_of ActiveSupport::Deprecation::Deprecators, Rails.application.deprecators
+      assert_equal Zoisite.application.routes_reloader, AppTemplate::Application.routes_reloader
+      assert_kind_of ActiveSupport::MessageVerifiers, Zoisite.application.message_verifiers
+      assert_kind_of ActiveSupport::Deprecation::Deprecators, Zoisite.application.deprecators
     end
 
-    test "Rails::Application responds to paths" do
+    test "Zoisite::Application responds to paths" do
       app "development"
       assert_equal ["#{app_path}/app/views"], AppTemplate::Application.paths["app/views"].expanded
     end
 
     test "the application root is set correctly" do
       app "development"
-      assert_equal Pathname.new(app_path), Rails.application.root
+      assert_equal Pathname.new(app_path), Zoisite.application.root
     end
 
     test "the application root can be seen from the application singleton" do
@@ -315,7 +315,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal Pathname.new(new_app), Rails.application.root
+      assert_equal Pathname.new(new_app), Zoisite.application.root
     end
 
     test "the application root is Dir.pwd if there is no config.ru" do
@@ -325,34 +325,34 @@ module ApplicationTests
 
       Dir.chdir("#{app_path}") do
         app "development"
-        assert_equal Pathname.new("#{app_path}"), Rails.application.root
+        assert_equal Pathname.new("#{app_path}"), Zoisite.application.root
       end
     end
 
-    test "Rails.root should be a Pathname" do
+    test "Zoisite.root should be a Pathname" do
       add_to_config <<-RUBY
         config.root = "#{app_path}"
       RUBY
 
       app "development"
 
-      assert_instance_of Pathname, Rails.root
+      assert_instance_of Pathname, Zoisite.root
     end
 
-    test "Rails.public_path should be a Pathname" do
+    test "Zoisite.public_path should be a Pathname" do
       add_to_config <<-RUBY
         config.paths["public"] = "somewhere"
       RUBY
 
       app "development"
 
-      assert_instance_of Pathname, Rails.public_path
+      assert_instance_of Pathname, Zoisite.public_path
     end
 
     test "config.enable_reloading is !config.cache_classes" do
       app "development"
 
-      config = Rails.application.config
+      config = Zoisite.application.config
 
       assert_equal !config.cache_classes, config.enable_reloading
 
@@ -535,7 +535,7 @@ module ApplicationTests
 
     test "application is always added to eager_load namespaces" do
       app "development"
-      assert_includes Rails.application.config.eager_load_namespaces, AppTemplate::Application
+      assert_includes Zoisite.application.config.eager_load_namespaces, AppTemplate::Application
     end
 
     test "the application can be eager loaded even when there are no frameworks" do
@@ -611,12 +611,12 @@ module ApplicationTests
     test "filter_parameters should be able to set via config.filter_parameters in an initializer" do
       remove_from_config '.*config\.load_defaults.*\n'
       app_file "config/initializers/filter_parameters_logging.rb", <<-RUBY
-        Rails.application.config.filter_parameters += [ :password, :foo, 'bar' ]
+        Zoisite.application.config.filter_parameters += [ :password, :foo, 'bar' ]
       RUBY
 
       app "development"
 
-      assert_equal [:password, :foo, "bar"], Rails.application.env_config["action_dispatch.parameter_filter"]
+      assert_equal [:password, :foo, "bar"], Zoisite.application.env_config["action_dispatch.parameter_filter"]
     end
 
     test "filter_parameters is precompiled when config.precompile_filter_parameters is true" do
@@ -629,7 +629,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal ActiveSupport::ParameterFilter.precompile_filters(filters), Rails.application.env_config["action_dispatch.parameter_filter"]
+      assert_equal ActiveSupport::ParameterFilter.precompile_filters(filters), Zoisite.application.env_config["action_dispatch.parameter_filter"]
     end
 
     test "filter_parameters is not precompiled when config.precompile_filter_parameters is false" do
@@ -642,7 +642,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal filters, Rails.application.env_config["action_dispatch.parameter_filter"]
+      assert_equal filters, Zoisite.application.env_config["action_dispatch.parameter_filter"]
     end
 
     test "filter_parameters reflects changes to config.filter_parameters after being precompiled" do
@@ -653,17 +653,17 @@ module ApplicationTests
 
       app "development"
 
-      assert_not_empty Rails.application.env_config["action_dispatch.parameter_filter"]
+      assert_not_empty Zoisite.application.env_config["action_dispatch.parameter_filter"]
 
-      Rails.application.config.filter_parameters << "baz.qux"
+      Zoisite.application.config.filter_parameters << "baz.qux"
 
-      assert_includes Rails.application.env_config["action_dispatch.parameter_filter"], "baz.qux"
+      assert_includes Zoisite.application.env_config["action_dispatch.parameter_filter"], "baz.qux"
     end
 
     test "config.precompile_filter_parameters is true by default for new apps" do
       app "development"
 
-      assert Rails.application.config.precompile_filter_parameters
+      assert Zoisite.application.config.precompile_filter_parameters
     end
 
     test "config.precompile_filter_parameters is false by default for upgraded apps" do
@@ -671,7 +671,7 @@ module ApplicationTests
       add_to_config 'config.load_defaults "7.0"'
       app "development"
 
-      assert_not Rails.application.config.precompile_filter_parameters
+      assert_not Zoisite.application.config.precompile_filter_parameters
     end
 
     test "config.to_prepare is forwarded to ActionDispatch" do
@@ -710,7 +710,7 @@ module ApplicationTests
       assert_utf8
     end
 
-    # Regression test for https://github.com/rails/rails/issues/49629.
+    # Regression test for https://github.com/zoisite-rb/zoisite-rb/issues/49629.
     test "config.paths can be mutated after accessing auto/eager load paths" do
       app_dir "vendor/auto"
       app_dir "vendor/once"
@@ -729,24 +729,24 @@ module ApplicationTests
 
       app "development"
 
-      assert_includes ActiveSupport::Dependencies.autoload_paths, "#{Rails.root}/vendor/auto"
-      assert_includes ActiveSupport::Dependencies.autoload_once_paths, "#{Rails.root}/vendor/once"
-      assert_includes ActiveSupport::Dependencies._eager_load_paths, "#{Rails.root}/vendor/eager"
+      assert_includes ActiveSupport::Dependencies.autoload_paths, "#{Zoisite.root}/vendor/auto"
+      assert_includes ActiveSupport::Dependencies.autoload_once_paths, "#{Zoisite.root}/vendor/once"
+      assert_includes ActiveSupport::Dependencies._eager_load_paths, "#{Zoisite.root}/vendor/eager"
     end
 
-    test "config.paths.public sets Rails.public_path" do
+    test "config.paths.public sets Zoisite.public_path" do
       add_to_config <<-RUBY
         config.paths["public"] = "somewhere"
       RUBY
 
       app "development"
-      assert_equal Pathname.new(app_path).join("somewhere"), Rails.public_path
+      assert_equal Pathname.new(app_path).join("somewhere"), Zoisite.public_path
     end
 
     test "In development mode, config.public_file_server.enabled is on by default" do
       restore_default_config
 
-      with_rails_env "development" do
+      with_zoisite_env "development" do
         app "development"
         assert app.config.public_file_server.enabled
       end
@@ -755,7 +755,7 @@ module ApplicationTests
     test "In test mode, config.public_file_server.enabled is on by default" do
       restore_default_config
 
-      with_rails_env "test" do
+      with_zoisite_env "test" do
         app "test"
         assert app.config.public_file_server.enabled
       end
@@ -764,7 +764,7 @@ module ApplicationTests
     test "In production mode, config.public_file_server.enabled is on by default" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_zoisite_env "production" do
         app "production"
         assert app.config.public_file_server.enabled
       end
@@ -773,7 +773,7 @@ module ApplicationTests
     test "In production mode, STDOUT logging is the default" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_zoisite_env "production" do
         app "production"
         assert ActiveSupport::Logger.logger_outputs_to?(app.config.logger, STDOUT)
       end
@@ -841,7 +841,7 @@ module ApplicationTests
 
       message = app.message_verifier(:sensitive_value).generate("some_value")
 
-      assert_equal "some_value", Rails.application.message_verifier(:sensitive_value).verify(message)
+      assert_equal "some_value", Zoisite.application.message_verifier(:sensitive_value).verify(message)
 
       secret = app.key_generator.generate_key("sensitive_value")
       verifier = ActiveSupport::MessageVerifier.new(secret)
@@ -850,7 +850,7 @@ module ApplicationTests
 
     test "application will generate secret_key_base in tmp file if blank in development" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_key_base = nil
+        Zoisite.application.config.secret_key_base = nil
       RUBY
 
       # For test that works even if tmp dir does not exist.
@@ -864,7 +864,7 @@ module ApplicationTests
 
     test "application will generate secret_key_base in tmp file if blank in test" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_key_base = nil
+        Zoisite.application.config.secret_key_base = nil
       RUBY
 
       # For test that works even if tmp dir does not exist.
@@ -890,7 +890,7 @@ module ApplicationTests
     test "application will use secret_key_base from credentials if present in local env" do
       credentials_secret = "credentials_secret"
       add_to_config <<-RUBY
-        Rails.application.credentials.secret_key_base = "#{credentials_secret}"
+        Zoisite.application.credentials.secret_key_base = "#{credentials_secret}"
       RUBY
 
       app "development"
@@ -900,7 +900,7 @@ module ApplicationTests
 
     test "application will not generate secret_key_base in tmp file if blank in production" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.credentials.secret_key_base = nil
+        Zoisite.application.credentials.secret_key_base = nil
       RUBY
 
       assert_raises ArgumentError do
@@ -910,7 +910,7 @@ module ApplicationTests
 
     test "raises when secret_key_base is blank" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.credentials.secret_key_base = nil
+        Zoisite.application.credentials.secret_key_base = nil
       RUBY
 
       error = assert_raise(ArgumentError) do
@@ -923,7 +923,7 @@ module ApplicationTests
       ENV["SECRET_KEY_BASE_DUMMY"] = "1"
 
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.credentials.secret_key_base = nil
+        Zoisite.application.credentials.secret_key_base = nil
       RUBY
 
       assert_nothing_raised do
@@ -942,7 +942,7 @@ module ApplicationTests
       ENV["SECRET_KEY_BASE"] = "env_secret"
 
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.credentials.secret_key_base = "credentials_secret"
+        Zoisite.application.credentials.secret_key_base = "credentials_secret"
       RUBY
 
       app_dir("tmp")
@@ -958,7 +958,7 @@ module ApplicationTests
 
     test "raise when secret_key_base is not a type of string" do
       add_to_config <<-RUBY
-        Rails.application.credentials.secret_key_base = 123
+        Zoisite.application.credentials.secret_key_base = 123
       RUBY
 
       assert_raise(ArgumentError) do
@@ -969,15 +969,15 @@ module ApplicationTests
     test "don't output secret_key_base when calling inspect" do
       secret = "b3c631c314c0bbca50c1b2843150fe33"
       add_to_config <<-RUBY
-        Rails.application.config.secret_key_base = "#{secret}"
+        Zoisite.application.config.secret_key_base = "#{secret}"
       RUBY
       app "production"
 
-      assert_no_match(/#{secret}/, Rails.application.config.inspect)
-      assert_match(/\A#<Rails::Application::Configuration:0x[0-9a-f]+>\z/, Rails.application.config.inspect)
+      assert_no_match(/#{secret}/, Zoisite.application.config.inspect)
+      assert_match(/\A#<Zoisite::Application::Configuration:0x[0-9a-f]+>\z/, Zoisite.application.config.inspect)
     end
 
-    test "Rails.application.key_generator supports specifying a secret base" do
+    test "Zoisite.application.key_generator supports specifying a secret base" do
       app "production"
 
       key = app.key_generator.generate_key("salt")
@@ -1006,7 +1006,7 @@ module ApplicationTests
       assert_not_equal default_verifier.object_id, text_verifier.object_id
     end
 
-    test "Rails.application.message_verifiers.rotate supports :secret_key_base option" do
+    test "Zoisite.application.message_verifiers.rotate supports :secret_key_base option" do
       old_secret_key_base = "old secret_key_base"
 
       add_to_config <<~RUBY
@@ -1026,7 +1026,7 @@ module ApplicationTests
 
     test "app.secret_key_base uses config.secret_key_base in development" do
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_key_base = "3b7cd727ee24e8444053437c36cc66c3"
+        Zoisite.application.config.secret_key_base = "3b7cd727ee24e8444053437c36cc66c3"
       RUBY
 
       app "development"
@@ -1036,7 +1036,7 @@ module ApplicationTests
     test "app.secret_key_base uses config.secret_key_base in production" do
       remove_file "config/credentials.yml.enc"
       app_file "config/initializers/secret_token.rb", <<-RUBY
-        Rails.application.config.secret_key_base = "iaminallyoursecretkeybase"
+        Zoisite.application.config.secret_key_base = "iaminallyoursecretkeybase"
       RUBY
 
       app "production"
@@ -1086,7 +1086,7 @@ module ApplicationTests
           label(attribute) + super(attribute, *args)
         end
       end
-      Rails.configuration.action_view.default_form_builder = "CustomFormBuilder"
+      Zoisite.configuration.action_view.default_form_builder = "CustomFormBuilder"
       RUBY
 
       app_file "app/models/post.rb", <<-RUBY
@@ -1118,7 +1118,7 @@ module ApplicationTests
 
     test "form_with can be configured with form_with_generates_ids" do
       app_file "config/initializers/form_builder.rb", <<-RUBY
-      Rails.configuration.action_view.form_with_generates_ids = false
+      Zoisite.configuration.action_view.form_with_generates_ids = false
       RUBY
 
       app_file "app/models/post.rb", <<-RUBY
@@ -1180,7 +1180,7 @@ module ApplicationTests
 
     test "form_with can be configured with form_with_generates_remote_forms" do
       app_file "config/initializers/form_builder.rb", <<-RUBY
-      Rails.configuration.action_view.form_with_generates_remote_forms = true
+      Zoisite.configuration.action_view.form_with_generates_remote_forms = true
       RUBY
 
       app_file "app/models/post.rb", <<-RUBY
@@ -1308,7 +1308,7 @@ module ApplicationTests
 
     test "sets ActionDispatch.test_app" do
       make_basic_app
-      assert_equal Rails.application, ActionDispatch.test_app
+      assert_equal Zoisite.application, ActionDispatch.test_app
     end
 
     test "sets ActionDispatch::Response.default_charset" do
@@ -1423,7 +1423,7 @@ module ApplicationTests
       assert_equal "test_default", ActionMailer::Base.deliver_later_queue_name
     end
 
-    test "ActionMailer::DeliveryJob queue name is :mailers without the Rails defaults" do
+    test "ActionMailer::DeliveryJob queue name is :mailers without the Zoisite defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
 
       app "development"
@@ -1454,7 +1454,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal "Wellington", Rails.application.config.time_zone
+      assert_equal "Wellington", Zoisite.application.config.time_zone
     end
 
     test "raises when an invalid timezone is defined in the config" do
@@ -1476,7 +1476,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal :wednesday, Rails.application.config.beginning_of_week
+      assert_equal :wednesday, Zoisite.application.config.beginning_of_week
     end
 
     test "raises when an invalid beginning of week is defined in the config" do
@@ -1493,14 +1493,14 @@ module ApplicationTests
     test "autoloaders" do
       app "development"
 
-      assert_predicate Rails.autoloaders, :zeitwerk_enabled?
-      assert_instance_of Zeitwerk::Loader, Rails.autoloaders.main
-      assert_equal "rails.main", Rails.autoloaders.main.tag
-      assert_instance_of Zeitwerk::Loader, Rails.autoloaders.once
-      assert_equal "rails.once", Rails.autoloaders.once.tag
-      assert_equal [Rails.autoloaders.main, Rails.autoloaders.once], Rails.autoloaders.to_a
-      assert_equal Rails::Autoloaders::Inflector, Rails.autoloaders.main.inflector
-      assert_equal Rails::Autoloaders::Inflector, Rails.autoloaders.once.inflector
+      assert_predicate Zoisite.autoloaders, :zeitwerk_enabled?
+      assert_instance_of Zeitwerk::Loader, Zoisite.autoloaders.main
+      assert_equal "zoisite.main", Zoisite.autoloaders.main.tag
+      assert_instance_of Zeitwerk::Loader, Zoisite.autoloaders.once
+      assert_equal "zoisite.once", Zoisite.autoloaders.once.tag
+      assert_equal [Zoisite.autoloaders.main, Zoisite.autoloaders.once], Zoisite.autoloaders.to_a
+      assert_equal Zoisite::Autoloaders::Inflector, Zoisite.autoloaders.main.inflector
+      assert_equal Zoisite::Autoloaders::Inflector, Zoisite.autoloaders.once.inflector
     end
 
     test "config.action_view.cache_template_loading with config.enable_reloading default" do
@@ -1559,11 +1559,11 @@ module ApplicationTests
       assert_equal false, ActionView::Resolver.caching?
     end
 
-    test "ActionController::Base::renderer uses Rails.application.default_url_options and config.force_ssl" do
+    test "ActionController::Base::renderer uses Zoisite.application.default_url_options and config.force_ssl" do
       add_to_config <<~RUBY
         config.force_ssl = true
 
-        Rails.application.default_url_options = {
+        Zoisite.application.default_url_options = {
           host: "foo.example.com",
           port: 9001,
           script_name: "/bar",
@@ -1598,7 +1598,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_6_2.rb", <<-RUBY
-        Rails.application.config.action_controller.raise_on_open_redirects = true
+        Zoisite.application.config.action_controller.raise_on_open_redirects = true
       RUBY
 
       app "development"
@@ -1821,7 +1821,7 @@ module ApplicationTests
 
     test "config.action_controller.permit_all_parameters can be configured in an initializer" do
       app_file "config/initializers/permit_all_parameters.rb", <<-RUBY
-        Rails.application.config.action_controller.permit_all_parameters = true
+        Zoisite.application.config.action_controller.permit_all_parameters = true
       RUBY
 
       app "development"
@@ -1834,7 +1834,7 @@ module ApplicationTests
 
     test "config.action_controller.always_permitted_parameters can be configured in an initializer" do
       app_file "config/initializers/always_permitted_parameters.rb", <<-RUBY
-        Rails.application.config.action_controller.always_permitted_parameters = []
+        Zoisite.application.config.action_controller.always_permitted_parameters = []
       RUBY
 
       app "development"
@@ -1847,7 +1847,7 @@ module ApplicationTests
 
     test "config.action_controller.action_on_unpermitted_parameters can be configured in an initializer" do
       app_file "config/initializers/action_on_unpermitted_parameters.rb", <<-RUBY
-        Rails.application.config.action_controller.action_on_unpermitted_parameters = :raise
+        Zoisite.application.config.action_controller.action_on_unpermitted_parameters = :raise
       RUBY
 
       app "development"
@@ -1879,14 +1879,14 @@ module ApplicationTests
       assert_equal "XML", last_response.body
     end
 
-    test "Rails.application#env_config exists and includes some existing parameters" do
+    test "Zoisite.application#env_config exists and includes some existing parameters" do
       make_basic_app
 
       assert_equal app.env_config["action_dispatch.parameter_filter"],  app.config.filter_parameters
       assert_equal app.env_config["action_dispatch.show_exceptions"],   app.config.action_dispatch.show_exceptions
-      assert_equal app.env_config["action_dispatch.logger"],            Rails.logger
-      assert_equal app.env_config["action_dispatch.backtrace_cleaner"], Rails.backtrace_cleaner
-      assert_equal app.env_config["action_dispatch.key_generator"],     Rails.application.key_generator
+      assert_equal app.env_config["action_dispatch.logger"],            Zoisite.logger
+      assert_equal app.env_config["action_dispatch.backtrace_cleaner"], Zoisite.backtrace_cleaner
+      assert_equal app.env_config["action_dispatch.key_generator"],     Zoisite.application.key_generator
     end
 
     test "config.colorize_logging default is true" do
@@ -1937,14 +1937,14 @@ module ApplicationTests
       restore_default_config
       app "development"
 
-      assert_equal Logger::DEBUG, Rails.logger.level
+      assert_equal Logger::DEBUG, Zoisite.logger.level
     end
 
     test "config.log_level default to info in production" do
       restore_default_config
       app "production"
 
-      assert_equal Logger::INFO, Rails.logger.level
+      assert_equal Logger::INFO, Zoisite.logger.level
     end
 
     test "config.log_level can be overwritten by ENV['RAILS_LOG_LEVEL'] in production" do
@@ -1952,7 +1952,7 @@ module ApplicationTests
 
       switch_env "RAILS_LOG_LEVEL", "debug" do
         app "production"
-        assert_equal Logger::DEBUG, Rails.logger.level
+        assert_equal Logger::DEBUG, Zoisite.logger.level
       end
     end
 
@@ -1961,7 +1961,7 @@ module ApplicationTests
         application.config.logger = Logger.new(STDOUT)
         application.config.log_level = :debug
       end
-      assert_equal Logger::DEBUG, Rails.logger.level
+      assert_equal Logger::DEBUG, Zoisite.logger.level
     end
 
     test "config.log_level does not override the level of the broadcast with the default value" do
@@ -1973,7 +1973,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal([Logger::INFO, Logger::ERROR], Rails.logger.broadcasts.map(&:level))
+      assert_equal([Logger::INFO, Logger::ERROR], Zoisite.logger.broadcasts.map(&:level))
     end
 
     test "config.log_level overrides the level of the broadcast when a custom value is set" do
@@ -1986,7 +1986,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal([Logger::WARN, Logger::WARN], Rails.logger.broadcasts.map(&:level))
+      assert_equal([Logger::WARN, Logger::WARN], Zoisite.logger.broadcasts.map(&:level))
     end
 
     test "config.logger when logger is already a Broadcast Logger" do
@@ -1995,7 +1995,7 @@ module ApplicationTests
       make_basic_app do |application|
         application.config.logger = logger
       end
-      assert_same(logger, Rails.logger)
+      assert_same(logger, Zoisite.logger)
     end
 
     test "config.logger when logger is not a Broadcast Logger" do
@@ -2005,15 +2005,15 @@ module ApplicationTests
         application.config.logger = logger
       end
 
-      assert_instance_of(ActiveSupport::BroadcastLogger, Rails.logger)
-      assert_includes(Rails.logger.broadcasts, logger)
+      assert_instance_of(ActiveSupport::BroadcastLogger, Zoisite.logger)
+      assert_includes(Zoisite.logger.broadcasts, logger)
     end
 
     test "respond_to? accepts include_private" do
       make_basic_app
 
-      assert_not_respond_to Rails.configuration, :method_missing
-      assert Rails.configuration.respond_to?(:method_missing, true)
+      assert_not_respond_to Zoisite.configuration, :method_missing
+      assert Zoisite.configuration.respond_to?(:method_missing, true)
     end
 
     test "config.active_record.dump_schema_after_migration is false on production" do
@@ -2045,7 +2045,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/use_yaml_unsafe_load.rb", <<-RUBY
-        Rails.application.config.active_record.use_yaml_unsafe_load = true
+        Zoisite.application.config.active_record.use_yaml_unsafe_load = true
       RUBY
 
       app "production"
@@ -2061,7 +2061,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/dont_raise.rb", <<-RUBY
-        Rails.application.config.active_record.raise_int_wider_than_64bit = false
+        Zoisite.application.config.active_record.raise_int_wider_than_64bit = false
       RUBY
 
       app "production"
@@ -2078,7 +2078,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/yaml_permitted_classes.rb", <<-RUBY
-        Rails.application.config.active_record.yaml_column_permitted_classes = [Symbol, Time]
+        Zoisite.application.config.active_record.yaml_column_permitted_classes = [Symbol, Time]
       RUBY
 
       app "production"
@@ -2092,14 +2092,14 @@ module ApplicationTests
         end
       end
 
-      assert_not_nil Rails::SourceAnnotationExtractor::Annotation.extensions[/\.(coffee)$/]
+      assert_not_nil Zoisite::SourceAnnotationExtractor::Annotation.extensions[/\.(coffee)$/]
     end
 
     test "config.default_log_file returns a File instance" do
       app "development"
 
       assert_instance_of File, app.config.default_log_file
-      assert_equal Rails.application.config.paths["log"].first, app.config.default_log_file.path
+      assert_equal Zoisite.application.config.paths["log"].first, app.config.default_log_file.path
     end
 
     test "config.log_file_size returns a 100MB size number in development" do
@@ -2122,7 +2122,7 @@ module ApplicationTests
 
     test "rake_tasks block works at instance level" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.ran_block = false
 
           rake_tasks do
@@ -2132,19 +2132,19 @@ module ApplicationTests
       RUBY
 
       app "development"
-      assert_not Rails.configuration.ran_block
+      assert_not Zoisite.configuration.ran_block
 
       require "rake"
       require "rake/testtask"
       require "rdoc/task"
 
-      Rails.application.load_tasks
-      assert Rails.configuration.ran_block
+      Zoisite.application.load_tasks
+      assert Zoisite.configuration.ran_block
     end
 
     test "generators block works at instance level" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.ran_block = false
 
           generators do
@@ -2154,15 +2154,15 @@ module ApplicationTests
       RUBY
 
       app "development"
-      assert_not Rails.configuration.ran_block
+      assert_not Zoisite.configuration.ran_block
 
-      Rails.application.load_generators
-      assert Rails.configuration.ran_block
+      Zoisite.application.load_generators
+      assert Zoisite.configuration.ran_block
     end
 
     test "console block works at instance level" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.ran_block = false
 
           console do
@@ -2172,15 +2172,15 @@ module ApplicationTests
       RUBY
 
       app "development"
-      assert_not Rails.configuration.ran_block
+      assert_not Zoisite.configuration.ran_block
 
-      Rails.application.load_console
-      assert Rails.configuration.ran_block
+      Zoisite.application.load_console
+      assert Zoisite.configuration.ran_block
     end
 
     test "runner block works at instance level" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.ran_block = false
 
           runner do
@@ -2190,16 +2190,16 @@ module ApplicationTests
       RUBY
 
       app "development"
-      assert_not Rails.configuration.ran_block
+      assert_not Zoisite.configuration.ran_block
 
-      Rails.application.load_runner
-      assert Rails.configuration.ran_block
+      Zoisite.application.load_runner
+      assert Zoisite.configuration.ran_block
     end
 
     test "loading the first existing database configuration available" do
       app_file "config/environments/development.rb", <<-RUBY
 
-      Rails.application.configure do
+      Zoisite.application.configure do
         config.paths.add 'config/database', with: 'config/nonexistent.yml'
         config.paths['config/database'] << 'config/database.yml'
         end
@@ -2207,7 +2207,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_kind_of Hash, Rails.application.config.database_configuration
+      assert_kind_of Hash, Zoisite.application.config.database_configuration
     end
 
     test "autoload paths do not include asset paths" do
@@ -2241,12 +2241,12 @@ module ApplicationTests
       autoload_paths_from_app_and_engines = autoload_paths.reject do |path|
         path.end_with?("mailers/previews")
       end
-      assert_equal true, Rails.configuration.add_autoload_paths_to_load_path
+      assert_equal true, Zoisite.configuration.add_autoload_paths_to_load_path
       assert_empty autoload_paths_from_app_and_engines - $LOAD_PATH
 
       # Precondition, ensure we are testing something next.
-      assert_not_empty Rails.configuration.paths.load_paths
-      assert_empty Rails.configuration.paths.load_paths - $LOAD_PATH
+      assert_not_empty Zoisite.configuration.paths.load_paths
+      assert_empty Zoisite.configuration.paths.load_paths - $LOAD_PATH
     end
 
     test "autoload paths are not added to $LOAD_PATH by default, except for lib" do
@@ -2255,19 +2255,19 @@ module ApplicationTests
       assert_equal ["#{app_path}/lib"], ActiveSupport::Dependencies.autoload_paths & $LOAD_PATH
 
       # Precondition, ensure we are testing something next.
-      assert_not_empty Rails.configuration.paths.load_paths
-      assert_empty Rails.configuration.paths.load_paths - $LOAD_PATH
+      assert_not_empty Zoisite.configuration.paths.load_paths
+      assert_empty Zoisite.configuration.paths.load_paths - $LOAD_PATH
     end
 
     test "lib is added to $LOAD_PATH regardless of config.add_autoload_paths_to_load_path" do
-      # Like Rails::Application.add_lib_to_load_path! does.
+      # Like Zoisite::Application.add_lib_to_load_path! does.
       lib = File.join(app_path, "lib")
 
       add_to_config "config.autoload_paths << '#{lib}'"
 
       app "development"
 
-      assert_not Rails.configuration.add_autoload_paths_to_load_path # precondition
+      assert_not Zoisite.configuration.add_autoload_paths_to_load_path # precondition
       assert_includes $LOAD_PATH, lib
     end
 
@@ -2279,8 +2279,8 @@ module ApplicationTests
 
       app "development"
 
-      assert_includes Rails.application.config.autoload_paths, "#{app_path}/lib"
-      assert_includes Rails.application.config.eager_load_paths, "#{app_path}/lib"
+      assert_includes Zoisite.application.config.autoload_paths, "#{app_path}/lib"
+      assert_includes Zoisite.application.config.eager_load_paths, "#{app_path}/lib"
 
       assert X
       assert M::X
@@ -2302,7 +2302,7 @@ module ApplicationTests
 
       app "development"
 
-      Rails.application.config.tap do |config|
+      Zoisite.application.config.tap do |config|
         assert_includes config.autoload_paths, "#{app_path}/custom_autoload_path"
         assert_includes config.autoload_once_paths, "#{app_path}/custom_autoload_once_path"
         assert_includes config.eager_load_paths, "#{app_path}/custom_eager_load_path"
@@ -2320,7 +2320,7 @@ module ApplicationTests
 
         app "development"
 
-        Rails.application.config.tap do |config|
+        Zoisite.application.config.tap do |config|
           assert_includes config.send(paths), "#{app_path}/lib"
           assert_includes config.eager_load_paths, "#{app_path}/lib"
         end
@@ -2339,7 +2339,7 @@ module ApplicationTests
 
         app "development"
 
-        Rails.application.config.tap do |config|
+        Zoisite.application.config.tap do |config|
           assert_includes config.send(paths), "#{app_path}/lib"
           assert_includes config.eager_load_paths, "#{app_path}/lib"
         end
@@ -2357,7 +2357,7 @@ module ApplicationTests
 
         app "development"
 
-        Rails.application.config.tap do |config|
+        Zoisite.application.config.tap do |config|
           assert_includes config.send(paths), "#{app_path}/lib"
           assert_includes config.eager_load_paths, "#{app_path}/lib"
         end
@@ -2375,7 +2375,7 @@ module ApplicationTests
 
         app "development"
 
-        Rails.application.config.tap do |config|
+        Zoisite.application.config.tap do |config|
           assert_includes config.send(paths), "#{app_path}/lib"
           assert_includes config.eager_load_paths, "#{app_path}/lib"
         end
@@ -2388,18 +2388,18 @@ module ApplicationTests
     test "load_database_yaml returns blank hash if configuration file is blank" do
       app_file "config/database.yml", ""
       app "development"
-      assert_equal({}, Rails.application.config.load_database_yaml)
+      assert_equal({}, Zoisite.application.config.load_database_yaml)
     end
 
     test "load_database_yaml returns blank hash if no database configuration is found" do
       remove_file "config/database.yml"
       app "development"
-      assert_equal({}, Rails.application.config.load_database_yaml)
+      assert_equal({}, Zoisite.application.config.load_database_yaml)
     end
 
     test "setup_initial_database_yaml does not print a warning" do
       app_file "config/database.yml", <<-YAML
-        <%= Rails.env %>:
+        <%= Zoisite.env %>:
           username: bobby
           adapter: sqlite3
           database: 'dev_db'
@@ -2415,7 +2415,7 @@ module ApplicationTests
       FileUtils.rm("#{app_path}/config/database.yml")
       err = assert_raises RuntimeError do
         app "development"
-        Rails.application.config.database_configuration
+        Zoisite.application.config.database_configuration
       end
       assert_match "config/database", err.message
     end
@@ -2432,7 +2432,7 @@ module ApplicationTests
 
       app "development"
 
-      ar_config = Rails.application.config.database_configuration
+      ar_config = Zoisite.application.config.database_configuration
       assert_equal "sqlite3", ar_config["development"]["adapter"]
       assert_equal "bobby",   ar_config["development"]["username"]
       assert_equal "dev_db",  ar_config["development"]["database"]
@@ -2448,7 +2448,7 @@ module ApplicationTests
 
       app "development"
 
-      ar_config = Rails.application.config.database_configuration
+      ar_config = Zoisite.application.config.database_configuration
       assert_equal "sqlite3", ar_config["development"]["adapter"]
       assert_equal "bobby",   ar_config["development"]["username"]
       assert_equal "dev_db",  ar_config["development"]["database"]
@@ -2467,7 +2467,7 @@ module ApplicationTests
 
       app "development"
 
-      ar_config = Rails.application.config.database_configuration
+      ar_config = Zoisite.application.config.database_configuration
       assert_equal "sqlite3", ar_config["development"]["primary"]["adapter"]
       assert_equal "bobby",   ar_config["development"]["primary"]["username"]
       assert_equal "dev_db",  ar_config["development"]["primary"]["database"]
@@ -2490,7 +2490,7 @@ module ApplicationTests
 
       app "development"
 
-      ar_config = Rails.configuration.database_configuration
+      ar_config = Zoisite.configuration.database_configuration
       assert_equal "db/one", ar_config["development"]["one"]["migrations_path"]
       assert_equal "db/two", ar_config["development"]["two"]["migrations_path"]
     end
@@ -2498,13 +2498,13 @@ module ApplicationTests
     test "config.action_mailer.show_previews defaults to true in development" do
       app "development"
 
-      assert Rails.application.config.action_mailer.show_previews
+      assert Zoisite.application.config.action_mailer.show_previews
     end
 
     test "config.action_mailer.show_previews defaults to false in production" do
       app "production"
 
-      assert_equal false, Rails.application.config.action_mailer.show_previews
+      assert_equal false, Zoisite.application.config.action_mailer.show_previews
     end
 
     test "config.action_mailer.show_previews can be set in the configuration file" do
@@ -2514,7 +2514,7 @@ module ApplicationTests
 
       app "production"
 
-      assert_equal true, Rails.application.config.action_mailer.show_previews
+      assert_equal true, Zoisite.application.config.action_mailer.show_previews
     end
 
     test "config_for loads custom configuration from YAML accessible as symbol or string" do
@@ -2525,8 +2525,8 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal "bar", Rails.application.config.my_custom_config[:foo]
-      assert_equal "bar", Rails.application.config.my_custom_config["foo"]
+      assert_equal "bar", Zoisite.application.config.my_custom_config[:foo]
+      assert_equal "bar", Zoisite.application.config.my_custom_config["foo"]
     end
 
     test "config_for loads nested custom configuration from YAML as symbol keys" do
@@ -2539,7 +2539,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal 1, Rails.application.config.my_custom_config[:foo][:bar][:baz]
+      assert_equal 1, Zoisite.application.config.my_custom_config[:foo][:bar][:baz]
     end
 
     test "config_for makes all hash methods available" do
@@ -2552,7 +2552,7 @@ module ApplicationTests
 
       app "development"
 
-      actual = Rails.application.config.my_custom_config
+      actual = Zoisite.application.config.my_custom_config
       assert_equal({ foo: 0, bar: { baz: 1 } }, actual)
       assert_equal([ :foo, :bar ], actual.keys)
       assert_equal([ 0, baz: 1], actual.values)
@@ -2570,7 +2570,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal %w( foo bar ), Rails.application.config.my_custom_config
+      assert_equal %w( foo bar ), Zoisite.application.config.my_custom_config
     end
 
     test "config_for works with only a shared root array" do
@@ -2582,7 +2582,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal %w( foo bar ), Rails.application.config.my_custom_config
+      assert_equal %w( foo bar ), Zoisite.application.config.my_custom_config
     end
 
     test "config_for returns only the env array when shared is an array" do
@@ -2596,18 +2596,18 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal %w( baz ), Rails.application.config.my_custom_config
+      assert_equal %w( baz ), Zoisite.application.config.my_custom_config
     end
 
     test "config_for uses the Pathname object if it is provided" do
-      set_custom_config <<~RUBY, "Pathname.new(Rails.root.join('config/custom.yml'))"
+      set_custom_config <<~RUBY, "Pathname.new(Zoisite.root.join('config/custom.yml'))"
         development:
           key: 'custom key'
       RUBY
 
       app "development"
 
-      assert_equal "custom key", Rails.application.config.my_custom_config[:key]
+      assert_equal "custom key", Zoisite.application.config.my_custom_config[:key]
     end
 
     test "config_for raises an exception if the file does not exist" do
@@ -2630,7 +2630,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_nil Rails.application.config.my_custom_config
+      assert_nil Zoisite.application.config.my_custom_config
     end
 
     test "config_for shared config is overridden" do
@@ -2643,7 +2643,7 @@ module ApplicationTests
 
       app "test"
 
-      assert_equal :from_env, Rails.application.config.my_custom_config[:foo]
+      assert_equal :from_env, Zoisite.application.config.my_custom_config[:foo]
     end
 
     test "config_for shared config is returned when environment is missing" do
@@ -2656,7 +2656,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal :from_shared, Rails.application.config.my_custom_config[:foo]
+      assert_equal :from_shared, Zoisite.application.config.my_custom_config[:foo]
     end
 
     test "config_for merges shared configuration deeply" do
@@ -2673,7 +2673,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal({ baz: 1, qux: 2 }, Rails.application.config.my_custom_config[:foo][:bar])
+      assert_equal({ baz: 1, qux: 2 }, Zoisite.application.config.my_custom_config[:foo][:bar])
     end
 
     test "config_for with empty file returns nil" do
@@ -2681,7 +2681,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_nil Rails.application.config.my_custom_config
+      assert_nil Zoisite.application.config.my_custom_config
     end
 
     test "config_for containing ERB tags should evaluate" do
@@ -2692,7 +2692,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal "custom key", Rails.application.config.my_custom_config[:key]
+      assert_equal "custom key", Zoisite.application.config.my_custom_config[:key]
     end
 
     test "config_for with syntax error show a more descriptive exception" do
@@ -2717,7 +2717,7 @@ module ApplicationTests
 
       require "#{app_path}/config/environment"
 
-      assert_equal "unicorn", Rails.application.config.my_custom_config[:key]
+      assert_equal "unicorn", Zoisite.application.config.my_custom_config[:key]
     end
 
     test "config_for handles YAML patches (like safe_yaml) that disable the symbolize_names option" do
@@ -2729,7 +2729,7 @@ module ApplicationTests
       app "development"
 
       YAML.stub :load, { "development" => { "key" => "value" } } do
-        assert_equal({ key: "value" }, Rails.application.config_for(:custom))
+        assert_equal({ key: "value" }, Zoisite.application.config_for(:custom))
       end
     end
 
@@ -2746,18 +2746,18 @@ module ApplicationTests
 
       app "development"
 
-      config = Rails.application.config_for(:custom)
+      config = Zoisite.application.config_for(:custom)
       assert_instance_of ActiveSupport::OrderedOptions, config
       assert_equal "value", config.some_key
 
-      config = Rails.application.config_for(:custom, env: :test)
+      config = Zoisite.application.config_for(:custom, env: :test)
       assert_instance_of ActiveSupport::OrderedOptions, config
       assert_equal "default", config.some_key
     end
 
     test "api_only is false by default" do
       app "development"
-      assert_not Rails.application.config.api_only
+      assert_not Zoisite.application.config.api_only
     end
 
     test "api_only generator config is set when api_only is set" do
@@ -2766,8 +2766,8 @@ module ApplicationTests
       RUBY
       app "development"
 
-      Rails.application.load_generators
-      assert Rails.configuration.api_only
+      Zoisite.application.load_generators
+      assert Zoisite.configuration.api_only
     end
 
     test "debug_exception_response_format is :api by default if api_only is enabled" do
@@ -2776,7 +2776,7 @@ module ApplicationTests
       RUBY
       app "development"
 
-      assert_equal :api, Rails.configuration.debug_exception_response_format
+      assert_equal :api, Zoisite.configuration.debug_exception_response_format
     end
 
     test "debug_exception_response_format can be overridden" do
@@ -2785,14 +2785,14 @@ module ApplicationTests
       RUBY
 
       app_file "config/environments/development.rb", <<-RUBY
-      Rails.application.configure do
+      Zoisite.application.configure do
         config.debug_exception_response_format = :default
       end
       RUBY
 
       app "development"
 
-      assert_equal :default, Rails.configuration.debug_exception_response_format
+      assert_equal :default, Zoisite.configuration.debug_exception_response_format
     end
 
     test "debug_exception_log_level is :fatal by default for upgraded apps" do
@@ -2843,7 +2843,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_6_1.rb", <<-RUBY
-        Rails.application.config.active_record.has_many_inversing = true
+        Zoisite.application.config.active_record.has_many_inversing = true
       RUBY
 
       app "development"
@@ -2869,7 +2869,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_7_0.rb", <<-RUBY
-        Rails.application.config.active_record.automatic_scope_inversing = true
+        Zoisite.application.config.active_record.automatic_scope_inversing = true
       RUBY
 
       app "development"
@@ -2895,7 +2895,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_7_0.rb", <<-RUBY
-        Rails.application.config.active_record.verify_foreign_keys_for_fixtures = true
+        Zoisite.application.config.active_record.verify_foreign_keys_for_fixtures = true
       RUBY
 
       app "development"
@@ -2940,7 +2940,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_7_0.rb", <<-RUBY
-        Rails.application.config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction = false
+        Zoisite.application.config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction = false
       RUBY
 
       app "development"
@@ -2951,10 +2951,10 @@ module ApplicationTests
     test "config.active_record.use_legacy_signed_id_verifier is :generate_and_verify by default for new apps" do
       app "development"
 
-      assert_equal :generate_and_verify, Rails.application.config.active_record.use_legacy_signed_id_verifier
+      assert_equal :generate_and_verify, Zoisite.application.config.active_record.use_legacy_signed_id_verifier
     end
 
-    test "Rails.application.message_verifiers['active_record/signed_id'] generates and verifies messages using legacy options when config.active_record.use_legacy_signed_id_verifier is :generate_and_verify" do
+    test "Zoisite.application.message_verifiers['active_record/signed_id'] generates and verifies messages using legacy options when config.active_record.use_legacy_signed_id_verifier is :generate_and_verify" do
       add_to_config <<-RUBY
         config.active_record.use_legacy_signed_id_verifier = :generate_and_verify
         config.secret_key_base = "secret"
@@ -2962,7 +2962,7 @@ module ApplicationTests
 
       app "development"
 
-      signed_id_verifier = Rails.application.message_verifiers["active_record/signed_id"]
+      signed_id_verifier = Zoisite.application.message_verifiers["active_record/signed_id"]
 
       secret = app.key_generator.generate_key("active_record/signed_id")
       legacy_verifier = ActiveSupport::MessageVerifier.new(secret, digest: "SHA256", serializer: JSON, url_safe: true)
@@ -2971,7 +2971,7 @@ module ApplicationTests
       assert_equal "message", signed_id_verifier.verify(legacy_verifier.generate("message"))
     end
 
-    test "Rails.application.message_verifiers['active_record/signed_id'] verifies messages using legacy options when config.active_record.use_legacy_signed_id_verifier is :verify" do
+    test "Zoisite.application.message_verifiers['active_record/signed_id'] verifies messages using legacy options when config.active_record.use_legacy_signed_id_verifier is :verify" do
       add_to_config <<-RUBY
         config.active_record.use_legacy_signed_id_verifier = :verify
         config.secret_key_base = "secret"
@@ -2979,7 +2979,7 @@ module ApplicationTests
 
       app "development"
 
-      signed_id_verifier = Rails.application.message_verifiers["active_record/signed_id"]
+      signed_id_verifier = Zoisite.application.message_verifiers["active_record/signed_id"]
 
       secret = app.key_generator.generate_key("active_record/signed_id")
       legacy_verifier = ActiveSupport::MessageVerifier.new(secret, digest: "SHA256", serializer: JSON, url_safe: true)
@@ -2990,7 +2990,7 @@ module ApplicationTests
       end
     end
 
-    test "Rails.application.message_verifiers['active_record/signed_id'] does not use legacy options when config.active_record.use_legacy_signed_id_verifier is false" do
+    test "Zoisite.application.message_verifiers['active_record/signed_id'] does not use legacy options when config.active_record.use_legacy_signed_id_verifier is false" do
       add_to_config <<-RUBY
         config.active_record.use_legacy_signed_id_verifier = false
         config.secret_key_base = "secret"
@@ -2998,7 +2998,7 @@ module ApplicationTests
 
       app "development"
 
-      signed_id_verifier = Rails.application.message_verifiers["active_record/signed_id"]
+      signed_id_verifier = Zoisite.application.message_verifiers["active_record/signed_id"]
 
       secret = app.key_generator.generate_key("active_record/signed_id")
       legacy_verifier = ActiveSupport::MessageVerifier.new(secret, digest: "SHA256", serializer: JSON, url_safe: true)
@@ -3021,10 +3021,10 @@ module ApplicationTests
       end
     end
 
-    test "ActiveRecord.message_verifiers is Rails.application.message_verifiers" do
+    test "ActiveRecord.message_verifiers is Zoisite.application.message_verifiers" do
       app "development"
 
-      assert_same Rails.application.message_verifiers, ActiveRecord.message_verifiers
+      assert_same Zoisite.application.message_verifiers, ActiveRecord.message_verifiers
     end
 
     test "PostgresqlAdapter.decode_dates is true by default for new apps" do
@@ -3113,7 +3113,7 @@ module ApplicationTests
 
       remove_from_config '.*config\.load_defaults.*\n'
       app_file "config/initializers/new_framework_defaults_7_1.rb", <<-RUBY
-        Rails.application.config.active_record.sqlite3_adapter_strict_strings_by_default = true
+        Zoisite.application.config.active_record.sqlite3_adapter_strict_strings_by_default = true
       RUBY
       app_file "config/initializers/active_record.rb", <<~RUBY
         ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
@@ -3149,7 +3149,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_6_0.rb", <<-RUBY
-        Rails.application.config.active_support.use_authenticated_message_encryption = true
+        Zoisite.application.config.active_support.use_authenticated_message_encryption = true
       RUBY
 
       app "development"
@@ -3175,7 +3175,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/custom_digest_class.rb", <<-RUBY
-        Rails.application.config.active_support.hash_digest_class = OpenSSL::Digest::SHA256
+        Zoisite.application.config.active_support.hash_digest_class = OpenSSL::Digest::SHA256
       RUBY
 
       app "development"
@@ -3201,7 +3201,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/custom_key_generator_digest_class.rb", <<-RUBY
-        Rails.application.config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA256
+        Zoisite.application.config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA256
       RUBY
 
       app "development"
@@ -3213,7 +3213,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/environments/test.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.active_support.test_parallelization_threshold = 1234
         end
       RUBY
@@ -3227,7 +3227,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/environments/test.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.active_support.parallelize_test_databases = false
         end
       RUBY
@@ -3245,7 +3245,7 @@ module ApplicationTests
       end
 
       app_file "config/initializers/custom_serializers.rb", <<-RUBY
-      Rails.application.config.active_job.custom_serializers << DummySerializer
+      Zoisite.application.config.active_job.custom_serializers << DummySerializer
       RUBY
 
       app "development"
@@ -3273,7 +3273,7 @@ module ApplicationTests
 
     test "config.active_job.enqueue_after_transaction_commit is deprecated" do
       app_file "config/initializers/enqueue_after_transaction_commit.rb", <<-RUBY
-      Rails.application.config.active_job.enqueue_after_transaction_commit = true
+      Zoisite.application.config.active_job.enqueue_after_transaction_commit = true
       RUBY
 
       app "production"
@@ -3301,7 +3301,7 @@ module ApplicationTests
       class ::DummyDestroyAssociationAsyncJob; end
 
       app_file "config/environments/test.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.active_record.destroy_association_async_job = "DummyDestroyAssociationAsyncJob"
         end
       RUBY
@@ -3319,7 +3319,7 @@ module ApplicationTests
 
     test "destroy association async batch size can be set in configs" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.active_record.destroy_association_async_batch_size = 100
         end
       RUBY
@@ -3347,7 +3347,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_6_0.rb", <<-RUBY
-        Rails.application.config.action_view.default_enforce_utf8 = true
+        Zoisite.application.config.action_view.default_enforce_utf8 = true
       RUBY
 
       app "development"
@@ -3372,7 +3372,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_7_0.rb", <<-RUBY
-        Rails.application.config.action_view.button_to_generates_button_tag = true
+        Zoisite.application.config.action_view.button_to_generates_button_tag = true
       RUBY
 
       app "development"
@@ -3387,7 +3387,7 @@ module ApplicationTests
 
     test "ActionView::Helpers::AssetTagHelper.image_loading can be configured via config.action_view.image_loading" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.action_view.image_loading = "lazy"
         end
       RUBY
@@ -3404,7 +3404,7 @@ module ApplicationTests
 
     test "ActionView::Helpers::AssetTagHelper.image_decoding can be configured via config.action_view.image_decoding" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.action_view.image_decoding = "async"
         end
       RUBY
@@ -3429,7 +3429,7 @@ module ApplicationTests
 
     test "ActionView::Helpers::AssetTagHelper.preload_links_header can be configured via config.action_view.preload_links_header" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.action_view.preload_links_header = false
         end
       RUBY
@@ -3450,7 +3450,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_7_0.rb", <<-RUBY
-        Rails.application.config.action_view.apply_stylesheet_media_default = false
+        Zoisite.application.config.action_view.apply_stylesheet_media_default = false
       RUBY
 
       app "development"
@@ -3482,7 +3482,7 @@ module ApplicationTests
 
     test "stylesheet_link_tag doesn't set the link header when disabled" do
       app_file "config/initializers/action_view.rb", <<-RUBY
-        Rails.application.config.action_view.preload_links_header = false
+        Zoisite.application.config.action_view.preload_links_header = false
       RUBY
 
       app_file "app/controllers/pages_controller.rb", <<-RUBY
@@ -3530,7 +3530,7 @@ module ApplicationTests
 
     test "javascript_include_tag doesn't set the link header when disabled" do
       app_file "config/initializers/action_view.rb", <<-RUBY
-        Rails.application.config.action_view.preload_links_header = false
+        Zoisite.application.config.action_view.preload_links_header = false
       RUBY
 
       app_file "app/controllers/pages_controller.rb", <<-RUBY
@@ -3570,68 +3570,68 @@ module ApplicationTests
     test "ActiveJob::Base.retry_jitter can be set by config" do
       app "development"
 
-      Rails.application.config.active_job.retry_jitter = 0.22
+      Zoisite.application.config.active_job.retry_jitter = 0.22
 
       assert_equal 0.22, ActiveJob::Base.retry_jitter
     end
 
-    test "Rails.application.config.action_dispatch.cookies_same_site_protection is :lax by default" do
+    test "Zoisite.application.config.action_dispatch.cookies_same_site_protection is :lax by default" do
       app "production"
 
-      assert_equal :lax, Rails.application.config.action_dispatch.cookies_same_site_protection
+      assert_equal :lax, Zoisite.application.config.action_dispatch.cookies_same_site_protection
     end
 
-    test "Rails.application.config.action_dispatch.cookies_same_site_protection is :lax can be overridden" do
+    test "Zoisite.application.config.action_dispatch.cookies_same_site_protection is :lax can be overridden" do
       app_file "config/environments/production.rb", <<~RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.action_dispatch.cookies_same_site_protection = :strict
         end
       RUBY
 
       app "production"
 
-      assert_equal :strict, Rails.application.config.action_dispatch.cookies_same_site_protection
+      assert_equal :strict, Zoisite.application.config.action_dispatch.cookies_same_site_protection
     end
 
-    test "Rails.application.config.action_dispatch.cookies_same_site_protection is :lax in 6.1 defaults" do
+    test "Zoisite.application.config.action_dispatch.cookies_same_site_protection is :lax in 6.1 defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config 'config.load_defaults "6.1"'
 
       app "development"
 
-      assert_equal :lax, Rails.application.config.action_dispatch.cookies_same_site_protection
+      assert_equal :lax, Zoisite.application.config.action_dispatch.cookies_same_site_protection
     end
 
-    test "Rails.application.config.action_dispatch.ssl_default_redirect_status is 308 in 6.1 defaults" do
+    test "Zoisite.application.config.action_dispatch.ssl_default_redirect_status is 308 in 6.1 defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config 'config.load_defaults "6.1"'
 
       app "production"
 
-      assert_equal 308, Rails.application.config.action_dispatch.ssl_default_redirect_status
+      assert_equal 308, Zoisite.application.config.action_dispatch.ssl_default_redirect_status
     end
 
-    test "Rails.application.config.action_dispatch.ssl_default_redirect_status can be configured in an initializer" do
+    test "Zoisite.application.config.action_dispatch.ssl_default_redirect_status can be configured in an initializer" do
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config 'config.load_defaults "6.0"'
 
       app_file "config/initializers/new_framework_defaults_6_1.rb", <<-RUBY
-        Rails.application.config.action_dispatch.ssl_default_redirect_status = 308
+        Zoisite.application.config.action_dispatch.ssl_default_redirect_status = 308
       RUBY
 
       app "production"
 
-      assert_equal 308, Rails.application.config.action_dispatch.ssl_default_redirect_status
+      assert_equal 308, Zoisite.application.config.action_dispatch.ssl_default_redirect_status
     end
 
-    test "Rails.application.config.action_dispatch.strict_freshness is false by default for older applications" do
+    test "Zoisite.application.config.action_dispatch.strict_freshness is false by default for older applications" do
       remove_from_config '.*config\.load_defaults.*\n'
       app "development"
 
-      assert_equal false, Rails.application.config.action_dispatch.strict_freshness
+      assert_equal false, Zoisite.application.config.action_dispatch.strict_freshness
     end
 
-    test "Rails.application.config.action_dispatch.strict_freshness can be configured in an initializer" do
+    test "Zoisite.application.config.action_dispatch.strict_freshness can be configured in an initializer" do
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config <<-RUBY
         config.action_dispatch.strict_freshness = true
@@ -3643,7 +3643,7 @@ module ApplicationTests
     end
 
 
-    test "Rails.application.config.action_mailer.smtp_settings have open_timeout and read_timeout defined as 5 in 7.0 defaults" do
+    test "Zoisite.application.config.action_mailer.smtp_settings have open_timeout and read_timeout defined as 5 in 7.0 defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config <<-RUBY
         config.action_mailer.smtp_settings = { domain: "example.com" }
@@ -3655,10 +3655,10 @@ module ApplicationTests
       smtp_settings = { domain: "example.com", open_timeout: 5, read_timeout: 5 }
 
       assert_equal smtp_settings, ActionMailer::Base.smtp_settings
-      assert_equal smtp_settings, Rails.configuration.action_mailer.smtp_settings
+      assert_equal smtp_settings, Zoisite.configuration.action_mailer.smtp_settings
     end
 
-    test "Rails.application.config.action_mailer.smtp_settings does not have open_timeout and read_timeout configured on other versions" do
+    test "Zoisite.application.config.action_mailer.smtp_settings does not have open_timeout and read_timeout configured on other versions" do
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config <<-RUBY
         config.action_mailer.smtp_settings = { domain: "example.com" }
@@ -3671,7 +3671,7 @@ module ApplicationTests
       assert_equal smtp_settings, ActionMailer::Base.smtp_settings
     end
 
-    test "Rails.application.config.action_mailer.smtp_settings = nil fallback to ActionMailer::Base.smtp_settings" do
+    test "Zoisite.application.config.action_mailer.smtp_settings = nil fallback to ActionMailer::Base.smtp_settings" do
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config <<-RUBY
         ActionMailer::Base.smtp_settings = { domain: "example.com" }
@@ -3683,10 +3683,10 @@ module ApplicationTests
       smtp_settings = { domain: "example.com", open_timeout: 5, read_timeout: 5 }
 
       assert_equal smtp_settings, ActionMailer::Base.smtp_settings
-      assert_nil Rails.configuration.action_mailer.smtp_settings
+      assert_nil Zoisite.configuration.action_mailer.smtp_settings
     end
 
-    test "Rails.application.config.action_mailer.smtp_settings = nil and ActionMailer::Base.smtp_settings = nil do not configure smtp_timeout" do
+    test "Zoisite.application.config.action_mailer.smtp_settings = nil and ActionMailer::Base.smtp_settings = nil do not configure smtp_timeout" do
       ActionMailer::Base.smtp_settings = nil
 
       remove_from_config '.*config\.load_defaults.*\n'
@@ -3697,7 +3697,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_nil Rails.configuration.action_mailer.smtp_settings
+      assert_nil Zoisite.configuration.action_mailer.smtp_settings
       assert_nil ActionMailer::Base.smtp_settings
     end
 
@@ -3750,7 +3750,7 @@ module ApplicationTests
       assert_nil ActiveStorage.queues[:analysis]
     end
 
-    test "ActiveStorage.queues[:analysis] is nil without Rails 6 defaults" do
+    test "ActiveStorage.queues[:analysis] is nil without Zoisite 6 defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
 
       app "development"
@@ -3776,7 +3776,7 @@ module ApplicationTests
       assert_nil ActiveStorage.queues[:purge]
     end
 
-    test "ActiveStorage.queues[:purge] is nil without Rails 6 defaults" do
+    test "ActiveStorage.queues[:purge] is nil without Zoisite 6 defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
 
       app "development"
@@ -3784,7 +3784,7 @@ module ApplicationTests
       assert_nil ActiveStorage.queues[:purge]
     end
 
-    test "ActiveStorage.queues[:mirror] is nil without Rails 6 defaults" do
+    test "ActiveStorage.queues[:mirror] is nil without Zoisite 6 defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
 
       app "development"
@@ -3806,7 +3806,7 @@ module ApplicationTests
       assert_kind_of ActiveSupport::HashWithIndifferentAccess, ActionCable.server.config.cable
     end
 
-    test "action_text.config.attachment_tag_name is 'action-text-attachment' with Rails 6 defaults" do
+    test "action_text.config.attachment_tag_name is 'action-text-attachment' with Zoisite 6 defaults" do
       add_to_config 'config.load_defaults "6.1"'
 
       app "development"
@@ -3830,10 +3830,10 @@ module ApplicationTests
       assert_equal "link", ActionText::Attachment.tag_name
     end
 
-    test "ActionMailbox.logger is Rails.logger by default" do
+    test "ActionMailbox.logger is Zoisite.logger by default" do
       app "development"
 
-      assert_equal Rails.logger, ActionMailbox.logger
+      assert_equal Zoisite.logger, ActionMailbox.logger
     end
 
     test "ActionMailbox.logger can be configured" do
@@ -3952,10 +3952,10 @@ module ApplicationTests
 
     test "ActiveRecord::Base.filter_attributes should equal to filter_parameters" do
       app_file "config/initializers/filter_parameters_logging.rb", <<-RUBY
-        Rails.application.config.filter_parameters += [ :password, :credit_card_number ]
+        Zoisite.application.config.filter_parameters += [ :password, :credit_card_number ]
       RUBY
       app "development"
-      assert_equal [ :password, :credit_card_number ], Rails.application.config.filter_parameters
+      assert_equal [ :password, :credit_card_number ], Zoisite.application.config.filter_parameters
       assert_equal [ :password, :credit_card_number ], ActiveRecord::Base.filter_attributes
     end
 
@@ -4027,8 +4027,8 @@ module ApplicationTests
       RUBY
 
       app_file "config/initializers/active_record.rb", <<-RUBY
-        Rails.application.config.active_record.encryption.primary_key = "dummy_key"
-        Rails.application.config.active_record.encryption.previous = [ { key_provider: MyOldKeyProvider.new } ]
+        Zoisite.application.config.active_record.encryption.primary_key = "dummy_key"
+        Zoisite.application.config.active_record.encryption.previous = [ { key_provider: MyOldKeyProvider.new } ]
 
         ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
         ActiveRecord::Migration.verbose = false
@@ -4067,8 +4067,8 @@ module ApplicationTests
       RUBY
 
       app_file "config/initializers/active_record.rb", <<-RUBY
-        Rails.application.config.active_record.encryption.primary_key = "dummy_key"
-        Rails.application.config.active_record.encryption.previous = [ { key_provider: MyOldKeyProvider.new } ]
+        Zoisite.application.config.active_record.encryption.primary_key = "dummy_key"
+        Zoisite.application.config.active_record.encryption.previous = [ { key_provider: MyOldKeyProvider.new } ]
 
         ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
         ActiveRecord::Migration.verbose = false
@@ -4090,23 +4090,23 @@ module ApplicationTests
 
     test "ActiveStorage.routes_prefix can be configured via config.active_storage.routes_prefix" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.active_storage.routes_prefix = '/files'
         end
       RUBY
 
-      output = rails("routes", "-g", "active_storage")
+      output = zoisite("routes", "-g", "active_storage")
       assert_equal <<~MESSAGE, output
                                Prefix Verb URI Pattern                                                                        Controller#Action
-                   rails_service_blob GET  /files/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
-             rails_service_blob_proxy GET  /files/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
+                   zoisite_service_blob GET  /files/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
+             zoisite_service_blob_proxy GET  /files/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
                                       GET  /files/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
-            rails_blob_representation GET  /files/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
-      rails_blob_representation_proxy GET  /files/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
+            zoisite_blob_representation GET  /files/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
+      zoisite_blob_representation_proxy GET  /files/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
                                       GET  /files/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
-                   rails_disk_service GET  /files/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
-            update_rails_disk_service PUT  /files/disk/:encoded_token(.:format)                                               active_storage/disk#update
-                 rails_direct_uploads POST /files/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
+                   zoisite_disk_service GET  /files/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
+            update_zoisite_disk_service PUT  /files/disk/:encoded_token(.:format)                                               active_storage/disk#update
+                 zoisite_direct_uploads POST /files/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
       MESSAGE
     end
 
@@ -4143,20 +4143,20 @@ module ApplicationTests
 
     test "ActiveStorage.draw_routes can be configured via config.active_storage.draw_routes" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.active_storage.draw_routes = false
         end
       RUBY
 
-      output = rails("routes")
-      assert_not_includes(output, "rails_service_blob")
-      assert_not_includes(output, "rails_blob_representation")
-      assert_not_includes(output, "rails_disk_service")
-      assert_not_includes(output, "update_rails_disk_service")
-      assert_not_includes(output, "rails_direct_uploads")
+      output = zoisite("routes")
+      assert_not_includes(output, "zoisite_service_blob")
+      assert_not_includes(output, "zoisite_blob_representation")
+      assert_not_includes(output, "zoisite_disk_service")
+      assert_not_includes(output, "update_zoisite_disk_service")
+      assert_not_includes(output, "zoisite_direct_uploads")
     end
 
-    test "ActiveStorage.video_preview_arguments uses the old arguments without Rails 7 defaults" do
+    test "ActiveStorage.video_preview_arguments uses the old arguments without Zoisite 7 defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
 
       app "development"
@@ -4173,7 +4173,7 @@ module ApplicationTests
         ActiveStorage.video_preview_arguments
     end
 
-    test "ActiveStorage.variant_processor uses mini_magick without Rails 7 defaults" do
+    test "ActiveStorage.variant_processor uses mini_magick without Zoisite 7 defaults" do
       remove_from_config '.*config\.load_defaults.*\n'
 
       app "development"
@@ -4199,7 +4199,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/add_image_processing_methods.rb", <<-RUBY
-        Rails.application.config.active_storage.supported_image_processing_methods = ["write", "set"]
+        Zoisite.application.config.active_storage.supported_image_processing_methods = ["write", "set"]
       RUBY
 
       app "development"
@@ -4212,7 +4212,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/add_image_processing_arguments.rb", <<-RUBY
-      Rails.application.config.active_storage.unsupported_image_processing_arguments = %w(
+      Zoisite.application.config.active_storage.unsupported_image_processing_arguments = %w(
         -write
         -danger
       )
@@ -4226,12 +4226,12 @@ module ApplicationTests
 
     test "hosts include .localhost in development" do
       app "development"
-      assert_includes Rails.application.config.hosts, ".localhost"
+      assert_includes Zoisite.application.config.hosts, ".localhost"
     end
 
     test "hosts include .test in development" do
       app "development"
-      assert_includes Rails.application.config.hosts, ".test"
+      assert_includes Zoisite.application.config.hosts, ".test"
     end
 
     test "hosts reads multiple values from RAILS_DEVELOPMENT_HOSTS" do
@@ -4239,8 +4239,8 @@ module ApplicationTests
       another_host = "bananapants.com"
       switch_development_hosts_to(host, another_host) do
         app "development"
-        assert_includes Rails.application.config.hosts, host
-        assert_includes Rails.application.config.hosts, another_host
+        assert_includes Zoisite.application.config.hosts, host
+        assert_includes Zoisite.application.config.hosts, another_host
       end
     end
 
@@ -4251,8 +4251,8 @@ module ApplicationTests
       another_host_with_white_space = "     #{another_host}"
       switch_development_hosts_to(host_with_white_space, another_host_with_white_space) do
         app "development"
-        assert_includes Rails.application.config.hosts, host
-        assert_includes Rails.application.config.hosts, another_host
+        assert_includes Zoisite.application.config.hosts, host
+        assert_includes Zoisite.application.config.hosts, another_host
       end
     end
 
@@ -4260,7 +4260,7 @@ module ApplicationTests
       host = "agoodhost.com"
       switch_development_hosts_to(host) do
         app "development"
-        assert_includes Rails.application.config.hosts, host
+        assert_includes Zoisite.application.config.hosts, host
       end
     end
 
@@ -4268,14 +4268,14 @@ module ApplicationTests
       host = "agoodhost.com"
       switch_development_hosts_to(host) do
         app "production"
-        assert_not_includes Rails.application.config.hosts, host
+        assert_not_includes Zoisite.application.config.hosts, host
       end
     end
 
     test "disable_sandbox is false by default" do
       app "development"
 
-      assert_equal false, Rails.configuration.disable_sandbox
+      assert_equal false, Zoisite.configuration.disable_sandbox
     end
 
     test "disable_sandbox can be overridden" do
@@ -4285,12 +4285,12 @@ module ApplicationTests
 
       app "development"
 
-      assert Rails.configuration.disable_sandbox
+      assert Zoisite.configuration.disable_sandbox
     end
 
     test "rake_eager_load is false by default" do
       app "development"
-      assert_equal false,  Rails.application.config.rake_eager_load
+      assert_equal false,  Zoisite.application.config.rake_eager_load
     end
 
     test "rake_eager_load is set correctly" do
@@ -4301,7 +4301,7 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal true, Rails.application.config.rake_eager_load
+      assert_equal true, Zoisite.application.config.rake_eager_load
     end
 
     test "ActiveSupport::Messages::Codec.default_serializer is :json_allow_marshal by default for new apps" do
@@ -4322,7 +4322,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_7_1.rb", <<~RUBY
-        Rails.application.config.active_support.message_serializer = :json_allow_marshal
+        Zoisite.application.config.active_support.message_serializer = :json_allow_marshal
       RUBY
 
       app "development"
@@ -4348,7 +4348,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_7_1.rb", <<~RUBY
-        Rails.application.config.active_support.use_message_serializer_for_metadata = true
+        Zoisite.application.config.active_support.use_message_serializer_for_metadata = true
       RUBY
 
       app "development"
@@ -4359,13 +4359,13 @@ module ApplicationTests
     test "unknown_asset_fallback is false by default" do
       app "development"
 
-      assert_equal false, Rails.application.config.assets.unknown_asset_fallback
+      assert_equal false, Zoisite.application.config.assets.unknown_asset_fallback
     end
 
     test "action_dispatch.log_rescued_responses is true by default" do
       app "development"
 
-      assert_equal true, Rails.application.env_config["action_dispatch.log_rescued_responses"]
+      assert_equal true, Zoisite.application.env_config["action_dispatch.log_rescued_responses"]
     end
 
     test "action_dispatch.log_rescued_responses can be configured" do
@@ -4375,59 +4375,59 @@ module ApplicationTests
 
       app "development"
 
-      assert_equal false, Rails.application.env_config["action_dispatch.log_rescued_responses"]
+      assert_equal false, Zoisite.application.env_config["action_dispatch.log_rescued_responses"]
     end
 
     test "app starts with LocalCache middleware" do
       app "development"
 
-      assert(Rails.application.config.middleware.map(&:name).include?("ActiveSupport::Cache::Strategy::LocalCache"))
+      assert(Zoisite.application.config.middleware.map(&:name).include?("ActiveSupport::Cache::Strategy::LocalCache"))
 
-      local_cache_index = Rails.application.config.middleware.map(&:name).index("ActiveSupport::Cache::Strategy::LocalCache")
-      logger_index = Rails.application.config.middleware.map(&:name).index("Rails::Rack::Logger")
+      local_cache_index = Zoisite.application.config.middleware.map(&:name).index("ActiveSupport::Cache::Strategy::LocalCache")
+      logger_index = Zoisite.application.config.middleware.map(&:name).index("Zoisite::Rack::Logger")
       assert local_cache_index < logger_index
     end
 
     test "LocalCache middleware can be moved via app config" do
-      # you can't move Rails.cache.middleware as it doesn't exist yet
-      add_to_config "config.middleware.move_after(Rails::Rack::Logger, ActiveSupport::Cache::Strategy::LocalCache)"
+      # you can't move Zoisite.cache.middleware as it doesn't exist yet
+      add_to_config "config.middleware.move_after(Zoisite::Rack::Logger, ActiveSupport::Cache::Strategy::LocalCache)"
 
       app "development"
 
-      local_cache_index = Rails.application.config.middleware.map(&:name).index("ActiveSupport::Cache::Strategy::LocalCache")
-      logger_index = Rails.application.config.middleware.map(&:name).index("Rails::Rack::Logger")
+      local_cache_index = Zoisite.application.config.middleware.map(&:name).index("ActiveSupport::Cache::Strategy::LocalCache")
+      logger_index = Zoisite.application.config.middleware.map(&:name).index("Zoisite::Rack::Logger")
       assert local_cache_index > logger_index
     end
 
     test "LocalCache middleware can be moved via initializer" do
       app_file "config/initializers/move_local_cache_middleware.rb", <<~RUBY
-        Rails.application.config.middleware.move_after(Rails::Rack::Logger, Rails.cache.middleware)
+        Zoisite.application.config.middleware.move_after(Zoisite::Rack::Logger, Zoisite.cache.middleware)
       RUBY
 
       app "development"
 
-      local_cache_index = Rails.application.config.middleware.map(&:name).index("ActiveSupport::Cache::Strategy::LocalCache")
-      logger_index = Rails.application.config.middleware.map(&:name).index("Rails::Rack::Logger")
+      local_cache_index = Zoisite.application.config.middleware.map(&:name).index("ActiveSupport::Cache::Strategy::LocalCache")
+      logger_index = Zoisite.application.config.middleware.map(&:name).index("Zoisite::Rack::Logger")
       assert local_cache_index > logger_index
     end
 
     test "LocalCache middleware can be removed via app config" do
-      # you can't delete Rails.cache.middleware as it doesn't exist yet
+      # you can't delete Zoisite.cache.middleware as it doesn't exist yet
       add_to_config "config.middleware.delete(ActiveSupport::Cache::Strategy::LocalCache)"
 
       app "development"
 
-      assert_not(Rails.application.config.middleware.map(&:name).include?("ActiveSupport::Cache::Strategy::LocalCache"))
+      assert_not(Zoisite.application.config.middleware.map(&:name).include?("ActiveSupport::Cache::Strategy::LocalCache"))
     end
 
     test "LocalCache middleware can be removed via initializer" do
       app_file "config/initializers/remove_local_cache_middleware.rb", <<~RUBY
-        Rails.application.config.middleware.delete(Rails.cache.middleware)
+        Zoisite.application.config.middleware.delete(Zoisite.cache.middleware)
       RUBY
 
       app "development"
 
-      assert_not(Rails.application.config.middleware.map(&:name).include?("ActiveSupport::Cache::Strategy::LocalCache"))
+      assert_not(Zoisite.application.config.middleware.map(&:name).include?("ActiveSupport::Cache::Strategy::LocalCache"))
     end
 
     test "custom middleware with overridden names can be added, moved, or deleted" do
@@ -4453,40 +4453,40 @@ module ApplicationTests
           def new(app); self; end
         end
 
-        Rails.application.config.middleware.use(CustomMiddlewareOne)
-        Rails.application.config.middleware.use(CustomMiddlewareTwo)
-        Rails.application.config.middleware.use(CustomMiddlewareThree)
-        Rails.application.config.middleware.move_after(CustomMiddlewareTwo, CustomMiddlewareOne)
-        Rails.application.config.middleware.delete(CustomMiddlewareThree)
+        Zoisite.application.config.middleware.use(CustomMiddlewareOne)
+        Zoisite.application.config.middleware.use(CustomMiddlewareTwo)
+        Zoisite.application.config.middleware.use(CustomMiddlewareThree)
+        Zoisite.application.config.middleware.move_after(CustomMiddlewareTwo, CustomMiddlewareOne)
+        Zoisite.application.config.middleware.delete(CustomMiddlewareThree)
       RUBY
 
       app "development"
 
-      custom_middleware_one = Rails.application.config.middleware.map(&:name).index("1st custom middleware")
-      custom_middleware_two = Rails.application.config.middleware.map(&:name).index("CustomMiddlewareTwo")
+      custom_middleware_one = Zoisite.application.config.middleware.map(&:name).index("1st custom middleware")
+      custom_middleware_two = Zoisite.application.config.middleware.map(&:name).index("CustomMiddlewareTwo")
       assert custom_middleware_one > custom_middleware_two
 
-      assert_nil Rails.application.config.middleware.map(&:name).index("3rd custom middleware")
+      assert_nil Zoisite.application.config.middleware.map(&:name).index("3rd custom middleware")
     end
 
-    test "Rails.application.deprecators includes framework deprecators" do
+    test "Zoisite.application.deprecators includes framework deprecators" do
       app "production"
 
-      assert_includes Rails.application.deprecators.each, ActiveSupport::Deprecation._instance
-      assert_equal ActionCable.deprecator, Rails.application.deprecators[:action_cable]
-      assert_equal AbstractController.deprecator, Rails.application.deprecators[:action_controller]
-      assert_equal ActionController.deprecator, Rails.application.deprecators[:action_controller]
-      assert_equal ActionDispatch.deprecator, Rails.application.deprecators[:action_dispatch]
-      assert_equal ActionMailbox.deprecator, Rails.application.deprecators[:action_mailbox]
-      assert_equal ActionMailer.deprecator, Rails.application.deprecators[:action_mailer]
-      assert_equal ActionText.deprecator, Rails.application.deprecators[:action_text]
-      assert_equal ActionView.deprecator, Rails.application.deprecators[:action_view]
-      assert_equal ActiveJob.deprecator, Rails.application.deprecators[:active_job]
-      assert_equal ActiveModel.deprecator, Rails.application.deprecators[:active_model]
-      assert_equal ActiveRecord.deprecator, Rails.application.deprecators[:active_record]
-      assert_equal ActiveStorage.deprecator, Rails.application.deprecators[:active_storage]
-      assert_equal ActiveSupport.deprecator, Rails.application.deprecators[:active_support]
-      assert_equal Rails.deprecator, Rails.application.deprecators[:railties]
+      assert_includes Zoisite.application.deprecators.each, ActiveSupport::Deprecation._instance
+      assert_equal ActionCable.deprecator, Zoisite.application.deprecators[:action_cable]
+      assert_equal AbstractController.deprecator, Zoisite.application.deprecators[:action_controller]
+      assert_equal ActionController.deprecator, Zoisite.application.deprecators[:action_controller]
+      assert_equal ActionDispatch.deprecator, Zoisite.application.deprecators[:action_dispatch]
+      assert_equal ActionMailbox.deprecator, Zoisite.application.deprecators[:action_mailbox]
+      assert_equal ActionMailer.deprecator, Zoisite.application.deprecators[:action_mailer]
+      assert_equal ActionText.deprecator, Zoisite.application.deprecators[:action_text]
+      assert_equal ActionView.deprecator, Zoisite.application.deprecators[:action_view]
+      assert_equal ActiveJob.deprecator, Zoisite.application.deprecators[:active_job]
+      assert_equal ActiveModel.deprecator, Zoisite.application.deprecators[:active_model]
+      assert_equal ActiveRecord.deprecator, Zoisite.application.deprecators[:active_record]
+      assert_equal ActiveStorage.deprecator, Zoisite.application.deprecators[:active_storage]
+      assert_equal ActiveSupport.deprecator, Zoisite.application.deprecators[:active_support]
+      assert_equal Zoisite.deprecator, Zoisite.application.deprecators[:railties]
     end
 
     test "can entirely opt out of deprecation warnings" do
@@ -4494,9 +4494,9 @@ module ApplicationTests
 
       app "production"
 
-      assert_predicate Rails.application.deprecators.each, :any?
+      assert_predicate Zoisite.application.deprecators.each, :any?
 
-      Rails.application.deprecators.each do |deprecator|
+      Zoisite.application.deprecators.each do |deprecator|
         assert_equal true, deprecator.silenced
         assert_equal [ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:silence]], deprecator.behavior
         assert_equal [ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:silence]], deprecator.disallowed_behavior
@@ -4514,7 +4514,7 @@ module ApplicationTests
       add_to_config 'config.load_defaults "6.1"'
 
       app_file "config/initializers/new_framework_defaults_7_0.rb", <<-RUBY
-        Rails.application.config.action_controller.wrap_parameters_by_default = true
+        Zoisite.application.config.action_controller.wrap_parameters_by_default = true
       RUBY
 
       app "production"
@@ -4522,7 +4522,7 @@ module ApplicationTests
       assert_equal [:json], ActionController::Base._wrapper_options.format
     end
 
-    test "ParamsWrapper can be changed from the default in the initializer that was created prior to Rails 7" do
+    test "ParamsWrapper can be changed from the default in the initializer that was created prior to Zoisite 7" do
       app_file "config/initializers/wrap_parameters.rb", <<-RUBY
         ActiveSupport.on_load(:action_controller) do
           wrap_parameters format: [:xml]
@@ -4535,7 +4535,7 @@ module ApplicationTests
     end
 
     test "ParamsWrapper can be turned off" do
-      add_to_config "Rails.application.config.action_controller.wrap_parameters_by_default = false"
+      add_to_config "Zoisite.application.config.action_controller.wrap_parameters_by_default = false"
 
       app "production"
 
@@ -4560,7 +4560,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/initializers/new_framework_defaults_6_2.rb", <<-RUBY
-        Rails.application.config.action_controller.raise_on_missing_callback_actions = true
+        Zoisite.application.config.action_controller.raise_on_missing_callback_actions = true
       RUBY
 
       app "production"
@@ -4582,7 +4582,7 @@ module ApplicationTests
 
     test "isolation_level can be set in initializer" do
       app_file "config/initializers/new_framework_defaults_7_0.rb", <<-RUBY
-        Rails.application.config.active_support.isolation_level = :fiber
+        Zoisite.application.config.active_support.isolation_level = :fiber
       RUBY
 
       app "development"
@@ -4613,19 +4613,19 @@ module ApplicationTests
       assert_equal 7.0, ActiveSupport::Cache.format_version
     end
 
-    test "config.active_support.cache_format_version affects Rails.cache when set in an environment file (or earlier)" do
+    test "config.active_support.cache_format_version affects Zoisite.cache when set in an environment file (or earlier)" do
       remove_from_config '.*config\.load_defaults.*\n'
 
       app_file "config/environments/development.rb", <<~RUBY
-        Rails.application.config.active_support.cache_format_version = 7.0
+        Zoisite.application.config.active_support.cache_format_version = 7.0
       RUBY
 
       app "development"
 
-      assert_not_nil Rails.cache.instance_variable_get(:@coder)
+      assert_not_nil Zoisite.cache.instance_variable_get(:@coder)
       assert_equal \
         Marshal.dump(ActiveSupport::Cache::NullStore.new.instance_variable_get(:@coder)),
-        Marshal.dump(Rails.cache.instance_variable_get(:@coder))
+        Marshal.dump(Zoisite.cache.instance_variable_get(:@coder))
     end
 
     test "raise_on_invalid_cache_expiration_time is false with 7.0 defaults" do
@@ -4648,7 +4648,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config 'config.load_defaults "7.0"'
       app_file "config/initializers/new_framework_defaults_7_1.rb", <<-RUBY
-        Rails.application.config.active_support.raise_on_invalid_cache_expiration_time = true
+        Zoisite.application.config.active_support.raise_on_invalid_cache_expiration_time = true
       RUBY
       app "development"
 
@@ -4704,7 +4704,7 @@ module ApplicationTests
       add_to_config "config.i18n.raise_on_missing_translations = true"
       app "development"
 
-      assert_equal true, Rails.application.config.i18n.raise_on_missing_translations
+      assert_equal true, Zoisite.application.config.i18n.raise_on_missing_translations
 
       assert_raise(I18n::MissingTranslationData) do
         I18n.t("translations.missing")
@@ -4715,7 +4715,7 @@ module ApplicationTests
       add_to_config "config.i18n.raise_on_missing_translations = false"
       app "development"
 
-      assert_equal false, Rails.application.config.i18n.raise_on_missing_translations
+      assert_equal false, Zoisite.application.config.i18n.raise_on_missing_translations
 
       assert_nothing_raised do
         I18n.t("translations.missing")
@@ -4735,7 +4735,7 @@ module ApplicationTests
       RUBY
       app "development"
 
-      assert_equal true, Rails.application.config.i18n.raise_on_missing_translations
+      assert_equal true, Zoisite.application.config.i18n.raise_on_missing_translations
 
       assert_equal "handled I18n::MissingTranslation", I18n.t("translations.missing")
       assert_raise(I18n::InvalidLocale) do
@@ -4756,7 +4756,7 @@ module ApplicationTests
       RUBY
       app "development"
 
-      assert_equal false, Rails.application.config.i18n.raise_on_missing_translations
+      assert_equal false, Zoisite.application.config.i18n.raise_on_missing_translations
 
       assert_equal "handled I18n::MissingTranslation", I18n.t("translations.missing")
       assert_raise(I18n::InvalidLocale) do
@@ -4774,7 +4774,7 @@ module ApplicationTests
           end
           }
 
-        Rails.application.config.after_initialize do
+        Zoisite.application.config.after_initialize do
           I18n.backend.class.include(I18n::Backend::Pluralization)
           I18n.backend.send(:init_translations)
           I18n.backend.store_translations :en, i18n: { plural: { rule: lambda { |n| [0, 1].include?(n) ? :one : :other } } }
@@ -4810,7 +4810,7 @@ module ApplicationTests
       remove_from_config '.*config\.load_defaults.*\n'
       add_to_config 'config.load_defaults "7.0"'
       app_file "config/initializers/new_framework_defaults_7_1.rb", <<-RUBY
-        Rails.application.config.active_record.run_after_transaction_callbacks_in_order_defined = true
+        Zoisite.application.config.active_record.run_after_transaction_callbacks_in_order_defined = true
       RUBY
       app "development"
 
@@ -4824,7 +4824,7 @@ module ApplicationTests
         ActiveRecord::Base.connected?
       RUBY
       app_file "config/initializers/new_framework_defaults_7_1.rb", <<-RUBY
-        Rails.application.config.active_record.run_after_transaction_callbacks_in_order_defined = true
+        Zoisite.application.config.active_record.run_after_transaction_callbacks_in_order_defined = true
       RUBY
       app "development"
 
@@ -4844,7 +4844,7 @@ module ApplicationTests
 
     test "allows initializer to set active_record_encryption.configuration" do
       app_file "config/initializers/active_record_encryption.rb", <<-RUBY
-        Rails.application.config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA1
+        Zoisite.application.config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA1
       RUBY
 
       app "development"
@@ -4855,7 +4855,7 @@ module ApplicationTests
     test "sanitizer_vendor is set to best supported vendor in new apps" do
       app "development"
 
-      assert_equal Rails::HTML::Sanitizer.best_supported_vendor, ActionView::Helpers::SanitizeHelper.sanitizer_vendor
+      assert_equal Zoisite::HTML::Sanitizer.best_supported_vendor, ActionView::Helpers::SanitizeHelper.sanitizer_vendor
     end
 
     test "sanitizer_vendor is set to HTML4 in upgraded apps" do
@@ -4863,7 +4863,7 @@ module ApplicationTests
       add_to_config 'config.load_defaults "7.0"'
       app "development"
 
-      assert_equal Rails::HTML4::Sanitizer, ActionView::Helpers::SanitizeHelper.sanitizer_vendor
+      assert_equal Zoisite::HTML4::Sanitizer, ActionView::Helpers::SanitizeHelper.sanitizer_vendor
     end
 
     test "sanitizer_vendor is set to a specific vendor" do
@@ -4877,7 +4877,7 @@ module ApplicationTests
       app "development"
 
       assert_kind_of(
-        Rails::HTML::Sanitizer.best_supported_vendor.safe_list_sanitizer,
+        Zoisite::HTML::Sanitizer.best_supported_vendor.safe_list_sanitizer,
         ActionText::ContentHelper.sanitizer,
       )
     end
@@ -4888,7 +4888,7 @@ module ApplicationTests
       app "development"
 
       assert_kind_of(
-        Rails::HTML4::Sanitizer.safe_list_sanitizer,
+        Zoisite::HTML4::Sanitizer.safe_list_sanitizer,
         ActionText::ContentHelper.sanitizer,
       )
     end
@@ -4983,7 +4983,7 @@ module ApplicationTests
       app "development"
       expected = defined?(Nokogiri::HTML5) ? :html5 : :html4
 
-      assert_equal(expected, Rails.application.config.dom_testing_default_html_version)
+      assert_equal(expected, Zoisite.application.config.dom_testing_default_html_version)
     end
 
     test "dom testing uses the HTML4 parser in upgraded apps" do
@@ -4991,7 +4991,7 @@ module ApplicationTests
       add_to_config 'config.load_defaults "7.0"'
       app "development"
 
-      assert_equal(:html4, Rails.application.config.dom_testing_default_html_version)
+      assert_equal(:html4, Zoisite.application.config.dom_testing_default_html_version)
     end
 
     test "app attributes_for_inspect configuration takes precedence over default" do
@@ -5040,13 +5040,13 @@ module ApplicationTests
 
       app "development"
 
-      assert Rails.application.config.active_record.query_log_tags_enabled
+      assert Zoisite.application.config.active_record.query_log_tags_enabled
     end
 
     ["development", "production"].each do |env|
       test "active job adapter is async in #{env}" do
         app(env)
-        assert_equal :async, Rails.application.config.active_job.queue_adapter
+        assert_equal :async, Zoisite.application.config.active_job.queue_adapter
         adapter = ActiveJob::Base.queue_adapter
         assert_instance_of ActiveJob::QueueAdapters::AsyncAdapter, adapter
       end
@@ -5054,19 +5054,19 @@ module ApplicationTests
       test "active job adapter can be overridden in #{env} via application.rb" do
         add_to_config "config.active_job.queue_adapter = :inline"
         app(env)
-        assert_equal :inline, Rails.application.config.active_job.queue_adapter
+        assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
         adapter = ActiveJob::Base.queue_adapter
         assert_instance_of ActiveJob::QueueAdapters::InlineAdapter, adapter
       end
 
       test "active job adapter can be overridden in #{env} via environment config" do
         app_file "config/environments/#{env}.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.active_job.queue_adapter = :inline
           end
         RUBY
         app(env)
-        assert_equal :inline, Rails.application.config.active_job.queue_adapter
+        assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
         adapter = ActiveJob::Base.queue_adapter
         assert_instance_of ActiveJob::QueueAdapters::InlineAdapter, adapter
       end
@@ -5074,7 +5074,7 @@ module ApplicationTests
 
     test "active job adapter is `:test` in test environment" do
       app "test"
-      assert_equal :test, Rails.application.config.active_job.queue_adapter
+      assert_equal :test, Zoisite.application.config.active_job.queue_adapter
       adapter = ActiveJob::Base.queue_adapter
       assert_instance_of ActiveJob::QueueAdapters::TestAdapter, adapter
     end
@@ -5090,7 +5090,7 @@ module ApplicationTests
       assert_equal 5, Regexp.timeout
     end
 
-    test "action_controller.logger defaults to Rails.logger" do
+    test "action_controller.logger defaults to Zoisite.logger" do
       restore_default_config
       add_to_config "config.logger = Logger.new(STDOUT, level: Logger::INFO)"
       app "development"
@@ -5099,8 +5099,8 @@ module ApplicationTests
         get "/"
       end
 
-      assert_equal Rails.logger, Rails.application.config.action_controller.logger
-      assert output.include?("Processing by Rails::WelcomeController#index as HTML")
+      assert_equal Zoisite.logger, Zoisite.application.config.action_controller.logger
+      assert output.include?("Processing by Zoisite::WelcomeController#index as HTML")
     end
 
     test "action_controller.logger can be disabled by assigning nil" do
@@ -5114,8 +5114,8 @@ module ApplicationTests
         get "/"
       end
 
-      assert_nil Rails.application.config.action_controller.logger
-      assert_not output.include?("Processing by Rails::WelcomeController#index as HTML")
+      assert_nil Zoisite.application.config.action_controller.logger
+      assert_not output.include?("Processing by Zoisite::WelcomeController#index as HTML")
     end
 
     test "action_controller.logger can be disabled by assigning false" do
@@ -5130,8 +5130,8 @@ module ApplicationTests
       end
 
 
-      assert_equal false, Rails.application.config.action_controller.logger
-      assert_not output.include?("Processing by Rails::WelcomeController#index as HTML")
+      assert_equal false, Zoisite.application.config.action_controller.logger
+      assert_not output.include?("Processing by Zoisite::WelcomeController#index as HTML")
     end
 
     private

@@ -192,7 +192,7 @@ class Mysql2AdapterTest < ActiveRecord::Mysql2TestCase
           id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
           old_car_id bigint,
           INDEX index_foos_on_old_car_id (old_car_id),
-          CONSTRAINT fk_rails_ff771f3c96 FOREIGN KEY (old_car_id) REFERENCES old_cars (id)
+          CONSTRAINT fk_zoisite_ff771f3c96 FOREIGN KEY (old_car_id) REFERENCES old_cars (id)
         )
       SQL
     end
@@ -220,7 +220,7 @@ class Mysql2AdapterTest < ActiveRecord::Mysql2TestCase
           id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
           car_id int,
           INDEX index_foos_on_car_id (car_id),
-          CONSTRAINT fk_rails_ff771f3c96 FOREIGN KEY (car_id) REFERENCES cars (id)
+          CONSTRAINT fk_zoisite_ff771f3c96 FOREIGN KEY (car_id) REFERENCES cars (id)
         )
       SQL
     end
@@ -248,7 +248,7 @@ class Mysql2AdapterTest < ActiveRecord::Mysql2TestCase
           id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
           subscriber_id bigint,
           INDEX index_foos_on_subscriber_id (subscriber_id),
-          CONSTRAINT fk_rails_ff771f3c96 FOREIGN KEY (subscriber_id) REFERENCES subscribers (nick)
+          CONSTRAINT fk_zoisite_ff771f3c96 FOREIGN KEY (subscriber_id) REFERENCES subscribers (nick)
         )
       SQL
     end

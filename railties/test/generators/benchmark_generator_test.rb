@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/benchmark/benchmark_generator"
+require "zoisite/generators/zoisite/benchmark/benchmark_generator"
 
-module Rails
+module Zoisite
   module Generators
-    class BenchmarkGeneratorTest < Rails::Generators::TestCase
+    class BenchmarkGeneratorTest < Zoisite::Generators::TestCase
       include GeneratorsTestHelper
 
       setup do

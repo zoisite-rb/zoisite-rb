@@ -52,7 +52,7 @@ class Array
   # Converts an array into a string suitable for use as a URL query string,
   # using the given +key+ as the param name.
   #
-  #   ['Rails', 'coding'].to_query('hobbies') # => "hobbies%5B%5D=Rails&hobbies%5B%5D=coding"
+  #   ['Zoisite', 'coding'].to_query('hobbies') # => "hobbies%5B%5D=Zoisite&hobbies%5B%5D=coding"
   def to_query(key)
     prefix = "#{key}[]"
 

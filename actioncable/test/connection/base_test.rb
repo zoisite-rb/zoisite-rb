@@ -23,7 +23,7 @@ class ActionCable::Connection::BaseTest < ActionCable::TestCase
 
   setup do
     @server = TestServer.new
-    @server.config.allowed_request_origins = %w( http://rubyonrails.com )
+    @server.config.allowed_request_origins = %w( http://zoisite-rb.org )
   end
 
   test "making a connection with invalid headers" do
@@ -124,7 +124,7 @@ class ActionCable::Connection::BaseTest < ActionCable::TestCase
       env = Rack::MockRequest.env_for(
         "/test",
         "HTTP_CONNECTION" => "upgrade", "HTTP_UPGRADE" => "websocket",
-          "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://rubyonrails.org", "rack.hijack" => CallMeMaybe.new
+          "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://zoisite-rb.org", "rack.hijack" => CallMeMaybe.new
       )
 
       connection = ActionCable::Connection::Base.new(@server, env)
@@ -136,7 +136,7 @@ class ActionCable::Connection::BaseTest < ActionCable::TestCase
   private
     def open_connection
       env = Rack::MockRequest.env_for "/test", "HTTP_CONNECTION" => "upgrade", "HTTP_UPGRADE" => "websocket",
-        "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://rubyonrails.com"
+        "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://zoisite-rb.org"
 
       Connection.new(@server, env)
     end

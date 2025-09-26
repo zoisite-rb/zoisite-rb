@@ -12,7 +12,7 @@ class AdapterTest < ActiveSupport::TestCase
       before_adapter = ActiveJob::Base.queue_adapter
 
       msg = <<~MSG.squish
-        The built-in `sidekiq` adapter is deprecated and will be removed in Rails 8.2.
+        The built-in `sidekiq` adapter is deprecated and will be removed in Zoisite 8.2.
         Please upgrade `sidekiq` gem to version 7.3.3 or later to use the `sidekiq` gem's adapter.
       MSG
       assert_deprecated(msg, ActiveJob.deprecator) do

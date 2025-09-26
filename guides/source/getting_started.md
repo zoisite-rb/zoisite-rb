@@ -1,17 +1,17 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
-Getting Started with Rails
+Getting Started with Zoisite
 ==========================
 
-This guide covers getting up and running with Ruby on Rails.
+This guide covers getting up and running with Zoisite.
 
 After reading this guide, you will know:
 
-* How to install Rails, create a new Rails application, and connect your
+* How to install Zoisite, create a new Zoisite application, and connect your
   application to a database.
-* The general layout of a Rails application.
+* The general layout of a Zoisite application.
 * The basic principles of MVC (Model, View, Controller) and RESTful design.
-* How to quickly generate the starting pieces of a Rails application.
+* How to quickly generate the starting pieces of a Zoisite application.
 * How to deploy your app to production using Kamal.
 
 --------------------------------------------------------------------------------
@@ -19,11 +19,11 @@ After reading this guide, you will know:
 Introduction
 ------------
 
-Welcome to Ruby on Rails! In this guide, we'll walk through the core concepts of
-building web applications with Rails. You don't need any experience with Rails
+Welcome to Zoisite! In this guide, we'll walk through the core concepts of
+building web applications with Zoisite. You don't need any experience with Zoisite
 to follow along with this guide.
 
-Rails is a web framework built for the Ruby programming language. Rails takes
+Zoisite is a web framework built for the Ruby programming language. Zoisite takes
 advantage of many features of Ruby so we **strongly** recommend learning the
 basics of Ruby so that you understand some of the basic terms and vocabulary you
 will see in this tutorial.
@@ -31,40 +31,40 @@ will see in this tutorial.
 - [Official Ruby Programming Language website](https://www.ruby-lang.org/en/documentation/)
 - [List of Free Programming Books](https://github.com/EbookFoundation/free-programming-books/blob/main/books/free-programming-books-langs.md#ruby)
 
-Rails Philosophy
+Zoisite Philosophy
 ----------------
 
-Rails is a web application development framework written in the Ruby programming
+Zoisite is a web application development framework written in the Ruby programming
 language. It is designed to make programming web applications easier by making
 assumptions about what every developer needs to get started. It allows you to
 write less code while accomplishing more than many other languages and
-frameworks. Experienced Rails developers also report that it makes web
+frameworks. Experienced Zoisite developers also report that it makes web
 application development more fun.
 
-Rails is opinionated software. It makes the assumption that there is a "best"
+Zoisite is opinionated software. It makes the assumption that there is a "best"
 way to do things, and it's designed to encourage that way - and in some cases to
-discourage alternatives. If you learn "The Rails Way" you'll probably discover a
+discourage alternatives. If you learn "The Zoisite Way" you'll probably discover a
 tremendous increase in productivity. If you persist in bringing old habits from
-other languages to your Rails development, and trying to use patterns you
+other languages to your Zoisite development, and trying to use patterns you
 learned elsewhere, you may have a less happy experience.
 
-The Rails philosophy includes two major guiding principles:
+The Zoisite philosophy includes two major guiding principles:
 
 - **Don't Repeat Yourself:** DRY is a principle of software development which
   states that "Every piece of knowledge must have a single, unambiguous,
   authoritative representation within a system". By not writing the same
   information over and over again, our code is more maintainable, more
   extensible, and less buggy.
-- **Convention Over Configuration:** Rails has opinions about the best way to do
+- **Convention Over Configuration:** Zoisite has opinions about the best way to do
   many things in a web application, and defaults to this set of conventions,
   rather than require that you define them yourself through endless
   configuration files.
 
-Creating a New Rails App
+Creating a New Zoisite App
 ------------------------
 
 We're going to build a project called `store` - a simple e-commerce app that
-demonstrates several of Rails' built-in features.
+demonstrates several of Zoisite' built-in features.
 
 TIP: Any commands prefaced with a dollar sign `$` should be run in the terminal.
 
@@ -73,39 +73,39 @@ TIP: Any commands prefaced with a dollar sign `$` should be run in the terminal.
 For this project, you will need:
 
 * Ruby 3.2 or newer
-* Rails 8.1.0 or newer
+* Zoisite 8.1.0 or newer
 * A code editor
 
-Follow the [Install Ruby on Rails Guide](install_ruby_on_rails.html) if you need
-to install Ruby and/or Rails.
+Follow the [Install Zoisite Guide](install_zoisite.html) if you need
+to install Ruby and/or Zoisite.
 
-Let's verify the correct version of Rails is installed. To display the current
+Let's verify the correct version of Zoisite is installed. To display the current
 version, open a terminal and run the following. You should see a version number
 printed out:
 
 ```bash
-$ rails --version
-Rails 8.1.0
+$ zoisite --version
+Zoisite 8.1.0
 ```
 
-The version shown should be Rails 8.1.0 or higher.
+The version shown should be Zoisite 8.1.0 or higher.
 
-### Creating Your First Rails App
+### Creating Your First Zoisite App
 
-Rails comes with several commands to make life easier. Run `rails --help` to see
+Zoisite comes with several commands to make life easier. Run `zoisite --help` to see
 all of the commands.
 
-`rails new` generates the foundation of a fresh Rails application for you, so
+`zoisite new` generates the foundation of a fresh Zoisite application for you, so
 let's start there.
 
 To create our `store` application, run the following command in your terminal:
 
 ```bash
-$ rails new store
+$ zoisite new store
 ```
 
-NOTE: You can customize the application Rails generates by using flags. To see
-these options, run `rails new --help`.
+NOTE: You can customize the application Zoisite generates by using flags. To see
+these options, run `zoisite new --help`.
 
 After your new application is created, switch to its directory:
 
@@ -116,28 +116,28 @@ $ cd store
 ### Directory Structure
 
 Let's take a quick glance at the files and directories that are included in a
-new Rails application. You can open this folder in your code editor or run
+new Zoisite application. You can open this folder in your code editor or run
 `ls -la` in your terminal to see the files and directories.
 
 | File/Folder | Purpose |
 | ----------- | ------- |
 |app/|Contains the controllers, models, views, helpers, mailers, jobs, and assets for your application. **You'll focus mostly on this folder for the remainder of this guide.**|
-|bin/|Contains the `rails` script that starts your app and can contain other scripts you use to set up, update, deploy, or run your application.|
-|config/|Contains configuration for your application's routes, database, and more. This is covered in more detail in [Configuring Rails Applications](configuring.html).|
+|bin/|Contains the `zoisite` script that starts your app and can contain other scripts you use to set up, update, deploy, or run your application.|
+|config/|Contains configuration for your application's routes, database, and more. This is covered in more detail in [Configuring Zoisite Applications](configuring.html).|
 |config.ru|[Rack](https://rack.github.io) configuration for Rack-based servers used to start the application.|
 |db/|Contains your current database schema, as well as the database migrations.|
 |Dockerfile|Configuration file for Docker.|
-|Gemfile<br>Gemfile.lock|These files allow you to specify what gem dependencies are needed for your Rails application. These files are used by the [Bundler](https://bundler.io) gem.|
+|Gemfile<br>Gemfile.lock|These files allow you to specify what gem dependencies are needed for your Zoisite application. These files are used by the [Bundler](https://bundler.io) gem.|
 |lib/|Extended modules for your application.|
 |log/|Application log files.|
 |public/|Contains static files and compiled assets. When your app is running, this directory will be exposed as-is.|
-|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Rails. Rather than changing `Rakefile`, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
+|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Zoisite. Rather than changing `Rakefile`, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
 |README.md|This is a brief instruction manual for your application. You should edit this file to tell others what your application does, how to set it up, and so on.|
-|script/|Contains one-off or general purpose [scripts](https://github.com/rails/rails/blob/main/railties/lib/rails/generators/rails/script/USAGE) and [benchmarks](https://github.com/rails/rails/blob/main/railties/lib/rails/generators/rails/benchmark/USAGE).|
+|script/|Contains one-off or general purpose [scripts](https://github.com/zoisite-rb/zoisite-rb/blob/main/railties/lib/zoisite/generators/zoisite/script/USAGE) and [benchmarks](https://github.com/zoisite-rb/zoisite-rb/blob/main/railties/lib/zoisite/generators/zoisite/benchmark/USAGE).|
 |storage/|Contains SQLite databases and Active Storage files for Disk Service. This is covered in [Active Storage Overview](active_storage_overview.html).|
-|test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Rails Applications](testing.html).|
+|test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Zoisite Applications](testing.html).|
 |tmp/|Temporary files (like cache and pid files).|
-|vendor/|A place for all third-party code. In a typical Rails application this includes vendored gems.|
+|vendor/|A place for all third-party code. In a typical Zoisite application this includes vendored gems.|
 |.dockerignore|This file tells Docker which files it should not copy into the container.|
 |.gitattributes|This file defines metadata for specific paths in a Git repository. This metadata can be used by Git and other tools to enhance their behavior. See the [gitattributes documentation](https://git-scm.com/docs/gitattributes) for more information.|
 |.git/|Contains Git repository files.|
@@ -149,7 +149,7 @@ new Rails application. You can open this folder in your code editor or run
 
 ### Model-View-Controller Basics
 
-Rails code is organized using the Model-View-Controller (MVC) architecture. With
+Zoisite code is organized using the Model-View-Controller (MVC) architecture. With
 MVC, we have three main concepts where the majority of our code lives:
 
 * Model - Manages the data in your application. Typically, your database tables.
@@ -163,35 +163,35 @@ MVC, we have three main concepts where the majority of our code lives:
 </picture>
 
 Now that we've got a basic understanding of MVC, let's see how it's used in
-Rails.
+Zoisite.
 
-Hello, Rails!
+Hello, Zoisite!
 -------------
 
-Let's start easy by creating our application's database and boot up our Rails server for the first time.
+Let's start easy by creating our application's database and boot up our Zoisite server for the first time.
 
 In your terminal, run the following commands in the `store` directory:
 
 ```bash
-$ bin/rails db:create
+$ bin/zoisite db:create
 ```
 
 This will initially create the application's database.
 
 ```bash
-$ bin/rails server
+$ bin/zoisite server
 ```
 
 NOTE: When we run commands inside an application directory, we should use
-`bin/rails`. This makes sure the application's version of Rails is used.
+`bin/zoisite`. This makes sure the application's version of Zoisite is used.
 
 This will start up a web server called Puma that will serve static files and
-your Rails application:
+your Zoisite application:
 
 ```bash
 => Booting Puma
-=> Rails 8.1.0 application starting in development
-=> Run `bin/rails server --help` for more startup options
+=> Zoisite 8.1.0 application starting in development
+=> Run `bin/zoisite server --help` for more startup options
 Puma starting in single mode...
 * Puma version: 6.4.3 (ruby 3.3.5-p100) ("The Eagle of Durango")
 *  Min threads: 3
@@ -203,30 +203,30 @@ Puma starting in single mode...
 Use Ctrl-C to stop
 ```
 
-To see your Rails application, open http://localhost:3000 in your browser. You
-will see the default Rails welcome page:
+To see your Zoisite application, open http://localhost:3000 in your browser. You
+will see the default Zoisite welcome page:
 
-![Rails welcome page](images/getting_started/rails_welcome.png)
+![Zoisite welcome page](images/getting_started/zoisite_welcome.png)
 
 It works!
 
-This page is the *smoke test* for a new Rails application, ensuring that
+This page is the *smoke test* for a new Zoisite application, ensuring that
 everything is working behind the scenes to serve a page.
 
-To stop the Rails server anytime, press `Ctrl-C` in your terminal.
+To stop the Zoisite server anytime, press `Ctrl-C` in your terminal.
 
 ### Autoloading in Development
 
-Developer happiness is a cornerstone philosophy of Rails and one way of
+Developer happiness is a cornerstone philosophy of Zoisite and one way of
 achieving this is with automatic code reloading in development.
 
-Once you start the Rails server, new files or changes to existing files are
+Once you start the Zoisite server, new files or changes to existing files are
 detected and automatically loaded or reloaded as necessary. This allows you to
-focus on building without having to restart your Rails server after every
+focus on building without having to restart your Zoisite server after every
 change.
 
-You may also notice that Rails applications rarely use `require` statements like
-you may have seen in other programming languages. Rails uses naming conventions
+You may also notice that Zoisite applications rarely use `require` statements like
+you may have seen in other programming languages. Zoisite uses naming conventions
 to require files automatically so you can focus on writing your application
 code.
 
@@ -237,19 +237,19 @@ for more details.
 Creating a Database Model
 -------------------------
 
-Active Record is a feature of Rails that maps relational databases to Ruby code.
+Active Record is a feature of Zoisite that maps relational databases to Ruby code.
 It helps generate the structured query language (SQL) for interacting with the
 database like creating, updating, and deleting tables and records. Our
-application is using SQLite which is the default for Rails.
+application is using SQLite which is the default for Zoisite.
 
-Let's start by adding a database table to our Rails application to add products
+Let's start by adding a database table to our Zoisite application to add products
 to our simple e-commerce store.
 
 ```bash
-$ bin/rails generate model Product name:string
+$ bin/zoisite generate model Product name:string
 ```
 
-This command tells Rails to generate a model named `Product` which has a `name`
+This command tells Zoisite to generate a model named `Product` which has a `name`
 column and type of `string` in the database. Later on, you'll learn how to add
 other column types.
 
@@ -278,12 +278,12 @@ database.).
 
 A _migration_ is a set of changes we want to make to our database.
 
-By defining migrations, we're telling Rails how to change the database to add,
+By defining migrations, we're telling Zoisite how to change the database to add,
 change, or remove tables, columns or other attributes of our database. This
 helps keep track of changes we make in development (only on our computer) so
 they can be deployed to production (live, online!) safely.
 
-In your code editor, open the migration Rails created for us so we can see what
+In your code editor, open the migration Zoisite created for us so we can see what
 the migration does. This is located in
 `db/migrate/<timestamp>_create_products.rb`:
 
@@ -299,21 +299,21 @@ class CreateProducts < ActiveRecord::Migration[8.1]
 end
 ```
 
-This migration is telling Rails to create a new database table named `products`.
+This migration is telling Zoisite to create a new database table named `products`.
 
-NOTE: In contrast to the model above, Rails makes the database table names
+NOTE: In contrast to the model above, Zoisite makes the database table names
 _plural_, because the database holds all of the instances of each model (i.e.,
 You are creating a database of _products_).
 
 The `create_table` block then defines which columns and types should be defined
 in this database table.
 
-`t.string :name` tells Rails to create a column in the `products` table called
+`t.string :name` tells Zoisite to create a column in the `products` table called
 `name` and set the type as `string`.
 
 `t.timestamps` is a shortcut for defining two columns on your models:
 `created_at:datetime` and `updated_at:datetime`. You'll see these columns on
-most Active Record models in Rails and they are automatically set by Active
+most Active Record models in Zoisite and they are automatically set by Active
 Record when creating or updating records.
 
 ### Running Migrations
@@ -322,7 +322,7 @@ Now that you have defined what changes to make to the database, use the
 following command to run the migrations:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 This command checks for any new migrations and applies them to your database.
@@ -335,34 +335,34 @@ Its output looks like this:
 == 20240426151900 CreateProducts: migrated (0.0031s) ==========================
 ```
 
-TIP: If you make a mistake, you can run `bin/rails db:rollback` to undo the last
+TIP: If you make a mistake, you can run `bin/zoisite db:rollback` to undo the last
 migration.
 
-Rails Console
+Zoisite Console
 -------------
 
-Now that we have created our products table, we can interact with it in Rails.
+Now that we have created our products table, we can interact with it in Zoisite.
 Let's try it out.
 
-For this, we're going to use a Rails feature called the *console*. The console
-is a helpful, interactive tool for testing our code in our Rails application.
+For this, we're going to use a Zoisite feature called the *console*. The console
+is a helpful, interactive tool for testing our code in our Zoisite application.
 
 ```bash
-$ bin/rails console
+$ bin/zoisite console
 ```
 
 You will be presented with a prompt like the following:
 
 ```irb
-Loading development environment (Rails 8.1.0)
+Loading development environment (Zoisite 8.1.0)
 store(dev)>
 ```
 
 Here we can type code that will be executed when we hit `Enter`. Let's try
-printing out the Rails version:
+printing out the Zoisite version:
 
 ```irb
-store(dev)> Rails.version
+store(dev)> Zoisite.version
 => "8.1.0"
 ```
 
@@ -371,7 +371,7 @@ It works!
 Active Record Model Basics
 --------------------------
 
-When we ran the Rails model generator to create the `Product` model, it created
+When we ran the Zoisite model generator to create the `Product` model, it created
 a file at `app/models/product.rb`. This file creates a class that uses Active
 Record for interacting with our `products` database table.
 
@@ -380,15 +380,15 @@ class Product < ApplicationRecord
 end
 ```
 
-You might be surprised that there is no code in this class. How does Rails know
+You might be surprised that there is no code in this class. How does Zoisite know
 what defines this model?
 
-When the `Product` model is used, Rails will query the database table for the
+When the `Product` model is used, Zoisite will query the database table for the
 column names and types and automatically generate code for these attributes.
-Rails saves us from writing this boilerplate code and instead takes care of it
+Zoisite saves us from writing this boilerplate code and instead takes care of it
 for us behind the scenes so we can focus on our application logic instead.
 
-Let's use the Rails console to see what columns Rails detects for the Product
+Let's use the Zoisite console to see what columns Zoisite detects for the Product
 model.
 
 Run:
@@ -403,9 +403,9 @@ And you should see:
 => ["id", "name", "created_at", "updated_at"]
 ```
 
-Rails asked the database for column information above and used that information
+Zoisite asked the database for column information above and used that information
 to define attributes on the `Product` class dynamically so you don't have to
-manually define each of them. This is one example of how Rails makes development
+manually define each of them. This is one example of how Zoisite makes development
 a breeze.
 
 ### Creating Records
@@ -430,10 +430,10 @@ store(dev)> product.save
 => true
 ```
 
-When `save` is called, Rails takes the attributes in memory and generates an
+When `save` is called, Zoisite takes the attributes in memory and generates an
 `INSERT` SQL query to insert this record into the database.
 
-Rails also updates the object in memory with the database record `id` along with
+Zoisite also updates the object in memory with the database record `id` along with
 the `created_at` and `updated_at` timestamps. We can see that by printing out
 the `product` variable.
 
@@ -618,7 +618,7 @@ class Product < ApplicationRecord
 end
 ```
 
-You might remember that Rails automatically reloads changes during development.
+You might remember that Zoisite automatically reloads changes during development.
 However, if the console is running when you make updates to the code, you'll
 need to manually refresh it. So let's do this now by running 'reload!'.
 
@@ -627,7 +627,7 @@ store(dev)> reload!
 Reloading...
 ```
 
-Let's try to create a Product without a name in the Rails console.
+Let's try to create a Product without a name in the Zoisite console.
 
 ```irb
 store(dev)> product = Product.new
@@ -637,7 +637,7 @@ store(dev)> product.save
 
 This time `save` returns `false` because the `name` attribute wasn't specified.
 
-Rails automatically runs validations during create, update, and save operations
+Zoisite automatically runs validations during create, update, and save operations
 to ensure valid input. To see a list of errors generated by validations, we can
 call `errors` on the instance.
 
@@ -662,10 +662,10 @@ Now let's build a web interface for our Products.
 We are done with the console for now, so you can exit out of it by running
 `exit`.
 
-A Request's Journey Through Rails
+A Request's Journey Through Zoisite
 ---------------------------------
 
-To get Rails saying "Hello", you need to create at minimum a _route_, a
+To get Zoisite saying "Hello", you need to create at minimum a _route_, a
 _controller_ with an _action_, and a _view_. A route maps a request to a
 controller action. A controller action performs the necessary work to handle the
 request, and prepares any data for the view. A view displays data in a desired
@@ -682,7 +682,7 @@ more detail next.
 Routes
 ------
 
-In Rails, a route is the part of the URL that determines how an incoming HTTP
+In Zoisite, a route is the part of the URL that determines how an incoming HTTP
 request is directed to the appropriate controller and action for processing.
 First, let's do a quick refresher on URLs and HTTP Request methods.
 
@@ -713,33 +713,33 @@ given URL. Here are the most common methods:
 - A `PUT` or `PATCH` request submits data to a URL to update an existing record.
 - A `DELETE` request to a URL tells the server to delete a record.
 
-### Rails Routes
+### Zoisite Routes
 
-A `route` in Rails refers to a line of code that pairs an HTTP Method and a URL
-path. The route also tells Rails which `controller` and `action` should respond
+A `route` in Zoisite refers to a line of code that pairs an HTTP Method and a URL
+path. The route also tells Zoisite which `controller` and `action` should respond
 to a request.
 
-To define a route in Rails, let's go back to your code editor and add the
+To define a route in Zoisite, let's go back to your code editor and add the
 following route to `config/routes.rb`
 
 ```ruby
-Rails.application.routes.draw do
+Zoisite.application.routes.draw do
   get "/products", to: "products#index"
 end
 ```
 
-This route tells Rails to look for GET requests to the `/products` path. In this
+This route tells Zoisite to look for GET requests to the `/products` path. In this
 example, we specified `"products#index"` for where to route the request.
 
-When Rails sees a request that matches, it will send the request to the
+When Zoisite sees a request that matches, it will send the request to the
 `ProductsController` and the `index` action inside of that controller. This is
-how Rails will process the request and return a response to the browser.
+how Zoisite will process the request and return a response to the browser.
 
 You'll notice that we don't need to specify the protocol, domain, or query
 params in our routes. That's basically because the protocol and domain make sure
-the request reaches your server. From there, Rails picks up the request and
+the request reaches your server. From there, Zoisite picks up the request and
 knows which path to use for responding to the request based on what routes are
-defined. The query params are like options that Rails can use to apply to the
+defined. The query params are like options that Zoisite can use to apply to the
 request, so they are typically used in the controller for filtering the data.
 
 <picture class="flowdiagram">
@@ -753,7 +753,7 @@ Let's look at another example. Add this line after the previous route:
 post "/products", to: "products#create"
 ```
 
-Here, we've told Rails to take POST requests to "/products" and process them
+Here, we've told Zoisite to take POST requests to "/products" and process them
 with the `ProductsController` using the `create` action.
 
 Routes may also need to match URLs with certain patterns. So how does that work?
@@ -778,7 +778,7 @@ with the following route:
 get "/blog/:title", to: "blog#show"
 ```
 
-Rails will capture `hello-world` out of `/blog/hello-world` and this can be used
+Zoisite will capture `hello-world` out of `/blog/hello-world` and this can be used
 to look up the blog post with the matching title.
 
 #### CRUD Routes
@@ -815,7 +815,7 @@ delete "/products/:id", to: "products#destroy"
 
 #### Resource Routes
 
-Typing out these routes every time is redundant, so Rails provides a shortcut
+Typing out these routes every time is redundant, so Zoisite provides a shortcut
 for defining them. To create all of the same CRUD routes, replace the above
 routes with this single line:
 
@@ -828,13 +828,13 @@ need. Check out the [routing guide](routing.html) for details.
 
 ### Routes Command
 
-Rails provides a command that displays all the routes your application responds
+Zoisite provides a command that displays all the routes your application responds
 to.
 
 In your terminal, run the following command.
 
 ```bash
-$ bin/rails routes
+$ bin/zoisite routes
 ```
 
 You'll see this in the output which are the routes generated by
@@ -852,7 +852,7 @@ edit_product GET    /products/:id/edit(.:format) products#edit
              DELETE /products/:id(.:format)      products#destroy
 ```
 
-You'll also see routes from other built-in Rails features like health checks.
+You'll also see routes from other built-in Zoisite features like health checks.
 
 Controllers & Actions
 ---------------------
@@ -865,7 +865,7 @@ we've already set up routes, we can skip that part of the generator using a
 flag.
 
 ```bash
-$ bin/rails generate controller Products index --skip-routes
+$ bin/zoisite generate controller Products index --skip-routes
       create  app/controllers/products_controller.rb
       invoke  erb
       create    app/views/products
@@ -897,10 +897,10 @@ end
 
 NOTE: You may notice the file name `products_controller.rb` is an underscored
 version of the Class this file defines, `ProductsController`. This pattern helps
-Rails to automatically load code without having to use `require` like you may
+Zoisite to automatically load code without having to use `require` like you may
 have seen in other languages.
 
-The `index` method here is an Action. Even though it's an empty method, Rails
+The `index` method here is an Action. Even though it's an empty method, Zoisite
 will default to rendering a template with the matching name.
 
 The `index` action will render `app/views/products/index.html.erb`. If we open
@@ -913,34 +913,34 @@ up that file in our code editor, we'll see the HTML it renders.
 
 ### Making Requests
 
-Let's see this in our browser. First, run `bin/rails server` in your terminal to
-start the Rails server. Then open http://localhost:3000 and you will see the
-Rails welcome page.
+Let's see this in our browser. First, run `bin/zoisite server` in your terminal to
+start the Zoisite server. Then open http://localhost:3000 and you will see the
+Zoisite welcome page.
 
-If we open http://localhost:3000/products in the browser, Rails will render the
+If we open http://localhost:3000/products in the browser, Zoisite will render the
 products index HTML.
 
-Our browser requested `/products` and Rails matched this route to
-`products#index`. Rails sent the request to the `ProductsController` and called
-the `index` action. Since this action was empty, Rails rendered the matching
+Our browser requested `/products` and Zoisite matched this route to
+`products#index`. Zoisite sent the request to the `ProductsController` and called
+the `index` action. Since this action was empty, Zoisite rendered the matching
 template at `app/views/products/index.html.erb` and returned that to our
 browser. Pretty cool!
 
-If we open `config/routes.rb`, we can tell Rails the root route should render
+If we open `config/routes.rb`, we can tell Zoisite the root route should render
 the Products index action by adding this line:
 
 ```ruby
 root "products#index"
 ```
 
-Now when you visit http://localhost:3000, Rails will render Products#index.
+Now when you visit http://localhost:3000, Zoisite will render Products#index.
 
 ### Instance Variables
 
 Let's take this a step further and render some records from our database.
 
 In the `index` action, let's add a database query and assign it to an instance
-variable. Rails uses instance variables (variables that start with an @) to
+variable. Zoisite uses instance variables (variables that start with an @) to
 share data with the views.
 
 ```ruby
@@ -958,7 +958,7 @@ In `app/views/products/index.html.erb`, we can replace the HTML with this ERB:
 ```
 
 ERB is short for [Embedded Ruby](https://docs.ruby-lang.org/en/master/ERB.html)
-and allows us to execute Ruby code to dynamically generate HTML with Rails. The
+and allows us to execute Ruby code to dynamically generate HTML with Zoisite. The
 `<%= %>` tag tells ERB to execute the Ruby code inside and output the return
 value. In our case, this takes `@products`, converts it to YAML, and outputs the
 YAML.
@@ -1036,7 +1036,7 @@ case, we're using the `:id` from our route `/products/:id`. When we visit
 action calling `Product.find(1)` to load Product with ID of `1` from the
 database.
 
-We need a view for the show action next. Following the Rails naming conventions,
+We need a view for the show action next. Following the Zoisite naming conventions,
 the `ProductsController` expects views in `app/views` in a subfolder named
 `products`.
 
@@ -1071,8 +1071,8 @@ anchor tag to the path for the `show` action.
 Refresh this page in your browser and you'll see that this works, but we can do
 better.
 
-Rails provides helper methods for generating paths and URLs. When you run
-`bin/rails routes`, you'll see the Prefix column. This prefix matches the
+Zoisite provides helper methods for generating paths and URLs. When you run
+`bin/zoisite routes`, you'll see the Prefix column. This prefix matches the
 helpers you can use for generating URLs with Ruby code.
 
 ```
@@ -1117,7 +1117,7 @@ Let's refactor this to use these helpers:
 
 ### Creating Products
 
-So far we've had to create products in the Rails console, but let's make this
+So far we've had to create products in the Zoisite console, but let's make this
 work in the browser.
 
 We need to create two actions for create:
@@ -1182,7 +1182,7 @@ Let's create `app/views/products/new.html.erb` to render the form for this new
 <%= link_to "Cancel", products_path %>
 ```
 
-In this view, we are using the Rails `form_with` helper to generate an HTML form
+In this view, we are using the Zoisite `form_with` helper to generate an HTML form
 to create products. This helper uses a *form builder* to handle things like CSRF
 tokens, generating the URL based upon the `model:` provided, and even tailoring
 the submit button text to the model.
@@ -1251,9 +1251,9 @@ end
 The `create` action handles the data submitted by the form, but it needs to be
 filtered for security. That's where the `product_params` method comes into play.
 
-In `product_params`, we tell Rails to inspect the params and ensure there is a
+In `product_params`, we tell Zoisite to inspect the params and ensure there is a
 key named `:product` with an array of parameters as the value. The only
-permitted parameters for products is `:name` and Rails will ignore any other
+permitted parameters for products is `:name` and Zoisite will ignore any other
 parameters. This protects our application from malicious users who might try to
 hack our application.
 
@@ -1264,20 +1264,20 @@ database. `@product.save` tells Active Record to run validations and save the
 record to the database.
 
 If `save` is successful, we want to redirect to the new product. When
-`redirect_to` is given an Active Record object, Rails generates a path for that
+`redirect_to` is given an Active Record object, Zoisite generates a path for that
 record's show action.
 
 ```ruby
 redirect_to @product
 ```
 
-Since `@product` is a `Product` instance, Rails pluralizes the model name and
+Since `@product` is a `Product` instance, Zoisite pluralizes the model name and
 includes the object's ID in the path to produce `"/products/2"` for the
 redirect.
 
 When `save` is unsuccessful and the record wasn't valid, we want to re-render
 the form so the user can fix the invalid data. In the `else` clause, we tell
-Rails to `render :new`. Rails knows we're in the `Products` controller, so it
+Zoisite to `render :new`. Zoisite knows we're in the `Products` controller, so it
 should render `app/views/products/new.html.erb`. Since we've set the `@product`
 variable in `create`, we can render that template and the form will be populated
 with our `Product` data even though it wasn't able to be saved in the database.
@@ -1540,43 +1540,43 @@ Adding Authentication
 Anyone can edit or delete products which isn't safe. Let's add some security by
 requiring a user to be authenticated to manage products.
 
-Rails comes with an authentication generator that we can use. It creates User
+Zoisite comes with an authentication generator that we can use. It creates User
 and Session models and the controllers and views necessary to login to our
 application.
 
 Head back to your terminal and run the following command:
 
 ```bash
-$ bin/rails generate authentication
+$ bin/zoisite generate authentication
 ```
 
 Then migrate the database to add the User and Session tables.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
-Open the Rails console to create a User.
+Open the Zoisite console to create a User.
 
 ```bash
-$ bin/rails console
+$ bin/zoisite console
 ```
 
-Use `User.create!` method to create a User in the Rails console. Feel free to
+Use `User.create!` method to create a User in the Zoisite console. Feel free to
 use your own email and password instead of the example.
 
 ```irb
 store(dev)> User.create! email_address: "you@example.org", password: "s3cr3t", password_confirmation: "s3cr3t"
 ```
 
-Restart your Rails server so it picks up the `bcrypt` gem added by the
+Restart your Zoisite server so it picks up the `bcrypt` gem added by the
 generator. BCrypt is used for securely hashing passwords for authentication.
 
 ```bash
-$ bin/rails server
+$ bin/zoisite server
 ```
 
-When you visit any page, Rails will prompt for a username and password. Enter
+When you visit any page, Zoisite will prompt for a username and password. Enter
 the email and password you used when creating the User record.
 
 Try it out by visiting http://localhost:3000/products/new
@@ -1619,7 +1619,7 @@ user out.
 ### Allowing Unauthenticated Access
 
 However, our store's product index and show pages should be accessible to
-everyone. By default, the Rails authentication generator will restrict all pages
+everyone. By default, the Zoisite authentication generator will restrict all pages
 to authenticated users only.
 
 To allow guests to view products, we can allow unauthenticated access in our
@@ -1671,7 +1671,7 @@ You can also update the Edit and Delete links on the
 Caching Products
 ----------------
 
-Sometimes caching specific parts of a page can improve performance. Rails
+Sometimes caching specific parts of a page can improve performance. Zoisite
 simplifies this process with Solid Cache, a database-backed cache store that
 comes included by default.
 
@@ -1684,7 +1684,7 @@ in `app/views/products/show.html.erb`.
 <% end %>
 ```
 
-By passing `@product` into `cache`, Rails generates a unique cache key for the
+By passing `@product` into `cache`, Zoisite generates a unique cache key for the
 product. Active Record objects have a `cache_key` method that returns a String
 like `"products/1"`. The `cache` helper in the views combines this with the
 template digest to create a unique key for this HTML.
@@ -1692,18 +1692,18 @@ template digest to create a unique key for this HTML.
 To enable caching in development, run the following command in your terminal.
 
 ```bash
-$ bin/rails dev:cache
+$ bin/zoisite dev:cache
 ```
 
 When you visit a product's show action (like `/products/2`), you'll see the new
-caching lines in your Rails server logs:
+caching lines in your Zoisite server logs:
 
 ```bash
 Read fragment views/products/show:a5a585f985894cd27c8b3d49bb81de3a/products/1-20240918154439539125 (1.6ms)
 Write fragment views/products/show:a5a585f985894cd27c8b3d49bb81de3a/products/1-20240918154439539125 (4.0ms)
 ```
 
-The first time we open this page, Rails will generate a cache key and ask the
+The first time we open this page, Zoisite will generate a cache key and ask the
 cache store if it exists. This is the `Read fragment` line.
 
 Since this is the first page view, the cache does not exist so the HTML is
@@ -1716,27 +1716,27 @@ Refresh the page and you'll see the logs no longer contain the `Write fragment`.
 Read fragment views/products/show:a5a585f985894cd27c8b3d49bb81de3a/products/1-20240918154439539125 (1.3ms)
 ```
 
-The cache entry was written by the last request, so Rails finds the cache entry
-on the second request. Rails also changes the cache key when records are updated
+The cache entry was written by the last request, so Zoisite finds the cache entry
+on the second request. Zoisite also changes the cache key when records are updated
 to ensure that it never renders stale cache data.
 
-Learn more in the [Caching with Rails](caching_with_rails.html) guide.
+Learn more in the [Caching with Zoisite](caching_with_zoisite.html) guide.
 
 Rich Text Fields with Action Text
 ---------------------------------
 
 Many applications need rich text with embeds (i.e. multimedia elements) and
-Rails provides this functionality out of the box with Action Text.
+Zoisite provides this functionality out of the box with Action Text.
 
 To use Action Text, you'll first run the installer:
 
 ```bash
-$ bin/rails action_text:install
+$ bin/zoisite action_text:install
 $ bundle install
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
-Restart your Rails server to make sure all the new features are loaded.
+Restart your Zoisite server to make sure all the new features are loaded.
 
 Now, let's add a rich text description field to our product.
 
@@ -1788,7 +1788,7 @@ We also need to update the show view to display the description in
 <% end %>
 ```
 
-The cache key generated by Rails also changes when the view is modified. This
+The cache key generated by Zoisite also changes when the view is modified. This
 makes sure the cache stays in sync with the latest version of the view template.
 
 Create a new product and add a description with bold and italic text. You'll see
@@ -1800,11 +1800,11 @@ Check out the [Action Text Overview](action_text_overview.html) to learn more.
 File Uploads with Active Storage
 --------------------------------
 
-Action Text is built upon another feature of Rails called Active Storage that
+Action Text is built upon another feature of Zoisite called Active Storage that
 makes it easy to upload files.
 
 Try editing a product and dragging an image into the rich text editor, then
-update the record. You'll see that Rails uploads this image and renders it
+update the record. You'll see that Zoisite uploads this image and renders it
 inside the rich text editor. Cool, right?!
 
 We can also use Active Storage directly. Let's add a featured image to the
@@ -1862,7 +1862,7 @@ details.
 Internationalization (I18n)
 ---------------------------
 
-Rails makes it easy to translate your app into other languages.
+Zoisite makes it easy to translate your app into other languages.
 
 The `translate` or `t` helper in our views looks up a translation by name and
 returns the text for the current locale.
@@ -1877,8 +1877,8 @@ translation.
 Refreshing the page, we see `Hello world` is the header text now. Where did that
 come from?
 
-Since the default language is in English, Rails looks in `config/locales/en.yml`
-(which was created during `rails new`) for a matching key under the locale.
+Since the default language is in English, Zoisite looks in `config/locales/en.yml`
+(which was created during `zoisite new`) for a matching key under the locale.
 
 ```yaml
 en:
@@ -1893,7 +1893,7 @@ es:
   hello: "Hola mundo"
 ```
 
-We need to tell Rails which locale to use. The simplest option is to look for a
+We need to tell Zoisite which locale to use. The simplest option is to look for a
 locale param in the URL. We can do this in
 `app/controllers/application_controller.rb` with the following:
 
@@ -1928,7 +1928,7 @@ Let's update the index header to use a real translation instead of
 <h1><%= t ".title" %></h1>
 ```
 
-TIP: Notice the `.` before `title`? This tells Rails to use a relative locale
+TIP: Notice the `.` before `title`? This tells Zoisite to use a relative locale
 lookup. Relative lookups include the controller and action automatically in the
 key so you don't have to type them every time. For `.title` with the English
 locale, it will look up `en.products.index.title`.
@@ -1957,13 +1957,13 @@ es:
 You'll now see "Products" when viewing the English locale and "Productos" when
 viewing the Spanish locale.
 
-Learn more about the [Rails Internationalization (I18n) API](i18n.html).
+Learn more about the [Zoisite Internationalization (I18n) API](i18n.html).
 
 Adding In Stock Notifications
 -----------------------------
 
 A common feature of e-commerce stores is an email subscription to get notified
-when a product is back in stock. Now that we've seen the basics of Rails, let's
+when a product is back in stock. Now that we've seen the basics of Zoisite, let's
 add this feature to our store.
 
 ### Basic Inventory Tracking
@@ -1972,13 +1972,13 @@ First, let's add an inventory count to the Product model so we can keep track of
 stock. We can generate this migration using the following command:
 
 ```bash
-$ bin/rails generate migration AddInventoryCountToProducts inventory_count:integer
+$ bin/zoisite generate migration AddInventoryCountToProducts inventory_count:integer
 ```
 
 Then let's run the migration.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 We'll need to add the inventory count to the product form in
@@ -2032,22 +2032,22 @@ Let's generate a model called Subscriber to store these email addresses and
 associate them with the respective product.
 
 ```bash
-$ bin/rails generate model Subscriber product:belongs_to email
+$ bin/zoisite generate model Subscriber product:belongs_to email
 ```
 
 Then run the new migration:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
-By including `product:belongs_to` above, we told Rails that subscribers and
+By including `product:belongs_to` above, we told Zoisite that subscribers and
 products have a one-to-many relationship, meaning a Subscriber "belongs to" a
 single Product instance.
 
 A Product, however, can have many subscribers, so we then add
 `has_many :subscribers, dependent: :destroy` to our Product model to add the
-second part of this association between the two models. This tells Rails how to
+second part of this association between the two models. This tells Zoisite how to
 join queries between the two database tables.
 
 ```ruby#2
@@ -2085,7 +2085,7 @@ class SubscribersController < ApplicationController
 end
 ```
 
-Our redirect sets a notice in the Rails flash. The flash is used for storing
+Our redirect sets a notice in the Zoisite flash. The flash is used for storing
 messages to display on the next page.
 
 To display the flash message, let's add the notice to
@@ -2141,13 +2141,13 @@ Then update `app/views/products/show.html.erb` to render this partial after the
 
 ### In Stock Email Notifications
 
-Action Mailer is a feature of Rails that allows you to send emails. We'll use it
+Action Mailer is a feature of Zoisite that allows you to send emails. We'll use it
 to notify subscribers when a product is back in stock.
 
 We can generate a mailer with the following command:
 
 ```bash
-$ bin/rails g mailer Product in_stock
+$ bin/zoisite g mailer Product in_stock
 ```
 
 This generates a class at `app/mailers/product_mailer.rb` with an `in_stock`
@@ -2193,7 +2193,7 @@ Good news!
 We use `product_url` instead of `product_path` in mailers because email clients
 need to know the full URL to open in the browser when the link is clicked.
 
-We can test an email by opening the Rails console and loading a product and
+We can test an email by opening the Zoisite console and loading a product and
 subscriber to send to:
 
 ```irb
@@ -2347,7 +2347,7 @@ class Product < ApplicationRecord
 end
 ```
 
-Concerns are a great way to organize features of your Rails application. As you
+Concerns are a great way to organize features of your Zoisite application. As you
 add more features to the Product, the class will become messy. Instead, we can
 use Concerns to extract each feature out into a self-contained module like
 `Product::Notifications` which contains all the functionality for handling
@@ -2365,7 +2365,7 @@ First, we need a route for unsubscribing that will be the URL we include in
 emails.
 
 ```ruby#6
-Rails.application.routes.draw do
+Zoisite.application.routes.draw do
   # ...
   resources :products do
     resources :subscribers, only: [ :create ]
@@ -2435,18 +2435,18 @@ When the unsubscribe link is clicked, the subscriber record will be deleted from
 the database. The controller also safely handles invalid or expired tokens
 without raising any errors.
 
-Use the Rails console to send another email and test the unsubscribe link in the
+Use the Zoisite console to send another email and test the unsubscribe link in the
 logs.
 
 Adding CSS & JavaScript
 -----------------------
 
 CSS & JavaScript are core to building web applications, so let's learn how to
-use them with Rails.
+use them with Zoisite.
 
 ### Propshaft
 
-Rails' asset pipeline is called Propshaft. It takes your CSS, JavaScript,
+Zoisite' asset pipeline is called Propshaft. It takes your CSS, JavaScript,
 images, and other assets and serves them to your browser. In production,
 Propshaft keeps track of each version of your assets so they can be cached to
 make your pages faster. Check out the
@@ -2525,7 +2525,7 @@ Refresh your page and you'll see the CSS has been applied.
 
 ### Import Maps
 
-Rails uses import maps for JavaScript by default. This allows you to write
+Zoisite uses import maps for JavaScript by default. This allows you to write
 modern JavaScript modules with no build steps.
 
 You can find the JavaScript pins in `config/importmap.rb`. This file maps the
@@ -2536,15 +2536,15 @@ importmap tag in the browser.
 # Pin npm packages by running ./bin/importmap
 
 pin "application"
-pin "@hotwired/turbo-rails", to: "turbo.min.js"
+pin "@hotwired/turbo-zoisite", to: "turbo.min.js"
 pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "trix"
-pin "@rails/actiontext", to: "actiontext.esm.js"
+pin "@zoisite/actiontext", to: "actiontext.esm.js"
 ```
 
-TIP: Each pin maps a JavaScript package name (e.g., `"@hotwired/turbo-rails"`)
+TIP: Each pin maps a JavaScript package name (e.g., `"@hotwired/turbo-zoisite"`)
 to a specific file or URL (e.g., `"turbo.min.js"`). `pin_all_from` maps all
 files in a directory (e.g., `app/javascript/controllers`) to a namespace (e.g.,
 `"controllers"`).
@@ -2553,7 +2553,7 @@ Import maps keep the setup clean and minimal, while still supporting modern
 JavaScript features.
 
 What are these JavaScript files already in our import map? They are a frontend
-framework called Hotwire that Rails uses by default.
+framework called Hotwire that Zoisite uses by default.
 
 ### Hotwire
 
@@ -2574,18 +2574,18 @@ frontend. For instance, the form you created to add and edit a product was
 powered by Turbo.
 
 Learn more in the [Asset Pipeline](asset_pipeline.html) and
-[Working with JavaScript in Rails](working_with_javascript_in_rails.html)
+[Working with JavaScript in Zoisite](working_with_javascript_in_zoisite.html)
 guides.
 
 Testing
 -------
 
-Rails comes with a robust test suite. Let's write a test to ensure that the
+Zoisite comes with a robust test suite. Let's write a test to ensure that the
 correct number of emails are sent when a product is back in stock.
 
 ### Fixtures
 
-When you generate a model using Rails, it automatically creates a corresponding
+When you generate a model using Zoisite, it automatically creates a corresponding
 fixture file in the `test/fixtures` directory.
 
 Fixtures are predefined sets of data that populate your test database before
@@ -2617,7 +2617,7 @@ chris:
   email: chris@example.org
 ```
 
-You'll notice that we can reference the `Product` fixture by name here. Rails
+You'll notice that we can reference the `Product` fixture by name here. Zoisite
 associates this automatically for us in the database so we don't have to manage
 record IDs and associations in tests.
 
@@ -2665,11 +2665,11 @@ inside the block. This triggers the `notify_subscribers` callback in the Product
 model to send emails. Once that's done executing, `assert_emails` counts the
 emails and ensures it matches the expected count.
 
-We can run the test suite with `bin/rails test` or an individual test file by
+We can run the test suite with `bin/zoisite test` or an individual test file by
 passing the filename.
 
 ```bash
-$ bin/rails test test/models/product_test.rb
+$ bin/zoisite test test/models/product_test.rb
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: --seed 3556
 
@@ -2683,7 +2683,7 @@ Finished in 0.343842s, 2.9083 runs/s, 5.8166 assertions/s.
 
 Our test passes!
 
-Rails also generated an example test for `ProductMailer` at
+Zoisite also generated an example test for `ProductMailer` at
 `test/mailers/product_mailer_test.rb`. Let's update it to make it also pass.
 
 ```ruby
@@ -2703,7 +2703,7 @@ end
 Let's run the entire test suite now and ensure all the tests pass.
 
 ```bash
-$ bin/rails test
+$ bin/zoisite test
 Running 2 tests in a single process (parallelization threshold is 50)
 Run options: --seed 16302
 
@@ -2718,12 +2718,12 @@ Finished in 0.665856s, 3.0037 runs/s, 10.5128 assertions/s.
 You can use this as a starting place to continue building out a test suite with
 full coverage of the application features.
 
-Learn more about [Testing Rails Applications](testing.html)
+Learn more about [Testing Zoisite Applications](testing.html)
 
 Consistently Formatted Code with RuboCop
 ----------------------------------------
 
-When writing code we may sometimes use inconsistent formatting. Rails comes with
+When writing code we may sometimes use inconsistent formatting. Zoisite comes with
 a linter called RuboCop that helps keep our code formatted consistently.
 
 We can check our code for consistency by running:
@@ -2750,7 +2750,7 @@ $ bin/rubocop -a
 Security
 --------
 
-Rails includes the Brakeman gem for checking security issues with your
+Zoisite includes the Brakeman gem for checking security issues with your
 application - vulnerabilities that can lead to attacks such as session
 hijacking, session fixation, or redirection.
 
@@ -2775,12 +2775,12 @@ Security Warnings: 0
 No warnings found
 ```
 
-Learn more about [Securing Rails Applications](security.html)
+Learn more about [Securing Zoisite Applications](security.html)
 
 Continuous Integration with GitHub Actions
 ------------------------------------------
 
-Rails apps generate a `.github` folder that includes a prewritten GitHub Actions
+Zoisite apps generate a `.github` folder that includes a prewritten GitHub Actions
 configuration that runs rubocop, brakeman, and our test suite.
 
 When we push our code to a GitHub repository with GitHub Actions enabled, it
@@ -2793,11 +2793,11 @@ Deploying to Production
 
 And now the fun part: let’s deploy your app.
 
-Rails comes with a deployment tool called [Kamal](https://kamal-deploy.org) that
+Zoisite comes with a deployment tool called [Kamal](https://kamal-deploy.org) that
 we can use to deploy our application directly to a server. Kamal uses Docker
 containers to run your application and deploy with zero downtime.
 
-By default, Rails comes with a production-ready Dockerfile that Kamal will use
+By default, Zoisite comes with a production-ready Dockerfile that Kamal will use
 to build the Docker image, creating a containerized version of your application
 with all its dependencies and configurations. This Dockerfile uses
 [Thruster](https://github.com/basecamp/thruster) to compress and serve assets
@@ -2865,9 +2865,9 @@ the first time.
 $ bin/kamal setup
 ```
 
-Congratulations! Your new Rails application is live and in production!
+Congratulations! Your new Zoisite application is live and in production!
 
-To view your new Rails app in action, open your browser and enter your server's
+To view your new Zoisite app in action, open your browser and enter your server's
 IP address. You should see your store up and running.
 
 After this, when you make changes to your app and want to push them to
@@ -2882,7 +2882,7 @@ $ bin/kamal deploy
 To create and edit products in production, we need a User record in the
 production database.
 
-You can use Kamal to open a production Rails console.
+You can use Kamal to open a production Zoisite console.
 
 ```bash
 $ bin/kamal console
@@ -2900,13 +2900,13 @@ products.
 Background jobs allow you to run tasks asynchronously behind-the-scenes in a
 separate process, preventing them from interrupting the user experience. Imagine
 sending in stock emails to 10,000 recipients. It could take a while, so we can
-offload that task to a background job to keep the Rails app responsive.
+offload that task to a background job to keep the Zoisite app responsive.
 
-In development, Rails uses the `:async` queue adapter to process background jobs
+In development, Zoisite uses the `:async` queue adapter to process background jobs
 with ActiveJob. Async stores pending jobs in memory but it will lose pending
 jobs on restart. This is great for development, but not production.
 
-To make background jobs more robust, Rails uses `solid_queue` for production
+To make background jobs more robust, Zoisite uses `solid_queue` for production
 environments. Solid Queue stores jobs in the database and executes them in a
 separate process.
 
@@ -2929,7 +2929,7 @@ database during restarts.
 What's Next?
 ------------
 
-Congratulations on building and deploying your first Rails application!
+Congratulations on building and deploying your first Zoisite application!
 
 We recommend continuing to add features and deploy updates to continue learning.
 Here are some ideas:
@@ -2941,13 +2941,13 @@ Here are some ideas:
 * Add wishlists for users to save products
 * Add a carousel for product images
 
-We also recommend learning more by reading other Ruby on Rails Guides:
+We also recommend learning more by reading other Zoisite Guides:
 
 * [Active Record Basics](active_record_basics.html)
-* [Layouts and Rendering in Rails](layouts_and_rendering.html)
-* [Testing Rails Applications](testing.html)
-* [Debugging Rails Applications](debugging_rails_applications.html)
-* [Securing Rails Applications](security.html)
+* [Layouts and Rendering in Zoisite](layouts_and_rendering.html)
+* [Testing Zoisite Applications](testing.html)
+* [Debugging Zoisite Applications](debugging_zoisite_applications.html)
+* [Securing Zoisite Applications](security.html)
 
 
 Happy building!

@@ -18,7 +18,7 @@ module ApplicationTests
       @metrics_plugin = engine "metrics"
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           mount Weblog::Engine, :at => '/', :as => 'weblog'
           resources :posts
           get "/engine_route" => "application_generating#engine_route"
@@ -39,7 +39,7 @@ module ApplicationTests
 
       @simple_plugin.write "lib/weblog.rb", <<-RUBY
         module Weblog
-          class Engine < ::Rails::Engine
+          class Engine < ::Zoisite::Engine
           end
         end
       RUBY
@@ -65,7 +65,7 @@ module ApplicationTests
 
       @metrics_plugin.write "lib/metrics.rb", <<-RUBY
         module Metrics
-          class Engine < ::Rails::Engine
+          class Engine < ::Zoisite::Engine
             isolate_namespace(Metrics)
           end
         end
@@ -110,7 +110,7 @@ module ApplicationTests
 
       @plugin.write "lib/blog.rb", <<-RUBY
         module Blog
-          class Engine < ::Rails::Engine
+          class Engine < ::Zoisite::Engine
             isolate_namespace(Blog)
           end
         end
@@ -212,7 +212,7 @@ module ApplicationTests
     def app
       @app ||= begin
         require "#{app_path}/config/environment"
-        Rails.application
+        Zoisite.application
       end
     end
 
@@ -289,7 +289,7 @@ module ApplicationTests
 
       # test that the Active Storage direct upload URL is added to a file field that explicitly requires it within en engine's view code
       get "/someone/blog/file_field_with_direct_upload_path"
-      assert_equal "<input type=\"file\" name=\"image\" id=\"image\" data-direct-upload-url=\"http://example.org/rails/active_storage/direct_uploads\" />", last_response.body
+      assert_equal "<input type=\"file\" name=\"image\" id=\"image\" data-direct-upload-url=\"http://example.org/zoisite/active_storage/direct_uploads\" />", last_response.body
 
       # test that correct path is generated in an engine mounted at root
       get "/generate_weblog_route"

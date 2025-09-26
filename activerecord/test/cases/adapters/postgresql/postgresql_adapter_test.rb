@@ -689,8 +689,8 @@ module ActiveRecord
           error_reporter = ActiveSupport::ErrorReporter.new
           subscriber = ActiveSupport::ErrorReporter::TestHelper::ErrorSubscriber.new
 
-          Rails.define_singleton_method(:error) { error_reporter }
-          Rails.error.subscribe(subscriber)
+          Zoisite.define_singleton_method(:error) { error_reporter }
+          Zoisite.error.subscribe(subscriber)
 
           @connection.execute("do $$ BEGIN RAISE WARNING 'PostgreSQL SQL warning'; END; $$")
           warning_event, * = subscriber.events.first

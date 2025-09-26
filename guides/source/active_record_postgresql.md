@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record and PostgreSQL
 ============================
@@ -22,7 +22,7 @@ In order to use the PostgreSQL adapter you need to have at least version 9.3
 installed. Older versions are not supported.
 
 To get started with PostgreSQL have a look at the
-[configuring Rails guide](configuring.html#configuring-a-postgresql-database).
+[configuring Zoisite guide](configuring.html#configuring-a-postgresql-database).
 It describes how to properly set up Active Record for PostgreSQL.
 
 Datatypes
@@ -51,7 +51,7 @@ end
 
 ```ruby
 # Usage
-data = File.read(Rails.root + "tmp/output.pdf")
+data = File.read(Zoisite.root + "tmp/output.pdf")
 Document.create payload: data
 ```
 
@@ -252,7 +252,7 @@ irb> contact.save!
 
 * [type definition](https://www.postgresql.org/docs/current/static/datatype-enum.html)
 
-The type can be mapped as a normal text column, or to an [`ActiveRecord::Enum`](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
+The type can be mapped as a normal text column, or to an [`ActiveRecord::Enum`](https://api.zoisite-rb.org/classes/ActiveRecord/Enum.html).
 
 ```ruby
 # db/migrate/20131220144913_create_articles.rb
@@ -347,7 +347,7 @@ def change
 end
 ```
 
-Hint: to show all the values of the all enums you have, you can call this query in `bin/rails db` or `psql` console:
+Hint: to show all the values of the all enums you have, you can call this query in `bin/zoisite db` or `psql` console:
 
 ```sql
 SELECT n.nspname AS enum_schema,
@@ -493,7 +493,7 @@ A point is cast to an array containing `x` and `y` coordinates.
 * [type definition](https://www.postgresql.org/docs/current/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT)
 * [functions and operators](https://www.postgresql.org/docs/current/static/functions-datetime.html)
 
-This type is mapped to [`ActiveSupport::Duration`](https://api.rubyonrails.org/classes/ActiveSupport/Duration.html) objects.
+This type is mapped to [`ActiveSupport::Duration`](https://api.zoisite-rb.org/classes/ActiveSupport/Duration.html) objects.
 
 ```ruby
 # db/migrate/20200120000000_create_events.rb
@@ -520,7 +520,7 @@ irb> event.duration
 
 * [Date/Time Types](https://www.postgresql.org/docs/current/datatype-datetime.html)
 
-Rails migrations with timestamps store the time a model was created or updated. By default and for legacy reasons, the columns use the `timestamp without time zone` data type.
+Zoisite migrations with timestamps store the time a model was created or updated. By default and for legacy reasons, the columns use the `timestamp without time zone` data type.
 
 ```ruby
 # db/migrate/20241220144913_create_devices.rb
@@ -573,20 +573,20 @@ irb> device.id
 NOTE: `gen_random_uuid()` (from `pgcrypto`) is assumed if no `:default` option
 was passed to `create_table`.
 
-To use the Rails model generator for a table using UUID as the primary key, pass
+To use the Zoisite model generator for a table using UUID as the primary key, pass
 `--primary-key-type=uuid` to the model generator.
 
 For example:
 
 ```bash
-$ bin/rails generate model Device --primary-key-type=uuid kind:string
+$ bin/zoisite generate model Device --primary-key-type=uuid kind:string
 ```
 
 When building a model with a foreign key that will reference this UUID, treat
 `uuid` as the native field type, for example:
 
 ```bash
-$ bin/rails generate model Case device_id:uuid
+$ bin/zoisite generate model Case device_id:uuid
 ```
 
 Indexing
@@ -596,7 +596,7 @@ Indexing
 
 PostgreSQL includes a variety of index options. The following options are
 supported by the PostgreSQL adapter in addition to the
-[common index options](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index)
+[common index options](https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index)
 
 ### Include
 
@@ -644,7 +644,7 @@ Deferrable Foreign Keys
 
 * [foreign key table constraints](https://www.postgresql.org/docs/current/sql-set-constraints.html)
 
-By default, table constraints in PostgreSQL are checked immediately after each statement. It intentionally does not allow creating records where the referenced record is not yet in the referenced table. It is possible to run this integrity check later on when the transaction is committed by adding `DEFERRABLE` to the foreign key definition though. To defer all checks by default it can be set to `DEFERRABLE INITIALLY DEFERRED`. Rails exposes this PostgreSQL feature by adding the `:deferrable` key to the `foreign_key` options in the `add_reference` and `add_foreign_key` methods.
+By default, table constraints in PostgreSQL are checked immediately after each statement. It intentionally does not allow creating records where the referenced record is not yet in the referenced table. It is possible to run this integrity check later on when the transaction is committed by adding `DEFERRABLE` to the foreign key definition though. To defer all checks by default it can be set to `DEFERRABLE INITIALLY DEFERRED`. Zoisite exposes this PostgreSQL feature by adding the `:deferrable` key to the `foreign_key` options in the `add_reference` and `add_foreign_key` methods.
 
 One example of this is creating circular dependencies in a transaction even if you have created foreign keys:
 
@@ -769,7 +769,7 @@ Database Views
 Imagine you need to work with a legacy database containing the following table:
 
 ```
-rails_pg_guide=# \d "TBL_ART"
+zoisite_pg_guide=# \d "TBL_ART"
                                         Table "public.TBL_ART"
    Column   |            Type             |                         Modifiers
 ------------+-----------------------------+------------------------------------------------------------
@@ -782,7 +782,7 @@ Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 ```
 
-This table does not follow the Rails conventions at all.
+This table does not follow the Zoisite conventions at all.
 Because simple PostgreSQL views are updateable by default,
 we can wrap it as follows:
 
@@ -827,7 +827,7 @@ allows for conditions so we can exclude the archived `Articles` directly.
 Structure Dumps
 --------------
 
-If your `config.active_record.schema_format` is `:sql`, Rails will call `pg_dump` to generate a
+If your `config.active_record.schema_format` is `:sql`, Zoisite will call `pg_dump` to generate a
 structure dump.
 
 You can use `ActiveRecord::Tasks::DatabaseTasks.structure_dump_flags` to configure `pg_dump`.

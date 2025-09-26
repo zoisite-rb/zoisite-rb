@@ -7,7 +7,7 @@ class QueryLogsTest < ActiveRecord::TestCase
   fixtures :dashboards
 
   def setup
-    # ActiveSupport::ExecutionContext context is automatically reset in Rails app via an executor hooks set in railtie
+    # ActiveSupport::ExecutionContext context is automatically reset in Zoisite app via an executor hooks set in railtie
     # But not in Active Record's own test suite.
     ActiveSupport::ExecutionContext.clear
 
@@ -35,7 +35,7 @@ class QueryLogsTest < ActiveRecord::TestCase
     ActiveRecord::QueryLogs.clear_cache
     ActiveRecord::QueryLogs.tags_formatter = :legacy
 
-    # ActiveSupport::ExecutionContext context is automatically reset in Rails app via an executor hooks set in railtie
+    # ActiveSupport::ExecutionContext context is automatically reset in Zoisite app via an executor hooks set in railtie
     # But not in Active Record's own test suite.
     ActiveSupport::ExecutionContext.clear
   end

@@ -547,9 +547,9 @@ class RelationTest < ActiveRecord::TestCase
   end
 
   def test_finding_with_hash_conditions_on_joined_table
-    firms = DependentFirm.joins(:account).where(name: "RailsCore", accounts: { credit_limit: 55..60 }).to_a
+    firms = DependentFirm.joins(:account).where(name: "ZoisiteCore", accounts: { credit_limit: 55..60 }).to_a
     assert_equal 1, firms.size
-    assert_equal companies(:rails_core), firms.first
+    assert_equal companies(:zoisite_core), firms.first
   end
 
   def test_find_all_with_join
@@ -1817,10 +1817,10 @@ class RelationTest < ActiveRecord::TestCase
 
   def test_intersection_with_array
     relation = Author.where(name: "David")
-    rails_author = relation.first
+    zoisite_author = relation.first
 
-    assert_equal [rails_author], [rails_author] & relation
-    assert_equal [rails_author], relation & [rails_author]
+    assert_equal [zoisite_author], [zoisite_author] & relation
+    assert_equal [zoisite_author], relation & [zoisite_author]
   end
 
   def test_primary_key

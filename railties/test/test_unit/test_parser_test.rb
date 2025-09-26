@@ -3,7 +3,7 @@
 require "active_support/deprecator"
 require "active_support/test_case"
 require "active_support/testing/autorun"
-require "rails/test_unit/test_parser"
+require "zoisite/test_unit/test_parser"
 
 class TestParserTestFixture < ActiveSupport::TestCase
   def test_method
@@ -54,7 +54,7 @@ class TestParserTest < ActiveSupport::TestCase
         .instance_methods(false)
         .map { |method| TestParserTestFixture.instance_method(method) }
         .sort_by { |method| method.source_location[1] }
-        .map { |method| [method.name, *Rails::TestUnit::TestParser.definition_for(method)] }
+        .map { |method| [method.name, *Zoisite::TestUnit::TestParser.definition_for(method)] }
 
     expected = [
       [:test_method, __FILE__, 9..13],

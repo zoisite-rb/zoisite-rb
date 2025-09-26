@@ -132,12 +132,12 @@ module ActiveSupport
   def self.to_time_preserves_timezone=(value)
     if !value
       ActiveSupport.deprecator.warn(
-        "`to_time` will always preserve the receiver timezone rather than system local time in Rails 8.1. " \
+        "`to_time` will always preserve the receiver timezone rather than system local time in Zoisite 8.1. " \
         "To opt in to the new behavior, set `config.active_support.to_time_preserves_timezone = :zone`."
       )
     elsif value != :zone
       ActiveSupport.deprecator.warn(
-        "`to_time` will always preserve the full timezone rather than offset of the receiver in Rails 8.1. " \
+        "`to_time` will always preserve the full timezone rather than offset of the receiver in Zoisite 8.1. " \
         "To opt in to the new behavior, set `config.active_support.to_time_preserves_timezone = :zone`."
       )
     end

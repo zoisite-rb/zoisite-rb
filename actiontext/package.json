@@ -1,19 +1,19 @@
 {
-  "name": "@rails/actiontext",
+  "name": "@zoisite/actiontext",
   "version": "8.1.0-beta1",
-  "description": "Edit and display rich text in Rails applications",
+  "description": "Edit and display rich text in Zoisite applications",
   "module": "app/assets/javascripts/actiontext.esm.js",
   "main": "app/assets/javascripts/actiontext.js",
   "files": [
     "app/assets/javascripts/*.js"
   ],
-  "homepage": "https://rubyonrails.org/",
+  "homepage": "https://zoisite-rb.org/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rails/rails.git"
+    "url": "git+https://github.com/zoisite-rb/zoisite-rb.git"
   },
   "bugs": {
-    "url": "https://github.com/rails/rails/issues"
+    "url": "https://github.com/zoisite-rb/zoisite-rb/issues"
   },
   "author": "37signals LLC",
   "contributors": [
@@ -22,7 +22,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@rails/activestorage": ">= 8.1.0-alpha"
+    "@zoisite/activestorage": ">= 8.1.0-alpha"
   },
   "peerDependencies": {
     "trix": "^2.0.0"

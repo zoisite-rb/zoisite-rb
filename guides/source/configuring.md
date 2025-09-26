@@ -1,13 +1,13 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
-Configuring Rails Applications
+Configuring Zoisite Applications
 ==============================
 
-This guide covers the configuration and initialization features available to Rails applications.
+This guide covers the configuration and initialization features available to Zoisite applications.
 
 After reading this guide, you will know:
 
-* How to adjust the behavior of your Rails applications.
+* How to adjust the behavior of your Zoisite applications.
 * How to add additional code to be run at application start time.
 
 --------------------------------------------------------------------------------
@@ -15,22 +15,22 @@ After reading this guide, you will know:
 Locations for Initialization Code
 ---------------------------------
 
-Rails offers four standard spots to place initialization code:
+Zoisite offers four standard spots to place initialization code:
 
 * `config/application.rb`
 * Environment-specific configuration files
 * Initializers
 * After-initializers
 
-Running Code Before Rails
+Running Code Before Zoisite
 -------------------------
 
-In the rare event that your application needs to run some code before Rails itself is loaded, put it above the call to `require "rails/all"` in `config/application.rb`.
+In the rare event that your application needs to run some code before Zoisite itself is loaded, put it above the call to `require "zoisite/all"` in `config/application.rb`.
 
-Configuring Rails Components
+Configuring Zoisite Components
 ----------------------------
 
-In general, the work of configuring Rails means configuring the components of Rails, as well as configuring Rails itself. The configuration file `config/application.rb` and environment-specific configuration files (such as `config/environments/production.rb`) allow you to specify the various settings that you want to pass down to all of the components.
+In general, the work of configuring Zoisite means configuring the components of Zoisite, as well as configuring Zoisite itself. The configuration file `config/application.rb` and environment-specific configuration files (such as `config/environments/production.rb`) allow you to specify the various settings that you want to pass down to all of the components.
 
 For example, you could add this setting to `config/application.rb` file:
 
@@ -38,23 +38,23 @@ For example, you could add this setting to `config/application.rb` file:
 config.time_zone = "Central Time (US & Canada)"
 ```
 
-This is a setting for Rails itself. If you want to pass settings to individual Rails components, you can do so via the same `config` object in `config/application.rb`:
+This is a setting for Zoisite itself. If you want to pass settings to individual Zoisite components, you can do so via the same `config` object in `config/application.rb`:
 
 ```ruby
 config.active_record.schema_format = :ruby
 ```
 
-Rails will use that particular setting to configure Active Record.
+Zoisite will use that particular setting to configure Active Record.
 
-WARNING: Use the public configuration methods over calling directly to the associated class. e.g. `Rails.application.config.action_mailer.options` instead of `ActionMailer::Base.options`.
+WARNING: Use the public configuration methods over calling directly to the associated class. e.g. `Zoisite.application.config.action_mailer.options` instead of `ActionMailer::Base.options`.
 
-NOTE: If you need to apply configuration directly to a class, use a [lazy load hook](https://api.rubyonrails.org/classes/ActiveSupport/LazyLoadHooks.html) in an initializer to avoid autoloading the class before initialization has completed. This will break because autoloading during initialization cannot be safely repeated when the app reloads.
+NOTE: If you need to apply configuration directly to a class, use a [lazy load hook](https://api.zoisite-rb.org/classes/ActiveSupport/LazyLoadHooks.html) in an initializer to avoid autoloading the class before initialization has completed. This will break because autoloading during initialization cannot be safely repeated when the app reloads.
 
 ### Versioned Default Values
 
 [`config.load_defaults`] loads default configuration values for a target version and all versions prior. For example, `config.load_defaults 6.1` will load defaults for all versions up to and including version 6.1.
 
-[`config.load_defaults`]: https://api.rubyonrails.org/classes/Rails/Application/Configuration.html#method-i-load_defaults
+[`config.load_defaults`]: https://api.zoisite-rb.org/classes/Zoisite/Application/Configuration.html#method-i-load_defaults
 
 Below are the default values associated with each target version. In cases of conflicting values, newer versions take precedence over older versions.
 
@@ -66,7 +66,7 @@ Below are the default values associated with each target version. In cases of co
 - [`config.action_view.remove_hidden_field_autocomplete`](#config-action-view-remove-hidden-field-autocomplete): `true`
 - [`config.action_view.render_tracker`](#config-action-view-render-tracker): `:ruby`
 - [`config.active_record.raise_on_missing_required_finder_order_columns`](#config-active-record-raise-on-missing-required-finder-order-columns): `true`
-- [`config.yjit`](#config-yjit): `!Rails.env.local?`
+- [`config.yjit`](#config-yjit): `!Zoisite.env.local?`
 
 #### Default Values for Target Version 8.0
 
@@ -85,8 +85,8 @@ Below are the default values associated with each target version. In cases of co
 
 - [`config.action_dispatch.debug_exception_log_level`](#config-action-dispatch-debug-exception-log-level): `:error`
 - [`config.action_dispatch.default_headers`](#config-action-dispatch-default-headers): `{ "X-Frame-Options" => "SAMEORIGIN", "X-XSS-Protection" => "0", "X-Content-Type-Options" => "nosniff", "X-Permitted-Cross-Domain-Policies" => "none", "Referrer-Policy" => "strict-origin-when-cross-origin" }`
-- [`config.action_text.sanitizer_vendor`](#config-action-text-sanitizer-vendor): `Rails::HTML::Sanitizer.best_supported_vendor`
-- [`config.action_view.sanitizer_vendor`](#config-action-view-sanitizer-vendor): `Rails::HTML::Sanitizer.best_supported_vendor`
+- [`config.action_text.sanitizer_vendor`](#config-action-text-sanitizer-vendor): `Zoisite::HTML::Sanitizer.best_supported_vendor`
+- [`config.action_view.sanitizer_vendor`](#config-action-view-sanitizer-vendor): `Zoisite::HTML::Sanitizer.best_supported_vendor`
 - [`config.active_record.before_committed_on_all_records`](#config-active-record-before-committed-on-all-records): `true`
 - [`config.active_record.belongs_to_required_validates_foreign_key`](#config-active-record-belongs-to-required-validates-foreign-key): `false`
 - [`config.active_record.default_column_serializer`](#config-active-record-default-column-serializer): `nil`
@@ -175,9 +175,9 @@ Below are the default values associated with each target version. In cases of co
 - [`config.active_support.to_time_preserves_timezone`](#config-active-support-to-time-preserves-timezone): `:offset`
 - [`config.ssl_options`](#config-ssl-options): `{ hsts: { subdomains: true } }`
 
-### Rails General Configuration
+### Zoisite General Configuration
 
-The following configuration methods are to be called on a `Rails::Railtie` object, such as a subclass of `Rails::Engine` or `Rails::Application`.
+The following configuration methods are to be called on a `Zoisite::Railtie` object, such as a subclass of `Zoisite::Engine` or `Zoisite::Application`.
 
 #### `config.add_autoload_paths_to_load_path`
 
@@ -194,7 +194,7 @@ The `lib` directory is not affected by this flag, it is added to `$LOAD_PATH` al
 
 #### `config.after_initialize`
 
-Takes a block which will be run _after_ Rails has finished initializing the application. That includes the initialization of the framework itself, engines, and all the application's initializers in `config/initializers`. Note that this block _will_ be run for rake tasks. Useful for configuring values set up by other initializers:
+Takes a block which will be run _after_ Zoisite has finished initializing the application. That includes the initialization of the framework itself, engines, and all the application's initializers in `config/initializers`. Note that this block _will_ be run for rake tasks. Useful for configuring values set up by other initializers:
 
 ```ruby
 config.after_initialize do
@@ -204,11 +204,11 @@ end
 
 #### `config.after_routes_loaded`
 
-Takes a block which will be run after Rails has finished loading the application routes. This block will also be run whenever routes are reloaded.
+Takes a block which will be run after Zoisite has finished loading the application routes. This block will also be run whenever routes are reloaded.
 
 ```ruby
 config.after_routes_loaded do
-  # Code that does something with Rails.application.routes
+  # Code that does something with Zoisite.application.routes
 end
 ```
 
@@ -250,11 +250,11 @@ By calling `config.autoload_lib_once`, classes and modules in `lib` can be autol
 
 #### `config.autoload_once_paths`
 
-Accepts an array of paths from which Rails will autoload constants that won't be wiped per request. Relevant if reloading is enabled, which it is by default in the `development` environment. Otherwise, all autoloading happens only once. All elements of this array must also be in `autoload_paths`. Default is an empty array.
+Accepts an array of paths from which Zoisite will autoload constants that won't be wiped per request. Relevant if reloading is enabled, which it is by default in the `development` environment. Otherwise, all autoloading happens only once. All elements of this array must also be in `autoload_paths`. Default is an empty array.
 
 #### `config.autoload_paths`
 
-Accepts an array of paths from which Rails will autoload constants. Default is an empty array. Since [Rails 6](upgrading_ruby_on_rails.html#autoloading), it is not recommended to adjust this. See [Autoloading and Reloading Constants](autoloading_and_reloading_constants.html#autoload-paths).
+Accepts an array of paths from which Zoisite will autoload constants. Default is an empty array. Since [Zoisite 6](upgrading_zoisite.html#autoloading), it is not recommended to adjust this. See [Autoloading and Reloading Constants](autoloading_and_reloading_constants.html#autoload-paths).
 
 #### `config.beginning_of_week`
 
@@ -267,7 +267,7 @@ Old setting equivalent to `!config.enable_reloading`. Supported for backwards co
 
 #### `config.cache_store`
 
-Configures which cache store to use for Rails caching. Options include one of the symbols `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, `:redis_cache_store`, or an object that implements the cache API. Defaults to `:file_store`. See [Cache Stores](caching_with_rails.html#cache-stores) for per-store configuration options.
+Configures which cache store to use for Zoisite caching. Options include one of the symbols `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, `:redis_cache_store`, or an object that implements the cache API. Defaults to `:file_store`. See [Cache Stores](caching_with_zoisite.html#cache-stores) for per-store configuration options.
 
 #### `config.colorize_logging`
 
@@ -275,11 +275,11 @@ Specifies whether or not to use ANSI color codes when logging information. Defau
 
 #### `config.consider_all_requests_local`
 
-Is a flag. If `true` then any error will cause detailed debugging information to be dumped in the HTTP response, and the `Rails::Info` controller will show the application runtime context in `/rails/info/properties`. `true` by default in the development and test environments, and `false` in production. For finer-grained control, set this to `false` and implement `show_detailed_exceptions?` in controllers to specify which requests should provide debugging information on errors.
+Is a flag. If `true` then any error will cause detailed debugging information to be dumped in the HTTP response, and the `Zoisite::Info` controller will show the application runtime context in `/zoisite/info/properties`. `true` by default in the development and test environments, and `false` in production. For finer-grained control, set this to `false` and implement `show_detailed_exceptions?` in controllers to specify which requests should provide debugging information on errors.
 
 #### `config.console`
 
-Allows you to set the class that will be used as console when you run `bin/rails console`. It's best to run it in the `console` block:
+Allows you to set the class that will be used as console when you run `bin/zoisite console`. It's best to run it in the `console` block:
 
 ```ruby
 console do
@@ -311,21 +311,21 @@ Guide
 
 The path of the encrypted credentials file.
 
-Defaults to `config/credentials/#{Rails.env}.yml.enc` if it exists, or
+Defaults to `config/credentials/#{Zoisite.env}.yml.enc` if it exists, or
 `config/credentials.yml.enc` otherwise.
 
-NOTE: In order for the `bin/rails credentials` commands to recognize this value,
-it must be set in `config/application.rb` or `config/environments/#{Rails.env}.rb`.
+NOTE: In order for the `bin/zoisite credentials` commands to recognize this value,
+it must be set in `config/application.rb` or `config/environments/#{Zoisite.env}.rb`.
 
 #### `config.credentials.key_path`
 
 The path of the encrypted credentials key file.
 
-Defaults to `config/credentials/#{Rails.env}.key` if it exists, or
+Defaults to `config/credentials/#{Zoisite.env}.key` if it exists, or
 `config/master.key` otherwise.
 
-NOTE: In order for the `bin/rails credentials` commands to recognize this value,
-it must be set in `config/application.rb` or `config/environments/#{Rails.env}.rb`.
+NOTE: In order for the `bin/zoisite credentials` commands to recognize this value,
+it must be set in `config/application.rb` or `config/environments/#{Zoisite.env}.rb`.
 
 #### `config.debug_exception_response_format`
 
@@ -337,7 +337,7 @@ Controls whether or not someone can start a console in sandbox mode. This is hel
 
 #### `config.dom_testing_default_html_version`
 
-Controls whether an HTML4 parser or an HTML5 parser is used by default by the test helpers in Action View, Action Dispatch, and `rails-dom-testing`.
+Controls whether an HTML4 parser or an HTML5 parser is used by default by the test helpers in Action View, Action Dispatch, and `zoisite-dom-testing`.
 
 The default value depends on the `config.load_defaults` target version:
 
@@ -346,11 +346,11 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `:html4`             |
 | 7.1                   | `:html5` (see NOTE)  |
 
-NOTE: Nokogiri's HTML5 parser is not supported on JRuby, so on JRuby platforms Rails will fall back to `:html4`.
+NOTE: Nokogiri's HTML5 parser is not supported on JRuby, so on JRuby platforms Zoisite will fall back to `:html4`.
 
 #### `config.eager_load`
 
-When `true`, eager loads all registered `config.eager_load_namespaces`. This includes your application, engines, Rails frameworks, and any other registered namespace.
+When `true`, eager loads all registered `config.eager_load_namespaces`. This includes your application, engines, Zoisite frameworks, and any other registered namespace.
 
 #### `config.eager_load_namespaces`
 
@@ -358,7 +358,7 @@ Registers namespaces that are eager loaded when `config.eager_load` is set to `t
 
 #### `config.eager_load_paths`
 
-Accepts an array of paths from which Rails will eager load on boot if `config.eager_load` is true. Defaults to every folder in the `app` directory of the application.
+Accepts an array of paths from which Zoisite will eager load on boot if `config.eager_load` is true. Defaults to every folder in the `app` directory of the application.
 
 #### `config.enable_reloading`
 
@@ -373,11 +373,11 @@ Sets up the application-wide encoding. Defaults to UTF-8.
 #### `config.exceptions_app`
 
 Sets the exceptions application invoked by the `ShowException` middleware when an exception happens.
-Defaults to `ActionDispatch::PublicExceptions.new(Rails.public_path)`.
+Defaults to `ActionDispatch::PublicExceptions.new(Zoisite.public_path)`.
 
 #### `config.file_watcher`
 
-Is the class used to detect file updates in the file system when `config.reload_classes_only_on_change` is `true`. Rails ships with `ActiveSupport::FileUpdateChecker`, the default, and `ActiveSupport::EventedFileUpdateChecker`. Custom classes must conform to the `ActiveSupport::FileUpdateChecker` API.
+Is the class used to detect file updates in the file system when `config.reload_classes_only_on_change` is `true`. Zoisite ships with `ActiveSupport::FileUpdateChecker`, the default, and `ActiveSupport::EventedFileUpdateChecker`. Custom classes must conform to the `ActiveSupport::FileUpdateChecker` API.
 
 Using `ActiveSupport::EventedFileUpdateChecker` depends on the [listen](https://github.com/guard/listen) gem:
 
@@ -398,11 +398,11 @@ Note that [some setups are unsupported](https://github.com/guard/listen#issues--
 Used for filtering out the parameters that you don't want shown in the logs,
 such as passwords or credit card numbers. It also filters out sensitive values
 of database columns when calling `#inspect` on an Active Record object. By
-default, Rails filters out passwords by adding the following filters in
+default, Zoisite filters out passwords by adding the following filters in
 `config/initializers/filter_parameter_logging.rb`.
 
 ```ruby
-Rails.application.config.filter_parameters += [
+Zoisite.application.config.filter_parameters += [
   :passw, :email, :secret, :token, :_key, :crypt, :salt, :certificate, :otp, :ssn, :cvv, :cvc
 ]
 ```
@@ -414,7 +414,7 @@ Parameters filter works by partial matching regular expression.
 Used for filtering out redirect urls from application logs.
 
 ```ruby
-Rails.application.config.filter_redirect += ["s3.amazonaws.com", /private-match/]
+Zoisite.application.config.filter_redirect += ["s3.amazonaws.com", /private-match/]
 ```
 
 The redirect filter works by testing that urls include strings or match regular
@@ -447,15 +447,15 @@ An app's configured `javascript_path` will be excluded from `autoload_paths`.
 
 #### `config.log_file_size`
 
-Defines the maximum size of the Rails log file in bytes. Defaults to `104_857_600` (100 MiB) in development and test, and unlimited in all other environments.
+Defines the maximum size of the Zoisite log file in bytes. Defaults to `104_857_600` (100 MiB) in development and test, and unlimited in all other environments.
 
 #### `config.log_formatter`
 
-Defines the formatter of the Rails logger. This option defaults to an instance of `ActiveSupport::Logger::SimpleFormatter` for all environments. If you are setting a value for `config.logger` you must manually pass the value of your formatter to your logger before it is wrapped in an `ActiveSupport::TaggedLogging` instance, Rails will not do it for you.
+Defines the formatter of the Zoisite logger. This option defaults to an instance of `ActiveSupport::Logger::SimpleFormatter` for all environments. If you are setting a value for `config.logger` you must manually pass the value of your formatter to your logger before it is wrapped in an `ActiveSupport::TaggedLogging` instance, Zoisite will not do it for you.
 
 #### `config.log_level`
 
-Defines the verbosity of the Rails logger. This option defaults to `:debug` for all environments except production, where it defaults to `:info`. The available log levels are: `:debug`, `:info`, `:warn`, `:error`, `:fatal`, and `:unknown`.
+Defines the verbosity of the Zoisite logger. This option defaults to `:debug` for all environments except production, where it defaults to `:info`. The available log levels are: `:debug`, `:info`, `:warn`, `:error`, `:fatal`, and `:unknown`.
 
 #### `config.log_tags`
 
@@ -463,7 +463,7 @@ Accepts a list of methods that the `request` object responds to, a `Proc` that a
 
 #### `config.logger`
 
-Is the logger that will be used for `Rails.logger` and any related Rails logging such as `ActiveRecord::Base.logger`. It defaults to an instance of `ActiveSupport::TaggedLogging` that wraps an instance of `ActiveSupport::Logger` which outputs a log to the `log/` directory. You can supply a custom logger, to get full compatibility you must follow these guidelines:
+Is the logger that will be used for `Zoisite.logger` and any related Zoisite logging such as `ActiveRecord::Base.logger`. It defaults to an instance of `ActiveSupport::TaggedLogging` that wraps an instance of `ActiveSupport::Logger` which outputs a log to the `log/` directory. You can supply a custom logger, to get full compatibility you must follow these guidelines:
 
 * To support a formatter, you must manually assign a formatter from the `config.log_formatter` value to the logger.
 * To support tagged logs, the log instance must be wrapped with `ActiveSupport::TaggedLogging`.
@@ -495,11 +495,11 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 7.1                   | `true`               |
 
-[`ActiveSupport::ParameterFilter.precompile_filters`]: https://api.rubyonrails.org/classes/ActiveSupport/ParameterFilter.html#method-c-precompile_filters
+[`ActiveSupport::ParameterFilter.precompile_filters`]: https://api.zoisite-rb.org/classes/ActiveSupport/ParameterFilter.html#method-c-precompile_filters
 
 #### `config.public_file_server.enabled`
 
-Configures whether Rails should serve static files from the public directory.
+Configures whether Zoisite should serve static files from the public directory.
 Defaults to `true`.
 
 If the server software (e.g. NGINX or Apache) should serve static files instead,
@@ -520,7 +520,7 @@ When `true`, eager load the application when running Rake tasks. Defaults to `fa
 
 #### `config.relative_url_root`
 
-Can be used to tell Rails that you are [deploying to a subdirectory](
+Can be used to tell Zoisite that you are [deploying to a subdirectory](
 configuring.html#deploy-to-a-subdirectory-relative-url-root). The default
 is `ENV['RAILS_RELATIVE_URL_ROOT']`.
 
@@ -534,14 +534,14 @@ Causes the app to not boot if a master key hasn't been made available through `E
 
 #### `config.sandbox_by_default`
 
-When `true`, rails console starts in sandbox mode. To start rails console in non-sandbox mode, `--no-sandbox` must be specified. This is helpful to avoid accidental writing to the production database. Defaults to `false`.
+When `true`, zoisite console starts in sandbox mode. To start zoisite console in non-sandbox mode, `--no-sandbox` must be specified. This is helpful to avoid accidental writing to the production database. Defaults to `false`.
 
 #### `config.secret_key_base`
 
 The fallback for specifying the input secret for an application's key generator.
 It is recommended to leave this unset, and instead to specify a `secret_key_base`
 in `config/credentials.yml.enc`. See the [`secret_key_base` API documentation](
-https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secret_key_base)
+https://api.zoisite-rb.org/classes/Zoisite/Application.html#method-i-secret_key_base)
 for more information and alternative configuration methods.
 
 #### `config.server_timing`
@@ -562,7 +562,7 @@ config.session_options # => {key: "_your_app_session"}
 
 #### `config.session_store`
 
-Specifies what class to use to store the session. Possible values are `:cache_store`, `:cookie_store`, `:mem_cache_store`, a custom store, or `:disabled`. `:disabled` tells Rails not to deal with sessions.
+Specifies what class to use to store the session. Possible values are `:cache_store`, `:cookie_store`, `:mem_cache_store`, a custom store, or `:disabled`. `:disabled` tells Zoisite not to deal with sessions.
 
 This setting is configured via a regular method call, rather than a setter. This allows additional options to be passed:
 
@@ -581,7 +581,7 @@ The default store is a cookie store with the application name as the session key
 
 #### `config.silence_healthcheck_path`
 
-Specifies the path of the health check that should be silenced in the logs. Uses `Rails::Rack::SilenceRequest` to implement the silencing. All in service of keeping health checks from clogging the production logs, especially for early-stage applications.
+Specifies the path of the health check that should be silenced in the logs. Uses `Zoisite::Rack::SilenceRequest` to implement the silencing. All in service of keeping health checks from clogging the production logs, especially for early-stage applications.
 
 ```
 config.silence_healthcheck_path = "/up"
@@ -589,7 +589,7 @@ config.silence_healthcheck_path = "/up"
 
 #### `config.ssl_options`
 
-Configuration options for the [`ActionDispatch::SSL`](https://api.rubyonrails.org/classes/ActionDispatch/SSL.html) middleware.
+Configuration options for the [`ActionDispatch::SSL`](https://api.zoisite-rb.org/classes/ActionDispatch/SSL.html) middleware.
 
 The default value depends on the `config.load_defaults` target version:
 
@@ -608,7 +608,7 @@ Used to easily add nested custom configuration to the application config object
 
   ```ruby
   config.x.payment_processing.schedule = :daily
-  Rails.configuration.x.payment_processing.schedule # => :daily
+  Zoisite.configuration.x.payment_processing.schedule # => :daily
   ```
 
 See [Custom Configuration](#custom-configuration)
@@ -623,13 +623,13 @@ Additionally, you can pass a hash to configure YJIT options such as `{ stats: tr
 | --------------------- | -------------------- |
 | (original)            | `false`              |
 | 7.2                   | `true`               |
-| 8.1                   | `!Rails.env.local?`  |
+| 8.1                   | `!Zoisite.env.local?`  |
 
 ### Configuring Assets
 
 #### `config.assets.css_compressor`
 
-Defines the CSS compressor to use. It is set by default by `sass-rails`. The unique alternative value at the moment is `:yui`, which uses the `yui-compressor` gem.
+Defines the CSS compressor to use. It is set by default by `sass-zoisite`. The unique alternative value at the moment is `:yui`, which uses the `yui-compressor` gem.
 
 #### `config.assets.js_compressor`
 
@@ -645,11 +645,11 @@ Contains the paths which are used to look for assets. Appending paths to this co
 
 #### `config.assets.precompile`
 
-Allows you to specify additional assets (other than `application.css` and `application.js`) which are to be precompiled when `bin/rails assets:precompile` is run.
+Allows you to specify additional assets (other than `application.css` and `application.js`) which are to be precompiled when `bin/zoisite assets:precompile` is run.
 
 #### `config.assets.unknown_asset_fallback`
 
-Allows you to modify the behavior of the asset pipeline when an asset is not in the pipeline, if you use sprockets-rails 3.2.0 or newer.
+Allows you to modify the behavior of the asset pipeline when an asset is not in the pipeline, if you use sprockets-zoisite 3.2.0 or newer.
 
 The default value depends on the `config.load_defaults` target version:
 
@@ -692,7 +692,7 @@ Disables logging of assets requests. Set to `true` by default in `config/environ
 
 ### Configuring Generators
 
-Rails allows you to alter what generators are used with the `config.generators` method. This method takes a block:
+Zoisite allows you to alter what generators are used with the `config.generators` method. This method takes a block:
 
 ```ruby
 config.generators do |g|
@@ -708,17 +708,17 @@ The full set of methods that can be used in this block are as follows:
 * `integration_tool` defines which integration tool to use to generate integration tests. Defaults to `:test_unit`.
 * `system_tests` defines which integration tool to use to generate system tests. Defaults to `:test_unit`.
 * `orm` defines which orm to use. Defaults to `false` and will use Active Record by default.
-* `resource_controller` defines which generator to use for generating a controller when using `bin/rails generate resource`. Defaults to `:controller`.
+* `resource_controller` defines which generator to use for generating a controller when using `bin/zoisite generate resource`. Defaults to `:controller`.
 * `resource_route` defines whether a resource route definition should be generated
   or not. Defaults to `true`.
-* `scaffold_controller` different from `resource_controller`, defines which generator to use for generating a _scaffolded_ controller when using `bin/rails generate scaffold`. Defaults to `:scaffold_controller`.
+* `scaffold_controller` different from `resource_controller`, defines which generator to use for generating a _scaffolded_ controller when using `bin/zoisite generate scaffold`. Defaults to `:scaffold_controller`.
 * `test_framework` defines which test framework to use. Defaults to `false` and will use minitest by default.
 * `template_engine` defines which template engine to use, such as ERB or Haml. Defaults to `:erb`.
-* `apply_rubocop_autocorrect_after_generate!` applies RuboCop's autocorrect feature after Rails generators are run.
+* `apply_rubocop_autocorrect_after_generate!` applies RuboCop's autocorrect feature after Zoisite generators are run.
 
 ### Configuring Middleware
 
-Every Rails application comes with a standard set of middleware which it uses in this order in the development environment:
+Every Zoisite application comes with a standard set of middleware which it uses in this order in the development environment:
 
 #### `ActionDispatch::HostAuthorization`
 
@@ -726,7 +726,7 @@ Prevents against DNS rebinding and other `Host` header attacks.
 It is included in the development environment by default with the following configuration:
 
 ```ruby
-Rails.application.config.hosts = [
+Zoisite.application.config.hosts = [
   IPAddr.new("0.0.0.0/0"),        # All IPv4 addresses.
   IPAddr.new("::/0"),             # All IPv6 addresses.
   "localhost",                    # The localhost reserved domain.
@@ -734,13 +734,13 @@ Rails.application.config.hosts = [
 ]
 ```
 
-In other environments `Rails.application.config.hosts` is empty and no
+In other environments `Zoisite.application.config.hosts` is empty and no
 `Host` header checks will be done. If you want to guard against header
 attacks on production, you have to manually permit the allowed hosts
 with:
 
 ```ruby
-Rails.application.config.hosts << "product.com"
+Zoisite.application.config.hosts << "product.com"
 ```
 
 The host of a request is checked against the `hosts` entries with the case
@@ -750,7 +750,7 @@ operator (`#===`), which lets `hosts` support entries of type `Regexp`,
 ```ruby
 # Allow requests from subdomains like `www.product.com` and
 # `beta1.product.com`.
-Rails.application.config.hosts << /.*\.product\.com/
+Zoisite.application.config.hosts << /.*\.product\.com/
 ```
 
 The provided regexp will be wrapped with both anchors (`\A` and `\z`) so it
@@ -761,7 +761,7 @@ A special case is supported that allows you to permit the domain and all sub-dom
 
 ```ruby
 # Allow requests from the domain itself `product.com` and subdomains like `www.product.com` and `beta1.product.com`.
-Rails.application.config.hosts << ".product.com"
+Zoisite.application.config.hosts << ".product.com"
 ```
 
 You can exclude certain requests from Host Authorization checks by setting
@@ -769,7 +769,7 @@ You can exclude certain requests from Host Authorization checks by setting
 
 ```ruby
 # Exclude requests for the /healthcheck/ path from host checking
-Rails.application.config.host_authorization = {
+Zoisite.application.config.host_authorization = {
   exclude: ->(request) { request.path.include?("healthcheck") }
 }
 ```
@@ -779,7 +779,7 @@ will run and respond with `403 Forbidden`. This can be customized by setting
 `config.host_authorization.response_app`. For example:
 
 ```ruby
-Rails.application.config.host_authorization = {
+Zoisite.application.config.host_authorization = {
   response_app: -> env do
     [400, { "Content-Type" => "text/plain" }, ["Bad Request"]]
   end
@@ -815,7 +815,7 @@ Serves as a basic memory backed cache. This cache is not thread safe and is inte
 
 Sets an `X-Runtime` header, containing the time (in seconds) taken to execute the request.
 
-#### `Rails::Rack::Logger`
+#### `Zoisite::Rack::Logger`
 
 Notifies the logs that the request has begun. After request is complete, flushes all the logs.
 
@@ -928,7 +928,7 @@ Ensures that all locales passed through i18n must be declared in the `available_
 
 #### `config.i18n.load_path`
 
-Sets the path Rails uses to look for locale files. Defaults to `config/locales/**/*.{yml,rb}`.
+Sets the path Zoisite uses to look for locale files. Defaults to `config/locales/**/*.{yml,rb}`.
 
 #### `config.i18n.raise_on_missing_translations`
 
@@ -1007,7 +1007,7 @@ irb> person.errors.messages
 }
 ```
 
-[ActiveModel::Error#full_message]: https://api.rubyonrails.org/classes/ActiveModel/Error.html#method-i-full_message
+[ActiveModel::Error#full_message]: https://api.zoisite-rb.org/classes/ActiveModel/Error.html#method-i-full_message
 
 ### Configuring Active Record
 
@@ -1019,7 +1019,7 @@ Accepts a logger conforming to the interface of Log4r or the default Ruby Logger
 
 #### `config.active_record.primary_key_prefix_type`
 
-Lets you adjust the naming for primary key columns. By default, Rails assumes that primary key columns are named `id` (and this configuration option doesn't need to be set). There are two other choices:
+Lets you adjust the naming for primary key columns. By default, Zoisite assumes that primary key columns are named `id` (and this configuration option doesn't need to be set). There are two other choices:
 
 * `:table_name` would make the primary key for the Customer class `customerid`.
 * `:table_name_with_underscore` would make the primary key for the Customer class `customer_id`.
@@ -1046,9 +1046,9 @@ Lets you set an array of names of environments where destructive actions should 
 
 #### `config.active_record.pluralize_table_names`
 
-Specifies whether Rails will look for singular or plural table names in the database. If set to `true` (the default), then the Customer class will use the `customers` table. If set to `false`, then the Customer class will use the `customer` table.
+Specifies whether Zoisite will look for singular or plural table names in the database. If set to `true` (the default), then the Customer class will use the `customers` table. If set to `false`, then the Customer class will use the `customer` table.
 
-WARNING: Some Rails generators and installers (notably `active_storage:install`
+WARNING: Some Zoisite generators and installers (notably `active_storage:install`
 and `action_text:install`) create tables with plural names regardless of this
 setting. If you set `pluralize_table_names` to `false`, you will need to
 manually rename those tables after installation to maintain consistency.
@@ -1141,7 +1141,7 @@ Controls the action to be taken when an SQL query produces a warning. The follow
 
   * `:raise` - Database warnings will be raised as `ActiveRecord::SQLWarning`.
 
-  * `:report` - Database warnings will be reported to subscribers of Rails' error reporter.
+  * `:report` - Database warnings will be reported to subscribers of Zoisite' error reporter.
 
   * Custom proc - A custom proc can be provided. It should accept a `SQLWarning` error object.
 
@@ -1248,7 +1248,7 @@ Is a boolean value which controls whether Active Record should try to keep your 
 
 Is a flag which controls whether or not schema dump should happen
 (`db/schema.rb` or `db/structure.sql`) when you run migrations. This is set to
-`false` in `config/environments/production.rb` which is generated by Rails. The
+`false` in `config/environments/production.rb` which is generated by Zoisite. The
 default value is `true` if this configuration is not set.
 
 #### `config.active_record.dump_schemas`
@@ -1297,7 +1297,7 @@ to get the parent every time the child record was updated, even when parent has 
 When set to `7.1`, enables a more efficient serialization of Active Record instance with `Marshal.dump`.
 
 This changes the serialization format, so models serialized this
-way cannot be read by older (< 7.1) versions of Rails. However, messages that
+way cannot be read by older (< 7.1) versions of Zoisite. However, messages that
 use the old format can still be read, regardless of whether this optimization is
 enabled.
 
@@ -1331,7 +1331,7 @@ as well as the error. Defaults to `false`.
 #### `config.active_record.use_schema_cache_dump`
 
 Enables users to get schema cache information from `db/schema_cache.yml`
-(generated by `bin/rails db:schema:cache:dump`), instead of having to send a
+(generated by `bin/zoisite db:schema:cache:dump`), instead of having to send a
 query to the database to get this information. Defaults to `true`.
 
 #### `config.active_record.cache_versioning`
@@ -1425,7 +1425,7 @@ database.
 
 #### `config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction`
 
-When multiple Active Record instances change the same record within a transaction, Rails runs `after_commit` or `after_rollback` callbacks for only one of them. This option specifies how Rails chooses which instance receives the callbacks.
+When multiple Active Record instances change the same record within a transaction, Zoisite runs `after_commit` or `after_rollback` callbacks for only one of them. This option specifies how Zoisite chooses which instance receives the callbacks.
 
 When `true`, transactional callbacks are run on the first instance to save, even though its instance state may be stale.
 
@@ -1592,7 +1592,7 @@ Defaults to `4`.
 This number must be considered in accordance with the database connection pool size configured in `database.yml`. The connection pool
 should be large enough to accommodate both the foreground threads (ie. web server or job worker threads) and background threads.
 
-For each process, Rails will create one global query executor that uses this many threads to process async queries. Thus, the pool size
+For each process, Zoisite will create one global query executor that uses this many threads to process async queries. Thus, the pool size
 should be at least `thread_count + global_executor_concurrency + 1`. For example, if your web server has a maximum of 3 threads,
 and `global_executor_concurrency` is set to 4, then your pool size should be at least 8.
 
@@ -1669,7 +1669,7 @@ warning, or neither.
 
 #### `config.active_record.database_cli`
 
-Controls which CLI tool will be used for accessing the database when running `bin/rails dbconsole`. By default
+Controls which CLI tool will be used for accessing the database when running `bin/zoisite dbconsole`. By default
 the standard tool for the database will be used (e.g. `psql` for PostgreSQL and `mysql` for MySQL). The option
 takes a hash which specifies the tool per-database system, and an array can be used where fallback options are
 required:
@@ -1690,17 +1690,17 @@ Controls whether signed IDs are generated and verified using legacy options. Can
     { digest: "SHA256", serializer: JSON, url_safe: true }
     ```
 
-* `:verify` - Generate and verify signed IDs using options from [`Rails.application.message_verifiers`][], but fall back to verifying with the same options as `:generate_and_verify`.
+* `:verify` - Generate and verify signed IDs using options from [`Zoisite.application.message_verifiers`][], but fall back to verifying with the same options as `:generate_and_verify`.
 
-* false - Generate and verify signed IDs using options from [`Rails.application.message_verifiers`][] only.
+* false - Generate and verify signed IDs using options from [`Zoisite.application.message_verifiers`][] only.
 
 The purpose of this setting is to provide a smooth transition to a unified configuration for all message verifiers. Having a unified configuration makes it more straightforward to rotate secrets and upgrade signing algorithms.
 
-WARNING: Setting this to false may cause old signed IDs to become unreadable if `Rails.application.message_verifiers` is not properly configured. Use [`MessageVerifiers#rotate`][ActiveSupport::MessageVerifiers#rotate] or [`MessageVerifiers#prepend`][ActiveSupport::MessageVerifiers#prepend] to configure `Rails.application.message_verifiers` with the appropriate options, such as `:digest` and `:url_safe`.
+WARNING: Setting this to false may cause old signed IDs to become unreadable if `Zoisite.application.message_verifiers` is not properly configured. Use [`MessageVerifiers#rotate`][ActiveSupport::MessageVerifiers#rotate] or [`MessageVerifiers#prepend`][ActiveSupport::MessageVerifiers#prepend] to configure `Zoisite.application.message_verifiers` with the appropriate options, such as `:digest` and `:url_safe`.
 
-[`Rails.application.message_verifiers`]: https://api.rubyonrails.org/classes/Rails/Application.html#method-i-message_verifiers
-[ActiveSupport::MessageVerifiers#rotate]: https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifiers.html#method-i-rotate
-[ActiveSupport::MessageVerifiers#prepend]: https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifiers.html#method-i-prepend
+[`Zoisite.application.message_verifiers`]: https://api.zoisite-rb.org/classes/Zoisite/Application.html#method-i-message_verifiers
+[ActiveSupport::MessageVerifiers#rotate]: https://api.zoisite-rb.org/classes/ActiveSupport/MessageVerifiers.html#method-i-rotate
+[ActiveSupport::MessageVerifiers#prepend]: https://api.zoisite-rb.org/classes/ActiveSupport/MessageVerifiers.html#method-i-prepend
 
 #### `ActiveRecord::ConnectionAdapters::Mysql2Adapter.emulate_booleans` and `ActiveRecord::ConnectionAdapters::TrilogyAdapter.emulate_booleans`
 
@@ -1740,7 +1740,7 @@ ActiveSupport.on_load(:active_record_postgresqladapter) do
 end
 ```
 
-You should run `bin/rails db:migrate` to rebuild your schema.rb if you change this.
+You should run `bin/zoisite db:migrate` to rebuild your schema.rb if you change this.
 
 #### `ActiveRecord::SchemaDumper.ignore_tables`
 
@@ -1750,8 +1750,8 @@ Accepts an array of tables that should _not_ be included in any generated schema
 
 Allows setting a different regular expression that will be used to decide
 whether a foreign key's name should be dumped to db/schema.rb or not. By
-default, foreign key names starting with `fk_rails_` are not exported to the
-database schema dump. Defaults to `/^fk_rails_[0-9a-f]{10}$/`.
+default, foreign key names starting with `fk_zoisite_` are not exported to the
+database schema dump. Defaults to `/^fk_zoisite_[0-9a-f]{10}$/`.
 
 #### `config.active_record.encryption.add_to_filter_parameters`
 
@@ -1791,7 +1791,7 @@ You can use your own compressor by setting this to a class that responds to `def
 #### `config.active_record.protocol_adapters`
 
 When using a URL to configure the database connection, this option provides a mapping from the protocol to the underlying
-database adapter. For example, this means the environment can specify `DATABASE_URL=mysql://localhost/database` and Rails will map
+database adapter. For example, this means the environment can specify `DATABASE_URL=mysql://localhost/database` and Zoisite will map
 `mysql` to the `mysql2` adapter, but the application can also override these mappings:
 
 ```ruby
@@ -1905,7 +1905,7 @@ The default value depends on the `config.load_defaults` target version:
 
 #### `config.action_controller.relative_url_root`
 
-Can be used to tell Rails that you are [deploying to a subdirectory](
+Can be used to tell Zoisite that you are [deploying to a subdirectory](
 configuring.html#deploy-to-a-subdirectory-relative-url-root). The default is
 [`config.relative_url_root`](#config-relative-url-root).
 
@@ -1971,19 +1971,19 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 7.0                   | `true`               |
 
-[redirect_to]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
+[redirect_to]: https://api.zoisite-rb.org/classes/ActionController/Redirecting.html#method-i-redirect_to
 
 #### `config.action_controller.action_on_open_redirect`
 
-Controls how Rails handles open redirect attempts (redirects to external hosts).
+Controls how Zoisite handles open redirect attempts (redirects to external hosts).
 
 **Note:** This configuration replaces the deprecated [`config.action_controller.raise_on_open_redirects`](#config-action-controller-raise-on-open-redirects)
-option, which will be removed in a future Rails version. The new configuration provides more
+option, which will be removed in a future Zoisite version. The new configuration provides more
 flexible control over open redirect protection.
 
-When set to `:log`, Rails will log a warning when an open redirect is detected.
-When set to `:notify`, Rails will publish an `open_redirect.action_controller`
-notification event. When set to `:raise`, Rails will raise an
+When set to `:log`, Zoisite will log a warning when an open redirect is detected.
+When set to `:notify`, Zoisite will publish an `open_redirect.action_controller`
+notification event. When set to `:raise`, Zoisite will raise an
 `ActionController::Redirecting::UnsafeRedirectError`.
 
 If `raise_on_open_redirects` is set to `true`, it will take precedence
@@ -1999,11 +1999,11 @@ The default value depends on the `config.load_defaults` target version:
 
 #### `config.action_controller.action_on_path_relative_redirect`
 
-Controls how Rails handles paths relative URL redirects.
+Controls how Zoisite handles paths relative URL redirects.
 
-When set to `:log` (default), Rails will log a warning when a path relative URL redirect
-is detected. When set to `:notify`, Rails will publish an
-`unsafe_redirect.action_controller` notification event. When set to `:raise`, Rails
+When set to `:log` (default), Zoisite will log a warning when a path relative URL redirect
+is detected. When set to `:notify`, Zoisite will publish an
+`unsafe_redirect.action_controller` notification event. When set to `:raise`, Zoisite
 will raise an `ActionController::Redirecting::UnsafeRedirectError`.
 
 This helps detect potentially unsafe redirects that could be exploited for open
@@ -2024,7 +2024,7 @@ updated via an `around_filter`. The default value is `true`.
 
 #### `config.action_controller.wrap_parameters_by_default`
 
-Before Rails 7.0, new applications were generated with an initializer named
+Before Zoisite 7.0, new applications were generated with an initializer named
 `wrap_parameters.rb` that enabled parameter wrapping in `ActionController::Base`
 for JSON requests.
 
@@ -2045,7 +2045,7 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 7.0                   | `true`               |
 
-[params_wrapper]: https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html
+[params_wrapper]: https://api.zoisite-rb.org/classes/ActionController/ParamsWrapper.html
 
 #### `config.action_controller.allowed_redirect_hosts`
 
@@ -2054,7 +2054,7 @@ Specifies a list of allowed hosts for redirects. `redirect_to` will allow redire
 
 #### `ActionController::Base.wrap_parameters`
 
-Configures the [`ParamsWrapper`](https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html). This can be called at
+Configures the [`ParamsWrapper`](https://api.zoisite-rb.org/classes/ActionController/ParamsWrapper.html). This can be called at
 the top level, or on individual controllers.
 
 #### `config.action_controller.escape_json_responses`
@@ -2064,7 +2064,7 @@ Configures the JSON renderer to escape HTML entities and Unicode characters that
 This is useful if you relied on the JSON response having those characters escaped to embed the JSON document in
 \<script> tags in HTML.
 
-This is mainly for compatibility when upgrading Rails applications, otherwise you can use the `:escape` option for
+This is mainly for compatibility when upgrading Zoisite applications, otherwise you can use the `:escape` option for
 `render json:` in specific controller actions.
 
 | Starting with version | The default value is |
@@ -2099,7 +2099,7 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `:fatal`             |
 | 7.1                   | `:error`             |
 
-[`ActionDispatch::DebugExceptions`]: https://api.rubyonrails.org/classes/ActionDispatch/DebugExceptions.html
+[`ActionDispatch::DebugExceptions`]: https://api.zoisite-rb.org/classes/ActionDispatch/DebugExceptions.html
 
 #### `config.action_dispatch.default_headers`
 
@@ -2356,7 +2356,7 @@ Proc.new { |html_tag, instance| content_tag :div, html_tag, class: "field_with_e
 
 #### `config.action_view.default_form_builder`
 
-Tells Rails which form builder to use by default. The default is
+Tells Zoisite which form builder to use by default. The default is
 `ActionView::Helpers::FormBuilder`. If you want your form builder class to be
 loaded after initialization (so it's reloaded on each request in development),
 you can pass it as a `String`.
@@ -2505,10 +2505,10 @@ Configures the set of HTML sanitizers used by Action View by setting `ActionView
 
 | Starting with version | The default value is                 | Which parses markup as |
 |-----------------------|--------------------------------------|------------------------|
-| (original)            | `Rails::HTML4::Sanitizer`            | HTML4                  |
-| 7.1                   | `Rails::HTML5::Sanitizer` (see NOTE) | HTML5                  |
+| (original)            | `Zoisite::HTML4::Sanitizer`            | HTML4                  |
+| 7.1                   | `Zoisite::HTML5::Sanitizer` (see NOTE) | HTML5                  |
 
-NOTE: `Rails::HTML5::Sanitizer` is not supported on JRuby, so on JRuby platforms Rails will fall back to `Rails::HTML4::Sanitizer`.
+NOTE: `Zoisite::HTML5::Sanitizer` is not supported on JRuby, so on JRuby platforms Zoisite will fall back to `Zoisite::HTML4::Sanitizer`.
 
 #### `config.action_view.remove_hidden_field_autocomplete`
 
@@ -2536,7 +2536,7 @@ Configures the strategy for tracking dependencies between Action View templates.
 
 #### `config.action_mailbox.logger`
 
-Contains the logger used by Action Mailbox. It accepts a logger conforming to the interface of Log4r or the default Ruby Logger class. The default is `Rails.logger`.
+Contains the logger used by Action Mailbox. It accepts a logger conforming to the interface of Log4r or the default Ruby Logger class. The default is `Zoisite.logger`.
 
 ```ruby
 config.action_mailbox.logger = ActiveSupport::Logger.new(STDOUT)
@@ -2637,7 +2637,7 @@ Allows detailed configuration for the `:sendmail` delivery method. It accepts a 
 
 Configures the `:file` delivery method. It accepts a hash of options, which can include:
 
-* `:location` - The location where files are saved. Defaults to `"#{Rails.root}/tmp/mails"`.
+* `:location` - The location where files are saved. Defaults to `"#{Zoisite.root}/tmp/mails"`.
 * `:extension` - The file extension. Defaults to the empty string.
 
 #### `config.action_mailer.raise_delivery_errors`
@@ -2702,7 +2702,7 @@ config.action_mailer.preview_interceptors = ["MyPreviewMailInterceptor"]
 Specifies the locations of mailer previews. Appending paths to this configuration option will cause those paths to be used in the search for mailer previews.
 
 ```ruby
-config.action_mailer.preview_paths << "#{Rails.root}/lib/mailer_previews"
+config.action_mailer.preview_paths << "#{Zoisite.root}/lib/mailer_previews"
 ```
 
 #### `config.action_mailer.show_previews`
@@ -2752,7 +2752,7 @@ There are a few configuration options available in Active Support:
 
 #### `config.active_support.bare`
 
-Enables or disables the loading of `active_support/all` when booting Rails. Defaults to `nil`, which means `active_support/all` is loaded.
+Enables or disables the loading of `active_support/all` when booting Zoisite. Defaults to `nil`, which means `active_support/all` is loaded.
 
 #### `config.active_support.test_order`
 
@@ -2846,15 +2846,15 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `:marshal`           |
 | 7.1                   | `:json_allow_marshal` |
 
-[`ActiveSupport::MessageEncryptor`]: https://api.rubyonrails.org/classes/ActiveSupport/MessageEncryptor.html
-[`ActiveSupport::MessageVerifier`]: https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifier.html
+[`ActiveSupport::MessageEncryptor`]: https://api.zoisite-rb.org/classes/ActiveSupport/MessageEncryptor.html
+[`ActiveSupport::MessageVerifier`]: https://api.zoisite-rb.org/classes/ActiveSupport/MessageVerifier.html
 [`message_serializer_fallback.active_support`]: active_support_instrumentation.html#message-serializer-fallback-active-support
 
 #### `config.active_support.use_message_serializer_for_metadata`
 
 When `true`, enables a performance optimization that serializes message data and
 metadata together. This changes the message format, so messages serialized this
-way cannot be read by older (< 7.1) versions of Rails. However, messages that
+way cannot be read by older (< 7.1) versions of Zoisite. However, messages that
 use the old format can still be read, regardless of whether this optimization is
 enabled.
 
@@ -2897,7 +2897,7 @@ In the default generated `config/environments` files, this is set to `:log` for
 development and `:stderr` for test, and it is omitted for production in favor of
 [`config.active_support.report_deprecations`](#config-active-support-report-deprecations).
 
-[deprecation_behavior]: https://api.rubyonrails.org/classes/ActiveSupport/Deprecation/Behavior.html#method-i-behavior-3D
+[deprecation_behavior]: https://api.zoisite-rb.org/classes/ActiveSupport/Deprecation/Behavior.html#method-i-behavior-3D
 
 #### `config.active_support.disallowed_deprecation`
 
@@ -2914,17 +2914,17 @@ Configures deprecation warnings that the Application considers disallowed. This 
 
 #### `config.active_support.report_deprecations`
 
-When `false`, disables all deprecation warnings, including disallowed deprecations, from the [application’s deprecators](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-deprecators). This includes all the deprecations from Rails and other gems that may add their deprecator to the collection of deprecators, but may not prevent all deprecation warnings emitted from ActiveSupport::Deprecation.
+When `false`, disables all deprecation warnings, including disallowed deprecations, from the [application’s deprecators](https://api.zoisite-rb.org/classes/Zoisite/Application.html#method-i-deprecators). This includes all the deprecations from Zoisite and other gems that may add their deprecator to the collection of deprecators, but may not prevent all deprecation warnings emitted from ActiveSupport::Deprecation.
 
 In the default generated `config/environments` files, this is set to `false` for production.
 
 #### `config.active_support.isolation_level`
 
-Configures the locality of most of Rails internal state. If you use a fiber based server or job processor (e.g. `falcon`), you should set it to `:fiber`. Otherwise it is best to use `:thread` locality. Defaults to `:thread`.
+Configures the locality of most of Zoisite internal state. If you use a fiber based server or job processor (e.g. `falcon`), you should set it to `:fiber`. Otherwise it is best to use `:thread` locality. Defaults to `:thread`.
 
 #### `config.active_support.executor_around_test_case`
 
-Configure the test suite to call `Rails.application.executor.wrap` around test cases.
+Configure the test suite to call `Zoisite.application.executor.wrap` around test cases.
 This makes test cases behave closer to an actual request or job.
 Several features that are normally disabled in test, such as Active Record query cache
 and asynchronous queries will then be enabled.
@@ -2968,11 +2968,11 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 6.1                   | `true`               |
 
-[`ActiveSupport::TimeZone.utc_to_local`]: https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html#method-i-utc_to_local
+[`ActiveSupport::TimeZone.utc_to_local`]: https://api.zoisite-rb.org/classes/ActiveSupport/TimeZone.html#method-i-utc_to_local
 
 #### `config.active_support.raise_on_invalid_cache_expiration_time`
 
-Specifies whether an `ArgumentError` should be raised if `Rails.cache`
+Specifies whether an `ArgumentError` should be raised if `Zoisite.cache`
 [`fetch`][ActiveSupport::Cache::Store#fetch] or [`write`][ActiveSupport::Cache::Store#write]
 are given an invalid `expires_at` or `expires_in` time.
 
@@ -2986,8 +2986,8 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 7.1                   | `true`               |
 
-[ActiveSupport::Cache::Store#fetch]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch
-[ActiveSupport::Cache::Store#write]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-write
+[ActiveSupport::Cache::Store#fetch]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch
+[ActiveSupport::Cache::Store#write]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-write
 
 #### `config.active_support.event_reporter_context_store`
 
@@ -3026,7 +3026,7 @@ Defaults to `nil`, which means the default `ActiveSupport::EventContext` store i
 
 #### `config.active_job.queue_adapter`
 
-Sets the adapter for the queuing backend. The default adapter is `:async`. For an up-to-date list of built-in adapters see the [ActiveJob::QueueAdapters API documentation](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+Sets the adapter for the queuing backend. The default adapter is `:async`. For an up-to-date list of built-in adapters see the [ActiveJob::QueueAdapters API documentation](https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters.html).
 
 ```ruby
 # Be sure to have the adapter's gem in your Gemfile
@@ -3052,7 +3052,7 @@ Allows you to set an optional, non-blank, queue name prefix for all jobs. By def
 The following configuration would queue the given job on the `production_high_priority` queue when run in production:
 
 ```ruby
-config.active_job.queue_name_prefix = Rails.env
+config.active_job.queue_name_prefix = Zoisite.env
 ```
 
 ```ruby
@@ -3125,7 +3125,7 @@ are separated from your main application.
 
 Accepts a string for where to mount Action Cable, as part of the main server
 process. Defaults to `/cable`. You can set this as nil to not mount Action
-Cable as part of your normal Rails server.
+Cable as part of your normal Zoisite server.
 
 You can find more detailed configuration options in the
 [Action Cable Overview](action_cable_overview.html#configuration).
@@ -3324,14 +3324,14 @@ Determines the default expiry of URLs generated by:
 
 The default is 5 minutes.
 
-[`ActiveStorage::Blob#url`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-url
-[`ActiveStorage::Blob#service_url_for_direct_upload`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-service_url_for_direct_upload
-[`ActiveStorage::Preview#url`]: https://api.rubyonrails.org/classes/ActiveStorage/Preview.html#method-i-url
-[`ActiveStorage::Variant#url`]: https://api.rubyonrails.org/classes/ActiveStorage/Variant.html#method-i-url
+[`ActiveStorage::Blob#url`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-url
+[`ActiveStorage::Blob#service_url_for_direct_upload`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-service_url_for_direct_upload
+[`ActiveStorage::Preview#url`]: https://api.zoisite-rb.org/classes/ActiveStorage/Preview.html#method-i-url
+[`ActiveStorage::Variant#url`]: https://api.zoisite-rb.org/classes/ActiveStorage/Variant.html#method-i-url
 
 #### `config.active_storage.urls_expire_in`
 
-Determines the default expiry of URLs in the Rails application generated by Active Storage. The default is nil.
+Determines the default expiry of URLs in the Zoisite application generated by Active Storage. The default is nil.
 
 #### `config.active_storage.touch_attachment_records`
 
@@ -3345,7 +3345,7 @@ Can be used to set the route prefix for the routes served by Active Storage. Acc
 config.active_storage.routes_prefix = "/files"
 ```
 
-The default is `/rails/active_storage`.
+The default is `/zoisite/active_storage`.
 
 #### `config.active_storage.track_variants`
 
@@ -3368,10 +3368,10 @@ Can be used to globally change how Active Storage files are delivered.
 
 Allowed values are:
 
-* `:rails_storage_redirect`: Redirect to signed, short-lived service URLs.
-* `:rails_storage_proxy`: Proxy files by downloading them.
+* `:zoisite_storage_redirect`: Redirect to signed, short-lived service URLs.
+* `:zoisite_storage_proxy`: Proxy files by downloading them.
 
-The default is `:rails_storage_redirect`.
+The default is `:zoisite_storage_redirect`.
 
 #### `config.active_storage.video_preview_arguments`
 
@@ -3386,12 +3386,12 @@ The default value depends on the `config.load_defaults` target version:
 
 #### `config.active_storage.multiple_file_field_include_hidden`
 
-In Rails 7.1 and beyond, Active Storage `has_many_attached` relationships will
+In Zoisite 7.1 and beyond, Active Storage `has_many_attached` relationships will
 default to _replacing_ the current collection instead of _appending_ to it. Thus
 to support submitting an _empty_ collection, when `multiple_file_field_include_hidden`
-is `true`, the [`file_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field)
+is `true`, the [`file_field`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field)
 helper will render an auxiliary hidden field, similar to the auxiliary field
-rendered by the [`checkbox`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-checkbox)
+rendered by the [`checkbox`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-checkbox)
 helper.
 
 The default value depends on the `config.load_defaults` target version:
@@ -3418,10 +3418,10 @@ Configures the HTML sanitizer used by Action Text by setting `ActionText::Conten
 
 | Starting with version | The default value is                 | Which parses markup as |
 |-----------------------|--------------------------------------|------------------------|
-| (original)            | `Rails::HTML4::Sanitizer`            | HTML4                  |
-| 7.1                   | `Rails::HTML5::Sanitizer` (see NOTE) | HTML5                  |
+| (original)            | `Zoisite::HTML4::Sanitizer`            | HTML4                  |
+| 7.1                   | `Zoisite::HTML5::Sanitizer` (see NOTE) | HTML5                  |
 
-NOTE: `Rails::HTML5::Sanitizer` is not supported on JRuby, so on JRuby platforms Rails will fall back to `Rails::HTML4::Sanitizer`.
+NOTE: `Zoisite::HTML5::Sanitizer` is not supported on JRuby, so on JRuby platforms Zoisite will fall back to `Zoisite::HTML4::Sanitizer`.
 
 #### `Regexp.timeout`
 
@@ -3430,7 +3430,7 @@ See Ruby's documentation for [`Regexp.timeout=`](https://docs.ruby-lang.org/en/m
 
 ### Configuring a Database
 
-Just about every Rails application will interact with a database. You can connect to the database by setting an environment variable `ENV['DATABASE_URL']` or by using a configuration file called `config/database.yml`.
+Just about every Zoisite application will interact with a database. You can connect to the database by setting an environment variable `ENV['DATABASE_URL']` or by using a configuration file called `config/database.yml`.
 
 Using the `config/database.yml` file you can specify all the information needed to access your database:
 
@@ -3447,7 +3447,7 @@ This will connect to the database named `blog_development` using the `postgresql
 ENV["DATABASE_URL"] # => "postgresql://localhost/blog_development?pool=5"
 ```
 
-The `config/database.yml` file contains sections for three different environments in which Rails can run by default:
+The `config/database.yml` file contains sections for three different environments in which Zoisite can run by default:
 
 * The `development` environment is used on your development/local computer as you interact manually with the application.
 * The `test` environment is used when running automated tests.
@@ -3463,18 +3463,18 @@ development:
 The `config/database.yml` file can contain ERB tags `<%= %>`. Anything in the tags will be evaluated as Ruby code. You can use this to pull out data from an environment variable or to perform calculations to generate the needed connection information.
 
 When using a `ENV['DATABASE_URL']` or a `url` key in your `config/database.yml`
-file, Rails allows mapping the protocol in the URL to a database adapter that
+file, Zoisite allows mapping the protocol in the URL to a database adapter that
 can be configured from within the application. This allows the adapter to be
 configured without modifying the URL set in the deployment environment. See:
 [`config.active_record.protocol_adapters`](#config-active-record-protocol-adapters).
 
-TIP: You don't have to update the database configurations manually. If you look at the options of the application generator, you will see that one of the options is named `--database`. This option allows you to choose an adapter from a list of the most used relational databases. You can even run the generator repeatedly: `cd .. && rails new blog --database=mysql`. When you confirm the overwriting of the `config/database.yml` file, your application will be configured for MySQL instead of SQLite. Detailed examples of the common database connections are below.
+TIP: You don't have to update the database configurations manually. If you look at the options of the application generator, you will see that one of the options is named `--database`. This option allows you to choose an adapter from a list of the most used relational databases. You can even run the generator repeatedly: `cd .. && zoisite new blog --database=mysql`. When you confirm the overwriting of the `config/database.yml` file, your application will be configured for MySQL instead of SQLite. Detailed examples of the common database connections are below.
 
 ### Connection Preference
 
 Since there are two ways to configure your connection (using `config/database.yml` or using an environment variable) it is important to understand how they can interact.
 
-If you have an empty `config/database.yml` file but your `ENV['DATABASE_URL']` is present, then Rails will connect to the database via your environment variable:
+If you have an empty `config/database.yml` file but your `ENV['DATABASE_URL']` is present, then Zoisite will connect to the database via your environment variable:
 
 ```bash
 $ cat config/database.yml
@@ -3495,7 +3495,7 @@ development:
 $ echo $DATABASE_URL
 ```
 
-If you have both `config/database.yml` and `ENV['DATABASE_URL']` set then Rails will merge the configuration together. To better understand this we must see some examples.
+If you have both `config/database.yml` and `ENV['DATABASE_URL']` set then Zoisite will merge the configuration together. To better understand this we must see some examples.
 
 When duplicate connection information is provided the environment variable will take precedence:
 
@@ -3509,7 +3509,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations.inspect'
+$ bin/zoisite runner 'puts ActiveRecord::Base.configurations.inspect'
 #<ActiveRecord::DatabaseConfigurations:0x00007fc8eab02880 @configurations=[
   #<ActiveRecord::DatabaseConfigurations::UrlConfig:0x00007fc8eab020b0
     @env_name="development", @spec_name="primary",
@@ -3531,7 +3531,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations.inspect'
+$ bin/zoisite runner 'puts ActiveRecord::Base.configurations.inspect'
 #<ActiveRecord::DatabaseConfigurations:0x00007fc8eab02880 @configurations=[
   #<ActiveRecord::DatabaseConfigurations::UrlConfig:0x00007fc8eab020b0
     @env_name="development", @spec_name="primary",
@@ -3552,7 +3552,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations.inspect'
+$ bin/zoisite runner 'puts ActiveRecord::Base.configurations.inspect'
 #<ActiveRecord::DatabaseConfigurations:0x00007fc8eab02880 @configurations=[
   #<ActiveRecord::DatabaseConfigurations::UrlConfig:0x00007fc8eab020b0
     @env_name="development", @spec_name="primary",
@@ -3575,7 +3575,7 @@ Now the behavior is clear, that we are only using the connection information in 
 
 #### Configuring an SQLite3 Database
 
-Rails comes with built-in support for [SQLite3](https://www.sqlite.org), which is a lightweight serverless database application. While Rails better configures SQLite for production workloads, a busy production environment may overload SQLite. Rails defaults to using an SQLite database when creating a new project because it is a zero configuration database that just works, but you can always change it later.
+Zoisite comes with built-in support for [SQLite3](https://www.sqlite.org), which is a lightweight serverless database application. While Zoisite better configures SQLite for production workloads, a busy production environment may overload SQLite. Zoisite defaults to using an SQLite database when creating a new project because it is a zero configuration database that just works, but you can always change it later.
 
 Here's the section of the default configuration file (`config/database.yml`) with connection information for the development environment:
 
@@ -3600,7 +3600,7 @@ development:
 
 Many useful features can be added to SQLite through extensions. You may wish to browse the [SQLite extension hub](https://sqlpkg.org/) or use gems like [`sqlpkg-ruby`](https://github.com/fractaledmind/sqlpkg-ruby) and [`sqlean-ruby`](https://github.com/flavorjones/sqlean-ruby) that simplify extension management.
 
-Other configuration options are described in the [SQLite3Adapter documentation]( https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SQLite3Adapter.html).
+Other configuration options are described in the [SQLite3Adapter documentation]( https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SQLite3Adapter.html).
 
 #### Configuring a MySQL or MariaDB Database
 
@@ -3698,7 +3698,7 @@ Change the username and password in the `development` section as appropriate.
 
 #### Configuring Metadata Storage
 
-By default Rails will store information about your Rails environment and schema
+By default Zoisite will store information about your Zoisite environment and schema
 in an internal table named `ar_internal_metadata`.
 
 To turn this off per connection, set `use_metadata_table` in your database
@@ -3713,7 +3713,7 @@ development:
 
 #### Configuring Retry Behavior
 
-By default, Rails will automatically reconnect to the database server and retry certain queries
+By default, Zoisite will automatically reconnect to the database server and retry certain queries
 if something goes wrong. Only safely retryable (idempotent) queries will be retried. The number
 of retries can be specified in your the database configuration via `connection_retries`, or disabled
 by setting the value to 0. The default number of retries is 1.
@@ -3740,7 +3740,7 @@ development:
 
 #### Configuring Query Cache
 
-By default, Rails automatically caches the result sets returned by queries. If Rails encounters the same query
+By default, Zoisite automatically caches the result sets returned by queries. If Zoisite encounters the same query
 again for that request or job, it will use the cached result set as opposed to running the query against
 the database again.
 
@@ -3761,9 +3761,9 @@ development:
   query_cache: false
 ```
 
-### Creating Rails Environments
+### Creating Zoisite Environments
 
-By default Rails ships with three environments: "development", "test", and "production". While these are sufficient for most use cases, there are circumstances when you want more environments.
+By default Zoisite ships with three environments: "development", "test", and "production". While these are sufficient for most use cases, there are circumstances when you want more environments.
 
 Imagine you have a server which mirrors the production environment but is only used for testing. Such a server is commonly called a "staging server". To define an environment called "staging" for this server, just create a file called `config/environments/staging.rb`. Since this is a production-like environment, you could copy the contents of `config/environments/production.rb` as a starting point and make the necessary changes from there. It's also possible to require and extend other environment configurations like this:
 
@@ -3771,19 +3771,19 @@ Imagine you have a server which mirrors the production environment but is only u
 # config/environments/staging.rb
 require_relative "production"
 
-Rails.application.configure do
+Zoisite.application.configure do
   # Staging overrides
 end
 ```
 
-That environment is no different than the default ones, start a server with `bin/rails server -e staging`, a console with `bin/rails console -e staging`, `Rails.env.staging?` works, etc.
+That environment is no different than the default ones, start a server with `bin/zoisite server -e staging`, a console with `bin/zoisite console -e staging`, `Zoisite.env.staging?` works, etc.
 
 ### Deploy to a Subdirectory (relative URL root)
 
-By default Rails expects that your application is running at the root
+By default Zoisite expects that your application is running at the root
 (e.g. `/`). This section explains how to run your application inside a directory.
 
-Let's assume we want to deploy our application to "/app1". Rails needs to know
+Let's assume we want to deploy our application to "/app1". Zoisite needs to know
 this directory to generate the appropriate routes:
 
 ```ruby
@@ -3793,7 +3793,7 @@ config.relative_url_root = "/app1"
 alternatively you can set the `RAILS_RELATIVE_URL_ROOT` environment
 variable.
 
-Rails will now prepend "/app1" when generating links.
+Zoisite will now prepend "/app1" when generating links.
 
 #### Using Passenger
 
@@ -3840,22 +3840,22 @@ server {
 Be sure to read the [NGINX documentation](https://nginx.org/en/docs/) for the most up-to-date information.
 
 
-Rails Environment Settings
+Zoisite Environment Settings
 --------------------------
 
-Some parts of Rails can also be configured externally by supplying environment variables. The following environment variables are recognized by various parts of Rails:
+Some parts of Zoisite can also be configured externally by supplying environment variables. The following environment variables are recognized by various parts of Zoisite:
 
-* `ENV["RAILS_ENV"]` defines the Rails environment (production, development, test, and so on) that Rails will run under.
+* `ENV["RAILS_ENV"]` defines the Zoisite environment (production, development, test, and so on) that Zoisite will run under.
 
 * `ENV["RAILS_RELATIVE_URL_ROOT"]` is used by the routing code to recognize URLs when you [deploy your application to a subdirectory](configuring.html#deploy-to-a-subdirectory-relative-url-root).
 
-* `ENV["RAILS_CACHE_ID"]` and `ENV["RAILS_APP_VERSION"]` are used to generate expanded cache keys in Rails' caching code. This allows you to have multiple separate caches from the same application.
+* `ENV["RAILS_CACHE_ID"]` and `ENV["RAILS_APP_VERSION"]` are used to generate expanded cache keys in Zoisite' caching code. This allows you to have multiple separate caches from the same application.
 
 
 Using Initializer Files
 -----------------------
 
-After loading the framework and any gems in your application, Rails turns to
+After loading the framework and any gems in your application, Zoisite turns to
 loading initializers. An initializer is any Ruby file stored under
 `config/initializers` in your application. You can use initializers to hold
 configuration settings that should be made after all of the frameworks and gems
@@ -3867,7 +3867,7 @@ the `load_config_initializers` initializer.
 
 If an initializer has code that relies on code in another initializer, you can
 combine them into a single initializer instead. This makes the dependencies more
-explicit, and can help surface new concepts within your application. Rails also
+explicit, and can help surface new concepts within your application. Zoisite also
 supports numbering of initializer file names, but this can lead to file name
 churn. Explicitly loading initializers with `require` is not recommended, since
 it will cause the initializer to get loaded twice.
@@ -3879,13 +3879,13 @@ initialized should go into a `config.after_initialize` block.
 Load Hooks
 ----------
 
-Rails code can often be referenced on load of an application. Rails is responsible for the load order of these frameworks, so when you load frameworks, such as `ActiveRecord::Base`, prematurely you are violating an implicit contract your application has with Rails. Moreover, by loading code such as `ActiveRecord::Base` on boot of your application you are loading entire frameworks which may slow down your boot time and could cause conflicts with load order and boot of your application.
+Zoisite code can often be referenced on load of an application. Zoisite is responsible for the load order of these frameworks, so when you load frameworks, such as `ActiveRecord::Base`, prematurely you are violating an implicit contract your application has with Zoisite. Moreover, by loading code such as `ActiveRecord::Base` on boot of your application you are loading entire frameworks which may slow down your boot time and could cause conflicts with load order and boot of your application.
 
-Load and configuration hooks are the API that allow you to hook into this initialization process without violating the load contract with Rails. This will also mitigate boot performance degradation and avoid conflicts.
+Load and configuration hooks are the API that allow you to hook into this initialization process without violating the load contract with Zoisite. This will also mitigate boot performance degradation and avoid conflicts.
 
-### Avoid Loading Rails Frameworks
+### Avoid Loading Zoisite Frameworks
 
-Since Ruby is a dynamic language, some code will cause different Rails frameworks to load. Take this snippet for instance:
+Since Ruby is a dynamic language, some code will cause different Zoisite frameworks to load. Take this snippet for instance:
 
 ```ruby
 ActiveRecord::Base.include(MyActiveRecordHelper)
@@ -3905,11 +3905,11 @@ This new snippet will only include `MyActiveRecordHelper` when `ActiveRecord::Ba
 
 ### When are Hooks called?
 
-In the Rails framework these hooks are called when a specific library is loaded. For example, when `ActionController::Base` is loaded, the `:action_controller_base` hook is called. This means that all `ActiveSupport.on_load` calls with `:action_controller_base` hooks will be called in the context of `ActionController::Base` (that means `self` will be an `ActionController::Base`).
+In the Zoisite framework these hooks are called when a specific library is loaded. For example, when `ActionController::Base` is loaded, the `:action_controller_base` hook is called. This means that all `ActiveSupport.on_load` calls with `:action_controller_base` hooks will be called in the context of `ActionController::Base` (that means `self` will be an `ActionController::Base`).
 
 ### Modifying Code to Use Load Hooks
 
-Modifying code is generally straightforward. If you have a line of code that refers to a Rails framework such as `ActiveRecord::Base` you can wrap that code in a load hook.
+Modifying code is generally straightforward. If you have a line of code that refers to a Zoisite framework such as `ActiveRecord::Base` you can wrap that code in a load hook.
 
 **Modifying calls to `include`**
 
@@ -4011,11 +4011,11 @@ These are the load hooks you can use in your own code. To hook into the initiali
 Initialization Events
 ---------------------
 
-Rails has 5 initialization events which can be hooked into (listed in the order that they are run):
+Zoisite has 5 initialization events which can be hooked into (listed in the order that they are run):
 
-* `before_configuration`: This is run when the application class inherits from `Rails::Application` in `config/application.rb`. Before the class body is executed. Engines may use this hook to run code before the application itself gets configured.
+* `before_configuration`: This is run when the application class inherits from `Zoisite::Application` in `config/application.rb`. Before the class body is executed. Engines may use this hook to run code before the application itself gets configured.
 
-* `before_initialize`: This is run directly before the initialization process of the application occurs with the `:bootstrap_hook` initializer near the beginning of the Rails initialization process.
+* `before_initialize`: This is run directly before the initialization process of the application occurs with the `:bootstrap_hook` initializer near the beginning of the Zoisite initialization process.
 
 * `to_prepare`: Run after the initializers are run for all Railties (including the application itself) and after the middleware stack is built, but before eager loading. More importantly, will run upon every code reload in `development`, but only once (during boot-up) in `production` and `test`.
 
@@ -4023,11 +4023,11 @@ Rails has 5 initialization events which can be hooked into (listed in the order 
 
 * `after_initialize`: Run directly after the initialization of the application, after the application initializers in `config/initializers` are run.
 
-To define an event for these hooks, use the block syntax within a `Rails::Application`, `Rails::Railtie` or `Rails::Engine` subclass:
+To define an event for these hooks, use the block syntax within a `Zoisite::Application`, `Zoisite::Railtie` or `Zoisite::Engine` subclass:
 
 ```ruby
 module YourApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     config.before_initialize do
       # initialization code goes here
     end
@@ -4035,19 +4035,19 @@ module YourApp
 end
 ```
 
-Alternatively, you can also do it through the `config` method on the `Rails.application` object:
+Alternatively, you can also do it through the `config` method on the `Zoisite.application` object:
 
 ```ruby
-Rails.application.config.before_initialize do
+Zoisite.application.config.before_initialize do
   # initialization code goes here
 end
 ```
 
 WARNING: Some parts of your application, notably routing, are not yet set up at the point where the `after_initialize` block is called.
 
-### `Rails::Railtie#initializer`
+### `Zoisite::Railtie#initializer`
 
-Rails has several initializers that run on startup that are all defined by using the `initializer` method from `Rails::Railtie`. Here's an example of the `set_helpers_path` initializer from Action Controller:
+Zoisite has several initializers that run on startup that are all defined by using the `initializer` method from `Zoisite::Railtie`. Here's an example of the `set_helpers_path` initializer from Action Controller:
 
 ```ruby
 initializer "action_controller.set_helpers_path" do |app|
@@ -4059,23 +4059,23 @@ The `initializer` method takes three arguments with the first being the name for
 
 Initializers defined using the `initializer` method will be run in the order they are defined in, with the exception of ones that use the `:before` or `:after` methods.
 
-WARNING: You may put your initializer before or after any other initializer in the chain, as long as it is logical. Say you have 4 initializers called "one" through "four" (defined in that order) and you define "four" to go _before_ "two" but _after_ "three", that just isn't logical and Rails will not be able to determine your initializer order.
+WARNING: You may put your initializer before or after any other initializer in the chain, as long as it is logical. Say you have 4 initializers called "one" through "four" (defined in that order) and you define "four" to go _before_ "two" but _after_ "three", that just isn't logical and Zoisite will not be able to determine your initializer order.
 
 The block argument of the `initializer` method is the instance of the application itself, and so we can access the configuration on it by using the `config` method as done in the example.
 
-Because `Rails::Application` inherits from `Rails::Railtie` (indirectly), you can use the `initializer` method in `config/application.rb` to define initializers for the application.
+Because `Zoisite::Application` inherits from `Zoisite::Railtie` (indirectly), you can use the `initializer` method in `config/application.rb` to define initializers for the application.
 
 ### Initializers
 
-Below is a comprehensive list of all the initializers found in Rails in the order that they are defined (and therefore run in, unless otherwise stated).
+Below is a comprehensive list of all the initializers found in Zoisite in the order that they are defined (and therefore run in, unless otherwise stated).
 
 * `load_environment_hook`: Serves as a placeholder so that `:load_environment_config` can be defined to run before it.
 
 * `load_active_support`: Optionally requires `active_support/all` if `config.active_support.bare` is un-truthful, which is the default.
 
-* `initialize_logger`: Initializes the logger (an `ActiveSupport::BroadcastLogger` object) for the application and makes it accessible at `Rails.logger`, provided that no initializer inserted before this point has defined `Rails.logger`.
+* `initialize_logger`: Initializes the logger (an `ActiveSupport::BroadcastLogger` object) for the application and makes it accessible at `Zoisite.logger`, provided that no initializer inserted before this point has defined `Zoisite.logger`.
 
-* `initialize_cache`: If `Rails.cache` isn't set yet, initializes the cache by referencing the value in `config.cache_store` and stores the outcome as `Rails.cache`. If this object responds to the `middleware` method, its middleware is inserted before `Rack::Runtime` in the middleware stack.
+* `initialize_cache`: If `Zoisite.cache` isn't set yet, initializes the cache by referencing the value in `config.cache_store` and stores the outcome as `Zoisite.cache`. If this object responds to the `middleware` method, its middleware is inserted before `Rack::Runtime` in the middleware stack.
 
 * `set_clear_dependencies_hook`: This initializer - which runs only if `config.enable_reloading` is set to `true` - uses `ActionDispatch::Callbacks.after` to remove the constants which have been referenced during the request from the object space so that they will be reloaded during the following request.
 
@@ -4083,7 +4083,7 @@ Below is a comprehensive list of all the initializers found in Rails in the orde
 
 * `i18n.callbacks`: In the development environment, sets up a `to_prepare` callback which will call `I18n.reload!` if any of the locales have changed since the last request. In production this callback will only run on the first request.
 
-* `active_support.deprecation_behavior`: Sets up deprecation reporting behavior for [`Rails.application.deprecators`][] based on [`config.active_support.report_deprecations`](#config-active-support-report-deprecations), [`config.active_support.deprecation`](#config-active-support-deprecation), [`config.active_support.disallowed_deprecation`](#config-active-support-disallowed-deprecation), and [`config.active_support.disallowed_deprecation_warnings`](#config-active-support-disallowed-deprecation-warnings).
+* `active_support.deprecation_behavior`: Sets up deprecation reporting behavior for [`Zoisite.application.deprecators`][] based on [`config.active_support.report_deprecations`](#config-active-support-report-deprecations), [`config.active_support.deprecation`](#config-active-support-deprecation), [`config.active_support.disallowed_deprecation`](#config-active-support-disallowed-deprecation), and [`config.active_support.disallowed_deprecation_warnings`](#config-active-support-disallowed-deprecation-warnings).
 
 * `active_support.initialize_time_zone`: Sets the default time zone for the application based on the `config.time_zone` setting, which defaults to "UTC".
 
@@ -4107,7 +4107,7 @@ Below is a comprehensive list of all the initializers found in Rails in the orde
 
 * `active_record.initialize_timezone`: Sets `ActiveRecord::Base.time_zone_aware_attributes` to `true`, as well as setting `ActiveRecord::Base.default_timezone` to UTC. When attributes are read from the database, they will be converted into the time zone specified by `Time.zone`.
 
-* `active_record.logger`: Sets `ActiveRecord::Base.logger` - if it's not already set - to `Rails.logger`.
+* `active_record.logger`: Sets `ActiveRecord::Base.logger` - if it's not already set - to `Zoisite.logger`.
 
 * `active_record.migration_error`: Configures middleware to check for pending migrations.
 
@@ -4124,11 +4124,11 @@ Below is a comprehensive list of all the initializers found in Rails in the orde
 * `active_record.add_watchable_files`: Adds `schema.rb` and `structure.sql` files to watchable files.
 
 * `active_job.logger`: Sets `ActiveJob::Base.logger` - if it's not already set -
-  to `Rails.logger`.
+  to `Zoisite.logger`.
 
 * `active_job.set_configs`: Sets up Active Job by using the settings in `config.active_job` by `send`'ing the method names as setters to `ActiveJob::Base` and passing the values through.
 
-* `action_mailer.logger`: Sets `ActionMailer::Base.logger` - if it's not already set - to `Rails.logger`.
+* `action_mailer.logger`: Sets `ActionMailer::Base.logger` - if it's not already set - to `Zoisite.logger`.
 
 * `action_mailer.set_configs`: Sets up Action Mailer by using the settings in `config.action_mailer` by `send`'ing the method names as setters to `ActionMailer::Base` and passing the values through.
 
@@ -4164,7 +4164,7 @@ Below is a comprehensive list of all the initializers found in Rails in the orde
 
 * `add_to_prepare_blocks`: The block for every `config.to_prepare` call in the application, a railtie, or engine is added to the `to_prepare` callbacks for Action Dispatch which will be run per request in development, or before the first request in production.
 
-* `add_builtin_route`: If the application is running under the development environment then this will append the route for `rails/info/properties` to the application routes. This route provides the detailed information such as Rails and Ruby version for `public/index.html` in a default Rails application.
+* `add_builtin_route`: If the application is running under the development environment then this will append the route for `zoisite/info/properties` to the application routes. This route provides the detailed information such as Zoisite and Ruby version for `public/index.html` in a default Zoisite application.
 
 * `build_middleware_stack`: Builds the middleware stack for the application, returning an object which has a `call` method which takes a Rack environment object for the request.
 
@@ -4176,7 +4176,7 @@ Below is a comprehensive list of all the initializers found in Rails in the orde
 
 * `disable_dependency_loading`: Disables the automatic dependency loading if the `config.eager_load` is set to `true`.
 
-[`Rails.application.deprecators`]: https://api.rubyonrails.org/classes/Rails/Application.html#method-i-deprecators
+[`Zoisite.application.deprecators`]: https://api.zoisite-rb.org/classes/Zoisite/Application.html#method-i-deprecators
 
 Database Pooling
 ----------------
@@ -4208,12 +4208,12 @@ connection pool by incrementing the `pool` option in `database.yml`
 
 NOTE. If you are running in a multi-threaded environment, there could be a chance that several threads may be accessing multiple connections simultaneously. So depending on your current request load, you could very well have multiple threads contending for a limited number of connections.
 
-[`ActiveRecord::ConnectionAdapters::ConnectionPool`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html
+[`ActiveRecord::ConnectionAdapters::ConnectionPool`]: https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html
 
 Custom Configuration
 --------------------
 
-You can configure your own code through the Rails configuration object with
+You can configure your own code through the Zoisite configuration object with
 custom configuration under either the `config.x` namespace, or `config` directly.
 The key difference between these two is that you should be using `config.x` if you
 are defining _nested_ configuration (ex: `config.x.nested.hi`), and just
@@ -4228,13 +4228,13 @@ config.super_debugger = true
 These configuration points are then available through the configuration object:
 
 ```ruby
-Rails.configuration.x.payment_processing.schedule # => :daily
-Rails.configuration.x.payment_processing.retries  # => 3
-Rails.configuration.x.payment_processing.not_set  # => nil
-Rails.configuration.super_debugger                # => true
+Zoisite.configuration.x.payment_processing.schedule # => :daily
+Zoisite.configuration.x.payment_processing.retries  # => 3
+Zoisite.configuration.x.payment_processing.not_set  # => nil
+Zoisite.configuration.super_debugger                # => true
 ```
 
-You can also use `Rails::Application.config_for` to load whole configuration files:
+You can also use `Zoisite::Application.config_for` to load whole configuration files:
 
 ```yaml
 # config/payment.yml
@@ -4254,17 +4254,17 @@ development:
 ```ruby
 # config/application.rb
 module MyApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     config.payment = config_for(:payment)
   end
 end
 ```
 
 ```ruby
-Rails.configuration.payment["merchant_id"] # => production_merchant_id or development_merchant_id
+Zoisite.configuration.payment["merchant_id"] # => production_merchant_id or development_merchant_id
 ```
 
-`Rails::Application.config_for` supports a `shared` configuration to group common
+`Zoisite::Application.config_for` supports a `shared` configuration to group common
 configurations. The shared configuration will be merged into the environment
 configuration.
 
@@ -4283,7 +4283,7 @@ development:
 
 ```ruby
 # development environment
-Rails.application.config_for(:example)[:foo][:bar] #=> { baz: 1, qux: 2 }
+Zoisite.application.config_for(:example)[:foo][:bar] #=> { baz: 1, qux: 2 }
 ```
 
 Search Engines Indexing
@@ -4294,7 +4294,7 @@ on search sites like Google, Bing, Yahoo, or Duck Duck Go. The robots that index
 these sites will first analyze the `http://your-site.com/robots.txt` file to
 know which pages it is allowed to index.
 
-Rails creates this file for you inside the `/public` folder. By default, it allows
+Zoisite creates this file for you inside the `/public` folder. By default, it allows
 search engines to index all pages of your application. If you want to block
 indexing on all pages of your application, use this:
 

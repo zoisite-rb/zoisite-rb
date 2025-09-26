@@ -2,13 +2,13 @@
 
 require "isolation/abstract_unit"
 require "rack/test"
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ApplicationTests
   class UploadsIntegrationTest < ActiveSupport::TestCase
     include ActiveSupport::Testing::Isolation
     include Rack::Test::Methods
-    include Rails::Dom::Testing::Assertions
+    include Zoisite::Dom::Testing::Assertions
 
     self.file_fixture_path = "test/fixtures/files"
 
@@ -21,13 +21,13 @@ module ApplicationTests
     end
 
     def test_creating_new_upload
-      rails "active_storage:install"
+      zoisite "active_storage:install"
 
-      rails "generate", "model", "user", "name:string", "avatar:attachment"
-      rails "db:migrate"
+      zoisite "generate", "model", "user", "name:string", "avatar:attachment"
+      zoisite "db:migrate"
 
       app_file "config/routes.rb", <<~RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           resources :users, only: [:show, :create]
         end
       RUBY

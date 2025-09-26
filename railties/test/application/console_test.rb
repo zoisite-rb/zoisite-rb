@@ -16,7 +16,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
       class Post < ActiveRecord::Base
       end
     CODE
-    system "#{app_path}/bin/rails runner 'Post.lease_connection.create_table :posts'"
+    system "#{app_path}/bin/zoisite runner 'Post.lease_connection.create_table :posts'"
 
     @primary, @replica = PTY.open
   end
@@ -38,7 +38,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
 
     pid = Process.spawn(
       { "TERM" => "dumb", "HOME" => home_tmp_dir }.merge(env),
-      "#{app_path}/bin/rails console #{options}",
+      "#{app_path}/bin/zoisite console #{options}",
       in: @replica, out: @replica, err: @replica
     )
 
@@ -73,7 +73,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
       config.disable_sandbox = true
     RUBY
 
-    output = `#{app_path}/bin/rails console --sandbox`
+    output = `#{app_path}/bin/zoisite console --sandbox`
 
     assert_includes output, "sandbox mode is disabled"
     assert_equal 1, $?.exitstatus
@@ -87,7 +87,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
     options = "-e production -- --verbose"
     spawn_console(options)
 
-    write_prompt "puts Rails.application.sandbox", "puts Rails.application.sandbox\r\ntrue"
+    write_prompt "puts Zoisite.application.sandbox", "puts Zoisite.application.sandbox\r\ntrue"
     @primary.puts "quit"
   end
 
@@ -99,7 +99,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
     options = "-e production --no-sandbox -- --verbose"
     spawn_console(options)
 
-    write_prompt "puts Rails.application.sandbox", "puts Rails.application.sandbox\r\nfalse"
+    write_prompt "puts Zoisite.application.sandbox", "puts Zoisite.application.sandbox\r\nfalse"
     @primary.puts "quit"
   end
 
@@ -111,7 +111,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
     options = "-- --verbose"
     spawn_console(options)
 
-    write_prompt "puts Rails.application.sandbox", "puts Rails.application.sandbox\r\nfalse"
+    write_prompt "puts Zoisite.application.sandbox", "puts Zoisite.application.sandbox\r\nfalse"
     @primary.puts "quit"
   end
 
@@ -136,7 +136,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
     spawn_console(options)
 
     write_prompt "a = 1", "a = 1"
-    write_prompt "puts Rails.env", "puts Rails.env\r\ntest"
+    write_prompt "puts Zoisite.env", "puts Zoisite.env\r\ntest"
     @primary.puts "quit"
   end
 
@@ -181,7 +181,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
 
   def test_app_helper_method
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get 'foo', to: 'foo#index'
       end
     RUBY
@@ -193,7 +193,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
 
   def test_app_routes_are_loaded
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get 'foo', to: 'foo#index'
       end
     RUBY

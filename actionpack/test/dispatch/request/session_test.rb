@@ -43,7 +43,7 @@ module ActionDispatch
 
       def test_destroy
         s = Session.create(store, req, {})
-        s["rails"] = "ftw"
+        s["zoisite"] = "ftw"
 
         s.destroy
 
@@ -58,9 +58,9 @@ module ActionDispatch
 
       def test_keys
         s = Session.create(store, req, {})
-        s["rails"] = "ftw"
+        s["zoisite"] = "ftw"
         s["adequate"] = "awesome"
-        assert_equal %w[rails adequate], s.keys
+        assert_equal %w[zoisite adequate], s.keys
       end
 
       def test_keys_with_deferred_loading
@@ -70,7 +70,7 @@ module ActionDispatch
 
       def test_values
         s = Session.create(store, req, {})
-        s["rails"] = "ftw"
+        s["zoisite"] = "ftw"
         s["adequate"] = "awesome"
         assert_equal %w[ftw awesome], s.values
       end
@@ -82,7 +82,7 @@ module ActionDispatch
 
       def test_clear
         s = Session.create(store, req, {})
-        s["rails"] = "ftw"
+        s["zoisite"] = "ftw"
         s["adequate"] = "awesome"
 
         s.clear
@@ -91,19 +91,19 @@ module ActionDispatch
 
       def test_update
         s = Session.create(store, req, {})
-        s["rails"] = "ftw"
+        s["zoisite"] = "ftw"
 
-        s.update(rails: "awesome")
+        s.update(zoisite: "awesome")
 
-        assert_equal(["rails"], s.keys)
-        assert_equal("awesome", s["rails"])
+        assert_equal(["zoisite"], s.keys)
+        assert_equal("awesome", s["zoisite"])
       end
 
       def test_delete
         s = Session.create(store, req, {})
-        s["rails"] = "ftw"
+        s["zoisite"] = "ftw"
 
-        s.delete("rails")
+        s.delete("zoisite")
 
         assert_empty(s.keys)
       end

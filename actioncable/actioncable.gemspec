@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = "actioncable"
   s.version     = version
-  s.summary     = "WebSocket framework for Rails."
+  s.summary     = "WebSocket framework for Zoisite."
   s.description = "Structure many real-time application concerns into channels over a single WebSocket connection."
 
   s.required_ruby_version = ">= 3.2.0"
@@ -15,22 +15,22 @@ Gem::Specification.new do |s|
 
   s.author   = ["Pratik Naik", "David Heinemeier Hansson"]
   s.email    = ["pratiknaik@gmail.com", "david@loudthinking.com"]
-  s.homepage = "https://rubyonrails.org"
+  s.homepage = "https://zoisite-rb.org"
 
   s.files        = Dir["CHANGELOG.md", "MIT-LICENSE", "README.md", "lib/**/*", "app/assets/javascripts/*.js"]
   s.require_path = "lib"
 
   s.metadata = {
-    "bug_tracker_uri"   => "https://github.com/rails/rails/issues",
-    "changelog_uri"     => "https://github.com/rails/rails/blob/v#{version}/actioncable/CHANGELOG.md",
-    "documentation_uri" => "https://api.rubyonrails.org/v#{version}/",
-    "mailing_list_uri"  => "https://discuss.rubyonrails.org/c/rubyonrails-talk",
-    "source_code_uri"   => "https://github.com/rails/rails/tree/v#{version}/actioncable",
+    "bug_tracker_uri"   => "https://github.com/zoisite-rb/zoisite-rb/issues",
+    "changelog_uri"     => "https://github.com/zoisite-rb/zoisite-rb/blob/v#{version}/actioncable/CHANGELOG.md",
+    "documentation_uri" => "https://api.zoisite-rb.org/v#{version}/",
+    "mailing_list_uri"  => "https://discuss.zoisite-rb.org/c/zoisite-talk",
+    "source_code_uri"   => "https://github.com/zoisite-rb/zoisite-rb/tree/v#{version}/actioncable",
     "rubygems_mfa_required" => "true",
   }
 
   # NOTE: Please read our dependency guidelines before updating versions:
-  # https://edgeguides.rubyonrails.org/security.html#dependency-management-and-cves
+  # https://edgeguides.zoisite-rb.org/security.html#dependency-management-and-cves
 
   s.add_dependency "activesupport", version
   s.add_dependency "actionpack", version

@@ -1,14 +1,14 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
-The Basics of Creating Rails Plugins
+The Basics of Creating Zoisite Plugins
 ====================================
 
-This guide is for developers who want to create a Rails plugin, in order to
-extend or modify the behavior of a Rails application.
+This guide is for developers who want to create a Zoisite plugin, in order to
+extend or modify the behavior of a Zoisite application.
 
 After reading this guide, you will know:
 
-* What Rails plugins are and when to use them.
+* What Zoisite plugins are and when to use them.
 * How to create a plugin from scratch.
 * How to extend core Ruby classes.
 * How to add methods to `ApplicationRecord`.
@@ -19,7 +19,7 @@ After reading this guide, you will know:
 What are Plugins?
 -----------------
 
-A Rails plugin is a packaged extension that adds functionality to a Rails
+A Zoisite plugin is a packaged extension that adds functionality to a Zoisite
 application. Plugins serve several purposes:
 
 * They offer a way for developers to experiment with new ideas without affecting
@@ -30,16 +30,16 @@ application. Plugins serve several purposes:
   include everything directly into the framework.
 
 At a technical level, a plugin is a Ruby gem that’s designed to work inside a
-Rails application. It often uses a
-[Railtie](https://api.rubyonrails.org/classes/Rails/Railtie.html) to hook into the
-Rails boot process, allowing it to extend or modify the framework's behavior in
+Zoisite application. It often uses a
+[Railtie](https://api.zoisite-rb.org/classes/Zoisite/Railtie.html) to hook into the
+Zoisite boot process, allowing it to extend or modify the framework's behavior in
 a structured way. A Railtie is the most
-basic integration point for extending Rails — it’s typically used when your
+basic integration point for extending Zoisite — it’s typically used when your
 plugin needs to add configuration, rake tasks, or initializer code, but doesn’t
 expose any controllers, views, or models.
 
 NOTE:
-An [Engine](engines.html) is a more advanced type of plugin that behaves like a mini Rails
+An [Engine](engines.html) is a more advanced type of plugin that behaves like a mini Zoisite
 application. It can include its own routes, controllers, views, and even assets.
 While all engines are plugins, not all plugins are engines. The main difference lies
 in scope: plugins are typically used for smaller customizations or shared
@@ -50,11 +50,11 @@ with their own routes, models, and views.
 Generator Options
 ------------------
 
-Rails plugins are built as gems. They can be shared across different Rails
+Zoisite plugins are built as gems. They can be shared across different Zoisite
 applications using [RubyGems](https://guides.rubygems.org/make-your-own-gem/)
 and [Bundler](https://bundler.io/guides/creating_gem.html) if desired.
 
-The `rails plugin new` command supports several options that determine what type
+The `zoisite plugin new` command supports several options that determine what type
 of plugin structure is generated.
 
 The **Basic Plugin** (default), without any arguments, generates a minimal
@@ -62,11 +62,11 @@ plugin structure suitable for simple extensions like core class methods or
 utility functions.
 
 ```bash
-$ rails plugin new api_boost
+$ zoisite plugin new api_boost
 ```
 
 We'll use the basic plugin generator for this guide. There are two options,
-`--full` and `--mountable`, which are covered in the [Rails Engines
+`--full` and `--mountable`, which are covered in the [Zoisite Engines
 guide](engines.html).
 
 The **Full Plugin** (`--full`) option creates a more complete plugin structure
@@ -74,7 +74,7 @@ that includes an `app` directory tree (models, views, controllers), a
 `config/routes.rb` file, and an Engine class at `lib/api_boost/engine.rb`.
 
 ```bash
-$ rails plugin new api_boost --full
+$ zoisite plugin new api_boost --full
 ```
 
 Use `--full` when your plugin needs its own models, controllers, or views but
@@ -90,7 +90,7 @@ mountable engine that includes everything from `--full` plus:
 - Automatic mounting in the dummy app for testing
 
 ```bash
-$ rails plugin new api_boost --mountable
+$ zoisite plugin new api_boost --mountable
 ```
 
 Use `--mountable` when building a self-contained feature that could work as a
@@ -111,7 +111,7 @@ Below is some guidance on choosing the right option:
 See usage and options by asking for help:
 
 ```bash
-$ rails plugin new --help
+$ zoisite plugin new --help
 ```
 
 Setup
@@ -120,14 +120,14 @@ Setup
 For the purpose of this guide, imagine you're building APIs and want to create a
 plugin that adds common API functionality like request throttling, response
 caching, and automatic API documentation. You'll create a plugin called
-"ApiBoost" that can enhance any Rails API application.
+"ApiBoost" that can enhance any Zoisite API application.
 
 ### Generate the Plugin
 
 Create a basic plugin with the command:
 
 ```bash
-$ rails plugin new api_boost
+$ zoisite plugin new api_boost
 ```
 
 This will create the ApiBoost plugin in a directory named `api_boost`. Let's
@@ -150,7 +150,7 @@ api_boost/
 │   │   ├── config/
 │   │   ├── db/
 │   │   ├── public/
-│   │   └── ... (full Rails application)
+│   │   └── ... (full Zoisite application)
 │   ├── integration/
 │   └── test_helper.rb
 ├── MIT-LICENSE
@@ -163,13 +163,13 @@ api_boost/
 - `lib/api_boost/` contains modules and classes for your plugin functionality
 - `lib/tasks/` contains any Rake tasks your plugin provides
 
-**The `test/dummy` directory** contains a complete Rails application that's used
+**The `test/dummy` directory** contains a complete Zoisite application that's used
 for testing your plugin. This dummy application:
 
 - Loads your plugin automatically through the Gemfile
-- Provides a Rails environment to test your plugin's integration
+- Provides a Zoisite environment to test your plugin's integration
 - Includes generators, models, controllers, and views as needed for testing
-- Can be used interactively with `rails console` and `rails server`
+- Can be used interactively with `zoisite console` and `zoisite server`
 
 **The Gemspec file** (`api_boost.gemspec`) defines your gem's metadata,
 dependencies, and the files to include when packaging.
@@ -198,10 +198,10 @@ directory and running the following command:
 
 ```bash
 $ cd test/dummy
-$ bin/rails db:create
+$ bin/zoisite db:create
 ```
 
-The dummy application works just like any Rails application - you can generate
+The dummy application works just like any Zoisite application - you can generate
 models, run migrations, start the server, or open a console to test the plugin's
 functionality as you develop it.
 
@@ -224,7 +224,7 @@ Extending Core Classes
 
 This section will explain how to add a method to
 [Integer](https://docs.ruby-lang.org/en/master/Integer.html) that will be
-available anywhere in your Rails application.
+available anywhere in your Zoisite application.
 
 WARNING: Before proceeding, it's important to understand that extending core
 classes (like String, Array, Hash, etc.) should be used sparingly, if at all.
@@ -232,7 +232,7 @@ Core class extensions can be brittle, dangerous, and are often
 unnecessary.<br></br> They can:</br>
 - Cause naming conflicts when multiple gems extend the same class with the same
   method name</br>
-- Break unexpectedly when Ruby or Rails updates change core class behavior</br>
+- Break unexpectedly when Ruby or Zoisite updates change core class behavior</br>
 - Make debugging difficult because it's not obvious where methods come from</br>
 - Create coupling issues between your plugin and other code<br></br> Better
 alternatives to consider:</br>
@@ -277,12 +277,12 @@ class Integer
 end
 ```
 
-To see this in action, change to the `test/dummy` directory, start `bin/rails
+To see this in action, change to the `test/dummy` directory, start `bin/zoisite
 console`, and test the API response formatting:
 
 ```bash
 $ cd test/dummy
-$ bin/rails console
+$ bin/zoisite console
 ```
 
 ```irb
@@ -348,7 +348,7 @@ The code above uses `ActiveSupport::Concern` to simplify including modules with
 both class and instance methods. Methods in the `class_methods` block become
 class methods when the module is included. For more details, see the
 [ActiveSupport::Concern API
-documentation](https://api.rubyonrails.org/classes/ActiveSupport/Concern.html).
+documentation](https://api.zoisite-rb.org/classes/ActiveSupport/Concern.html).
 
 ### Add a Class Method
 
@@ -362,13 +362,13 @@ Internally, this value is stored in a class-level setting called
 For example, if you want to use `last_api_call` instead of `last_requested_at` as
 the column name, you can do the following:
 
-First, generate some models in your "dummy" Rails application to test this
+First, generate some models in your "dummy" Zoisite application to test this
 functionality. Run the following commands from the `test/dummy` directory:
 
 ```bash
 $ cd test/dummy
-$ bin/rails generate model Product last_requested_at:datetime last_api_call:datetime
-$ bin/rails db:migrate
+$ bin/zoisite generate model Product last_requested_at:datetime last_api_call:datetime
+$ bin/zoisite db:migrate
 ```
 
 Now update the Product model so that it acts like an API resource:
@@ -394,7 +394,7 @@ class ApplicationRecord < ActiveRecord::Base
 end
 ```
 
-Now you can test this functionality in the Rails console:
+Now you can test this functionality in the Zoisite console:
 
 ```irb
 irb> Product.api_timestamp_field
@@ -440,7 +440,7 @@ the setter method
 send("#{self.class.api_timestamp_field}=", timestamp)
 ```
 
-Now you can test the functionality in the Rails console:
+Now you can test the functionality in the Zoisite console:
 
 ```irb
 irb> product = Product.new
@@ -453,17 +453,17 @@ Advanced Integration: Using Railties
 ------------------------------------
 
 The plugin we've built so far works great for basic functionality. However, if
-the plugin needs to integrate more deeply with Rails' framework, you'll want to
-use a [Railtie](https://api.rubyonrails.org/classes/Rails/Railtie.html).
+the plugin needs to integrate more deeply with Zoisite' framework, you'll want to
+use a [Railtie](https://api.zoisite-rb.org/classes/Zoisite/Railtie.html).
 
 A Railtie is required when your plugin needs to:
 
-* Add configuration options accessible via `Rails.application.config`
-* Automatically include modules in Rails classes without manual setup
+* Add configuration options accessible via `Zoisite.application.config`
+* Automatically include modules in Zoisite classes without manual setup
 * Provide Rake tasks to the host application
-* Set up initializers that run during Rails boot
+* Set up initializers that run during Zoisite boot
 * Add middleware to the application stack
-* Configure Rails generators
+* Configure Zoisite generators
 * Subscribe to `ActiveSupport::Notifications`
 
 For simple plugins like ours that only extend core classes or add modules, a
@@ -478,7 +478,7 @@ Let's say you want to make the default rate limit in your
 # api_boost/lib/api_boost/railtie.rb
 
 module ApiBoost
-  class Railtie < Rails::Railtie
+  class Railtie < Zoisite::Railtie
     config.api_boost = ActiveSupport::OrderedOptions.new
     config.api_boost.default_rate_limit = 60.requests_per_hour
 
@@ -555,7 +555,7 @@ Instead of requiring users to manually include `ActsAsApiResource` in their
 # api_boost/lib/api_boost/railtie.rb
 
 module ApiBoost
-  class Railtie < Rails::Railtie
+  class Railtie < Zoisite::Railtie
     config.api_boost = ActiveSupport::OrderedOptions.new
     config.api_boost.default_rate_limit = 60.requests_per_hour
 
@@ -573,7 +573,7 @@ end
 ```
 
 The `ActiveSupport.on_load` hook ensures your module is included at the right
-time during Rails initialization, after ActiveRecord is fully loaded.
+time during Zoisite initialization, after ActiveRecord is fully loaded.
 
 ### Rake Tasks
 
@@ -583,7 +583,7 @@ To provide Rake tasks to applications using your plugin:
 # api_boost/lib/api_boost/railtie.rb
 
 module ApiBoost
-  class Railtie < Rails::Railtie
+  class Railtie < Zoisite::Railtie
     # ... existing configuration ...
 
     rake_tasks do
@@ -613,7 +613,7 @@ namespace :api_boost do
 end
 ```
 
-Applications using your plugin will now have access to `rails api_boost:stats`.
+Applications using your plugin will now have access to `zoisite api_boost:stats`.
 
 ### Testing the Railtie
 
@@ -635,20 +635,20 @@ class RailtieTest < ActiveSupport::TestCase
   end
 
   def test_rake_tasks_are_loaded
-    Rails.application.load_tasks
+    Zoisite.application.load_tasks
     assert Rake::Task.task_defined?("api_boost:stats")
   end
 end
 ```
 
-Railties provide a clean way to integrate your plugin with Rails' initialization
-process. For more details about the complete Rails initialization lifecycle, see
-the [Rails Initialization Process Guide](initialization.html).
+Railties provide a clean way to integrate your plugin with Zoisite' initialization
+process. For more details about the complete Zoisite initialization lifecycle, see
+the [Zoisite Initialization Process Guide](initialization.html).
 
 Testing Your Plugin
 -------------------
 
-It's good practice to add tests. The Rails
+It's good practice to add tests. The Zoisite
 plugin generator created a test framework for you. Let's add tests for the
 functionality we just built.
 

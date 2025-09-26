@@ -22,7 +22,7 @@ module ApplicationTests
         [200, {}, ["Hello"]]
       end
 
-      Rails.application.middleware.build(endpoint).call(env)
+      Zoisite.application.middleware.build(endpoint).call(env)
       remote_ip
     end
 

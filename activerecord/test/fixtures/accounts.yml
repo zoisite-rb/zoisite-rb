@@ -9,7 +9,7 @@ unknown:
   id: 2
   credit_limit: 50
 
-rails_core_account:
+zoisite_core_account:
   id: 3
   firm_id: 6
   credit_limit: 50
@@ -21,7 +21,7 @@ last_account:
   credit_limit: 60
   status: "trial"
 
-rails_core_account_2:
+zoisite_core_account_2:
   id: 5
   firm_id: 6
   credit_limit: 55

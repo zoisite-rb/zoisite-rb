@@ -5,9 +5,9 @@ require "bundler/inline"
 gemfile(true) do
   source "https://rubygems.org"
 
-  gem "rails"
-  # If you want to test against edge Rails replace the previous line with this:
-  # gem "rails", github: "rails/rails", branch: "main"
+  gem "zoisite"
+  # If you want to test against edge Zoisite replace the previous line with this:
+  # gem "zoisite", github: "zoisite-rb/zoisite-rb", branch: "main"
 
   gem "sqlite3"
 end
@@ -18,8 +18,8 @@ require "minitest/autorun"
 
 ENV["DATABASE_URL"] = "sqlite3::memory:"
 
-class TestApp < Rails::Application
-  config.load_defaults Rails::VERSION::STRING.to_f
+class TestApp < Zoisite::Application
+  config.load_defaults Zoisite::VERSION::STRING.to_f
 
   config.root = __dir__
   config.hosts << "example.org"
@@ -28,7 +28,7 @@ class TestApp < Rails::Application
   config.secret_key_base = "secret_key_base"
 
   config.logger = Logger.new($stdout)
-  Rails.logger  = config.logger
+  Zoisite.logger  = config.logger
 
   config.active_storage.service = :local
   config.active_storage.service_configurations = {
@@ -40,7 +40,7 @@ class TestApp < Rails::Application
 
   config.active_job.queue_adapter = :inline
 end
-Rails.application.initialize!
+Zoisite.application.initialize!
 
 require ActiveStorage::Engine.root.join("db/migrate/20170806125915_create_active_storage_tables.rb").to_s
 

@@ -13,7 +13,7 @@ module ActiveJob
     #
     # To use Backburner set the queue_adapter config to +:backburner+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :backburner
+    #   Zoisite.application.config.active_job.queue_adapter = :backburner
     class BackburnerAdapter < AbstractAdapter
       def enqueue(job) # :nodoc:
         response = Backburner::Worker.enqueue(JobWrapper, [job.serialize], queue: job.queue_name, pri: job.priority)

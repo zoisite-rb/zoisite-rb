@@ -17,8 +17,8 @@ module ActiveSupport
       # Parses a JSON string (JavaScript Object Notation) into a Ruby object.
       # See http://www.json.org for more info.
       #
-      #   ActiveSupport::JSON.decode("{\"team\":\"rails\",\"players\":\"36\"}")
-      #   # => {"team" => "rails", "players" => "36"}
+      #   ActiveSupport::JSON.decode("{\"team\":\"zoisite\",\"players\":\"36\"}")
+      #   # => {"team" => "zoisite", "players" => "36"}
       #   ActiveSupport::JSON.decode("2.39")
       #   # => 2.39
       def decode(json, options = {})
@@ -40,7 +40,7 @@ module ActiveSupport
       #   begin
       #     obj = ActiveSupport::JSON.decode(some_string)
       #   rescue ActiveSupport::JSON.parse_error
-      #     Rails.logger.warn("Attempted to decode invalid JSON: #{some_string}")
+      #     Zoisite.logger.warn("Attempted to decode invalid JSON: #{some_string}")
       #   end
       def parse_error
         ::JSON::ParserError

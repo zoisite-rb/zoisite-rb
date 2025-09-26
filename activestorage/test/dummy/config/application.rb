@@ -1,14 +1,14 @@
 require_relative "boot"
 
-require "rails/all"
+require "zoisite/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+Bundler.require(*Zoisite.groups)
 
 module Dummy
-  class Application < Rails::Application
-    config.load_defaults Rails::VERSION::STRING.to_f
+  class Application < Zoisite::Application
+    config.load_defaults Zoisite::VERSION::STRING.to_f
 
     # For compatibility with applications that use this config
     config.action_controller.include_all_helpers = false
@@ -19,6 +19,6 @@ module Dummy
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    # config.eager_load_paths << Zoisite.root.join("extras")
   end
 end

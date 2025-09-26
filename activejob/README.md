@@ -10,20 +10,20 @@ that makes it easy to turn any mailing into a job for running later. That's
 one of the most common jobs in a modern web application: sending emails outside
 the request-response cycle, so the user doesn't have to wait on it.
 
-The main point is to ensure that all \Rails apps will have a job infrastructure
+The main point is to ensure that all \Zoisite apps will have a job infrastructure
 in place, even if it's in the form of an "immediate runner". We can then have
 framework features and other gems build on top of that, without having to worry
 about API differences between Delayed Job and Resque. Picking your queuing
 backend becomes more of an operational concern, then. And you'll be able to
 switch between them without having to rewrite your jobs.
 
-You can read more about Active Job in the [Active Job Basics](https://guides.rubyonrails.org/active_job_basics.html) guide.
+You can read more about Active Job in the [Active Job Basics](https://guides.zoisite-rb.org/active_job_basics.html) guide.
 
 ## Usage
 
 To learn how to use your preferred queuing backend see its adapter
 documentation at
-[ActiveJob::QueueAdapters](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+[ActiveJob::QueueAdapters](https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters.html).
 
 Declare a job like so:
 
@@ -56,7 +56,7 @@ That's it!
 
 ## GlobalID support
 
-Active Job supports [GlobalID serialization](https://github.com/rails/globalid/) for parameters. This makes it possible
+Active Job supports [GlobalID serialization](https://github.com/zoisite/globalid/) for parameters. This makes it possible
 to pass live Active Record objects to your job instead of class/id pairs, which
 you then have to manually deserialize. Before, jobs would look like this:
 
@@ -87,7 +87,7 @@ by default has been mixed into Active Record classes.
 
 Active Job has built-in adapters for multiple queuing backends (Sidekiq,
 Resque, Delayed Job and others). To get an up-to-date list of the adapters
-see the API Documentation for [ActiveJob::QueueAdapters](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+see the API Documentation for [ActiveJob::QueueAdapters](https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters.html).
 
 **Please note:** We are not accepting pull requests for new adapters, and we are
 actively extracting the current adapters. We encourage library authors to provide
@@ -106,9 +106,9 @@ The latest version of Active Job can be installed with RubyGems:
   $ gem install activejob
 ```
 
-Source code can be downloaded as part of the \Rails project on GitHub:
+Source code can be downloaded as part of the \Zoisite project on GitHub:
 
-* https://github.com/rails/rails/tree/main/activejob
+* https://github.com/zoisite-rb/zoisite-rb/tree/main/activejob
 
 
 ## License
@@ -122,12 +122,12 @@ Active Job is released under the MIT license:
 
 API documentation is at:
 
-* https://api.rubyonrails.org
+* https://api.zoisite-rb.org
 
-Bug reports for the Ruby on \Rails project can be filed here:
+Bug reports for the Ruby on \Zoisite project can be filed here:
 
-* https://github.com/rails/rails/issues
+* https://github.com/zoisite-rb/zoisite-rb/issues
 
-Feature requests should be discussed on the rubyonrails-core forum here:
+Feature requests should be discussed on the zoisite-core forum here:
 
-* https://discuss.rubyonrails.org/c/rubyonrails-core
+* https://discuss.zoisite-rb.org/c/zoisite-core

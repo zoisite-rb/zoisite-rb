@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/test_case"
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ActionMailer
   class NonInferrableMailerError < ::StandardError
@@ -34,8 +34,8 @@ module ActionMailer
 
       include ActiveSupport::Testing::ConstantLookup
       include TestHelper
-      include Rails::Dom::Testing::Assertions::SelectorAssertions
-      include Rails::Dom::Testing::Assertions::DomAssertions
+      include Zoisite::Dom::Testing::Assertions::SelectorAssertions
+      include Zoisite::Dom::Testing::Assertions::DomAssertions
 
       included do
         class_attribute :_mailer_class
@@ -78,9 +78,9 @@ module ActionMailer
       #
       # This is useful when testing mailers by being able to write the body of
       # an email inside a fixture. See the testing guide for a concrete example:
-      # https://guides.rubyonrails.org/testing.html#revenge-of-the-fixtures
+      # https://guides.zoisite-rb.org/testing.html#revenge-of-the-fixtures
       def read_fixture(action)
-        IO.readlines(File.join(Rails.root, "test", "fixtures", self.class.mailer_class.name.underscore, action))
+        IO.readlines(File.join(Zoisite.root, "test", "fixtures", self.class.mailer_class.name.underscore, action))
       end
 
       private

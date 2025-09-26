@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite-rb.orgmand"
 require "io/console/size"
 
-class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
+class Zoisite::Command::UnusedRoutesTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
   test "no results" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
       end
     RUBY
 
@@ -19,7 +19,7 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
 
   test "no controller" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/", to: "my#index", as: :my_route
       end
     RUBY
@@ -39,7 +39,7 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/", to: "my#index", as: :my_route
       end
     RUBY
@@ -63,7 +63,7 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
     HTML
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/", to: "my#index", as: :my_route
       end
     RUBY
@@ -73,7 +73,7 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
 
   test "multiple unused routes" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/one", to: "action#one"
         get "/two", to: "action#two"
       end
@@ -90,7 +90,7 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
 
   test "filter by grep" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/one", to: "posts#one"
         get "/two", to: "users#two"
       end
@@ -106,7 +106,7 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
 
   test "filter by grep no results" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
       end
     RUBY
 
@@ -117,7 +117,7 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
 
   test "filter by controller" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/one", to: "posts#one"
         get "/two", to: "users#two"
       end
@@ -133,7 +133,7 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
 
   test "filter by controller no results" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
       end
     RUBY
 
@@ -144,6 +144,6 @@ class Rails::Command::UnusedRoutesTest < ActiveSupport::TestCase
 
   private
     def run_unused_routes_command(args = [], allow_failure: false)
-      rails "unused_routes", args, allow_failure: allow_failure
+      zoisite "unused_routes", args, allow_failure: allow_failure
     end
 end

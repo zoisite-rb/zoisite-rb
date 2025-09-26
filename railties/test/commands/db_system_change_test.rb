@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite-rb.orgmand"
 
-class Rails::Command::DbSystemChangeTest < ActiveSupport::TestCase
+class Zoisite::Command::DbSystemChangeTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
 
   setup { build_app }
@@ -52,7 +52,7 @@ class Rails::Command::DbSystemChangeTest < ActiveSupport::TestCase
   end
 
   test "change can be forced" do
-    output = `cd #{app_path}; bin/rails db:system:change --to=postgresql --force`
+    output = `cd #{app_path}; bin/zoisite db:system:change --to=postgresql --force`
 
     assert_match "force  config/database.yml", output
     assert_match "gsub  Gemfile", output
@@ -69,6 +69,6 @@ class Rails::Command::DbSystemChangeTest < ActiveSupport::TestCase
   private
     def change_database(to:, **options)
       args = ["--to", to]
-      rails "db:system:change", args, **options
+      zoisite "db:system:change", args, **options
     end
 end

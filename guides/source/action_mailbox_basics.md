@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Mailbox Basics
 =====================
@@ -8,7 +8,7 @@ your application.
 
 After reading this guide, you will know:
 
-* How to receive email within a Rails application.
+* How to receive email within a Zoisite application.
 * How to configure Action Mailbox.
 * How to generate and route emails to a mailbox.
 * How to test incoming emails.
@@ -19,13 +19,13 @@ What is Action Mailbox?
 -----------------------
 
 Action Mailbox routes incoming emails to controller-like mailboxes for
-processing in your Rails application. Action Mailbox is for receiving email,
+processing in your Zoisite application. Action Mailbox is for receiving email,
 while [Action Mailer](action_mailer_basics.html) is for *sending* them.
 
 The inbound emails are routed asynchronously using [Active
 Job](active_job_basics.html) to one or several dedicated mailboxes. These emails
 are turned into
-[`InboundEmail`](https://api.rubyonrails.org/classes/ActionMailbox/InboundEmail.html)
+[`InboundEmail`](https://api.zoisite-rb.org/classes/ActionMailbox/InboundEmail.html)
 records using [Active Record](active_record_basics.html), which are capable of
 interacting directly with the rest of your domain model.
 
@@ -48,13 +48,13 @@ incoming emails.
 To start, let's install Action Mailbox:
 
 ```bash
-$ bin/rails action_mailbox:install
+$ bin/zoisite action_mailbox:install
 ```
 
 This will create an `application_mailbox.rb` file and copy over migrations.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 This will run the Action Mailbox and Active Storage migrations.
@@ -62,11 +62,11 @@ This will run the Action Mailbox and Active Storage migrations.
 The Action Mailbox table `action_mailbox_inbound_emails` stores incoming
 messages and their processing status.
 
-At this point, you can start your Rails server and check out
-`http://localhost:3000/rails/conductor/action_mailbox/inbound_emails`. See
+At this point, you can start your Zoisite server and check out
+`http://localhost:3000/zoisite/conductor/action_mailbox/inbound_emails`. See
 [Local Development and Testing](#local-development-and-testing) for more.
 
-The next step is to configure an ingress in your Rails application to specify
+The next step is to configure an ingress in your Zoisite application to specify
 how incoming emails should be received.
 
 ## Ingress Configuration
@@ -87,7 +87,7 @@ config.action_mailbox.ingress = :relay
 Generate a strong password that Action Mailbox can use to authenticate requests
 to the relay ingress.
 
-Use `bin/rails credentials:edit` to add the password to your application's
+Use `bin/zoisite credentials:edit` to add the password to your application's
 encrypted credentials under `action_mailbox.ingress_password`, where Action
 Mailbox will automatically find it:
 
@@ -99,13 +99,13 @@ action_mailbox:
 Alternatively, provide the password in the `RAILS_INBOUND_EMAIL_PASSWORD`
 environment variable.
 
-Configure Exim to pipe inbound emails to `bin/rails
+Configure Exim to pipe inbound emails to `bin/zoisite
 action_mailbox:ingress:exim`, providing the `URL` of the relay ingress and the
 `INGRESS_PASSWORD` you previously generated. If your application lived at
 `https://example.com`, the full command would look like this:
 
 ```bash
-$ bin/rails action_mailbox:ingress:exim URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+$ bin/zoisite action_mailbox:ingress:exim URL=https://example.com/zoisite/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
 ```
 
 ### Mailgun
@@ -114,7 +114,7 @@ Give Action Mailbox your Mailgun Signing key (which you can find under Settings
 -> Security & Users -> API security in Mailgun), so it can authenticate requests
 to the Mailgun ingress.
 
-Use `bin/rails credentials:edit` to add your Signing key to your application's
+Use `bin/zoisite credentials:edit` to add your Signing key to your application's
 encrypted credentials under `action_mailbox.mailgun_signing_key`, where Action
 Mailbox will automatically find it:
 
@@ -136,16 +136,16 @@ config.action_mailbox.ingress = :mailgun
 [Configure
 Mailgun](https://documentation.mailgun.com/docs/mailgun/user-manual/receive-forward-store/)
 to forward inbound emails to
-`/rails/action_mailbox/mailgun/inbound_emails/mime`. If your application lived
+`/zoisite/action_mailbox/mailgun/inbound_emails/mime`. If your application lived
 at `https://example.com`, you would specify the fully-qualified URL
-`https://example.com/rails/action_mailbox/mailgun/inbound_emails/mime`.
+`https://example.com/zoisite/action_mailbox/mailgun/inbound_emails/mime`.
 
 ### Mandrill
 
 Give Action Mailbox your Mandrill API key, so it can authenticate requests to
 the Mandrill ingress.
 
-Use `bin/rails credentials:edit` to add your API key to your application's
+Use `bin/zoisite credentials:edit` to add your API key to your application's
 encrypted credentials under `action_mailbox.mandrill_api_key`, where Action
 Mailbox will automatically find it:
 
@@ -166,10 +166,10 @@ config.action_mailbox.ingress = :mandrill
 
 [Configure
 Mandrill](https://mandrill.zendesk.com/hc/en-us/articles/205583197-Inbound-Email-Processing-Overview)
-to route inbound emails to `/rails/action_mailbox/mandrill/inbound_emails`. If
+to route inbound emails to `/zoisite/action_mailbox/mandrill/inbound_emails`. If
 your application lived at `https://example.com`, you would specify the
 fully-qualified URL
-`https://example.com/rails/action_mailbox/mandrill/inbound_emails`.
+`https://example.com/zoisite/action_mailbox/mandrill/inbound_emails`.
 
 ### Postfix
 
@@ -183,7 +183,7 @@ config.action_mailbox.ingress = :relay
 Generate a strong password that Action Mailbox can use to authenticate requests
 to the relay ingress.
 
-Use `bin/rails credentials:edit` to add the password to your application's
+Use `bin/zoisite credentials:edit` to add the password to your application's
 encrypted credentials under `action_mailbox.ingress_password`, where Action
 Mailbox will automatically find it:
 
@@ -197,13 +197,13 @@ environment variable.
 
 [Configure
 Postfix](https://serverfault.com/questions/258469/how-to-configure-postfix-to-pipe-all-incoming-email-to-a-script)
-to pipe inbound emails to `bin/rails action_mailbox:ingress:postfix`, providing
+to pipe inbound emails to `bin/zoisite action_mailbox:ingress:postfix`, providing
 the `URL` of the Postfix ingress and the `INGRESS_PASSWORD` you previously
 generated. If your application lived at `https://example.com`, the full command
 would look like this:
 
 ```bash
-$ bin/rails action_mailbox:ingress:postfix URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+$ bin/zoisite action_mailbox:ingress:postfix URL=https://example.com/zoisite/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
 ```
 
 ### Postmark
@@ -218,7 +218,7 @@ config.action_mailbox.ingress = :postmark
 Generate a strong password that Action Mailbox can use to authenticate requests
 to the Postmark ingress.
 
-Use `bin/rails credentials:edit` to add the password to your application's
+Use `bin/zoisite credentials:edit` to add the password to your application's
 encrypted credentials under `action_mailbox.ingress_password`, where Action
 Mailbox will automatically find it:
 
@@ -232,13 +232,13 @@ environment variable.
 
 [Configure Postmark inbound
 webhook](https://postmarkapp.com/manual#configure-your-inbound-webhook-url) to
-forward inbound emails to `/rails/action_mailbox/postmark/inbound_emails` with
+forward inbound emails to `/zoisite/action_mailbox/postmark/inbound_emails` with
 the username `actionmailbox` and the password you previously generated. If your
 application lived at `https://example.com`, you would configure Postmark with
 the following fully-qualified URL:
 
 ```
-https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/postmark/inbound_emails
+https://actionmailbox:PASSWORD@example.com/zoisite/action_mailbox/postmark/inbound_emails
 ```
 
 NOTE: When configuring your Postmark inbound webhook, be sure to check the box
@@ -257,7 +257,7 @@ config.action_mailbox.ingress = :relay
 Generate a strong password that Action Mailbox can use to authenticate requests
 to the relay ingress.
 
-Use `bin/rails credentials:edit` to add the password to your application's
+Use `bin/zoisite credentials:edit` to add the password to your application's
 encrypted credentials under `action_mailbox.ingress_password`, where Action
 Mailbox will automatically find it:
 
@@ -269,13 +269,13 @@ action_mailbox:
 Alternatively, provide the password in the `RAILS_INBOUND_EMAIL_PASSWORD`
 environment variable.
 
-Configure Qmail to pipe inbound emails to `bin/rails
+Configure Qmail to pipe inbound emails to `bin/zoisite
 action_mailbox:ingress:qmail`, providing the `URL` of the relay ingress and the
 `INGRESS_PASSWORD` you previously generated. If your application lived at
 `https://example.com`, the full command would look like this:
 
 ```bash
-$ bin/rails action_mailbox:ingress:qmail URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+$ bin/zoisite action_mailbox:ingress:qmail URL=https://example.com/zoisite/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
 ```
 
 ### SendGrid
@@ -290,7 +290,7 @@ config.action_mailbox.ingress = :sendgrid
 Generate a strong password that Action Mailbox can use to authenticate requests
 to the SendGrid ingress.
 
-Use `bin/rails credentials:edit` to add the password to your application's
+Use `bin/zoisite credentials:edit` to add the password to your application's
 encrypted credentials under `action_mailbox.ingress_password`, where Action
 Mailbox will automatically find it:
 
@@ -304,13 +304,13 @@ environment variable.
 
 [Configure SendGrid Inbound
 Parse](https://sendgrid.com/docs/for-developers/parsing-email/setting-up-the-inbound-parse-webhook/)
-to forward inbound emails to `/rails/action_mailbox/sendgrid/inbound_emails`
+to forward inbound emails to `/zoisite/action_mailbox/sendgrid/inbound_emails`
 with the username `actionmailbox` and the password you previously generated. If
 your application lived at `https://example.com`, you would configure SendGrid
 with the following URL:
 
 ```
-https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/sendgrid/inbound_emails
+https://actionmailbox:PASSWORD@example.com/zoisite/action_mailbox/sendgrid/inbound_emails
 ```
 
 NOTE: When configuring your SendGrid Inbound Parse webhook, be sure to check the
@@ -320,7 +320,7 @@ MIME message to work.
 ## Processing Incoming Email
 
 Processing incoming emails usually entails using the email content to create
-models, update views, queue background work, etc. in your Rails application.
+models, update views, queue background work, etc. in your Zoisite application.
 
 Before you can start processing incoming emails, you'll need to setup Action
 Mailbox routing and create mailboxes.
@@ -329,7 +329,7 @@ Mailbox routing and create mailboxes.
 
 After an incoming email is received via the configured ingress, it needs to be
 forwarded to a mailbox for actual processing by your application. Much like the
-[Rails router](routing.html) that dispatches URLs to controllers, routing in
+[Zoisite router](routing.html) that dispatches URLs to controllers, routing in
 Action Mailbox defines which emails go to which mailboxes for processing. Routes
 are added to the `application_mailbox.rb` file using regular expressions:
 
@@ -344,7 +344,7 @@ end
 The regular expression matches the incoming email's `to`, `cc`, or `bcc` fields.
 For example, the above will match any email sent to `save@` to a "forwards"
 mailbox. There are other ways to route an email, see
-[`ActionMailbox::Base`](https://api.rubyonrails.org/classes/ActionMailbox/Base.html)
+[`ActionMailbox::Base`](https://api.zoisite-rb.org/classes/ActionMailbox/Base.html)
 for more.
 
 We need to create that "forwards" mailbox next.
@@ -353,7 +353,7 @@ We need to create that "forwards" mailbox next.
 
 ```bash
 # Generate new mailbox
-$ bin/rails generate mailbox forwards
+$ bin/zoisite generate mailbox forwards
 ```
 
 This creates `app/mailboxes/forwards_mailbox.rb`, with a `ForwardsMailbox` class
@@ -414,7 +414,7 @@ Here is an example of an Action Mailbox that processes emails to create
 The `before_processing` callback is used to ensure that certain conditions are
 met before `process` method is called. In this case, `before_processing` checks
 that the user has at least one project. Other supported [Action Mailbox
-callbacks](https://api.rubyonrails.org/classes/ActionMailbox/Callbacks.html) are
+callbacks](https://api.zoisite-rb.org/classes/ActionMailbox/Callbacks.html) are
 `after_processing` and `around_processing`.
 
 The email can be bounced using `bounced_with` if the "forwarder" has no
@@ -467,7 +467,7 @@ end
 
 It's helpful to be able to test incoming emails in development without actually
 sending and receiving real emails. To accomplish this, there's a conductor
-controller mounted at `/rails/conductor/action_mailbox/inbound_emails`, which
+controller mounted at `/zoisite/conductor/action_mailbox/inbound_emails`, which
 gives you an index of all the InboundEmails in the system, their state of
 processing, and a form to create a new InboundEmail as well.
 
@@ -498,7 +498,7 @@ end
 ```
 
 Please refer to the [ActionMailbox::TestHelper
-API](https://api.rubyonrails.org/classes/ActionMailbox/TestHelper.html) for
+API](https://api.zoisite-rb.org/classes/ActionMailbox/TestHelper.html) for
 further test helper methods.
 
 ## Incineration of InboundEmails
@@ -508,7 +508,7 @@ By default, an `InboundEmail` that has been processed will be incinerated after
 to `delivered`, `failed`, or `bounced`.
 
 The actual incineration is done via the
-[`IncinerationJob`](https://api.rubyonrails.org/classes/ActionMailbox/IncinerationJob.html)
+[`IncinerationJob`](https://api.zoisite-rb.org/classes/ActionMailbox/IncinerationJob.html)
 that's scheduled to run after
 [`config.action_mailbox.incinerate_after`](configuring.html#config-action-mailbox-incinerate-after)
 time. This value is set to `30.days` by default, but you can change it in your

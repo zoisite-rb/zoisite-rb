@@ -2,10 +2,10 @@
 
 require "isolation/abstract_unit"
 require "env_helpers"
-require "rails/command"
-require "rails/commands/server/server_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/server/server_command"
 
-class Rails::Command::ServerTest < ActiveSupport::TestCase
+class Zoisite::Command::ServerTest < ActiveSupport::TestCase
   include EnvHelpers
 
   def test_environment_with_server_option
@@ -54,7 +54,7 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
     build_app
 
     ["fastcgi", "lsws"].each do |server|
-      output = rails "server", "-u", server
+      output = zoisite "server", "-u", server
       assert_match(/Could not find server '#{server}'./, output)
       assert_no_match("Gemfile", output)
     end
@@ -77,7 +77,7 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
   def test_server_option_without_environment
     args = ["-u", "thin"]
     with_rack_env nil do
-      with_rails_env nil do
+      with_zoisite_env nil do
         options = parse_arguments(args)
         assert_equal "development",  options[:environment]
         assert_equal "thin", options[:server]
@@ -85,9 +85,9 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
     end
   end
 
-  def test_environment_with_rails_env
+  def test_environment_with_zoisite_env
     with_rack_env nil do
-      with_rails_env "production" do
+      with_zoisite_env "production" do
         options = parse_arguments
         assert_equal "production", options[:environment]
       end
@@ -95,7 +95,7 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
   end
 
   def test_environment_with_rack_env
-    with_rails_env nil do
+    with_zoisite_env nil do
       with_rack_env "production" do
         options = parse_arguments
         assert_equal "production", options[:environment]
@@ -118,9 +118,9 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
   end
 
   def test_environment_with_pidfile
-    switch_env "PIDFILE", "/tmp/rails.pid" do
+    switch_env "PIDFILE", "/tmp/zoisite.pid" do
       options = parse_arguments
-      assert_equal "/tmp/rails.pid", options[:pid]
+      assert_equal "/tmp/zoisite.pid", options[:pid]
     end
   end
 
@@ -154,7 +154,7 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
 
   def test_log_stdout
     with_rack_env nil do
-      with_rails_env nil do
+      with_zoisite_env nil do
         args    = []
         options = parse_arguments(args)
         assert_equal true, options[:log_stdout]
@@ -191,13 +191,13 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
           assert_equal false, options[:log_stdout]
         end
 
-        with_rails_env "development" do
+        with_zoisite_env "development" do
           args    = []
           options = parse_arguments(args)
           assert_equal true, options[:log_stdout]
         end
 
-        with_rails_env "production" do
+        with_zoisite_env "production" do
           args    = []
           options = parse_arguments(args)
           assert_equal false, options[:log_stdout]
@@ -207,17 +207,17 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
   end
 
   def test_host
-    with_rails_env "development" do
+    with_zoisite_env "development" do
       options = parse_arguments([])
       assert_equal "localhost", options[:Host]
     end
 
-    with_rails_env "production" do
+    with_zoisite_env "production" do
       options = parse_arguments([])
       assert_equal "0.0.0.0", options[:Host]
     end
 
-    with_rails_env "development" do
+    with_zoisite_env "development" do
       args = ["-b", "127.0.0.1"]
       options = parse_arguments(args)
       assert_equal "127.0.0.1", options[:Host]
@@ -243,7 +243,7 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
       assert_equal "127.0.0.1", options[:Host]
     end
 
-    switch_env "PIDFILE", "/tmp/rails.pid" do
+    switch_env "PIDFILE", "/tmp/zoisite.pid" do
       args = ["-P", "/somewhere/else.pid"]
       options = parse_arguments(args)
       assert_equal "/somewhere/else.pid", options[:pid]
@@ -280,7 +280,7 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
   end
 
   def test_default_options
-    server = Rails::Server.new
+    server = Zoisite::Server.new
     old_default_options = server.default_options
 
     Dir.chdir("..") do
@@ -293,7 +293,7 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
     args = %w(-p 4567 -b 127.0.0.1 -c dummy_config.ru -d -e test -P tmp/server.pid -C)
     ARGV.replace args
 
-    expected = "bin/rails server -p 4567 -b 127.0.0.1 -c dummy_config.ru -d -e test -P tmp/server.pid -C --restart"
+    expected = "bin/zoisite server -p 4567 -b 127.0.0.1 -c dummy_config.ru -d -e test -P tmp/server.pid -C --restart"
 
     assert_equal expected, parse_arguments(args)[:restart_cmd]
   ensure
@@ -302,25 +302,25 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
 
   def test_served_url
     args = %w(-u webrick -b 127.0.0.1 -p 4567)
-    server = Rails::Server.new(parse_arguments(args))
+    server = Zoisite::Server.new(parse_arguments(args))
     assert_equal "http://127.0.0.1:4567", server.served_url
   end
 
   def test_served_url_when_server_prints_it
     args = %w(-u puma -b 127.0.0.1 -p 4567)
-    server = Rails::Server.new(parse_arguments(args))
+    server = Zoisite::Server.new(parse_arguments(args))
     assert_nil server.served_url
   end
 
   private
     def run_command(*args)
       build_app
-      rails "server", *args
+      zoisite "server", *args
     ensure
       teardown_app
     end
 
     def parse_arguments(args = [])
-      Rails::Command::ServerCommand.new([], args).server_options
+      Zoisite::Command::ServerCommand.new([], args).server_options
     end
 end

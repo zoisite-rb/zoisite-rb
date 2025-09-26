@@ -595,7 +595,7 @@ module ActiveRecord
       # <tt>:foreign_key</tt> and <tt>:through</tt> options on the associations
       # will also prevent the association's inverse from being found automatically,
       # as will a custom scopes in some cases. See further details in the
-      # {Active Record Associations guide}[https://guides.rubyonrails.org/association_basics.html#bi-directional-associations].
+      # {Active Record Associations guide}[https://guides.zoisite-rb.org/association_basics.html#bi-directional-associations].
       #
       # The automatic guessing of the inverse association uses a heuristic based
       # on the name of the class, so it may not work for all associations,
@@ -953,7 +953,7 @@ module ActiveRecord
       #    end
       #
       # For more information, see the documentation for the +:inverse_of+ option and the
-      # {Active Record Associations guide}[https://guides.rubyonrails.org/association_basics.html#bi-directional-associations].
+      # {Active Record Associations guide}[https://guides.zoisite-rb.org/association_basics.html#bi-directional-associations].
       #
       # == Deleting from associations
       #
@@ -975,7 +975,7 @@ module ActiveRecord
       # specific association types. When no option is given, the behavior is to do nothing
       # with the associated records when destroying a record.
       #
-      # Note that <tt>:dependent</tt> is implemented using \Rails' callback
+      # Note that <tt>:dependent</tt> is implemented using \Zoisite' callback
       # system, which works by processing callbacks in order. Therefore, other
       # callbacks declared either before or after the <tt>:dependent</tt> option
       # can affect what it does.
@@ -1137,8 +1137,8 @@ module ActiveRecord
       # clean stack trace set.
       #
       # Clean backtraces are computed using the Active Record backtrace cleaner.
-      # In Rails applications, that is by the default the same as
-      # <tt>Rails.backtrace_cleaner</tt>.
+      # In Zoisite applications, that is by the default the same as
+      # <tt>Zoisite.backtrace_cleaner</tt>.
       #
       # == Type safety with ActiveRecord::AssociationTypeMismatch
       #
@@ -1298,7 +1298,7 @@ module ActiveRecord
         # [+:dependent+]
         #   Controls what happens to the associated objects when
         #   their owner is destroyed. Note that these are implemented as
-        #   callbacks, and \Rails executes callbacks in order. Therefore, other
+        #   callbacks, and \Zoisite executes callbacks in order. Therefore, other
         #   similar callbacks may affect the <tt>:dependent</tt> behavior, and the
         #   <tt>:dependent</tt> behavior may affect other callbacks.
         #
@@ -1390,7 +1390,7 @@ module ActiveRecord
         #   associated records to be deleted in a background job.
         # [+:query_constraints+]
         #   Serves as a composite foreign key. Defines the list of columns to be used to query the associated object.
-        #   This is an optional option. By default Rails will attempt to derive the value automatically.
+        #   This is an optional option. By default Zoisite will attempt to derive the value automatically.
         #   When the value is set the Array size must match associated model's primary key or +query_constraints+ size.
         # [+:index_errors+]
         #   Allows differentiation of multiple validation errors from the association records, by including
@@ -1605,7 +1605,7 @@ module ActiveRecord
         #   associated records to be deleted in a background job.
         # [+:query_constraints+]
         #   Serves as a composite foreign key. Defines the list of columns to be used to query the associated object.
-        #   This is an optional option. By default Rails will attempt to derive the value automatically.
+        #   This is an optional option. By default Zoisite will attempt to derive the value automatically.
         #   When the value is set the Array size must match associated model's primary key or +query_constraints+ size.
         # [+:deprecated+]
         #   If true, marks the association as deprecated. Usage of deprecated associations is reported.
@@ -1800,7 +1800,7 @@ module ActiveRecord
         #   associated records to be deleted in a background job.
         # [+:query_constraints+]
         #   Serves as a composite foreign key. Defines the list of columns to be used to query the associated object.
-        #   This is an optional option. By default Rails will attempt to derive the value automatically.
+        #   This is an optional option. By default Zoisite will attempt to derive the value automatically.
         #   When the value is set the Array size must match associated model's primary key or +query_constraints+ size.
         # [+:deprecated+]
         #   If true, marks the association as deprecated. Usage of deprecated associations is reported.

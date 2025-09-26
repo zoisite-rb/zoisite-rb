@@ -28,7 +28,7 @@ module ApplicationTests
     test "config set via environment config" do
       add_to_config "config.active_job.queue_adapter = :async"
       app_file "config/environments/test.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.active_job.queue_adapter = :inline
         end
       RUBY
@@ -38,7 +38,7 @@ module ApplicationTests
 
     test "config is set for production, but test uses defaults" do
       app_file "config/environments/production.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.active_job.queue_adapter = :sidekiq
         end
       RUBY
@@ -51,19 +51,19 @@ module ApplicationTests
         app_file "test/integration/config_test.rb", <<-RUBY
         require "test_helper"
 
-        class RailsConfigUnitTest < ActiveSupport::TestCase
+        class ZoisiteConfigUnitTest < ActiveSupport::TestCase
           test "the Inline Active Job adapter is used in unit tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::InlineAdapter), adapter
-            assert_equal :inline, Rails.application.config.active_job.queue_adapter
+            assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
           end
         end
 
-        class RailsConfigIntegrationTest < ActionDispatch::IntegrationTest
+        class ZoisiteConfigIntegrationTest < ActionDispatch::IntegrationTest
           test "the Inline Active Job adapter is used in integration tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::InlineAdapter), adapter
-            assert_equal :inline, Rails.application.config.active_job.queue_adapter
+            assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
 
             # ActionDispatch::IntegrationTest includes ActiveJob::TestHelper,
             # which adds a bunch of assertions. But these assertions only work
@@ -75,11 +75,11 @@ module ApplicationTests
           end
         end
 
-        class RailsConfigJobTest < ActiveJob::TestCase
+        class ZoisiteConfigJobTest < ActiveJob::TestCase
           test "the Inline Active Job adapter is used in job tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::InlineAdapter), adapter
-            assert_equal :inline, Rails.application.config.active_job.queue_adapter
+            assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
 
             # ActiveJob::TesTCase includes ActiveJob::TestHelper,
             # which adds a bunch of assertions. But these assertions only work
@@ -91,11 +91,11 @@ module ApplicationTests
           end
         end
 
-        class RailsConfigMailerTest < ActionMailer::TestCase
+        class ZoisiteConfigMailerTest < ActionMailer::TestCase
           test "the Inline Active Job adapter is used in mailer tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::InlineAdapter), adapter
-            assert_equal :inline, Rails.application.config.active_job.queue_adapter
+            assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
 
             # ActionMailer::TestHelper includes ActiveJob::TestHelper
             # So this just asserts that we haven't broken Action Mailer assertions that
@@ -105,27 +105,27 @@ module ApplicationTests
           end
         end
 
-        class RailsConfigHelperTest < ActionView::TestCase
+        class ZoisiteConfigHelperTest < ActionView::TestCase
           test "the Inline Active Job adapter is used in helper tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::InlineAdapter), adapter
-            assert_equal :inline, Rails.application.config.active_job.queue_adapter
+            assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
           end
         end
 
-        class RailsConfigControllerTest < ActionController::TestCase
+        class ZoisiteConfigControllerTest < ActionController::TestCase
           test "the Inline Active Job adapter is used in controller tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::InlineAdapter), adapter
-            assert_equal :inline, Rails.application.config.active_job.queue_adapter
+            assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
           end
         end
 
-        class RailsConfigSystemTest < ActionDispatch::SystemTestCase
+        class ZoisiteConfigSystemTest < ActionDispatch::SystemTestCase
           test "the Inline Active Job adapter is used in system tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::InlineAdapter), adapter
-            assert_equal :inline, Rails.application.config.active_job.queue_adapter
+            assert_equal :inline, Zoisite.application.config.active_job.queue_adapter
           end
         end
         RUBY
@@ -135,19 +135,19 @@ module ApplicationTests
         app_file "test/integration/config_test.rb", <<-RUBY
         require "test_helper"
 
-        class RailsConfigUnitTest < ActiveSupport::TestCase
+        class ZoisiteConfigUnitTest < ActiveSupport::TestCase
           test "the Test Active Job adapter is used in unit tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::TestAdapter), adapter
-            assert_equal :test, Rails.application.config.active_job.queue_adapter
+            assert_equal :test, Zoisite.application.config.active_job.queue_adapter
           end
         end
 
-        class RailsConfigIntegrationTest < ActionDispatch::IntegrationTest
+        class ZoisiteConfigIntegrationTest < ActionDispatch::IntegrationTest
           test "the Test Active Job adapter is used in integration tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::TestAdapter), adapter
-            assert_equal :test, Rails.application.config.active_job.queue_adapter
+            assert_equal :test, Zoisite.application.config.active_job.queue_adapter
 
             assert_nothing_raised do
               assert_no_enqueued_jobs {}
@@ -155,11 +155,11 @@ module ApplicationTests
           end
         end
 
-        class RailsConfigJobTest < ActiveJob::TestCase
+        class ZoisiteConfigJobTest < ActiveJob::TestCase
           test "the Test Active Job adapter is used in job tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::TestAdapter), adapter
-            assert_equal :test, Rails.application.config.active_job.queue_adapter
+            assert_equal :test, Zoisite.application.config.active_job.queue_adapter
 
             assert_nothing_raised do
               assert_no_enqueued_jobs {}
@@ -167,38 +167,38 @@ module ApplicationTests
           end
         end
 
-        class RailsConfigMailerTest < ActionMailer::TestCase
+        class ZoisiteConfigMailerTest < ActionMailer::TestCase
           test "the Test Active Job adapter is used in mailer tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::TestAdapter), adapter
-            assert_equal :test, Rails.application.config.active_job.queue_adapter
+            assert_equal :test, Zoisite.application.config.active_job.queue_adapter
 
             assert_emails(0) {}
             assert_emails(0)
           end
         end
 
-        class RailsConfigHelperTest < ActionView::TestCase
+        class ZoisiteConfigHelperTest < ActionView::TestCase
           test "the Test Active Job adapter is used in helper tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::TestAdapter), adapter
-            assert_equal :test, Rails.application.config.active_job.queue_adapter
+            assert_equal :test, Zoisite.application.config.active_job.queue_adapter
           end
         end
 
-        class RailsConfigControllerTest < ActionController::TestCase
+        class ZoisiteConfigControllerTest < ActionController::TestCase
           test "the Test Active Job adapter is used in controller tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::TestAdapter), adapter
-            assert_equal :test, Rails.application.config.active_job.queue_adapter
+            assert_equal :test, Zoisite.application.config.active_job.queue_adapter
           end
         end
 
-        class RailsConfigSystemTest < ActionDispatch::SystemTestCase
+        class ZoisiteConfigSystemTest < ActionDispatch::SystemTestCase
           test "the Test Active Job adapter is used in system tests" do
             adapter = ActiveJob::Base.queue_adapter
             assert adapter.is_a?(ActiveJob::QueueAdapters::TestAdapter), adapter
-            assert_equal :test, Rails.application.config.active_job.queue_adapter
+            assert_equal :test, Zoisite.application.config.active_job.queue_adapter
           end
         end
         RUBY
@@ -211,7 +211,7 @@ module ApplicationTests
       end
 
       def run_test_file(name)
-        rails "test", "#{app_path}/test/#{name}", allow_failure: true
+        zoisite "test", "#{app_path}/test/#{name}", allow_failure: true
       end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/engine"
+require "zoisite/engine"
 require "controller/fake_controllers"
 
 class SecureArticlesController < ArticlesController
@@ -18,7 +18,7 @@ class QueryBooksController < BooksController; end
 
 module RoutingAssertionsSharedTests
   def setup
-    root_engine = Class.new(Rails::Engine) do
+    root_engine = Class.new(Zoisite::Engine) do
       def self.name
         "root_engine"
       end
@@ -28,7 +28,7 @@ module RoutingAssertionsSharedTests
       root to: "books#index"
     end
 
-    engine = Class.new(Rails::Engine) do
+    engine = Class.new(Zoisite::Engine) do
       def self.name
         "blog_engine"
       end

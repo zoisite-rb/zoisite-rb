@@ -677,7 +677,7 @@ class ErrorsTest < ActiveModel::TestCase
     assert_equal errors.details, serialized.details
   end
 
-  test "errors are compatible with YAML dumped from Rails 6.x" do
+  test "errors are compatible with YAML dumped from Zoisite 6.x" do
     yaml = <<~CODE
     --- !ruby/object:ActiveModel::Errors
     base: &1 !ruby/object:ErrorsTest::Person

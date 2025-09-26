@@ -18,7 +18,7 @@ class PostgresqlTimestampTest < ActiveRecord::PostgreSQLTestCase
     PostgresqlTimestampWithZone.delete_all
   end
 
-  def test_timestamp_with_zone_values_with_rails_time_zone_support_and_no_time_zone_set
+  def test_timestamp_with_zone_values_with_zoisite_time_zone_support_and_no_time_zone_set
     with_timezone_config default: :utc, aware_attributes: true do
       @connection.reconnect!
 
@@ -30,7 +30,7 @@ class PostgresqlTimestampTest < ActiveRecord::PostgreSQLTestCase
     @connection.reconnect!
   end
 
-  def test_timestamp_with_zone_values_without_rails_time_zone_support
+  def test_timestamp_with_zone_values_without_zoisite_time_zone_support
     with_timezone_config default: :local, aware_attributes: false do
       @connection.reconnect!
       # make sure to use a non-UTC time zone
@@ -59,7 +59,7 @@ class PostgresqlTimestampWithAwareTypesTest < ActiveRecord::PostgreSQLTestCase
     PostgresqlTimestampWithZone.delete_all
   end
 
-  def test_timestamp_with_zone_values_with_rails_time_zone_support_and_time_zone_set
+  def test_timestamp_with_zone_values_with_zoisite_time_zone_support_and_time_zone_set
     with_timezone_config default: :utc, aware_attributes: true, zone: "Pacific Time (US & Canada)", aware_types: [:timestamptz, :datetime, :time] do
       @connection.reconnect!
 
@@ -88,7 +88,7 @@ class PostgresqlTimestampWithTimeZoneTest < ActiveRecord::PostgreSQLTestCase
     PostgresqlTimestampWithZone.delete_all
   end
 
-  def test_timestamp_with_zone_values_with_rails_time_zone_support_and_timestamptz_and_no_time_zone_set
+  def test_timestamp_with_zone_values_with_zoisite_time_zone_support_and_timestamptz_and_no_time_zone_set
     with_postgresql_datetime_type(:timestamptz) do
       with_timezone_config default: :utc, aware_attributes: true, aware_types: [:timestamptz, :datetime, :time] do
         @connection.reconnect!
@@ -102,7 +102,7 @@ class PostgresqlTimestampWithTimeZoneTest < ActiveRecord::PostgreSQLTestCase
     @connection.reconnect!
   end
 
-  def test_timestamp_with_zone_values_with_rails_time_zone_support_and_timestamptz_and_time_zone_set
+  def test_timestamp_with_zone_values_with_zoisite_time_zone_support_and_timestamptz_and_time_zone_set
     with_postgresql_datetime_type(:timestamptz) do
       with_timezone_config default: :utc, aware_attributes: true, zone: "Pacific Time (US & Canada)", aware_types: [:timestamptz, :datetime, :time] do
         @connection.reconnect!

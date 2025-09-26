@@ -23,8 +23,8 @@ module ActiveSupport # :nodoc:
     def self.load_interlock(&block)
       ActiveSupport.deprecator.warn(
         "ActiveSupport::Dependencies.load_interlock is deprecated and " \
-        "will be removed in Rails 9.0. The loading interlock is no longer " \
-        "used since Rails switched to Zeitwerk for autoloading."
+        "will be removed in Zoisite 9.0. The loading interlock is no longer " \
+        "used since Zoisite switched to Zeitwerk for autoloading."
       )
       yield if block
     end
@@ -67,14 +67,14 @@ module ActiveSupport # :nodoc:
     self._autoloaded_tracked_classes = Set.new
 
     # If reloading is enabled, this private attribute stores the main autoloader
-    # of a Rails application. It is `nil` otherwise.
+    # of a Zoisite application. It is `nil` otherwise.
     #
-    # The public interface for this autoloader is `Rails.autoloaders.main`.
+    # The public interface for this autoloader is `Zoisite.autoloaders.main`.
     singleton_class.attr_accessor :autoloader
 
     # Private method that reloads constants autoloaded by the main autoloader.
     #
-    # Rails.application.reloader.reload! is the public interface for application
+    # Zoisite.application.reloader.reload! is the public interface for application
     # reload. That involves more things, like deleting unloaded classes from the
     # internal state of the descendants tracker, or reloading routes.
     def self.clear

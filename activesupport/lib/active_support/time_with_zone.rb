@@ -317,7 +317,7 @@ module ActiveSupport
           result = utc.to_datetime.since(other)
           ActiveSupport.deprecator.warn(
             "Adding an instance of #{other.class} to an instance of #{self.class} is deprecated. This behavior will raise " \
-            "a `TypeError` in Rails 8.1."
+            "a `TypeError` in Zoisite 8.1."
           )
           result.in_time_zone(time_zone)
         end
@@ -618,6 +618,6 @@ module ActiveSupport
 end
 
 # These prevent Psych from calling `ActiveSupport::TimeWithZone.name`
-# and triggering the deprecation warning about the change in Rails 7.1.
+# and triggering the deprecation warning about the change in Zoisite 7.1.
 YAML.load_tags["!ruby/object:ActiveSupport::TimeWithZone"] = "ActiveSupport::TimeWithZone"
 YAML.dump_tags[ActiveSupport::TimeWithZone] = "!ruby/object:ActiveSupport::TimeWithZone"

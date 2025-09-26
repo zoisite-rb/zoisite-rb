@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/generated_attribute"
-require "rails/generators/base"
+require "zoisite/generators/generated_attribute"
+require "zoisite/generators/base"
 
-class GeneratedAttributeTest < Rails::Generators::TestCase
+class GeneratedAttributeTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   def setup
-    @old_belongs_to_required_by_default = Rails.application.config.active_record.belongs_to_required_by_default
-    Rails.application.config.active_record.belongs_to_required_by_default = true
+    @old_belongs_to_required_by_default = Zoisite.application.config.active_record.belongs_to_required_by_default
+    Zoisite.application.config.active_record.belongs_to_required_by_default = true
     ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
   end
 
   def teardown
-    Rails.application.config.active_record.belongs_to_required_by_default = @old_belongs_to_required_by_default
+    Zoisite.application.config.active_record.belongs_to_required_by_default = @old_belongs_to_required_by_default
   end
 
   def test_field_name_with_dangerous_attribute_raises_error
-    e = assert_raise Rails::Generators::Error do
+    e = assert_raise Zoisite::Generators::Error do
       create_generated_attribute :string, :save
     end
     message = "Could not generate field 'save', as it is already defined by Active Record."
@@ -69,7 +69,7 @@ class GeneratedAttributeTest < Rails::Generators::TestCase
 
   def test_field_type_with_unknown_type_raises_error
     field_type = :unknown
-    e = assert_raise Rails::Generators::Error do
+    e = assert_raise Zoisite::Generators::Error do
       create_generated_attribute field_type
     end
     message = "Could not generate field 'test' with unknown type 'unknown'"
@@ -78,7 +78,7 @@ class GeneratedAttributeTest < Rails::Generators::TestCase
 
   def test_field_type_with_unknown_index_type_raises_error
     index_type = :unknown
-    e = assert_raise Rails::Generators::Error do
+    e = assert_raise Zoisite::Generators::Error do
       create_generated_attribute "string", "name", index_type
     end
     message = "Could not generate field 'name' with unknown index 'unknown'"
@@ -112,7 +112,7 @@ class GeneratedAttributeTest < Rails::Generators::TestCase
   end
 
   def test_default_value_for_type
-    att = Rails::Generators::GeneratedAttribute.parse("type:string")
+    att = Zoisite::Generators::GeneratedAttribute.parse("type:string")
     assert_equal("", att.default)
   end
 
@@ -152,7 +152,7 @@ class GeneratedAttributeTest < Rails::Generators::TestCase
 
   def test_size_option_raises_exception_when_passed_to_invalid_type
     %w(integer string).each do |attribute_type|
-      e = assert_raise Rails::Generators::Error do
+      e = assert_raise Zoisite::Generators::Error do
         create_generated_attribute("#{attribute_type}{medium}")
       end
       message = "Could not generate field 'test' with unknown type '#{attribute_type}{medium}'"
@@ -210,13 +210,13 @@ class GeneratedAttributeTest < Rails::Generators::TestCase
   end
 
   def test_parse_works_with_adapter_specific_types
-    att = Rails::Generators::GeneratedAttribute.parse("document:json")
+    att = Zoisite::Generators::GeneratedAttribute.parse("document:json")
     assert_equal "document", att.name
     assert_equal :json, att.type
   end
 
   def test_parse_required_attribute_with_index
-    att = Rails::Generators::GeneratedAttribute.parse("supplier:references:index")
+    att = Zoisite::Generators::GeneratedAttribute.parse("supplier:references:index")
     assert_equal "supplier", att.name
     assert_equal :references, att.type
     assert_predicate att, :has_index?
@@ -224,43 +224,43 @@ class GeneratedAttributeTest < Rails::Generators::TestCase
   end
 
   def test_parse_required_attribute_with_index_false_when_belongs_to_required_by_default_global_config_is_false
-    Rails.application.config.active_record.belongs_to_required_by_default = false
-    att = Rails::Generators::GeneratedAttribute.parse("supplier:references:index")
+    Zoisite.application.config.active_record.belongs_to_required_by_default = false
+    att = Zoisite::Generators::GeneratedAttribute.parse("supplier:references:index")
     assert_not_predicate att, :required?
   end
 
   def test_generated_attribute_to_s
-    att = Rails::Generators::GeneratedAttribute.parse("name")
+    att = Zoisite::Generators::GeneratedAttribute.parse("name")
     assert_equal "name:string", att.to_s
   end
 
   def test_generated_attribute_to_s_with_index
-    att = Rails::Generators::GeneratedAttribute.parse("name:index")
+    att = Zoisite::Generators::GeneratedAttribute.parse("name:index")
     assert_equal "name:string:index", att.to_s
   end
 
   def test_generated_attribute_to_s_with_uniq_index
-    att = Rails::Generators::GeneratedAttribute.parse("name:uniq")
+    att = Zoisite::Generators::GeneratedAttribute.parse("name:uniq")
     assert_equal "name:string:uniq", att.to_s
   end
 
   def test_generated_attribute_to_s_with_limit
-    att = Rails::Generators::GeneratedAttribute.parse("name:text{140}")
+    att = Zoisite::Generators::GeneratedAttribute.parse("name:text{140}")
     assert_equal "name:text{140}", att.to_s
   end
 
   def test_generated_attribute_to_s_with_size
-    att = Rails::Generators::GeneratedAttribute.parse("name:text{medium}")
+    att = Zoisite::Generators::GeneratedAttribute.parse("name:text{medium}")
     assert_equal "name:text{medium}", att.to_s
   end
 
   def test_generated_attribute_to_s_with_precision_and_scale
-    att = Rails::Generators::GeneratedAttribute.parse("name:decimal{1,2}")
+    att = Zoisite::Generators::GeneratedAttribute.parse("name:decimal{1,2}")
     assert_equal "name:decimal{1,2}", att.to_s
   end
 
   def test_generated_attribute_to_s_with_polymorphic
-    att = Rails::Generators::GeneratedAttribute.parse("name:references{polymorphic}")
+    att = Zoisite::Generators::GeneratedAttribute.parse("name:references{polymorphic}")
     assert_equal "name:references{polymorphic}", att.to_s
   end
 end

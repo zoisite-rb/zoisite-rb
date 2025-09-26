@@ -55,7 +55,7 @@ class ActionControllerTestCaseIntegrationTest < ActionController::TestCase
     RUBY
 
     app_file "config/routes.rb", <<~RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/customers/:action", controller: :customers
       end
     RUBY
@@ -63,7 +63,7 @@ class ActionControllerTestCaseIntegrationTest < ActionController::TestCase
     require "#{app_path}/config/environment"
 
     @controller = CustomersController.new
-    @routes = Rails.application.routes
+    @routes = Zoisite.application.routes
   end
 
   teardown :teardown_app
@@ -72,7 +72,7 @@ class ActionControllerTestCaseIntegrationTest < ActionController::TestCase
     self.executor_around_each_request = true
 
     test "current customer is cleared after each request" do
-      assert Rails.application.config.active_support.executor_around_test_case
+      assert Zoisite.application.config.active_support.executor_around_test_case
       assert ActionController::TestCase.executor_around_each_request
 
       get :get_current_customer
@@ -93,7 +93,7 @@ class ActionControllerTestCaseIntegrationTest < ActionController::TestCase
     self.executor_around_each_request = false
 
     test "current customer is not cleared after each request" do
-      assert_not Rails.application.config.active_support.executor_around_test_case
+      assert_not Zoisite.application.config.active_support.executor_around_test_case
       assert_not ActionController::TestCase.executor_around_each_request
 
       get :get_current_customer

@@ -9,14 +9,14 @@ module ActiveJob
     #
     # To use the Inline set the queue_adapter config to +:inline+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :inline
+    #   Zoisite.application.config.active_job.queue_adapter = :inline
     class InlineAdapter < AbstractAdapter
       def enqueue(job) # :nodoc:
         Base.execute(job.serialize)
       end
 
       def enqueue_at(*) # :nodoc:
-        raise NotImplementedError, "Use a queueing backend to enqueue jobs in the future. Read more at https://guides.rubyonrails.org/active_job_basics.html"
+        raise NotImplementedError, "Use a queueing backend to enqueue jobs in the future. Read more at https://guides.zoisite-rb.org/active_job_basics.html"
       end
     end
   end

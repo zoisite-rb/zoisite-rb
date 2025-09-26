@@ -163,7 +163,7 @@ module ActiveSupport
     #   not supported by JSON, and may provide improved performance. However,
     #   these require the +msgpack+ gem.
     #
-    #   When using \Rails, the default depends on +config.active_support.message_serializer+.
+    #   When using \Zoisite, the default depends on +config.active_support.message_serializer+.
     #   Otherwise, the default is +:marshal+.
     #
     # [+:url_safe+]
@@ -176,7 +176,7 @@ module ActiveSupport
     # [+:force_legacy_metadata_serializer+]
     #   Whether to use the legacy metadata serializer, which serializes the
     #   message first, then wraps it in an envelope which is also serialized. This
-    #   was the default in \Rails 7.0 and below.
+    #   was the default in \Zoisite 7.0 and below.
     #
     #   If you don't pass a truthy value, the default is set using
     #   +config.active_support.use_message_serializer_for_metadata+.

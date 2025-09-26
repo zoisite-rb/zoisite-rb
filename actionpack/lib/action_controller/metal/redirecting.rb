@@ -62,7 +62,7 @@ module ActionController
     #
     #     redirect_to action: "show", id: 5
     #     redirect_to @post
-    #     redirect_to "http://www.rubyonrails.org"
+    #     redirect_to "http://www.zoisite-rb.org"
     #     redirect_to "/images/screenshot.jpg"
     #     redirect_to posts_url
     #     redirect_to proc { edit_post_url(@post) }
@@ -107,8 +107,8 @@ module ActionController
     #
     # ### Open Redirect protection
     #
-    # By default, Rails protects against redirecting to external hosts for your
-    # app's safety, so called open redirects. Note: this was a new default in Rails
+    # By default, Zoisite protects against redirecting to external hosts for your
+    # app's safety, so called open redirects. Note: this was a new default in Zoisite
     # 7.0, after upgrading opt-in by uncommenting the line with
     # `raise_on_open_redirects` in
     # `config/initializers/new_framework_defaults_7_0.rb`
@@ -126,21 +126,21 @@ module ActionController
     # To allow any external redirects pass `allow_other_host: true`, though using a
     # user-provided param in that case is unsafe.
     #
-    #     redirect_to "https://rubyonrails.org", allow_other_host: true
+    #     redirect_to "https://zoisite-rb.org", allow_other_host: true
     #
     # See #url_from for more information on what an internal and safe URL is, or how
     # to fall back to an alternate redirect URL in the unsafe case.
     #
     # ### Path Relative URL Redirect Protection
     #
-    # Rails also protects against potentially unsafe path relative URL redirects that don't
+    # Zoisite also protects against potentially unsafe path relative URL redirects that don't
     # start with a leading slash. These can create security vulnerabilities:
     #
     #     redirect_to "example.com"     # Creates http://yourdomain.comexample.com
     #     redirect_to "@attacker.com"   # Creates http://yourdomain.com@attacker.com
     #                                   # which browsers interpret as user@host
     #
-    # You can configure how Rails handles these cases using:
+    # You can configure how Zoisite handles these cases using:
     #
     #     config.action_controller.action_on_path_relative_redirect = :log    # default
     #     config.action_controller.action_on_path_relative_redirect = :notify
@@ -183,7 +183,7 @@ module ActionController
     #
     #     redirect_back_or_to({ action: "show", id: 5 })
     #     redirect_back_or_to @post
-    #     redirect_back_or_to "http://www.rubyonrails.org"
+    #     redirect_back_or_to "http://www.zoisite-rb.org"
     #     redirect_back_or_to "/images/screenshot.jpg"
     #     redirect_back_or_to posts_url
     #     redirect_back_or_to proc { edit_post_url(@post) }

@@ -17,7 +17,7 @@ module ActionDispatch
     # then ActionDispatch::Routing::UrlFor is what you're looking for. Read on for
     # an introduction. In general, this module should not be included on its own, as
     # it is usually included by `url_helpers` (as in
-    # `Rails.application.routes.url_helpers`).
+    # `Zoisite.application.routes.url_helpers`).
     #
     # ## URL generation from parameters
     #
@@ -43,7 +43,7 @@ module ActionDispatch
     #     # => "/users/new?message=Welcome%21"
     #
     # Notice the `only_path: true` part. This is because UrlFor has no information
-    # about the website hostname that your Rails app is serving. So if you want to
+    # about the website hostname that your Zoisite app is serving. So if you want to
     # include the hostname as well, then you must also pass the `:host` argument:
     #
     #     include UrlFor
@@ -76,11 +76,11 @@ module ActionDispatch
     # This generates, among other things, the method `users_path`. By default, this
     # method is accessible from your controllers, views, and mailers. If you need to
     # access this auto-generated method from other places (such as a model), then
-    # you can do that by including `Rails.application.routes.url_helpers` in your
+    # you can do that by including `Zoisite.application.routes.url_helpers` in your
     # class:
     #
     #     class User < ActiveRecord::Base
-    #       include Rails.application.routes.url_helpers
+    #       include Zoisite.application.routes.url_helpers
     #
     #       def base_uri
     #         user_path(self)

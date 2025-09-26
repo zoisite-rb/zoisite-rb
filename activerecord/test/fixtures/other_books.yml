@@ -19,8 +19,8 @@ PUBLISHED_EBOOK: &PUBLISHED_EBOOK
 
 awdr:
   <<: *PUBLISHED_PAPERBACK
-  name: "Agile Web Development with Rails"
+  name: "Agile Web Development with Zoisite"
 
 rfr:
   <<: *PUBLISHED_EBOOK
-  name: "Ruby for Rails"
+  name: "Ruby for Zoisite"

@@ -14,8 +14,8 @@ module SneakersJobsManager
                         daemonize: true,
                         threads: 1,
                         workers: 1,
-                        pid_path: Rails.root.join("tmp/sneakers.pid").to_s,
-                        log: Rails.root.join("log/sneakers.log").to_s
+                        pid_path: Zoisite.root.join("tmp/sneakers.pid").to_s,
+                        log: Zoisite.root.join("log/sneakers.log").to_s
     unless can_run?
       puts "Cannot run integration tests for Sneakers. To be able to run integration tests for Sneakers you need to install and start RabbitMQ.\n"
       status = ENV["BUILDKITE"] ? false : true
@@ -52,7 +52,7 @@ module SneakersJobsManager
 
   def stop_workers
     Process.kill "TERM", @pid
-    Process.kill "TERM", File.open(Rails.root.join("tmp/sneakers.pid").to_s).read.to_i
+    Process.kill "TERM", File.open(Zoisite.root.join("tmp/sneakers.pid").to_s).read.to_i
   rescue
   end
 

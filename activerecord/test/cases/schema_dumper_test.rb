@@ -687,7 +687,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
       $stdout = original
     end
 
-    def test_timestamps_schema_dump_before_rails_7
+    def test_timestamps_schema_dump_before_zoisite_7
       migration, original, $stdout = nil, $stdout, StringIO.new
 
       migration = Class.new(ActiveRecord::Migration[6.1]) do
@@ -713,7 +713,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
       $stdout = original
     end
 
-    def test_timestamps_schema_dump_before_rails_7_with_timestamptz_setting
+    def test_timestamps_schema_dump_before_zoisite_7_with_timestamptz_setting
       migration, original, $stdout = nil, $stdout, StringIO.new
 
       with_postgresql_datetime_type(:timestamptz) do
@@ -736,7 +736,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
         # to something else, `t.datetime` now means `:timestamptz`. To ensure that old columns
         # are still created as a `:timestamp` we need to change what is written to the schema dump.
         #
-        # Typically in Rails we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
+        # Typically in Zoisite we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
         # but that doesn't work here because the schema dumper is not aware of which migration
         # a column was added in.
         assert output.include?('t.timestamp "this_should_change_to_timestamp"')
@@ -839,7 +839,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
       $stdout = original
     end
 
-    def test_schema_dump_with_correct_timestamp_types_via_add_column_before_rails_7
+    def test_schema_dump_with_correct_timestamp_types_via_add_column_before_zoisite_7
       original, $stdout = $stdout, StringIO.new
 
       migration = Class.new(ActiveRecord::Migration[6.1]) do
@@ -865,7 +865,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
       $stdout = original
     end
 
-    def test_schema_dump_with_correct_timestamp_types_via_add_column_before_rails_7_with_timestamptz_setting
+    def test_schema_dump_with_correct_timestamp_types_via_add_column_before_zoisite_7_with_timestamptz_setting
       migration, original, $stdout = nil, $stdout, StringIO.new
 
       with_postgresql_datetime_type(:timestamptz) do
@@ -887,7 +887,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
         # to something else, `t.datetime` now means `:timestamptz`. To ensure that old columns
         # are still created as a `:timestamp` we need to change what is written to the schema dump.
         #
-        # Typically in Rails we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
+        # Typically in Zoisite we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
         # but that doesn't work here because the schema dumper is not aware of which migration
         # a column was added in.
         assert output.include?('t.timestamp "this_should_change_to_timestamp"')
@@ -920,7 +920,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
         # to something else, `t.datetime` now means `:timestamptz`. To ensure that old columns
         # are still created as a `:timestamp` we need to change what is written to the schema dump.
         #
-        # Typically in Rails we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
+        # Typically in Zoisite we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
         # but that doesn't work here because the schema dumper is not aware of which migration
         # a column was added in.
         assert output.include?('t.timestamp "this_should_change_to_timestamp"')

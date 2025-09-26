@@ -772,7 +772,7 @@ module ActiveRecord
         #
         # The +options+ hash can include the following keys:
         # [<tt>:name</tt>]
-        #   The constraint name. Defaults to <tt>excl_rails_<identifier></tt>.
+        #   The constraint name. Defaults to <tt>excl_zoisite_<identifier></tt>.
         # [<tt>:deferrable</tt>]
         #   Specify whether or not the exclusion constraint should be deferrable. Valid values are +false+ or +:immediate+ or +:deferred+ to specify the default behavior. Defaults to +false+.
         # [<tt>:using</tt>]
@@ -822,7 +822,7 @@ module ActiveRecord
         #
         # The +options+ hash can include the following keys:
         # [<tt>:name</tt>]
-        #   The constraint name. Defaults to <tt>uniq_rails_<identifier></tt>.
+        #   The constraint name. Defaults to <tt>uniq_zoisite_<identifier></tt>.
         # [<tt>:deferrable</tt>]
         #   Specify whether or not the unique constraint should be deferrable. Valid values are +false+ or +:immediate+ or +:deferred+ to specify the default behavior. Defaults to +false+.
         # [<tt>:using_index</tt>]
@@ -863,7 +863,7 @@ module ActiveRecord
           remove_constraint(table_name, unique_name_to_delete)
         end
 
-        # Maps logical Rails types to PostgreSQL-specific data types.
+        # Maps logical Zoisite types to PostgreSQL-specific data types.
         def type_to_sql(type, limit: nil, precision: nil, scale: nil, array: nil, enum_type: nil, **) # :nodoc:
           sql = \
             case type.to_s
@@ -1119,7 +1119,7 @@ module ActiveRecord
               identifier = "#{table_name}_#{expression}_excl"
               hashed_identifier = Digest::SHA256.hexdigest(identifier).first(10)
 
-              "excl_rails_#{hashed_identifier}"
+              "excl_zoisite_#{hashed_identifier}"
             end
           end
 
@@ -1139,7 +1139,7 @@ module ActiveRecord
               identifier = "#{table_name}_#{column_or_index * '_and_'}_unique"
               hashed_identifier = Digest::SHA256.hexdigest(identifier).first(10)
 
-              "uniq_rails_#{hashed_identifier}"
+              "uniq_zoisite_#{hashed_identifier}"
             end
           end
 

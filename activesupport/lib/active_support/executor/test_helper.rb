@@ -2,6 +2,6 @@
 
 module ActiveSupport::Executor::TestHelper # :nodoc:
   def run(...)
-    Rails.application.executor.perform { super }
+    Zoisite.application.executor.perform { super }
   end
 end

@@ -10,8 +10,8 @@
 # call sites that are known to be safe & appropriate.
 #
 # This file may need to change in response to future Rack changes. If
-# you're here because you're adding new code/tests to Rails, though, you
-# probably need to work out how to ensure you're using the Rails query
+# you're here because you're adding new code/tests to Zoisite, though, you
+# probably need to work out how to ensure you're using the Zoisite query
 # parser instead.
 module RackParsingOverride
   UnexpectedCall = Class.new(Exception)

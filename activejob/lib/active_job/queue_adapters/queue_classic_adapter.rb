@@ -17,7 +17,7 @@ module ActiveJob
     #
     # To use queue_classic set the queue_adapter config to +:queue_classic+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :queue_classic
+    #   Zoisite.application.config.active_job.queue_adapter = :queue_classic
     class QueueClassicAdapter < AbstractAdapter
       def enqueue(job) # :nodoc:
         qc_job = build_queue(job.queue_name).enqueue("#{JobWrapper.name}.perform", job.serialize)

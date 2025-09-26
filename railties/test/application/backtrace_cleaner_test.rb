@@ -7,13 +7,13 @@ module ApplicationTests
     include EnvHelpers
 
     setup do
-      @cleaner = Rails::BacktraceCleaner.new
+      @cleaner = Zoisite::BacktraceCleaner.new
     end
 
-    test "#clean silences Rails code from backtrace" do
+    test "#clean silences Zoisite code from backtrace" do
       backtrace = [
         "app/controllers/foo_controller.rb:4:in 'index'",
-        "#{Gem.default_dir}/gems/railties-1.2.3/lib/rails/engine.rb:536:in `call"
+        "#{Gem.default_dir}/gems/railties-1.2.3/lib/zoisite/engine.rb:536:in `call"
       ]
 
       cleaned = @cleaner.clean(backtrace)
@@ -25,7 +25,7 @@ module ApplicationTests
       switch_env("BACKTRACE", "1") do
         backtrace = [
           "app/app/controllers/foo_controller.rb:4:in 'index'",
-          "#{Gem.default_dir}/gems/railties-1.2.3/lib/rails/engine.rb:536:in `call"
+          "#{Gem.default_dir}/gems/railties-1.2.3/lib/zoisite/engine.rb:536:in `call"
         ]
 
         cleaned = @cleaner.clean(backtrace)
@@ -34,8 +34,8 @@ module ApplicationTests
       end
     end
 
-    test "#clean_frame silences Rails code" do
-      frame = "#{Gem.default_dir}/gems/railties-1.2.3/lib/rails/engine.rb:536:in `call"
+    test "#clean_frame silences Zoisite code" do
+      frame = "#{Gem.default_dir}/gems/railties-1.2.3/lib/zoisite/engine.rb:536:in `call"
 
       cleaned = @cleaner.clean_frame(frame)
 
@@ -44,7 +44,7 @@ module ApplicationTests
 
     test "#clean_frame does not silence when BACKTRACE is set" do
       switch_env("BACKTRACE", "1") do
-        frame = "#{Gem.default_dir}/gems/railties-1.2.3/lib/rails/engine.rb:536:in `call"
+        frame = "#{Gem.default_dir}/gems/railties-1.2.3/lib/zoisite/engine.rb:536:in `call"
 
         cleaned = @cleaner.clean_frame(frame)
 

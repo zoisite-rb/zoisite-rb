@@ -47,7 +47,7 @@ class ActiveStorage::DiskControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "showing blob with invalid key" do
-    get rails_disk_service_url(encoded_key: "Invalid key", filename: "hello.txt")
+    get zoisite_disk_service_url(encoded_key: "Invalid key", filename: "hello.txt")
     assert_response :not_found
   end
 
@@ -119,7 +119,7 @@ class ActiveStorage::DiskControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "directly uploading blob with invalid token" do
-    put update_rails_disk_service_url(encoded_token: "invalid"),
+    put update_zoisite_disk_service_url(encoded_token: "invalid"),
       params: "Something else entirely!", headers: { "Content-Type" => "text/plain" }
     assert_response :not_found
   end

@@ -25,14 +25,14 @@ if ActiveRecord::Base.lease_connection.supports_virtual_columns?
         end
       end
 
-      VirtualColumn.create(name: "Rails")
+      VirtualColumn.create(name: "Zoisite")
     end
 
     def test_virtual_column_with_full_inserts
       partial_inserts_was = VirtualColumn.partial_inserts
       VirtualColumn.partial_inserts = false
       assert_nothing_raised do
-        VirtualColumn.create!(name: "Rails")
+        VirtualColumn.create!(name: "Zoisite")
       end
     ensure
       VirtualColumn.partial_inserts = partial_inserts_was
@@ -64,7 +64,7 @@ if ActiveRecord::Base.lease_connection.supports_virtual_columns?
       column = VirtualColumn.columns_hash["lower_name"]
       assert_predicate column, :virtual?
       assert_predicate column, :virtual_stored? if @connection.database_version >= 18_00_00
-      assert_equal "rails", VirtualColumn.take.lower_name
+      assert_equal "zoisite", VirtualColumn.take.lower_name
     end
 
     if ActiveRecord::Base.lease_connection.database_version >= 18_00_00

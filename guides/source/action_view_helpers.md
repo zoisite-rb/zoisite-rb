@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action View Helpers
 ====================
@@ -15,7 +15,7 @@ After reading this guide, you will know:
 
 The following outlines **some of the most commonly used helpers** available in
 Action View. It serves as a good starting point, but reviewing the full [API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers.html) is
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers.html) is
 also recommended, as it covers all of the helpers in more detail.
 
 Formatting
@@ -40,11 +40,11 @@ distance_of_time_in_words(Time.current, 15.seconds.from_now, include_seconds: tr
 ```
 
 NOTE: We use `Time.current` instead of `Time.now` because it returns the current
-time based on the timezone set in Rails, whereas `Time.now` returns a Time
+time based on the timezone set in Zoisite, whereas `Time.now` returns a Time
 object based on the server's timezone.
 
 See the [`distance_of_time_in_words` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-distance_of_time_in_words)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/DateHelper.html#method-i-distance_of_time_in_words)
 for more information.
 
 #### time_ago_in_words
@@ -57,7 +57,7 @@ time_ago_in_words(3.minutes.from_now) # => 3 minutes
 ```
 
 See the [`time_ago_in_words` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-time_ago_in_words)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/DateHelper.html#method-i-time_ago_in_words)
 for more information.
 
 ### Numbers
@@ -75,7 +75,7 @@ number_to_currency(1234567890.50) # => $1,234,567,890.50
 ```
 
 See the [`number_to_currency` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_currency)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_currency)
 for more information.
 
 #### number_to_human
@@ -89,7 +89,7 @@ number_to_human(1234567) # => 1.23 Million
 ```
 
 See the [`number_to_human` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_human)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_human)
 for more information.
 
 #### number_to_human_size
@@ -103,7 +103,7 @@ number_to_human_size(1234567) # => 1.18 MB
 ```
 
 See the [`number_to_human_size` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_human_size)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_human_size)
 for more information.
 
 #### number_to_percentage
@@ -115,7 +115,7 @@ number_to_percentage(100, precision: 0) # => 100%
 ```
 
 See the [`number_to_percentage` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_percentage)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_percentage)
 for more information.
 
 #### number_to_phone
@@ -127,7 +127,7 @@ number_to_phone(1235551234) # => 123-555-1234
 ```
 
 See the [`number_to_phone` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_phone)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_phone)
 for more information.
 
 #### number_with_delimiter
@@ -139,7 +139,7 @@ number_with_delimiter(12345678) # => 12,345,678
 ```
 
 See the [`number_with_delimiter` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_with_delimiter)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_with_delimiter)
 for more information.
 
 #### number_with_precision
@@ -152,7 +152,7 @@ number_with_precision(111.2345, precision: 2) # => 111.23
 ```
 
 See the [`number_with_precision` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_with_precision)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/NumberHelper.html#method-i-number_with_precision)
 for more information.
 
 ### Text
@@ -175,7 +175,7 @@ excerpt("This is also an example", "an", radius: 8, omission: "<chop> ")
 ```
 
 See the [`excerpt` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/TextHelper.html#method-i-excerpt)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/TextHelper.html#method-i-excerpt)
 for more information.
 
 #### pluralize
@@ -189,7 +189,7 @@ pluralize(3, "person", plural: "users") # => 3 users
 ```
 
 See the [`pluralize` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/TextHelper.html#method-i-pluralize)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/TextHelper.html#method-i-pluralize)
 for more information.
 
 #### truncate
@@ -216,7 +216,7 @@ truncate("<p>Once upon a time in a world far far away</p>", escape: false)
 ```
 
 See the [`truncate` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/TextHelper.html#method-i-truncate)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/TextHelper.html#method-i-truncate)
 for more information.
 
 #### word_wrap
@@ -229,7 +229,7 @@ word_wrap("Once upon a time", line_width: 8)
 ```
 
 See the [`word_wrap` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/TextHelper.html#method-i-word_wrap)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/TextHelper.html#method-i-word_wrap)
 for more information.
 
 Forms
@@ -268,7 +268,7 @@ would output the following HTML:
 ```
 
 See the [`button_to` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to)
 for more information.
 
 ### current_page?
@@ -282,7 +282,7 @@ Returns true if the current request URL matches the given `options`.
 ```
 
 See the [`current_page?` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-current_page-3F)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/UrlHelper.html#method-i-current_page-3F)
 for more information.
 
 ### link_to
@@ -325,7 +325,7 @@ It would output the following HTML:
 ```
 
 See the [`link_to` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
 for more information.
 
 ### mail_to
@@ -344,7 +344,7 @@ mail_to "me@john_doe.com", cc: "me@jane_doe.com",
 ```
 
 See the [`mail_to` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-mail_to)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/UrlHelper.html#method-i-mail_to)
 for more information.
 
 ### url_for
@@ -371,7 +371,7 @@ rendered. It can also be useful to prevent XSS attacks by escaping or removing
 potentially malicious content from user input before rendering it in your views.
 
 This functionality is powered internally by the
-[rails-html-sanitizer](https://github.com/rails/rails-html-sanitizer) gem.
+[zoisite-html-sanitizer](https://github.com/zoisite-rb/zoisite-rb-html-sanitizer) gem.
 
 ### sanitize
 
@@ -394,13 +394,13 @@ default:
 
 ```ruby
 # config/application.rb
-class Application < Rails::Application
+class Application < Zoisite::Application
   config.action_view.sanitized_allowed_tags = %w(table tr td)
 end
 ```
 
 See the [`sanitize` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html#method-i-sanitize)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html#method-i-sanitize)
 for more information.
 
 ### sanitize_css
@@ -416,7 +416,7 @@ sanitize_css("background-color: red; color: white; font-size: 16px;")
 ```
 
 See the [`sanitize_css` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html#method-i-sanitize_css)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html#method-i-sanitize_css)
 for more information.
 
 ### strip_links
@@ -424,8 +424,8 @@ for more information.
 Strips all link tags from text leaving just the link text.
 
 ```ruby
-strip_links("<a href='https://rubyonrails.org'>Ruby on Rails</a>")
-# => Ruby on Rails
+strip_links("<a href='https://zoisite-rb.org'>Zoisite</a>")
+# => Zoisite
 
 strip_links("emails to <a href='mailto:me@email.com'>me@email.com</a>.")
 # => emails to me@email.com.
@@ -435,7 +435,7 @@ strip_links("Blog: <a href='http://myblog.com/'>Visit</a>.")
 ```
 
 See the [`strip_links` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html#method-i-strip_links)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html#method-i-strip_links)
 for more information.
 
 ### strip_tags
@@ -454,7 +454,7 @@ strip_links('<<a href="https://example.org">malformed & link</a>')
 ```
 
 See the [`strip_tags` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html#method-i-strip_tags)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html#method-i-strip_tags)
 for more information.
 
 Assets
@@ -463,8 +463,8 @@ Assets
 A set of methods for generating HTML that links views to assets such as images,
 JavaScript files, stylesheets, and feeds.
 
-By default, Rails links to these assets on the current host in the public
-folder, but you can direct Rails to link to assets from a dedicated assets
+By default, Zoisite links to these assets on the current host in the public
+folder, but you can direct Zoisite to link to assets from a dedicated assets
 server by setting [`config.asset_host`][] in the application configuration,
 typically in `config/environments/production.rb`.
 
@@ -477,8 +477,8 @@ config.asset_host = "assets.example.com"
 then the corresponding URL for an `image_tag` would be:
 
 ```ruby
-image_tag("rails.png")
-# => <img src="//assets.example.com/images/rails.png" />
+image_tag("zoisite.png")
+# => <img src="//assets.example.com/images/zoisite.png" />
 ```
 
 [`config.asset_host`]: configuring.html#config-asset-host
@@ -502,11 +502,11 @@ audio_tag("sound", controls: true)
 ```
 
 INFO: Internally, `audio_tag` uses [`audio_path` from the
-AssetUrlHelpers](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-audio_path)
+AssetUrlHelpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-audio_path)
 to build the audio path.
 
 See the [`audio_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-audio_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-audio_tag)
 for more information.
 
 ### auto_discovery_link_tag
@@ -520,7 +520,7 @@ auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS F
 ```
 
 See the [`auto_discovery_link_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-auto_discovery_link_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-auto_discovery_link_tag)
 for more information.
 
 ### favicon_link_tag
@@ -534,7 +534,7 @@ favicon_link_tag
 ```
 
 See the [`favicon_link_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-favicon_link_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-favicon_link_tag)
 for more information.
 
 ### image_tag
@@ -551,11 +551,11 @@ image_tag("icon.png", size: "16x10", alt: "Edit Article")
 ```
 
 INFO: Internally, `image_tag` uses [`image_path` from the
-AssetUrlHelpers](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-image_path)
+AssetUrlHelpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-image_path)
 to build the image path.
 
 See the [`image_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag)
 for more information.
 
 ### javascript_include_tag
@@ -579,11 +579,11 @@ possible, and `defer` will indicate that the script is meant to be executed
 after the document has been parsed.
 
 INFO: Internally, `javascript_include_tag` uses [`javascript_path` from the
-AssetUrlHelpers](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-javascript_path)
+AssetUrlHelpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-javascript_path)
 to build the script path.
 
 See the [`javascript_include_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-javascript_include_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-javascript_include_tag)
 for more information.
 
 ### picture_tag
@@ -606,7 +606,7 @@ This generates the following HTML:
 ```
 
 See the [`picture_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-picture_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-picture_tag)
 for more information.
 
 ### preload_link_tag
@@ -620,7 +620,7 @@ preload_link_tag("application.css")
 ```
 
 See the [`preload_link_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-preload_link_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-preload_link_tag)
 for more information.
 
 ### stylesheet_link_tag
@@ -640,11 +640,11 @@ stylesheet_link_tag("application", media: "all")
 types are `all`, `screen`, `print`, and `speech`.
 
 INFO: Internally, `stylesheet_link_tag` uses [`stylesheet_path` from the
-AssetUrlHelpers](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-stylesheet_path)
+AssetUrlHelpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-stylesheet_path)
 to build the stylesheet path.
 
 See the [`stylesheet_link_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-stylesheet_link_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-stylesheet_link_tag)
 for more information.
 
 ### video_tag
@@ -666,11 +666,11 @@ video_tag("trailer", controls: true)
 ```
 
 INFO: Internally, `video_tag` uses [`video_path` from the
-AssetUrlHelpers](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-video_path)
+AssetUrlHelpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetUrlHelper.html#method-i-video_path)
 to build the video path.
 
 See the [`video_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-video_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-video_tag)
 for more information.
 
 JavaScript
@@ -702,7 +702,7 @@ My name is <%= current_user.name %>, and I'm here to say "Welcome to our website
 This will escape the quotes correctly and display the greeting in an alert box.
 
 See the [`escape_javascript` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/JavaScriptHelper.html#method-i-escape_javascript)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/JavaScriptHelper.html#method-i-escape_javascript)
 for more information.
 
 ### javascript_tag
@@ -731,7 +731,7 @@ Instead of passing the content as an argument, you can also use a block.
 ```
 
 See the [`javascript_tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/JavaScriptHelper.html#method-i-javascript_tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/JavaScriptHelper.html#method-i-javascript_tag)
 for more information.
 
 Alternative Tags
@@ -779,7 +779,7 @@ tag.div data: { user_id: 123 }
 ```
 
 See the [`tag` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-tag)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/TagHelper.html#method-i-tag)
 for more information.
 
 ### token_list
@@ -841,7 +841,7 @@ The return of capture is the string generated by the block.
 ```
 
 See the [`capture` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-capture)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-capture)
 for more information.
 
 ### content_for
@@ -906,7 +906,7 @@ simply adds to what's already stored. In contrast, `capture` only returns the
 content of the block, without keeping track of any previous invocations.
 
 See the [`content_for` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-content_for)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-content_for)
 for more information.
 
 Performance
@@ -931,7 +931,7 @@ NOTE: This helper is a part of Active Support, and it is also available on
 controllers, helpers, models, etc.
 
 See the [`benchmark` API
-Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Benchmarkable.html#method-i-benchmark)
+Documentation](https://api.zoisite-rb.org/classes/ActiveSupport/Benchmarkable.html#method-i-benchmark)
 for more information.
 
 ### cache
@@ -964,16 +964,16 @@ would cache each article separately.
 <% end %>
 ```
 
-When your application receives its first request to this page, Rails will write
+When your application receives its first request to this page, Zoisite will write
 a new cache entry with a unique key. A key looks something like this:
 
 ```irb
 views/articles/index:bea67108094918eeba32cd4a6f786301/articles/1
 ```
 
-See [`Fragment Caching`](caching_with_rails.html#fragment-caching) and the
+See [`Fragment Caching`](caching_with_zoisite.html#fragment-caching) and the
 [`cache` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache)
 for more information.
 
 Miscellaneous
@@ -1025,7 +1025,7 @@ end
 ```
 
 See the [`atom_feed` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/AtomFeedHelper.html#method-i-atom_feed)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/AtomFeedHelper.html#method-i-atom_feed)
 for more information.
 
 ### debug
@@ -1050,5 +1050,5 @@ third:
 ```
 
 See the [`debug` API
-Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/DebugHelper.html#method-i-debug)
+Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/DebugHelper.html#method-i-debug)
 for more information.

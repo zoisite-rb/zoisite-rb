@@ -97,7 +97,7 @@ class SerializersTest < ActiveSupport::TestCase
   end
 
   test "raises a deprecation warning if the klass method doesn't exist" do
-    expected_message = "TestSerializerWithoutKlass should implement a public #klass method. This will raise an error in Rails 8.2"
+    expected_message = "TestSerializerWithoutKlass should implement a public #klass method. This will raise an error in Zoisite 8.2"
 
     assert_deprecated(expected_message, ActiveJob.deprecator) do
       ActiveJob::Serializers.add_serializers TestSerializerWithoutKlass

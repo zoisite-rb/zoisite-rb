@@ -20,7 +20,7 @@ module ActiveSupport
 
       private
         def tagged_logger
-          @tagged_logger ||= (defined?(Rails.logger) && Rails.logger)
+          @tagged_logger ||= (defined?(Zoisite.logger) && Zoisite.logger)
         end
     end
   end

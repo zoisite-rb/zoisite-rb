@@ -15,21 +15,21 @@ module ActiveRecord
   # \Fixtures are a way of organizing data that you want to test against; in short, sample data.
   #
   # They are stored in YAML files, one file per model, which are by default placed in either
-  # <tt><your-rails-app>/test/fixtures/</tt> or in the <tt>test/fixtures</tt>
+  # <tt><your-zoisite-app>/test/fixtures/</tt> or in the <tt>test/fixtures</tt>
   # folder under any of your application's engines.
   #
   # The location can also be changed with ActiveSupport::TestCase.fixture_paths=,
-  # once you have <tt>require "rails/test_help"</tt> in your +test_helper.rb+.
+  # once you have <tt>require "zoisite/test_help"</tt> in your +test_helper.rb+.
   #
   # The fixture file ends with the +.yml+ file extension, for example:
-  # <tt><your-rails-app>/test/fixtures/web_sites.yml</tt>).
+  # <tt><your-zoisite-app>/test/fixtures/web_sites.yml</tt>).
   #
   # The format of a fixture file looks like this:
   #
-  #   rubyonrails:
+  #   zoisite:
   #     id: 1
-  #     name: Ruby on Rails
-  #     url: http://www.rubyonrails.org
+  #     name: Ruby on Zoisite
+  #     url: http://www.zoisite-rb.org
   #
   #   google:
   #     id: 2
@@ -87,13 +87,13 @@ module ActiveRecord
   # Passing in a fixture name to this dynamic method returns the fixture matching this name:
   #
   #   test "find one" do
-  #     assert_equal "Ruby on Rails", web_sites(:rubyonrails).name
+  #     assert_equal "Ruby on Zoisite", web_sites(:zoisite).name
   #   end
   #
   # Passing in multiple fixture names returns all fixtures matching these names:
   #
   #   test "find all by name" do
-  #     assert_equal 2, web_sites(:rubyonrails, :google).length
+  #     assert_equal 2, web_sites(:zoisite, :google).length
   #   end
   #
   # Passing in no arguments returns all fixtures:
@@ -111,18 +111,18 @@ module ActiveRecord
   # If the model names conflicts with a +TestCase+ methods, you can use the generic +fixture+ accessor
   #
   #   test "generic find" do
-  #     assert_equal "Ruby on Rails", fixture(:web_sites, :rubyonrails).name
+  #     assert_equal "Ruby on Zoisite", fixture(:web_sites, :zoisite).name
   #   end
   #
   # Alternatively, you may enable auto-instantiation of the fixture data. For instance, take the
   # following tests:
   #
   #   test "find_alt_method_1" do
-  #     assert_equal "Ruby on Rails", @web_sites['rubyonrails']['name']
+  #     assert_equal "Ruby on Zoisite", @web_sites['zoisite']['name']
   #   end
   #
   #   test "find_alt_method_2" do
-  #     assert_equal "Ruby on Rails", @rubyonrails.name
+  #     assert_equal "Ruby on Zoisite", @zoisite.name
   #   end
   #
   # In order to use these methods to access fixtured data within your test cases, you must specify one of the
@@ -166,7 +166,7 @@ module ActiveRecord
   # - define a helper method in <tt>test_helper.rb</tt>
   #     module FixtureFileHelpers
   #       def file_sha(path)
-  #         OpenSSL::Digest::SHA256.hexdigest(File.read(Rails.root.join('test/fixtures', path)))
+  #         OpenSSL::Digest::SHA256.hexdigest(File.read(Zoisite.root.join('test/fixtures', path)))
   #       end
   #     end
   #     ActiveRecord::FixtureSet.context_class.include FixtureFileHelpers
@@ -195,7 +195,7 @@ module ActiveRecord
   #     end
   #   end
   #
-  # If you preload your test database with all fixture data (probably by running <tt>bin/rails db:fixtures:load</tt>)
+  # If you preload your test database with all fixture data (probably by running <tt>bin/zoisite db:fixtures:load</tt>)
   # and use transactional tests, then you may omit all fixtures declarations in your test cases since
   # all the data's already there and every case rolls back its changes.
   #
@@ -516,7 +516,7 @@ module ActiveRecord
   # It's possible to set the fixture's model class directly in the YAML file.
   # This is helpful when fixtures are loaded outside tests and
   # +set_fixture_class+ is not available (e.g.
-  # when running <tt>bin/rails db:fixtures:load</tt>).
+  # when running <tt>bin/zoisite db:fixtures:load</tt>).
   #
   #   _fixture:
   #     model_class: User

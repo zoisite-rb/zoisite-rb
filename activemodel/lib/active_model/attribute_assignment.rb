@@ -47,7 +47,7 @@ module ActiveModel
     #     attr_accessor :length, :width
     #
     #     def attribute_writer_missing(name, value)
-    #       Rails.logger.warn "Tried to assign to unknown attribute #{name}"
+    #       Zoisite.logger.warn "Tried to assign to unknown attribute #{name}"
     #     end
     #   end
     #

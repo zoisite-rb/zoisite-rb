@@ -1,2 +1,2 @@
-Rails.application.routes.draw do
+Zoisite.application.routes.draw do
 end

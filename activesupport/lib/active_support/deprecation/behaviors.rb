@@ -9,7 +9,7 @@ module ActiveSupport
   end
 
   class Deprecation
-    # Default warning behaviors per Rails.env.
+    # Default warning behaviors per Zoisite.env.
     DEFAULT_BEHAVIORS = {
       raise: ->(message, callstack, deprecator) do
         e = DeprecationException.new(message)
@@ -24,8 +24,8 @@ module ActiveSupport
 
       log: ->(message, callstack, deprecator) do
         logger =
-            if defined?(Rails.logger) && Rails.logger
-              Rails.logger
+            if defined?(Zoisite.logger) && Zoisite.logger
+              Zoisite.logger
             else
               require "active_support/logger"
               ActiveSupport::Logger.new($stderr)
@@ -59,10 +59,10 @@ module ActiveSupport
     #
     # [+:raise+]   Raise ActiveSupport::DeprecationException.
     # [+:stderr+]  Log all deprecation warnings to <tt>$stderr</tt>.
-    # [+:log+]     Log all deprecation warnings to +Rails.logger+.
-    # [+:notify+]  Use ActiveSupport::Notifications to notify +deprecation.rails+.
+    # [+:log+]     Log all deprecation warnings to +Zoisite.logger+.
+    # [+:notify+]  Use ActiveSupport::Notifications to notify +deprecation.zoisite+.
     # [+:report+]  Use ActiveSupport::ErrorReporter to report deprecations.
-    # [+:silence+] Do nothing. On \Rails, set <tt>config.active_support.report_deprecations = false</tt> to disable all behaviors.
+    # [+:silence+] Do nothing. On \Zoisite, set <tt>config.active_support.report_deprecations = false</tt> to disable all behaviors.
     #
     # Setting behaviors only affects deprecations that happen after boot time.
     # For more information you can read the documentation of the #behavior= method.
@@ -87,14 +87,14 @@ module ActiveSupport
       #
       # [+:raise+]   Raise ActiveSupport::DeprecationException.
       # [+:stderr+]  Log all deprecation warnings to <tt>$stderr</tt>.
-      # [+:log+]     Log all deprecation warnings to +Rails.logger+.
-      # [+:notify+]  Use ActiveSupport::Notifications to notify +deprecation.rails+.
+      # [+:log+]     Log all deprecation warnings to +Zoisite.logger+.
+      # [+:notify+]  Use ActiveSupport::Notifications to notify +deprecation.zoisite+.
       # [+:report+]  Use ActiveSupport::ErrorReporter to report deprecations.
       # [+:silence+] Do nothing.
       #
       # Setting behaviors only affects deprecations that happen after boot time.
       # Deprecation warnings raised by gems are not affected by this setting
-      # because they happen before \Rails boots up.
+      # because they happen before \Zoisite boots up.
       #
       #   deprecator = ActiveSupport::Deprecation.new
       #   deprecator.behavior = :stderr
@@ -104,7 +104,7 @@ module ActiveSupport
       #     # custom stuff
       #   }
       #
-      # If you are using \Rails, you can set
+      # If you are using \Zoisite, you can set
       # <tt>config.active_support.report_deprecations = false</tt> to disable
       # all deprecation behaviors. This is similar to the +:silence+ option but
       # more performant.

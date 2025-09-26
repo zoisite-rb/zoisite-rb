@@ -21,14 +21,14 @@ module ApplicationTests
     def test_use_value_defined_in_environment_file_in_database_yml
       app_file "config/database.yml", <<-YAML
         development:
-           database: <%= Rails.application.config.database %>
+           database: <%= Zoisite.application.config.database %>
            adapter: sqlite3
            max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
            timeout: 5000
       YAML
 
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.database = "storage/development.sqlite3"
         end
       RUBY
@@ -68,7 +68,7 @@ module ApplicationTests
 
     private
       def spawn_dbconsole(fd, options = nil)
-        Process.spawn("#{app_path}/bin/rails dbconsole #{options}", in: fd, out: fd, err: fd)
+        Process.spawn("#{app_path}/bin/zoisite dbconsole #{options}", in: fd, out: fd, err: fd)
       end
   end
 end

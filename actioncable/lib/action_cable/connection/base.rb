@@ -177,7 +177,7 @@ module ActionCable
         # gives access to the environment, cookies, etc.
         def request # :doc:
           @request ||= begin
-            environment = Rails.application.env_config.merge(env) if defined?(Rails.application) && Rails.application
+            environment = Zoisite.application.env_config.merge(env) if defined?(Zoisite.application) && Zoisite.application
             ActionDispatch::Request.new(environment || env)
           end
         end

@@ -11,9 +11,9 @@ module SharedGeneratorTests
   include EnvHelpers
 
   def setup
-    Rails.application = TestApp::Application
+    Zoisite.application = TestApp::Application
     super
-    Rails::Generators::AppGenerator.instance_variable_set("@desc", nil)
+    Zoisite::Generators::AppGenerator.instance_variable_set("@desc", nil)
 
     Kernel.silence_warnings do
       Thor::Base.shell.attr_accessor :always_force
@@ -24,8 +24,8 @@ module SharedGeneratorTests
 
   def teardown
     super
-    Rails::Generators::AppGenerator.instance_variable_set("@desc", nil)
-    Rails.application = TestApp::Application.instance
+    Zoisite::Generators::AppGenerator.instance_variable_set("@desc", nil)
+    Zoisite.application = TestApp::Application.instance
   end
 
   def application_path
@@ -83,7 +83,7 @@ module SharedGeneratorTests
       assert File.executable?("#{application_path}/bin/docker-entrypoint")
     end
 
-    assert_file "#{application_path}/config/application.rb", /\s+require\s+["']rails\/all["']/
+    assert_file "#{application_path}/config/application.rb", /\s+require\s+["']zoisite\/all["']/
 
     assert_file "#{application_path}/config/environments/development.rb" do |content|
       assert_match(/config\.action_mailer\.raise_delivery_errors = false/, content)
@@ -121,7 +121,7 @@ module SharedGeneratorTests
     reserved_words = %w[application destroy plugin runner test]
     reserved_words.each do |reserved|
       content = capture(:stderr) { run_generator [File.join(destination_root, reserved)] }
-      assert_match(/Invalid \w+ name #{reserved}\. Please give a name which does not match one of the reserved rails words: application, destroy, plugin, runner, test\n/, content)
+      assert_match(/Invalid \w+ name #{reserved}\. Please give a name which does not match one of the reserved zoisite words: application, destroy, plugin, runner, test\n/, content)
     end
   end
 
@@ -132,14 +132,14 @@ module SharedGeneratorTests
     end
   end
 
-  def test_shebang_is_added_to_rails_file
+  def test_shebang_is_added_to_zoisite_file
     run_generator [destination_root, "--ruby", "foo/bar/baz", "--full"]
-    assert_file "bin/rails", /#!foo\/bar\/baz/
+    assert_file "bin/zoisite", /#!foo\/bar\/baz/
   end
 
   def test_shebang_when_is_the_same_as_default_use_env
     run_generator [destination_root, "--ruby", Thor::Util.ruby_command, "--full"]
-    assert_file "bin/rails", /#!\/usr\/bin\/env/
+    assert_file "bin/zoisite", /#!\/usr\/bin\/env/
   end
 
   def test_template_from_absolute_path
@@ -229,20 +229,20 @@ module SharedGeneratorTests
       "--skip-action-cable"
     ]
 
-    assert_file "#{application_path}/config/application.rb", /^require\s+["']rails["']/
+    assert_file "#{application_path}/config/application.rb", /^require\s+["']zoisite["']/
     assert_file "#{application_path}/config/application.rb", /^require\s+["']active_model\/railtie["']/
     assert_file "#{application_path}/config/application.rb", /^require\s+["']active_job\/railtie["']/
     assert_file "#{application_path}/config/application.rb", /^# require\s+["']active_record\/railtie["']/
     assert_file "#{application_path}/config/application.rb", /^# require\s+["']active_storage\/engine["']/
     assert_file "#{application_path}/config/application.rb", /^require\s+["']action_controller\/railtie["']/
     assert_file "#{application_path}/config/application.rb", /^# require\s+["']action_mailer\/railtie["']/
-    unless generator_class.name == "Rails::Generators::PluginGenerator"
+    unless generator_class.name == "Zoisite::Generators::PluginGenerator"
       assert_file "#{application_path}/config/application.rb", /^# require\s+["']action_mailbox\/engine["']/
       assert_file "#{application_path}/config/application.rb", /^# require\s+["']action_text\/engine["']/
     end
     assert_file "#{application_path}/config/application.rb", /^require\s+["']action_view\/railtie["']/
     assert_file "#{application_path}/config/application.rb", /^# require\s+["']action_cable\/engine["']/
-    assert_file "#{application_path}/config/application.rb", /^require\s+["']rails\/test_unit\/railtie["']/
+    assert_file "#{application_path}/config/application.rb", /^require\s+["']zoisite\/test_unit\/railtie["']/
   end
 
   def test_generator_if_skip_active_record_is_given
@@ -355,37 +355,37 @@ module SharedGeneratorTests
 
   def test_dev_option
     run_generator_using_prerelease [destination_root, "--dev"]
-    rails_path = File.expand_path("../../..", Rails.root)
-    assert_file "Gemfile", %r{^gem ["']rails["'], path: ["']#{Regexp.escape rails_path}["']$}
+    zoisite_path = File.expand_path("../../..", Zoisite.root)
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], path: ["']#{Regexp.escape zoisite_path}["']$}
   end
 
   def test_edge_option
-    Rails.stub(:gem_version, Gem::Version.new("2.1.0")) do
+    Zoisite.stub(:gem_version, Gem::Version.new("2.1.0")) do
       run_generator_using_prerelease [destination_root, "--edge"]
     end
-    assert_file "Gemfile", %r{^gem ["']rails["'], github: ["']rails/rails["'], branch: ["']2-1-stable["']$}
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']2-1-stable["']$}
   end
 
   def test_edge_option_during_alpha
-    Rails.stub(:gem_version, Gem::Version.new("2.1.0.alpha")) do
+    Zoisite.stub(:gem_version, Gem::Version.new("2.1.0.alpha")) do
       run_generator_using_prerelease [destination_root, "--edge"]
     end
-    assert_file "Gemfile", %r{^gem ["']rails["'], github: ["']rails/rails["'], branch: ["']main["']$}
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']main["']$}
   end
 
   def test_main_option
     run_generator_using_prerelease [destination_root, "--main"]
-    assert_file "Gemfile", %r{^gem ["']rails["'], github: ["']rails/rails["'], branch: ["']main["']$}
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']main["']$}
   end
 
   def test_master_option
     run_generator_using_prerelease [destination_root, "--master"]
-    assert_file "Gemfile", %r{^gem ["']rails["'], github: ["']rails/rails["'], branch: ["']main["']$}
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']main["']$}
   end
 
-  def test_target_rails_prerelease_with_relative_app_path
+  def test_target_zoisite_prerelease_with_relative_app_path
     run_generator_using_prerelease ["myproject", "--main"]
-    assert_file "myproject/Gemfile", %r{^gem ["']rails["'], github: ["']rails/rails["'], branch: ["']main["']$}
+    assert_file "myproject/Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']main["']$}
   end
 
   def test_generated_files_have_no_rubocop_warnings
@@ -426,11 +426,11 @@ module SharedGeneratorTests
       @bundle_commands = []
       @bundle_command_stub ||= -> (command, *) { @bundle_commands << command }
 
-      @rails_commands = []
-      @rails_command_stub ||= -> (command, *_) { @rails_commands << command }
+      @zoisite-rb.orgmands = []
+      @zoisite-rb.orgmand_stub ||= -> (command, *_) { @zoisite-rb.orgmands << command }
 
       generator.stub(:bundle_command, @bundle_command_stub) do
-        generator.stub(:rails_command, @rails_command_stub) do
+        generator.stub(:zoisite-rb.orgmand, @zoisite-rb.orgmand_stub) do
           super
         end
       end
@@ -444,31 +444,31 @@ module SharedGeneratorTests
       generator(positional_args, option_args)
 
       prerelease_commands = []
-      prerelease_command_rails_gems = []
-      rails_gem_pattern = /^gem ["']rails["'], .+/
+      prerelease_command_zoisite_gems = []
+      zoisite_gem_pattern = /^gem ["']zoisite["'], .+/
 
       @bundle_command_stub = -> (command, *) do
         @bundle_commands << command
 
-        if command.start_with?("install", "exec rails")
+        if command.start_with?("install", "exec zoisite")
           prerelease_commands << command
           assert_file File.expand_path("Gemfile", project_path) do |gemfile|
-            prerelease_command_rails_gems << gemfile[rails_gem_pattern]
+            prerelease_command_zoisite_gems << gemfile[zoisite_gem_pattern]
           end
         end
       end
 
-      # run target_rails_prerelease on exit to mimic re-running generator
-      generator.stub :exit, generator.method(:target_rails_prerelease) do
+      # run target_zoisite_prerelease on exit to mimic re-running generator
+      generator.stub :exit, generator.method(:target_zoisite_prerelease) do
         run_generator_instance
       end
 
       assert_file File.expand_path("Gemfile", project_path) do |gemfile|
         assert_match %r/^install/, prerelease_commands[0]
-        assert_equal gemfile[rails_gem_pattern], prerelease_command_rails_gems[0]
+        assert_equal gemfile[zoisite_gem_pattern], prerelease_command_zoisite_gems[0]
 
-        assert_match %r/^exec rails (?:plugin )?new #{Regexp.escape Shellwords.join(expected_args)}/, prerelease_commands[1]
-        assert_equal gemfile[rails_gem_pattern], prerelease_command_rails_gems[1]
+        assert_match %r/^exec zoisite (?:plugin )?new #{Regexp.escape Shellwords.join(expected_args)}/, prerelease_commands[1]
+        assert_equal gemfile[zoisite_gem_pattern], prerelease_command_zoisite_gems[1]
       end
     end
 

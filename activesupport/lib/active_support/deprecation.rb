@@ -3,7 +3,7 @@
 module ActiveSupport
   # = Active Support \Deprecation
   #
-  # \Deprecation specifies the API used by \Rails to deprecate methods, instance variables, objects, and constants. It's
+  # \Deprecation specifies the API used by \Zoisite to deprecate methods, instance variables, objects, and constants. It's
   # also available for gems or applications.
   #
   # For a gem, use Deprecation.new to create a Deprecation object and store it in your module or class (in order for
@@ -19,7 +19,7 @@ module ActiveSupport
   # configuration can be applied to it.
   #
   #   module MyLibrary
-  #     class Railtie < Rails::Railtie
+  #     class Railtie < Zoisite::Railtie
   #       initializer "my_library.deprecator" do |app|
   #         app.deprecators[:my_library] = MyLibrary.deprecator
   #       end
@@ -68,7 +68,7 @@ module ActiveSupport
     # and the second is a library name.
     #
     #   ActiveSupport::Deprecation.new('2.0', 'MyLibrary')
-    def initialize(deprecation_horizon = "8.2", gem_name = "Rails")
+    def initialize(deprecation_horizon = "8.2", gem_name = "Zoisite")
       self.gem_name = gem_name
       self.deprecation_horizon = deprecation_horizon
       # By default, warnings are not silenced and debugging is off.

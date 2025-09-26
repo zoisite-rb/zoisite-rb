@@ -214,7 +214,7 @@ class DeprecationTest < ActiveSupport::TestCase
     @deprecator.behavior = :log
     output = StringIO.new
 
-    with_rails_logger(Logger.new(output)) do
+    with_zoisite_logger(Logger.new(output)) do
       @deprecator.behavior.first.call("fubar", ["call stack!"], @deprecator)
     end
 
@@ -227,7 +227,7 @@ class DeprecationTest < ActiveSupport::TestCase
     @deprecator.debug = true
     output = StringIO.new
 
-    with_rails_logger(Logger.new(output)) do
+    with_zoisite_logger(Logger.new(output)) do
       @deprecator.behavior.first.call("fubar", ["call stack!"], @deprecator)
     end
 
@@ -235,11 +235,11 @@ class DeprecationTest < ActiveSupport::TestCase
     assert_match "call stack!", output.string
   end
 
-  test ":log behavior without Rails.logger" do
+  test ":log behavior without Zoisite.logger" do
     @deprecator.behavior = :log
 
     output = capture(:stderr) do
-      with_rails_logger(nil) do
+      with_zoisite_logger(nil) do
         @deprecator.behavior.first.call("fubar", ["call stack!"], @deprecator)
       end
     end
@@ -545,15 +545,15 @@ class DeprecationTest < ActiveSupport::TestCase
     assert_match "foo", deprecator.messages.last
   end
 
-  test "default deprecation_horizon is greater than the current Rails version" do
+  test "default deprecation_horizon is greater than the current Zoisite version" do
     assert_operator ActiveSupport::Deprecation.new.deprecation_horizon, :>, ActiveSupport::VERSION::STRING
   end
 
-  test "default gem_name is Rails" do
+  test "default gem_name is Zoisite" do
     deprecator = ActiveSupport::Deprecation.new
 
     deprecator.send(:deprecated_method_warning, :deprecated_method, "You are calling deprecated method").tap do |message|
-      assert_match(/is deprecated and will be removed from Rails/, message)
+      assert_match(/is deprecated and will be removed from Zoisite/, message)
     end
   end
 
@@ -815,11 +815,11 @@ class DeprecationTest < ActiveSupport::TestCase
       deprecator.warn
     end
 
-    def with_rails_application_deprecators(&block)
+    def with_zoisite_application_deprecators(&block)
       application = Struct.new(:deprecators).new(ActiveSupport::Deprecation::Deprecators.new)
-      rails = Struct.new(:application).new(application)
-      rails.application.deprecators[:deprecator] = @deprecator
-      stub_const(Object, :Rails, rails, &block)
+      zoisite = Struct.new(:application).new(application)
+      zoisite.application.deprecators[:deprecator] = @deprecator
+      stub_const(Object, :Zoisite, zoisite, &block)
     end
 
     def deprecator_with_messages
@@ -832,17 +832,17 @@ class DeprecationTest < ActiveSupport::TestCase
       deprecator
     end
 
-    module ::Rails; end
+    module ::Zoisite; end
 
-    def with_rails_logger(logger)
-      ::Rails.singleton_class.class_eval do
+    def with_zoisite_logger(logger)
+      ::Zoisite.singleton_class.class_eval do
         alias_method :__original_logger, :logger if method_defined?(:logger)
         define_method(:logger) { logger }
       end
 
       yield logger
     ensure
-      ::Rails.singleton_class.class_eval do
+      ::Zoisite.singleton_class.class_eval do
         if method_defined?(:__original_logger)
           alias_method :logger, :__original_logger
           undef_method :__original_logger

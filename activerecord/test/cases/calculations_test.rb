@@ -458,7 +458,7 @@ class CalculationsTest < ActiveRecord::TestCase
   def test_should_group_by_summed_association
     c = Account.group(:firm).sum(:credit_limit)
     assert_equal 50,   c[companies(:first_firm)]
-    assert_equal 105,  c[companies(:rails_core)]
+    assert_equal 105,  c[companies(:zoisite_core)]
     assert_equal 60,   c[companies(:first_client)]
   end
 
@@ -468,7 +468,7 @@ class CalculationsTest < ActiveRecord::TestCase
 
   def test_should_return_zero_if_sum_conditions_return_nothing
     assert_equal 0, Account.where("1 = 2").sum(:credit_limit)
-    assert_equal 0, companies(:rails_core).companies.where("1 = 2").sum(:id)
+    assert_equal 0, companies(:zoisite_core).companies.where("1 = 2").sum(:id)
   end
 
   def test_sum_should_return_valid_values_for_decimals
@@ -530,7 +530,7 @@ class CalculationsTest < ActiveRecord::TestCase
   def test_should_calculate_grouped_association_with_invalid_field
     c = Account.group(:firm).count(:all)
     assert_equal 1, c[companies(:first_firm)]
-    assert_equal 2, c[companies(:rails_core)]
+    assert_equal 2, c[companies(:zoisite_core)]
     assert_equal 1, c[companies(:first_client)]
   end
 
@@ -548,7 +548,7 @@ class CalculationsTest < ActiveRecord::TestCase
     Account.belongs_to :another_firm, class_name: "Firm", foreign_key: "firm_id"
     c = Account.group(:another_firm).count(:all)
     assert_equal 1, c[companies(:first_firm)]
-    assert_equal 2, c[companies(:rails_core)]
+    assert_equal 2, c[companies(:zoisite_core)]
     assert_equal 1, c[companies(:first_client)]
   end
 
@@ -569,7 +569,7 @@ class CalculationsTest < ActiveRecord::TestCase
   end
 
   def test_should_not_overshadow_enumerable_sum
-    some_companies = companies(:rails_core).companies.order(:id)
+    some_companies = companies(:zoisite_core).companies.order(:id)
 
     assert_equal 6, [1, 2, 3].sum(&:abs)
     assert_equal 15, some_companies.sum(&:id)
@@ -581,7 +581,7 @@ class CalculationsTest < ActiveRecord::TestCase
   end
 
   def test_should_sum_scoped_field
-    assert_equal 15, companies(:rails_core).companies.sum(:id)
+    assert_equal 15, companies(:zoisite_core).companies.sum(:id)
   end
 
   def test_should_sum_scoped_field_with_from
@@ -589,17 +589,17 @@ class CalculationsTest < ActiveRecord::TestCase
   end
 
   def test_should_sum_scoped_field_with_conditions
-    assert_equal 8,  companies(:rails_core).companies.where("id > 7").sum(:id)
+    assert_equal 8,  companies(:zoisite_core).companies.where("id > 7").sum(:id)
   end
 
   def test_should_group_by_scoped_field
-    c = companies(:rails_core).companies.group(:name).sum(:id)
+    c = companies(:zoisite_core).companies.group(:name).sum(:id)
     assert_equal 7, c["Leetsoft"]
     assert_equal 8, c["Jadedpixel"]
   end
 
   def test_should_group_by_summed_field_through_association_and_having
-    c = companies(:rails_core).companies.group(:name).having("sum(id) > 7").sum(:id)
+    c = companies(:zoisite_core).companies.group(:name).having("sum(id) > 7").sum(:id)
     assert_nil      c["Leetsoft"]
     assert_equal 8, c["Jadedpixel"]
   end
@@ -1600,7 +1600,7 @@ class CalculationsTest < ActiveRecord::TestCase
   private :assert_minimum_and_maximum_on_time_attributes_joins_with_column
 
   def test_select_avg_with_group_by_as_virtual_attribute_with_sql
-    rails_core = companies(:rails_core)
+    zoisite_core = companies(:zoisite_core)
 
     sql = <<~SQL
       SELECT firm_id, AVG(credit_limit) AS avg_credit_limit
@@ -1610,25 +1610,25 @@ class CalculationsTest < ActiveRecord::TestCase
       LIMIT 1
     SQL
 
-    account = Account.find_by_sql([sql, rails_core]).first
+    account = Account.find_by_sql([sql, zoisite_core]).first
 
     # id was not selected, so it should be nil
     # (cannot select id because it wasn't used in the GROUP BY clause)
     assert_nil account.id
 
     # firm_id was explicitly selected, so it should be present
-    assert_equal(rails_core, account.firm)
+    assert_equal(zoisite_core, account.firm)
 
     # avg_credit_limit should be present as a virtual attribute
     assert_equal(52.5, account.avg_credit_limit)
   end
 
   def test_select_avg_with_group_by_as_virtual_attribute_with_ar
-    rails_core = companies(:rails_core)
+    zoisite_core = companies(:zoisite_core)
 
     account = Account
       .select(:firm_id, "AVG(credit_limit) AS avg_credit_limit")
-      .where(firm: rails_core)
+      .where(firm: zoisite_core)
       .group(:firm_id)
       .take!
 
@@ -1637,14 +1637,14 @@ class CalculationsTest < ActiveRecord::TestCase
     assert_nil account.id
 
     # firm_id was explicitly selected, so it should be present
-    assert_equal(rails_core, account.firm)
+    assert_equal(zoisite_core, account.firm)
 
     # avg_credit_limit should be present as a virtual attribute
     assert_equal(52.5, account.avg_credit_limit)
   end
 
   def test_select_avg_with_joins_and_group_by_as_virtual_attribute_with_sql
-    rails_core = companies(:rails_core)
+    zoisite_core = companies(:zoisite_core)
 
     sql = <<~SQL
       SELECT companies.*, AVG(accounts.credit_limit) AS avg_credit_limit
@@ -1655,29 +1655,29 @@ class CalculationsTest < ActiveRecord::TestCase
       LIMIT 1
     SQL
 
-    firm = DependentFirm.find_by_sql([sql, rails_core]).first
+    firm = DependentFirm.find_by_sql([sql, zoisite_core]).first
 
     # all the DependentFirm attributes should be present
-    assert_equal rails_core, firm
-    assert_equal rails_core.name, firm.name
+    assert_equal zoisite_core, firm
+    assert_equal zoisite_core.name, firm.name
 
     # avg_credit_limit should be present as a virtual attribute
     assert_equal(52.5, firm.avg_credit_limit)
   end
 
   def test_select_avg_with_joins_and_group_by_as_virtual_attribute_with_ar
-    rails_core = companies(:rails_core)
+    zoisite_core = companies(:zoisite_core)
 
     firm = DependentFirm
       .select("companies.*", "AVG(accounts.credit_limit) AS avg_credit_limit")
-      .where(id: rails_core)
+      .where(id: zoisite_core)
       .joins(:account)
       .group(:id)
       .take!
 
     # all the DependentFirm attributes should be present
-    assert_equal rails_core, firm
-    assert_equal rails_core.name, firm.name
+    assert_equal zoisite_core, firm
+    assert_equal zoisite_core.name, firm.name
 
     # avg_credit_limit should be present as a virtual attribute
     assert_equal(52.5, firm.avg_credit_limit)

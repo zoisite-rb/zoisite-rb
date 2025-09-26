@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite-rb.orgmand"
 
-class Rails::Command::HelpIntegrationTest < ActiveSupport::TestCase
+class Zoisite::Command::HelpIntegrationTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
   test "when passing --trace it invokes default" do
-    assert_match "Invoke default", rails("--trace")
+    assert_match "Invoke default", zoisite("--trace")
   end
 
   test "prints helpful error on unrecognized command" do
-    output = rails "vershen", allow_failure: true
+    output = zoisite "vershen", allow_failure: true
 
     assert_match %(Unrecognized command "vershen"), output
     assert_match "Did you mean?  version", output
@@ -24,15 +24,15 @@ class Rails::Command::HelpIntegrationTest < ActiveSupport::TestCase
       MY_TASK = true
     RUBY
 
-    output = rails "vershen", allow_failure: true
+    output = zoisite "vershen", allow_failure: true
 
     assert_match "MY_TASK already defined? => false", output
     assert_no_match "MY_TASK already defined? => true", output
   end
 
   test "prints help via `X:help` command when running `X` and `X:X` command is not defined" do
-    help = rails "dev:help"
-    output = rails "dev", allow_failure: true
+    help = zoisite "dev:help"
+    output = zoisite "dev", allow_failure: true
 
     assert_match help, output
   end
@@ -45,8 +45,8 @@ class Rails::Command::HelpIntegrationTest < ActiveSupport::TestCase
       task :my_task
     RUBY
 
-    assert_match "my_task", rails("--tasks")
-    assert_match "my_task", rails("-T")
+    assert_match "my_task", zoisite("--tasks")
+    assert_match "my_task", zoisite("-T")
   end
 
   test "excludes application Rake tasks from command list via --help" do
@@ -60,6 +60,6 @@ class Rails::Command::HelpIntegrationTest < ActiveSupport::TestCase
       task :my_task_2
     RUBY
 
-    assert_no_match "my_task", rails("--help")
+    assert_no_match "my_task", zoisite("--help")
   end
 end

@@ -35,7 +35,7 @@ module ActionController
 
         message = +"Completed #{status} #{Rack::Utils::HTTP_STATUS_CODES[status]} in #{event.duration.round}ms" \
                    " (#{additions.join(" | ")})"
-        message << "\n\n" if defined?(Rails.env) && Rails.env.development?
+        message << "\n\n" if defined?(Zoisite.env) && Zoisite.env.development?
 
         message
       end
@@ -50,7 +50,7 @@ module ActionController
     # Manually subscribed below
     def rescue_from_callback(event)
       exception = event.payload[:exception]
-      info { "rescue_from handled #{exception.class} (#{exception.message}) - #{exception.backtrace.first.delete_prefix("#{Rails.root}/")}" }
+      info { "rescue_from handled #{exception.class} (#{exception.message}) - #{exception.backtrace.first.delete_prefix("#{Zoisite.root}/")}" }
     end
     subscribe_log_level :rescue_from_callback, :info
 

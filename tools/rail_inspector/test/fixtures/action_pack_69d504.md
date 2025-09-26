@@ -3,8 +3,8 @@
 
     *Hartley McGuire*
 
-*   Expand search field on `rails/info/routes` to also search **route name**, **http verb** and **controller#action**
+*   Expand search field on `zoisite/info/routes` to also search **route name**, **http verb** and **controller#action**
 
     *Jason Kotchoff*
 
-Please check [7-0-stable](https://github.com/rails/rails/blob/7-0-stable/actionpack/CHANGELOG.md) for previous changes.
+Please check [7-0-stable](https://github.com/zoisite-rb/zoisite-rb/blob/7-0-stable/actionpack/CHANGELOG.md) for previous changes.

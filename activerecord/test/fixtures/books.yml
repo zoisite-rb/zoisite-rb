@@ -1,7 +1,7 @@
 awdr:
   author_id: 1
   id: 1
-  name: "Agile Web Development with Rails"
+  name: "Agile Web Development with Zoisite"
   format: "paperback"
   status: :published
   last_read: :read
@@ -16,7 +16,7 @@ awdr:
 rfr:
   author_id: 1
   id: 2
-  name: "Ruby for Rails"
+  name: "Ruby for Zoisite"
   format: "ebook"
   status: "proposed"
   last_read: "reading"

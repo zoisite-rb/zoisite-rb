@@ -14,7 +14,7 @@ module ActionDispatch # :nodoc:
   #
   # Example global policy:
   #
-  #     Rails.application.config.permissions_policy do |policy|
+  #     Zoisite.application.config.permissions_policy do |policy|
   #       policy.camera      :none
   #       policy.gyroscope   :none
   #       policy.microphone  :none

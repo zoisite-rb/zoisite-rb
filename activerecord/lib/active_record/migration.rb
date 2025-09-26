@@ -165,8 +165,8 @@ module ActiveRecord
 
     private
       def detailed_migration_message(pending_migrations)
-        message = "Migrations are pending. To resolve this issue, run:\n\n        bin/rails db:migrate"
-        message += " RAILS_ENV=#{::Rails.env}" if defined?(Rails.env) && !Rails.env.local?
+        message = "Migrations are pending. To resolve this issue, run:\n\n        bin/zoisite db:migrate"
+        message += " RAILS_ENV=#{::Zoisite.env}" if defined?(Zoisite.env) && !Zoisite.env.local?
         message += "\n\n"
 
         message += "You have #{pending_migrations.size} pending #{pending_migrations.size > 1 ? 'migrations:' : 'migration:'}\n\n"
@@ -194,9 +194,9 @@ module ActiveRecord
 
   class NoEnvironmentInSchemaError < MigrationError # :nodoc:
     def initialize
-      msg = "Environment data not found in the schema. To resolve this issue, run: \n\n        bin/rails db:environment:set"
-      if defined?(Rails.env)
-        super("#{msg} RAILS_ENV=#{::Rails.env}")
+      msg = "Environment data not found in the schema. To resolve this issue, run: \n\n        bin/zoisite db:environment:set"
+      if defined?(Zoisite.env)
+        super("#{msg} RAILS_ENV=#{::Zoisite.env}")
       else
         super(msg)
       end
@@ -217,9 +217,9 @@ module ActiveRecord
       msg = +"You are attempting to modify a database that was last run in `#{ stored }` environment.\n"
       msg << "You are running in `#{ current }` environment. "
       msg << "If you are sure you want to continue, first set the environment using:\n\n"
-      msg << "        bin/rails db:environment:set"
-      if defined?(Rails.env)
-        super("#{msg} RAILS_ENV=#{::Rails.env}\n\n")
+      msg << "        bin/zoisite db:environment:set"
+      if defined?(Zoisite.env)
+        super("#{msg} RAILS_ENV=#{::Zoisite.env}\n\n")
       else
         super("#{msg}\n\n")
       end
@@ -377,13 +377,13 @@ module ActiveRecord
   # Migrations of that kind should raise an ActiveRecord::IrreversibleMigration
   # exception in their +down+ method.
   #
-  # == Running migrations from within \Rails
+  # == Running migrations from within \Zoisite
   #
-  # The \Rails package has several tools to help create and apply migrations.
+  # The \Zoisite package has several tools to help create and apply migrations.
   #
   # To generate a new migration, you can use
   #
-  #   $ bin/rails generate migration MyNewMigration
+  #   $ bin/zoisite generate migration MyNewMigration
   #
   # where MyNewMigration is the name of your migration. The generator will
   # create an empty migration file <tt>timestamp_my_new_migration.rb</tt>
@@ -392,7 +392,7 @@ module ActiveRecord
   #
   # There is a special syntactic shortcut to generate migrations that add fields to a table.
   #
-  #   $ bin/rails generate migration add_fieldname_to_tablename fieldname:string
+  #   $ bin/zoisite generate migration add_fieldname_to_tablename fieldname:string
   #
   # This will generate the file <tt>timestamp_add_fieldname_to_tablename.rb</tt>, which will look like this:
   #   class AddFieldnameToTablename < ActiveRecord::Migration[8.1]
@@ -402,16 +402,16 @@ module ActiveRecord
   #   end
   #
   # To run migrations against the currently configured database, use
-  # <tt>bin/rails db:migrate</tt>. This will update the database by running all of the
+  # <tt>bin/zoisite db:migrate</tt>. This will update the database by running all of the
   # pending migrations, creating the <tt>schema_migrations</tt> table
   # (see "About the schema_migrations table" section below) if missing. It will also
   # invoke the db:schema:dump command, which will update your db/schema.rb file
   # to match the structure of your database.
   #
   # To roll the database back to a previous migration version, use
-  # <tt>bin/rails db:rollback VERSION=X</tt> where <tt>X</tt> is the version to which
+  # <tt>bin/zoisite db:rollback VERSION=X</tt> where <tt>X</tt> is the version to which
   # you wish to downgrade. Alternatively, you can also use the STEP option if you
-  # wish to rollback last few migrations. <tt>bin/rails db:rollback STEP=2</tt> will rollback
+  # wish to rollback last few migrations. <tt>bin/zoisite db:rollback STEP=2</tt> will rollback
   # the latest two migrations.
   #
   # If any of the migrations throw an ActiveRecord::IrreversibleMigration exception,
@@ -501,7 +501,7 @@ module ActiveRecord
   #
   # == Timestamped Migrations
   #
-  # By default, \Rails generates migrations that look like:
+  # By default, \Zoisite generates migrations that look like:
   #
   #    20080717013526_your_migration_name.rb
   #
@@ -775,11 +775,11 @@ module ActiveRecord
 
         def load_schema!
           # Roundtrip to Rake to allow plugins to hook into database initialization.
-          root = defined?(ENGINE_ROOT) ? ENGINE_ROOT : Rails.root
+          root = defined?(ENGINE_ROOT) ? ENGINE_ROOT : Zoisite.root
 
           FileUtils.cd(root) do
             Base.connection_handler.clear_all_connections!(:all)
-            system("bin/rails db:test:prepare")
+            system("bin/zoisite db:test:prepare")
           end
         end
 
@@ -1215,7 +1215,7 @@ module ActiveRecord
   # A migration context requires the path to the migrations is set
   # in the +migrations_paths+ parameter. Optionally a +schema_migration+
   # class can be provided. Multiple database applications will instantiate
-  # a +SchemaMigration+ object per database. From the Rake tasks, \Rails will
+  # a +SchemaMigration+ object per database. From the Rake tasks, \Zoisite will
   # handle this for you.
   class MigrationContext
     attr_reader :migrations_paths, :schema_migration, :internal_metadata

@@ -41,8 +41,8 @@ class WarningsTest < ActiveRecord::AbstractMysqlTestCase
       error_reporter = ActiveSupport::ErrorReporter.new
       subscriber = ActiveSupport::ErrorReporter::TestHelper::ErrorSubscriber.new
 
-      Rails.define_singleton_method(:error) { error_reporter }
-      Rails.error.subscribe(subscriber)
+      Zoisite.define_singleton_method(:error) { error_reporter }
+      Zoisite.error.subscribe(subscriber)
 
       @connection.execute('SELECT 1 + "foo"')
 

@@ -6,7 +6,7 @@ import adapters from "./adapters"
 //
 //   Example:
 //
-//   import * as ActionCable from '@rails/actioncable'
+//   import * as ActionCable from '@zoisite/actioncable'
 //
 //   ActionCable.logger.enabled = true
 //   ActionCable.logger.log('Connection Established.')

@@ -31,7 +31,7 @@ module ActionController
       def escape_json_responses=(value)
         if value
           ActionController.deprecator.warn(<<~MSG.squish)
-            Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Rails 8.2.
+            Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Zoisite 8.2.
             Set it to `false`, or remove the config.
           MSG
         end
@@ -72,7 +72,7 @@ module ActionController
     #         disposition: "attachment; filename=#{filename}.csv"
     #     end
     #
-    # Note that we used [Mime](:csv) for the csv mime type as it comes with Rails.
+    # Note that we used [Mime](:csv) for the csv mime type as it comes with Zoisite.
     # For a custom renderer, you'll need to register a mime type with
     # `Mime::Type.register`.
     #

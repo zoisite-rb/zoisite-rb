@@ -24,7 +24,7 @@ module ActiveRecord
       #     attr_readonly :title
       #   end
       #
-      #   post = Post.create!(title: "Introducing Ruby on Rails!")
+      #   post = Post.create!(title: "Introducing Ruby on Zoisite!")
       #   post.title = "a different title" # raises ActiveRecord::ReadonlyAttributeError
       #   post.update(title: "a different title") # raises ActiveRecord::ReadonlyAttributeError
       def attr_readonly(*attributes)

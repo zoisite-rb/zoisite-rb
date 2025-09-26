@@ -48,7 +48,7 @@ module ActionController
       emit_event("action_controller.rescue_from_handled",
         exception_class: exception.class.name,
         exception_message: exception.message,
-        exception_backtrace: exception.backtrace&.first&.delete_prefix("#{Rails.root}/")
+        exception_backtrace: exception.backtrace&.first&.delete_prefix("#{Zoisite.root}/")
       )
     end
 

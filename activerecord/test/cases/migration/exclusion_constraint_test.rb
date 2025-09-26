@@ -87,7 +87,7 @@ if ActiveRecord::Base.lease_connection.supports_exclusion_constraints?
 
           constraint = exclusion_constraints.first
           assert_equal "invoices", constraint.table_name
-          assert_equal "excl_rails_74c9160f55", constraint.name
+          assert_equal "excl_zoisite_74c9160f55", constraint.name
           assert_equal false, constraint.deferrable
           assert_equal "daterange(start_date, end_date) WITH &&", constraint.expression
         end
@@ -100,7 +100,7 @@ if ActiveRecord::Base.lease_connection.supports_exclusion_constraints?
 
           constraint = exclusion_constraints.first
           assert_equal "invoices", constraint.table_name
-          assert_equal "excl_rails_74c9160f55", constraint.name
+          assert_equal "excl_zoisite_74c9160f55", constraint.name
           assert_equal false, constraint.deferrable
           assert_equal "daterange(start_date, end_date) WITH &&", constraint.expression
         end
@@ -113,7 +113,7 @@ if ActiveRecord::Base.lease_connection.supports_exclusion_constraints?
 
           constraint = exclusion_constraints.first
           assert_equal "invoices", constraint.table_name
-          assert_equal "excl_rails_74c9160f55", constraint.name
+          assert_equal "excl_zoisite_74c9160f55", constraint.name
           assert_equal :immediate, constraint.deferrable
           assert_equal "daterange(start_date, end_date) WITH &&", constraint.expression
         end
@@ -126,7 +126,7 @@ if ActiveRecord::Base.lease_connection.supports_exclusion_constraints?
 
           constraint = exclusion_constraints.first
           assert_equal "invoices", constraint.table_name
-          assert_equal "excl_rails_74c9160f55", constraint.name
+          assert_equal "excl_zoisite_74c9160f55", constraint.name
           assert_equal :deferred, constraint.deferrable
           assert_equal "daterange(start_date, end_date) WITH &&", constraint.expression
         end

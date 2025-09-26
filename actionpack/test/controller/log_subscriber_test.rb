@@ -237,7 +237,7 @@ class ACLogSubscriberTest < ActionController::TestCase
   def test_process_action_headers
     get :show
     wait
-    assert_equal "Rails Testing", @controller.last_payload[:headers]["User-Agent"]
+    assert_equal "Zoisite Testing", @controller.last_payload[:headers]["User-Agent"]
   end
 
   def test_process_action_with_filter_parameters

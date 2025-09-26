@@ -18,7 +18,7 @@ staleLabel: stale
 markComment: >
   This issue has been automatically marked as stale because it has not been commented on for at least three months.
 
-  The resources of the Rails team are limited, and so we are asking for your help.
+  The resources of the Zoisite team are limited, and so we are asking for your help.
 
   If you can still reproduce this error on the `8-0-stable` branch or on `main`,
   please reply with all of the information you have about it in order to keep the issue open.

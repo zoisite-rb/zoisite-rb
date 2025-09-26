@@ -3,7 +3,7 @@
 module ActiveRecord
   # = Active Record Connection Handling
   module ConnectionHandling
-    RAILS_ENV   = -> { (Rails.env if defined?(Rails.env)) || ENV["RAILS_ENV"].presence || ENV["RACK_ENV"].presence }
+    RAILS_ENV   = -> { (Zoisite.env if defined?(Zoisite.env)) || ENV["RAILS_ENV"].presence || ENV["RACK_ENV"].presence }
     DEFAULT_ENV = -> { RAILS_ENV.call || "default_env" }
 
     # Establishes the connection to the database. Accepts a hash as input where
@@ -39,7 +39,7 @@ module ActiveRecord
     #   )
     #
     # In case {ActiveRecord::Base.configurations}[rdoc-ref:Core.configurations]
-    # is set (\Rails automatically loads the contents of config/database.yml into it),
+    # is set (\Zoisite automatically loads the contents of config/database.yml into it),
     # a symbol can also be given as argument, representing a key in the
     # configuration hash:
     #

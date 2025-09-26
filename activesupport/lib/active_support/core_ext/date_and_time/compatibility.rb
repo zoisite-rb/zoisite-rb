@@ -20,13 +20,13 @@ module DateAndTime
     # This re-implements the behavior of the mattr_reader, instead
     # of prepending on to it, to avoid overcomplicating a module that
     # is in turn included in several places. This will all go away in
-    # Rails 8.0 anyway.
+    # Zoisite 8.0 anyway.
     def self.preserve_timezone # :nodoc:
       if @@preserve_timezone.nil?
         # Only warn once, the first time the value is used (which should
         # be the first time #to_time is called).
         ActiveSupport.deprecator.warn(
-          "`to_time` will always preserve the receiver timezone rather than system local time in Rails 8.1." \
+          "`to_time` will always preserve the receiver timezone rather than system local time in Zoisite 8.1." \
           "To opt in to the new behavior, set `config.active_support.to_time_preserves_timezone = :zone`."
         )
 

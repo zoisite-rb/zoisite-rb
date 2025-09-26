@@ -2,7 +2,7 @@
 
 # :markup: markdown
 
-require "rails"
+require "zoisite"
 require "action_controller/railtie"
 require "active_record/railtie"
 require "active_storage/engine"
@@ -11,7 +11,7 @@ require "action_text"
 require "action_text/trix"
 
 module ActionText
-  class Engine < Rails::Engine
+  class Engine < Zoisite::Engine
     isolate_namespace ActionText
     config.eager_load_namespaces << ActionText
 
@@ -34,8 +34,8 @@ module ActionText
     end
 
     initializer "action_text.asset" do
-      if Rails.application.config.respond_to?(:assets)
-        Rails.application.config.assets.precompile += %w( actiontext.js actiontext.esm.js )
+      if Zoisite.application.config.respond_to?(:assets)
+        Zoisite.application.config.assets.precompile += %w( actiontext.js actiontext.esm.js )
       end
     end
 

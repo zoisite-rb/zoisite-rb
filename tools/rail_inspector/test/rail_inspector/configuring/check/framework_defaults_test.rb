@@ -11,7 +11,7 @@ class FrameworkDefaultsTest < ActiveSupport::TestCase
         "Regexp.timeout" => "1"
       },
       "8.1" => {
-        "self.yjit" => "!Rails.env.local?",
+        "self.yjit" => "!Zoisite.env.local?",
         "action_controller.escape_json_responses" => "false",
       }
     }
@@ -20,7 +20,7 @@ class FrameworkDefaultsTest < ActiveSupport::TestCase
       #### Default Values for Target Version 8.1
 
       - [`config.action_controller.escape_json_responses`](#config-action-controller-escape-json-responses): `false`
-      - [`config.yjit`](#config-yjit): `!Rails.env.local?`
+      - [`config.yjit`](#config-yjit): `!Zoisite.env.local?`
 
       #### Default Values for Target Version 8.0
 

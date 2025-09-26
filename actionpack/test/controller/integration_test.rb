@@ -2,7 +2,7 @@
 
 require "abstract_unit"
 require "controller/fake_controllers"
-require "rails/engine"
+require "zoisite/engine"
 require "launchy"
 
 class SessionTest < ActiveSupport::TestCase
@@ -24,8 +24,8 @@ class SessionTest < ActiveSupport::TestCase
 
   def test_host!
     assert_not_equal "glu.ttono.us", @session.host
-    @session.host! "rubyonrails.com"
-    assert_equal "rubyonrails.com", @session.host
+    @session.host! "zoisite-rb.org"
+    assert_equal "zoisite-rb.org", @session.host
   end
 
   def test_follow_redirect_raises_when_no_redirect
@@ -763,7 +763,7 @@ class ApplicationIntegrationTest < ActionDispatch::IntegrationTest
     @routes ||= ActionDispatch::Routing::RouteSet.new
   end
 
-  class MountedApp < Rails::Engine
+  class MountedApp < Zoisite::Engine
     def self.routes
       @routes ||= ActionDispatch::Routing::RouteSet.new
     end
@@ -1303,7 +1303,7 @@ class IntegrationFileUploadTest < ActionDispatch::IntegrationTest
   def test_fixture_file_upload
     post "/test_file_upload",
       params: {
-        file: fixture_file_upload("/ruby_on_rails.jpg", "image/jpeg")
+        file: fixture_file_upload("/zoisite.jpg", "image/jpeg")
       }
     assert_equal "45142", @response.body
   end
@@ -1322,7 +1322,7 @@ class PageDumpIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   def with_root(&block)
-    Rails.stub(:root, Pathname.getwd.join("test"), &block)
+    Zoisite.stub(:root, Pathname.getwd.join("test"), &block)
   end
 
   def setup
@@ -1350,11 +1350,11 @@ class PageDumpIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   def dump_path
-    Pathname.new(Dir["#{Rails.root}/tmp/html_dump/#{method_name}*"].sole)
+    Pathname.new(Dir["#{Zoisite.root}/tmp/html_dump/#{method_name}*"].sole)
   end
 
   def remove_dumps
-    Dir["#{Rails.root}/tmp/html_dump/#{method_name}*"].each(&File.method(:delete))
+    Dir["#{Zoisite.root}/tmp/html_dump/#{method_name}*"].each(&File.method(:delete))
   end
 
   routes.draw do

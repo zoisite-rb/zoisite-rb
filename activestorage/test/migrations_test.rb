@@ -9,11 +9,11 @@ class ActiveStorage::MigrationsTest < ActiveSupport::TestCase
     ActiveRecord::Migration.verbose = false
 
     @connection = ActiveRecord::Base.lease_connection
-    @original_options = Rails.configuration.generators.options.deep_dup
+    @original_options = Zoisite.configuration.generators.options.deep_dup
   end
 
   teardown do
-    Rails.configuration.generators.options = @original_options
+    Zoisite.configuration.generators.options = @original_options
     rerun_migration
     ActiveRecord::Migration.verbose = @original_verbose
   end
@@ -31,7 +31,7 @@ class ActiveStorage::MigrationsTest < ActiveSupport::TestCase
   end
 
   test "migration creates tables with configured primary and foreign key types" do
-    Rails.configuration.generators do |g|
+    Zoisite.configuration.generators do |g|
       g.orm :active_record, primary_key_type: :string
     end
 

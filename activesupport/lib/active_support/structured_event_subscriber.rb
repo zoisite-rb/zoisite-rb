@@ -6,7 +6,7 @@ module ActiveSupport
   # = Active Support Structured Event \Subscriber
   #
   # +ActiveSupport::StructuredEventSubscriber+ consumes ActiveSupport::Notifications
-  # in order to emit structured events via +Rails.event+.
+  # in order to emit structured events via +Zoisite.event+.
   #
   # An example would be the Action Controller structured event subscriber, responsible for
   # emitting request processing events:
@@ -64,7 +64,7 @@ module ActiveSupport
 
     attr_writer :silenced_events # :nodoc:
 
-    # Emit a structured event via Rails.event.notify.
+    # Emit a structured event via Zoisite.event.notify.
     #
     # ==== Arguments
     #

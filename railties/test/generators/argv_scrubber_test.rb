@@ -2,12 +2,12 @@
 
 require "active_support/test_case"
 require "active_support/testing/autorun"
-require "rails/generators/rails/app/app_generator"
+require "zoisite/generators/zoisite/app/app_generator"
 require "tempfile"
 require "fileutils"
 require "env_helpers"
 
-module Rails
+module Zoisite
   module Generators
     class ARGVScrubberTest < ActiveSupport::TestCase # :nodoc:
       # Future people who read this... These tests are just to surround the
@@ -26,7 +26,7 @@ module Rails
             define_method(:exit) { |code| exit_code = code }
           })
           scrubber.prepare!
-          assert_equal "Rails #{Rails::VERSION::STRING}", output
+          assert_equal "Zoisite #{Zoisite::VERSION::STRING}", output
           assert_equal 0, exit_code
         end
       end
@@ -62,7 +62,7 @@ module Rails
 
       def test_default_rc_file_with_xdg_config_home
         Dir.mktmpdir do |dir|
-          rc_file = File.join(dir, "rails/railsrc")
+          rc_file = File.join(dir, "zoisite-rb/zoisite-rbrc")
           FileUtils.mkdir_p(File.dirname(rc_file))
           FileUtils.touch(rc_file)
           switch_env("XDG_CONFIG_HOME", dir) do

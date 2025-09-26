@@ -30,7 +30,7 @@ require_relative "support/rack_parsing_override"
 
 ActiveSupport::Cache.format_version = 7.1
 
-module Rails
+module Zoisite
   class << self
     def env
       @_env ||= ActiveSupport::StringInquirer.new(ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "test")
@@ -139,7 +139,7 @@ class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
   end
 
   class DeadEndRoutes < ActionDispatch::Routing::RouteSet
-    # Stub Rails dispatcher so it does not get controller references and
+    # Stub Zoisite dispatcher so it does not get controller references and
     # simply return the controller#action as Rack::Body.
     class NullController < ::ActionController::Metal
       def self.dispatch(action, req, res)
@@ -223,7 +223,7 @@ module ActionController
   end
 
   class Base
-    # This stub emulates the Railtie including the URL helpers from a Rails application
+    # This stub emulates the Railtie including the URL helpers from a Zoisite application
     extend AbstractController::Railties::RoutesHelpers.with(SharedTestRoutes)
     include SharedTestRoutes.mounted_helpers
 

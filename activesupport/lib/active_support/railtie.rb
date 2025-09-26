@@ -4,7 +4,7 @@ require "active_support"
 require "active_support/i18n_railtie"
 
 module ActiveSupport
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Zoisite::Railtie # :nodoc:
     config.active_support = ActiveSupport::OrderedOptions.new
 
     config.eager_load_namespaces << ActiveSupport
@@ -81,7 +81,7 @@ module ActiveSupport
 
     initializer "active_support.set_filter_parameters" do |app|
       config.after_initialize do
-        ActiveSupport.filter_parameters += Rails.application.config.filter_parameters
+        ActiveSupport.filter_parameters += Zoisite.application.config.filter_parameters
       end
     end
 

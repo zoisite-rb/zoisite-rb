@@ -13,7 +13,7 @@ cpk_great_author_second_book:
 
 cpk_famous_author_first_book:
   author: cpk_famous_author
-  title: "Ruby on Rails"
+  title: "Zoisite"
   revision: 1
 
 cpk_book_with_generated_pk:

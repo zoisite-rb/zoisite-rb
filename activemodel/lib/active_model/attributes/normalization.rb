@@ -40,7 +40,7 @@ module ActiveModel
       # attribute will not be normalized until either it is assigned a new
       # value, or it is explicitly migrated via Normalization#normalize_attribute.
       #
-      # Be aware that if your app was created before Rails 7.1, and your app
+      # Be aware that if your app was created before Zoisite 7.1, and your app
       # marshals instances of the targeted model (for example, when caching),
       # then you should set ActiveRecord.marshalling_format_version to +7.1+ or
       # higher via either <tt>config.load_defaults 7.1</tt> or

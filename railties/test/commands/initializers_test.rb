@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite-rb.orgmand"
 
-class Rails::Command::InitializersTest < ActiveSupport::TestCase
+class Zoisite::Command::InitializersTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
-  test "`rails initializers` prints out defined initializers invoked by Rails" do
+  test "`zoisite initializers` prints out defined initializers invoked by Zoisite" do
     initial_output = run_initializers_command
     initial_output_length = initial_output.split("\n").length
 
@@ -27,8 +27,8 @@ class Rails::Command::InitializersTest < ActiveSupport::TestCase
 
   test "prints out initializers only specified in environment option" do
     add_to_config <<-RUBY
-      initializer(:set_added_development_module) { } if Rails.env.development?
-      initializer(:set_added_production_module) { } if Rails.env.production?
+      initializer(:set_added_development_module) { } if Zoisite.env.development?
+      initializer(:set_added_production_module) { } if Zoisite.env.production?
     RUBY
 
     output = run_initializers_command.split("\n")
@@ -42,6 +42,6 @@ class Rails::Command::InitializersTest < ActiveSupport::TestCase
 
   private
     def run_initializers_command(args = [])
-      rails "initializers", args
+      zoisite "initializers", args
     end
 end

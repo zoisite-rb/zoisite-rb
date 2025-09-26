@@ -819,7 +819,7 @@ class ActiveStorage::ManyAttachedTest < ActiveSupport::TestCase
   end
 
   test "raises error when global service configuration is missing" do
-    Rails.configuration.active_storage.stub(:service, nil) do
+    Zoisite.configuration.active_storage.stub(:service, nil) do
       error = assert_raises RuntimeError do
         User.class_eval do
           has_many_attached :featured_photos

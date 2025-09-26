@@ -5,17 +5,17 @@ require "bundler/inline"
 gemfile(true) do
   source "https://rubygems.org"
 
-  gem "rails"
-  # If you want to test against edge Rails replace the previous line with this:
-  # gem "rails", github: "rails/rails", branch: "main"
+  gem "zoisite"
+  # If you want to test against edge Zoisite replace the previous line with this:
+  # gem "zoisite", github: "zoisite-rb/zoisite-rb", branch: "main"
   gem "net-smtp", github: "ruby/net-smtp", ref: "d496a829f9b99adb44ecc1768c4d005e5f7b779e", require: false
 end
 
 require "action_mailer/railtie"
 require "minitest/autorun"
 
-class TestApp < Rails::Application
-  config.load_defaults Rails::VERSION::STRING.to_f
+class TestApp < Zoisite::Application
+  config.load_defaults Zoisite::VERSION::STRING.to_f
   config.root = __dir__
   config.eager_load = false
   config.hosts << "example.org"
@@ -23,7 +23,7 @@ class TestApp < Rails::Application
 
   config.logger = Logger.new($stdout)
 end
-Rails.application.initialize!
+Zoisite.application.initialize!
 
 class TestMailer < ActionMailer::Base
   def hello_world

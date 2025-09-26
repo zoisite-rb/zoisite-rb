@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Callbacks
 =======================
@@ -20,7 +20,7 @@ After reading this guide, you will know:
 The Object Life Cycle
 ---------------------
 
-During the normal operation of a Rails application, objects may be [created,
+During the normal operation of a Zoisite application, objects may be [created,
 updated, and
 destroyed](active_record_basics.html#crud-reading-and-writing-data). Active
 Record provides hooks into this object life cycle so that you can control your
@@ -34,7 +34,7 @@ validated, or loaded from the database.
 
 ```ruby
 class BirthdayCake < ApplicationRecord
-  after_create -> { Rails.logger.info("Congratulations, the callback has run!") }
+  after_create -> { Zoisite.logger.info("Congratulations, the callback has run!") }
 end
 ```
 
@@ -123,7 +123,7 @@ what context your callbacks are triggered.
 NOTE: A context is like a category or a scenario in which you want certain
 validations to apply. When you validate an ActiveRecord model, you can specify a
 context to group validations. This allows you to have different sets of
-validations that apply in different situations. In Rails, there are certain
+validations that apply in different situations. In Zoisite, there are certain
 default contexts for validations like :create, :update, and :save.
 
 ```ruby
@@ -183,25 +183,25 @@ section](active_record_callbacks.html#after-commit-and-after-rollback) for
 examples using these two callbacks.
 
 [`after_create`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_create
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_create
 [`after_commit`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit
+    https://api.zoisite-rb.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit
 [`after_rollback`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback
+    https://api.zoisite-rb.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback
 [`after_save`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_save
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_save
 [`after_validation`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-after_validation
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-after_validation
 [`around_create`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_create
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_create
 [`around_save`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_save
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_save
 [`before_create`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_create
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_create
 [`before_save`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_save
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_save
 [`before_validation`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-before_validation
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-before_validation
 
 There are examples below that show how to use these callbacks. We've grouped
 them by the operation they are associated with, and lastly show how they can be
@@ -211,11 +211,11 @@ used in combination.
 
 Validation callbacks are triggered whenever the record is validated directly via
 the
-[`valid?`](https://api.rubyonrails.org/classes/ActiveModel/Validations.html#method-i-valid-3F)
+[`valid?`](https://api.zoisite-rb.org/classes/ActiveModel/Validations.html#method-i-valid-3F)
 ( or its alias
-[`validate`](https://api.rubyonrails.org/classes/ActiveModel/Validations.html#method-i-validate))
+[`validate`](https://api.zoisite-rb.org/classes/ActiveModel/Validations.html#method-i-validate))
 or
-[`invalid?`](https://api.rubyonrails.org/classes/ActiveModel/Validations.html#method-i-invalid-3F)
+[`invalid?`](https://api.zoisite-rb.org/classes/ActiveModel/Validations.html#method-i-invalid-3F)
 method, or indirectly via `create`, `update`, or `save`. They are called before
 and after the validation phase.
 
@@ -228,12 +228,12 @@ class User < ApplicationRecord
   private
     def titleize_name
       self.name = name.downcase.titleize if name.present?
-      Rails.logger.info("Name titleized to #{name}")
+      Zoisite.logger.info("Name titleized to #{name}")
     end
 
     def log_errors
       if errors.any?
-        Rails.logger.error("Validation failed: #{errors.full_messages.join(', ')}")
+        Zoisite.logger.error("Validation failed: #{errors.full_messages.join(', ')}")
       end
     end
 end
@@ -264,18 +264,18 @@ class User < ApplicationRecord
   private
     def hash_password
       self.password_digest = BCrypt::Password.create(password)
-      Rails.logger.info("Password hashed for user with email: #{email}")
+      Zoisite.logger.info("Password hashed for user with email: #{email}")
     end
 
     def log_saving
-      Rails.logger.info("Saving user with email: #{email}")
+      Zoisite.logger.info("Saving user with email: #{email}")
       yield
-      Rails.logger.info("User saved with email: #{email}")
+      Zoisite.logger.info("User saved with email: #{email}")
     end
 
     def update_cache
-      Rails.cache.write(["user_data", self], attributes)
-      Rails.logger.info("Update Cache")
+      Zoisite.cache.write(["user_data", self], attributes)
+      Zoisite.logger.info("Update Cache")
     end
 end
 ```
@@ -306,18 +306,18 @@ class User < ApplicationRecord
   private
     def set_default_role
       self.role = "user"
-      Rails.logger.info("User role set to default: user")
+      Zoisite.logger.info("User role set to default: user")
     end
 
     def log_creation
-      Rails.logger.info("Creating user with email: #{email}")
+      Zoisite.logger.info("Creating user with email: #{email}")
       yield
-      Rails.logger.info("User created with email: #{email}")
+      Zoisite.logger.info("User created with email: #{email}")
     end
 
     def send_welcome_email
       UserMailer.welcome_email(self).deliver_later
-      Rails.logger.info("User welcome email sent to: #{email}")
+      Zoisite.logger.info("User welcome email sent to: #{email}")
     end
 end
 ```
@@ -349,11 +349,11 @@ around the object is updated.
 * [`after_commit`][] / [`after_rollback`][]
 
 [`after_update`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_update
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_update
 [`around_update`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_update
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_update
 [`before_update`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_update
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_update
 
 WARNING: The `after_save` callback is triggered on both create and update
 operations. However, it consistently executes after the more specific callbacks
@@ -379,19 +379,19 @@ class User < ApplicationRecord
   private
     def check_role_change
       if role_changed?
-        Rails.logger.info("User role changed to #{role}")
+        Zoisite.logger.info("User role changed to #{role}")
       end
     end
 
     def log_updating
-      Rails.logger.info("Updating user with email: #{email}")
+      Zoisite.logger.info("Updating user with email: #{email}")
       yield
-      Rails.logger.info("User updated with email: #{email}")
+      Zoisite.logger.info("User updated with email: #{email}")
     end
 
     def send_update_email
       UserMailer.update_email(self).deliver_later
-      Rails.logger.info("Update email sent to: #{email}")
+      Zoisite.logger.info("Update email sent to: #{email}")
     end
 end
 ```
@@ -423,13 +423,13 @@ class User < ApplicationRecord
   private
     def send_confirmation_email
       UserMailer.confirmation_email(self).deliver_later
-      Rails.logger.info("Confirmation email sent to: #{email}")
+      Zoisite.logger.info("Confirmation email sent to: #{email}")
     end
 
     def notify_admin_if_critical_info_updated
       if saved_change_to_email? || saved_change_to_phone_number?
         AdminMailer.user_critical_info_updated(self).deliver_later
-        Rails.logger.info("Notification sent to admin about critical info update for: #{email}")
+        Zoisite.logger.info("Notification sent to admin about critical info update for: #{email}")
       end
     end
 end
@@ -457,11 +457,11 @@ destroyed.
 * [`after_commit`][] / [`after_rollback`][]
 
 [`after_destroy`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_destroy
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_destroy
 [`around_destroy`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_destroy
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_destroy
 [`before_destroy`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_destroy
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_destroy
 
 Find [examples for using `after_commit` /
 `after_rollback`](#after-commit-and-after-rollback).
@@ -479,18 +479,18 @@ class User < ApplicationRecord
       if admin? && User.where(role: "admin").count == 1
         throw :abort
       end
-      Rails.logger.info("Checked the admin count")
+      Zoisite.logger.info("Checked the admin count")
     end
 
     def log_destroy_operation
-      Rails.logger.info("About to destroy user with ID #{id}")
+      Zoisite.logger.info("About to destroy user with ID #{id}")
       yield
-      Rails.logger.info("User with ID #{id} destroyed successfully")
+      Zoisite.logger.info("User with ID #{id} destroyed successfully")
     end
 
     def notify_users
       UserMailer.deletion_email(self).deliver_later
-      Rails.logger.info("Notification sent to other users about user deletion")
+      Zoisite.logger.info("Notification sent to other users about user deletion")
     end
 end
 ```
@@ -524,11 +524,11 @@ They can be registered just like the other Active Record callbacks.
 ```ruby
 class User < ApplicationRecord
   after_initialize do |user|
-    Rails.logger.info("You have initialized an object!")
+    Zoisite.logger.info("You have initialized an object!")
   end
 
   after_find do |user|
-    Rails.logger.info("You have found an object!")
+    Zoisite.logger.info("You have found an object!")
   end
 end
 ```
@@ -545,20 +545,20 @@ You have initialized an object!
 ```
 
 [`after_find`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_find
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_find
 [`after_initialize`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_initialize
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_initialize
 
 ### `after_touch`
 
 The [`after_touch`][] callback will be called whenever an Active Record object
 is touched. You can [read more about `touch` in the API
-docs](https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-touch).
+docs](https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-touch).
 
 ```ruby
 class User < ApplicationRecord
   after_touch do |user|
-    Rails.logger.info("You have touched an object")
+    Zoisite.logger.info("You have touched an object")
   end
 end
 ```
@@ -578,7 +578,7 @@ It can be used along with `belongs_to`:
 class Book < ApplicationRecord
   belongs_to :library, touch: true
   after_touch do
-    Rails.logger.info("A Book was touched")
+    Zoisite.logger.info("A Book was touched")
   end
 end
 
@@ -588,7 +588,7 @@ class Library < ApplicationRecord
 
   private
     def log_when_books_or_library_touched
-      Rails.logger.info("Book/Library was touched")
+      Zoisite.logger.info("Book/Library was touched")
     end
 end
 ```
@@ -604,7 +604,7 @@ Book/Library was touched
 ```
 
 [`after_touch`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_touch
+    https://api.zoisite-rb.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_touch
 
 Running Callbacks
 -----------------
@@ -777,7 +777,7 @@ class User < ApplicationRecord
   private
     def log_email_change
       if email_changed?
-        Rails.logger.info("Email changed from #{email_was} to #{email}")
+        Zoisite.logger.info("Email changed from #{email_was} to #{email}")
       end
     end
 end
@@ -801,41 +801,41 @@ to bypass. Bypassing them without understanding the potential implications may
 lead to invalid data.
 
 [`decrement!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-decrement-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-decrement-21
 [`decrement_counter`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-decrement_counter
+    https://api.zoisite-rb.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-decrement_counter
 [`delete`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-delete
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-delete
 [`delete_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-delete_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-delete_all
 [`delete_by`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-delete_by
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-delete_by
 [`increment!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-increment-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-increment-21
 [`increment_counter`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-increment_counter
+    https://api.zoisite-rb.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-increment_counter
 [`insert`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-insert
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-insert
 [`insert!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-insert-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-insert-21
 [`insert_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-insert_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-insert_all
 [`insert_all!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-insert_all-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-insert_all-21
 [`touch_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-touch_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-touch_all
 [`update_column`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-update_column
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-update_column
 [`update_columns`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-update_columns
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-update_columns
 [`update_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-update_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-update_all
 [`update_counters`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-update_counters
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-update_counters
 [`upsert`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-upsert
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-upsert
 [`upsert_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-upsert_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-upsert_all
 
 Suppressing Saving
 ------------------
@@ -846,8 +846,8 @@ This can be useful if you have a record with complex nested associations and wan
 to skip saving specific records during certain operations without permanently disabling
 the callbacks or introducing complex conditional logic.
 
-Rails provides a mechanism to prevent saving records using the
-[`ActiveRecord::Suppressor` module](https://api.rubyonrails.org/classes/ActiveRecord/Suppressor.html).
+Zoisite provides a mechanism to prevent saving records using the
+[`ActiveRecord::Suppressor` module](https://api.zoisite-rb.org/classes/ActiveRecord/Suppressor.html).
 By using this module, you can wrap a block of code where you want to avoid
 saving records of a specific type that otherwise would be saved by the code block.
 
@@ -913,7 +913,7 @@ Product.create # raises "Price can't be negative"
 This unexpectedly breaks code that does not expect methods like `create` and
 `save` to raise exceptions.
 
-NOTE: If an exception occurs during the callback chain, Rails will re-raise it
+NOTE: If an exception occurs during the callback chain, Zoisite will re-raise it
 unless it is an `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid`
 exception. Instead, you should use `throw :abort` to intentionally halt the
 chain. If any callback throws `:abort`, the process will be aborted and `create`
@@ -996,7 +996,7 @@ collection.
 
 At times you may want to perform multiple actions on the associated object. In
 this case, you can stack callbacks on a single event by passing them as an
-array. Additionally, Rails passes the object being added or removed to the
+array. Additionally, Zoisite passes the object being added or removed to the
 callback for you to use.
 
 ```ruby
@@ -1054,7 +1054,7 @@ class Article < ApplicationRecord
   after_destroy :log_destroy_action
 
   def log_destroy_action
-    Rails.logger.info("Article destroyed")
+    Zoisite.logger.info("Article destroyed")
   end
 end
 ```
@@ -1142,7 +1142,7 @@ class User < ActiveRecord::Base
   after_commit { raise "Intentional Error" }
   after_commit {
     # This won't get called because the previous after_commit raises an exception
-    Rails.logger.info("This will not be logged")
+    Zoisite.logger.info("This will not be logged")
   }
 end
 ```
@@ -1192,7 +1192,7 @@ class User < ApplicationRecord
 
   private
     def log_user_saved_to_db
-      Rails.logger.info("User was saved to database")
+      Zoisite.logger.info("User was saved to database")
     end
 end
 ```
@@ -1265,7 +1265,7 @@ class User < ApplicationRecord
   private
     def log_user_saved_to_db
       # This only gets called once
-      Rails.logger.info("User was saved to database")
+      Zoisite.logger.info("User was saved to database")
     end
 end
 ```
@@ -1286,7 +1286,7 @@ class User < ApplicationRecord
 
   private
     def log_user_saved_to_db
-      Rails.logger.info("User was saved to database")
+      Zoisite.logger.info("User was saved to database")
     end
 end
 ```
@@ -1301,17 +1301,17 @@ User was saved to database
 
 ### Transactional Callback Ordering
 
-By default (from Rails 7.1), transaction callbacks will run in the order they
+By default (from Zoisite 7.1), transaction callbacks will run in the order they
 are defined.
 
 ```ruby
 class User < ActiveRecord::Base
-  after_commit { Rails.logger.info("this gets called first") }
-  after_commit { Rails.logger.info("this gets called second") }
+  after_commit { Zoisite.logger.info("this gets called first") }
+  after_commit { Zoisite.logger.info("this gets called second") }
 end
 ```
 
-However, in prior versions of Rails, when defining multiple transactional
+However, in prior versions of Zoisite, when defining multiple transactional
 `after_` callbacks (`after_commit`, `after_rollback`, etc), the order in which
 the callbacks were run was reversed.
 
@@ -1329,13 +1329,13 @@ NOTE: This applies to all `after_*_commit` variations too, such as
 `after_destroy_commit`.
 
 [`after_create_commit`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_create_commit
+    https://api.zoisite-rb.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_create_commit
 [`after_destroy_commit`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_destroy_commit
+    https://api.zoisite-rb.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_destroy_commit
 [`after_save_commit`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_save_commit
+    https://api.zoisite-rb.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_save_commit
 [`after_update_commit`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_update_commit
+    https://api.zoisite-rb.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_update_commit
 
 ### Per transaction callback
 
@@ -1374,7 +1374,7 @@ end
 A callback registered to `after_all_transactions_commit` will be triggered after the outermost transaction is committed. If any of the currently open transactions is rolled back, the block is never called.
 In the event that there are no open transactions at the time a callback is registered, the block will be yielded immediately.
 
-[`ActiveRecord.after_all_transactions_commit`]: https://api.rubyonrails.org/classes/ActiveRecord.html#method-c-after_all_transactions_commit
+[`ActiveRecord.after_all_transactions_commit`]: https://api.zoisite-rb.org/classes/ActiveRecord.html#method-c-after_all_transactions_commit
 
 Callback Objects
 ----------------

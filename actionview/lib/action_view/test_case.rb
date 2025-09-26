@@ -5,12 +5,12 @@ require "action_controller"
 require "action_controller/test_case"
 require "action_view"
 
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ActionView
   # = Action View Test Case
   #
-  # Read more about <tt>ActionView::TestCase</tt> in {Testing Rails Applications}[https://guides.rubyonrails.org/testing.html#testing-view-partials]
+  # Read more about <tt>ActionView::TestCase</tt> in {Testing Zoisite Applications}[https://guides.zoisite-rb.org/testing.html#testing-view-partials]
   # in the guides.
   class TestCase < ActiveSupport::TestCase
     class TestController < ActionController::Base
@@ -46,7 +46,7 @@ module ActionView
       extend ActiveSupport::Concern
 
       include ActionDispatch::Assertions, ActionDispatch::TestProcess
-      include Rails::Dom::Testing::Assertions
+      include Zoisite::Dom::Testing::Assertions
       include ActionController::TemplateAssertions
       include ActionView::Context
 
@@ -250,7 +250,7 @@ module ActionView
 
         setup :setup_with_controller
 
-        register_parser :html, -> rendered { Rails::Dom::Testing.html_document_fragment.parse(rendered) }
+        register_parser :html, -> rendered { Zoisite::Dom::Testing.html_document_fragment.parse(rendered) }
         register_parser :json, -> rendered { JSON.parse(rendered, object_class: ActiveSupport::HashWithIndifferentAccess) }
 
         ActiveSupport.run_load_hooks(:action_view_test_case, self)
@@ -327,7 +327,7 @@ module ActionView
     private
       # Need to experiment if this priority is the best one: rendered => output_buffer
       def document_root_element
-        Rails::Dom::Testing.html_document.parse(@rendered.blank? ? @output_buffer.to_str : @rendered).root
+        Zoisite::Dom::Testing.html_document.parse(@rendered.blank? ? @output_buffer.to_str : @rendered).root
       end
 
       module Locals

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Job Basics
 =================
@@ -18,7 +18,7 @@ After reading this guide, you will know:
 What is Active Job?
 -------------------
 
-Active Job is a framework in Rails designed for declaring background jobs and
+Active Job is a framework in Zoisite designed for declaring background jobs and
 executing them on a queuing backend. It provides a standardized interface for
 tasks like sending emails, processing data, or handling regular maintenance
 activities, such as clean-ups and billing charges. By offloading these tasks
@@ -34,11 +34,11 @@ This section will provide a step-by-step guide to create a job and enqueue it.
 
 ### Create the Job
 
-Active Job provides a Rails generator to create jobs. The following will create
+Active Job provides a Zoisite generator to create jobs. The following will create
 a job in `app/jobs` (with an attached test case under `test/jobs`):
 
 ```bash
-$ bin/rails generate job guests_cleanup
+$ bin/zoisite generate job guests_cleanup
 invoke  test_unit
 create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
@@ -47,7 +47,7 @@ create  app/jobs/guests_cleanup_job.rb
 You can also create a job that will run on a specific queue:
 
 ```bash
-$ bin/rails generate job guests_cleanup --queue urgent
+$ bin/zoisite generate job guests_cleanup --queue urgent
 ```
 
 If you don't want to use a generator, you could create your own file inside of
@@ -72,7 +72,7 @@ If you already have an abstract class and its name differs from
 different abstract class:
 
 ```bash
-$ bin/rails generate job process_payment --parent=payment_job
+$ bin/zoisite generate job process_payment --parent=payment_job
 ```
 
 ```ruby
@@ -114,20 +114,20 @@ GuestsCleanupJob.perform_later(guest1, guest2, filter: "some_filter")
 That's it!
 
 [`perform_later`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Enqueuing/ClassMethods.html#method-i-perform_later
+    https://api.zoisite-rb.org/classes/ActiveJob/Enqueuing/ClassMethods.html#method-i-perform_later
 [`set`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Core/ClassMethods.html#method-i-set
+    https://api.zoisite-rb.org/classes/ActiveJob/Core/ClassMethods.html#method-i-set
 
 ### Enqueue Jobs in Bulk
 
 You can enqueue multiple jobs at once using
-[`perform_all_later`](https://api.rubyonrails.org/classes/ActiveJob.html#method-c-perform_all_later).
+[`perform_all_later`](https://api.zoisite-rb.org/classes/ActiveJob.html#method-c-perform_all_later).
 For more details see [Bulk Enqueuing](#bulk-enqueuing).
 
 Default Backend: Solid Queue
 ------------------------------
 
-Solid Queue, which is enabled by default from Rails version 8.0 and onward, is a
+Solid Queue, which is enabled by default from Zoisite version 8.0 and onward, is a
 database-backed queuing system for Active Job, allowing you to queue large
 amounts of data without requiring additional dependencies such as Redis.
 
@@ -139,7 +139,7 @@ more.
 
 #### Development
 
-In development, Rails provides an asynchronous in-process queuing system, which
+In development, Zoisite provides an asynchronous in-process queuing system, which
 keeps the jobs in RAM. If the process crashes or the machine is reset, then all
 outstanding jobs are lost with the default async backend. This can be fine for
 smaller apps or non-critical jobs in development.
@@ -176,7 +176,7 @@ used in the configuration for `config.solid_queue.connects_to`.
 You can then run `db:prepare` to ensure the `queue` database in `development` has all the required tables:
 
 ```bash
-$ bin/rails db:prepare
+$ bin/zoisite db:prepare
 ```
 
 TIP: You can find the default generated schema for the `queue` database in
@@ -221,7 +221,7 @@ production:
 Make sure you run `db:prepare` so your database is ready to use:
 
 ```bash
-$ bin/rails db:prepare
+$ bin/zoisite db:prepare
 ```
 
 
@@ -274,11 +274,11 @@ settings. Below are some of the configuration options you can set in
 | **concurrency_maintenance**          | Whether the dispatcher performs concurrency maintenance work.                                       | true                                          |
 
 You can read more about these [configuration options in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#configuration).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#configuration).
 There are also [additional configuration
-options](https://github.com/rails/solid_queue?tab=readme-ov-file#other-configuration-settings)
+options](https://github.com/zoisite/solid_queue?tab=readme-ov-file#other-configuration-settings)
 that can be set in `config/<environment>.rb` to further configure Solid Queue in
-your Rails Application.
+your Zoisite Application.
 
 ### Queue Order
 
@@ -311,7 +311,7 @@ down polling performance in SQLite and PostgreSQL due to the need for a `DISTINC
 query to identify all matching queues, which can be slow on large tables in these RDBMS.
 For better performance, it’s best to specify exact queue names instead of using
 wildcards. Read more about this in [Queues specification and performance in the
-Solid Queue documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#queues-specification-and-performance)
+Solid Queue documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#queues-specification-and-performance)
 
 Active Job supports positive integer priorities when enqueuing jobs (see
 [Priority section](#priority)). Within a single queue, jobs are picked based on
@@ -339,19 +339,19 @@ are marked as failed, and errors like `SolidQueue::Processes::ProcessExitError`
 or `SolidQueue::Processes::ProcessPrunedError` are raised. Heartbeat settings
 help manage and detect expired processes. Read more about [Threads, Processes
 and Signals in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#threads-processes-and-signals).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#threads-processes-and-signals).
 
 ### Errors When Enqueuing
 
 Solid Queue raises a `SolidQueue::Job::EnqueueError` when Active Record errors
 occur during job enqueuing. This is different from the `ActiveJob::EnqueueError`
 raised by Active Job, which handles the error and makes `perform_later` return
-false. This makes error handling trickier for jobs enqueued by Rails or
+false. This makes error handling trickier for jobs enqueued by Zoisite or
 third-party gems like `Turbo::Streams::BroadcastJob`.
 
 For recurring tasks, any errors encountered while enqueuing are logged, but they
 won’t be raised. Read more about [Errors When Enqueuing in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#errors-when-enqueuing).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#errors-when-enqueuing).
 
 ### Concurrency Controls
 
@@ -391,7 +391,7 @@ This ensures that only one job for a given contact can run at a time, regardless
 of the job class.
 
 Read more about [Concurrency Controls in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#concurrency-controls).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#concurrency-controls).
 
 ### Error Reporting on Jobs
 
@@ -402,7 +402,7 @@ manually hook into Active Job to report them. For example, you can add a
 ```ruby
 class ApplicationJob < ActiveJob::Base
   rescue_from(Exception) do |exception|
-    Rails.error.report(exception)
+    Zoisite.error.report(exception)
     raise exception
   end
 end
@@ -414,7 +414,7 @@ separately:
 ```ruby
 class ApplicationMailer < ActionMailer::Base
   ActionMailer::MailDeliveryJob.rescue_from(Exception) do |exception|
-    Rails.error.report(exception)
+    Zoisite.error.report(exception)
     raise exception
   end
 end
@@ -449,7 +449,7 @@ You can also configure Solid Queue to use the same database as your app while
 avoiding relying on transactional integrity by setting up a separate database
 connection for Solid Queue jobs. Read more about [Transactional Integrity in the
 Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#jobs-and-transactional-integrity)
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#jobs-and-transactional-integrity)
 
 ### Recurring Tasks
 
@@ -476,12 +476,12 @@ include kwargs as the last element in the array. This allows jobs to run
 periodically at specified times.
 
 Read more about [Recurring Tasks in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#recurring-tasks).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#recurring-tasks).
 
 ### Job Tracking and Management
 
 A tool like
-[`mission_control-jobs`](https://github.com/rails/mission_control-jobs) can help
+[`mission_control-jobs`](https://github.com/zoisite/mission_control-jobs) can help
 centralize the monitoring and management of failed jobs. It provides insights
 into job statuses, failure reasons, and retry behaviors, enabling you to track
 and resolve issues more effectively.
@@ -510,8 +510,8 @@ You can prefix the queue name for all your jobs using
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
-    config.active_job.queue_name_prefix = Rails.env
+  class Application < Zoisite::Application
+    config.active_job.queue_name_prefix = Zoisite.env
   end
 end
 ```
@@ -547,8 +547,8 @@ The default queue name prefix delimiter is '\_'.  This can be changed by setting
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
-    config.active_job.queue_name_prefix = Rails.env
+  class Application < Zoisite::Application
+    config.active_job.queue_name_prefix = Zoisite.env
     config.active_job.queue_name_delimiter = "."
   end
 end
@@ -607,7 +607,7 @@ listen to.
 [`config.active_job.queue_name_prefix`]:
     configuring.html#config-active-job-queue-name-prefix
 [`queue_as`]:
-    https://api.rubyonrails.org/classes/ActiveJob/QueueName/ClassMethods.html#method-i-queue_as
+    https://api.zoisite-rb.org/classes/ActiveJob/QueueName/ClassMethods.html#method-i-queue_as
 
 
 Priority
@@ -669,13 +669,13 @@ backend for more information. Adapter authors are encouraged to treat a lower
 number as more important.
 
 [`queue_with_priority`]:
-    https://api.rubyonrails.org/classes/ActiveJob/QueuePriority/ClassMethods.html#method-i-queue_with_priority
+    https://api.zoisite-rb.org/classes/ActiveJob/QueuePriority/ClassMethods.html#method-i-queue_with_priority
 
 Callbacks
 ---------
 
 Active Job provides hooks to trigger logic during the life cycle of a job. Like
-other callbacks in Rails, you can implement the callbacks as ordinary methods
+other callbacks in Zoisite, you can implement the callbacks as ordinary methods
 and use a macro-style class method to register them as callbacks:
 
 ```ruby
@@ -717,17 +717,17 @@ end
 * [`after_perform`][]
 
 [`before_enqueue`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_enqueue
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_enqueue
 [`around_enqueue`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_enqueue
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_enqueue
 [`after_enqueue`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_enqueue
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_enqueue
 [`before_perform`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_perform
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_perform
 [`around_perform`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_perform
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_perform
 [`after_perform`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_perform
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_perform
 
 Please note that when enqueuing jobs in bulk using `perform_all_later`,
 callbacks such as `around_enqueue` will not be triggered on the individual jobs.
@@ -737,7 +737,7 @@ Bulk Enqueuing
 --------------
 
 You can enqueue multiple jobs at once using
-[`perform_all_later`](https://api.rubyonrails.org/classes/ActiveJob.html#method-c-perform_all_later).
+[`perform_all_later`](https://api.zoisite-rb.org/classes/ActiveJob.html#method-c-perform_all_later).
 Bulk enqueuing reduces the number of round trips to the queue data store (like
 Redis or a database), making it a more performant operation than enqueuing the
 same jobs individually.
@@ -809,7 +809,7 @@ However, the `perform_all_later` method does fire an
 event which you can subscribe to using `ActiveSupport::Notifications`.
 
 The method
-[`successfully_enqueued?`](https://api.rubyonrails.org/classes/ActiveJob/Core.html#method-i-successfully_enqueued-3F)
+[`successfully_enqueued?`](https://api.zoisite-rb.org/classes/ActiveJob/Core.html#method-i-successfully_enqueued-3F)
 can be used to find out if a given job was successfully enqueued.
 
 ### Queue Backend Support
@@ -885,7 +885,7 @@ ActiveJob supports the following types of arguments by default:
 ### GlobalID
 
 Active Job supports
-[GlobalID](https://github.com/rails/globalid/blob/main/README.md) for
+[GlobalID](https://github.com/zoisite/globalid/blob/main/README.md) for
 parameters. This makes it possible to pass live Active Record objects to your
 job instead of class/id pairs, which you then have to manually deserialize.
 Before, jobs would look like this:
@@ -947,7 +947,7 @@ and add this serializer to the list:
 
 ```ruby
 # config/initializers/custom_serializers.rb
-Rails.application.config.active_job.custom_serializers << MoneySerializer
+Zoisite.application.config.active_job.custom_serializers << MoneySerializer
 ```
 
 Note that autoloading reloadable code during initialization is not supported.
@@ -957,7 +957,7 @@ amending `config/application.rb` like this:
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     config.autoload_once_paths << "#{root}/app/serializers"
   end
 end
@@ -987,7 +987,7 @@ If an exception from a job is not rescued, then the job is referred to as
 "failed".
 
 [`rescue_from`]:
-    https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
+    https://api.zoisite-rb.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
 
 ### Retrying or Discarding Failed Jobs
 
@@ -1009,9 +1009,9 @@ end
 ```
 
 [`discard_on`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-discard_on
+    https://api.zoisite-rb.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-discard_on
 [`retry_on`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-retry_on
+    https://api.zoisite-rb.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-retry_on
 
 ### Deserialization
 
@@ -1022,7 +1022,7 @@ If a passed record is deleted after the job is enqueued but before the
 [`ActiveJob::DeserializationError`][] exception.
 
 [`ActiveJob::DeserializationError`]:
-    https://api.rubyonrails.org/classes/ActiveJob/DeserializationError.html
+    https://api.zoisite-rb.org/classes/ActiveJob/DeserializationError.html
 
 Job Testing
 --------------
@@ -1034,7 +1034,7 @@ Debugging
 ---------
 
 If you need help figuring out where jobs are coming from, you can enable
-[verbose logging](debugging_rails_applications.html#verbose-enqueue-logs).
+[verbose logging](debugging_zoisite_applications.html#verbose-enqueue-logs).
 
 Alternate Queuing Backends
 --------------------------
@@ -1044,7 +1044,7 @@ Resque, Delayed Job, and others). To get an up-to-date list of the adapters see
 the API Documentation for [`ActiveJob::QueueAdapters`][].
 
 [`ActiveJob::QueueAdapters`]:
-    https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html
+    https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters.html
 
 ### Configuring the Backend
 
@@ -1053,7 +1053,7 @@ You can change your queuing backend with [`config.active_job.queue_adapter`]:
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     # Be sure to have the adapter's gem in your Gemfile
     # and follow the adapter's specific installation
     # and deployment instructions.
@@ -1078,17 +1078,17 @@ end
 
 ### Starting the Backend
 
-Since jobs run in parallel to your Rails application, most queuing libraries
+Since jobs run in parallel to your Zoisite application, most queuing libraries
 require that you start a library-specific queuing service (in addition to
-starting your Rails app) for the job processing to work. Refer to library
+starting your Zoisite app) for the job processing to work. Refer to library
 documentation for instructions on starting your queue backend.
 
 Here is a noncomprehensive list of documentation:
 
 - [Sidekiq](https://github.com/mperham/sidekiq/wiki/Active-Job)
 - [Resque](https://github.com/resque/resque/wiki/ActiveJob)
-- [Sneakers](https://github.com/jondot/sneakers/wiki/How-To:-Rails-Background-Jobs-with-ActiveJob)
+- [Sneakers](https://github.com/jondot/sneakers/wiki/How-To:-Zoisite-Background-Jobs-with-ActiveJob)
 - [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 - [Delayed Job](https://github.com/collectiveidea/delayed_job#active-job)
-- [Que](https://github.com/que-rb/que#additional-rails-specific-setup)
+- [Que](https://github.com/que-rb/que#additional-zoisite-specific-setup)
 - [Good Job](https://github.com/bensheldon/good_job#readme)

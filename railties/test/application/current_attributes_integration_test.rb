@@ -32,7 +32,7 @@ class CurrentAttributesIntegrationTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get "/customers/:action", controller: :customers
       end
     RUBY
@@ -75,7 +75,7 @@ class CurrentAttributesIntegrationTest < ActiveSupport::TestCase
     assert_nil Current.customer
     assert_equal "UTC", Time.zone.name
 
-    Rails.application.executor.wrap do
+    Zoisite.application.executor.wrap do
       Current.customer = Customer.new("david")
 
       assert_equal "david", Current.customer.name

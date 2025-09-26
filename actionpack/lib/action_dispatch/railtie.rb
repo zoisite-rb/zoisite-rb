@@ -8,7 +8,7 @@ require "action_dispatch/structured_event_subscriber"
 require "active_support/messages/rotation_configuration"
 
 module ActionDispatch
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Zoisite::Railtie # :nodoc:
     config.action_dispatch = ActiveSupport::OrderedOptions.new
     config.action_dispatch.x_sendfile_header = nil
     config.action_dispatch.ip_spoofing_check = true
@@ -80,10 +80,10 @@ module ActionDispatch
       ActionDispatch::ExceptionWrapper.rescue_responses.merge!(config.action_dispatch.rescue_responses)
       ActionDispatch::ExceptionWrapper.rescue_templates.merge!(config.action_dispatch.rescue_templates)
 
-      config.action_dispatch.always_write_cookie = Rails.env.development? if config.action_dispatch.always_write_cookie.nil?
+      config.action_dispatch.always_write_cookie = Zoisite.env.development? if config.action_dispatch.always_write_cookie.nil?
       ActionDispatch::Cookies::CookieJar.always_write_cookie = config.action_dispatch.always_write_cookie
 
-      ActionDispatch::Routing::Mapper.route_source_locations = Rails.env.development?
+      ActionDispatch::Routing::Mapper.route_source_locations = Zoisite.env.development?
 
       ActionDispatch::Http::Cache::Request.strict_freshness = app.config.action_dispatch.strict_freshness
       ActionDispatch.test_app = app

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/generator/generator_generator"
+require "zoisite/generators/zoisite/generator/generator_generator"
 
-class GeneratorGeneratorTest < Rails::Generators::TestCase
+class GeneratorGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(awesome)
 
@@ -17,26 +17,26 @@ class GeneratorGeneratorTest < Rails::Generators::TestCase
     ).each { |path| assert_file path }
 
     assert_file "lib/generators/awesome/awesome_generator.rb",
-                /class AwesomeGenerator < Rails::Generators::NamedBase/
+                /class AwesomeGenerator < Zoisite::Generators::NamedBase/
     assert_file "test/lib/generators/awesome_generator_test.rb",
-               /class AwesomeGeneratorTest < Rails::Generators::TestCase/,
+               /class AwesomeGeneratorTest < Zoisite::Generators::TestCase/,
                /require "generators\/awesome\/awesome_generator"/
   end
 
   def test_namespaced_generator_skeleton
-    run_generator ["rails/awesome"]
+    run_generator ["zoisite/awesome"]
 
     %w(
-      lib/generators/rails/awesome
-      lib/generators/rails/awesome/USAGE
-      lib/generators/rails/awesome/templates
+      lib/generators/zoisite/awesome
+      lib/generators/zoisite/awesome/USAGE
+      lib/generators/zoisite/awesome/templates
     ).each { |path| assert_file path }
 
-    assert_file "lib/generators/rails/awesome/awesome_generator.rb",
-                /class Rails::AwesomeGenerator < Rails::Generators::NamedBase/
-    assert_file "test/lib/generators/rails/awesome_generator_test.rb",
-               /class Rails::AwesomeGeneratorTest < Rails::Generators::TestCase/,
-               /require "generators\/rails\/awesome\/awesome_generator"/
+    assert_file "lib/generators/zoisite/awesome/awesome_generator.rb",
+                /class Zoisite::AwesomeGenerator < Zoisite::Generators::NamedBase/
+    assert_file "test/lib/generators/zoisite/awesome_generator_test.rb",
+               /class Zoisite::AwesomeGeneratorTest < Zoisite::Generators::TestCase/,
+               /require "generators\/zoisite\/awesome\/awesome_generator"/
   end
 
   def test_generator_skeleton_is_created_without_file_name_namespace
@@ -49,25 +49,25 @@ class GeneratorGeneratorTest < Rails::Generators::TestCase
     ).each { |path| assert_file path }
 
     assert_file "lib/generators/awesome_generator.rb",
-                /class AwesomeGenerator < Rails::Generators::NamedBase/
+                /class AwesomeGenerator < Zoisite::Generators::NamedBase/
     assert_file "test/lib/generators/awesome_generator_test.rb",
-               /class AwesomeGeneratorTest < Rails::Generators::TestCase/,
+               /class AwesomeGeneratorTest < Zoisite::Generators::TestCase/,
                /require "generators\/awesome_generator"/
   end
 
   def test_namespaced_generator_skeleton_without_file_name_namespace
-    run_generator ["rails/awesome", "--namespace", "false"]
+    run_generator ["zoisite/awesome", "--namespace", "false"]
 
     %w(
-      lib/generators/rails
-      lib/generators/rails/USAGE
-      lib/generators/rails/templates
+      lib/generators/zoisite
+      lib/generators/zoisite/USAGE
+      lib/generators/zoisite/templates
     ).each { |path| assert_file path }
 
-    assert_file "lib/generators/rails/awesome_generator.rb",
-                /class Rails::AwesomeGenerator < Rails::Generators::NamedBase/
-    assert_file "test/lib/generators/rails/awesome_generator_test.rb",
-               /class Rails::AwesomeGeneratorTest < Rails::Generators::TestCase/,
-               /require "generators\/rails\/awesome_generator"/
+    assert_file "lib/generators/zoisite/awesome_generator.rb",
+                /class Zoisite::AwesomeGenerator < Zoisite::Generators::NamedBase/
+    assert_file "test/lib/generators/zoisite/awesome_generator_test.rb",
+               /class Zoisite::AwesomeGeneratorTest < Zoisite::Generators::TestCase/,
+               /require "generators\/zoisite\/awesome_generator"/
   end
 end

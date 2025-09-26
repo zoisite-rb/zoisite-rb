@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Sign Up and Settings
 ====================
@@ -22,7 +22,7 @@ Introduction
 
 One of the most common features to add to any application is a sign up process
 for registering new users. The e-commerce application we've built so far only
-has authentication and users must be created in the Rails console or a script.
+has authentication and users must be created in the Zoisite console or a script.
 
 This feature is required before we can add other features. For example, to let
 users create wishlists, they will need to be able to sign up first before they
@@ -34,7 +34,7 @@ Adding Sign Up
 --------------
 
 We've already used the
-[Rails authentication generator in the Getting Started guide](/getting_started.html#adding-authentication)
+[Zoisite authentication generator in the Getting Started guide](/getting_started.html#adding-authentication)
 to allow users to login to their accounts. The generator created a `User` model
 with `email_address:string` and `password_digest:string` columns in the
 database. It also added `has_secure_password` to the `User` model which handles
@@ -50,13 +50,13 @@ start by adding `first_name` and `last_name` columns to the database.
 In the terminal, create a migration with these columns:
 
 ```bash
-$ bin/rails g migration AddNamesToUsers first_name:string last_name:string
+$ bin/zoisite g migration AddNamesToUsers first_name:string last_name:string
 ```
 
 Then migrate the database:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 Let's also add a method to combine `first_name` and `last_name`, so that we can
@@ -247,8 +247,8 @@ Our application will be accessible on the internet so we're bound to have
 malicious bots and users trying to spam our application. We can add rate
 limiting to sign up to slow down anyone submitting too many requests.
 
-Rails makes this easy with the
-[`rate_limit`](https://api.rubyonrails.org/classes/ActionController/RateLimiting/ClassMethods.html)
+Zoisite makes this easy with the
+[`rate_limit`](https://api.zoisite-rb.org/classes/ActionController/RateLimiting/ClassMethods.html)
 method in controllers.
 
 ```ruby#3
@@ -271,7 +271,7 @@ expect to update their profile, password, email address, and other settings.
 
 ### Using Namespaces
 
-The Rails authentication generator already created a controller at
+The Zoisite authentication generator already created a controller at
 `app/controllers/passwords_controller.rb` for password resets. This means we
 need to use a different controller for editing passwords of authenticated users.
 
@@ -350,9 +350,9 @@ Passing `model: Current.user` also tells `form_with` to submit a `PATCH` request
 to process the form with the `update` action.
 
 TIP: `Current.user` comes from
-[CurrentAttributes](https://api.rubyonrails.org/classes/ActiveSupport/CurrentAttributes.html)
+[CurrentAttributes](https://api.zoisite-rb.org/classes/ActiveSupport/CurrentAttributes.html)
 which is a per-request attribute which resets automatically before and after
-each request. The Rails authentication generator uses this to keep track of the
+each request. The Zoisite authentication generator uses this to keep track of the
 logged in User.
 
 ### Safely Updating Passwords
@@ -396,7 +396,7 @@ password.
 ### Renaming The Password Challenge Attribute
 
 While `password_challenge` is a good name for our code, users are used to seeing
-"Current password" for this form field. We can rename this with locales in Rails
+"Current password" for this form field. We can rename this with locales in Zoisite
 to change how this attribute is displayed on the frontend.
 
 Add the following to `config/locales/en.yml`:
@@ -415,7 +415,7 @@ en:
 ```
 
 To learn more, check out the
-[I18n Guide](https://guides.rubyonrails.org/i18n.html#translations-for-active-record-models)
+[I18n Guide](https://guides.zoisite-rb.org/i18n.html#translations-for-active-record-models)
 
 Editing User Profiles
 ---------------------
@@ -556,7 +556,7 @@ Let's create `app/views/layouts/settings.html.erb` and add the following:
 <%= render template: "layouts/application" %>
 ```
 
-In the settings layout, we're providing HTML for the sidebar and telling Rails
+In the settings layout, we're providing HTML for the sidebar and telling Zoisite
 to render the application layout as the parent.
 
 We need to modify the application layout to render the content from the nested
@@ -744,13 +744,13 @@ We'll start by adding a new field to the users table in our database. This will
 store the new email address while we're waiting for confirmation.
 
 ```bash
-$ bin/rails g migration AddUnconfirmedEmailToUsers unconfirmed_email:string
+$ bin/zoisite g migration AddUnconfirmedEmailToUsers unconfirmed_email:string
 ```
 
 Then migrate the database.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 
@@ -845,7 +845,7 @@ Let's use the mailer generator to create the `UserMailer` we referenced in
 `Settings::EmailsController`:
 
 ```bash
-$ bin/rails generate mailer User email_confirmation
+$ bin/zoisite generate mailer User email_confirmation
       create  app/mailers/user_mailer.rb
       invoke  erb
       create    app/views/user_mailer
@@ -918,7 +918,7 @@ Confirm your email: <%= email_confirmation_url(token: @token) %>
 
 ### Email Confirmation Controller
 
-The confirmation email includes a link to our Rails app to verify the email
+The confirmation email includes a link to our Zoisite app to verify the email
 change.
 
 Let's add a route for this to `config/routes.rb`
@@ -981,7 +981,7 @@ Finally, let's add a link to Email in the settings layout sidebar:
 ```
 
 Test out this process by navigating to https://localhost:3000/settings/email and
-updating your email address. Watch the Rails server logs for the email contents
+updating your email address. Watch the Zoisite server logs for the email contents
 and open the confirm link in your browser to update the email in the database.
 
 Separating Admins & Users
@@ -995,13 +995,13 @@ differentiate between regular users and admins.
 We'll start by adding a column to the User model.
 
 ```bash
-$ bin/rails g migration AddAdminToUsers admin:boolean
+$ bin/zoisite g migration AddAdminToUsers admin:boolean
 ```
 
 Then migrate the database.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 A `User` with `admin` set to `true` should be able to add and remove products
@@ -1014,7 +1014,7 @@ This is easy enough by keeping the `:admin` attribute out of any permitted
 parameters list.
 
 Optionally, we can mark the admin attribute as readonly for added security. This
-will tell Rails to raise an error anytime the admin attribute is changed. It can
+will tell Zoisite to raise an error anytime the admin attribute is changed. It can
 still be set when creating a record, but provides an additional layer of
 security against unauthorized changes. You may want to skip this if you'll be
 changing the admin flag for users often but in our e-commerce store, it's a
@@ -1035,11 +1035,11 @@ class User < ApplicationRecord
 When `admin` is read-only, we have to directly update this in the database
 instead of using Active Record.
 
-Rails has a command called `dbconsole` that will open a database console where
+Zoisite has a command called `dbconsole` that will open a database console where
 we can directly interact with the database using SQL.
 
 ```bash
-$ bin/rails dbconsole
+$ bin/zoisite dbconsole
 SQLite version 3.43.2 2023-10-10 13:08:14
 Enter ".help" for usage hints.
 sqlite>
@@ -1552,7 +1552,7 @@ Let's add some tests to verify that our features work correctly.
 
 ### Authentication Test Helpers
 
-In our test suite, we'll need to sign in users in our tests. The Rails
+In our test suite, we'll need to sign in users in our tests. The Zoisite
 authentication generator has been updated to include helpers for authentication,
 but your application may have been created before this, so let's ensure these
 files exist before writing our tests.
@@ -1584,7 +1584,7 @@ them.
 ```ruby#4,8
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
-require "rails/test_help"
+require "zoisite/test_help"
 require_relative "test_helpers/session_test_helper"
 
 module ActiveSupport
@@ -1626,7 +1626,7 @@ This test will visit `/sign_up` and ensure that it receives a 200 OK response.
 Let's run the test and see if it passes:
 
 ```bash
-$ bin/rails test test/controllers/sign_ups_controller_test.rb:4
+$ bin/zoisite test test/controllers/sign_ups_controller_test.rb:4
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: --seed 5967
 
@@ -1751,7 +1751,7 @@ delivery.
 Let's run these tests and make sure they pass:
 
 ```bash
-$ bin/rails test test/controllers/settings/emails_controller_test.rb
+$ bin/zoisite test test/controllers/settings/emails_controller_test.rb
 Running 2 tests in a single process (parallelization threshold is 50)
 Run options: --seed 31545
 
@@ -1885,7 +1885,7 @@ These tests ensure that only admins will see the Store settings in the navbar.
 You can run these tests with:
 
 ```bash
-$ bin/rails test test/integration/settings_test.rb
+$ bin/zoisite test test/integration/settings_test.rb
 ```
 
 We also want to ensure regular users cannot access the Store settings for
@@ -1930,7 +1930,7 @@ end
 Run the test file again and you should see they all pass.
 
 ```bash
-$ bin/rails test test/integration/settings_test.rb
+$ bin/zoisite test test/integration/settings_test.rb
 Running 6 tests in a single process (parallelization threshold is 50)
 Run options: --seed 33354
 
@@ -1945,7 +1945,7 @@ Finished in 0.625542s, 9.5917 runs/s, 12.7889 assertions/s.
 And let's run the full test suite one more time to make sure all the tests pass.
 
 ```bash
-$ bin/rails test
+$ bin/zoisite test
 Running 18 tests in a single process (parallelization threshold is 50)
 Run options: --seed 38561
 
@@ -1984,7 +1984,7 @@ UPDATE users SET admin=true WHERE users.email='you@example.org';
 .quit
 ```
 
-Otherwise, you can use the Rails console to update your account.
+Otherwise, you can use the Zoisite console to update your account.
 
 ```bash
 $ bin/kamal console
@@ -2007,4 +2007,4 @@ Here are a few ideas to build on to this:
 
 Happy building!
 
-[Return to all tutorials](https://rubyonrails.org/docs/tutorials)
+[Return to all tutorials](https://zoisite-rb.org/docs/tutorials)

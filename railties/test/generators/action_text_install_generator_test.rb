@@ -3,12 +3,12 @@
 require "generators/generators_test_helper"
 require "generators/action_text/install/install_generator"
 
-class ActionText::Generators::InstallGeneratorTest < Rails::Generators::TestCase
+class ActionText::Generators::InstallGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   setup do
-    Rails.application = Rails.application.class
-    Rails.application.config.root = Pathname(destination_root)
+    Zoisite.application = Zoisite.application.class
+    Zoisite.application.config.root = Pathname(destination_root)
 
     FileUtils.mkdir_p("#{destination_root}/app/javascript")
     FileUtils.touch("#{destination_root}/app/javascript/application.js")
@@ -20,26 +20,26 @@ class ActionText::Generators::InstallGeneratorTest < Rails::Generators::TestCase
   end
 
   teardown do
-     Rails.application = Rails.application.instance
+     Zoisite.application = Zoisite.application.instance
    end
 
   test "installs JavaScript dependencies" do
     FileUtils.touch("#{destination_root}/package.json")
 
     run_generator_instance
-    assert_match %r"yarn add @rails/actiontext trix", @run_commands.join("\n")
+    assert_match %r"yarn add @zoisite/actiontext trix", @run_commands.join("\n")
   end
 
   test "throws warning for missing entry point" do
     FileUtils.rm("#{destination_root}/app/javascript/application.js")
-    assert_match "You must import the @rails/actiontext and trix JavaScript modules", run_generator_instance
+    assert_match "You must import the @zoisite/actiontext and trix JavaScript modules", run_generator_instance
   end
 
   test "imports JavaScript dependencies in application.js" do
     run_generator_instance
 
     assert_file "app/javascript/application.js" do |content|
-      assert_match %r"^#{Regexp.escape 'import "@rails/actiontext"'}", content
+      assert_match %r"^#{Regexp.escape 'import "@zoisite/actiontext"'}", content
       assert_match %r"^#{Regexp.escape 'import "trix"'}", content
     end
   end
@@ -48,7 +48,7 @@ class ActionText::Generators::InstallGeneratorTest < Rails::Generators::TestCase
     run_generator_instance
 
     assert_file "config/importmap.rb" do |content|
-      assert_match %r|pin "@rails/actiontext"|, content
+      assert_match %r|pin "@zoisite/actiontext"|, content
       assert_match %r|pin "trix"|, content
     end
   end

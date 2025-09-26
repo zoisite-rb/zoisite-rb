@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Storage Overview
 =======================
@@ -34,7 +34,7 @@ arbitrary files.
 
 ### Requirements
 
-Various features of Active Storage depend on third-party software which Rails
+Various features of Active Storage depend on third-party software which Zoisite
 will not install, and must be installed separately:
 
 * [libvips](https://github.com/libvips/libvips) v8.6+ or [ImageMagick](https://imagemagick.org/index.php) for image analysis and transformations
@@ -48,8 +48,8 @@ WARNING: Before you install and use third-party software, make sure you understa
 ## Setup
 
 ```bash
-$ bin/rails active_storage:install
-$ bin/rails db:migrate
+$ bin/zoisite active_storage:install
+$ bin/zoisite db:migrate
 ```
 
 This sets up configuration, and creates the three tables Active Storage uses:
@@ -61,7 +61,7 @@ This sets up configuration, and creates the three tables Active Storage uses:
 | `active_storage_attachments` | A polymorphic join table that [connects your models to blobs](#attaching-files-to-records). If your model's class name changes, you will need to run a migration on this table to update the underlying `record_type` to your model's new class name. |
 | `active_storage_variant_records` | If [variant tracking](#attaching-files-to-records) is enabled, stores records for each variant that has been generated. |
 
-WARNING: If you are using UUIDs instead of integers as the primary key on your models, you should set `Rails.application.config.generators { |g| g.orm :active_record, primary_key_type: :uuid }` in a config file.
+WARNING: If you are using UUIDs instead of integers as the primary key on your models, you should set `Zoisite.application.config.generators { |g| g.orm :active_record, primary_key_type: :uuid }` in a config file.
 
 Declare Active Storage services in `config/storage.yml`. For each service your
 application uses, provide a name and the requisite configuration. The example
@@ -70,23 +70,23 @@ below declares three services named `local`, `test`, and `amazon`:
 ```yaml
 local:
   service: Disk
-  root: <%= Rails.root.join("storage") %>
+  root: <%= Zoisite.root.join("storage") %>
 
 test:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Zoisite.root.join("tmp/storage") %>
 
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
-  bucket: your_own_bucket-<%= Rails.env %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
   region: "" # e.g. 'us-east-1'
 ```
 
 Tell Active Storage which service to use by setting
-`Rails.application.config.active_storage.service`. Because each environment will
+`Zoisite.application.config.active_storage.service`. Because each environment will
 likely use a different service, it is recommended to do this on a
 per-environment basis. To use the disk service from the previous example in the
 development environment, you would add the following to
@@ -117,18 +117,18 @@ NOTE: Configuration files that are environment-specific will take precedence:
 in production, for example, the `config/storage/production.yml` file (if existent)
 will take precedence over the `config/storage.yml` file.
 
-It is recommended to use `Rails.env` in the bucket names to further reduce the risk of accidentally destroying production data.
+It is recommended to use `Zoisite.env` in the bucket names to further reduce the risk of accidentally destroying production data.
 
 ```yaml
 amazon:
   service: S3
   # ...
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 
 google:
   service: GCS
   # ...
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 ```
 
 Continue reading for more information on the built-in service adapters (e.g.
@@ -141,7 +141,7 @@ Declare a Disk service in `config/storage.yml`:
 ```yaml
 local:
   service: Disk
-  root: <%= Rails.root.join("storage") %>
+  root: <%= Zoisite.root.join("storage") %>
 ```
 
 ### S3 Service (Amazon S3 and S3-compatible APIs)
@@ -149,25 +149,25 @@ local:
 To connect to Amazon S3, declare an S3 service in `config/storage.yml`:
 
 ```yaml
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
   region: "" # e.g. 'us-east-1'
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 ```
 
 Optionally provide client and upload options:
 
 ```yaml
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
   region: "" # e.g. 'us-east-1'
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
   http_open_timeout: 0
   http_read_timeout: 0
   retry_limit: 0
@@ -197,8 +197,8 @@ To connect to an S3-compatible object storage API such as DigitalOcean Spaces, p
 digitalocean:
   service: S3
   endpoint: https://nyc3.digitaloceanspaces.com
-  access_key_id: <%= Rails.application.credentials.dig(:digitalocean, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:digitalocean, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:digitalocean, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:digitalocean, :secret_access_key) %>
   # ...and other options
 ```
 
@@ -211,22 +211,22 @@ Declare a Google Cloud Storage service in `config/storage.yml`:
 ```yaml
 google:
   service: GCS
-  credentials: <%= Rails.root.join("path/to/keyfile.json") %>
+  credentials: <%= Zoisite.root.join("path/to/keyfile.json") %>
   project: ""
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 ```
 
 Optionally provide a Hash of credentials instead of a keyfile path:
 
 ```yaml
-# Use bin/rails credentials:edit to set the GCS secrets (as gcs:private_key_id|private_key)
+# Use bin/zoisite credentials:edit to set the GCS secrets (as gcs:private_key_id|private_key)
 google:
   service: GCS
   credentials:
     type: "service_account"
     project_id: ""
-    private_key_id: <%= Rails.application.credentials.dig(:gcs, :private_key_id) %>
-    private_key: <%= Rails.application.credentials.dig(:gcs, :private_key).dump %>
+    private_key_id: <%= Zoisite.application.credentials.dig(:gcs, :private_key_id) %>
+    private_key: <%= Zoisite.application.credentials.dig(:gcs, :private_key).dump %>
     client_email: ""
     client_id: ""
     auth_uri: "https://accounts.google.com/o/oauth2/auth"
@@ -234,7 +234,7 @@ google:
     auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
     client_x509_cert_url: ""
   project: ""
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 ```
 
 Optionally provide a Cache-Control metadata to set on uploaded assets:
@@ -289,20 +289,20 @@ Define each of the services you'd like to mirror as described above. Reference
 them by name when defining a mirror service:
 
 ```yaml
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 s3_west_coast:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
   region: "" # e.g. 'us-west-1'
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 
 s3_east_coast:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
   region: "" # e.g. 'us-east-1'
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 
 production:
   service: Mirror
@@ -329,13 +329,13 @@ gcs: &gcs
 
 private_gcs:
   <<: *gcs
-  credentials: <%= Rails.root.join("path/to/private_key.json") %>
-  bucket: your_own_bucket-<%= Rails.env %>
+  credentials: <%= Zoisite.root.join("path/to/private_key.json") %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 
 public_gcs:
   <<: *gcs
-  credentials: <%= Rails.root.join("path/to/public_key.json") %>
-  bucket: your_own_bucket-<%= Rails.env %>
+  credentials: <%= Zoisite.root.join("path/to/public_key.json") %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
   public: true
 ```
 
@@ -360,10 +360,10 @@ class User < ApplicationRecord
 end
 ```
 
-or if you are using Rails 6.0+, you can run a model generator command like this:
+or if you are using Zoisite 6.0+, you can run a model generator command like this:
 
 ```bash
-$ bin/rails generate model User avatar:attachment
+$ bin/zoisite generate model User avatar:attachment
 ```
 
 You can create a user with an avatar:
@@ -439,7 +439,7 @@ end
 ```
 
 If you know in advance that your variants will be accessed, you can specify that
-Rails should generate them ahead of time:
+Zoisite should generate them ahead of time:
 
 ```ruby
 class User < ApplicationRecord
@@ -449,13 +449,13 @@ class User < ApplicationRecord
 end
 ```
 
-Rails will enqueue a job to generate the variant after the attachment is attached to the record.
+Zoisite will enqueue a job to generate the variant after the attachment is attached to the record.
 
 NOTE: Since Active Storage relies on polymorphic associations, and [polymorphic associations](./association_basics.html#polymorphic-associations) rely on storing class names in the database, that data must remain synchronized with the class name used by the Ruby code. When renaming classes that use `has_one_attached`, make sure to also update the class names in the `active_storage_attachments.record_type` polymorphic type column of the corresponding rows.
 
-[`has_one_attached`]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached
-[Attached::One#attach]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-attach
-[Attached::One#attached?]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-attached-3F
+[`has_one_attached`]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached
+[Attached::One#attach]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/One.html#method-i-attach
+[Attached::One#attached?]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/One.html#method-i-attached-3F
 
 ### `has_many_attached`
 
@@ -471,10 +471,10 @@ class Message < ApplicationRecord
 end
 ```
 
-or if you are using Rails 6.0+, you can run a model generator command like this:
+or if you are using Zoisite 6.0+, you can run a model generator command like this:
 
 ```bash
-$ bin/rails generate model Message images:attachments
+$ bin/zoisite generate model Message images:attachments
 ```
 
 You can create a message with images:
@@ -523,9 +523,9 @@ class Message < ApplicationRecord
 end
 ```
 
-[`has_many_attached`]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached
-[Attached::Many#attach]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Many.html#method-i-attach
-[Attached::Many#attached?]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Many.html#method-i-attached-3F
+[`has_many_attached`]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached
+[Attached::Many#attach]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Many.html#method-i-attach
+[Attached::Many#attached?]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Many.html#method-i-attached-3F
 
 NOTE: Since Active Storage relies on polymorphic associations, and [polymorphic associations](./association_basics.html#polymorphic-associations) rely on storing class names in the database, that data must remain synchronized with the class name used by the Ruby code. When renaming classes that use `has_many_attached`, make sure to also update the class names in the `active_storage_attachments.record_type` polymorphic type column of the corresponding rows.
 
@@ -573,7 +573,7 @@ approach is helpful if you want to organize your S3 Bucket files better.
   io: File.open("/path/to/file"),
   filename: "file.pdf",
   content_type: "application/pdf",
-  key: "#{Rails.env}/blog_content/intuitive_filename.pdf",
+  key: "#{Zoisite.env}/blog_content/intuitive_filename.pdf",
   identify: false
 )
 ```
@@ -585,7 +585,7 @@ recommended to append the filename with a unique random key, something like:
 
 ```ruby
 def s3_file_key
-  "#{Rails.env}/blog_content/intuitive_filename-#{SecureRandom.uuid}.pdf"
+  "#{Zoisite.env}/blog_content/intuitive_filename-#{SecureRandom.uuid}.pdf"
 end
 ```
 
@@ -601,7 +601,7 @@ end
 
 ### Replacing vs Adding Attachments
 
-By default in Rails, attaching files to a `has_many_attached` association will replace
+By default in Zoisite, attaching files to a `has_many_attached` association will replace
 any existing attachments.
 
 To keep existing attachments, you can use hidden form fields with the [`signed_id`][ActiveStorage::Blob#signed_id]
@@ -618,7 +618,7 @@ of each attached file:
 This has the advantage of making it possible to remove existing attachments
 selectively, e.g. by using JavaScript to remove individual hidden fields.
 
-[ActiveStorage::Blob#signed_id]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-signed_id
+[ActiveStorage::Blob#signed_id]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-signed_id
 
 ### Form Validation
 
@@ -638,7 +638,7 @@ Active Storage attachments are Active Record associations behind the scenes, so 
 
 ### `has_one_attached`
 
-[`has_one_attached`](https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached) creates a `has_one` association named `"<name>_attachment"` and a `has_one :through` association named `"<name>_blob"`.
+[`has_one_attached`](https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached) creates a `has_one` association named `"<name>_attachment"` and a `has_one :through` association named `"<name>_blob"`.
 To select every user where the avatar is a PNG, run the following:
 
 ```ruby
@@ -647,14 +647,14 @@ User.joins(:avatar_blob).where(active_storage_blobs: { content_type: "image/png"
 
 ### `has_many_attached`
 
-[`has_many_attached`](https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached) creates a `has_many` association called `"<name>_attachments"` and a `has_many :through` association called `"<name>_blobs"` (note the plural).
+[`has_many_attached`](https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached) creates a `has_many` association called `"<name>_attachments"` and a `has_many :through` association called `"<name>_blobs"` (note the plural).
 To select all messages where images are videos rather than photos you can do the following:
 
 ```ruby
 Message.joins(:images_blobs).where(active_storage_blobs: { content_type: "video/mp4" })
 ```
 
-The query will filter on the [**`ActiveStorage::Blob`**](https://api.rubyonrails.org/classes/ActiveStorage/Blob.html), not the [attachment record](https://api.rubyonrails.org/classes/ActiveStorage/Attachment.html) because these are plain SQL joins. You can combine the blob predicates above with any other scope conditions, just as you would with any other Active Record query.
+The query will filter on the [**`ActiveStorage::Blob`**](https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html), not the [attachment record](https://api.zoisite-rb.org/classes/ActiveStorage/Attachment.html) because these are plain SQL joins. You can combine the blob predicates above with any other scope conditions, just as you would with any other Active Record query.
 
 
 Removing Files
@@ -673,8 +673,8 @@ user.avatar.purge
 user.avatar.purge_later
 ```
 
-[Attached::One#purge]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-purge
-[Attached::One#purge_later]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-purge_later
+[Attached::One#purge]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/One.html#method-i-purge
+[Attached::One#purge_later]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/One.html#method-i-purge_later
 
 Serving Files
 -------------
@@ -695,7 +695,7 @@ that is routed to the blob's [`RedirectController`][`ActiveStorage::Blobs::Redir
 
 ```ruby
 url_for(user.avatar)
-# => https://www.example.com/rails/active_storage/blobs/redirect/:signed_id/my-avatar.png
+# => https://www.example.com/zoisite/active_storage/blobs/redirect/:signed_id/my-avatar.png
 ```
 
 The `RedirectController` redirects to the actual service endpoint. This
@@ -703,26 +703,26 @@ indirection decouples the service URL from the actual one, and allows, for
 example, mirroring attachments in different services for high-availability. The
 redirection has an HTTP expiration of 5 minutes.
 
-To create a download link, use the `rails_blob_{path|url}` helper. Using this
+To create a download link, use the `zoisite_blob_{path|url}` helper. Using this
 helper allows you to set the disposition.
 
 ```ruby
-rails_blob_path(user.avatar, disposition: "attachment")
+zoisite_blob_path(user.avatar, disposition: "attachment")
 ```
 
 WARNING: To prevent XSS attacks, Active Storage forces the Content-Disposition header
 to "attachment" for some kind of files. To change this behavior see the
-available configuration options in [Configuring Rails Applications](configuring.html#configuring-active-storage).
+available configuration options in [Configuring Zoisite Applications](configuring.html#configuring-active-storage).
 
 If you need to create a link from outside of controller/view context (Background
-jobs, Cronjobs, etc.), you can access the `rails_blob_path` like this:
+jobs, Cronjobs, etc.), you can access the `zoisite_blob_path` like this:
 
 ```ruby
-Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
+Zoisite.application.routes.url_helpers.zoisite_blob_path(user.avatar, only_path: true)
 ```
 
-[ActionView::RoutingUrlFor#url_for]: https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
-[ActiveStorage::Blob#signed_id]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-signed_id
+[ActionView::RoutingUrlFor#url_for]: https://api.zoisite-rb.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
+[ActiveStorage::Blob#signed_id]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-signed_id
 
 ### Proxy Mode
 
@@ -732,13 +732,13 @@ You can configure Active Storage to use proxying by default:
 
 ```ruby
 # config/initializers/active_storage.rb
-Rails.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
+Zoisite.application.config.active_storage.resolve_model_to_route = :zoisite_storage_proxy
 ```
 
-Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of `rails_storage_proxy_path` and `rails_storage_proxy_url`.
+Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of `zoisite_storage_proxy_path` and `zoisite_storage_proxy_url`.
 
 ```erb
-<%= image_tag rails_storage_proxy_path(@user.avatar) %>
+<%= image_tag zoisite_storage_proxy_path(@user.avatar) %>
 ```
 
 #### Putting a CDN in Front of Active Storage
@@ -754,7 +754,7 @@ direct :cdn_image do |model, options|
 
   if model.respond_to?(:signed_id)
     route_for(
-      :rails_service_blob_proxy,
+      :zoisite_service_blob_proxy,
       model.signed_id(expires_in: expires_in),
       model.filename,
       options.merge(host: ENV["CDN_HOST"])
@@ -765,7 +765,7 @@ direct :cdn_image do |model, options|
     filename       = model.blob.filename
 
     route_for(
-      :rails_blob_representation_proxy,
+      :zoisite_blob_representation_proxy,
       signed_blob_id,
       variation_key,
       filename,
@@ -827,10 +827,10 @@ config.active_storage.draw_routes = false
 
 to prevent files being accessed with the publicly accessible URLs.
 
-[`ActiveStorage::Blobs::RedirectController`]: https://api.rubyonrails.org/classes/ActiveStorage/Blobs/RedirectController.html
-[`ActiveStorage::Blobs::ProxyController`]: https://api.rubyonrails.org/classes/ActiveStorage/Blobs/ProxyController.html
-[`ActiveStorage::Representations::RedirectController`]: https://api.rubyonrails.org/classes/ActiveStorage/Representations/RedirectController.html
-[`ActiveStorage::Representations::ProxyController`]: https://api.rubyonrails.org/classes/ActiveStorage/Representations/ProxyController.html
+[`ActiveStorage::Blobs::RedirectController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blobs/RedirectController.html
+[`ActiveStorage::Blobs::ProxyController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blobs/ProxyController.html
+[`ActiveStorage::Representations::RedirectController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Representations/RedirectController.html
+[`ActiveStorage::Representations::ProxyController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Representations/ProxyController.html
 
 Downloading Files
 -----------------
@@ -856,8 +856,8 @@ end
 
 It's important to know that the file is not yet available in the `after_create` callback but in the `after_create_commit` only.
 
-[Blob#download]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-download
-[Blob#open]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-open
+[Blob#download]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-download
+[Blob#open]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-open
 
 Analyzing Files
 ---------------
@@ -866,7 +866,7 @@ Active Storage analyzes files once they've been uploaded by queuing a job in Act
 
 Image analysis provides `width` and `height` attributes. Video analysis provides these, as well as `duration`, `angle`, `display_aspect_ratio`, and `video` and `audio` booleans to indicate the presence of those channels. Audio analysis provides `duration` and `bit_rate` attributes.
 
-[`analyzed?`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyzed-3F
+[`analyzed?`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyzed-3F
 
 Displaying Images, Videos, and PDFs
 ---------------
@@ -886,7 +886,7 @@ the file instead.
       <% if file.representable? %>
         <%= image_tag file.representation(resize_to_limit: [100, 100]) %>
       <% else %>
-        <%= link_to rails_blob_path(file, disposition: "attachment") do %>
+        <%= link_to zoisite_blob_path(file, disposition: "attachment") do %>
           <%= image_tag "placeholder.png", alt: "Download file" %>
         <% end %>
       <% end %>
@@ -898,8 +898,8 @@ the file instead.
 Internally, `representation` calls `variant` for images, and `preview` for
 previewable files. You can also call these methods directly.
 
-[`representable?`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-representable-3F
-[`representation`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-representation
+[`representable?`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Representable.html#method-i-representable-3F
+[`representation`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Representable.html#method-i-representation
 
 ### Lazy vs Immediate Loading
 
@@ -946,8 +946,8 @@ end
 ```
 
 [`config.active_storage.track_variants`]: configuring.html#config-active-storage-track-variants
-[`ActiveStorage::Representations::RedirectController`]: https://api.rubyonrails.org/classes/ActiveStorage/Representations/RedirectController.html
-[`ActiveStorage::Attachment`]: https://api.rubyonrails.org/classes/ActiveStorage/Attachment.html
+[`ActiveStorage::Representations::RedirectController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Representations/RedirectController.html
+[`ActiveStorage::Attachment`]: https://api.zoisite-rb.org/classes/ActiveStorage/Attachment.html
 
 ### Transforming Images
 
@@ -978,7 +978,7 @@ processor can be changed by setting [`config.active_storage.variant_processor`][
 [`config.active_storage.variable_content_types`]: configuring.html#config-active-storage-variable-content-types
 [`config.active_storage.variant_processor`]: configuring.html#config-active-storage-variant-processor
 [`config.active_storage.web_image_content_types`]: configuring.html#config-active-storage-web-image-content-types
-[`variant`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-variant
+[`variant`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Representable.html#method-i-variant
 [Vips]: https://www.rubydoc.info/gems/ruby-vips/Vips/Image
 
 ### Previewing Files
@@ -995,8 +995,8 @@ a link to a lazily-generated preview, use the attachment's [`preview`][] method:
 To add support for another format, add your own previewer. See the
 [`ActiveStorage::Preview`][] documentation for more information.
 
-[`preview`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-preview
-[`ActiveStorage::Preview`]: https://api.rubyonrails.org/classes/ActiveStorage/Preview.html
+[`preview`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Representable.html#method-i-preview
+[`ActiveStorage::Preview`]: https://api.zoisite-rb.org/classes/ActiveStorage/Preview.html
 
 Direct Uploads
 --------------
@@ -1014,16 +1014,16 @@ directly from the client to the cloud.
     <%= javascript_include_tag "activestorage" %>
     ```
 
-    Requiring via importmap-rails without bundling through the asset pipeline in the application HTML without autostart as ESM:
+    Requiring via importmap-zoisite without bundling through the asset pipeline in the application HTML without autostart as ESM:
 
     ```ruby
     # config/importmap.rb
-    pin "@rails/activestorage", to: "activestorage.esm.js"
+    pin "@zoisite/activestorage", to: "activestorage.esm.js"
     ```
 
     ```html
     <script type="module-shim">
-      import * as ActiveStorage from "@rails/activestorage"
+      import * as ActiveStorage from "@zoisite/activestorage"
       ActiveStorage.start()
     </script>
     ```
@@ -1037,11 +1037,11 @@ directly from the client to the cloud.
     Using the npm package:
 
     ```js
-    import * as ActiveStorage from "@rails/activestorage"
+    import * as ActiveStorage from "@zoisite/activestorage"
     ActiveStorage.start()
     ```
 
-2. Annotate file inputs with the direct upload URL using Rails' [file field helper](form_helpers.html#uploading-files).
+2. Annotate file inputs with the direct upload URL using Zoisite' [file field helper](form_helpers.html#uploading-files).
 
     ```erb
     <%= form.file_field :attachments, multiple: true, direct_upload: true %>
@@ -1050,7 +1050,7 @@ directly from the client to the cloud.
     Or, if you aren't using a `FormBuilder`, add the data attribute directly:
 
     ```erb
-    <input type="file" data-direct-upload-url="<%= rails_direct_uploads_url %>" />
+    <input type="file" data-direct-upload-url="<%= zoisite_direct_uploads_url %>" />
     ```
 
 3. Configure CORS on third-party storage services to allow direct upload requests.
@@ -1225,7 +1225,7 @@ of choice, instantiate a DirectUpload and call its create method. Create takes
 a callback to invoke when the upload completes.
 
 ```js
-import { DirectUpload } from "@rails/activestorage"
+import { DirectUpload } from "@zoisite/activestorage"
 
 const input = document.querySelector('input[type=file]')
 
@@ -1275,7 +1275,7 @@ method during the upload process.
 You can then attach your own progress handler to the XHR to suit your needs.
 
 ```js
-import { DirectUpload } from "@rails/activestorage"
+import { DirectUpload } from "@zoisite/activestorage"
 
 class Uploader {
   constructor(file, url) {
@@ -1312,7 +1312,7 @@ adding any required additional headers as necessary. The "create" method also re
 a callback function to be provided that will be triggered once the upload has finished.
 
 ```js
-import { DirectUpload } from "@rails/activestorage"
+import { DirectUpload } from "@zoisite/activestorage"
 
 class Uploader {
   constructor(file, url, token) {
@@ -1344,7 +1344,7 @@ class Uploader {
 ```
 
 To implement customized authentication, a new controller must be created on
-the Rails application, similar to the following:
+the Zoisite application, similar to the following:
 
 ```ruby
 class DirectUploadsController < ActiveStorage::DirectUploadsController
@@ -1365,7 +1365,7 @@ Testing
 -------------------------------------------
 
 Use [`file_fixture_upload`][] to test uploading a file in an integration or controller test.
-Rails handles files like any other parameter.
+Zoisite handles files like any other parameter.
 
 ```ruby
 class SignupController < ActionDispatch::IntegrationTest
@@ -1381,7 +1381,7 @@ class SignupController < ActionDispatch::IntegrationTest
 end
 ```
 
-[`file_fixture_upload`]: https://api.rubyonrails.org/classes/ActionDispatch/TestProcess/FixtureFile.html#method-i-file_fixture_upload
+[`file_fixture_upload`]: https://api.zoisite-rb.org/classes/ActionDispatch/TestProcess/FixtureFile.html#method-i-file_fixture_upload
 
 ### Discarding Files Created During Tests
 
@@ -1467,7 +1467,7 @@ You can add attachments to your existing [fixtures][]. First, you'll want to cre
 
 test_fixtures:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage_fixtures") %>
+  root: <%= Zoisite.root.join("tmp/storage_fixtures") %>
 ```
 
 This tells Active Storage where to "upload" fixture files to, so it should be a temporary directory. By making it
@@ -1535,7 +1535,7 @@ end
 ```
 
 [fixtures]: testing.html#fixtures
-[`ActiveStorage::FixtureSet`]: https://api.rubyonrails.org/classes/ActiveStorage/FixtureSet.html
+[`ActiveStorage::FixtureSet`]: https://api.zoisite-rb.org/classes/ActiveStorage/FixtureSet.html
 
 ### Configuring services
 
@@ -1557,11 +1557,11 @@ In this case, you can add `config/storage/test.yml` and use Disk service for `s3
 ```yaml
 test:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Zoisite.root.join("tmp/storage") %>
 
 s3:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Zoisite.root.join("tmp/storage") %>
 ```
 
 Implementing Support for Other Cloud Services
@@ -1569,13 +1569,13 @@ Implementing Support for Other Cloud Services
 
 If you need to support a cloud service other than these, you will need to
 implement the Service. Each service extends
-[`ActiveStorage::Service`](https://api.rubyonrails.org/classes/ActiveStorage/Service.html)
+[`ActiveStorage::Service`](https://api.zoisite-rb.org/classes/ActiveStorage/Service.html)
 by implementing the methods necessary to upload and download files to the cloud.
 
 Purging Unattached Uploads
 --------------------------
 
-There are cases where a file is uploaded but never attached to a record. This can happen when using [Direct Uploads](#direct-uploads). You can query for unattached records using the [unattached scope](https://github.com/rails/rails/blob/8ef5bd9ced351162b673904a0b77c7034ca2bc20/activestorage/app/models/active_storage/blob.rb#L49). Below is an example using a [custom rake task](command_line.html#custom-rake-tasks).
+There are cases where a file is uploaded but never attached to a record. This can happen when using [Direct Uploads](#direct-uploads). You can query for unattached records using the [unattached scope](https://github.com/zoisite-rb/zoisite-rb/blob/8ef5bd9ced351162b673904a0b77c7034ca2bc20/activestorage/app/models/active_storage/blob.rb#L49). Below is an example using a [custom rake task](command_line.html#custom-rake-tasks).
 
 ```ruby
 namespace :active_storage do

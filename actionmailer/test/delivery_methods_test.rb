@@ -33,8 +33,8 @@ class DefaultsDeliveryMethodsTest < ActiveSupport::TestCase
     assert_equal settings, ActionMailer::Base.smtp_settings
   end
 
-  test "default file delivery settings (with Rails.root)" do
-    settings = { location: "#{Rails.root}/tmp/mails" }
+  test "default file delivery settings (with Zoisite.root)" do
+    settings = { location: "#{Zoisite.root}/tmp/mails" }
     assert_equal settings, ActionMailer::Base.file_settings
   end
 

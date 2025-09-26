@@ -1,28 +1,28 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action View Form Helpers
 ========================
 
-Forms are a common interface for user input in web applications. However, form markup can be tedious to write and maintain because of the need to handle form controls, naming, and attributes. Rails simplifies this by providing view helpers, which are methods that output HTML form markup. This guide will help you understand the different helper methods and when to use each.
+Forms are a common interface for user input in web applications. However, form markup can be tedious to write and maintain because of the need to handle form controls, naming, and attributes. Zoisite simplifies this by providing view helpers, which are methods that output HTML form markup. This guide will help you understand the different helper methods and when to use each.
 
 After reading this guide, you will know:
 
 * How to create basic forms, such as a search form.
 * How to work with model-based forms for creating and editing specific database records.
 * How to generate select boxes from multiple types of data.
-* What date and time helpers Rails provides.
+* What date and time helpers Zoisite provides.
 * What makes a file upload form different.
 * How to post forms to external resources and specify setting an `authenticity_token`.
 * How to build complex forms.
 
 --------------------------------------------------------------------------------
 
-This guide is not intended to be a complete list of all available form helpers. Please refer to [the Rails API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers.html) for an exhaustive list of form helpers and their arguments.
+This guide is not intended to be a complete list of all available form helpers. Please refer to [the Zoisite API documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers.html) for an exhaustive list of form helpers and their arguments.
 
 Working with Basic Forms
 ------------------------
 
-The main form helper is [`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
+The main form helper is [`form_with`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
 
 ```erb
 <%= form_with do |form| %>
@@ -40,7 +40,7 @@ When called without arguments, it creates an HTML `<form>` tag with the value of
 ```
 
 Notice that the form contains an `input` element with type `hidden`. This `authenticity_token` hidden input is required for non-GET form submissions.
-This token is a security feature in Rails used to prevent cross-site request forgery (CSRF) attacks, and form helpers automatically generate it for every non-GET form (assuming the security feature is enabled). You can read more about it in the [Securing Rails Applications](security.html#cross-site-request-forgery-csrf) guide.
+This token is a security feature in Zoisite used to prevent cross-site request forgery (CSRF) attacks, and form helpers automatically generate it for every non-GET form (assuming the security feature is enabled). You can read more about it in the [Securing Zoisite Applications](security.html#cross-site-request-forgery-csrf) guide.
 
 ### A Generic Search Form
 
@@ -75,11 +75,11 @@ Notice that for the search form we are using the `url` option of `form_with`. Se
 
 In general, passing `url: my_path` to `form_with` tells the form where to make the request. The other option is to pass Active Model objects to the form, as you will learn [below](#creating-forms-with-model-objects). You can also use [URL helpers](routing.html#path-and-url-helpers).
 
-The search form example above also shows the [form builder](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html) object. You will learn about the many helpers provided by the form builder object (like`form.label` and `form.text_field`) in the next section.
+The search form example above also shows the [form builder](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html) object. You will learn about the many helpers provided by the form builder object (like`form.label` and `form.text_field`) in the next section.
 
 TIP: For every form `input` element, an `id` attribute is generated from its name (`"query"` in above example). These IDs can be very useful for CSS styling or manipulation of form controls with JavaScript.
 
-IMPORTANT: Use "GET" as the method for search forms. In general, Rails
+IMPORTANT: Use "GET" as the method for search forms. In general, Zoisite
 conventions encourage using the right HTTP verb for controller actions. Using "GET" for
 search allows users to bookmark a specific search.
 
@@ -95,7 +95,7 @@ For example, if the form contains `<%= form.text_field :query %>`, then you
 would be able to get the value of this field in the controller with
 `params[:query]`.
 
-When naming inputs, Rails uses certain conventions that make it possible to submit parameters with non-scalar values such as arrays or hashes, which will also be accessible in `params`. You can read more about them in the [Form Input Naming Conventions and Params Hash](#form-input-naming-conventions-and-params-hash) section of this guide. For details on the precise usage of these helpers, please refer to the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+When naming inputs, Zoisite uses certain conventions that make it possible to submit parameters with non-scalar values such as arrays or hashes, which will also be accessible in `params`. You can read more about them in the [Form Input Naming Conventions and Params Hash](#form-input-naming-conventions-and-params-hash) section of this guide. For details on the precise usage of these helpers, please refer to the [API documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormTagHelper.html).
 
 #### Checkboxes
 
@@ -123,7 +123,7 @@ The above will generate the following:
 <label for="mystery">Mystery</label>
 ```
 
-The first parameter to [`checkbox`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-checkbox) is the name of the input which can be found in the `params` hash. If the user has checked the "Biography" checkbox only, the `params` hash would contain:
+The first parameter to [`checkbox`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-checkbox) is the name of the input which can be found in the `params` hash. If the user has checked the "Biography" checkbox only, the `params` hash would contain:
 
 ```ruby
 {
@@ -135,7 +135,7 @@ The first parameter to [`checkbox`](https://api.rubyonrails.org/classes/ActionVi
 
 You can use `params[:biography]` to check if that checkbox is selected by the user.
 
-The checkbox's values (the values that will appear in `params`) can optionally be specified using the `checked_value` and `unchecked_value` parameters. See the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-checkbox) for more details.
+The checkbox's values (the values that will appear in `params`) can optionally be specified using the `checked_value` and `unchecked_value` parameters. See the [API documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormHelper.html#method-i-checkbox) for more details.
 
 There is also a `collection_checkboxes`, which you can learn about in the [Collection Related Helpers section](#collection-related-helpers).
 
@@ -165,7 +165,7 @@ The above will generate the following HTML:
 <label for="flavor_hazelnut">Hazelnut</label>
 ```
 
-The second argument to [`radio_button`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-radio_button) is the value of the input. Because these radio buttons share the same name (`flavor`), the user will only be able to select one of them, and `params[:flavor]` will contain either `"chocolate_chip"`, `"vanilla"`, or `hazelnut`.
+The second argument to [`radio_button`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-radio_button) is the value of the input. Because these radio buttons share the same name (`flavor`), the user will only be able to select one of them, and `params[:flavor]` will contain either `"chocolate_chip"`, `"vanilla"`, or `hazelnut`.
 
 NOTE: Always use labels for checkbox and radio buttons. They associate text with
 a specific option using the `for` attribute and, by expanding the clickable
@@ -237,7 +237,7 @@ Output:
 
 Hidden inputs are not shown to the user but instead hold data like any textual input. Values inside them can be changed with JavaScript.
 
-TIP: If you're using password input fields, you might want to configure your application to prevent those parameters from being logged. You can learn about how in the [Securing Rails Applications](security.html#logging) guide.
+TIP: If you're using password input fields, you might want to configure your application to prevent those parameters from being logged. You can learn about how in the [Securing Zoisite Applications](security.html#logging) guide.
 
 Creating Forms with Model Objects
 ---------------------------------
@@ -359,11 +359,11 @@ The above will produce the following output:
 The object yielded by `fields_for` is a form builder like the one yielded by
 `form_with`. The `fields_for` helper creates a similar binding but without
 rendering a `<form>` tag. You can learn more about `fields_for` in the [API
-docs](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for).
+docs](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for).
 
 ### Relying on Record Identification
 
-When dealing with RESTful resources, calls to `form_with` can be simplified by relying on **record identification**. This means you pass the model instance and have Rails figure out the model name, method, and other things. In the example below for creating a new record, both calls to `form_with` generate the same HTML:
+When dealing with RESTful resources, calls to `form_with` can be simplified by relying on **record identification**. This means you pass the model instance and have Zoisite figure out the model name, method, and other things. In the example below for creating a new record, both calls to `form_with` generate the same HTML:
 
 ```ruby
 # longer way:
@@ -381,7 +381,7 @@ form_with(model: @article, url: article_path(@article), method: "patch")
 form_with(model: @article)
 ```
 
-Notice how the short-hand `form_with` invocation is conveniently the same, regardless of the record being new or existing. Record identification is smart enough to figure out if the record is new by asking [`record.persisted?`](https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-persisted-3F). It also selects the correct path to submit to, and the name based on the class of the object.
+Notice how the short-hand `form_with` invocation is conveniently the same, regardless of the record being new or existing. Record identification is smart enough to figure out if the record is new by asking [`record.persisted?`](https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-persisted-3F). It also selects the correct path to submit to, and the name based on the class of the object.
 
 This is assuming that the `Article` model is declared with `resources :articles` in the routes file.
 
@@ -392,7 +392,7 @@ resource :article
 resolve("Article") { [:article] }
 ```
 
-TIP: Declaring a resource has a number of side effects. See the [Rails Routing from the Outside In](routing.html#resource-routing-the-rails-default) guide for more information on setting up and using resources.
+TIP: Declaring a resource has a number of side effects. See the [Zoisite Routing from the Outside In](routing.html#resource-routing-the-zoisite-default) guide for more information on setting up and using resources.
 
 WARNING: When you're using [single-table inheritance](association_basics.html#single-table-inheritance-sti) with your models, you can't rely on record identification on a subclass if only their parent class is declared a resource. You will have to specify `:url`, and `:scope` (the model name) explicitly.
 
@@ -412,13 +412,13 @@ If you have several levels of namespacing then the syntax is similar:
 form_with model: [:admin, :management, @article]
 ```
 
-For more information on Rails' routing system and the associated conventions, please see the [Rails Routing from the Outside In](routing.html) guide.
+For more information on Zoisite' routing system and the associated conventions, please see the [Zoisite Routing from the Outside In](routing.html) guide.
 
 ### Forms with PATCH, PUT, or DELETE Methods
 
-The Rails framework encourages RESTful design, which means forms in your application will make requests where the `method` is `PATCH`, `PUT`, or `DELETE` in addition to `GET` and `POST`. However, HTML forms _don't support_ methods other than `GET` and `POST` when it comes to submitting forms.
+The Zoisite framework encourages RESTful design, which means forms in your application will make requests where the `method` is `PATCH`, `PUT`, or `DELETE` in addition to `GET` and `POST`. However, HTML forms _don't support_ methods other than `GET` and `POST` when it comes to submitting forms.
 
-Rails works around this limitation by emulating other methods over POST with a hidden input named `"_method"`. For example:
+Zoisite works around this limitation by emulating other methods over POST with a hidden input named `"_method"`. For example:
 
 ```ruby
 form_with(url: search_path, method: "patch")
@@ -434,7 +434,7 @@ The above form Will generate this HTML output:
 </form>
 ```
 
-When parsing POSTed data, Rails will take into account the special `_method` parameter and proceed as if the request's HTTP method was the one set as the value of `_method` (`PATCH` in this example).
+When parsing POSTed data, Zoisite will take into account the special `_method` parameter and proceed as if the request's HTTP method was the one set as the value of `_method` (`PATCH` in this example).
 
 When rendering a form, submission buttons can override the declared `method` attribute through the `formmethod:` keyword:
 
@@ -447,7 +447,7 @@ When rendering a form, submission buttons can override the declared `method` att
 
 Similar to `<form>` elements, most browsers _don't support_ overriding form methods declared through [formmethod][] other than `GET` and `POST`.
 
-Rails works around this issue by emulating other methods over POST through a combination of [formmethod][], [value][button-value], and [name][button-name] attributes:
+Zoisite works around this issue by emulating other methods over POST through a combination of [formmethod][], [value][button-value], and [name][button-name] attributes:
 
 ```html
 <form accept-charset="UTF-8" action="/posts/1" method="post">
@@ -469,9 +469,9 @@ In this case, the "Update" button will be treated as `PATCH` and the "Delete" bu
 Making Select Boxes with Ease
 -----------------------------
 
-Select boxes, also known as drop-down list, allow users to select from a list of options. The HTML for select boxes requires a decent amount of markup - one `<option>` element for each option to choose from. Rails provides helper methods to help generate that markup.
+Select boxes, also known as drop-down list, allow users to select from a list of options. The HTML for select boxes requires a decent amount of markup - one `<option>` element for each option to choose from. Zoisite provides helper methods to help generate that markup.
 
-For example, let's say we have a list of cities for the user to choose from. We can use the [`select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-select) helper:
+For example, let's say we have a list of cities for the user to choose from. We can use the [`select`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-select) helper:
 
 ```erb
 <%= form.select :city, ["Berlin", "Chicago", "Madrid"] %>
@@ -583,7 +583,7 @@ Notice that the appropriate option was automatically marked `selected="selected"
 Using Date and Time Form Helpers
 --------------------------------
 
-In addition to the `date_field` and `time_field` helpers mentioned [earlier](#other-helpers-of-interest), Rails provides alternative date and time form helpers that render plain select boxes. The `date_select` helper renders a separate select box for year, month, and day.
+In addition to the `date_field` and `time_field` helpers mentioned [earlier](#other-helpers-of-interest), Zoisite provides alternative date and time form helpers that render plain select boxes. The `date_select` helper renders a separate select box for year, month, and day.
 
 For example, if we have a `@person` model object like:
 
@@ -640,11 +640,11 @@ Will output select boxes like:
 
 Notice that, when the form is submitted, there will be no single value in the `params` hash that contains the full date. Instead, there will be several values with special names like `"birth_date(1i)"`. However, Active Model knows how to assemble these values into a full date, based on the declared type of the model attribute. So we can pass `params[:person]` to `Person.new` or `Person#update` just like we would if the form used a single field to represent the full date.
 
-In addition to the [`date_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-date_select) helper, Rails provides [`time_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-time_select) which outputs select boxes for the hour and minute. There is [`datetime_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-datetime_select) as well which combines both date and time select boxes.
+In addition to the [`date_select`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-date_select) helper, Zoisite provides [`time_select`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-time_select) which outputs select boxes for the hour and minute. There is [`datetime_select`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-datetime_select) as well which combines both date and time select boxes.
 
 ### Select Boxes for Time or Date Components
 
-Rails also provides helpers to render select boxes for individual date and time components: [`select_year`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_year), [`select_month`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_month), [`select_day`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_day), [`select_hour`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_hour), [`select_minute`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_minute), and [`select_second`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_second).  These helpers are "bare" methods, meaning they are not called on a form builder instance.  For example:
+Zoisite also provides helpers to render select boxes for individual date and time components: [`select_year`](https://api.zoisite-rb.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_year), [`select_month`](https://api.zoisite-rb.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_month), [`select_day`](https://api.zoisite-rb.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_day), [`select_hour`](https://api.zoisite-rb.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_hour), [`select_minute`](https://api.zoisite-rb.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_minute), and [`select_second`](https://api.zoisite-rb.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_second).  These helpers are "bare" methods, meaning they are not called on a form builder instance.  For example:
 
 ```erb
 <%= select_year 2024, prefix: "party" %>
@@ -672,9 +672,9 @@ For each of these helpers, you may specify a `Date` or `Time` object instead of 
 
 ### Selecting Time Zone
 
-When you need to ask users what time zone they are in, there is a very convenient [`time_zone_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-time_zone_select) helper to use.
+When you need to ask users what time zone they are in, there is a very convenient [`time_zone_select`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-time_zone_select) helper to use.
 
-Typically, you would have to provide a list of time zone options for users to select from. This can get tedious if not for the list of pre-defined [`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html) objects. The `time_with_zone` helper wraps this and can be used as follows:
+Typically, you would have to provide a list of time zone options for users to select from. This can get tedious if not for the list of pre-defined [`ActiveSupport::TimeZone`](https://api.zoisite-rb.org/classes/ActiveSupport/TimeZone.html) objects. The `time_with_zone` helper wraps this and can be used as follows:
 
 ```erb
 <%= form.time_zone_select :time_zone %>
@@ -698,7 +698,7 @@ Output:
 Collection Related Helpers
 --------------------------
 
-If you need to generate a set of choices from a collection of arbitrary objects, Rails has `collection_select`, `collection_radio_button`, and `collection_checkboxes` helpers.
+If you need to generate a set of choices from a collection of arbitrary objects, Zoisite has `collection_select`, `collection_radio_button`, and `collection_checkboxes` helpers.
 
 To see when these helpers are useful, suppose you have a `City` model and corresponding `belongs_to :city` association with `Person`:
 
@@ -736,13 +736,13 @@ The above will generate this HTML:
 </select>
 ```
 
-The above example shows how you'd generate the choices manually. However, Rails has helpers that generate choices from a collection without having to explicitly iterate over it. These helpers determine the value and text label of each choice by calling specified methods on each object in the collection.
+The above example shows how you'd generate the choices manually. However, Zoisite has helpers that generate choices from a collection without having to explicitly iterate over it. These helpers determine the value and text label of each choice by calling specified methods on each object in the collection.
 
 NOTE: When rendering a field for a `belongs_to` association, you must specify the name of the foreign key (`city_id` in the above example), rather than the name of the association itself.
 
 ### The `collection_select` Helper
 
-To generate a select box, we can use [`collection_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
+To generate a select box, we can use [`collection_select`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
 
 ```erb
 <%= form.collection_select :city_id, City.order(:name), :id, :name %>
@@ -762,7 +762,7 @@ NOTE: The order of arguments for `collection_select` is different from the order
 
 ### The `collection_radio_buttons` Helper
 
-To generate a set of radio buttons, we can use [`collection_radio_buttons`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
+To generate a set of radio buttons, we can use [`collection_radio_buttons`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
 
 ```erb
 <%= form.collection_radio_buttons :city_id, City.order(:name), :id, :name %>
@@ -783,7 +783,7 @@ Output:
 
 ### The `collection_checkboxes` Helper
 
-To generate a set of check boxes — for example, to support a `has_and_belongs_to_many` association — we can use [`collection_checkboxes`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_checkboxes):
+To generate a set of check boxes — for example, to support a `has_and_belongs_to_many` association — we can use [`collection_checkboxes`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_checkboxes):
 
 ```erb
 <%= form.collection_checkboxes :interest_ids, Interest.order(:name), :id, :name %>
@@ -808,7 +808,7 @@ Output:
 Uploading Files
 ---------------
 
-A common task with forms is allowing users to upload a file. It could be an avatar image or a CSV file with data to process. File upload fields can be rendered with the [`file_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field) helper.
+A common task with forms is allowing users to upload a file. It could be an avatar image or a CSV file with data to process. File upload fields can be rendered with the [`file_field`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field) helper.
 
 ```erb
 <%= form_with model: @person do |form| %>
@@ -836,7 +836,7 @@ Note that, per `form_with` conventions, the field names in the two forms above w
 
 ### CSV File Upload Example
 
-When using `file_field`, the object in the `params` hash is an instance of [`ActionDispatch::Http::UploadedFile`](https://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html). Here is an example of how to save data in an uploaded CSV file to records in your application:
+When using `file_field`, the object in the `params` hash is an instance of [`ActionDispatch::Http::UploadedFile`](https://api.zoisite-rb.org/classes/ActionDispatch/Http/UploadedFile.html). Here is an example of how to save data in an uploaded CSV file to records in your application:
 
 ```ruby
   require "csv"
@@ -848,7 +848,7 @@ When using `file_field`, the object in the `params` hash is an instance of [`Act
       csv_data.each do |row|
         # Process each row of the CSV file
         # SomeInvoiceModel.create(amount: row['Amount'], status: row['Status'])
-        Rails.logger.info row.inspect
+        Zoisite.logger.info row.inspect
         #<CSV::Row "id":"po_1KE3FRDSYPMwkcNz9SFKuaYd" "Amount":"96.22" "Created (UTC)":"2022-01-04 02:59" "Arrival Date (UTC)":"2022-01-05 00:00" "Status":"paid">
       end
     end
@@ -863,7 +863,7 @@ Customizing Form Builders
 
 We call the objects yielded by `form_with` or `fields_for` Form Builders. Form builders allow you to generate form elements associated with a model object
 and are an instance of
-[`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html). This class can be extended to add custom helpers for your application.
+[`ActionView::Helpers::FormBuilder`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html). This class can be extended to add custom helpers for your application.
 
 For example, if you want to display a `text_field` along with a `label` across your application, you could add the following helper method to `application_helper.rb`:
 
@@ -949,7 +949,7 @@ All of the form helpers described above help with generating the HTML for form e
 
 The `params` hash can contain arrays and arrays of hashes. Values can be at the top level of the `params` hash or nested in another hash. For example, in a standard `create` action for a Person model, `params[:person]` will be a hash of all the attributes for the `Person` object.
 
-Note that HTML forms don't have an inherent structure to the user input data, all they generate is name-value string pairs. The arrays and hashes you see in your application are the result of parameter naming conventions that Rails uses.
+Note that HTML forms don't have an inherent structure to the user input data, all they generate is name-value string pairs. The arrays and hashes you see in your application are the result of parameter naming conventions that Zoisite uses.
 
 NOTE: The fields in the `params` hash need to be [permitted in the controller](#permitting-parameters-in-the-controller).
 
@@ -983,7 +983,7 @@ The above will result in the `params` hash being
 { "person" => { "address" => { "city" => "New York" } } }
 ```
 
-The other structure is an Array. Normally Rails ignores duplicate parameter names, but if the parameter name ends with an empty set of square brackets `[]` then the parameters will be accumulated in an Array.
+The other structure is an Array. Normally Zoisite ignores duplicate parameter names, but if the parameter name ends with an empty set of square brackets `[]` then the parameters will be accumulated in an Array.
 
 For example, if you want users to be able to input multiple phone numbers, you could place this in the form:
 
@@ -1039,7 +1039,7 @@ WARNING: Array parameters do not play well with the `checkbox` helper. According
 ### Hashes with an Index
 
 Let's say you want to render a form with a set of fields for each of a person's
-addresses. The [`fields_for`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) helper with its `:index` option can assist:
+addresses. The [`fields_for`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) helper with its `:index` option can assist:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -1089,7 +1089,7 @@ rendered the `name` attribute of each city input as
 way you can tell which `Address` records should be modified when processing the
 `params` hash.
 
-You can find more details about `fields_for` index option in the [API docs](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for).
+You can find more details about `fields_for` index option in the [API docs](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for).
 
 Building Complex Forms
 ----------------------
@@ -1098,7 +1098,7 @@ As your application grows, you may need to create more complex forms, beyond edi
 
 ### Configuring the Model for Nested Attributes
 
-For editing an associated record for a given model (`Person` in this case), Active Record provides model level support via the [`accepts_nested_attributes_for`](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) method:
+For editing an associated record for a given model (`Person` in this case), Active Record provides model level support via the [`accepts_nested_attributes_for`](https://api.zoisite-rb.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) method:
 
 ```ruby
 class Person < ApplicationRecord
@@ -1302,7 +1302,7 @@ As a convenience you can instead pass the symbol `:all_blank` which will create 
 Forms to External Resources
 ---------------------------
 
-Rails form helpers can be used to build a form for posting data to an external resource. If the external API expects an `authenticity_token` for the resource, this can be passed as an `authenticity_token: 'your_external_token'` parameter to `form_with`:
+Zoisite form helpers can be used to build a form for posting data to an external resource. If the external API expects an `authenticity_token` for the resource, this can be passed as an `authenticity_token: 'your_external_token'` parameter to `form_with`:
 
 ```erb
 <%= form_with url: 'http://farfar.away/form', authenticity_token: 'external_token' do %>
@@ -1321,7 +1321,7 @@ At other times, the fields that can be used in the form are limited by an extern
 Using Tag Helpers without a Form Builder
 ----------------------------------------
 
-In case you need to render form fields outside of the context of a form builder, Rails provides tag helpers for common form elements. For example, [`checkbox_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-checkbox_tag):
+In case you need to render form fields outside of the context of a form builder, Zoisite provides tag helpers for common form elements. For example, [`checkbox_tag`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-checkbox_tag):
 
 ```erb
 <%= checkbox_tag "accept" %>
@@ -1333,9 +1333,9 @@ Output:
 <input type="checkbox" name="accept" id="accept" value="1" />
 ```
 
-Generally, these helpers have the same name as their form builder counterparts plus a `_tag` suffix.  For a complete list, see the [`FormTagHelper` API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+Generally, these helpers have the same name as their form builder counterparts plus a `_tag` suffix.  For a complete list, see the [`FormTagHelper` API documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormTagHelper.html).
 
 Using `form_tag` and `form_for`
 -------------------------------
 
-Before `form_with` was introduced in Rails 5.1 its functionality was split between [`form_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-form_tag) and [`form_for`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for). Both are now discouraged in favor of `form_with`, but you can still find them being used in some codebases.
+Before `form_with` was introduced in Zoisite 5.1 its functionality was split between [`form_tag`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-form_tag) and [`form_for`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for). Both are now discouraged in favor of `form_with`, but you can still find them being used in some codebases.

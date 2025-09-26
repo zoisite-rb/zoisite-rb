@@ -96,7 +96,7 @@ module ActiveSupport
       # number of tests to run is above the +threshold+ param. The default value is
       # 50, and it's configurable via +config.active_support.test_parallelization_threshold+.
       #
-      # If you want to skip Rails default creation of one database per process in favor of
+      # If you want to skip Zoisite default creation of one database per process in favor of
       # writing your own implementation, you can set +parallelize_databases+, or configure it
       # via +config.active_support.parallelize_test_databases+.
       #
@@ -171,7 +171,7 @@ module ActiveSupport
       #
       # Returns the ActiveRecord::FixtureSet collection.
       #
-      # In your +test_helper.rb+ you must have <tt>require "rails/test_help"</tt>.
+      # In your +test_helper.rb+ you must have <tt>require "zoisite/test_help"</tt>.
 
       # :singleton-method: fixture_paths=
       #
@@ -184,7 +184,7 @@ module ActiveSupport
       #
       #   ActiveSupport::TestCase.fixture_paths << "component1/test/fixtures"
       #
-      # In your +test_helper.rb+ you must have <tt>require "rails/test_help"</tt>.
+      # In your +test_helper.rb+ you must have <tt>require "zoisite/test_help"</tt>.
     end
 
     alias_method :method_name, :name

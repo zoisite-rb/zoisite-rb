@@ -24,9 +24,9 @@ module ActiveRecord
         File.open(::File.join(FIXTURES_ROOT, "accounts.yml")) do |fh|
           assert_equal ["signals37",
                         "unknown",
-                        "rails_core_account",
+                        "zoisite_core_account",
                         "last_account",
-                        "rails_core_account_2",
+                        "zoisite_core_account_2",
                         "odegy_account"].sort, fh.to_a.map(&:first).sort
         end
       end

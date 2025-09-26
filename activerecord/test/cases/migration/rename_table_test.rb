@@ -31,8 +31,8 @@ module ActiveRecord
 
         # Using explicit id in insert for compatibility across all databases
         table_name = connection.quote_table_name("references")
-        connection.execute "INSERT INTO #{table_name} (id, url) VALUES (123, 'http://rubyonrails.com')"
-        assert_equal "http://rubyonrails.com", connection.select_value("SELECT url FROM #{table_name} WHERE id=123")
+        connection.execute "INSERT INTO #{table_name} (id, url) VALUES (123, 'http://zoisite-rb.org')"
+        assert_equal "http://zoisite-rb.org", connection.select_value("SELECT url FROM #{table_name} WHERE id=123")
       ensure
         if renamed
           connection.rename_table :references, :test_models

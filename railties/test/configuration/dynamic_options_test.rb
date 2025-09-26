@@ -3,12 +3,12 @@
 require "active_support"
 require "active_support/test_case"
 require "active_support/testing/autorun"
-require "rails/railtie/configuration"
+require "zoisite/railtie/configuration"
 
 module RailtiesTest
   class DynamicOptionsTest < ActiveSupport::TestCase
     setup do
-      @config = Rails::Railtie::Configuration.dup.new
+      @config = Zoisite::Railtie::Configuration.dup.new
       @config.class.class_variable_set(:@@options, {})
     end
 

@@ -90,7 +90,7 @@ module ApplicationTests
       $initialize_test_set_from_env = nil
       app_file "config/environments/development.rb", <<-RUBY
         $initialize_test_set_from_env = 'success'
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.enable_reloading = false
           config.time_zone = "Brasilia"
         end
@@ -104,8 +104,8 @@ module ApplicationTests
 
       require "#{app_path}/config/environment"
       assert_equal "success", $initialize_test_set_from_env
-      assert_not Rails.application.config.reloading_enabled?
-      assert_equal "Brasilia", Rails.application.config.time_zone
+      assert_not Zoisite.application.config.reloading_enabled?
+      assert_equal "Brasilia", Zoisite.application.config.time_zone
     end
   end
 end

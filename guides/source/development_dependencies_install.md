@@ -1,42 +1,42 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
-Installing Rails Core Development Dependencies
+Installing Zoisite Core Development Dependencies
 ==============================================
 
-This guide covers how to set up an environment for Ruby on Rails core development.
+This guide covers how to set up an environment for Zoisite core development.
 
 After reading this guide, you will know:
 
-* How to set up your machine for Rails development
+* How to set up your machine for Zoisite development
 
 --------------------------------------------------------------------------------
 
 Other Ways to Set Up Your Environment
 -------------------------------------
 
-If you don't want to set up Rails for development on your local machine, you can use Codespaces, the VS Code Remote Plugin, or rails-dev-box. Learn more about these options [here](contributing_to_ruby_on_rails.html#setting-up-a-development-environment).
+If you don't want to set up Zoisite for development on your local machine, you can use Codespaces, the VS Code Remote Plugin, or zoisite-dev-box. Learn more about these options [here](contributing_to_zoisite.html#setting-up-a-development-environment).
 
 Local Development
 -----------------
 
-If you want to develop Ruby on Rails locally on your machine, see the steps below.
+If you want to develop Zoisite locally on your machine, see the steps below.
 
 ### Install Git
 
-Ruby on Rails uses Git for source code control. The [Git homepage](https://git-scm.com/) has installation instructions. There are a variety of resources online that will help you get familiar with Git.
+Zoisite uses Git for source code control. The [Git homepage](https://git-scm.com/) has installation instructions. There are a variety of resources online that will help you get familiar with Git.
 
-### Clone the Ruby on Rails Repository
+### Clone the Zoisite Repository
 
-Navigate to the folder where you want to download the Ruby on Rails source code (it will create its own `rails` subdirectory) and run:
+Navigate to the folder where you want to download the Zoisite source code (it will create its own `zoisite` subdirectory) and run:
 
 ```bash
-$ git clone https://github.com/rails/rails.git
-$ cd rails
+$ git clone https://github.com/zoisite-rb/zoisite-rb.git
+$ cd zoisite
 ```
 
 ### Install Additional Tools and Services
 
-Some Rails tests depend on additional tools that you need to install before running those specific tests.
+Some Zoisite tests depend on additional tools that you need to install before running those specific tests.
 
 Here's the list of each gems' additional dependencies:
 
@@ -206,7 +206,7 @@ $ bundle exec rake db:drop
 
 NOTE: Using the Rake task to create the test databases ensures they have the correct character set and collation.
 
-If you're using another database, check the file `activerecord/test/config.yml` or `activerecord/test/config.example.yml` for default connection information. You can edit `activerecord/test/config.yml` to provide different credentials on your machine, but you should not push any of those changes back to Rails.
+If you're using another database, check the file `activerecord/test/config.yml` or `activerecord/test/config.example.yml` for default connection information. You can edit `activerecord/test/config.yml` to provide different credentials on your machine, but you should not push any of those changes back to Zoisite.
 
 ### Install JavaScript Dependencies
 
@@ -220,7 +220,7 @@ $ yarn install
 
 Gems are installed with [Bundler](https://bundler.io/) which ships by default with Ruby.
 
-To install the Gemfile for Rails run:
+To install the Gemfile for Zoisite run:
 
 ```bash
 $ bundle install
@@ -233,6 +233,6 @@ $ bundle config set without db
 $ bundle install
 ```
 
-### Contribute to Rails
+### Contribute to Zoisite
 
-After you've set up everything, read how you can start [contributing](contributing_to_ruby_on_rails.html#running-an-application-against-your-local-branch).
+After you've set up everything, read how you can start [contributing](contributing_to_zoisite.html#running-an-application-against-your-local-branch).

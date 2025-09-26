@@ -27,7 +27,7 @@ module ActionMailbox
   #
   # 2. Generate a strong password that Action Mailbox can use to authenticate requests to the Postmark ingress.
   #
-  #    Use <tt>bin/rails credentials:edit</tt> to add the password to your application's encrypted credentials under
+  #    Use <tt>bin/zoisite credentials:edit</tt> to add the password to your application's encrypted credentials under
   #    +action_mailbox.ingress_password+, where Action Mailbox will automatically find it:
   #
   #        action_mailbox:
@@ -36,11 +36,11 @@ module ActionMailbox
   #    Alternatively, provide the password in the +RAILS_INBOUND_EMAIL_PASSWORD+ environment variable.
   #
   # 3. {Configure Postmark}[https://postmarkapp.com/manual#configure-your-inbound-webhook-url] to forward inbound emails
-  #    to +/rails/action_mailbox/postmark/inbound_emails+ with the username +actionmailbox+ and the password you
+  #    to +/zoisite/action_mailbox/postmark/inbound_emails+ with the username +actionmailbox+ and the password you
   #    previously generated. If your application lived at <tt>https://example.com</tt>, you would configure your
   #    Postmark inbound webhook with the following fully-qualified URL:
   #
-  #        https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/postmark/inbound_emails
+  #        https://actionmailbox:PASSWORD@example.com/zoisite/action_mailbox/postmark/inbound_emails
   #
   #    *NOTE:* When configuring your Postmark inbound webhook, be sure to check the box labeled *"Include raw email
   #    content in JSON payload"*. Action Mailbox needs the raw email content to work.

@@ -9,9 +9,9 @@ class RackSilenceRequestTest < ActiveSupport::TestCase
     mock_logger = Minitest::Mock.new
     mock_logger.expect :silence, nil
 
-    app = Rails::Rack::SilenceRequest.new(lambda { |env| [200, env, "app"] }, path: "/up")
+    app = Zoisite::Rack::SilenceRequest.new(lambda { |env| [200, env, "app"] }, path: "/up")
 
-    Rails.stub(:logger, mock_logger) do
+    Zoisite.stub(:logger, mock_logger) do
       app.call(Rack::MockRequest.env_for("http://example.com/up"))
       app.call(Rack::MockRequest.env_for("http://example.com/down"))
     end
@@ -23,9 +23,9 @@ class RackSilenceRequestTest < ActiveSupport::TestCase
     mock_logger = Minitest::Mock.new
     mock_logger.expect :silence, nil
 
-    app = Rails::Rack::SilenceRequest.new(lambda { |env| [200, env, "app"] }, path: /up/)
+    app = Zoisite::Rack::SilenceRequest.new(lambda { |env| [200, env, "app"] }, path: /up/)
 
-    Rails.stub(:logger, mock_logger) do
+    Zoisite.stub(:logger, mock_logger) do
       app.call(Rack::MockRequest.env_for("http://example.com/up"))
       app.call(Rack::MockRequest.env_for("http://example.com/down"))
     end

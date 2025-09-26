@@ -41,7 +41,7 @@ module ActionController # :nodoc:
       #
       #       private
       #         def handle_outdated_browser
-      #           render file: Rails.root.join("public/custom-error.html"), status: :not_acceptable
+      #           render file: Zoisite.root.join("public/custom-error.html"), status: :not_acceptable
       #         end
       #     end
       #
@@ -54,7 +54,7 @@ module ActionController # :nodoc:
       #       # In addition to the browsers blocked by ApplicationController, also block Opera below 104 and Chrome below 119 for the show action.
       #       allow_browser versions: { opera: 104, chrome: 119 }, only: :show
       #     end
-      def allow_browser(versions:, block: -> { render file: Rails.root.join("public/406-unsupported-browser.html"), layout: false, status: :not_acceptable }, **options)
+      def allow_browser(versions:, block: -> { render file: Zoisite.root.join("public/406-unsupported-browser.html"), layout: false, status: :not_acceptable }, **options)
         before_action -> { allow_browser(versions: versions, block: block) }, **options
       end
     end

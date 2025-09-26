@@ -13,8 +13,8 @@ module ActionView
 
     def render_template(event)
       info do
-        message = +"  Rendered #{from_rails_root(event.payload[:identifier])}"
-        message << " within #{from_rails_root(event.payload[:layout])}" if event.payload[:layout]
+        message = +"  Rendered #{from_zoisite_root(event.payload[:identifier])}"
+        message << " within #{from_zoisite_root(event.payload[:layout])}" if event.payload[:layout]
         message << " (Duration: #{event.duration.round(1)}ms | GC: #{event.gc_time.round(1)}ms)"
       end
     end
@@ -22,8 +22,8 @@ module ActionView
 
     def render_partial(event)
       debug do
-        message = +"  Rendered #{from_rails_root(event.payload[:identifier])}"
-        message << " within #{from_rails_root(event.payload[:layout])}" if event.payload[:layout]
+        message = +"  Rendered #{from_zoisite_root(event.payload[:identifier])}"
+        message << " within #{from_zoisite_root(event.payload[:layout])}" if event.payload[:layout]
         message << " (Duration: #{event.duration.round(1)}ms | GC: #{event.gc_time.round(1)}ms)"
         message << " #{cache_message(event.payload)}" unless event.payload[:cache_hit].nil?
         message
@@ -33,7 +33,7 @@ module ActionView
 
     def render_layout(event)
       info do
-        message = +"  Rendered layout #{from_rails_root(event.payload[:identifier])}"
+        message = +"  Rendered layout #{from_zoisite_root(event.payload[:identifier])}"
         message << " (Duration: #{event.duration.round(1)}ms | GC: #{event.gc_time.round(1)}ms)"
       end
     end
@@ -43,8 +43,8 @@ module ActionView
       identifier = event.payload[:identifier] || "templates"
 
       debug do
-        message = +"  Rendered collection of #{from_rails_root(identifier)}"
-        message << " within #{from_rails_root(event.payload[:layout])}" if event.payload[:layout]
+        message = +"  Rendered collection of #{from_zoisite_root(identifier)}"
+        message << " within #{from_zoisite_root(event.payload[:layout])}" if event.payload[:layout]
         message << " #{render_count(event.payload)} (Duration: #{event.duration.round(1)}ms | GC: #{event.gc_time.round(1)}ms)"
         message
       end
@@ -57,14 +57,14 @@ module ActionView
       end
 
     private
-      def from_rails_root(string)
-        string = string.sub(rails_root, "")
+      def from_zoisite_root(string)
+        string = string.sub(zoisite_root, "")
         string.sub!(VIEWS_PATTERN, "")
         string
       end
 
-      def rails_root # :doc:
-        @root ||= "#{Rails.root}/"
+      def zoisite_root # :doc:
+        @root ||= "#{Zoisite.root}/"
       end
     end
 
@@ -85,8 +85,8 @@ module ActionView
 
           return unless qualifier
 
-          message = +"  Rendering #{qualifier}#{from_rails_root(payload[:identifier])}"
-          message << " within #{from_rails_root(payload[:layout])}" if payload[:layout]
+          message = +"  Rendering #{qualifier}#{from_zoisite_root(payload[:identifier])}"
+          message << " within #{from_zoisite_root(payload[:layout])}" if payload[:layout]
           message
         end
       end

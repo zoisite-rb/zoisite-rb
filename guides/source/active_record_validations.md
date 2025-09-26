@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Validations
 =========================
@@ -46,7 +46,7 @@ For example, it may be important to your application to ensure that every user
 provides a valid email address and mailing address. Model-level validations are
 the best way to ensure that only valid data is saved into your database. They
 can be used with any database, cannot be bypassed by end users, and are
-convenient to test and maintain. Rails provides built-in helpers for common
+convenient to test and maintain. Zoisite provides built-in helpers for common
 needs, and allows you to create your own validation methods as well.
 
 
@@ -72,7 +72,7 @@ controller-level validations. Here's a summary of the pros and cons:
   keep your controllers simple, as it will make working with your application
   easier in the long run.
 
-Rails recommends using model-level validations in most circumstances, however
+Zoisite recommends using model-level validations in most circumstances, however
 there may be specific cases where you want to complement them with alternate
 validations.
 
@@ -91,7 +91,7 @@ class Person < ApplicationRecord
 end
 ```
 
-We can see how it works by looking at some `bin/rails console` output:
+We can see how it works by looking at some `bin/zoisite console` output:
 
 ```irb
 irb> p = Person.new(name: "Jane Doe")
@@ -122,7 +122,7 @@ object in the database. You can choose to have specific validations run when an
 object is created, saved, or updated.
 
 WARNING: While validations usually prevent invalid data from being saved to the
-database, it's important to be aware that not all methods in Rails trigger
+database, it's important to be aware that not all methods in Zoisite trigger
 validations. Some methods allow changes to be made directly to the database
 without performing validations. As a result, if you're not careful, it’s
 possible to [bypass validations](#skipping-validations) and save an object in an
@@ -143,17 +143,17 @@ raise an exception if the record is invalid. The non-bang versions - `save` and
 `update` returns `false`, and `create` returns the object.
 
 [`create`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-create
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-create
 [`create!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-create-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-create-21
 [`save`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-save
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-save
 [`save!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-save-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-save-21
 [`update`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-update
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-update
 [`update!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-update-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-update-21
 
 ### Skipping Validations
 
@@ -187,48 +187,48 @@ passed as an argument. This technique should be used with caution.
 
 
 [`decrement!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-decrement-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-decrement-21
 [`decrement_counter`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-decrement_counter
+    https://api.zoisite-rb.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-decrement_counter
 [`increment!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-increment-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-increment-21
 [`increment_counter`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-increment_counter
+    https://api.zoisite-rb.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-increment_counter
 [`insert`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-insert
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-insert
 [`insert!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-insert-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-insert-21
 [`insert_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-insert_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-insert_all
 [`insert_all!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-insert_all-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-insert_all-21
 [`toggle!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-toggle-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-toggle-21
 [`touch`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-touch
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-touch
 [`touch_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-touch_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-touch_all
 [`update_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-update_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-update_all
 [`update_attribute`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-update_attribute
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-update_attribute
 [`update_attribute!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-update_attribute-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-update_attribute-21
 [`update_column`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-update_column
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-update_column
 [`update_columns`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-update_columns
+    https://api.zoisite-rb.org/classes/ActiveRecord/Persistence.html#method-i-update_columns
 [`update_counters`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-update_counters
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-update_counters
 [`upsert`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-upsert
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-upsert
 [`upsert_all`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-upsert_all
+    https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-upsert_all
 
 ### Checking Validity
 
-Before saving an Active Record object, Rails runs your validations, and if these
-validations produce any validation errors, then Rails will not save the object.
+Before saving an Active Record object, Zoisite runs your validations, and if these
+validations produce any validation errors, then Zoisite will not save the object.
 
 You can also run the validations on your own. [`valid?`][] triggers your
 validations and returns true if no errors are found in the object, and false
@@ -287,11 +287,11 @@ ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
 returning true if any errors were found in the object, and false otherwise.
 
 [`errors`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations.html#method-i-errors
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations.html#method-i-errors
 [`invalid?`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations.html#method-i-invalid-3F
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations.html#method-i-invalid-3F
 [`valid?`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Validations.html#method-i-valid-3F
+    https://api.zoisite-rb.org/classes/ActiveRecord/Validations.html#method-i-valid-3F
 
 ### Inspecting and Handling Errors
 
@@ -324,7 +324,7 @@ irb> create_person.errors[:name].any?
 ```
 
 Additionally, you can use the
-[`errors.add`](https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-add)
+[`errors.add`](https://api.zoisite-rb.org/classes/ActiveModel/Errors.html#method-i-add)
 method to manually add error messages for specific attributes. This is
 particularly useful when defining custom validation scenarios.
 
@@ -340,7 +340,7 @@ NOTE: To read about validation errors in greater depth refer to the [Working
 with Validation Errors](#working-with-validation-errors) section.
 
 [Errors#squarebrackets]:
-    https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-5B-5D
+    https://api.zoisite-rb.org/classes/ActiveModel/Errors.html#method-i-5B-5D
 
 Validations
 -----------
@@ -357,21 +357,21 @@ easily access the errors related to any specific attribute. For instance, if you
 validate the `:name` attribute and the validation fails, you will find the error
 message under `errors[:name]`.
 
-In modern Rails applications, the more concise validate syntax is commonly used,
+In modern Zoisite applications, the more concise validate syntax is commonly used,
 for example:
 
 ```ruby
 validates :name, presence: true
 ```
 
-However, older versions of Rails used "helper" methods, such as:
+However, older versions of Zoisite used "helper" methods, such as:
 
 ```ruby
 validates_presence_of :name
 ```
 
 Both notations perform the same function, but the newer form is recommended for
-its readability and alignment with Rails' conventions.
+its readability and alignment with Zoisite' conventions.
 
 Each validation accepts an arbitrary number of attribute names, allowing you to
 apply the same type of validation to multiple attributes in a single line of
@@ -381,7 +381,7 @@ Additionally, all validations accept the `:on` and `:message` options. The `:on`
 option specifies when the validation should be triggered, with possible values
 being `:create` or `:update`. The `:message` option allows you to define a
 custom error message that will be added to the errors collection if the
-validation fails. If you do not specify a message, Rails will use a default
+validation fails. If you do not specify a message, Zoisite will use a default
 error message for that validation.
 
 INFO: To see a list of the available default helpers, take a look at
@@ -389,7 +389,7 @@ INFO: To see a list of the available default helpers, take a look at
 notation as described above.
 
 [`ActiveModel::Validations::HelperMethods`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations/HelperMethods.html
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations/HelperMethods.html
 
 Below we outline the most commonly used validations.
 
@@ -438,7 +438,7 @@ irb> line_item_with_order.valid?
 NOTE: For `belongs_to` the association presence is validated by default. If you
 don’t want to have association presence validated, use `optional: true`.
 
-Rails will usually infer the inverse association automatically. In cases where
+Zoisite will usually infer the inverse association automatically. In cases where
 you use a custom `:foreign_key` or a `:through` association, it's important to
 explicitly set the `:inverse_of` option to optimize the association lookup. This
 helps avoid unnecessary database queries during validation.
@@ -465,7 +465,7 @@ validates :field_name, exclusion: { in: [true, false] }
 The default error message is _"must be blank"_.
 
 [`Object#present?`]:
-    https://api.rubyonrails.org/classes/Object.html#method-i-present-3F
+    https://api.zoisite-rb.org/classes/Object.html#method-i-present-3F
 
 ### `acceptance`
 
@@ -857,7 +857,7 @@ which would result in a `NULL` value in most cases.
 The default error message is _"can't be blank"_.
 
 [`Object#blank?`]:
-    https://api.rubyonrails.org/classes/Object.html#method-i-blank-3F
+    https://api.zoisite-rb.org/classes/Object.html#method-i-blank-3F
 
 ### `uniqueness`
 
@@ -925,9 +925,9 @@ The default error message is _"has already been taken"_.
 See [`validates_uniqueness_of`][] for more information.
 
 [`validates_uniqueness_of`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Validations/ClassMethods.html#method-i-validates_uniqueness_of
+    https://api.zoisite-rb.org/classes/ActiveRecord/Validations/ClassMethods.html#method-i-validates_uniqueness_of
 [`add_index`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index
 [the MySQL manual]:
     https://dev.mysql.com/doc/refman/en/multiple-column-indexes.html
 [the MariaDB manual]: https://mariadb.com/kb/en/compound-composite-indexes/
@@ -961,7 +961,7 @@ everything up until now can also be used on any object which includes
 [`ActiveModel::Validations`][].
 
 [`validates_associated`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Validations/ClassMethods.html#method-i-validates_associated
+    https://api.zoisite-rb.org/classes/ActiveRecord/Validations/ClassMethods.html#method-i-validates_associated
 
 ### `validates_each`
 
@@ -987,7 +987,7 @@ validation fails, you should add an error to the model, therefore making it
 invalid.
 
 [`validates_each`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validates_each
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validates_each
 
 ### `validates_with`
 
@@ -1104,7 +1104,7 @@ end
 We will cover [custom validations](#performing-custom-validations) more later.
 
 [`validates_with`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validates_with
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validates_with
 
 Validation Options
 ------------------
@@ -1124,7 +1124,7 @@ NOTE: Not all of these options are supported by every validator, please refer to
 the API documentation for [`ActiveModel::Validations`][].
 
 [`ActiveModel::Validations`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations.html
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations.html
 
 ### `:allow_nil`
 
@@ -1368,7 +1368,7 @@ All validations inside of the `with_options` block will automatically have `if:
 :is_admin?` merged into its options.
 
 [`with_options`]:
-    https://api.rubyonrails.org/classes/Object.html#method-i-with_options
+    https://api.zoisite-rb.org/classes/Object.html#method-i-with_options
 
 ### Combining Validation Conditions
 
@@ -1461,7 +1461,7 @@ irb> Person.validators_on(:name)
 ```
 
 [`validate`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate
+    https://api.zoisite-rb.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate
 
 Performing Custom Validations
 -----------------------------
@@ -1515,9 +1515,9 @@ As shown in the example, you can also combine standard validations with your own
 custom validators.
 
 [`ActiveModel::EachValidator`]:
-    https://api.rubyonrails.org/classes/ActiveModel/EachValidator.html
+    https://api.zoisite-rb.org/classes/ActiveModel/EachValidator.html
 [`ActiveModel::Validator`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Validator.html
+    https://api.zoisite-rb.org/classes/ActiveModel/Validator.html
 
 ### Custom Methods
 
@@ -1641,7 +1641,7 @@ The following is a list of the most commonly used methods. Please refer to the
 [`ActiveModel::Errors`][] documentation for a list of all the available methods.
 
 [`ActiveModel::Errors`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Errors.html
+    https://api.zoisite-rb.org/classes/ActiveModel/Errors.html
 
 ### `errors`
 
@@ -1678,7 +1678,7 @@ irb> person.errors.first.details
 ```
 
 [`ActiveModel::Error`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Error.html
+    https://api.zoisite-rb.org/classes/ActiveModel/Error.html
 
 ### `errors[]`
 
@@ -1791,9 +1791,9 @@ capitalized attribute name prepended. (To customize the format that
 `full_message` uses, see the [I18n guide](i18n.html#active-model-methods).)
 
 [`full_message`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-full_message
+    https://api.zoisite-rb.org/classes/ActiveModel/Errors.html#method-i-full_message
 [`where`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-where
+    https://api.zoisite-rb.org/classes/ActiveModel/Errors.html#method-i-where
 
 ### `errors.add`
 
@@ -1818,7 +1818,7 @@ irb> person.errors.where(:name).first.full_message
 ```
 
 [`add`]:
-    https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-add
+    https://api.zoisite-rb.org/classes/ActiveModel/Errors.html#method-i-add
 
 ### `errors[:base]`
 
@@ -1904,10 +1904,10 @@ Once you've defined a model and added validations, you'll want to display an
 error message when a validation fails during the creation of that model via a
 web form.
 
-Since every application handles displaying validation errors differently, Rails
-does not include any view helpers for generating these messages. However, Rails
+Since every application handles displaying validation errors differently, Zoisite
+does not include any view helpers for generating these messages. However, Zoisite
 gives you a rich number of methods to interact with validations that you can use
-to build your own. In addition, when generating a scaffold, Rails will put some
+to build your own. In addition, when generating a scaffold, Zoisite will put some
 generated ERB into the `_form.html.erb` that displays the full list of errors on
 that model.
 
@@ -1928,7 +1928,7 @@ Assuming we have a model that's been saved in an instance variable named
 <% end %>
 ```
 
-Furthermore, if you use the Rails form helpers to generate your forms, when a
+Furthermore, if you use the Zoisite form helpers to generate your forms, when a
 validation error occurs on a field, it will generate an extra `<div>` around the
 entry.
 
@@ -1938,7 +1938,7 @@ entry.
 </div>
 ```
 
-You can then style this div however you'd like. The default scaffold that Rails
+You can then style this div however you'd like. The default scaffold that Zoisite
 generates, for example, adds this CSS rule:
 
 ```css
@@ -1953,7 +1953,7 @@ This means that any field with an error ends up with a 2 pixel red border.
 
 ### Customizing Error Field Wrapper
 
-Rails uses the `field_error_proc` configuration option to wrap fields with
+Zoisite uses the `field_error_proc` configuration option to wrap fields with
 errors in HTML. By default, this option wraps the erroneous form fields in a
 `<div>` with a `field_with_errors` class, as seen in the example above:
 

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/active_record/multi_db/multi_db_generator"
+require "zoisite/generators/active_record/multi_db/multi_db_generator"
 
-class MultiDbGeneratorTest < Rails::Generators::TestCase
+class MultiDbGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   tests ActiveRecord::Generators::MultiDbGenerator
 

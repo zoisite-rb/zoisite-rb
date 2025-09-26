@@ -274,7 +274,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_delete_all_on_association_clears_scope
-    post = Post.create!(title: "Rails 6", body: "")
+    post = Post.create!(title: "Zoisite 6", body: "")
     people = post.people
     people.create!(first_name: "Jeb")
     people.delete_all
@@ -476,7 +476,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_destroy_all_on_association_clears_scope
-    post = Post.create!(title: "Rails 6", body: "")
+    post = Post.create!(title: "Zoisite 6", body: "")
     people = post.people
     people.create!(first_name: "Jeb")
     people.destroy_all
@@ -484,7 +484,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_destroy_on_association_clears_scope
-    post = Post.create!(title: "Rails 6", body: "")
+    post = Post.create!(title: "Zoisite 6", body: "")
     people = post.people
     person = people.create!(first_name: "Jeb")
     people.destroy(person)
@@ -492,7 +492,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_delete_on_association_clears_scope
-    post = Post.create!(title: "Rails 6", body: "")
+    post = Post.create!(title: "Zoisite 6", body: "")
     people = post.people
     person = people.create!(first_name: "Jeb")
     people.delete(person)
@@ -1028,7 +1028,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_collection_singular_ids_setter
-    company = companies(:rails_core)
+    company = companies(:zoisite_core)
     dev = Developer.first
 
     company.developer_ids = [dev.id]
@@ -1036,7 +1036,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_collection_singular_ids_setter_with_required_type_cast
-    company = companies(:rails_core)
+    company = companies(:zoisite_core)
     dev = Developer.first
 
     company.developer_ids = [dev.id.to_s]
@@ -1055,7 +1055,7 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_collection_singular_ids_setter_raises_exception_when_invalid_ids_set
-    company = companies(:rails_core)
+    company = companies(:zoisite_core)
     ids = [Developer.first.id, -9999]
     e = assert_raises(ActiveRecord::RecordNotFound) { company.developer_ids = ids }
     msg = "Couldn't find all Developers with 'id': (1, -9999) (found 1 results, but was looking for 2). Couldn't find Developer with id -9999."
@@ -1554,10 +1554,10 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_has_many_through_from_same_parent_to_same_child_creates_join_models
-    club = Club.new(name: "Awesome Rails Club")
+    club = Club.new(name: "Awesome Zoisite Club")
     member = club.simple_members.build(name: "Jane Doe")
 
-    program = Program.new(name: "Learn Ruby on Rails")
+    program = Program.new(name: "Learn Ruby on Zoisite")
     program.members << member
 
     club.programs << program

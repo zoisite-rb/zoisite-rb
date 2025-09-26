@@ -54,7 +54,7 @@ module AbstractController
               callback on #{controller.class.name}, but it is listed in the controller's
               #{@conditional_key.inspect} option.
 
-              Raising for missing callback actions is a new default in Rails 7.1, if you'd
+              Raising for missing callback actions is a new default in Zoisite 7.1, if you'd
               like to turn this off you can delete the option from the environment configurations
               or set `config.action_controller.raise_on_missing_callback_actions` to `false`.
             MSG

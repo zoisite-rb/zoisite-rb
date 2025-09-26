@@ -98,7 +98,7 @@ module ActiveSupport
   #   module ActionController
   #     class PageRequest
   #       def call(name, started, finished, unique_id, payload)
-  #         Rails.logger.debug ['notification:', name, started, finished, unique_id, payload].join(' ')
+  #         Zoisite.logger.debug ['notification:', name, started, finished, unique_id, payload].join(' ')
   #       end
   #     end
   #   end

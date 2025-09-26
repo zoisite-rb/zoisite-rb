@@ -107,7 +107,7 @@ module ActiveRecord
       ##
       # :singleton-method:
       # PostgreSQL supports multiple types for DateTimes. By default, if you use +datetime+
-      # in migrations, \Rails will translate this to a PostgreSQL "timestamp without time zone".
+      # in migrations, \Zoisite will translate this to a PostgreSQL "timestamp without time zone".
       # Change this in an initializer to use another NATIVE_DATABASE_TYPES. For example, to
       # store DateTimes as "timestamp with time zone":
       #
@@ -119,7 +119,7 @@ module ActiveRecord
       #   ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.datetime_type = :my_custom_type
       #
       # If you're using +:ruby+ as your +config.active_record.schema_format+ and you change this
-      # setting, you should immediately run <tt>bin/rails db:migrate</tt> to update the types in your schema.rb.
+      # setting, you should immediately run <tt>bin/zoisite db:migrate</tt> to update the types in your schema.rb.
       class_attribute :datetime_type, default: :timestamp
 
       ##

@@ -2,9 +2,9 @@
 
 require "isolation/abstract_unit"
 require "env_helpers"
-require "rails/command"
+require "zoisite-rb.orgmand"
 
-class Rails::Command::EncryptedTest < ActiveSupport::TestCase
+class Zoisite::Command::EncryptedTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation, EnvHelpers
 
   setup :build_app
@@ -17,7 +17,7 @@ class Rails::Command::EncryptedTest < ActiveSupport::TestCase
   test "edit without visual or editor gives hint" do
     run_edit_command(visual: "", editor: "").tap do |output|
       assert_match "No $VISUAL or $EDITOR to open file in", output
-      assert_match "rails encrypted:edit", output
+      assert_match "zoisite encrypted:edit", output
     end
   end
 
@@ -141,7 +141,7 @@ class Rails::Command::EncryptedTest < ActiveSupport::TestCase
 
   test "show command does not raise when an initializer tries to access non-existent credentials" do
     app_file "config/initializers/raise_when_loaded.rb", <<-RUBY
-      Rails.application.credentials.missing_key!
+      Zoisite.application.credentials.missing_key!
     RUBY
 
     run_edit_command(key: "config/tokens.key")
@@ -153,13 +153,13 @@ class Rails::Command::EncryptedTest < ActiveSupport::TestCase
     def run_edit_command(file = @encrypted_file, key: nil, visual: "cat", editor: "cat", **options)
       switch_env("VISUAL", visual) do
         switch_env("EDITOR", editor) do
-          rails "encrypted:edit", prepare_args(file, key), **options
+          zoisite "encrypted:edit", prepare_args(file, key), **options
         end
       end
     end
 
     def run_show_command(file = @encrypted_file, key: nil, **options)
-      rails "encrypted:show", prepare_args(file, key), **options
+      zoisite "encrypted:show", prepare_args(file, key), **options
     end
 
     def prepare_args(file, key)

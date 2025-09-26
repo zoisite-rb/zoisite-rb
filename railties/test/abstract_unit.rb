@@ -10,10 +10,10 @@ require "fileutils"
 require "active_support"
 require "action_controller"
 require "action_view"
-require "rails/all"
+require "zoisite/all"
 
 module TestApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     config.root = File.expand_path("../../", __FILE__)
   end
 end
