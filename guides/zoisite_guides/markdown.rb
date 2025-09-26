@@ -2,9 +2,9 @@
 
 require "redcarpet"
 require "nokogiri"
-require "rails_guides/markdown/renderer"
-require "rails_guides/markdown/epub_renderer"
-require "rails-html-sanitizer"
+require "zoisite_guides/markdown/renderer"
+require "zoisite_guides/markdown/epub_renderer"
+require "zoisite-html-sanitizer"
 
 module ZoisiteGuides
   class Markdown

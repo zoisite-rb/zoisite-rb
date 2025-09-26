@@ -5,8 +5,8 @@ require "active_support/core_ext/array/wrap"
 require "active_support/core_ext/kernel/reporting"
 require "active_support/file_update_checker"
 require "active_support/configuration_file"
-require "rails/engine/configuration"
-require "rails/source_annotation_extractor"
+require "zoisite/engine/configuration"
+require "zoisite/source_annotation_extractor"
 
 module Zoisite
   class Application
@@ -445,14 +445,14 @@ module Zoisite
       # Do not use this method, use #database_configuration instead.
       def load_database_yaml # :nodoc:
         if path = paths["config/database"].existent.first
-          require "rails/application/dummy_config"
-          original_rails_config = Zoisite.application.config
+          require "zoisite/application/dummy_config"
+          original_zoisite_config = Zoisite.application.config
 
           begin
-            Zoisite.application.config = DummyConfig.new(original_rails_config)
+            Zoisite.application.config = DummyConfig.new(original_zoisite_config)
             ActiveSupport::ConfigurationFile.parse(Pathname.new(path))
           ensure
-            Zoisite.application.config = original_rails_config
+            Zoisite.application.config = original_zoisite_config
           end
         else
           {}
@@ -551,7 +551,7 @@ module Zoisite
         elsif new_secret_key_base
           raise ArgumentError, "`secret_key_base` for #{Zoisite.env} environment must be a type of String`"
         else
-          raise ArgumentError, "Missing `secret_key_base` for '#{Zoisite.env}' environment, set this string with `bin/rails credentials:edit`"
+          raise ArgumentError, "Missing `secret_key_base` for '#{Zoisite.env}' environment, set this string with `bin/zoisite credentials:edit`"
         end
       end
 

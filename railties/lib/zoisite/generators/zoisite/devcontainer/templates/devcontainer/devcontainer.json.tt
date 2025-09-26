@@ -3,7 +3,7 @@
 {
   "name": "<%= options[:app_name] %>",
   "dockerComposeFile": "compose.yaml",
-  "service": "rails-app",
+  "service": "zoisite-app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
   // Features to add to the dev container. More info: https://containers.dev/features.

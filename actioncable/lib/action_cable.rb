@@ -24,7 +24,7 @@
 #++
 
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "zeitwerk"
 
 # We compute lib this way instead of using __dir__ because __dir__ gives a real
@@ -34,7 +34,7 @@ lib = File.dirname(__FILE__)
 
 Zeitwerk::Loader.for_gem.tap do |loader|
   loader.ignore(
-    "#{lib}/rails", # Contains generators, templates, docs, etc.
+    "#{lib}/zoisite", # Contains generators, templates, docs, etc.
     "#{lib}/action_cable/gem_version.rb",
     "#{lib}/action_cable/version.rb",
     "#{lib}/action_cable/deprecator.rb",

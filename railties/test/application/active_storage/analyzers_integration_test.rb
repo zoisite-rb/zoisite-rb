@@ -13,10 +13,10 @@ module ApplicationTests
     def setup
       build_app
 
-      rails "active_storage:install"
+      zoisite "active_storage:install"
 
-      rails "generate", "model", "user", "name:string", "avatar:attachment"
-      rails "db:migrate"
+      zoisite "generate", "model", "user", "name:string", "avatar:attachment"
+      zoisite "db:migrate"
     end
 
     def teardown

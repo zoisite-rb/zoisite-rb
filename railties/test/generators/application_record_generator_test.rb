@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/application_record/application_record_generator"
+require "zoisite/generators/zoisite/application_record/application_record_generator"
 
 class ApplicationRecordGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper

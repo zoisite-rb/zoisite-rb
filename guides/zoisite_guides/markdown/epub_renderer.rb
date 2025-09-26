@@ -3,7 +3,7 @@
 require "rouge"
 
 # Add more common shell commands
-Rouge::Lexers::Shell::BUILTINS << "|bin/rails|brew|bundle|gem|git|node|rails|rake|ruby|sqlite3|yarn"
+Rouge::Lexers::Shell::BUILTINS << "|bin/zoisite|brew|bundle|gem|git|node|zoisite|rake|ruby|sqlite3|yarn"
 
 module ZoisiteGuides
   class Markdown
@@ -93,7 +93,7 @@ module ZoisiteGuides
               file_path
             end
 
-          "https://github.com/rails/rails/tree/#{tree}/#{path}"
+          "https://github.com/zoisite/zoisite/tree/#{tree}/#{path}"
         end
 
         def api_link(url)

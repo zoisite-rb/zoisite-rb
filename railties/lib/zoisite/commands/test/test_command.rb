@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "rails/command"
-require "rails/commands/rake/rake_command"
-require "rails/test_unit/runner"
-require "rails/test_unit/reporter"
+require "zoisite/command"
+require "zoisite/commands/rake/rake_command"
+require "zoisite/test_unit/runner"
+require "zoisite/test_unit/reporter"
 
 module Zoisite
   module Command
@@ -33,7 +33,7 @@ module Zoisite
         Zoisite::TestUnit::Runner.run(args)
       end
 
-      # Define Thor tasks to avoid going through Rake and booting twice when using bin/rails test:*
+      # Define Thor tasks to avoid going through Rake and booting twice when using bin/zoisite test:*
       Zoisite::TestUnit::Runner::TEST_FOLDERS.each do |name|
         desc name, "Run tests in test/#{name}"
         define_method(name) do |*args|

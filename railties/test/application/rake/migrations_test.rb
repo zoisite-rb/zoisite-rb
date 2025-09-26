@@ -16,14 +16,14 @@ module ApplicationTests
       end
 
       test "running migrations with given scope" do
-        rails "generate", "model", "user", "username:string", "password:string"
+        zoisite "generate", "model", "user", "username:string", "password:string"
 
         app_file "db/migrate/02_a_migration.bukkits.rb", <<-MIGRATION
           class AMigration < ActiveRecord::Migration::Current
           end
         MIGRATION
 
-        output = rails("db:migrate", "SCOPE=bukkits")
+        output = zoisite("db:migrate", "SCOPE=bukkits")
         assert_no_match(/create_table\(:users\)/, output)
         assert_no_match(/CreateUsers/, output)
         assert_no_match(/add_column\(:users, :email, :string\)/, output)
@@ -31,17 +31,17 @@ module ApplicationTests
         assert_match(/AMigration: migrated/, output)
 
         # run all the migrations to test scope for down
-        output = rails("db:migrate")
+        output = zoisite("db:migrate")
         assert_match(/CreateUsers: migrated/, output)
 
-        output = rails("db:migrate", "SCOPE=bukkits", "VERSION=0")
+        output = zoisite("db:migrate", "SCOPE=bukkits", "VERSION=0")
         assert_no_match(/drop_table\(:users\)/, output)
         assert_no_match(/CreateUsers/, output)
         assert_no_match(/remove_column\(:users, :email\)/, output)
 
         assert_match(/AMigration: reverted/, output)
 
-        output = rails("db:migrate", "VERSION=0")
+        output = zoisite("db:migrate", "VERSION=0")
 
         assert_match(/CreateUsers: reverted/, output)
       end
@@ -52,9 +52,9 @@ module ApplicationTests
           end
         MIGRATION
 
-        rails "db:migrate"
+        zoisite "db:migrate"
 
-        output = rails("db:version")
+        output = zoisite("db:version")
         assert_match(/Current version: 1/, output)
       end
 
@@ -74,27 +74,27 @@ module ApplicationTests
           end
         MIGRATION
 
-        rails "db:migrate"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/up\s+002\s+Two migration/, output)
         assert_match(/up\s+003\s+Three migration/, output)
 
-        rails "db:migrate", "VERSION=01_one_migration.rb"
-        output = rails("db:migrate:status")
+        zoisite "db:migrate", "VERSION=01_one_migration.rb"
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/down\s+002\s+Two migration/, output)
         assert_match(/down\s+003\s+Three migration/, output)
 
-        rails "db:migrate", "VERSION=3"
-        output = rails("db:migrate:status")
+        zoisite "db:migrate", "VERSION=3"
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/up\s+002\s+Two migration/, output)
         assert_match(/up\s+003\s+Three migration/, output)
 
-        rails "db:migrate", "VERSION=001"
-        output = rails("db:migrate:status")
+        zoisite "db:migrate", "VERSION=001"
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/down\s+002\s+Two migration/, output)
         assert_match(/down\s+003\s+Three migration/, output)
@@ -111,28 +111,28 @@ module ApplicationTests
           end
         MIGRATION
 
-        rails("db:migrate", "VERSION=")
+        zoisite("db:migrate", "VERSION=")
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/up\s+002\s+Two migration/, output)
 
-        output = rails("db:migrate:redo", "VERSION=", allow_failure: true)
+        output = zoisite("db:migrate:redo", "VERSION=", allow_failure: true)
         assert_match(/Empty VERSION provided/, output)
 
-        output = rails("db:migrate:up", "VERSION=", allow_failure: true)
+        output = zoisite("db:migrate:up", "VERSION=", allow_failure: true)
         assert_match(/VERSION is required/, output)
 
-        output = rails("db:migrate:up", allow_failure: true)
+        output = zoisite("db:migrate:up", allow_failure: true)
         assert_match(/VERSION is required/, output)
 
-        output = rails("db:migrate:down", "VERSION=", allow_failure: true)
+        output = zoisite("db:migrate:down", "VERSION=", allow_failure: true)
         assert_match(/VERSION is required - To go down one migration, use db:rollback/, output)
 
-        output = rails("db:migrate:down", allow_failure: true)
+        output = zoisite("db:migrate:down", allow_failure: true)
         assert_match(/VERSION is required - To go down one migration, use db:rollback/, output)
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/up\s+002\s+Two migration/, output)
       end
@@ -148,9 +148,9 @@ module ApplicationTests
           end
         MIGRATION
 
-        rails "db:migrate"
+        zoisite "db:migrate"
 
-        output = rails("db:rollback", "VERSION=01_one_migration.rb", allow_failure: true)
+        output = zoisite("db:rollback", "VERSION=01_one_migration.rb", allow_failure: true)
         assert_match(/VERSION is not supported - To rollback a specific version, use db:migrate:down/, output)
       end
 
@@ -165,30 +165,30 @@ module ApplicationTests
           end
         MIGRATION
 
-        rails "db:migrate"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/up\s+002\s+Two migration/, output)
 
-        rails "db:migrate", "VERSION=0"
+        zoisite "db:migrate", "VERSION=0"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
         assert_match(/down\s+001\s+One migration/, output)
         assert_match(/down\s+002\s+Two migration/, output)
       end
 
       test "model and migration generator with change syntax" do
-        rails "generate", "model", "user", "username:string", "password:string"
-        rails "generate", "migration", "add_email_to_users", "email:string"
+        zoisite "generate", "model", "user", "username:string", "password:string"
+        zoisite "generate", "migration", "add_email_to_users", "email:string"
 
-        output = rails("db:migrate")
+        output = zoisite("db:migrate")
         assert_match(/create_table\(:users\)/, output)
         assert_match(/CreateUsers: migrated/, output)
         assert_match(/add_column\(:users, :email, :string\)/, output)
         assert_match(/AddEmailToUsers: migrated/, output)
 
-        output = rails("db:rollback", "STEP=2")
+        output = zoisite("db:rollback", "STEP=2")
         assert_match(/drop_table\(:users\)/, output)
         assert_match(/CreateUsers: reverted/, output)
         assert_match(/remove_column\(:users, :email, :string\)/, output)
@@ -196,24 +196,24 @@ module ApplicationTests
       end
 
       test "migration status when schema migrations table is not present" do
-        output = rails("db:migrate:status", allow_failure: true)
+        output = zoisite("db:migrate:status", allow_failure: true)
         assert_equal "Schema migrations table does not exist yet.\n", output
       end
 
       test "migration status" do
         remove_from_config("config.active_record.timestamped_migrations = false")
 
-        rails "generate", "model", "user", "username:string", "password:string"
-        rails "generate", "migration", "add_email_to_users", "email:string"
-        rails "db:migrate"
+        zoisite "generate", "model", "user", "username:string", "password:string"
+        zoisite "generate", "migration", "add_email_to_users", "email:string"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{14}\s+Create users/, output)
         assert_match(/up\s+\d{14}\s+Add email to users/, output)
 
-        rails "db:rollback", "STEP=1"
-        output = rails("db:migrate:status")
+        zoisite "db:rollback", "STEP=1"
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{14}\s+Create users/, output)
         assert_match(/down\s+\d{14}\s+Add email to users/, output)
@@ -222,17 +222,17 @@ module ApplicationTests
       test "migration status without timestamps" do
         remove_from_config("config.active_record.timestamped_migrations = false")
 
-        rails "generate", "model", "user", "username:string", "password:string"
-        rails "generate", "migration", "add_email_to_users", "email:string"
-        rails "db:migrate"
+        zoisite "generate", "model", "user", "username:string", "password:string"
+        zoisite "generate", "migration", "add_email_to_users", "email:string"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{3,}\s+Create users/, output)
         assert_match(/up\s+\d{3,}\s+Add email to users/, output)
 
-        rails "db:rollback", "STEP=1"
-        output = rails("db:migrate:status")
+        zoisite "db:rollback", "STEP=1"
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{3,}\s+Create users/, output)
         assert_match(/down\s+\d{3,}\s+Add email to users/, output)
@@ -241,23 +241,23 @@ module ApplicationTests
       test "migration status after rollback and redo" do
         remove_from_config("config.active_record.timestamped_migrations = false")
 
-        rails "generate", "model", "user", "username:string", "password:string"
-        rails "generate", "migration", "add_email_to_users", "email:string"
-        rails "db:migrate"
+        zoisite "generate", "model", "user", "username:string", "password:string"
+        zoisite "generate", "migration", "add_email_to_users", "email:string"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{14}\s+Create users/, output)
         assert_match(/up\s+\d{14}\s+Add email to users/, output)
 
-        rails "db:rollback", "STEP=2"
-        output = rails("db:migrate:status")
+        zoisite "db:rollback", "STEP=2"
+        output = zoisite("db:migrate:status")
 
         assert_match(/down\s+\d{14}\s+Create users/, output)
         assert_match(/down\s+\d{14}\s+Add email to users/, output)
 
-        rails "db:migrate:redo"
-        output = rails("db:migrate:status")
+        zoisite "db:migrate:redo"
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{14}\s+Create users/, output)
         assert_match(/up\s+\d{14}\s+Add email to users/, output)
@@ -266,23 +266,23 @@ module ApplicationTests
       test "migration status after rollback and forward" do
         remove_from_config("config.active_record.timestamped_migrations = false")
 
-        rails "generate", "model", "user", "username:string", "password:string"
-        rails "generate", "migration", "add_email_to_users", "email:string"
-        rails "db:migrate"
+        zoisite "generate", "model", "user", "username:string", "password:string"
+        zoisite "generate", "migration", "add_email_to_users", "email:string"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{14}\s+Create users/, output)
         assert_match(/up\s+\d{14}\s+Add email to users/, output)
 
-        rails "db:rollback", "STEP=2"
-        output = rails("db:migrate:status")
+        zoisite "db:rollback", "STEP=2"
+        output = zoisite("db:migrate:status")
 
         assert_match(/down\s+\d{14}\s+Create users/, output)
         assert_match(/down\s+\d{14}\s+Add email to users/, output)
 
-        rails "db:forward", "STEP=2"
-        output = rails("db:migrate:status")
+        zoisite "db:forward", "STEP=2"
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{14}\s+Create users/, output)
         assert_match(/up\s+\d{14}\s+Add email to users/, output)
@@ -292,30 +292,30 @@ module ApplicationTests
         Dir.chdir(app_path) do
           remove_from_config("config.active_record.timestamped_migrations = false")
 
-          rails "generate", "model", "user", "username:string", "password:string"
-          rails "generate", "migration", "add_email_to_users", "email:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "user", "username:string", "password:string"
+          zoisite "generate", "migration", "add_email_to_users", "email:string"
+          zoisite "db:migrate"
           `rm db/migrate/*email*.rb`
 
-          output = rails("db:migrate:status")
+          output = zoisite("db:migrate:status")
           assert_match(/up\s+\d{14}\s+Create users/, output)
           assert_match(/up\s+\d{14}\s+\** NO FILE \**/, output)
 
-          output = rails("db:rollback", allow_failure: true)
-          assert_match(/rails aborted!/, output)
+          output = zoisite("db:rollback", allow_failure: true)
+          assert_match(/zoisite aborted!/, output)
           assert_match(/ActiveRecord::UnknownMigrationVersionError:/, output)
           assert_match(/No migration with version number\s\d{14}\./, output)
 
-          output = rails("db:migrate:status")
+          output = zoisite("db:migrate:status")
           assert_match(/up\s+\d{14}\s+Create users/, output)
           assert_match(/up\s+\d{14}\s+\** NO FILE \**/, output)
 
-          output = rails("db:forward", allow_failure: true)
-          assert_match(/rails aborted!/, output)
+          output = zoisite("db:forward", allow_failure: true)
+          assert_match(/zoisite aborted!/, output)
           assert_match(/ActiveRecord::UnknownMigrationVersionError:/, output)
           assert_match(/No migration with version number\s\d{14}\./, output)
 
-          output = rails("db:migrate:status")
+          output = zoisite("db:migrate:status")
           assert_match(/up\s+\d{14}\s+Create users/, output)
           assert_match(/up\s+\d{14}\s+\** NO FILE \**/, output)
         end
@@ -332,82 +332,82 @@ module ApplicationTests
           end
         MIGRATION
 
-        rails "db:migrate"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/up\s+002\s+Two migration/, output)
 
-        output = rails("db:migrate", "VERSION=3", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate", "VERSION=3", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/ActiveRecord::UnknownMigrationVersionError:/, output)
         assert_match(/No migration with version number 3/, output)
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/up\s+002\s+Two migration/, output)
       end
 
       test "raise error on any move when VERSION has invalid format" do
-        output = rails("db:migrate", "VERSION=unknown", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate", "VERSION=unknown", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate", "VERSION=0.1.11", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate", "VERSION=0.1.11", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate", "VERSION=1.1.11", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate", "VERSION=1.1.11", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate", "VERSION='0 '", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate", "VERSION='0 '", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate", "VERSION=1.", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate", "VERSION=1.", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate", "VERSION=1_", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate", "VERSION=1_", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate", "VERSION=1_name", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate", "VERSION=1_name", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate:redo", "VERSION=unknown", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate:redo", "VERSION=unknown", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate:up", "VERSION=unknown", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate:up", "VERSION=unknown", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
 
-        output = rails("db:migrate:down", "VERSION=unknown", allow_failure: true)
-        assert_match(/rails aborted!/, output)
+        output = zoisite("db:migrate:down", "VERSION=unknown", allow_failure: true)
+        assert_match(/zoisite aborted!/, output)
         assert_match(/Invalid format of target version/, output)
       end
 
       test "migration status after rollback and redo without timestamps" do
-        rails "generate", "model", "user", "username:string", "password:string"
-        rails "generate", "migration", "add_email_to_users", "email:string"
-        rails "db:migrate"
+        zoisite "generate", "model", "user", "username:string", "password:string"
+        zoisite "generate", "migration", "add_email_to_users", "email:string"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{3,}\s+Create users/, output)
         assert_match(/up\s+\d{3,}\s+Add email to users/, output)
 
-        rails "db:rollback", "STEP=2"
-        output = rails("db:migrate:status")
+        zoisite "db:rollback", "STEP=2"
+        output = zoisite("db:migrate:status")
 
         assert_match(/down\s+\d{3,}\s+Create users/, output)
         assert_match(/down\s+\d{3,}\s+Add email to users/, output)
 
-        rails "db:migrate:redo"
-        output = rails("db:migrate:status")
+        zoisite "db:migrate:redo"
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+\d{3,}\s+Create users/, output)
         assert_match(/up\s+\d{3,}\s+Add email to users/, output)
@@ -424,9 +424,9 @@ module ApplicationTests
           end
         MIGRATION
 
-        rails "db:migrate"
+        zoisite "db:migrate"
 
-        output = rails("db:migrate:status")
+        output = zoisite("db:migrate:status")
 
         assert_match(/up\s+001\s+One migration/, output)
         assert_match(/up\s+002\s+Two migration/, output)
@@ -443,8 +443,8 @@ module ApplicationTests
         EOS
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
 
           assert File.exist?("db/schema_file.rb"), "should dump schema when configured to"
         end
@@ -461,8 +461,8 @@ module ApplicationTests
         EOS
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
 
           assert_not File.exist?("db/schema.rb"), "should not dump schema when configured not to"
         end
@@ -472,20 +472,20 @@ module ApplicationTests
         add_to_config("config.active_record.dump_schema_after_migration = false")
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          output = rails("generate", "model", "author", "name:string")
+          zoisite "generate", "model", "book", "title:string"
+          output = zoisite("generate", "model", "author", "name:string")
           version = output =~ %r{[^/]+db/migrate/(\d+)_create_authors\.rb} && $1
 
-          rails "db:migrate", "db:rollback", "db:forward"
-          rails "db:migrate:up", "db:migrate:down", "VERSION=#{version}"
+          zoisite "db:migrate", "db:rollback", "db:forward"
+          zoisite "db:migrate:up", "db:migrate:down", "VERSION=#{version}"
           assert_not File.exist?("db/schema.rb"), "should not dump schema when configured not to"
         end
 
         add_to_config("config.active_record.dump_schema_after_migration = true")
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "reviews", "book_id:integer"
-          rails "db:migrate"
+          zoisite "generate", "model", "reviews", "book_id:integer"
+          zoisite "db:migrate"
 
           structure_dump = File.read("db/schema.rb")
           assert_match(/create_table "reviews"/, structure_dump)
@@ -494,8 +494,8 @@ module ApplicationTests
 
       test "default schema generation after migration" do
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
 
           structure_dump = File.read("db/schema.rb")
           assert_match(/create_table "books"/, structure_dump)
@@ -506,12 +506,12 @@ module ApplicationTests
         Dir.chdir(app_path) do
           remove_from_config("config.active_record.timestamped_migrations = false")
 
-          rails "generate", "model", "user", "username:string", "password:string"
-          rails "generate", "migration", "add_email_to_users", "email:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "user", "username:string", "password:string"
+          zoisite "generate", "migration", "add_email_to_users", "email:string"
+          zoisite "db:migrate"
           `rm db/migrate/*email*.rb`
 
-          output = rails("db:migrate:status")
+          output = zoisite("db:migrate:status")
 
           assert_match(/up\s+\d{14}\s+Create users/, output)
           assert_match(/up\s+\d{14}\s+\** NO FILE \**/, output)
@@ -528,9 +528,9 @@ module ApplicationTests
             end
           RUBY
 
-          rails "generate", "model", "user", "username:string", "password:string"
+          zoisite "generate", "model", "user", "username:string", "password:string"
 
-          rails("db:migrate")
+          zoisite("db:migrate")
 
           app_file "db/migrate/02_a_migration.bukkits.rb", <<-MIGRATION
             class AMigration < ActiveRecord::Migration::Current
@@ -541,7 +541,7 @@ module ApplicationTests
             end
           MIGRATION
 
-          output = rails("db:migrate")
+          output = zoisite("db:migrate")
 
           assert_match(/execute\("SELECT 1"\)/, output)
         end

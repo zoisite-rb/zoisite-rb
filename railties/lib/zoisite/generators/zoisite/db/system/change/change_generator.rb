@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/generators/base"
+require "zoisite/generators/base"
 require "yaml"
 require "json"
 
@@ -126,20 +126,20 @@ module Zoisite
               Database.all.each do |database|
                 compose_config["services"].delete(database.name)
                 compose_config["volumes"]&.delete(database.volume)
-                compose_config["services"]["rails-app"]["depends_on"]&.delete(database.name)
+                compose_config["services"]["zoisite-app"]["depends_on"]&.delete(database.name)
               end
 
               if database.service
                 compose_config["services"][database.name] = database.service
                 compose_config["volumes"] = { database.volume => nil }.merge(compose_config["volumes"] || {})
-                compose_config["services"]["rails-app"]["depends_on"] = [
+                compose_config["services"]["zoisite-app"]["depends_on"] = [
                   database.name,
-                  compose_config["services"]["rails-app"]["depends_on"]
+                  compose_config["services"]["zoisite-app"]["depends_on"]
                 ].flatten.compact
               end
 
               compose_config.delete("volumes") unless compose_config["volumes"]&.any?
-              compose_config["services"]["rails-app"].delete("depends_on") unless compose_config["services"]["rails-app"]["depends_on"]&.any?
+              compose_config["services"]["zoisite-app"].delete("depends_on") unless compose_config["services"]["zoisite-app"]["depends_on"]&.any?
 
               File.write(compose_yaml_path, compose_config.to_yaml)
             end

@@ -17,7 +17,7 @@ module ActionCable
       # server. Your JavaScript can then connect to the server without needing to
       # specify the URL directly:
       #
-      #     import Cable from "@rails/actioncable"
+      #     import Cable from "@zoisite/actioncable"
       #     window.Cable = Cable
       #     window.App = {}
       #     App.cable = Cable.createConsumer()

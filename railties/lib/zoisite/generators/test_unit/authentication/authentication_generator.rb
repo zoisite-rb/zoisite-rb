@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/generators/test_unit"
+require "zoisite/generators/test_unit"
 
 module TestUnit # :nodoc:
   module Generators # :nodoc:
@@ -24,7 +24,7 @@ module TestUnit # :nodoc:
       end
 
       def configure_test_helper
-        inject_into_file "test/test_helper.rb", "require_relative \"test_helpers/session_test_helper\"\n", after: "require \"rails/test_help\"\n"
+        inject_into_file "test/test_helper.rb", "require_relative \"test_helpers/session_test_helper\"\n", after: "require \"zoisite/test_help\"\n"
         inject_into_class "test/test_helper.rb", "TestCase", "    include SessionTestHelper\n"
       end
     end

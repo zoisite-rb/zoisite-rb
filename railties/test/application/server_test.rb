@@ -2,7 +2,7 @@
 
 require "isolation/abstract_unit"
 require "console_helpers"
-require "rails/command"
+require "zoisite/command"
 
 module ApplicationTests
   class ServerTest < ActiveSupport::TestCase
@@ -16,7 +16,7 @@ module ApplicationTests
       teardown_app
     end
 
-    test "restart rails server with custom pid file path" do
+    test "restart zoisite server with custom pid file path" do
       skip "PTY unavailable" unless available_pty?
 
       File.open("#{app_path}/config/boot.rb", "w") do |f|
@@ -28,10 +28,10 @@ module ApplicationTests
       pid = nil
 
       Bundler.with_original_env do
-        pid = Process.spawn("bin/rails server -b localhost -P tmp/dummy.pid", chdir: app_path, in: replica, out: replica, err: replica)
+        pid = Process.spawn("bin/zoisite server -b localhost -P tmp/dummy.pid", chdir: app_path, in: replica, out: replica, err: replica)
         assert_output("Listening", primary, 100)
 
-        rails("restart")
+        zoisite("restart")
 
         assert_output("Restarting", primary, 100)
         assert_output("Listening", primary, 100)
@@ -58,7 +58,7 @@ module ApplicationTests
       pid = nil
 
       Bundler.with_original_env do
-        pid = Process.spawn("bin/rails server -b localhost", chdir: app_path, in: replica, out: primary, err: replica)
+        pid = Process.spawn("bin/zoisite server -b localhost", chdir: app_path, in: replica, out: primary, err: replica)
         assert_output("Hello world", primary, 100)
         assert_output("Listening", primary, 100)
       ensure

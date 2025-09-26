@@ -57,7 +57,7 @@ test:
 #   CACHE_DATABASE_URL="mysql2://cacheuser:cachepass@localhost/cachedatabase"
 #
 <%- end -%>
-# Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
+# Read https://guides.rubyonzoisite.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
 <%- if options.skip_solid? -%>

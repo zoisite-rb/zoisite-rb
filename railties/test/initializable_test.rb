@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/initializable"
+require "zoisite/initializable"
 
 module InitializableTests
   class Foo

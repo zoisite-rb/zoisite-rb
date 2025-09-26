@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators/base"
-require "rails/generators/rails/master_key/master_key_generator"
+require "zoisite/generators/base"
+require "zoisite/generators/zoisite/master_key/master_key_generator"
 require "active_support/encrypted_configuration"
 
 module Zoisite
@@ -24,7 +24,7 @@ module Zoisite
           say ""
           say content, :on_green
           say ""
-          say "You can edit encrypted credentials with `bin/rails credentials:edit`."
+          say "You can edit encrypted credentials with `bin/zoisite credentials:edit`."
           say ""
         end
       end

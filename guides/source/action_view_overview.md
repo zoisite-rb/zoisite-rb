@@ -49,7 +49,7 @@ For example, when you use scaffolding to generate an `article` resource, Zoisite
 generates the following files in `app/views/articles`:
 
 ```bash
-$ bin/rails generate scaffold article
+$ bin/zoisite generate scaffold article
       [...]
       invoke  scaffold_controller
       create    app/controllers/articles_controller.rb
@@ -84,9 +84,9 @@ Templates
 Action View templates can be written in different formats. If the template file
 has a `.erb` extension, it uses embedded Ruby to build an HTML response. If the
 template has a `.jbuilder` extension, it uses the
-[Jbuilder](https://github.com/rails/jbuilder) gem to build a JSON response. And
+[Jbuilder](https://github.com/zoisite/jbuilder) gem to build a JSON response. And
 a template with a `.builder` extension uses the
-[`Builder::XmlMarkup`](https://github.com/rails/builder) library to build an XML
+[`Builder::XmlMarkup`](https://github.com/zoisite/builder) library to build an XML
 response.
 
 Zoisite uses the file extension to distinguish among multiple template systems.
@@ -165,7 +165,7 @@ would produce:
 }
 ```
 
-See the [Jbuilder documentation](https://github.com/rails/jbuilder#jbuilder) for
+See the [Jbuilder documentation](https://github.com/zoisite/jbuilder#jbuilder) for
 more examples.
 
 ### Builder
@@ -213,7 +213,7 @@ would produce something like:
 </div>
 ```
 
-See [Builder documentation](https://github.com/rails/builder) for more examples.
+See [Builder documentation](https://github.com/zoisite/builder) for more examples.
 
 ### Template Compilation
 
@@ -223,7 +223,7 @@ modification time and recompile it.
 
 There is also Fragment Caching for when different parts of the page need to be
 cached and expired separately. Learn more about it in the [caching
-guide](caching_with_rails.html#fragment-caching).
+guide](caching_with_zoisite.html#fragment-caching).
 
 Partials
 --------

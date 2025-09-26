@@ -9,8 +9,8 @@ gemspec
 <% end -%>
 <%- unless options.skip_rubocop? -%>
 
-# Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-gem "rubocop-rails-omakase", require: false
+# Omakase Ruby styling [https://github.com/zoisite/rubocop-zoisite-omakase/]
+gem "rubocop-zoisite-omakase", require: false
 <%- end -%>
 <% if RUBY_ENGINE == "ruby" -%>
 

@@ -231,7 +231,7 @@ module ActiveSupport
     # Otherwise you can use #unexpected to report an error which does accept a
     # string argument.
     def report(error, handled: true, severity: handled ? :warning : :error, context: {}, source: DEFAULT_SOURCE)
-      return if error.instance_variable_defined?(:@__rails_error_reported)
+      return if error.instance_variable_defined?(:@__zoisite_error_reported)
       raise ArgumentError, "Reported error must be an Exception, got: #{error.inspect}" unless error.is_a?(Exception)
 
       ensure_backtrace(error)
@@ -266,7 +266,7 @@ module ActiveSupport
 
       while error
         unless error.frozen?
-          error.instance_variable_set(:@__rails_error_reported, true)
+          error.instance_variable_set(:@__zoisite_error_reported, true)
         end
         error = error.cause
       end

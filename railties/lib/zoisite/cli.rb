@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/app_loader"
+require "zoisite/app_loader"
 
 # If we are inside a Zoisite application this method performs an exec and thus
 # the rest of this script is not run.
@@ -8,7 +8,7 @@ Zoisite::AppLoader.exec_app
 
 Signal.trap("INT") { puts; exit(1) }
 
-require "rails/command"
+require "zoisite/command"
 case ARGV.first
 when Zoisite::Command::HELP_MAPPINGS, "help", nil
   ARGV.shift

@@ -19,7 +19,7 @@ module ActionMailer
   #
   # To use Action Mailer, you need to create a mailer model.
   #
-  #   $ bin/rails generate mailer Notifier
+  #   $ bin/zoisite generate mailer Notifier
   #
   # The generated model inherits from <tt>ApplicationMailer</tt> which in turn
   # inherits from +ActionMailer::Base+. A mailer model defines methods
@@ -393,7 +393,7 @@ module ActionMailer
   #
   #   config.action_mailer.preview_paths << "#{Zoisite.root}/lib/mailer_previews"
   #
-  # An overview of all previews is accessible at <tt>http://localhost:3000/rails/mailers</tt>
+  # An overview of all previews is accessible at <tt>http://localhost:3000/zoisite/mailers</tt>
   # on a running development server instance.
   #
   # Previews can also be intercepted in a similar manner as deliveries can be by registering

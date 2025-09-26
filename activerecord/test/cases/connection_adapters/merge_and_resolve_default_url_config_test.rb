@@ -8,7 +8,7 @@ module ActiveRecord
       def setup
         @previous_database_url = ENV.delete("DATABASE_URL")
         @previous_rack_env = ENV.delete("RACK_ENV")
-        @previous_rails_env = ENV.delete("RAILS_ENV")
+        @previous_zoisite_env = ENV.delete("RAILS_ENV")
         @adapters_was = ActiveRecord::ConnectionAdapters.instance_variable_get(:@adapters).dup
         @protocol_adapters = ActiveRecord.protocol_adapters.dup
       end
@@ -16,7 +16,7 @@ module ActiveRecord
       teardown do
         ENV["DATABASE_URL"] = @previous_database_url
         ENV["RACK_ENV"] = @previous_rack_env
-        ENV["RAILS_ENV"] = @previous_rails_env
+        ENV["RAILS_ENV"] = @previous_zoisite_env
         ActiveRecord::ConnectionAdapters.instance_variable_set(:@adapters, @adapters_was)
         ActiveRecord.protocol_adapters = @protocol_adapters
       end
@@ -56,7 +56,7 @@ module ActiveRecord
         assert_equal expected, actual.configuration_hash
       end
 
-      def test_resolver_with_database_uri_and_current_env_symbol_key_and_rails_env
+      def test_resolver_with_database_uri_and_current_env_symbol_key_and_zoisite_env
         ENV["DATABASE_URL"] = "postgres://localhost/foo"
         ENV["RAILS_ENV"]    = "foo"
 
@@ -240,7 +240,7 @@ module ActiveRecord
         assert_equal expected, actual
       end
 
-      def test_blank_with_database_url_with_rails_env
+      def test_blank_with_database_url_with_zoisite_env
         ENV["RAILS_ENV"] = "not_production"
         ENV["DATABASE_URL"] = "postgres://localhost/foo"
 

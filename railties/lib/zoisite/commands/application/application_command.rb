@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators"
-require "rails/generators/rails/app/app_generator"
+require "zoisite/generators"
+require "zoisite/generators/zoisite/app/app_generator"
 
 module Zoisite
   module Generators
@@ -18,7 +18,7 @@ module Zoisite
     class ApplicationCommand < Base # :nodoc:
       hide_command!
 
-      self.bin = "rails"
+      self.bin = "zoisite"
 
       def help
         perform # Punt help output to the generator.

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/devcontainer/devcontainer_generator"
+require "zoisite/generators/zoisite/devcontainer/devcontainer_generator"
 
 module Zoisite
   module Generators
@@ -21,7 +21,7 @@ module Zoisite
         run_generator
 
         assert_devcontainer_json_file do |devcontainer_json|
-          assert_includes devcontainer_json["features"].keys, "ghcr.io/rails/devcontainer/features/activestorage"
+          assert_includes devcontainer_json["features"].keys, "ghcr.io/zoisite/devcontainer/features/activestorage"
         end
       end
 
@@ -30,7 +30,7 @@ module Zoisite
 
         test_common_config
         assert_devcontainer_json_file do |devcontainer_json|
-          assert_nil devcontainer_json["features"]["ghcr.io/rails/devcontainer/features/activestorage"]
+          assert_nil devcontainer_json["features"]["ghcr.io/zoisite/devcontainer/features/activestorage"]
         end
       end
 
@@ -38,11 +38,11 @@ module Zoisite
         run_generator
 
         assert_devcontainer_json_file do |devcontainer_json|
-          assert_equal "rails_app", devcontainer_json["name"]
+          assert_equal "zoisite_app", devcontainer_json["name"]
         end
 
         assert_compose_file do |compose|
-          assert_equal "rails_app", compose["name"]
+          assert_equal "zoisite_app", compose["name"]
         end
       end
 
@@ -64,7 +64,7 @@ module Zoisite
 
         assert_no_file "config/database.yml"
         assert_devcontainer_json_file do |devcontainer_json|
-          assert_includes devcontainer_json["features"].keys, "ghcr.io/rails/devcontainer/features/sqlite3"
+          assert_includes devcontainer_json["features"].keys, "ghcr.io/zoisite/devcontainer/features/sqlite3"
         end
       end
 
@@ -85,12 +85,12 @@ module Zoisite
           }
           assert_equal expected_mariadb_config, compose["services"]["mariadb"]
           assert_includes compose["volumes"].keys, "mariadb-data"
-          assert_includes compose["services"]["rails-app"]["depends_on"], "mariadb"
+          assert_includes compose["services"]["zoisite-app"]["depends_on"], "mariadb"
         end
 
         assert_devcontainer_json_file do |devcontainer_json|
           assert_equal "mariadb", devcontainer_json["containerEnv"]["DB_HOST"]
-          assert_includes devcontainer_json["features"].keys, "ghcr.io/rails/devcontainer/features/mysql-client"
+          assert_includes devcontainer_json["features"].keys, "ghcr.io/zoisite/devcontainer/features/mysql-client"
           assert_includes devcontainer_json["forwardPorts"], 3306
         end
       end
@@ -112,7 +112,7 @@ module Zoisite
           }
           assert_equal expected_mariadb_config, compose["services"]["mariadb"]
           assert_includes compose["volumes"].keys, "mariadb-data"
-          assert_includes compose["services"]["rails-app"]["depends_on"], "mariadb"
+          assert_includes compose["services"]["zoisite-app"]["depends_on"], "mariadb"
         end
 
         assert_devcontainer_json_file do |devcontainer_json|
@@ -139,12 +139,12 @@ module Zoisite
           }
           assert_equal expected_mysql_config, compose["services"]["mysql"]
           assert_includes compose["volumes"].keys, "mysql-data"
-          assert_includes compose["services"]["rails-app"]["depends_on"], "mysql"
+          assert_includes compose["services"]["zoisite-app"]["depends_on"], "mysql"
         end
 
         assert_devcontainer_json_file do |devcontainer_json|
           assert_equal "mysql", devcontainer_json["containerEnv"]["DB_HOST"]
-          assert_includes devcontainer_json["features"].keys, "ghcr.io/rails/devcontainer/features/mysql-client"
+          assert_includes devcontainer_json["features"].keys, "ghcr.io/zoisite/devcontainer/features/mysql-client"
           assert_includes devcontainer_json["forwardPorts"], 3306
         end
       end
@@ -173,12 +173,12 @@ module Zoisite
           }
           assert_equal expected_postgres_config, compose["services"]["postgres"]
           assert_includes compose["volumes"].keys, "postgres-data"
-          assert_includes compose["services"]["rails-app"]["depends_on"], "postgres"
+          assert_includes compose["services"]["zoisite-app"]["depends_on"], "postgres"
         end
 
         assert_devcontainer_json_file do |devcontainer_json|
           assert_equal "postgres", devcontainer_json["containerEnv"]["DB_HOST"]
-          assert_includes devcontainer_json["features"].keys, "ghcr.io/rails/devcontainer/features/postgres-client"
+          assert_includes devcontainer_json["features"].keys, "ghcr.io/zoisite/devcontainer/features/postgres-client"
           assert_includes devcontainer_json["forwardPorts"], 5432
         end
       end
@@ -201,7 +201,7 @@ module Zoisite
           }
           assert_equal expected_mysql_config, compose["services"]["mysql"]
           assert_includes compose["volumes"].keys, "mysql-data"
-          assert_includes compose["services"]["rails-app"]["depends_on"], "mysql"
+          assert_includes compose["services"]["zoisite-app"]["depends_on"], "mysql"
         end
 
         assert_devcontainer_json_file do |content|
@@ -252,7 +252,7 @@ module Zoisite
         run_generator
 
         assert_compose_file do |compose|
-          assert_includes compose["services"]["rails-app"]["depends_on"], "redis"
+          assert_includes compose["services"]["zoisite-app"]["depends_on"], "redis"
           expected_redis_config = {
             "image" => "valkey/valkey:8",
             "restart" => "unless-stopped",
@@ -273,7 +273,7 @@ module Zoisite
 
         test_common_config
         assert_compose_file do |compose|
-          assert_not_includes compose["services"]["rails-app"]["depends_on"], "redis"
+          assert_not_includes compose["services"]["zoisite-app"]["depends_on"], "redis"
           assert_nil compose["services"]["redis"]
           assert_nil compose["volumes"]
         end
@@ -313,7 +313,7 @@ module Zoisite
 
         assert_file("test/application_system_test_case.rb") do |system_test_case|
           assert_match(/^  if ENV\["CAPYBARA_SERVER_PORT"\]/, system_test_case)
-          assert_match(/^    served_by host: "rails-app", port: ENV\["CAPYBARA_SERVER_PORT"\]/, system_test_case)
+          assert_match(/^    served_by host: "zoisite-app", port: ENV\["CAPYBARA_SERVER_PORT"\]/, system_test_case)
           assert_match(/^    driven_by :selenium, using: :headless_chrome, screen_size: \[ 1400, 1400 \], options: {$/, system_test_case)
           assert_match(/^      browser: :remote,$/, system_test_case)
           assert_match(/^      url: "http:\/\/\#{ENV\["SELENIUM_HOST"\]}:4444"$/, system_test_case)
@@ -334,7 +334,7 @@ module Zoisite
 
         test_common_config
         assert_compose_file do |compose|
-          assert_not_includes compose["services"]["rails-app"]["depends_on"], "selenium"
+          assert_not_includes compose["services"]["zoisite-app"]["depends_on"], "selenium"
           assert_not_includes compose["services"].keys, "selenium"
         end
         assert_devcontainer_json_file do |devcontainer_json|
@@ -363,7 +363,7 @@ module Zoisite
               "volumes" => ["../../#{compose["name"]}:/workspaces/#{compose["name"]}:cached"],
               "command" => "sleep infinity"
             }
-            actual_independent_config = compose["services"]["rails-app"].except("depends_on")
+            actual_independent_config = compose["services"]["zoisite-app"].except("depends_on")
             assert_equal expected_app_config, actual_independent_config
           end
         end

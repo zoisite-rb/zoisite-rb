@@ -27,7 +27,7 @@ module ActionMailbox
   #
   # 2. Generate a strong password that Action Mailbox can use to authenticate requests to the ingress.
   #
-  #    Use <tt>bin/rails credentials:edit</tt> to add the password to your application's encrypted credentials under
+  #    Use <tt>bin/zoisite credentials:edit</tt> to add the password to your application's encrypted credentials under
   #    +action_mailbox.ingress_password+, where Action Mailbox will automatically find it:
   #
   #        action_mailbox:
@@ -41,13 +41,13 @@ module ActionMailbox
   #    If your application lives at <tt>https://example.com</tt>, you would configure the Postfix SMTP server to pipe
   #    inbound emails to the following command:
   #
-  #        $ bin/rails action_mailbox:ingress:postfix URL=https://example.com/rails/action_mailbox/postfix/inbound_emails INGRESS_PASSWORD=...
+  #        $ bin/zoisite action_mailbox:ingress:postfix URL=https://example.com/zoisite/action_mailbox/postfix/inbound_emails INGRESS_PASSWORD=...
   #
   #    Built-in ingress commands are available for these popular SMTP servers:
   #
-  #    - Exim (<tt>bin/rails action_mailbox:ingress:exim</tt>)
-  #    - Postfix (<tt>bin/rails action_mailbox:ingress:postfix</tt>)
-  #    - Qmail (<tt>bin/rails action_mailbox:ingress:qmail</tt>)
+  #    - Exim (<tt>bin/zoisite action_mailbox:ingress:exim</tt>)
+  #    - Postfix (<tt>bin/zoisite action_mailbox:ingress:postfix</tt>)
+  #    - Qmail (<tt>bin/zoisite action_mailbox:ingress:qmail</tt>)
   class Ingresses::Relay::InboundEmailsController < ActionMailbox::BaseController
     before_action :authenticate_by_password, :require_valid_rfc822_message
 

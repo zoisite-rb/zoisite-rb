@@ -123,8 +123,8 @@ module Zoisite
 
           if rack_cache == true
             {
-              metastore: "rails:/",
-              entitystore: "rails:/",
+              metastore: "zoisite:/",
+              entitystore: "zoisite:/",
               verbose: false
             }
           else

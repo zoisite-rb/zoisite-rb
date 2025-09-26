@@ -2,7 +2,7 @@
 
 <h1>Deliver new inbound email</h1>
 
-<%= form_with(url: main_app.rails_conductor_inbound_emails_path, scope: :mail, local: true) do |form| %>
+<%= form_with(url: main_app.zoisite_conductor_inbound_emails_path, scope: :mail, local: true) do |form| %>
   <div>
     <%= form.label :from, "From" %><br>
     <%= form.text_field :from, value: params[:from] %>

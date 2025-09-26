@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/application_controller"
+require "zoisite/application_controller"
 
 class Zoisite::PwaController < Zoisite::ApplicationController # :nodoc:
   skip_forgery_protection

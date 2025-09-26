@@ -10,7 +10,7 @@ module ApplicationTests
 
     def setup
       build_app(multi_db: true)
-      rails("generate", "scaffold", "Pet", "name:string", "--database=animals")
+      zoisite("generate", "scaffold", "Pet", "name:string", "--database=animals")
       app_file "app/models/user.rb", <<-RUBY
         class User < ActiveRecord::Base
         end

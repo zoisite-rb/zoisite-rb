@@ -35,7 +35,7 @@ creation of a new application.
 ### Test Setup
 
 Zoisite creates a `test` directory for you as soon as you create a Zoisite project
-using `bin/rails new` _application_name_. If you list the contents of this directory
+using `bin/zoisite new` _application_name_. If you list the contents of this directory
 then you will see:
 
 ```bash
@@ -90,13 +90,13 @@ NOTE: Your tests are run under `RAILS_ENV=test`. This is set by Zoisite automati
 
 ### Writing Your First Test
 
-We introduced the `bin/rails generate model` command in the [Getting Started
+We introduced the `bin/zoisite generate model` command in the [Getting Started
 with Zoisite](getting_started.html#creating-a-database-model) guide.
 Alongside creating a model, this command also creates a test stub in the `test`
 directory:
 
 ```bash
-$ bin/rails generate model article title:string body:text
+$ bin/zoisite generate model article title:string body:text
 ...
 create  app/models/article.rb
 create  test/models/article_test.rb
@@ -209,7 +209,7 @@ end
 Here is the output if this newly added test is run:
 
 ```bash
-$ bin/rails test test/models/article_test.rb
+$ bin/zoisite test test/models/article_test.rb
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: --seed 44656
 
@@ -222,7 +222,7 @@ ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/model
 Expected true to be nil or false
 
 
-bin/rails test test/models/article_test.rb:4
+bin/zoisite test test/models/article_test.rb:4
 
 
 
@@ -267,7 +267,7 @@ with a `title`, so the model validation will prevent the save. This can be
 verified by running the test again:
 
 ```bash
-$ bin/rails test test/models/article_test.rb:6
+$ bin/zoisite test test/models/article_test.rb:6
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: --seed 31252
 
@@ -302,7 +302,7 @@ end
 Now you can see even more output in the console from running the tests:
 
 ```bash
-$ bin/rails test test/models/article_test.rb
+$ bin/zoisite test test/models/article_test.rb
 Running 2 tests in a single process (parallelization threshold is 50)
 Run options: --seed 1808
 
@@ -316,7 +316,7 @@ NameError: undefined local variable or method 'some_undefined_variable' for #<Ar
     test/models/article_test.rb:11:in 'block in <class:ArticleTest>'
 
 
-bin/rails test test/models/article_test.rb:9
+bin/zoisite test test/models/article_test.rb:9
 
 .
 
@@ -341,7 +341,7 @@ in situations when you want to see the full backtrace, set the `-b` (or
 `--backtrace`) argument to enable this behavior:
 
 ```bash
-$ bin/rails test -b test/models/article_test.rb
+$ bin/zoisite test -b test/models/article_test.rb
 ```
 
 If you want this test to pass you can modify it to use `assert_raises` (so you
@@ -479,13 +479,13 @@ documentation](http://docs.seattlerb.org/minitest).
 
 ### The Zoisite Test Runner
 
-We can run all of our tests at once by using the `bin/rails test` command.
+We can run all of our tests at once by using the `bin/zoisite test` command.
 
-Or we can run a single test file by appending the filename to the `bin/rails
+Or we can run a single test file by appending the filename to the `bin/zoisite
 test` command.
 
 ```bash
-$ bin/rails test test/models/article_test.rb
+$ bin/zoisite test test/models/article_test.rb
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: --seed 1559
 
@@ -504,7 +504,7 @@ You can also run a particular test method from the test case by providing the
 `-n` or `--name` flag and the test's method name.
 
 ```bash
-$ bin/rails test test/models/article_test.rb -n test_the_truth
+$ bin/zoisite test test/models/article_test.rb -n test_the_truth
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: -n test_the_truth --seed 43583
 
@@ -520,20 +520,20 @@ Finished tests in 0.009064s, 110.3266 tests/s, 110.3266 assertions/s.
 You can also run a test at a specific line by providing the line number.
 
 ```bash
-$ bin/rails test test/models/article_test.rb:6 # run specific test and line
+$ bin/zoisite test test/models/article_test.rb:6 # run specific test and line
 ```
 
 You can also run a range of tests by providing the line range.
 
 ```bash
-$ bin/rails test test/models/article_test.rb:6-20 # runs tests from line 6 to 20
+$ bin/zoisite test test/models/article_test.rb:6-20 # runs tests from line 6 to 20
 ```
 
 You can also run an entire directory of tests by providing the path to the
 directory.
 
 ```bash
-$ bin/rails test test/controllers # run all tests from specific directory
+$ bin/zoisite test test/controllers # run all tests from specific directory
 ```
 
 The test runner also provides a lot of other features like failing fast, showing
@@ -541,24 +541,24 @@ verbose progress, and so on. Check the documentation of the test runner using
 the command below:
 
 ```bash
-$ bin/rails test -h
+$ bin/zoisite test -h
 Usage:
-  bin/rails test [PATHS...]
+  bin/zoisite test [PATHS...]
 
 Run tests except system tests
 
 Examples:
     You can run a single test by appending a line number to a filename:
 
-        bin/rails test test/models/user_test.rb:27
+        bin/zoisite test test/models/user_test.rb:27
 
     You can run multiple tests with in a line range by appending the line range to a filename:
 
-        bin/rails test test/models/user_test.rb:10-20
+        bin/zoisite test test/models/user_test.rb:10-20
 
     You can run multiple files and directories at the same time:
 
-        bin/rails test test/controllers test/integration/login_test.rb
+        bin/zoisite test test/controllers test/integration/login_test.rb
 
     By default test failures and errors are reported inline during a run.
 
@@ -572,7 +572,7 @@ minitest options:
         --exclude PATTERN            Exclude /regexp/ or string from run.
     -S, --skip CODES                 Skip reporting of certain types of results (eg E).
 
-Known extensions: rails, pride
+Known extensions: zoisite, pride
     -w, --warnings                   Run with Ruby warnings enabled
     -e, --environment ENV            Run tests in the ENV environment
     -b, --backtrace                  Show the complete backtrace
@@ -605,10 +605,10 @@ test helper checks whether your test database has any pending migrations. It
 will try to load your `db/schema.rb` or `db/structure.sql` into the test
 database. If migrations are still pending, an error will be raised. Usually this
 indicates that your schema is not fully migrated. Running the migrations (using
-`bin/rails db:migrate RAILS_ENV=test`) will bring the schema up to date.
+`bin/zoisite db:migrate RAILS_ENV=test`) will bring the schema up to date.
 
 NOTE: If there were modifications to existing migrations, the test database
-needs to be rebuilt. This can be done by executing `bin/rails test:db`.
+needs to be rebuilt. This can be done by executing `bin/zoisite test:db`.
 
 ### Fixtures
 
@@ -848,7 +848,7 @@ Zoisite model tests are stored under the `test/models` directory. Zoisite provid
 generator to create a model test skeleton for you.
 
 ```bash
-$ bin/rails generate test_unit:model article
+$ bin/zoisite generate test_unit:model article
 create  test/models/article_test.rb
 ```
 
@@ -889,7 +889,7 @@ The easiest way to see functional tests in action is to generate a controller
 using the scaffold generator:
 
 ```bash
-$ bin/rails generate scaffold_controller article
+$ bin/zoisite generate scaffold_controller article
 ...
 create  app/controllers/articles_controller.rb
 ...
@@ -906,7 +906,7 @@ If you already have a controller and just want to generate the test scaffold
 code for each of the seven default actions, you can use the following command:
 
 ```bash
-$ bin/rails generate test_unit:scaffold article
+$ bin/zoisite generate test_unit:scaffold article
 ...
 invoke  test_unit
 create    test/controllers/articles_controller_test.rb
@@ -1119,7 +1119,7 @@ end
 If the test is run now, it should fail:
 
 ```bash
-$ bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
+$ bin/zoisite test test/controllers/articles_controller_test.rb -n test_should_create_article
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: -n test_should_create_article --seed 32266
 
@@ -1159,7 +1159,7 @@ end
 Now, if the tests are run they should pass:
 
 ```bash
-$ bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
+$ bin/zoisite test test/controllers/articles_controller_test.rb -n test_should_create_article
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: -n test_should_create_article --seed 18981
 
@@ -1282,7 +1282,7 @@ to test important workflows. Zoisite integration tests are stored in the
 Zoisite provides a generator to create an integration test skeleton as follows:
 
 ```bash
-$ bin/rails generate integration_test user_flows
+$ bin/zoisite generate integration_test user_flows
       invoke  test_unit
       create  test/integration/user_flows_test.rb
 ```
@@ -1314,7 +1314,7 @@ properly.
 Start by generating the integration test skeleton:
 
 ```bash
-$ bin/rails generate integration_test blog_flow
+$ bin/zoisite generate integration_test blog_flow
 ```
 
 It should have created a test file placeholder. With the output of the previous
@@ -1450,20 +1450,20 @@ generate system tests in two ways:
 1. **When scaffolding**, explicitly enable system tests:
 
    ```bash
-   $ bin/rails generate scaffold Article title:string body:text --system-tests=true
+   $ bin/zoisite generate scaffold Article title:string body:text --system-tests=true
    ```
 
 2. **Generate system tests independently** for critical features:
 
    ```bash
-   $ bin/rails generate system_test articles
+   $ bin/zoisite generate system_test articles
    ```
 
 Zoisite system tests are stored in the `test/system` directory in your
 application. To generate a system test skeleton, run the following command:
 
 ```bash
-$ bin/rails generate system_test users
+$ bin/zoisite generate system_test users
       invoke test_unit
       create test/system/users_test.rb
 ```
@@ -1557,7 +1557,7 @@ end
 Now you should get a connection to the remote browser.
 
 ```bash
-$ SELENIUM_REMOTE_URL=http://localhost:4444/wd/hub bin/rails test:system
+$ SELENIUM_REMOTE_URL=http://localhost:4444/wd/hub bin/zoisite test:system
 ```
 
 If your application is remote, e.g. within a Docker container, Capybara needs
@@ -1597,7 +1597,7 @@ include system tests when scaffolding, use the `--system-tests=true` option.
 Otherwise, create system tests manually for your critical user paths.
 
 ```bash
-$ bin/rails generate system_test articles
+$ bin/zoisite generate system_test articles
 ```
 
 It should have created a test file placeholder. With the output of the previous
@@ -1626,12 +1626,12 @@ The test should see that there is an `h1` on the articles index page and pass.
 Run the system tests.
 
 ```bash
-$ bin/rails test:system
+$ bin/zoisite test:system
 ```
 
-NOTE: By default, running `bin/rails test` won't run your system tests. Make
-sure to run `bin/rails test:system` to actually run them. You can also run
-`bin/rails test:all` to run all tests, including system tests.
+NOTE: By default, running `bin/zoisite test` won't run your system tests. Make
+sure to run `bin/zoisite test:system` to actually run them. You can also run
+`bin/zoisite test:all` to run all tests, including system tests.
 
 #### Creating Articles System Test
 
@@ -1895,10 +1895,10 @@ assert_dom_equal '<a href="http://www.further-reading.com">Read more</a>',
   link_to("Read more", "http://www.further-reading.com")
 ```
 
-For more advanced usage, refer to the [`rails-dom-testing`
-documentation](https://github.com/rails/rails-dom-testing).
+For more advanced usage, refer to the [`zoisite-dom-testing`
+documentation](https://github.com/zoisite/zoisite-dom-testing).
 
-In order to integrate with [rails-dom-testing][], tests that inherit from
+In order to integrate with [zoisite-dom-testing][], tests that inherit from
 `ActionView::TestCase` declare a `document_root_element` method that returns the
 rendered content as an instance of a
 [Nokogiri::XML::Node](https://nokogiri.org/rdoc/Nokogiri/XML/Node.html):
@@ -2023,7 +2023,7 @@ test "renders JSON" do
 end
 ```
 
-[rails-dom-testing]: https://github.com/rails/rails-dom-testing
+[zoisite-dom-testing]: https://github.com/zoisite/zoisite-dom-testing
 [RSS content]: https://www.rssboard.org/rss-specification
 
 ### Additional View-Based Assertions
@@ -2073,7 +2073,7 @@ end
 Tests that inherit from `ActionView::TestCase` also have access to
 [`assert_dom`](#testing-views) and the [other additional view-based
 assertions](#additional-view-based-assertions) provided by
-[rails-dom-testing][]:
+[zoisite-dom-testing][]:
 
 ```ruby
 test "renders a link to itself" do
@@ -2611,12 +2611,12 @@ tested before merge.
 To run all tests in a CI environment, there's just one command you need:
 
 ```bash
-$ bin/rails test
+$ bin/zoisite test
 ```
 
-If you are using [System Tests](#system-testing), `bin/rails test` will not run
+If you are using [System Tests](#system-testing), `bin/zoisite test` will not run
 them, since they can be slow. To also run them, add another CI step that runs
-`bin/rails test:system`, or change your first step to `bin/rails test:all`,
+`bin/zoisite test:system`, or change your first step to `bin/zoisite test:all`,
 which runs all tests including system tests.
 
 Parallel Testing
@@ -2647,7 +2647,7 @@ an environment variable is provided to be able to easily change the number of
 workers a test run should use:
 
 ```bash
-$ PARALLEL_WORKERS=15 bin/rails test
+$ PARALLEL_WORKERS=15 bin/zoisite test
 ```
 
 When parallelizing tests, Active Record automatically handles creating a

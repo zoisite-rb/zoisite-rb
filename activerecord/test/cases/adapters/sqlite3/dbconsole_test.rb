@@ -40,7 +40,7 @@ module ActiveRecord
         end
       end
 
-      def test_sqlite3_db_with_defined_rails_root
+      def test_sqlite3_db_with_defined_zoisite_root
         config = make_db_config(adapter: "sqlite3", database: "config/db.sqlite3")
 
         root = method(:root)

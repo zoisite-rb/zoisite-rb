@@ -226,9 +226,9 @@
 
     *Eileen M. Uchitelle*
 
-*   `rails db:schema:{dump,load}` now checks `ENV["SCHEMA_FORMAT"]` before config
+*   `zoisite db:schema:{dump,load}` now checks `ENV["SCHEMA_FORMAT"]` before config
 
-    Since `rails db:structure:{dump,load}` was deprecated there wasn't a simple
+    Since `zoisite db:structure:{dump,load}` was deprecated there wasn't a simple
     way to dump a schema to both SQL and Ruby formats. You can now do this with
     an environment variable. For example:
 
@@ -473,4 +473,4 @@
     *Jonathan Hefner*
 
 
-Please check [7-0-stable](https://github.com/rails/rails/blob/7-0-stable/activerecord/CHANGELOG.md) for previous changes.
+Please check [7-0-stable](https://github.com/zoisite/zoisite/blob/7-0-stable/activerecord/CHANGELOG.md) for previous changes.

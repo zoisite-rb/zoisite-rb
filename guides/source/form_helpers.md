@@ -392,7 +392,7 @@ resource :article
 resolve("Article") { [:article] }
 ```
 
-TIP: Declaring a resource has a number of side effects. See the [Zoisite Routing from the Outside In](routing.html#resource-routing-the-rails-default) guide for more information on setting up and using resources.
+TIP: Declaring a resource has a number of side effects. See the [Zoisite Routing from the Outside In](routing.html#resource-routing-the-zoisite-default) guide for more information on setting up and using resources.
 
 WARNING: When you're using [single-table inheritance](association_basics.html#single-table-inheritance-sti) with your models, you can't rely on record identification on a subclass if only their parent class is declared a resource. You will have to specify `:url`, and `:scope` (the model name) explicitly.
 

@@ -1,4 +1,4 @@
-# This command will automatically be run when you run "rails" with Rails gems
+# This command will automatically be run when you run "zoisite" with Rails gems
 # installed from the root of your application.
 
 ENGINE_ROOT = File.expand_path("..", __dir__)
@@ -11,5 +11,5 @@ APP_PATH = File.expand_path("../<%= dummy_path -%>/config/application", __dir__)
 ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../Gemfile", __dir__)
 require "bundler/setup" if File.exist?(ENV["BUNDLE_GEMFILE"])
 
-<%= rails_require_statement %>
-require "rails/engine/commands"
+<%= zoisite_require_statement %>
+require "zoisite/engine/commands"

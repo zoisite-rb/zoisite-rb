@@ -13,7 +13,7 @@ module ActionDispatch
   #     config.middleware.insert_before Rack::Sendfile, ActionDispatch::DebugLocks
   #
   # After restarting the application and re-triggering the deadlock condition, the
-  # route `/rails/locks` will show a summary of all threads currently known to the
+  # route `/zoisite/locks` will show a summary of all threads currently known to the
   # interlock, which lock level they are holding or awaiting, and their current
   # backtrace.
   #
@@ -27,7 +27,7 @@ module ActionDispatch
   # This middleware exposes operational details of the server, with no access
   # control. It should only be enabled when in use, and removed thereafter.
   class DebugLocks
-    def initialize(app, path = "/rails/locks")
+    def initialize(app, path = "/zoisite/locks")
       @app = app
       @path = path
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/dev_caching"
+require "zoisite/dev_caching"
 
 module Zoisite
   module Command

@@ -5,7 +5,7 @@ require "action_controller"
 require "action_controller/test_case"
 require "action_view"
 
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ActionView
   # = Action View Test Case

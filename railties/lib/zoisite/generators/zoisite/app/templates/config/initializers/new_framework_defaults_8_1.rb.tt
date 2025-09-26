@@ -7,7 +7,7 @@
 # this file and set the `config.load_defaults` to `8.1`.
 #
 # Read the Guide for Upgrading Ruby on Rails for more info on each option.
-# https://guides.rubyonrails.org/upgrading_ruby_on_rails.html
+# https://guides.rubyonzoisite.org/upgrading_ruby_on_zoisite.html
 
 ###
 # Skips escaping HTML entities and line separators. When set to `false`, the

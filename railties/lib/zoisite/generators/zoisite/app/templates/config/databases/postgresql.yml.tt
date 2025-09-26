@@ -16,7 +16,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  # https://guides.rubyonzoisite.org/configuring.html#database-pooling
   max_connections: <%%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 <% if devcontainer? -%>
   <%% if ENV["DB_HOST"] %>
@@ -89,7 +89,7 @@ test:
 #   CACHE_DATABASE_URL="postgres://cacheuser:cachepass@localhost/cachedatabase"
 #
 <%- end -%>
-# Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
+# Read https://guides.rubyonzoisite.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
 <%- if options.skip_solid? -%>

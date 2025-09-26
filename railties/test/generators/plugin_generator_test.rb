@@ -2,9 +2,9 @@
 
 require "plugin_helpers"
 require "generators/generators_test_helper"
-require "rails/generators/rails/plugin/plugin_generator"
+require "zoisite/generators/zoisite/plugin/plugin_generator"
 require "generators/shared_generator_tests"
-require "rails/engine/updater"
+require "zoisite/engine/updater"
 
 DEFAULT_PLUGIN_FILES = %w(
   .git
@@ -41,7 +41,7 @@ DEFAULT_PLUGIN_FILES = %w(
   test/dummy/app/views/pwa/service-worker.js
   test/dummy/bin/ci
   test/dummy/bin/dev
-  test/dummy/bin/rails
+  test/dummy/bin/zoisite
   test/dummy/bin/rake
   test/dummy/bin/setup
   test/dummy/config.ru
@@ -100,7 +100,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     assert_equal "Invalid plugin name 43things. Please give a name which does not start with numbers.\n", content
 
     content = capture(:stderr) { run_generator [File.join(destination_root, "plugin")] }
-    assert_equal "Invalid plugin name plugin. Please give a name which does not match one of the reserved rails words: application, destroy, plugin, runner, test\n", content
+    assert_equal "Invalid plugin name plugin. Please give a name which does not match one of the reserved zoisite words: application, destroy, plugin, runner, test\n", content
 
     content = capture(:stderr) { run_generator [File.join(destination_root, "Digest")] }
     assert_equal "Invalid plugin name Digest, constant Digest is already in use. Please choose another plugin name.\n", content
@@ -170,15 +170,15 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
 
   def test_generating_in_full_mode_with_almost_of_all_skip_options
     run_generator [destination_root, "--full", "-M", "-O", "-C", "-T", "--skip-active-storage", "--skip-active-job"]
-    assert_file "bin/rails" do |content|
-      assert_no_match(/\s+require\s+["']rails\/all["']/, content)
+    assert_file "bin/zoisite" do |content|
+      assert_no_match(/\s+require\s+["']zoisite\/all["']/, content)
     end
-    assert_file "bin/rails", /#\s+require\s+["']active_job\/railtie["']/
-    assert_file "bin/rails", /#\s+require\s+["']active_record\/railtie["']/
-    assert_file "bin/rails", /#\s+require\s+["']active_storage\/engine["']/
-    assert_file "bin/rails", /#\s+require\s+["']action_mailer\/railtie["']/
-    assert_file "bin/rails", /#\s+require\s+["']action_cable\/engine["']/
-    assert_file "bin/rails", /#\s+require\s+["']rails\/test_unit\/railtie["']/
+    assert_file "bin/zoisite", /#\s+require\s+["']active_job\/railtie["']/
+    assert_file "bin/zoisite", /#\s+require\s+["']active_record\/railtie["']/
+    assert_file "bin/zoisite", /#\s+require\s+["']active_storage\/engine["']/
+    assert_file "bin/zoisite", /#\s+require\s+["']action_mailer\/railtie["']/
+    assert_file "bin/zoisite", /#\s+require\s+["']action_cable\/engine["']/
+    assert_file "bin/zoisite", /#\s+require\s+["']zoisite\/test_unit\/railtie["']/
   end
 
   def test_generating_test_files_in_full_mode
@@ -207,7 +207,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     assert_file "Rakefile" do |contents|
       assert_no_match(/APP_RAKEFILE/, contents)
     end
-    assert_file "bin/rails" do |contents|
+    assert_file "bin/zoisite" do |contents|
       assert_no_match(/APP_PATH/, contents)
     end
   end
@@ -215,7 +215,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
   def test_generating_adds_dummy_app_rake_tasks_without_unit_test_files
     run_generator [destination_root, "-T", "--mountable", "--dummy-path", "my_dummy_app"]
     assert_file "Rakefile", /APP_RAKEFILE/
-    assert_file "bin/rails", /APP_PATH/
+    assert_file "bin/zoisite", /APP_PATH/
   end
 
   def test_ensure_that_plugin_options_are_not_passed_to_app_generator
@@ -308,7 +308,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
 
     in_plugin_context(destination_root) do
       quietly { system "bundle install" }
-      output = `bin/rails db:migrate 2>&1`
+      output = `bin/zoisite db:migrate 2>&1`
       assert_predicate $?, :success?, "Command failed: #{output}"
     end
   end
@@ -323,7 +323,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     assert_file "app/helpers"
     assert_file "app/mailers"
     assert_file "app/jobs"
-    assert_file "bin/rails", /\s+require\s+["']rails\/all["']/
+    assert_file "bin/zoisite", /\s+require\s+["']zoisite\/all["']/
     assert_file "config/routes.rb", /Zoisite.application.routes.draw do/
     assert_file "lib/bukkits/engine.rb", /module Bukkits\n  class Engine < ::Zoisite::Engine\n  end\nend/
     assert_file "lib/bukkits.rb", /require "bukkits\/engine"/
@@ -340,11 +340,11 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     assert_file "hyphenated-name/app/helpers"
     assert_file "hyphenated-name/app/mailers"
     assert_file "hyphenated-name/app/jobs"
-    assert_file "hyphenated-name/bin/rails"
+    assert_file "hyphenated-name/bin/zoisite"
     assert_file "hyphenated-name/config/routes.rb",              /Zoisite.application.routes.draw do/
     assert_file "hyphenated-name/lib/hyphenated/name/engine.rb", /module Hyphenated\n  module Name\n    class Engine < ::Zoisite::Engine\n    end\n  end\nend/
     assert_file "hyphenated-name/lib/hyphenated/name.rb",        /require "hyphenated\/name\/engine"/
-    assert_file "hyphenated-name/bin/rails",                     /\.\.\/lib\/hyphenated\/name\/engine/
+    assert_file "hyphenated-name/bin/zoisite",                     /\.\.\/lib\/hyphenated\/name\/engine/
   end
 
   def test_creating_engine_with_hyphenated_and_underscored_name_in_full_mode
@@ -358,11 +358,11 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     assert_file "my_hyphenated-name/app/helpers"
     assert_file "my_hyphenated-name/app/mailers"
     assert_file "my_hyphenated-name/app/jobs"
-    assert_file "my_hyphenated-name/bin/rails"
+    assert_file "my_hyphenated-name/bin/zoisite"
     assert_file "my_hyphenated-name/config/routes.rb",              /Zoisite\.application\.routes\.draw do/
     assert_file "my_hyphenated-name/lib/my_hyphenated/name/engine.rb", /module MyHyphenated\n  module Name\n    class Engine < ::Zoisite::Engine\n    end\n  end\nend/
     assert_file "my_hyphenated-name/lib/my_hyphenated/name.rb",        /require "my_hyphenated\/name\/engine"/
-    assert_file "my_hyphenated-name/bin/rails",                     /\.\.\/lib\/my_hyphenated\/name\/engine/
+    assert_file "my_hyphenated-name/bin/zoisite",                     /\.\.\/lib\/my_hyphenated\/name\/engine/
   end
 
   def test_being_quiet_while_creating_dummy_application
@@ -523,28 +523,28 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     assert_file "bukkits.gemspec", /spec\.version\s+ = Bukkits::VERSION/
   end
 
-  def test_gemspec_uses_optimistic_rails_version_constraint
-    rails_version = "1.2.3.4.pre5"
+  def test_gemspec_uses_optimistic_zoisite_version_constraint
+    zoisite_version = "1.2.3.4.pre5"
 
-    Zoisite.stub(:gem_version, Gem::Version.new(rails_version)) do
+    Zoisite.stub(:gem_version, Gem::Version.new(zoisite_version)) do
       run_generator
     end
 
-    assert_file "bukkits.gemspec", /add_dependency "rails", ">= #{Regexp.escape rails_version}"/
+    assert_file "bukkits.gemspec", /add_dependency "zoisite", ">= #{Regexp.escape zoisite_version}"/
   end
 
   def test_usage_of_engine_commands
     run_generator [destination_root, "--full"]
-    assert_file "bin/rails", /ENGINE_PATH = File\.expand_path\("\.\.\/lib\/bukkits\/engine", __dir__\)/
-    assert_file "bin/rails", /ENGINE_ROOT = File\.expand_path\("\.\.", __dir__\)/
-    assert_file "bin/rails", %r|APP_PATH = File\.expand_path\("\.\./test/dummy/config/application", __dir__\)|
-    assert_file "bin/rails", /require "rails\/all"/
-    assert_file "bin/rails", /require "rails\/engine\/commands"/
+    assert_file "bin/zoisite", /ENGINE_PATH = File\.expand_path\("\.\.\/lib\/bukkits\/engine", __dir__\)/
+    assert_file "bin/zoisite", /ENGINE_ROOT = File\.expand_path\("\.\.", __dir__\)/
+    assert_file "bin/zoisite", %r|APP_PATH = File\.expand_path\("\.\./test/dummy/config/application", __dir__\)|
+    assert_file "bin/zoisite", /require "zoisite\/all"/
+    assert_file "bin/zoisite", /require "zoisite\/engine\/commands"/
   end
 
   def test_shebang
     run_generator [destination_root, "--full"]
-    assert_file "bin/rails", /#!\/usr\/bin\/env ruby/
+    assert_file "bin/zoisite", /#!\/usr\/bin\/env ruby/
   end
 
   def test_passing_dummy_path_as_a_parameter
@@ -572,7 +572,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
   def test_creating_dummy_without_tests_but_with_dummy_path
     run_generator [destination_root, "--dummy_path", "spec/dummy", "--skip-test"]
     assert_directory "spec/dummy"
-    assert_file "spec/dummy/config/application.rb", /#\s+require\s+["']rails\/test_unit\/railtie["']/
+    assert_file "spec/dummy/config/application.rb", /#\s+require\s+["']zoisite\/test_unit\/railtie["']/
     assert_no_directory "test"
     assert_file ".gitignore" do |contents|
       assert_match(/spec\/dummy/, contents)
@@ -617,7 +617,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     end
   end
 
-  def test_dummy_application_uses_dynamic_rails_version_number
+  def test_dummy_application_uses_dynamic_zoisite_version_number
     run_generator
 
     assert_file "test/dummy/config/application.rb" do |contents|
@@ -688,7 +688,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     assert_no_file "bukkits.gemspec"
     assert_file "Gemfile" do |contents|
       assert_no_match("gemspec", contents)
-      assert_match(/gem "rails"/, contents)
+      assert_match(/gem "zoisite"/, contents)
     end
   end
 
@@ -697,7 +697,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     assert_no_file "bukkits.gemspec"
     assert_file "Gemfile" do |contents|
       assert_no_match("gemspec", contents)
-      assert_match(/gem "rails"/, contents)
+      assert_match(/gem "zoisite"/, contents)
     end
   end
 
@@ -746,7 +746,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     run_generator [destination_root, "--mountable"]
 
     capture(:stdout) do
-      `#{destination_root}/bin/rails g controller admin/dashboard foo`
+      `#{destination_root}/bin/zoisite g controller admin/dashboard foo`
     end
 
     assert_file "config/routes.rb" do |contents|
@@ -839,7 +839,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     run_generator [destination_root, "--mountable", "--api"]
 
     capture(:stdout) do
-      `#{destination_root}/bin/rails g scaffold article`
+      `#{destination_root}/bin/zoisite g scaffold article`
     end
 
     assert_file "app/models/bukkits/article.rb"
@@ -855,7 +855,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
   def test_model_with_existent_application_record_in_mountable_engine
     run_generator [destination_root, "--mountable"]
     capture(:stdout) do
-      `#{destination_root}/bin/rails g model article`
+      `#{destination_root}/bin/zoisite g model article`
     end
 
     assert_file "app/models/bukkits/article.rb", /class Article < ApplicationRecord/
@@ -865,7 +865,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     run_generator [destination_root, "--mountable"]
     FileUtils.rm "#{destination_root}/app/mailers/bukkits/application_mailer.rb"
     capture(:stdout) do
-      `#{destination_root}/bin/rails g mailer User`
+      `#{destination_root}/bin/zoisite g mailer User`
     end
 
     assert_file "#{destination_root}/app/mailers/bukkits/application_mailer.rb" do |mailer|
@@ -877,7 +877,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
   def test_generate_mailer_layouts_when_does_not_exist_in_mountable_engine
     run_generator [destination_root, "--mountable"]
     capture(:stdout) do
-      `#{destination_root}/bin/rails g mailer User`
+      `#{destination_root}/bin/zoisite g mailer User`
     end
 
     assert_file "#{destination_root}/app/views/layouts/bukkits/mailer.text.erb" do |view|
@@ -893,7 +893,7 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     run_generator [destination_root, "--mountable"]
     FileUtils.rm "#{destination_root}/app/jobs/bukkits/application_job.rb"
     capture(:stdout) do
-      `#{destination_root}/bin/rails g job refresh_counters`
+      `#{destination_root}/bin/zoisite g job refresh_counters`
     end
 
     assert_file "#{destination_root}/app/jobs/bukkits/application_job.rb" do |record|
@@ -906,11 +906,11 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
     run_generator [destination_root, "--mountable"]
 
     Object.const_set("ENGINE_ROOT", destination_root)
-    FileUtils.rm("#{destination_root}/bin/rails")
+    FileUtils.rm("#{destination_root}/bin/zoisite")
 
     quietly { Zoisite::Engine::Updater.run(:create_bin_files) }
 
-    assert_file "#{destination_root}/bin/rails" do |content|
+    assert_file "#{destination_root}/bin/zoisite" do |content|
       assert_match(%r|APP_PATH = File\.expand_path\("\.\./test/dummy/config/application", __dir__\)|, content)
     end
   ensure
@@ -924,12 +924,12 @@ class PluginGeneratorTest < Zoisite::Generators::TestCase
 
   def test_engine_test_command
     run_generator [destination_root, "--full"]
-    assert_file ".github/workflows/ci.yml", /run: bin\/rails db:test:prepare test/
+    assert_file ".github/workflows/ci.yml", /run: bin\/zoisite db:test:prepare test/
   end
 
   def test_engine_without_active_record_test_command
     run_generator [destination_root, "--full", "--skip-active-record"]
-    assert_file ".github/workflows/ci.yml", /run: bin\/rails test/
+    assert_file ".github/workflows/ci.yml", /run: bin\/zoisite test/
   end
 
   private

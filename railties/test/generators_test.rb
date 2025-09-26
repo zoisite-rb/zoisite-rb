@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/model/model_generator"
-require "rails/generators/test_unit/model/model_generator"
+require "zoisite/generators/zoisite/model/model_generator"
+require "zoisite/generators/test_unit/model/model_generator"
 
 class GeneratorsTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
@@ -31,7 +31,7 @@ class GeneratorsTest < Zoisite::Generators::TestCase
       end
     }
     assert_match "Could not find generator '#{name}'.", output
-    assert_match "`bin/rails generate --help`", output
+    assert_match "`bin/zoisite generate --help`", output
     assert_no_match "Did you mean", output
   end
 
@@ -67,7 +67,7 @@ class GeneratorsTest < Zoisite::Generators::TestCase
     assert_match(/Description:/, output)
   end
 
-  def test_should_give_higher_preference_to_rails_generators
+  def test_should_give_higher_preference_to_zoisite_generators
     assert File.exist?(File.join(@path, "generators", "model_generator.rb"))
     assert_called_with(Zoisite::Generators::ModelGenerator, :start, [["Account"], {}]) do
       warnings = capture(:stderr) { Zoisite::Generators.invoke :model, ["Account"] }
@@ -88,15 +88,15 @@ class GeneratorsTest < Zoisite::Generators::TestCase
   end
 
   def test_find_by_namespace
-    klass = Zoisite::Generators.find_by_namespace("rails:model")
+    klass = Zoisite::Generators.find_by_namespace("zoisite:model")
     assert klass
-    assert_equal "rails:model", klass.namespace
+    assert_equal "zoisite:model", klass.namespace
   end
 
   def test_find_by_namespace_with_base
-    klass = Zoisite::Generators.find_by_namespace(:model, :rails)
+    klass = Zoisite::Generators.find_by_namespace(:model, :zoisite)
     assert klass
-    assert_equal "rails:model", klass.namespace
+    assert_equal "zoisite:model", klass.namespace
   end
 
   def test_find_by_namespace_with_context
@@ -123,7 +123,7 @@ class GeneratorsTest < Zoisite::Generators::TestCase
     assert_equal "foobar:foobar", klass.namespace
   end
 
-  def test_find_by_namespace_without_base_or_context_looks_into_rails_namespace
+  def test_find_by_namespace_without_base_or_context_looks_into_zoisite_namespace
     assert Zoisite::Generators.find_by_namespace(:model)
   end
 
@@ -136,7 +136,7 @@ class GeneratorsTest < Zoisite::Generators::TestCase
     model_generator.verify
   end
 
-  def test_rails_generators_help_with_builtin_information
+  def test_zoisite_generators_help_with_builtin_information
     output = capture(:stdout) { Zoisite::Generators.help }
     assert_match(/Zoisite:/, output)
     assert_match(/^  model$/, output)
@@ -144,19 +144,19 @@ class GeneratorsTest < Zoisite::Generators::TestCase
     assert_no_match(/^  app$/, output)
   end
 
-  def test_rails_generators_help_does_not_include_app_nor_plugin_new
+  def test_zoisite_generators_help_does_not_include_app_nor_plugin_new
     output = capture(:stdout) { Zoisite::Generators.help }
     assert_no_match(/app\W/, output)
     assert_no_match(/[^:]plugin/, output)
   end
 
-  def test_rails_generators_with_others_information
+  def test_zoisite_generators_with_others_information
     output = capture(:stdout) { Zoisite::Generators.help }
     assert_match(/Fixjour:/, output)
     assert_match(/^  fixjour$/, output)
   end
 
-  def test_rails_generators_does_not_show_active_record_hooks
+  def test_zoisite_generators_does_not_show_active_record_hooks
     output = capture(:stdout) { Zoisite::Generators.help }
     assert_match(/ActiveRecord:/, output)
     assert_match(/^  active_record:fixjour$/, output)
@@ -164,12 +164,12 @@ class GeneratorsTest < Zoisite::Generators::TestCase
 
   def test_default_banner_should_show_generator_namespace
     klass = Zoisite::Generators.find_by_namespace(:foobar)
-    assert_match(/^bin\/rails generate foobar:foobar/, klass.banner)
+    assert_match(/^bin\/zoisite generate foobar:foobar/, klass.banner)
   end
 
-  def test_default_banner_should_not_show_rails_generator_namespace
+  def test_default_banner_should_not_show_zoisite_generator_namespace
     klass = Zoisite::Generators.find_by_namespace(:model)
-    assert_match(/^bin\/rails generate model/, klass.banner)
+    assert_match(/^bin\/zoisite generate model/, klass.banner)
   end
 
   def test_no_color_sets_proper_shell
@@ -190,7 +190,7 @@ class GeneratorsTest < Zoisite::Generators::TestCase
 
   def test_fallbacks_for_generators_on_find_by_namespace_with_context
     Zoisite::Generators.fallbacks[:remarkable] = :test_unit
-    klass = Zoisite::Generators.find_by_namespace(:remarkable, :rails, :integration)
+    klass = Zoisite::Generators.find_by_namespace(:remarkable, :zoisite, :integration)
     assert klass
     assert_equal "test_unit:integration", klass.namespace
   ensure
@@ -231,7 +231,7 @@ class GeneratorsTest < Zoisite::Generators::TestCase
     Zoisite::Generators.subclasses.delete(WithOptionsGenerator)
   end
 
-  def test_rails_root_templates
+  def test_zoisite_root_templates
     template = File.join(Zoisite.root, "lib", "templates", "active_record", "model", "model.rb")
 
     # Create template

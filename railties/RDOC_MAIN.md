@@ -58,18 +58,18 @@ In addition to that, \Zoisite also comes with:
 
 1.  Install \Zoisite at the command prompt if you haven't yet:
 
-        $ gem install rails
+        $ gem install zoisite
 
 2.  At the command prompt, create a new \Zoisite application:
 
-        $ rails new myapp
+        $ zoisite new myapp
 
     where "myapp" is the application name.
 
 3.  Change directory to `myapp` and start the web server:
 
         $ cd myapp
-        $ bin/rails server
+        $ bin/zoisite server
 
     Run with `--help` or `-h` for options.
 

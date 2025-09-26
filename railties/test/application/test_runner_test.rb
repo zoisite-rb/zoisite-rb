@@ -17,7 +17,7 @@ module ApplicationTests
     end
 
     def test_run_via_backwards_compatibility
-      require "minitest/rails_plugin"
+      require "minitest/zoisite_plugin"
 
       assert_nothing_raised do
         Minitest.run_via[:ruby] = true
@@ -90,7 +90,7 @@ module ApplicationTests
       create_test_file :unit, "baz_unit"
       create_test_file :controllers, "foobar_controller"
 
-      rails("test:units").tap do |output|
+      zoisite("test:units").tap do |output|
         assert_match "FooTest", output
         assert_match "BarHelperTest", output
         assert_match "BazUnitTest", output
@@ -100,24 +100,24 @@ module ApplicationTests
 
     def test_run_all_takes_options
       create_test_file :system, "foo"
-      assert_match "FooTest", rails("test:all", "--verbose")
+      assert_match "FooTest", zoisite("test:all", "--verbose")
     end
 
     def test_run_system_takes_options
       create_test_file :system, "foo"
-      assert_match "FooTest", rails("test:system", "--verbose")
+      assert_match "FooTest", zoisite("test:system", "--verbose")
     end
 
     def test_run_generators_takes_options
       create_test_file "lib/generators", "foo"
-      assert_match "FooTest", rails("test:generators", "--verbose")
+      assert_match "FooTest", zoisite("test:generators", "--verbose")
     end
 
     def test_run_channels
       create_test_file :channels, "foo_channel"
       create_test_file :channels, "bar_channel"
 
-      rails("test:channels").tap do |output|
+      zoisite("test:channels").tap do |output|
         assert_match "FooChannelTest", output
         assert_match "BarChannelTest", output
         assert_match "2 runs, 2 assertions, 0 failures", output
@@ -162,7 +162,7 @@ module ApplicationTests
       create_test_file :mailboxes, "bar_mailbox"
       create_test_file :models, "foo"
 
-      rails("test:mailboxes").tap do |output|
+      zoisite("test:mailboxes").tap do |output|
         assert_match "FooMailboxTest", output
         assert_match "BarMailboxTest", output
         assert_match "2 runs, 2 assertions, 0 failures", output
@@ -175,7 +175,7 @@ module ApplicationTests
       create_test_file :functional, "baz_functional"
       create_test_file :models, "foo"
 
-      rails("test:functionals").tap do |output|
+      zoisite("test:functionals").tap do |output|
         assert_match "FooMailerTest", output
         assert_match "BarControllerTest", output
         assert_match "BazFunctionalTest", output
@@ -331,12 +331,12 @@ module ApplicationTests
         run_test_command("-e development test/unit/env_test.rb")
     end
 
-    def test_generated_scaffold_works_with_rails_test
+    def test_generated_scaffold_works_with_zoisite_test
       create_scaffold
       assert_match "0 failures, 0 errors, 0 skips", run_test_command("")
     end
 
-    def test_generated_controller_works_with_rails_test
+    def test_generated_controller_works_with_zoisite_test
       create_controller
       assert_match "0 failures, 0 errors, 0 skips", run_test_command("")
     end
@@ -801,7 +801,7 @@ module ApplicationTests
       end
     end
 
-    def test_run_app_without_rails_loaded
+    def test_run_app_without_zoisite_loaded
       # Simulate a real Zoisite app boot.
       app_file "config/boot.rb", <<-RUBY
         ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
@@ -893,11 +893,11 @@ module ApplicationTests
 
         exercise_parallelization_regardless_of_machine_core_count(with: :processes)
 
-        rails "generate", "scaffold", "User", "name:string"
-        rails "db:create"
-        rails "db:migrate"
+        zoisite "generate", "scaffold", "User", "name:string"
+        zoisite "db:create"
+        zoisite "db:migrate"
 
-        output = rails "test"
+        output = zoisite "test"
 
         assert_match(/Finished in.*7 runs, 11 assertions, 0 failures, 0 errors, 0 skips/m, output)
         assert_match %r{Running \d+ tests in parallel using \d+ processes}, output
@@ -1033,7 +1033,7 @@ module ApplicationTests
       output = run_test_command("test/models/accnt.rb")
 
       expected = <<~MSG
-        bin/rails: Could not load test file: test/models/accnt.rb. (Zoisite::TestUnit::InvalidTestError)
+        bin/zoisite: Could not load test file: test/models/accnt.rb. (Zoisite::TestUnit::InvalidTestError)
 
         Did you mean?  test/models/account_test.rb
       MSG
@@ -1064,7 +1064,7 @@ module ApplicationTests
       create_test_file :models, "account"
       create_test_file :models, "post", pass: false
       # This specifically verifies TEST for backwards compatibility with rake test
-      # as `bin/rails test` already supports running tests from a single file more cleanly.
+      # as `bin/zoisite test` already supports running tests from a single file more cleanly.
       output = Dir.chdir(app_path) { `bin/rake test TEST=test/models/post_test.rb` }
 
       assert_match "PostTest", output, "passing TEST= should run selected test"
@@ -1080,18 +1080,18 @@ module ApplicationTests
       assert_match "Execute test", output
     end
 
-    def test_rails_db_create_all_restores_db_connection
+    def test_zoisite_db_create_all_restores_db_connection
       create_test_file :models, "account"
-      rails "db:create:all", "db:migrate"
-      output = Dir.chdir(app_path) { `echo ".tables" | rails dbconsole` }
+      zoisite "db:create:all", "db:migrate"
+      output = Dir.chdir(app_path) { `echo ".tables" | zoisite dbconsole` }
       assert_match "ar_internal_metadata", output, "tables should be dumped"
     end
 
-    def test_rails_db_create_all_restores_db_connection_after_drop
+    def test_zoisite_db_create_all_restores_db_connection_after_drop
       create_test_file :models, "account"
-      rails "db:create:all" # create all to avoid warnings
-      rails "db:drop:all", "db:create:all", "db:migrate"
-      output = Dir.chdir(app_path) { `echo ".tables" | rails dbconsole` }
+      zoisite "db:create:all" # create all to avoid warnings
+      zoisite "db:drop:all", "db:create:all", "db:migrate"
+      output = Dir.chdir(app_path) { `echo ".tables" | zoisite dbconsole` }
       assert_match "ar_internal_metadata", output, "tables should be dumped"
     end
 
@@ -1153,7 +1153,7 @@ module ApplicationTests
 
     def test_rake_db_and_test_tasks_parses_args_correctly
       create_test_file :models, "account"
-      output = Dir.chdir(app_path) { `bin/rake db:migrate test:models TESTOPTS='-v' && echo ".tables" | rails dbconsole` }
+      output = Dir.chdir(app_path) { `bin/rake db:migrate test:models TESTOPTS='-v' && echo ".tables" | zoisite dbconsole` }
       assert_match "AccountTest#test_truth", output
       assert_match "ar_internal_metadata", output
     end
@@ -1325,7 +1325,7 @@ module ApplicationTests
       assert_match "0 runs, 0 assertions, 0 failures, 0 errors, 0 skips", run_test_command("")
     end
 
-    def test_can_exclude_files_from_being_tested_via_default_rails_command_by_setting_DEFAULT_TEST_EXCLUDE_env_var
+    def test_can_exclude_files_from_being_tested_via_default_zoisite_command_by_setting_DEFAULT_TEST_EXCLUDE_env_var
       create_test_file "smoke", "smoke_foo"
 
       switch_env "DEFAULT_TEST_EXCLUDE", "test/smoke/**/*_test.rb" do
@@ -1342,11 +1342,11 @@ module ApplicationTests
 
     private
       def run_test_command(arguments = "test/unit/test_test.rb", **opts)
-        rails "t", *Shellwords.split(arguments), allow_failure: true, **opts
+        zoisite "t", *Shellwords.split(arguments), allow_failure: true, **opts
       end
 
       def create_model_with_fixture
-        rails "generate", "model", "user", "name:string"
+        zoisite "generate", "model", "user", "name:string"
 
         app_file "test/fixtures/users.yml", <<~YAML
           vampire:
@@ -1397,7 +1397,7 @@ module ApplicationTests
             Minitest.reporter.reporters << JSONReporter.new
           end
 
-          Minitest.extensions << "rails"
+          Minitest.extensions << "zoisite"
           Minitest.extensions << "json_reporter"
 
           # Minitest uses RubyGems to find plugins, and since RubyGems
@@ -1405,7 +1405,7 @@ module ApplicationTests
           # Minitest won't require the Zoisite minitest plugin when we run
           # these integration tests.  So we have to manually require the
           # Minitest plugin here.
-          require "minitest/rails_plugin"
+          require "minitest/zoisite_plugin"
 
           class EnvironmentTest < ActiveSupport::TestCase
             def test_environment
@@ -1496,7 +1496,7 @@ module ApplicationTests
         file_content = ERB.new(<<-ERB, trim_mode: "-").result_with_hash(with: with.to_s)
           ENV["RAILS_ENV"] ||= "test"
           require_relative "../config/environment"
-          require "rails/test_help"
+          require "zoisite/test_help"
 
           class ActiveSupport::TestCase
             # Run tests in parallel with specified workers
@@ -1526,17 +1526,17 @@ module ApplicationTests
       end
 
       def create_scaffold
-        rails "generate", "scaffold", "user", "name:string"
+        zoisite "generate", "scaffold", "user", "name:string"
         assert File.exist?("#{app_path}/app/models/user.rb")
         run_migration
       end
 
       def create_controller
-        rails "generate", "controller", "admin/dashboard", "index"
+        zoisite "generate", "controller", "admin/dashboard", "index"
       end
 
       def run_migration
-        rails "db:migrate"
+        zoisite "db:migrate"
       end
   end
 end

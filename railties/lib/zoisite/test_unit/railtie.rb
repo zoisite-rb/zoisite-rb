@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/test_unit/line_filtering"
+require "zoisite/test_unit/line_filtering"
 
 module Zoisite
   class TestUnitRailtie < Zoisite::Railtie
@@ -19,7 +19,7 @@ module Zoisite
     end
 
     rake_tasks do
-      load "rails/test_unit/testing.rake"
+      load "zoisite/test_unit/testing.rake"
     end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/gem_version"
+require "zoisite/gem_version"
 
 class VersionTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
@@ -15,12 +15,12 @@ class VersionTest < ActiveSupport::TestCase
   end
 
   test "command works" do
-    output = rails("version")
+    output = zoisite("version")
     assert_equal "Zoisite #{Zoisite.gem_version}\n", output
   end
 
   test "short-cut alias works" do
-    output = rails("-v")
+    output = zoisite("-v")
     assert_equal "Zoisite #{Zoisite.gem_version}\n", output
   end
 end

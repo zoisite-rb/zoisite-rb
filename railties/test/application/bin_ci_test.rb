@@ -20,9 +20,9 @@ module ApplicationTests
         assert_match(/bin\/rubocop/, content)
         assert_match(/bin\/brakeman/, content)
         assert_match(/bin\/bundler-audit/, content)
-        assert_match(/"bin\/rails test"$/, content)
-        assert_match(/"bin\/rails test:system"$/, content)
-        assert_match(/bin\/rails db:seed:replant/, content)
+        assert_match(/"bin\/zoisite test"$/, content)
+        assert_match(/"bin\/zoisite test:system"$/, content)
+        assert_match(/bin\/zoisite db:seed:replant/, content)
 
         # Node-specific steps excluded by default
         assert_no_match(/yarn audit/, content)

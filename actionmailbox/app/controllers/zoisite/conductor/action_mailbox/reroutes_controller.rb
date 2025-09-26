@@ -9,7 +9,7 @@ module Zoisite
       inbound_email = ActionMailbox::InboundEmail.find(params[:inbound_email_id])
       reroute inbound_email
 
-      redirect_to main_app.rails_conductor_inbound_email_url(inbound_email)
+      redirect_to main_app.zoisite_conductor_inbound_email_url(inbound_email)
     end
 
     private

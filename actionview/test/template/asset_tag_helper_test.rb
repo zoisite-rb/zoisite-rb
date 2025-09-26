@@ -254,8 +254,8 @@ class AssetTagHelperTest < ActionView::TestCase
     %(image_tag("google.com.png")) => %(<img src="/images/google.com.png" />),
     %(image_tag("slash..png")) => %(<img src="/images/slash..png" />),
     %(image_tag(".pdf.png")) => %(<img src="/images/.pdf.png" />),
-    %(image_tag("http://www.zoisite.com/images/rails.png")) => %(<img src="http://www.zoisite.com/images/rails.png" />),
-    %(image_tag("//www.zoisite.com/images/rails.png")) => %(<img src="//www.zoisite.com/images/rails.png" />),
+    %(image_tag("http://www.zoisite.com/images/zoisite.png")) => %(<img src="http://www.zoisite.com/images/zoisite.png" />),
+    %(image_tag("//www.zoisite.com/images/zoisite.png")) => %(<img src="//www.zoisite.com/images/zoisite.png" />),
     %(image_tag("mouse.png", :alt => nil)) => %(<img src="/images/mouse.png" />),
     %(image_tag("data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==", :alt => nil)) => %(<img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />),
     %(image_tag("")) => %(<img src="" />),
@@ -314,8 +314,8 @@ class AssetTagHelperTest < ActionView::TestCase
     %(picture_tag("google.com.png")) => %(<picture><img src="/images/google.com.png" /></picture>),
     %(picture_tag("slash..png")) => %(<picture><img src="/images/slash..png" /></picture>),
     %(picture_tag(".pdf.png")) => %(<picture><img src="/images/.pdf.png" /></picture>),
-    %(picture_tag("http://www.zoisite.com/images/rails.png")) => %(<picture><img src="http://www.zoisite.com/images/rails.png" /></picture>),
-    %(picture_tag("//www.zoisite.com/images/rails.png")) => %(<picture><img src="//www.zoisite.com/images/rails.png" /></picture>),
+    %(picture_tag("http://www.zoisite.com/images/zoisite.png")) => %(<picture><img src="http://www.zoisite.com/images/zoisite.png" /></picture>),
+    %(picture_tag("//www.zoisite.com/images/zoisite.png")) => %(<picture><img src="//www.zoisite.com/images/zoisite.png" /></picture>),
     %(picture_tag("mouse.png", :image => { :alt => nil })) => %(<picture><img src="/images/mouse.png" /></picture>),
     %(picture_tag("data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==", :image => { :alt => nil })) => %(<picture><img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" /></picture>),
     %(picture_tag("")) => %(<picture><img src="" /></picture>),
@@ -401,8 +401,8 @@ class AssetTagHelperTest < ActionView::TestCase
     %(video_tag("error.avi", "size" => "1,024x768")) => %(<video src="/videos/error.avi"></video>),
     %(video_tag("error.avi", "size" => "768x1,024")) => %(<video src="/videos/error.avi"></video>),
     %(video_tag("error.avi", "size" => "x")) => %(<video src="/videos/error.avi"></video>),
-    %(video_tag("http://media.zoisite-rb.org/video/rails_blog_2.mov")) => %(<video src="http://media.zoisite-rb.org/video/rails_blog_2.mov"></video>),
-    %(video_tag("//media.zoisite-rb.org/video/rails_blog_2.mov")) => %(<video src="//media.zoisite-rb.org/video/rails_blog_2.mov"></video>),
+    %(video_tag("http://media.zoisite-rb.org/video/zoisite_blog_2.mov")) => %(<video src="http://media.zoisite-rb.org/video/zoisite_blog_2.mov"></video>),
+    %(video_tag("//media.zoisite-rb.org/video/zoisite_blog_2.mov")) => %(<video src="//media.zoisite-rb.org/video/zoisite_blog_2.mov"></video>),
     %(video_tag("multiple.ogg", "multiple.avi")) => %(<video><source src="/videos/multiple.ogg" /><source src="/videos/multiple.avi" /></video>),
     %(video_tag(["multiple.ogg", "multiple.avi"])) => %(<video><source src="/videos/multiple.ogg" /><source src="/videos/multiple.avi" /></video>),
     %(video_tag(["multiple.ogg", "multiple.avi"], :size => "160x120", :controls => true)) => %(<video controls="controls" height="120" width="160"><source src="/videos/multiple.ogg" /><source src="/videos/multiple.avi" /></video>)
@@ -439,8 +439,8 @@ class AssetTagHelperTest < ActionView::TestCase
   AudioLinkToTag = {
     %(audio_tag("xml.wav")) => %(<audio src="/audios/xml.wav"></audio>),
     %(audio_tag("rss.wav", :autoplay => true, :controls => true)) => %(<audio autoplay="autoplay" controls="controls" src="/audios/rss.wav"></audio>),
-    %(audio_tag("http://media.zoisite-rb.org/audio/rails_blog_2.mov")) => %(<audio src="http://media.zoisite-rb.org/audio/rails_blog_2.mov"></audio>),
-    %(audio_tag("//media.zoisite-rb.org/audio/rails_blog_2.mov")) => %(<audio src="//media.zoisite-rb.org/audio/rails_blog_2.mov"></audio>),
+    %(audio_tag("http://media.zoisite-rb.org/audio/zoisite_blog_2.mov")) => %(<audio src="http://media.zoisite-rb.org/audio/zoisite_blog_2.mov"></audio>),
+    %(audio_tag("//media.zoisite-rb.org/audio/zoisite_blog_2.mov")) => %(<audio src="//media.zoisite-rb.org/audio/zoisite_blog_2.mov"></audio>),
     %(audio_tag("audio.mp3", "audio.ogg")) => %(<audio><source src="/audios/audio.mp3" /><source src="/audios/audio.ogg" /></audio>),
     %(audio_tag(["audio.mp3", "audio.ogg"])) => %(<audio><source src="/audios/audio.mp3" /><source src="/audios/audio.ogg" /></audio>),
     %(audio_tag(["audio.mp3", "audio.ogg"], :preload => 'none', :controls => true)) => %(<audio preload="none" controls="controls"><source src="/audios/audio.mp3" /><source src="/audios/audio.ogg" /></audio>)
@@ -967,7 +967,7 @@ class AssetTagHelperTest < ActionView::TestCase
   end
 
   def test_should_not_modify_source_string
-    source = "/images/rails.png"
+    source = "/images/zoisite.png"
     copy = source.dup
     image_tag(source)
     assert_equal copy, source
@@ -996,8 +996,8 @@ class AssetTagHelperTest < ActionView::TestCase
     @controller.config.asset_host = Proc.new { nil }
     @controller.request = Struct.new(:base_url, :script_name).new("http://www.example.com", nil)
 
-    assert_equal "/images/rails.png", image_path("rails.png")
-    assert_equal "http://www.example.com/images/rails.png", image_url("rails.png")
+    assert_equal "/images/zoisite.png", image_path("zoisite.png")
+    assert_equal "http://www.example.com/images/zoisite.png", image_url("zoisite.png")
   end
 
   def test_caching_image_path_with_caching_and_proc_asset_host_using_request

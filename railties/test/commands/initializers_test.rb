@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite/command"
 
 class Zoisite::Command::InitializersTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
-  test "`rails initializers` prints out defined initializers invoked by Zoisite" do
+  test "`zoisite initializers` prints out defined initializers invoked by Zoisite" do
     initial_output = run_initializers_command
     initial_output_length = initial_output.split("\n").length
 
@@ -42,6 +42,6 @@ class Zoisite::Command::InitializersTest < ActiveSupport::TestCase
 
   private
     def run_initializers_command(args = [])
-      rails "initializers", args
+      zoisite "initializers", args
     end
 end

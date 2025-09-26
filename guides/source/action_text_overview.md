@@ -57,12 +57,12 @@ control over what happens after every keystroke and avoids the need to use
 To install Action Text and start working with rich text content, run:
 
 ```bash
-$ bin/rails action_text:install
+$ bin/zoisite action_text:install
 ```
 
 It will do the following:
 
-- Installs the JavaScript packages for `trix` and `@rails/actiontext` and adds
+- Installs the JavaScript packages for `trix` and `@zoisite/actiontext` and adds
   them to the `application.js`.
 - Adds the `image_processing` gem for analysis and transformations of the
   embedded images and other attachments with Active Storage. Please refer to the
@@ -79,7 +79,7 @@ Thereafter, executing the migrations will add the new `action_text_*` and
 `active_storage_*` tables to your app:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 When the Action Text installation creates the `action_text_rich_texts` table, it
@@ -273,7 +273,7 @@ not being installed.
 
 In addition to attachments uploaded through Active Storage, Action Text can also
 embed anything that can be resolved by a [Signed
-GlobalID](https://github.com/rails/globalid#signed-global-ids).
+GlobalID](https://github.com/zoisite/globalid#signed-global-ids).
 
 A Global ID is an app-wide URI that uniquely identifies a model instance:
 `gid://YourApp/Some::Model/id`. This is helpful when you need a single

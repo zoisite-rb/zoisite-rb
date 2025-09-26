@@ -214,7 +214,7 @@ class DeprecationTest < ActiveSupport::TestCase
     @deprecator.behavior = :log
     output = StringIO.new
 
-    with_rails_logger(Logger.new(output)) do
+    with_zoisite_logger(Logger.new(output)) do
       @deprecator.behavior.first.call("fubar", ["call stack!"], @deprecator)
     end
 
@@ -227,7 +227,7 @@ class DeprecationTest < ActiveSupport::TestCase
     @deprecator.debug = true
     output = StringIO.new
 
-    with_rails_logger(Logger.new(output)) do
+    with_zoisite_logger(Logger.new(output)) do
       @deprecator.behavior.first.call("fubar", ["call stack!"], @deprecator)
     end
 
@@ -239,7 +239,7 @@ class DeprecationTest < ActiveSupport::TestCase
     @deprecator.behavior = :log
 
     output = capture(:stderr) do
-      with_rails_logger(nil) do
+      with_zoisite_logger(nil) do
         @deprecator.behavior.first.call("fubar", ["call stack!"], @deprecator)
       end
     end
@@ -815,11 +815,11 @@ class DeprecationTest < ActiveSupport::TestCase
       deprecator.warn
     end
 
-    def with_rails_application_deprecators(&block)
+    def with_zoisite_application_deprecators(&block)
       application = Struct.new(:deprecators).new(ActiveSupport::Deprecation::Deprecators.new)
-      rails = Struct.new(:application).new(application)
-      rails.application.deprecators[:deprecator] = @deprecator
-      stub_const(Object, :Zoisite, rails, &block)
+      zoisite = Struct.new(:application).new(application)
+      zoisite.application.deprecators[:deprecator] = @deprecator
+      stub_const(Object, :Zoisite, zoisite, &block)
     end
 
     def deprecator_with_messages
@@ -834,7 +834,7 @@ class DeprecationTest < ActiveSupport::TestCase
 
     module ::Zoisite; end
 
-    def with_rails_logger(logger)
+    def with_zoisite_logger(logger)
       ::Zoisite.singleton_class.class_eval do
         alias_method :__original_logger, :logger if method_defined?(:logger)
         define_method(:logger) { logger }

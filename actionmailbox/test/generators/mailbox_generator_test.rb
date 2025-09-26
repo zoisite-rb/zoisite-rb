@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
-require "rails/generators/mailbox/mailbox_generator"
+require "zoisite/generators/mailbox/mailbox_generator"
 
 class MailboxGeneratorTest < Zoisite::Generators::TestCase
   destination File.expand_path("../../tmp", __dir__)

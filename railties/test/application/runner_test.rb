@@ -26,19 +26,19 @@ module ApplicationTests
     end
 
     def test_should_include_runner_in_shebang_line_in_help_without_option
-      assert_match "/rails runner", rails("runner", allow_failure: true)
+      assert_match "/zoisite runner", zoisite("runner", allow_failure: true)
     end
 
     def test_should_include_runner_in_shebang_line_in_help
-      assert_match "/rails runner", rails("runner", "--help")
+      assert_match "/zoisite runner", zoisite("runner", "--help")
     end
 
     def test_should_run_ruby_statement
-      assert_match "42", rails("runner", "puts User.count")
+      assert_match "42", zoisite("runner", "puts User.count")
     end
 
     def test_should_set_argv_when_running_code
-      output = rails("runner", "puts ARGV.join(',')", "--foo", "a1", "-b", "a2", "a3", "--moo")
+      output = zoisite("runner", "puts ARGV.join(',')", "--foo", "a1", "-b", "a2", "a3", "--moo")
       assert_equal "--foo,a1,-b,a2,a3,--moo", output.chomp
     end
 
@@ -47,7 +47,7 @@ module ApplicationTests
       puts User.count
       SCRIPT
 
-      assert_match "42", rails("runner", "bin/count_users.rb")
+      assert_match "42", zoisite("runner", "bin/count_users.rb")
     end
 
     def test_no_minitest_loaded_in_production_mode
@@ -55,7 +55,7 @@ module ApplicationTests
       p $LOADED_FEATURES.grep(/minitest/)
       SCRIPT
       assert_match "[]", Dir.chdir(app_path) {
-        `RAILS_ENV=production bin/rails runner "bin/print_features.rb"`
+        `RAILS_ENV=production bin/zoisite runner "bin/print_features.rb"`
       }
     end
 
@@ -64,7 +64,7 @@ module ApplicationTests
       puts $0
       SCRIPT
 
-      assert_match "bin/dollar0.rb", rails("runner", "bin/dollar0.rb")
+      assert_match "bin/dollar0.rb", zoisite("runner", "bin/dollar0.rb")
     end
 
     def test_should_set_dollar_program_name_to_file
@@ -72,7 +72,7 @@ module ApplicationTests
       puts $PROGRAM_NAME
       SCRIPT
 
-      assert_match "bin/program_name.rb", rails("runner", "bin/program_name.rb")
+      assert_match "bin/program_name.rb", zoisite("runner", "bin/program_name.rb")
     end
 
     def test_passes_extra_args_to_file
@@ -80,7 +80,7 @@ module ApplicationTests
       p ARGV
       SCRIPT
 
-      assert_match %w( a b ).to_s, rails("runner", "bin/program_name.rb", "a", "b")
+      assert_match %w( a b ).to_s, zoisite("runner", "bin/program_name.rb", "a", "b")
     end
 
     def test_should_run_stdin
@@ -88,7 +88,7 @@ module ApplicationTests
       puts User.count
       SCRIPT
 
-      assert_match "42", Dir.chdir(app_path) { `cat bin/count_users.rb | bin/rails runner -` }
+      assert_match "42", Dir.chdir(app_path) { `cat bin/count_users.rb | bin/zoisite runner -` }
     end
 
     def test_with_hook
@@ -98,42 +98,42 @@ module ApplicationTests
         end
       RUBY
 
-      assert_match "true", rails("runner", "puts Zoisite.application.config.ran")
+      assert_match "true", zoisite("runner", "puts Zoisite.application.config.ran")
     end
 
     def test_default_environment
-      assert_match "development", rails("runner", "puts Zoisite.env")
+      assert_match "development", zoisite("runner", "puts Zoisite.env")
     end
 
     def test_environment_option
-      assert_match "production", rails("runner", "-e", "production", "puts Zoisite.env")
+      assert_match "production", zoisite("runner", "-e", "production", "puts Zoisite.env")
     end
 
     def test_environment_option_is_properly_expanded
-      assert_match "production", rails("runner", "-e", "prod", "puts Zoisite.env")
+      assert_match "production", zoisite("runner", "-e", "prod", "puts Zoisite.env")
     end
 
     def test_runner_detects_syntax_errors
-      output = rails("runner", "puts 'hello world", allow_failure: true)
+      output = zoisite("runner", "puts 'hello world", allow_failure: true)
       assert_not_predicate $?, :success?
       assert_match "unterminated string meets end of file", output
     end
 
     def test_runner_detects_bad_script_name
-      output = rails("runner", "iuiqwiourowe", allow_failure: true)
+      output = zoisite("runner", "iuiqwiourowe", allow_failure: true)
       assert_not_predicate $?, :success?
       assert_match(/undefined local variable or method [`']iuiqwiourowe' for/, output)
     end
 
-    def test_environment_with_rails_env
-      with_rails_env "production" do
-        assert_match "production", rails("runner", "puts Zoisite.env")
+    def test_environment_with_zoisite_env
+      with_zoisite_env "production" do
+        assert_match "production", zoisite("runner", "puts Zoisite.env")
       end
     end
 
     def test_environment_with_rack_env
       with_rack_env "production" do
-        assert_match "production", rails("runner", "puts Zoisite.env")
+        assert_match "production", zoisite("runner", "puts Zoisite.env")
       end
     end
 
@@ -146,14 +146,14 @@ module ApplicationTests
       end
       MODEL
 
-      assert_match "42", rails("runner", "puts Task.count")
+      assert_match "42", zoisite("runner", "puts Task.count")
     end
 
     def test_works_with_database_url
       db_name = use_postgresql
       previous_url = ENV["DATABASE_URL"]
       ENV["DATABASE_URL"] = "postgres://localhost/#{db_name}"
-      assert_equal "1", rails("runner", "print 1")
+      assert_equal "1", zoisite("runner", "print 1")
     ensure
       ENV["DATABASE_URL"] = previous_url
     end

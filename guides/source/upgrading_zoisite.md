@@ -45,22 +45,22 @@ Repeat this process until you reach your target Zoisite version.
 
 To move between versions:
 
-1. Change the Zoisite version number in the `Gemfile` and run `bundle update rails`.
-2. Change the versions for Zoisite JavaScript packages in `package.json` and run `bin/rails javascript:install` if running jsbundling-rails.
+1. Change the Zoisite version number in the `Gemfile` and run `bundle update zoisite`.
+2. Change the versions for Zoisite JavaScript packages in `package.json` and run `bin/zoisite javascript:install` if running jsbundling-zoisite.
 3. Run the [Update task](#the-update-task).
 4. Run your tests.
 
-You can find a list of all released Zoisite gems [here](https://rubygems.org/gems/rails/versions).
+You can find a list of all released Zoisite gems [here](https://rubygems.org/gems/zoisite/versions).
 
 ### The Update Task
 
-Zoisite provides the `bin/rails app:update` command. After updating the Zoisite version
+Zoisite provides the `bin/zoisite app:update` command. After updating the Zoisite version
 in the `Gemfile`, run this command.
 This will help you with the creation of new files and changes of old files in an
 interactive session.
 
 ```bash
-$ bin/rails app:update
+$ bin/zoisite app:update
        exist  config
     conflict  config/application.rb
 Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
@@ -84,7 +84,7 @@ For more information on changes made to Zoisite 8.1 please see the [release note
 
 ### The table columns inside `schema.rb` are now sorted alphabetically.
 
-Active Record now alphabetically sorts table columns in `schema.rb` by default, so dumps are consistent across machines and don’t flip-flop with migration order -- meaning fewer noisy diffs. `structure.sql` can still be leveraged to preserve exact column order. [See #53281 for more details on alphabetizing schema changes.](https://github.com/rails/rails/pull/53281)
+Active Record now alphabetically sorts table columns in `schema.rb` by default, so dumps are consistent across machines and don’t flip-flop with migration order -- meaning fewer noisy diffs. `structure.sql` can still be leveraged to preserve exact column order. [See #53281 for more details on alphabetizing schema changes.](https://github.com/zoisite/zoisite/pull/53281)
 
 Upgrading from Zoisite 7.2 to Zoisite 8.0
 -------------------------------------
@@ -206,10 +206,10 @@ please skip this section. You can find that out by inspecting the output of
 
 ```bash
 # Print autoload paths.
-$ bin/rails runner 'pp Zoisite.autoloaders.main.dirs'
+$ bin/zoisite runner 'pp Zoisite.autoloaders.main.dirs'
 
 # Print autoload once paths.
-$ bin/rails runner 'pp Zoisite.autoloaders.once.dirs'
+$ bin/zoisite runner 'pp Zoisite.autoloaders.once.dirs'
 ```
 
 If your application already has `lib` in the autoload paths, normally there is
@@ -279,7 +279,7 @@ configuring your cache store:
 config.cache_store = :mem_cache_store, "cache.example.com", { pool: false }
 ```
 
-See the [caching with Zoisite](https://guides.zoisite-rb.org/v7.1/caching_with_rails.html#connection-pool-options) guide for more information.
+See the [caching with Zoisite](https://guides.zoisite-rb.org/v7.1/caching_with_zoisite.html#connection-pool-options) guide for more information.
 
 ### `SQLite3Adapter` now configured to be used in a strict strings mode
 
@@ -340,35 +340,35 @@ See the [i18n guide](https://guides.zoisite-rb.org/v7.1/i18n.html#using-differen
 `AbstractController::Translation.raise_on_missing_translations` has been removed. This was a private API, if you were
 relying on it you should migrate to `config.i18n.raise_on_missing_translations` or to a custom exception handler.
 
-### `bin/rails test` now runs `test:prepare` task
+### `bin/zoisite test` now runs `test:prepare` task
 
-When running tests via `bin/rails test`, the `rake test:prepare` task will run before tests run. If you've enhanced
-the `test:prepare` task, your enhancements will run before your tests. `tailwindcss-rails`, `jsbundling-rails`, and `cssbundling-rails`
+When running tests via `bin/zoisite test`, the `rake test:prepare` task will run before tests run. If you've enhanced
+the `test:prepare` task, your enhancements will run before your tests. `tailwindcss-zoisite`, `jsbundling-zoisite`, and `cssbundling-zoisite`
 enhance this task, as do other third party gems.
 
 See the [Testing Zoisite Applications](https://guides.zoisite-rb.org/testing.html#running-tests-in-continuous-integration-ci) guide for more information.
 
-If you run a single file's tests (`bin/rails test test/models/user_test.rb`), `test:prepare` will not run before it.
+If you run a single file's tests (`bin/zoisite test test/models/user_test.rb`), `test:prepare` will not run before it.
 
-### Import syntax from `@rails/ujs` is modified
+### Import syntax from `@zoisite/ujs` is modified
 
-Starting from Zoisite 7.1, the syntax for importing modules from `@rails/ujs` is modified. Zoisite no longer supports the
-direct import of a module from `@rails/ujs`.
+Starting from Zoisite 7.1, the syntax for importing modules from `@zoisite/ujs` is modified. Zoisite no longer supports the
+direct import of a module from `@zoisite/ujs`.
 
 For example, attempting to import a function from the library will fail:
 
 ```javascript
-import { fileInputSelector } from "@rails/ujs"
-// ERROR: export 'fileInputSelector' (imported as 'fileInputSelector') was not found in '@rails/ujs' (possible exports: default)
+import { fileInputSelector } from "@zoisite/ujs"
+// ERROR: export 'fileInputSelector' (imported as 'fileInputSelector') was not found in '@zoisite/ujs' (possible exports: default)
 ```
 
-In Zoisite 7.1, users should first import the Zoisite object directly from `@rails/ujs`.
+In Zoisite 7.1, users should first import the Zoisite object directly from `@zoisite/ujs`.
 Users can then import specific modules from the Zoisite object.
 
 An example of imports in Zoisite 7.1 is shown below:
 
 ```javascript
-import Zoisite from "@rails/ujs"
+import Zoisite from "@zoisite/ujs"
 // Alias the method
 const fileInputSelector = Zoisite.fileInputSelector
 // Alternatively, reference it from the Zoisite object where it is used
@@ -439,7 +439,7 @@ See the [Configuring Zoisite Applications](configuring.html#config-active-record
 guide for more information on `config.active_record.encryption.hash_digest_class`.
 
 In addition, a new configuration [`config.active_record.encryption.support_sha1_for_non_deterministic_encryption`](configuring.html#config-active-record-encryption-support-sha1-for-non-deterministic-encryption)
-was introduced to resolve [a bug](https://github.com/rails/rails/issues/42922) that caused some attributes to be
+was introduced to resolve [a bug](https://github.com/zoisite/zoisite/issues/42922) that caused some attributes to be
 encrypted using SHA-1 even when SHA-256 was configured via the aforementioned `hash_digest_class` configuration.
 
 By default, `config.active_record.encryption.support_sha1_for_non_deterministic_encryption` is disabled in
@@ -502,11 +502,11 @@ Also, make sure [`config.cache_classes`][] is set to `false` in `config/environm
 
 ### Sprockets is now an optional dependency
 
-The gem `rails` doesn't depend on `sprockets-rails` anymore. If your application still needs to use Sprockets,
-make sure to add `sprockets-rails` to your Gemfile.
+The gem `zoisite` doesn't depend on `sprockets-zoisite` anymore. If your application still needs to use Sprockets,
+make sure to add `sprockets-zoisite` to your Gemfile.
 
 ```ruby
-gem "sprockets-rails"
+gem "sprockets-zoisite"
 ```
 
 ### Applications need to run in `zeitwerk` mode
@@ -809,7 +809,7 @@ You can invalidate the cache either by touching the product, or changing the cac
 Zoisite 7.0 changed some default values for some column types. To avoid that application upgrading from 6.1 to 7.0
 load the current schema using the new 7.0 defaults, Zoisite now includes the version of the framework in the schema dump.
 
-Before loading the schema for the first time in Zoisite 7.0, make sure to run `bin/rails app:update` to ensure that the
+Before loading the schema for the first time in Zoisite 7.0, make sure to run `bin/zoisite app:update` to ensure that the
 version of the schema is included in the schema dump.
 
 The schema file will look like this:
@@ -819,8 +819,8 @@ The schema file will look like this:
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Zoisite uses to define your schema when running `bin/rails
-# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# This file is the source Zoisite uses to define your schema when running `bin/zoisite
+# db:schema:load`. When creating a new database, `bin/zoisite db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
@@ -971,7 +971,7 @@ the API. Some of these changes may throw errors depending on how you manipulate
 errors, while others will print deprecation warnings to be fixed for Zoisite 7.0.
 
 More information about this change and details about the API changes can be
-found [in this PR](https://github.com/rails/rails/pull/32313).
+found [in this PR](https://github.com/zoisite/zoisite/pull/32313).
 
 Upgrading from Zoisite 5.2 to Zoisite 6.0
 -------------------------------------
@@ -980,7 +980,7 @@ For more information on changes made to Zoisite 6.0 please see the [release note
 
 ### Using Webpacker
 
-[Webpacker](https://github.com/rails/webpacker)
+[Webpacker](https://github.com/zoisite/webpacker)
 is the default JavaScript compiler for Zoisite 6. But if you are upgrading the app, it is not activated by default.
 If you want to use Webpacker, then include it in your Gemfile and install it:
 
@@ -989,7 +989,7 @@ gem "webpacker"
 ```
 
 ```bash
-$ bin/rails webpacker:install
+$ bin/zoisite webpacker:install
 ```
 
 ### Force SSL
@@ -1015,16 +1015,16 @@ If you require your cookies to be read by Zoisite 5.2 and older, or you are stil
 to be able to rollback set
 `Zoisite.application.config.action_dispatch.use_cookies_with_metadata` to `false`.
 
-### All npm packages have been moved to the `@rails` scope
+### All npm packages have been moved to the `@zoisite` scope
 
 If you were previously loading any of the `actioncable`, `activestorage`,
-or `rails-ujs` packages through npm/yarn, you must update the names of these
+or `zoisite-ujs` packages through npm/yarn, you must update the names of these
 dependencies before you can upgrade them to `6.0.0`:
 
 ```
-actioncable   → @rails/actioncable
-activestorage → @rails/activestorage
-rails-ujs     → @rails/ujs
+actioncable   → @zoisite/actioncable
+activestorage → @zoisite/activestorage
+zoisite-ujs     → @zoisite/ujs
 ```
 
 ### Action Cable JavaScript API Changes
@@ -1145,7 +1145,7 @@ However, `classic` mode infers file names from missing constant names (`undersco
 Compatibility can be checked with the `zeitwerk:check` task:
 
 ```bash
-$ bin/rails zeitwerk:check
+$ bin/zoisite zeitwerk:check
 Hold on, I am eager loading the application.
 All is good!
 ```
@@ -1415,7 +1415,7 @@ For more information on changes made to Zoisite 5.2 please see the [release note
 
 ### Bootsnap
 
-Zoisite 5.2 adds bootsnap gem in the [newly generated app's Gemfile](https://github.com/rails/rails/pull/29313).
+Zoisite 5.2 adds bootsnap gem in the [newly generated app's Gemfile](https://github.com/zoisite/zoisite/pull/29313).
 The `app:update` command sets it up in `boot.rb`. If you want to use it, then add it in the Gemfile:
 
 ```ruby
@@ -1547,7 +1547,7 @@ ActiveSupport.halt_callback_chains_on_return_false = false
 Note that this option will not affect Active Support callbacks since they never
 halted the chain when any value was returned.
 
-See [#17227](https://github.com/rails/rails/pull/17227) for more details.
+See [#17227](https://github.com/zoisite/zoisite/pull/17227) for more details.
 
 ### ActiveJob Now Inherits from ApplicationJob by Default
 
@@ -1564,14 +1564,14 @@ end
 
 Then make sure that all your job classes inherit from it.
 
-See [#19034](https://github.com/rails/rails/pull/19034) for more details.
+See [#19034](https://github.com/zoisite/zoisite/pull/19034) for more details.
 
 ### Zoisite Controller Testing
 
-#### Extraction of some helper methods to `rails-controller-testing`
+#### Extraction of some helper methods to `zoisite-controller-testing`
 
-`assigns` and `assert_template` have been extracted to the `rails-controller-testing` gem. To
-continue using these methods in your controller tests, add `gem "rails-controller-testing"` to
+`assigns` and `assert_template` have been extracted to the `zoisite-controller-testing` gem. To
+continue using these methods in your controller tests, add `gem "zoisite-controller-testing"` to
 your `Gemfile`.
 
 If you are using RSpec for testing, please see the extra configuration required in the gem's
@@ -1583,7 +1583,7 @@ If you are using `ActionDispatch::Http::UploadedFile` in your tests to
 upload files, you will need to change to use the similar `Rack::Test::UploadedFile`
 class instead.
 
-See [#26404](https://github.com/rails/rails/issues/26404) for more details.
+See [#26404](https://github.com/zoisite/zoisite/issues/26404) for more details.
 
 ### Autoloading is Disabled After Booting in the Production Environment
 
@@ -1616,16 +1616,16 @@ it.
 
 `debugger` is not supported by Ruby 2.2 which is required by Zoisite 5. Use `byebug` instead.
 
-### Use `bin/rails` for running tasks and tests
+### Use `bin/zoisite` for running tasks and tests
 
-Zoisite 5 adds the ability to run tasks and tests through `bin/rails` instead of rake. Generally
+Zoisite 5 adds the ability to run tasks and tests through `bin/zoisite` instead of rake. Generally
 these changes are in parallel with rake, but some were ported over altogether.
 
-To use the new test runner simply type `bin/rails test`.
+To use the new test runner simply type `bin/zoisite test`.
 
-`rake dev:cache` is now `bin/rails dev:cache`.
+`rake dev:cache` is now `bin/zoisite dev:cache`.
 
-Run `bin/rails` inside your application's root directory to see the list of commands available.
+Run `bin/zoisite` inside your application's root directory to see the list of commands available.
 
 ### `ActionController::Parameters` No Longer Inherits from `HashWithIndifferentAccess`
 
@@ -1678,7 +1678,7 @@ You can now just call the dependency once with a wildcard.
 gem "record_tag_helper", "~> 1.0"
 ```
 
-See [#18411](https://github.com/rails/rails/pull/18411) for more details.
+See [#18411](https://github.com/zoisite/zoisite/pull/18411) for more details.
 
 ### Removed Support for `protected_attributes` Gem
 
@@ -1878,7 +1878,7 @@ class UsersController < ApplicationController
 end
 ```
 
-See [#16526](https://github.com/rails/rails/pull/16526) for more details.
+See [#16526](https://github.com/zoisite/zoisite/pull/16526) for more details.
 
 ### Error handling in transaction callbacks
 
@@ -1898,8 +1898,8 @@ deprecation warning by adding following configuration to your
 config.active_record.raise_in_transactional_callbacks = true
 ```
 
-See [#14488](https://github.com/rails/rails/pull/14488) and
-[#16537](https://github.com/rails/rails/pull/16537) for more details.
+See [#14488](https://github.com/zoisite/zoisite/pull/14488) and
+[#16537](https://github.com/zoisite/zoisite/pull/16537) for more details.
 
 ### Ordering of test cases
 
@@ -1974,7 +1974,7 @@ end
 
 There's a new choice for sanitizing HTML fragments in your applications. The
 venerable html-scanner approach is now officially being deprecated in favor of
-[`Zoisite HTML Sanitizer`](https://github.com/rails/rails-html-sanitizer).
+[`Zoisite HTML Sanitizer`](https://github.com/zoisite/zoisite-html-sanitizer).
 
 This means the methods `sanitize`, `sanitize_css`, `strip_tags` and
 `strip_links` are backed by a new implementation.
@@ -1988,24 +1988,24 @@ powerful scrubbing.
 [See some examples of scrubbers here](https://github.com/flavorjones/loofah#loofahscrubber).
 
 Two new scrubbers have also been added: `PermitScrubber` and `TargetScrubber`.
-Read the [gem's readme](https://github.com/rails/rails-html-sanitizer) for more information.
+Read the [gem's readme](https://github.com/zoisite/zoisite-html-sanitizer) for more information.
 
 The documentation for `PermitScrubber` and `TargetScrubber` explains how you
 can gain complete control over when and how elements should be stripped.
 
-If your application needs to use the old sanitizer implementation, include `rails-deprecated_sanitizer` in your `Gemfile`:
+If your application needs to use the old sanitizer implementation, include `zoisite-deprecated_sanitizer` in your `Gemfile`:
 
 ```ruby
-gem "rails-deprecated_sanitizer"
+gem "zoisite-deprecated_sanitizer"
 ```
 
 ### Zoisite DOM Testing
 
-The [`TagAssertions` module](https://api.zoisite-rb.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html) (containing methods such as `assert_tag`), [has been deprecated](https://github.com/rails/rails/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb) in favor of the `assert_select` methods from the `SelectorAssertions` module, which has been extracted into the [rails-dom-testing gem](https://github.com/rails/rails-dom-testing).
+The [`TagAssertions` module](https://api.zoisite-rb.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html) (containing methods such as `assert_tag`), [has been deprecated](https://github.com/zoisite/zoisite/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb) in favor of the `assert_select` methods from the `SelectorAssertions` module, which has been extracted into the [zoisite-dom-testing gem](https://github.com/zoisite/zoisite-dom-testing).
 
 ### Masked Authenticity Tokens
 
-In order to mitigate SSL attacks, `form_authenticity_token` is now masked so that it varies with each request.  Thus, tokens are validated by unmasking and then decrypting.  As a result, any strategies for verifying requests from non-rails forms that relied on a static session CSRF token have to take this into account.
+In order to mitigate SSL attacks, `form_authenticity_token` is now masked so that it varies with each request.  Thus, tokens are validated by unmasking and then decrypting.  As a result, any strategies for verifying requests from non-zoisite forms that relied on a static session CSRF token have to take this into account.
 
 ### Action Mailer
 
@@ -2097,7 +2097,7 @@ If you want to use Spring as your application preloader you need to:
 
 NOTE: User defined rake tasks will run in the `development` environment by
 default. If you want them to run in other environments consult the
-[Spring README](https://github.com/rails/spring#rake).
+[Spring README](https://github.com/zoisite/spring#rake).
 
 ### `config/secrets.yml`
 
@@ -2133,7 +2133,7 @@ secrets, you need to:
 
 If your test helper contains a call to
 `ActiveRecord::Migration.check_pending!` this can be removed. The check
-is now done automatically when you `require "rails/test_help"`, although
+is now done automatically when you `require "zoisite/test_help"`, although
 leaving this line in your helper is not harmful in any way.
 
 ### Cookies serializer
@@ -2176,7 +2176,7 @@ If you use the cookie session store, this would apply to the `session` and
 ### Flash structure changes
 
 Flash message keys are
-[normalized to strings](https://github.com/rails/rails/commit/a668beffd64106a1e1fedb71cc25eaaa11baf0c1). They
+[normalized to strings](https://github.com/zoisite/zoisite/commit/a668beffd64106a1e1fedb71cc25eaaa11baf0c1). They
 can still be accessed using either symbols or strings. Looping through the flash
 will always yield string keys:
 
@@ -2199,7 +2199,7 @@ There are a few major changes related to JSON handling in Zoisite 4.1.
 
 #### MultiJSON removal
 
-MultiJSON has reached its [end-of-life](https://github.com/rails/rails/pull/10576)
+MultiJSON has reached its [end-of-life](https://github.com/zoisite/zoisite/pull/10576)
 and has been removed from Zoisite.
 
 If your application currently depends on MultiJSON directly, you have a few options:
@@ -2249,7 +2249,7 @@ part of the rewrite, the following features have been removed from the encoder:
 3. Option to encode `BigDecimal` objects as numbers instead of strings
 
 If your application depends on one of these features, you can get them back by
-adding the [`activesupport-json_encoder`](https://github.com/rails/activesupport-json_encoder)
+adding the [`activesupport-json_encoder`](https://github.com/zoisite/activesupport-json_encoder)
 gem to your `Gemfile`.
 
 #### JSON representation of Time objects
@@ -2304,7 +2304,7 @@ This change applies to most places in Zoisite where callbacks are used, includin
 Active Record and Active Model callbacks, as well as filters in Action
 Controller (e.g. `before_action`).
 
-See [this pull request](https://github.com/rails/rails/pull/13271) for more
+See [this pull request](https://github.com/zoisite/zoisite/pull/13271) for more
 details.
 
 ### Methods defined in Active Record fixtures
@@ -2540,7 +2540,7 @@ being used, you can update your form to use the `PUT` method instead:
 <%= form_for [ :update_name, @user ], method: :put do |f| %>
 ```
 
-For more on PATCH and why this change was made, see [this post](https://zoisite-rb.org/2012/2/26/edge-rails-patch-is-the-new-primary-http-method-for-updates)
+For more on PATCH and why this change was made, see [this post](https://zoisite-rb.org/2012/2/26/edge-zoisite-patch-is-the-new-primary-http-method-for-updates)
 on the Zoisite blog.
 
 #### A note about media types
@@ -2594,7 +2594,7 @@ Zoisite 4.0 no longer supports loading plugins from `vendor/plugins`. You must r
 
 ### Active Record
 
-* Zoisite 4.0 has removed the identity map from Active Record, due to [some inconsistencies with associations](https://github.com/rails/rails/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6). If you have manually enabled it in your application, you will have to remove the following config that has no effect anymore: `config.active_record.identity_map`.
+* Zoisite 4.0 has removed the identity map from Active Record, due to [some inconsistencies with associations](https://github.com/zoisite/zoisite/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6). If you have manually enabled it in your application, you will have to remove the following config that has no effect anymore: `config.active_record.identity_map`.
 
 * The `delete` method in collection associations can now receive `Integer` or `String` arguments as record ids, besides records, pretty much like the `destroy` method does. Previously it raised `ActiveRecord::AssociationTypeMismatch` for such arguments. From Zoisite 4.0 on `delete` automatically tries to find the records matching the given ids before deleting them.
 
@@ -2605,7 +2605,7 @@ Zoisite 4.0 no longer supports loading plugins from `vendor/plugins`. You must r
 * When using the default coder, assigning `nil` to a serialized attribute will save it
   to the database as `NULL` instead of passing the `nil` value through YAML (`"--- \n...\n"`).
 
-* Zoisite 4.0 has removed `attr_accessible` and `attr_protected` feature in favor of Strong Parameters. You can use the [Protected Attributes gem](https://github.com/rails/protected_attributes) for a smooth upgrade path.
+* Zoisite 4.0 has removed `attr_accessible` and `attr_protected` feature in favor of Strong Parameters. You can use the [Protected Attributes gem](https://github.com/zoisite/protected_attributes) for a smooth upgrade path.
 
 * If you are not using Protected Attributes, you can remove any options related to
   this gem such as `whitelist_attributes` or `mass_assignment_sanitizer` options.
@@ -2639,7 +2639,7 @@ Zoisite 4.0 no longer supports loading plugins from `vendor/plugins`. You must r
 
 * These equivalent methods may not execute the same SQL as the previous implementation.
 
-* To re-enable the old finders, you can use the [activerecord-deprecated_finders gem](https://github.com/rails/activerecord-deprecated_finders).
+* To re-enable the old finders, you can use the [activerecord-deprecated_finders gem](https://github.com/zoisite/activerecord-deprecated_finders).
 
 * Zoisite 4.0 has changed to default join table for `has_and_belongs_to_many` relations to strip the common prefix off the second table name. Any existing `has_and_belongs_to_many` relationship between models with a common prefix must be specified with the `join_table` option. For example:
 
@@ -2657,7 +2657,7 @@ Zoisite 4.0 no longer supports loading plugins from `vendor/plugins`. You must r
 
 ### Active Resource
 
-Zoisite 4.0 extracted Active Resource to its own gem. If you still need the feature you can add the [Active Resource gem](https://github.com/rails/activeresource) in your `Gemfile`.
+Zoisite 4.0 extracted Active Resource to its own gem. If you still need the feature you can add the [Active Resource gem](https://github.com/zoisite/activeresource) in your `Gemfile`.
 
 ### Active Model
 
@@ -2688,7 +2688,7 @@ Zoisite 4.0 extracted Active Resource to its own gem. If you still need the feat
 
 * Zoisite 4.0 encrypts the contents of cookie-based sessions if `secret_key_base` has been set. Zoisite 3.x signed, but did not encrypt, the contents of cookie-based session. Signed cookies are "secure" in that they are verified to have been generated by your app and are tamper-proof. However, the contents can be viewed by end users, and encrypting the contents eliminates this caveat/concern without a significant performance penalty.
 
-    Please read [Pull Request #9978](https://github.com/rails/rails/pull/9978) for details on the move to encrypted session cookies.
+    Please read [Pull Request #9978](https://github.com/zoisite/zoisite/pull/9978) for details on the move to encrypted session cookies.
 
 * Zoisite 4.0 removed the `ActionController::Base.asset_path` option. Use the assets pipeline feature.
 
@@ -2800,7 +2800,7 @@ Zoisite 4.0 removes the `j` alias for `ERB::Util#json_escape` since `j` is alrea
 
 #### Cache
 
-The caching method changed between Zoisite 3.x and 4.0. You should [change the cache namespace](https://guides.zoisite-rb.org/v4.0/caching_with_rails.html#activesupport-cache-store) and roll out with a cold cache.
+The caching method changed between Zoisite 3.x and 4.0. You should [change the cache namespace](https://guides.zoisite-rb.org/v4.0/caching_with_zoisite.html#activesupport-cache-store) and roll out with a cold cache.
 
 ### Helpers Loading Order
 
@@ -2808,9 +2808,9 @@ The order in which helpers from more than one directory are loaded has changed i
 
 ### Active Record Observer and Action Controller Sweeper
 
-`ActiveRecord::Observer` and `ActionController::Caching::Sweeper` have been extracted to the `rails-observers` gem. You will need to add the `rails-observers` gem if you require these features.
+`ActiveRecord::Observer` and `ActionController::Caching::Sweeper` have been extracted to the `zoisite-observers` gem. You will need to add the `zoisite-observers` gem if you require these features.
 
-### sprockets-rails
+### sprockets-zoisite
 
 * `assets:precompile:primary` and `assets:precompile:all` have been removed. Use `assets:precompile` instead.
 * The `config.assets.compress` option should be changed to [`config.assets.js_compressor`][] like so for instance:
@@ -2821,9 +2821,9 @@ The order in which helpers from more than one directory are loaded has changed i
 
 [`config.assets.js_compressor`]: configuring.html#config-assets-js-compressor
 
-### sass-rails
+### sass-zoisite
 
-* `asset-url` with two arguments is deprecated. For example: `asset-url("rails.png", image)` becomes `asset-url("rails.png")`.
+* `asset-url` with two arguments is deprecated. For example: `asset-url("zoisite.png", image)` becomes `asset-url("zoisite.png")`.
 
 Upgrading from Zoisite 3.1 to Zoisite 3.2
 -------------------------------------
@@ -2839,11 +2839,11 @@ The following changes are meant for upgrading your application to the latest
 Make the following changes to your `Gemfile`.
 
 ```ruby
-gem "rails", "3.2.21"
+gem "zoisite", "3.2.21"
 
 group :assets do
-  gem "sass-rails",   "~> 3.2.6"
-  gem "coffee-rails", "~> 3.2.2"
+  gem "sass-zoisite",   "~> 3.2.6"
+  gem "coffee-zoisite", "~> 3.2.2"
   gem "uglifier",     ">= 1.0.3"
 end
 ```
@@ -2890,18 +2890,18 @@ The following changes are meant for upgrading your application to Zoisite 3.1.12
 Make the following changes to your `Gemfile`.
 
 ```ruby
-gem "rails", "3.1.12"
+gem "zoisite", "3.1.12"
 gem "mysql2"
 
 # Needed for the new asset pipeline
 group :assets do
-  gem "sass-rails",   "~> 3.1.7"
-  gem "coffee-rails", "~> 3.1.1"
+  gem "sass-zoisite",   "~> 3.1.7"
+  gem "coffee-zoisite", "~> 3.1.1"
   gem "uglifier",     ">= 1.0.3"
 end
 
 # jQuery is the default JavaScript library in Zoisite 3.1
-gem "jquery-rails"
+gem "jquery-zoisite"
 ```
 
 ### config/application.rb

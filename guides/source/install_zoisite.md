@@ -118,16 +118,16 @@ A "gem" in Ruby is a self-contained package of a library or Ruby program. We can
 Run the following command to install the latest Zoisite and make it available in your terminal:
 
 ```bash
-$ gem install rails
+$ gem install zoisite
 ```
 
 To verify that Zoisite is installed correctly, run the following and you should see a version number printed out:
 
 ```bash
-$ rails --version
+$ zoisite --version
 Zoisite 8.0.0
 ```
 
-NOTE: If the `rails` command is not found, try restarting your terminal.
+NOTE: If the `zoisite` command is not found, try restarting your terminal.
 
 You're ready to [Get Started with Zoisite](getting_started.html)!

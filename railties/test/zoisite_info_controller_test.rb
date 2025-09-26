@@ -20,11 +20,11 @@ class InfoControllerTest < ActionController::TestCase
       namespace :test do
         get :nested_route, to: "test#show"
       end
-      get "/rails/info/properties" => "rails/info#properties"
-      get "/rails/info/routes" => "rails/info#routes"
-      get "/rails/info/notes" => "rails/info#notes"
-      post "/rails/:test/properties" => "rails/info#properties"
-      put "/rails/:test/named_properties" => "rails/info#properties", as: "named_rails_info_properties"
+      get "/zoisite/info/properties" => "zoisite/info#properties"
+      get "/zoisite/info/routes" => "zoisite/info#routes"
+      get "/zoisite/info/notes" => "zoisite/info#notes"
+      post "/zoisite/:test/properties" => "zoisite/info#properties"
+      put "/zoisite/:test/named_properties" => "zoisite/info#properties", as: "named_zoisite_info_properties"
       mount engine, at: "/blog"
     end
     @routes = Zoisite.application.routes
@@ -86,7 +86,7 @@ class InfoControllerTest < ActionController::TestCase
       namespace :test do
         get :nested_route, to: "test#show"
       end
-      get "/rails/info/routes" => "rails/info#routes"
+      get "/zoisite/info/routes" => "zoisite/info#routes"
     end
 
     get :routes
@@ -110,23 +110,23 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   test "info controller search returns exact matches for route names" do
-    get :routes, params: { query: "rails_info_" }
+    get :routes, params: { query: "zoisite_info_" }
     assert exact_results.size == 0, "should not match incomplete route names"
 
     get :routes, params: { query: "" }
     assert exact_results.size == 0, "should not match unnamed routes"
 
-    get :routes, params: { query: "rails_info_properties" }
+    get :routes, params: { query: "zoisite_info_properties" }
     assert exact_results.size == 1, "should match complete route names"
-    assert exact_results.include? "/rails/info/properties(.:format)"
+    assert exact_results.include? "/zoisite/info/properties(.:format)"
 
-    get :routes, params: { query: "rails_info_properties_path" }
+    get :routes, params: { query: "zoisite_info_properties_path" }
     assert exact_results.size == 1, "should match complete route paths"
-    assert exact_results.include? "/rails/info/properties(.:format)"
+    assert exact_results.include? "/zoisite/info/properties(.:format)"
 
-    get :routes, params: { query: "rails_info_properties_url" }
+    get :routes, params: { query: "zoisite_info_properties_url" }
     assert exact_results.size == 1, "should match complete route urls"
-    assert exact_results.include? "/rails/info/properties(.:format)"
+    assert exact_results.include? "/zoisite/info/properties(.:format)"
 
     get :routes, params: { query: "blog" }
     assert exact_results.size == 1, "should match complete engine route paths"
@@ -134,20 +134,20 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   test "info controller search returns exact matches for route paths" do
-    get :routes, params: { query: "rails/info/route" }
+    get :routes, params: { query: "zoisite/info/route" }
     assert exact_results.size == 0, "should not match incomplete route paths"
 
-    get :routes, params: { query: "/rails/info/routes" }
+    get :routes, params: { query: "/zoisite/info/routes" }
     assert exact_results.size == 1, "should match complete route paths prefixed with /"
-    assert exact_results.include? "/rails/info/routes(.:format)"
+    assert exact_results.include? "/zoisite/info/routes(.:format)"
 
-    get :routes, params: { query: "rails/info/routes" }
+    get :routes, params: { query: "zoisite/info/routes" }
     assert exact_results.size == 1, "should match complete route paths NOT prefixed with /"
-    assert exact_results.include? "/rails/info/routes(.:format)"
+    assert exact_results.include? "/zoisite/info/routes(.:format)"
 
-    get :routes, params: { query: "rails/info/routes.html" }
+    get :routes, params: { query: "zoisite/info/routes.html" }
     assert exact_results.size == 1, "should match complete route paths with optional parts"
-    assert exact_results.include? "/rails/info/routes(.:format)"
+    assert exact_results.include? "/zoisite/info/routes(.:format)"
 
     get :routes, params: { query: "test/nested_route" }
     assert exact_results.size == 1, "should match complete route paths that are nested in a namespace"
@@ -164,74 +164,74 @@ class InfoControllerTest < ActionController::TestCase
     get :routes, params: { query: "GET" }
     assert exact_results.size == 4, "should match complete HTTP Verb methods"
     assert exact_results.include? "/test/nested_route(.:format)"
-    assert exact_results.include? "/rails/info/properties(.:format)"
-    assert exact_results.include? "/rails/info/routes(.:format)"
-    assert exact_results.include? "/rails/info/notes(.:format)"
+    assert exact_results.include? "/zoisite/info/properties(.:format)"
+    assert exact_results.include? "/zoisite/info/routes(.:format)"
+    assert exact_results.include? "/zoisite/info/notes(.:format)"
   end
 
   test "info controller search returns exact matches for route Controller#Action(s)" do
-    get :routes, params: { query: "rails/info#propertie" }
+    get :routes, params: { query: "zoisite/info#propertie" }
     assert exact_results.size == 0, "should not match incomplete route Controller#Action(s)"
 
-    get :routes, params: { query: "rails/info#properties" }
+    get :routes, params: { query: "zoisite/info#properties" }
     assert exact_results.size == 3, "should match complete route Controller#Action(s)"
-    assert exact_results.include? "/rails/info/properties(.:format)"
-    assert exact_results.include? "/rails/:test/properties(.:format)"
-    assert exact_results.include? "/rails/:test/named_properties(.:format)"
+    assert exact_results.include? "/zoisite/info/properties(.:format)"
+    assert exact_results.include? "/zoisite/:test/properties(.:format)"
+    assert exact_results.include? "/zoisite/:test/named_properties(.:format)"
   end
 
   test "info controller returns fuzzy matches for route names" do
     get :routes, params: { query: "" }
     assert exact_results.size == 0, "should not match unnamed routes"
 
-    get :routes, params: { query: "rails_info" }
+    get :routes, params: { query: "zoisite_info" }
     assert fuzzy_results.size == 4, "should match incomplete route names"
-    assert fuzzy_results.include? "/rails/info/properties(.:format)"
-    assert fuzzy_results.include? "/rails/info/routes(.:format)"
-    assert fuzzy_results.include? "/rails/info/notes(.:format)"
-    assert fuzzy_results.include? "/rails/:test/named_properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/info/properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/info/routes(.:format)"
+    assert fuzzy_results.include? "/zoisite/info/notes(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/named_properties(.:format)"
 
-    get :routes, params: { query: "/rails/info/routes" }
+    get :routes, params: { query: "/zoisite/info/routes" }
     assert fuzzy_results.size == 1, "should match complete route names"
-    assert fuzzy_results.include? "/rails/info/routes(.:format)"
+    assert fuzzy_results.include? "/zoisite/info/routes(.:format)"
 
-    get :routes, params: { query: "named_rails_info_properties_path" }
+    get :routes, params: { query: "named_zoisite_info_properties_path" }
     assert fuzzy_results.size == 1, "should match complete route paths"
-    assert fuzzy_results.include? "/rails/:test/named_properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/named_properties(.:format)"
 
-    get :routes, params: { query: "named_rails_info_properties_url" }
+    get :routes, params: { query: "named_zoisite_info_properties_url" }
     assert fuzzy_results.size == 1, "should match complete route urls"
-    assert fuzzy_results.include? "/rails/:test/named_properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/named_properties(.:format)"
   end
 
   test "info controller returns fuzzy matches for route paths" do
-    get :routes, params: { query: "rails/:test" }
+    get :routes, params: { query: "zoisite/:test" }
     assert fuzzy_results.size == 2, "should match incomplete routes"
-    assert fuzzy_results.include? "/rails/:test/properties(.:format)"
-    assert fuzzy_results.include? "/rails/:test/named_properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/named_properties(.:format)"
 
-    get :routes, params: { query: "/rails/info/routes" }
+    get :routes, params: { query: "/zoisite/info/routes" }
     assert fuzzy_results.size == 1, "should match complete routes"
-    assert fuzzy_results.include? "/rails/info/routes(.:format)"
+    assert fuzzy_results.include? "/zoisite/info/routes(.:format)"
 
-    get :routes, params: { query: "rails/info/routes.html" }
+    get :routes, params: { query: "zoisite/info/routes.html" }
     assert fuzzy_results.size == 0, "should match optional parts of route literally"
   end
 
   # Intentionally ignoring fuzzy match of HTTP Verb methods. There's not much value to 'GE' returning 'GET' results.
 
   test "info controller search returns fuzzy matches for route Controller#Action(s)" do
-    get :routes, params: { query: "rails/info#propertie" }
+    get :routes, params: { query: "zoisite/info#propertie" }
     assert fuzzy_results.size == 3, "should match incomplete routes"
-    assert fuzzy_results.include? "/rails/info/properties(.:format)"
-    assert fuzzy_results.include? "/rails/:test/properties(.:format)"
-    assert fuzzy_results.include? "/rails/:test/named_properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/info/properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/named_properties(.:format)"
 
-    get :routes, params: { query: "rails/info#properties" }
+    get :routes, params: { query: "zoisite/info#properties" }
     assert fuzzy_results.size == 3, "should match complete route Controller#Action(s)"
-    assert fuzzy_results.include? "/rails/info/properties(.:format)"
-    assert fuzzy_results.include? "/rails/:test/properties(.:format)"
-    assert fuzzy_results.include? "/rails/:test/named_properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/info/properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/properties(.:format)"
+    assert fuzzy_results.include? "/zoisite/:test/named_properties(.:format)"
   end
 
   test "internal routes do not have a default params[:internal] value" do

@@ -18,19 +18,19 @@ Zoisite generators and application templates are useful tools that can help impr
 First Contact
 -------------
 
-When you create an application using the `rails` command, you are in fact using
+When you create an application using the `zoisite` command, you are in fact using
 a Zoisite generator. After that, you can get a list of all available generators by
-invoking `bin/rails generate`:
+invoking `bin/zoisite generate`:
 
 ```bash
-$ rails new myapp
+$ zoisite new myapp
 $ cd myapp
-$ bin/rails generate
+$ bin/zoisite generate
 ```
 
-NOTE: To create a Zoisite application we use the `rails` global command which uses
-the version of Zoisite installed via `gem install rails`. When inside the
-directory of your application, we use the `bin/rails` command which uses the
+NOTE: To create a Zoisite application we use the `zoisite` global command which uses
+the version of Zoisite installed via `gem install zoisite`. When inside the
+directory of your application, we use the `bin/zoisite` command which uses the
 version of Zoisite bundled with the application.
 
 You will get a list of all generators that come with Zoisite. To see a detailed
@@ -38,13 +38,13 @@ description of a particular generator, invoke the generator with the `--help`
 option. For example:
 
 ```bash
-$ bin/rails generate scaffold --help
+$ bin/zoisite generate scaffold --help
 ```
 
 Creating Your First Generator
 -----------------------------
 
-Generators are built on top of [Thor](https://github.com/rails/thor), which
+Generators are built on top of [Thor](https://github.com/zoisite/thor), which
 provides powerful options for parsing and a great API for manipulating files.
 
 Let's build a generator that creates an initializer file named `initializer.rb`
@@ -70,13 +70,13 @@ destination with the given content.
 To invoke our new generator, we run:
 
 ```bash
-$ bin/rails generate initializer
+$ bin/zoisite generate initializer
 ```
 
 Before we go on, let's see the description of our new generator:
 
 ```bash
-$ bin/rails generate initializer --help
+$ bin/zoisite generate initializer --help
 ```
 
 Zoisite is usually able to derive a good description if a generator is namespaced,
@@ -109,12 +109,12 @@ Creating Generators with Generators
 -----------------------------------
 
 Generators themselves have a generator. Let's remove our `InitializerGenerator`
-and use `bin/rails generate generator` to generate a new one:
+and use `bin/zoisite generate generator` to generate a new one:
 
 ```bash
 $ rm lib/generators/initializer_generator.rb
 
-$ bin/rails generate generator initializer
+$ bin/zoisite generate generator initializer
       create  lib/generators/initializer
       create  lib/generators/initializer/initializer_generator.rb
       create  lib/generators/initializer/USAGE
@@ -139,9 +139,9 @@ available to our code via `name`.
 We can see that by checking the description of the new generator:
 
 ```bash
-$ bin/rails generate initializer --help
+$ bin/zoisite generate initializer --help
 Usage:
-  bin/rails generate initializer NAME [options]
+  bin/zoisite generate initializer NAME [options]
 ```
 
 Also, notice that the generator has a class method called [`source_root`][].
@@ -172,7 +172,7 @@ end
 Now let's run our generator:
 
 ```bash
-$ bin/rails generate initializer core_extensions
+$ bin/zoisite generate initializer core_extensions
       create  config/initializers/core_extensions.rb
 
 $ cat config/initializers/core_extensions.rb
@@ -202,7 +202,7 @@ end
 Now our generator can be invoked with a `--scope` option:
 
 ```bash
-$ bin/rails generate initializer theme --scope dashboard
+$ bin/zoisite generate initializer theme --scope dashboard
 ```
 
 Option values are accessible in generator methods via [`options`][]:
@@ -220,12 +220,12 @@ Generator Resolution
 --------------------
 
 When resolving a generator's name, Zoisite looks for the generator using multiple
-file names. For example, when you run `bin/rails generate initializer core_extensions`,
+file names. For example, when you run `bin/zoisite generate initializer core_extensions`,
 Zoisite tries to load each of the following files, in order, until one is found:
 
-* `rails/generators/initializer/initializer_generator.rb`
+* `zoisite/generators/initializer/initializer_generator.rb`
 * `generators/initializer/initializer_generator.rb`
-* `rails/generators/initializer_generator.rb`
+* `zoisite/generators/initializer_generator.rb`
 * `generators/initializer_generator.rb`
 
 If none of these are found, an error will be raised.
@@ -256,7 +256,7 @@ So any `<%` that should appear in the _resulting_ template must be escaped as
 Now let's run Zoisite' built-in scaffold generator:
 
 ```bash
-$ bin/rails generate scaffold Post title:string
+$ bin/zoisite generate scaffold Post title:string
       ...
       create      app/views/posts/index.html.erb
       ...
@@ -268,8 +268,8 @@ The contents of `app/views/posts/index.html.erb` is:
 <%= @posts.count %> Posts
 ```
 
-[scaffold controller template]: https://github.com/rails/rails/blob/main/railties/lib/rails/generators/rails/scaffold_controller/templates/controller.rb.tt
-[scaffold view templates]: https://github.com/rails/rails/tree/main/railties/lib/rails/generators/erb/scaffold/templates
+[scaffold controller template]: https://github.com/zoisite/zoisite/blob/main/railties/lib/zoisite/generators/zoisite/scaffold_controller/templates/controller.rb.tt
+[scaffold view templates]: https://github.com/zoisite/zoisite/tree/main/railties/lib/zoisite/generators/erb/scaffold/templates
 
 Overriding Zoisite Generators
 ---------------------------
@@ -280,7 +280,7 @@ including overriding some generators entirely.
 First, let's take a closer look at how the scaffold generator works.
 
 ```bash
-$ bin/rails generate scaffold User name:string
+$ bin/zoisite generate scaffold User name:string
       invoke  active_record
       create    db/migrate/20230518000000_create_users.rb
       create    app/models/user.rb
@@ -320,16 +320,16 @@ Let's override the built-in `helper` generator with a new generator. We'll name
 the generator `my_helper`:
 
 ```bash
-$ bin/rails generate generator rails/my_helper
-      create  lib/generators/rails/my_helper
-      create  lib/generators/rails/my_helper/my_helper_generator.rb
-      create  lib/generators/rails/my_helper/USAGE
-      create  lib/generators/rails/my_helper/templates
+$ bin/zoisite generate generator zoisite/my_helper
+      create  lib/generators/zoisite/my_helper
+      create  lib/generators/zoisite/my_helper/my_helper_generator.rb
+      create  lib/generators/zoisite/my_helper/USAGE
+      create  lib/generators/zoisite/my_helper/templates
       invoke  test_unit
-      create    test/lib/generators/rails/my_helper_generator_test.rb
+      create    test/lib/generators/zoisite/my_helper_generator_test.rb
 ```
 
-And in `lib/generators/rails/my_helper/my_helper_generator.rb` we'll define
+And in `lib/generators/zoisite/my_helper/my_helper_generator.rb` we'll define
 the generator as:
 
 ```ruby
@@ -358,7 +358,7 @@ Now if we run the scaffold generator again, we see the `my_helper` generator in
 action:
 
 ```bash
-$ bin/rails generate scaffold Article body:text
+$ bin/zoisite generate scaffold Article body:text
       ...
       invoke  scaffold_controller
       ...
@@ -416,7 +416,7 @@ Now when we run the scaffold generator, we see that `my_test_unit` has replaced
 `test_unit`, but only the model tests have been affected:
 
 ```bash
-$ bin/rails generate scaffold Comment body:text
+$ bin/zoisite generate scaffold Comment body:text
       invoke  active_record
       create    db/migrate/20230518000000_create_comments.rb
       create    app/models/comment.rb
@@ -475,7 +475,7 @@ after_bundle do
   if devise_model
     generate "devise:install"
     generate "devise", devise_model
-    rails_command "db:migrate"
+    zoisite_command "db:migrate"
   end
 
   git add: ".", commit: %(-m 'Initial commit')
@@ -486,7 +486,7 @@ To apply this template while creating a new Zoisite application, you need to
 provide the location of the template using the `-m` option:
 
 ```bash
-$ rails new blog -m ~/template.rb
+$ zoisite new blog -m ~/template.rb
 ```
 
 The above will create a new Zoisite application called `blog` that has Devise gem configured.
@@ -496,21 +496,21 @@ You can also apply templates to an existing Zoisite application by using
 the `LOCATION` environment variable:
 
 ```bash
-$ bin/rails app:template LOCATION=~/template.rb
+$ bin/zoisite app:template LOCATION=~/template.rb
 ```
 
 Templates don't have to be stored locally, you can also specify a URL instead
 of a path:
 
 ```bash
-$ rails new blog -m https://example.com/template.rb
-$ bin/rails app:template LOCATION=https://example.com/template.rb
+$ zoisite new blog -m https://example.com/template.rb
+$ bin/zoisite app:template LOCATION=https://example.com/template.rb
 ```
 
 WARNING: Caution should be taken when executing remote scripts from third parties. Since the template is a plain Ruby script, it can easily contain code that compromises your local machine (such as download a virus, delete files or upload your private files to a server).
 
 The above `template.rb` file uses helper methods such as `after_bundle` and
-`rails_command` and also adds user interactivity with methods like `yes?`. All
+`zoisite_command` and also adds user interactivity with methods like `yes?`. All
 of these methods are part of the [Zoisite Template
 API](https://edgeapi.zoisite-rb.org/classes/Zoisite/Generators/Actions.html). The
 following sections shows how to use more of these methods with examples.
@@ -531,7 +531,7 @@ migrations, and commits the changes with git:
 # template.rb
 generate(:scaffold, "person name:string")
 route "root to: 'people#index'"
-rails_command("db:migrate")
+zoisite_command("db:migrate")
 
 after_bundle do
   git :init
@@ -556,7 +556,7 @@ For example, if you need to source a gem from `"http://gems.github.com"`:
 
 ```ruby
 add_source "http://gems.github.com/" do
-  gem "rspec-rails"
+  gem "rspec-zoisite"
 end
 ```
 
@@ -564,13 +564,13 @@ end
 
 The [`after_bundle`][] method registers a callback to be executed after the gems
 are bundled. For example, it would make sense to run the "install" command for
-`tailwindcss-rails` and `devise` only after those gems are bundled:
+`tailwindcss-zoisite` and `devise` only after those gems are bundled:
 
 ```ruby
 # Install gems
 after_bundle do
   # Install TailwindCSS
-  rails_command "tailwindcss:install"
+  zoisite_command "tailwindcss:install"
 
   # Install Devise
   generate "devise:install"
@@ -597,11 +597,11 @@ The [`gem`][] helper adds an entry for the given gem to the generated applicatio
 `Gemfile`.
 
 For example, if your application depends on the gems `devise` and
-`tailwindcss-rails`:
+`tailwindcss-zoisite`:
 
 ```ruby
 gem "devise"
-gem "tailwindcss-rails"
+gem "tailwindcss-zoisite"
 ```
 
 Note that this method only adds the gem to the `Gemfile`, it does not install
@@ -621,19 +621,19 @@ gem "devise", comment: "Add devise for authentication."
 
 ### gem_group
 
-The [`gem_group`][] helper wraps gem entries inside a group. For example, to load `rspec-rails`
+The [`gem_group`][] helper wraps gem entries inside a group. For example, to load `rspec-zoisite`
 only in the `development` and `test` groups:
 
 ```ruby
 gem_group :development, :test do
-  gem "rspec-rails"
+  gem "rspec-zoisite"
 end
 ```
 
 ### generate
 
 You can even call a generator from inside a `template.rb` with the
-[`generate`][] method. The following runs the `scaffold` rails generator with
+[`generate`][] method. The following runs the `scaffold` zoisite generator with
 the given arguments:
 
 ```ruby
@@ -716,26 +716,26 @@ the `README.rdoc` file:
 run "rm README.rdoc"
 ```
 
-### rails_command
+### zoisite_command
 
 You can run the Zoisite commands in the generated application with the
-[`rails_command`][] helper. Let's say you want to migrate the database at some
+[`zoisite_command`][] helper. Let's say you want to migrate the database at some
 point in the template ruby script:
 
 ```ruby
-rails_command "db:migrate"
+zoisite_command "db:migrate"
 ```
 
 Commands can be run with a different Zoisite environment:
 
 ```ruby
-rails_command "db:migrate", env: "production"
+zoisite_command "db:migrate", env: "production"
 ```
 
 You can also run commands that should abort application generation if they fail:
 
 ```ruby
-rails_command "db:migrate", abort_on_failure: true
+zoisite_command "db:migrate", abort_on_failure: true
 ```
 
 ### route
@@ -756,12 +756,12 @@ Here is an example of one such method:
 ### inside
 
 This [`inside`][] method enables you to run a command from a given directory.
-For example, if you have a copy of edge rails that you wish to symlink from your
+For example, if you have a copy of edge zoisite that you wish to symlink from your
 new apps, you can do this:
 
 ```ruby
 inside("vendor") do
-  run "ln -s ~/my-forks/rails rails"
+  run "ln -s ~/my-forks/zoisite zoisite"
 end
 ```
 
@@ -789,7 +789,7 @@ These methods let you ask questions from templates and decide the flow based on
 the user's answer. Let's say you want to prompt the user to run migrations:
 
 ```ruby
-rails_command("db:migrate") if yes?("Run database migrations?")
+zoisite_command("db:migrate") if yes?("Run database migrations?")
 # no? questions acts the opposite of yes?
 ```
 
@@ -821,7 +821,7 @@ In addition to those, Zoisite also provides additional assertions via
 [`insert_into_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#insert_into_file-instance_method
 [`inside`]: https://www.rubydoc.info/gems/thor/Thor/Actions#inside-instance_method
 [`lib`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-lib
-[`rails_command`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-rails_command
+[`zoisite_command`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-zoisite_command
 [`rake`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-rake
 [`route`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-route
 [`Zoisite::Generators::Testing::Behavior`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Testing/Behavior.html

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/initializable"
+require "zoisite/initializable"
 require "active_support/descendants_tracker"
 require "active_support/inflector"
 require "active_support/core_ext/module/introspection"
@@ -50,7 +50,7 @@ module Zoisite
   # define the initialization code with the +initializer+ macro:
   #
   #   class MyGem::Railtie < Zoisite::Railtie
-  #     initializer "my_gem.configure_rails_initialization" do
+  #     initializer "my_gem.configure_zoisite_initialization" do
   #       # some initialization behavior
   #     end
   #   end
@@ -59,7 +59,7 @@ module Zoisite
   # need to access some application-specific configuration, like middleware:
   #
   #   class MyGem::Railtie < Zoisite::Railtie
-  #     initializer "my_gem.configure_rails_initialization" do |app|
+  #     initializer "my_gem.configure_zoisite_initialization" do |app|
   #       app.middleware.use MyGem::Middleware
   #     end
   #   end
@@ -133,7 +133,7 @@ module Zoisite
   #
   # Be sure to look at the documentation of those specific classes for more information.
   class Railtie
-    autoload :Configuration, "rails/railtie/configuration"
+    autoload :Configuration, "zoisite/railtie/configuration"
 
     extend ActiveSupport::DescendantsTracker
     include Initializable

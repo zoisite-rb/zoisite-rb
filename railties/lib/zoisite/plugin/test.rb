@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/test_unit/runner"
-require "rails/test_unit/reporter"
+require "zoisite/test_unit/runner"
+require "zoisite/test_unit/reporter"
 
 Zoisite::TestUnitReporter.executable = "bin/test"
 

@@ -202,7 +202,7 @@ are typically created using [Active Record Migrations](#migrations) and not raw
 SQL. A migration for the `books` table above can be generated like this:
 
 ```bash
-$ bin/rails generate migration CreateBooks title:string author:string
+$ bin/zoisite generate migration CreateBooks title:string author:string
 ```
 
 and results in this:
@@ -241,7 +241,7 @@ irb> book.title
 ```
 
 NOTE: You can generate the Active Record model class as well as a matching
-migration with the command `bin/rails generate model Book title:string
+migration with the command `bin/zoisite generate model Book title:string
 author:string`. This creates the files `app/models/book.rb`,
 `db/migrate/20240220143807_create_books.rb`, and a couple others for testing
 purposes.
@@ -258,7 +258,7 @@ In the case where the `Book` module does not already exist, the `generate`
 command will create everything like this:
 
 ```bash
-$ bin/rails generate model Book::Order
+$ bin/zoisite generate model Book::Order
       invoke  active_record
       create    db/migrate/20240306194227_create_book_orders.rb
       create    app/models/book/order.rb
@@ -272,12 +272,12 @@ If the `Book` module already exists, you will be asked to resolve
 the conflict:
 
 ```bash
-$ bin/rails generate model Book::Order
+$ bin/zoisite generate model Book::Order
       invoke  active_record
       create    db/migrate/20240305140356_create_book_orders.rb
       create    app/models/book/order.rb
     conflict    app/models/book.rb
-  Overwrite /Users/bhumi/Code/rails_guides/app/models/book.rb? (enter "h" for help) [Ynaqdhm]
+  Overwrite /Users/bhumi/Code/zoisite_guides/app/models/book.rb? (enter "h" for help) [Ynaqdhm]
 ```
 
 Once the namespaced model generation is successful, the `Book` and `Order`
@@ -695,8 +695,8 @@ Zoisite keeps track of which migrations have been committed to the database and
 stores them in a neighboring table in that same database called
 `schema_migrations`.
 
-To run the migration and create the table, you'd run `bin/rails db:migrate`, and
-to roll it back and delete the table, `bin/rails db:rollback`.
+To run the migration and create the table, you'd run `bin/zoisite db:migrate`, and
+to roll it back and delete the table, `bin/zoisite db:rollback`.
 
 You can learn more about migrations in the [Active Record Migrations
 guide](active_record_migrations.html).

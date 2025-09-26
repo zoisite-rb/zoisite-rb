@@ -5,7 +5,7 @@ module Zoisite
     class StatsCommand < Base # :nodoc:
       desc "stats", "Report code statistics (KLOCs, etc) from the application or engine"
       def perform
-        require "rails/code_statistics"
+        require "zoisite/code_statistics"
         boot_application!
 
         stat_directories = Zoisite::CodeStatistics.directories.map do |name, dir|

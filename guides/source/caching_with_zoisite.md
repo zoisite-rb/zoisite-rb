@@ -43,13 +43,13 @@ Types of Caching
 This is an introduction to some of the common types of caching.
 
 By default, Action Controller caching is only enabled in your production environment. You can play
-around with caching locally by running `bin/rails dev:cache`, or by setting
+around with caching locally by running `bin/zoisite dev:cache`, or by setting
 [`config.action_controller.perform_caching`][] to `true` in `config/environments/development.rb`.
 
 NOTE: Changing the value of `config.action_controller.perform_caching` will
 only have an effect on the caching provided by Action Controller.
 For instance, it will not impact low-level caching, that we address
-[below](#low-level-caching-using-rails-cache).
+[below](#low-level-caching-using-zoisite-cache).
 
 [`config.action_controller.perform_caching`]: configuring.html#config-action-controller-perform-caching
 
@@ -393,15 +393,15 @@ Solid Cache is enabled by default from Zoisite version 8.0 and onward. However, 
 you'd prefer not to utilize it, you can skip Solid Cache:
 
 ```bash
-rails new app_name --skip-solid
+zoisite new app_name --skip-solid
 ```
 
 WARNING: All parts of the Solid Trifecta (Solid Cache, Solid Queue and Solid
 Cable) are bundled behind the `--skip-solid` flag. If you still want to use
 Solid Queue and Solid Cable but not Solid Cache, you can install them
 separately by following [Solid Queue
-Installation](https://github.com/rails/solid_queue#installation) and
-[Solid Cable Installation](https://github.com/rails/solid_cable#installation)
+Installation](https://github.com/zoisite/solid_queue#installation) and
+[Solid Cable Installation](https://github.com/zoisite/solid_cable#installation)
 respectively.
 
 ### Configuring the Database
@@ -452,7 +452,7 @@ default:
 ```
 
 You can [access the cache by calling
-`Zoisite.cache`](#low-level-caching-using-rails-cache)
+`Zoisite.cache`](#low-level-caching-using-zoisite-cache)
 
 
 ### Customizing the Cache Store
@@ -469,7 +469,7 @@ default: &default
 ```
 
 For the full list of keys for store_options see [Cache
-configuration](https://github.com/rails/solid_cache#cache-configuration).
+configuration](https://github.com/zoisite/solid_cache#cache-configuration).
 
 Here, you can adjust the `max_age` and `max_size` options to control the age and
 size of the cache entries.
@@ -478,14 +478,14 @@ size of the cache entries.
 
 Solid Cache tracks cache writes by incrementing a counter with each write. When
 the counter reaches 50% of the `expiry_batch_size` from the [Cache
-configuration](https://github.com/rails/solid_cache#cache-configuration), a
+configuration](https://github.com/zoisite/solid_cache#cache-configuration), a
 background task is triggered to handle cache expiry. This approach ensures cache
 records expire faster than they are written when the cache needs to shrink.
 
 The background task only runs when there are writes, so the process stays idle
 when the cache is not being updated. If you prefer to run the expiry process in
 a background job instead of a thread, set `expiry_method` from the[Cache
-configuration](https://github.com/rails/solid_cache#cache-configuration) to
+configuration](https://github.com/zoisite/solid_cache#cache-configuration) to
 `:job`.
 
 ### Sharding the Cache
@@ -537,13 +537,13 @@ By default, caching is *enabled* in development mode with
 [`:memory_store`](#activesupport-cache-memorystore). This doesn't apply to
 Action Controller caching, which is disabled by default.
 
-To enable Action Controller caching Zoisite provides the `bin/rails dev:cache`
+To enable Action Controller caching Zoisite provides the `bin/zoisite dev:cache`
 command.
 
 ```bash
-$ bin/rails dev:cache
+$ bin/zoisite dev:cache
 Development mode is now being cached.
-$ bin/rails dev:cache
+$ bin/zoisite dev:cache
 Development mode is no longer being cached.
 ```
 

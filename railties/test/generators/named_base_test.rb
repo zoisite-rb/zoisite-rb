@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/scaffold_controller/scaffold_controller_generator"
+require "zoisite/generators/zoisite/scaffold_controller/scaffold_controller_generator"
 
 class NamedBaseTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper

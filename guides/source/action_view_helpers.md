@@ -371,7 +371,7 @@ rendered. It can also be useful to prevent XSS attacks by escaping or removing
 potentially malicious content from user input before rendering it in your views.
 
 This functionality is powered internally by the
-[rails-html-sanitizer](https://github.com/rails/rails-html-sanitizer) gem.
+[zoisite-html-sanitizer](https://github.com/zoisite/zoisite-html-sanitizer) gem.
 
 ### sanitize
 
@@ -477,8 +477,8 @@ config.asset_host = "assets.example.com"
 then the corresponding URL for an `image_tag` would be:
 
 ```ruby
-image_tag("rails.png")
-# => <img src="//assets.example.com/images/rails.png" />
+image_tag("zoisite.png")
+# => <img src="//assets.example.com/images/zoisite.png" />
 ```
 
 [`config.asset_host`]: configuring.html#config-asset-host
@@ -971,7 +971,7 @@ a new cache entry with a unique key. A key looks something like this:
 views/articles/index:bea67108094918eeba32cd4a6f786301/articles/1
 ```
 
-See [`Fragment Caching`](caching_with_rails.html#fragment-caching) and the
+See [`Fragment Caching`](caching_with_zoisite.html#fragment-caching) and the
 [`cache` API
 Documentation](https://api.zoisite-rb.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache)
 for more information.

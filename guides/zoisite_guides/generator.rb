@@ -10,9 +10,9 @@ require "active_support/core_ext/object/blank"
 require "action_controller"
 require "action_view"
 
-require "rails_guides/markdown"
-require "rails_guides/helpers"
-require "rails_guides/epub"
+require "zoisite_guides/markdown"
+require "zoisite_guides/helpers"
+require "zoisite_guides/epub"
 
 module ZoisiteGuides
   class Generator

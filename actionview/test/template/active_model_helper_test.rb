@@ -28,7 +28,7 @@ class ActiveModelHelperTest < ActionView::TestCase
 
     @post.author_name = ""
     @post.body        = "Back to the hill and over it again!"
-    @post.category    = "rails"
+    @post.category    = "zoisite"
     @post.published   = false
     @post.updated_at  = Date.new(2004, 6, 15)
   end
@@ -123,15 +123,15 @@ class ActiveModelHelperTest < ActionView::TestCase
 
   def test_radio_button_with_errors
     assert_dom_equal(
-      %(<div class="field_with_errors"><input type="radio" value="rails" checked="checked" name="post[category]" id="post_category_rails" /></div>),
-      radio_button("post", "category", "rails")
+      %(<div class="field_with_errors"><input type="radio" value="zoisite" checked="checked" name="post[category]" id="post_category_zoisite" /></div>),
+      radio_button("post", "category", "zoisite")
     )
   end
 
   def test_radio_buttons_with_errors
     assert_dom_equal(
-      %(<div class="field_with_errors"><input type="radio" value="rails" checked="checked" name="post[category]" id="post_category_rails" /></div><div class="field_with_errors"><input type="radio" value="java" name="post[category]" id="post_category_java" /></div>),
-      radio_button("post", "category", "rails") + radio_button("post", "category", "java")
+      %(<div class="field_with_errors"><input type="radio" value="zoisite" checked="checked" name="post[category]" id="post_category_zoisite" /></div><div class="field_with_errors"><input type="radio" value="java" name="post[category]" id="post_category_java" /></div>),
+      radio_button("post", "category", "zoisite") + radio_button("post", "category", "java")
     )
   end
 

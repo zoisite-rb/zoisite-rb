@@ -1,4 +1,4 @@
-import { DirectUpload, dispatchEvent } from "@rails/activestorage"
+import { DirectUpload, dispatchEvent } from "@zoisite/activestorage"
 
 export class AttachmentUpload {
   constructor(attachment, element) {

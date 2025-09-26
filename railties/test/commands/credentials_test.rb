@@ -2,7 +2,7 @@
 
 require "isolation/abstract_unit"
 require "env_helpers"
-require "rails/command"
+require "zoisite/command"
 require "fileutils"
 
 class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
@@ -14,7 +14,7 @@ class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
   test "edit without visual or editor gives hint" do
     run_edit_command(visual: "", editor: "").tap do |output|
       assert_match "No $VISUAL or $EDITOR to open file in", output
-      assert_match "rails credentials:edit", output
+      assert_match "zoisite credentials:edit", output
     end
   end
 
@@ -145,7 +145,7 @@ class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
   end
 
   test "edit command can use custom template to generate credentials file" do
-    app_file "lib/templates/rails/credentials/credentials.yml.tt", <<~ERB
+    app_file "lib/templates/zoisite/credentials/credentials.yml.tt", <<~ERB
       provides_secret_key_base: <%= [secret_key_base] == [secret_key_base].compact %>
     ERB
     remove_file "config/credentials.yml.enc"
@@ -207,8 +207,8 @@ class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
     assert_match(/\benrolled project/i, run_diff_command(enroll: true))
 
     assert_includes File.read(app_path(".gitattributes")), <<~EOM
-      config/credentials/*.yml.enc diff=rails_credentials
-      config/credentials.yml.enc diff=rails_credentials
+      config/credentials/*.yml.enc diff=zoisite_credentials
+      config/credentials.yml.enc diff=zoisite_credentials
     EOM
   end
 
@@ -252,7 +252,7 @@ class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
     assert_match %r/git diff driver/i, run_edit_command
 
     Dir.chdir(app_path) do
-      assert_equal "bin/rails credentials:diff", `git config --get 'diff.rails_credentials.textconv'`.strip
+      assert_equal "bin/zoisite credentials:diff", `git config --get 'diff.zoisite_credentials.textconv'`.strip
     end
 
     assert_no_match %r/git diff driver/i, run_edit_command
@@ -332,7 +332,7 @@ class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
     content_path = "my_secrets/credentials.yml.enc"
     add_to_env_config "production", "config.credentials.content_path = #{content_path.inspect}"
 
-    with_rails_env "production" do
+    with_zoisite_env "production" do
       assert_credentials_paths content_path, "config/master.key"
     end
 
@@ -343,7 +343,7 @@ class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
     key_path = "my_secrets/master.key"
     add_to_env_config "production", "config.credentials.key_path = #{key_path.inspect}"
 
-    with_rails_env "production" do
+    with_zoisite_env "production" do
       assert_credentials_paths "config/credentials.yml.enc", key_path
     end
 
@@ -371,23 +371,23 @@ class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
       switch_env("VISUAL", visual) do
         switch_env("EDITOR", editor) do
           args = environment ? ["--environment", environment] : []
-          rails "credentials:edit", args, **options
+          zoisite "credentials:edit", args, **options
         end
       end
     end
 
     def run_show_command(environment: nil, **options)
       args = environment ? ["--environment", environment] : []
-      rails "credentials:show", args, **options
+      zoisite "credentials:show", args, **options
     end
 
     def run_diff_command(path = nil, enroll: nil, disenroll: nil, **options)
       args = [path, ("--enroll" if enroll), ("--disenroll" if disenroll)].compact
-      rails "credentials:diff", args, **options
+      zoisite "credentials:diff", args, **options
     end
 
     def run_fetch_command(path, **options)
-      rails "credentials:fetch", path, **options
+      zoisite "credentials:fetch", path, **options
     end
 
     def write_credentials(content, **options)

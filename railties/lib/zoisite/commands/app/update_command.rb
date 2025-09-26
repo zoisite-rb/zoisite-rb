@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators"
-require "rails/generators/rails/app/app_generator"
+require "zoisite/generators"
+require "zoisite/generators/zoisite/app/app_generator"
 
 module Zoisite
   module Command
@@ -54,7 +54,7 @@ module Zoisite
 
           def app_generator
             @app_generator ||= begin
-              gen = Zoisite::Generators::AppGenerator.new(["rails"], generator_options, destination_root: Zoisite.root)
+              gen = Zoisite::Generators::AppGenerator.new(["zoisite"], generator_options, destination_root: Zoisite.root)
               gen.send(:valid_const?) unless File.exist?(Zoisite.root.join("config", "application.rb"))
               gen
             end

@@ -3,9 +3,9 @@
 require "abstract_unit"
 require "active_support/testing/stream"
 require "active_support/testing/method_call_assertions"
-require "rails/generators"
-require "rails/generators/test_case"
-require "rails/generators/app_base"
+require "zoisite/generators"
+require "zoisite/generators/test_case"
+require "zoisite/generators/app_base"
 
 Zoisite.application.config.generators.templates = [File.expand_path("../fixtures/lib/templates", __dir__)]
 
@@ -61,7 +61,7 @@ module GeneratorsTestHelper
   end
 
   def copy_routes
-    routes = File.expand_path("../../lib/rails/generators/rails/app/templates/config/routes.rb.tt", __dir__)
+    routes = File.expand_path("../../lib/zoisite/generators/zoisite/app/templates/config/routes.rb.tt", __dir__)
     routes = evaluate_template(routes, {
       options: ActiveSupport::OrderedOptions.new
     })
@@ -72,7 +72,7 @@ module GeneratorsTestHelper
 
   def copy_gemfile(*gemfile_entries)
     locals = gemfile_locals.merge(gemfile_entries: gemfile_entries)
-    gemfile = File.expand_path("../../lib/rails/generators/rails/app/templates/Gemfile.tt", __dir__)
+    gemfile = File.expand_path("../../lib/zoisite/generators/zoisite/app/templates/Gemfile.tt", __dir__)
     gemfile = evaluate_template(gemfile, locals)
     destination = File.join(destination_root)
     File.write File.join(destination, "Gemfile"), gemfile
@@ -141,17 +141,17 @@ module GeneratorsTestHelper
   def run_app_update(app_root = destination_root, flags: "--force")
     Dir.chdir(app_root) do
       gemfile_contents = File.read("Gemfile")
-      gemfile_contents.sub!(/^(gem "rails").*/, "\\1, path: #{File.expand_path("../../..", __dir__).inspect}")
+      gemfile_contents.sub!(/^(gem "zoisite").*/, "\\1, path: #{File.expand_path("../../..", __dir__).inspect}")
       File.write("Gemfile", gemfile_contents)
 
-      silence_stream($stdout) { system({ "BUNDLE_GEMFILE" => "Gemfile" }, "bin/rails app:update #{flags}", exception: true) }
+      silence_stream($stdout) { system({ "BUNDLE_GEMFILE" => "Gemfile" }, "bin/zoisite app:update #{flags}", exception: true) }
     end
   end
 
   private
     def gemfile_locals
       {
-        rails_prerelease: false,
+        zoisite_prerelease: false,
         skip_active_storage: true,
         depend_on_bootsnap: false,
         depends_on_system_test: false,

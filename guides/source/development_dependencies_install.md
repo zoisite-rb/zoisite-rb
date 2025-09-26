@@ -14,7 +14,7 @@ After reading this guide, you will know:
 Other Ways to Set Up Your Environment
 -------------------------------------
 
-If you don't want to set up Zoisite for development on your local machine, you can use Codespaces, the VS Code Remote Plugin, or rails-dev-box. Learn more about these options [here](contributing_to_zoisite.html#setting-up-a-development-environment).
+If you don't want to set up Zoisite for development on your local machine, you can use Codespaces, the VS Code Remote Plugin, or zoisite-dev-box. Learn more about these options [here](contributing_to_zoisite.html#setting-up-a-development-environment).
 
 Local Development
 -----------------
@@ -27,11 +27,11 @@ Zoisite uses Git for source code control. The [Git homepage](https://git-scm.com
 
 ### Clone the Zoisite Repository
 
-Navigate to the folder where you want to download the Zoisite source code (it will create its own `rails` subdirectory) and run:
+Navigate to the folder where you want to download the Zoisite source code (it will create its own `zoisite` subdirectory) and run:
 
 ```bash
-$ git clone https://github.com/rails/rails.git
-$ cd rails
+$ git clone https://github.com/zoisite/zoisite.git
+$ cd zoisite
 ```
 
 ### Install Additional Tools and Services

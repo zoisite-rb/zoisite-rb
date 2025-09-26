@@ -7,11 +7,11 @@ ENV["RAILS_INBOUND_EMAIL_PASSWORD"] = "tbsy84uSV1Kt3ZJZELY2TmShPRs91E3yL4tzf9629
 
 require_relative "../test/dummy/config/environment"
 ActiveRecord::Migrator.migrations_paths = [ File.expand_path("../test/dummy/db/migrate", __dir__) ]
-require "rails/test_help"
+require "zoisite/test_help"
 
 require "webmock/minitest"
 
-require "rails/test_unit/reporter"
+require "zoisite/test_unit/reporter"
 Zoisite::TestUnitReporter.executable = "bin/test"
 
 if ActiveSupport::TestCase.respond_to?(:fixture_paths=)

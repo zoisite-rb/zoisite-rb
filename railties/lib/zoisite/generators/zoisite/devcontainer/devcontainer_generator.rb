@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "rails/generators"
+require "zoisite/generators"
 
 module Zoisite
   module Generators
     class DevcontainerGenerator < Base # :nodoc:
-      class_option :app_name, type: :string, default: "rails_app",
+      class_option :app_name, type: :string, default: "zoisite_app",
                    desc: "Name of the app"
 
       class_option :database, enum: Database::DATABASES, type: :string, default: "sqlite3",
@@ -110,7 +110,7 @@ module Zoisite
             "ghcr.io/devcontainers/features/github-cli:1" => {}
           }
 
-          @features["ghcr.io/rails/devcontainer/features/activestorage"] = {} if options[:active_storage]
+          @features["ghcr.io/zoisite/devcontainer/features/activestorage"] = {} if options[:active_storage]
           @features["ghcr.io/devcontainers/features/node:1"] = {} if options[:node]
           @features["ghcr.io/devcontainers/features/docker-outside-of-docker:1"] = {} if options[:kamal]
 
@@ -124,7 +124,7 @@ module Zoisite
 
           @mounts = []
 
-          @mounts << local_rails_mount if options[:dev]
+          @mounts << local_zoisite_mount if options[:dev]
 
           @mounts
         end
@@ -149,7 +149,7 @@ module Zoisite
           { database.name => service }.to_yaml(**options)[4..-1]
         end
 
-        def local_rails_mount
+        def local_zoisite_mount
           {
             type: "bind",
             source: Zoisite::Generators::RAILS_DEV_PATH,
@@ -160,7 +160,7 @@ module Zoisite
         def system_test_configuration
           optimize_indentation(<<-'RUBY', 2).chomp
             if ENV["CAPYBARA_SERVER_PORT"]
-              served_by host: "rails-app", port: ENV["CAPYBARA_SERVER_PORT"]
+              served_by host: "zoisite-app", port: ENV["CAPYBARA_SERVER_PORT"]
 
               driven_by :selenium, using: :headless_chrome, screen_size: [ 1400, 1400 ], options: {
                 browser: :remote,

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators/app_base"
-require "rails/generators/rails/devcontainer/devcontainer_generator"
+require "zoisite/generators/app_base"
+require "zoisite/generators/zoisite/devcontainer/devcontainer_generator"
 
 module Zoisite
   module ActionMethods # :nodoc:
@@ -37,7 +37,7 @@ module Zoisite
   #
   #  class CustomAppBuilder < Zoisite::AppBuilder
   #    def test
-  #      @generator.gem "rspec-rails", group: [:development, :test]
+  #      @generator.gem "rspec-zoisite", group: [:development, :test]
   #      run "bundle install"
   #      generate "rspec:install"
   #    end
@@ -191,7 +191,7 @@ module Zoisite
     def master_key
       return if options[:pretend] || options[:dummy_app]
 
-      require "rails/generators/rails/master_key/master_key_generator"
+      require "zoisite/generators/zoisite/master_key/master_key_generator"
       master_key_generator = Zoisite::Generators::MasterKeyGenerator.new([], quiet: options[:quiet], force: options[:force])
       master_key_generator.add_master_key_file_silently
     end
@@ -199,7 +199,7 @@ module Zoisite
     def credentials
       return if options[:pretend] || options[:dummy_app]
 
-      require "rails/generators/rails/credentials/credentials_generator"
+      require "zoisite/generators/zoisite/credentials/credentials_generator"
       Zoisite::Generators::CredentialsGenerator.new([], quiet: true).add_credentials_file
     end
 
@@ -207,7 +207,7 @@ module Zoisite
       return if options[:skip_decrypted_diffs] || options[:dummy_app] || options[:pretend]
 
       @generator.shell.mute do
-        rails_command "credentials:diff --enroll", inline: true, shell: @generator.shell
+        zoisite_command "credentials:diff --enroll", inline: true, shell: @generator.shell
       end
     end
 
@@ -296,12 +296,12 @@ module Zoisite
 
       add_shared_options_for "application"
 
-      # Add rails command options
-      class_option :version, type: :boolean, aliases: "-v", group: :rails, desc: "Show Zoisite version number and quit"
+      # Add zoisite command options
+      class_option :version, type: :boolean, aliases: "-v", group: :zoisite, desc: "Show Zoisite version number and quit"
       class_option :api, type: :boolean, desc: "Preconfigure smaller stack for API only apps"
-      class_option :minimal, type: :boolean, desc: "Preconfigure a minimal rails app"
+      class_option :minimal, type: :boolean, desc: "Preconfigure a minimal zoisite app"
       class_option :javascript, type: :string, aliases: ["-j", "--js"], default: "importmap", enum: JAVASCRIPT_OPTIONS, desc: "Choose JavaScript approach"
-      class_option :css, type: :string, aliases: "-c", enum: CSS_OPTIONS, desc: "Choose CSS processor. Check https://github.com/rails/cssbundling-rails for more options"
+      class_option :css, type: :string, aliases: "-c", enum: CSS_OPTIONS, desc: "Choose CSS processor. Check https://github.com/zoisite/cssbundling-zoisite for more options"
       class_option :skip_bundle, type: :boolean, aliases: "-B", default: nil, desc: "Don't run bundle install"
       class_option :skip_decrypted_diffs, type: :boolean, default: nil, desc: "Don't configure git to show decrypted diffs of encrypted credentials"
 
@@ -340,10 +340,10 @@ module Zoisite
 
       META_OPTIONS = [:minimal] # :nodoc:
 
-      def self.apply_rails_template(template, destination) # :nodoc:
+      def self.apply_zoisite_template(template, destination) # :nodoc:
         generator = new([destination], { template: template }, { destination_root: destination })
         generator.set_default_accessors!
-        generator.apply_rails_template
+        generator.apply_zoisite_template
         generator.run_bundle
         generator.run_after_bundle_callbacks
       end
@@ -359,7 +359,7 @@ module Zoisite
       public_task :report_implied_options
       public_task :set_default_accessors!
       public_task :create_root
-      public_task :target_rails_prerelease
+      public_task :target_zoisite_prerelease
 
       def create_root_files
         build(:readme)
@@ -392,7 +392,7 @@ module Zoisite
 
       def update_active_storage
         unless skip_active_storage?
-          rails_command "active_storage:update", inline: true
+          zoisite_command "active_storage:update", inline: true
         end
       end
       remove_task :update_active_storage
@@ -579,7 +579,7 @@ module Zoisite
         build(:leftovers)
       end
 
-      public_task :apply_rails_template
+      public_task :apply_zoisite_template
       public_task :run_bundle
       public_task :add_bundler_platforms
       public_task :run_javascript
@@ -593,7 +593,7 @@ module Zoisite
       end
 
       def self.banner
-        "rails new #{arguments.map(&:usage).join(' ')} [options]"
+        "zoisite new #{arguments.map(&:usage).join(' ')} [options]"
       end
 
     # :startdoc:
@@ -621,7 +621,7 @@ module Zoisite
 
     # This class handles preparation of the arguments before the AppGenerator is
     # called. The class provides version or help information if they were
-    # requested, and also constructs the railsrc file (used for extra configuration
+    # requested, and also constructs the zoisiterc file (used for extra configuration
     # options).
     #
     # This class should be called before the AppGenerator is required and started
@@ -634,24 +634,24 @@ module Zoisite
       def prepare!
         handle_version_request!(@argv.first)
         handle_invalid_command!(@argv.first, @argv) do
-          handle_rails_rc!(@argv.drop(1))
+          handle_zoisite_rc!(@argv.drop(1))
         end
       end
 
       def self.default_rc_file
         xdg_config_home = ENV["XDG_CONFIG_HOME"].presence || "~/.config"
-        xdg_railsrc = File.expand_path("rails/railsrc", xdg_config_home)
-        if File.exist?(xdg_railsrc)
-          xdg_railsrc
+        xdg_zoisiterc = File.expand_path("zoisite/zoisiterc", xdg_config_home)
+        if File.exist?(xdg_zoisiterc)
+          xdg_zoisiterc
         else
-          File.expand_path("~/.railsrc")
+          File.expand_path("~/.zoisiterc")
         end
       end
 
       private
         def handle_version_request!(argument)
           if ["--version", "-v"].include?(argument)
-            require "rails/version"
+            require "zoisite/version"
             puts "Zoisite #{Zoisite::VERSION::STRING}"
             exit(0)
           end
@@ -665,15 +665,15 @@ module Zoisite
           end
         end
 
-        def handle_rails_rc!(argv)
+        def handle_zoisite_rc!(argv)
           if argv.find { |arg| arg == "--no-rc" }
             argv.reject { |arg| arg == "--no-rc" }
           else
-            railsrc(argv) { |rc_argv, rc| insert_railsrc_into_argv!(rc_argv, rc) }
+            zoisiterc(argv) { |rc_argv, rc| insert_zoisiterc_into_argv!(rc_argv, rc) }
           end
         end
 
-        def railsrc(argv)
+        def zoisiterc(argv)
           if (customrc = argv.index { |x| x.include?("--rc=") })
             fname = File.expand_path(argv[customrc].gsub(/--rc=/, ""))
             yield(argv.take(customrc) + argv.drop(customrc + 1), fname)
@@ -682,15 +682,15 @@ module Zoisite
           end
         end
 
-        def read_rc_file(railsrc)
-          extra_args = File.readlines(railsrc).flat_map.each { |line| line.split("#", 2).first.split }
-          puts "Using #{extra_args.join(" ")} from #{railsrc}"
+        def read_rc_file(zoisiterc)
+          extra_args = File.readlines(zoisiterc).flat_map.each { |line| line.split("#", 2).first.split }
+          puts "Using #{extra_args.join(" ")} from #{zoisiterc}"
           extra_args
         end
 
-        def insert_railsrc_into_argv!(argv, railsrc)
-          return argv unless File.exist?(railsrc)
-          extra_args = read_rc_file railsrc
+        def insert_zoisiterc_into_argv!(argv, zoisiterc)
+          return argv unless File.exist?(zoisiterc)
+          extra_args = read_rc_file zoisiterc
           argv.take(1) + extra_args + argv.drop(1)
         end
     end

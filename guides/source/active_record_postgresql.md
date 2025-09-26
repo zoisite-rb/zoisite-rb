@@ -347,7 +347,7 @@ def change
 end
 ```
 
-Hint: to show all the values of the all enums you have, you can call this query in `bin/rails db` or `psql` console:
+Hint: to show all the values of the all enums you have, you can call this query in `bin/zoisite db` or `psql` console:
 
 ```sql
 SELECT n.nspname AS enum_schema,
@@ -579,14 +579,14 @@ To use the Zoisite model generator for a table using UUID as the primary key, pa
 For example:
 
 ```bash
-$ bin/rails generate model Device --primary-key-type=uuid kind:string
+$ bin/zoisite generate model Device --primary-key-type=uuid kind:string
 ```
 
 When building a model with a foreign key that will reference this UUID, treat
 `uuid` as the native field type, for example:
 
 ```bash
-$ bin/rails generate model Case device_id:uuid
+$ bin/zoisite generate model Case device_id:uuid
 ```
 
 Indexing
@@ -769,7 +769,7 @@ Database Views
 Imagine you need to work with a legacy database containing the following table:
 
 ```
-rails_pg_guide=# \d "TBL_ART"
+zoisite_pg_guide=# \d "TBL_ART"
                                         Table "public.TBL_ART"
    Column   |            Type             |                         Modifiers
 ------------+-----------------------------+------------------------------------------------------------

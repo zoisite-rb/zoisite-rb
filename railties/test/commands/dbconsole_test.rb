@@ -2,8 +2,8 @@
 
 require "abstract_unit"
 require "minitest/mock"
-require "rails/command"
-require "rails/commands/dbconsole/dbconsole_command"
+require "zoisite/command"
+require "zoisite/commands/dbconsole/dbconsole_command"
 require "active_record/database_configurations"
 require "active_support/testing/method_call_assertions"
 require "active_record/connection_adapters/sqlite3_adapter"
@@ -12,7 +12,7 @@ class Zoisite::DBConsoleTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::MethodCallAssertions
 
   def setup
-    Zoisite::DBConsole.const_set("APP_PATH", "rails/all")
+    Zoisite::DBConsole.const_set("APP_PATH", "zoisite/all")
   end
 
   def teardown
@@ -96,15 +96,15 @@ class Zoisite::DBConsoleTest < ActiveSupport::TestCase
       ENV["RACK_ENV"] = "rack_env"
       assert_equal "rack_env", Zoisite::DBConsole.new.environment
 
-      ENV["RAILS_ENV"] = "rails_env"
-      assert_equal "rails_env", Zoisite::DBConsole.new.environment
+      ENV["RAILS_ENV"] = "zoisite_env"
+      assert_equal "zoisite_env", Zoisite::DBConsole.new.environment
     end
   ensure
     ENV["RAILS_ENV"] = "test"
     ENV["RACK_ENV"] = nil
   end
 
-  def test_rails_env_is_development_when_environment_option_is_dev
+  def test_zoisite_env_is_development_when_environment_option_is_dev
     stub_available_environments([ "development", "test" ]) do
       assert_match("development", parse_arguments([ "-e", "dev" ])[:environment])
     end
@@ -190,14 +190,14 @@ class Zoisite::DBConsoleTest < ActiveSupport::TestCase
     stdout = capture(:stdout) do
       Zoisite::Command.invoke(:dbconsole, ["-h"])
     end
-    assert_match %r"bin/rails dbconsole", stdout
+    assert_match %r"bin/zoisite dbconsole", stdout
   end
 
   def test_print_help_long
     stdout = capture(:stdout) do
       Zoisite::Command.invoke(:dbconsole, ["--help"])
     end
-    assert_match %r"bin/rails dbconsole", stdout
+    assert_match %r"bin/zoisite dbconsole", stdout
   end
 
   attr_reader :aborted, :output

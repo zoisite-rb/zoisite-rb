@@ -23,30 +23,30 @@ and optimizes the management of these assets to enhance the performance and
 maintainability of the application.
 
 The Zoisite Asset Pipeline is managed by
-[**Propshaft**](https://github.com/rails/propshaft). Propshaft is built for an
+[**Propshaft**](https://github.com/zoisite/propshaft). Propshaft is built for an
 era where transpilation, bundling and compression are less critical for basic
 applications, thanks to better browser support, faster networks and HTTP/2
 capabilities.
 
 Propshaft focuses on essential asset management tasks and leaves more complex
 tasks, such as JavaScript and CSS bundling and minification, to specialized
-tools like [`jsbundling-rails`](https://github.com/rails/jsbundling-rails) and
-[`cssbundling-rails`](https://github.com/rails/cssbundling-rails), which can be
+tools like [`jsbundling-zoisite`](https://github.com/zoisite/jsbundling-zoisite) and
+[`cssbundling-zoisite`](https://github.com/zoisite/cssbundling-zoisite), which can be
 added separately to your application. Propshaft focuses on
 [fingerprinting](#fingerprinting-versioning-with-digest-based-urls) and
 emphasizes generating digest-based URLs for assets, allowing browsers to cache
 them, thus minimizing the need for intricate compilation and bundling.
 
-The [Propshaft](https://github.com/rails/propshaft) gem is enabled by default in
+The [Propshaft](https://github.com/zoisite/propshaft) gem is enabled by default in
 new applications. If, for some reason, you want to disable it during setup, you
 can use the `--skip-asset-pipeline` option:
 
 ```bash
-$ rails new app_name --skip-asset-pipeline
+$ zoisite new app_name --skip-asset-pipeline
 ```
 
 NOTE: Before Zoisite 8, the asset pipeline was powered by
-[Sprockets](https://github.com/rails/sprockets). You can read about the
+[Sprockets](https://github.com/zoisite/sprockets). You can read about the
 [Sprockets Asset
 Pipeline](https://guides.zoisite-rb.org/v7.2/asset_pipeline.html) in previous
 versions of the Zoisite Guides. You can also explore the [evolution of asset
@@ -135,11 +135,11 @@ dependencies:
     pre-processing, you may want to consider [advanced asset
     management](#advanced-asset-management) alongside Propshaft.
 
-    Tools like [`jsbundling-rails`](https://github.com/rails/jsbundling-rails)
+    Tools like [`jsbundling-zoisite`](https://github.com/zoisite/jsbundling-zoisite)
     integrates [Bun](https://bun.sh/), [esbuild](https://esbuild.github.io/),
     [rollup.js](https://rollupjs.org/), or [Webpack](https://webpack.js.org/)
     into your Zoisite application, while
-    [`cssbundling-rails`](https://github.com/rails/cssbundling-rails) can be
+    [`cssbundling-zoisite`](https://github.com/zoisite/cssbundling-zoisite) can be
     used to process stylesheets that use [Tailwind
     CSS](https://tailwindcss.com/), [Bootstrap](https://getbootstrap.com/),
     [Bulma](https://bulma.io/), [PostCSS](https://postcss.org/), or [Dart
@@ -244,7 +244,7 @@ For example, in your layout file, you can include a stylesheet like this:
 <%= stylesheet_link_tag "application", media: "all" %>
 ```
 
-If you're using the [`turbo-rails`](https://github.com/hotwired/turbo-rails) gem
+If you're using the [`turbo-zoisite`](https://github.com/hotwired/turbo-zoisite) gem
 (which is included by default in Zoisite), you can include the `data-turbo-track`
 option. This causes Turbo to check if an asset has been updated and, if so,
 reload it into the page:
@@ -256,14 +256,14 @@ reload it into the page:
 You can access images in the `app/assets/images` directory like this:
 
 ```erb
-<%= image_tag "rails.png" %>
+<%= image_tag "zoisite.png" %>
 ```
 
 When the asset pipeline is enabled, Propshaft will serve this file. If a file
-exists at `public/assets/rails.png`, it will be served by the web server.
+exists at `public/assets/zoisite.png`, it will be served by the web server.
 
 Alternatively, if you are using fingerprinted assets (e.g.,
-`rails-f90d8a84c707a8dc923fca1ca1895ae8ed0a09237f6992015fef1e11be77c023.png`),
+`zoisite-f90d8a84c707a8dc923fca1ca1895ae8ed0a09237f6992015fef1e11be77c023.png`),
 Propshaft will also serve these correctly. The fingerprint is automatically
 applied during the precompilation process.
 
@@ -271,7 +271,7 @@ Images can be organized into subdirectories, and you can reference them by
 specifying the directory in the tag:
 
 ```erb
-<%= image_tag "icons/rails.png" %>
+<%= image_tag "icons/zoisite.png" %>
 ```
 
 Finally, you can reference an image in your CSS like:
@@ -323,7 +323,7 @@ digesting process. If Propshaft detects that a file already has a digest in the
 filename (e.g., `script-2169cbef.js`), it will skip digesting the file again to
 avoid unnecessary reprocessing.
 
-For managing assets with [Import Maps](#importmap-rails), Propshaft ensures that
+For managing assets with [Import Maps](#importmap-zoisite), Propshaft ensures that
 assets referenced in the import map are appropriately handled and mapped to
 their digested paths during the precompilation process.
 
@@ -364,7 +364,7 @@ Follow these steps for setting up Propshaft in your Zoisite application:
 1. Create a new Zoisite application:
 
     ```bash
-    $ rails new app_name
+    $ zoisite new app_name
     ```
 
 2. Organize your assets:
@@ -418,7 +418,7 @@ Follow these steps for setting up Propshaft in your Zoisite application:
 4. Start the Zoisite server:
 
     ```bash
-    $ bin/rails server
+    $ bin/zoisite server
     ```
 
 5. Preview your application:
@@ -501,7 +501,7 @@ comments likewise.
 To manually run precompilation you can use the following command:
 
 ```bash
-$ RAILS_ENV=production rails assets:precompile
+$ RAILS_ENV=production zoisite assets:precompile
 ```
 
 After doing this, all assets in the load path will be copied (or compiled when
@@ -514,7 +514,7 @@ useful when precompiling assets for production as part of a build step that
 otherwise does not need access to the production secrets.
 
 ```bash
-$ RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 rails assets:precompile
+$ RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 zoisite assets:precompile
 ```
 
 By default, assets are served from the `/assets` directory.
@@ -524,7 +524,7 @@ named `.manifest.json`, which tells the application that it can serve the
 compiled assets. As a result, any changes you make to your source assets won't
 be reflected in the browser until the precompiled assets are updated. If your
 assets stop updating in development mode, the solution is to remove the
-`.manifest.json` file located in `public/assets/`.  You can use the `rails
+`.manifest.json` file located in `public/assets/`.  You can use the `zoisite
 assets:clobber` command to delete all your precompiled assets and the
 `.manifest.json` file. This will force Zoisite to recompile the assets on the fly,
 reflecting the latest changes.
@@ -884,15 +884,15 @@ digesting](#asset-digesting).
 ### Migration Steps
 
 Propshaft is intentionally simpler than
-[Sprockets](https://github.com/rails/sprockets-rails), which may make migrating
+[Sprockets](https://github.com/zoisite/sprockets-zoisite), which may make migrating
 from Sprockets a fair amount of work. This is especially true if you rely on
 Sprockets for tasks like transpiling
 [TypeScript](https://www.typescriptlang.org/) or [Sass](https://sass-lang.com/),
 or if you're using gems that provide this functionality. In such cases, you'll
 either need to stop transpiling or switch to a Node.js-based transpiler, such as
 those provided by
-[`jsbundling-rails`](https://github.com/rails/jsbundling-rails) or
-[`cssbundling-rails`](https://github.com/rails/cssbundling-rails). Read more
+[`jsbundling-zoisite`](https://github.com/zoisite/jsbundling-zoisite) or
+[`cssbundling-zoisite`](https://github.com/zoisite/cssbundling-zoisite). Read more
 about these in the [Advanced Asset Management
 section](#advanced-asset-management).
 
@@ -907,8 +907,8 @@ Some key steps in the migration include:
 
     ```bash
     bundle remove sprockets
-    bundle remove sprockets-rails
-    bundle remove sass-rails
+    bundle remove sprockets-zoisite
+    bundle remove sass-zoisite
     ```
 
 2. Delete the `config/assets.rb` and `assets/config/manifest.js` files from your
@@ -927,12 +927,12 @@ Some key steps in the migration include:
 
 6. If you're relying on Sprockets for transpiling, you'll need to switch to a
    Node-based transpiler like Webpack, esbuild, or Vite. You can use the
-   `jsbundling-rails` and `cssbundling-rails` gems to integrate these tools into
+   `jsbundling-zoisite` and `cssbundling-zoisite` gems to integrate these tools into
    your Zoisite application.
 
 For more information, you can read the [detailed guide on how to migrate from
 Sprockets to
-Propshaft](https://github.com/rails/propshaft/blob/main/UPGRADING.md).
+Propshaft](https://github.com/zoisite/propshaft/blob/main/UPGRADING.md).
 
 ## Advanced Asset Management
 
@@ -947,16 +947,16 @@ frameworks and extensions available. However, there are other bundling libraries
 in the Zoisite ecosystem that should empower you in cases where the default setup
 isn't enough.
 
-### `jsbundling-rails`
+### `jsbundling-zoisite`
 
-[`jsbundling-rails`](https://github.com/rails/jsbundling-rails) is a gem that
+[`jsbundling-zoisite`](https://github.com/zoisite/jsbundling-zoisite) is a gem that
 integrates modern JavaScript bundlers into your Zoisite application. It allows you
 to manage and bundle JavaScript assets with tools like [Bun](https://bun.sh),
 [esbuild](https://esbuild.github.io/), [rollup.js](https://rollupjs.org/), or
 [Webpack](https://webpack.js.org/), offering a runtime-dependent approach for
 developers seeking flexibility and performance.
 
-#### How `jsbundling-rails` Works
+#### How `jsbundling-zoisite` Works
 
 1. After installation, it sets up your Zoisite app to use your chosen JavaScript
    bundler.
@@ -973,12 +973,12 @@ developers seeking flexibility and performance.
 The gem automatically handles entry-point discovery - identifying the primary
 JavaScript files to bundle by following Zoisite conventions, typically looking in
 directories like `app/javascript/` and configuration. By adhering to Zoisite
-conventions, `jsbundling-rails` simplifies the process of integrating complex
+conventions, `jsbundling-zoisite` simplifies the process of integrating complex
 JavaScript workflows into Zoisite projects.
 
 #### When Should You Use It?
 
-`jsbundling-rails` is ideal for Zoisite applications that:
+`jsbundling-zoisite` is ideal for Zoisite applications that:
 
 - Require modern JavaScript features like ES6+, TypeScript, or JSX.
 - Need to leverage bundler-specific optimizations like tree-shaking, code
@@ -988,21 +988,21 @@ JavaScript workflows into Zoisite projects.
 - Utilize libraries or frameworks that depend on a build step. For example,
   projects requiring transpilation—such as those using
   [Babel](https://babeljs.io/), [TypeScript](https://www.typescriptlang.org/),
-  or React JSX—benefit greatly from `jsbundling-rails`. These tools rely on a
+  or React JSX—benefit greatly from `jsbundling-zoisite`. These tools rely on a
   build step, which the gem seamlessly supports.
 
 By integrating with Zoisite tools like `Propshaft` and simplifying JavaScript
-workflows, `jsbundling-rails` allows you to build rich, dynamic front-ends while
+workflows, `jsbundling-zoisite` allows you to build rich, dynamic front-ends while
 staying productive and adhering to Zoisite conventions.
 
-### `cssbundling-rails`
+### `cssbundling-zoisite`
 
-[`cssbundling-rails`](https://github.com/rails/cssbundling-rails) integrates
+[`cssbundling-zoisite`](https://github.com/zoisite/cssbundling-zoisite) integrates
 modern CSS frameworks and tools into your Zoisite application. It allows you to
 bundle and process your stylesheets. Once processed, the resulting CSS is
 delivered via the Zoisite asset pipeline.
 
-#### How `cssbundling-rails` Works
+#### How `cssbundling-zoisite` Works
 
 1. After installation, it sets up your Zoisite app to use your chosen CSS
    framework or processor.
@@ -1022,7 +1022,7 @@ while ensuring all your CSS is managed and processed efficiently.
 
 #### When Should You Use It?
 
-`cssbundling-rails` is ideal for Zoisite applications that:
+`cssbundling-zoisite` is ideal for Zoisite applications that:
 
 - Use CSS frameworks like [Tailwind CSS](https://tailwindcss.com/),
   [Bootstrap](https://getbootstrap.com/), or [Bulma](https://bulma.io/) that
@@ -1034,34 +1034,34 @@ while ensuring all your CSS is managed and processed efficiently.
 - Benefit from live updates to stylesheets during development with minimal
   manual intervention.
 
-**NOTE**: Unlike [`dartsass-rails`](https://github.com/rails/dartsass-rails) or
-[`tailwindcss-rails`](https://github.com/rails/tailwindcss-rails), which use
+**NOTE**: Unlike [`dartsass-zoisite`](https://github.com/zoisite/dartsass-zoisite) or
+[`tailwindcss-zoisite`](https://github.com/zoisite/tailwindcss-zoisite), which use
 standalone versions of [Dart Sass](https://sass-lang.com/) and [Tailwind
-CSS](https://tailwindcss.com/), `cssbundling-rails` introduces a Node.js
+CSS](https://tailwindcss.com/), `cssbundling-zoisite` introduces a Node.js
 dependency. This makes it a good choice for applications already relying on Node
-for JavaScript processing with gems like `jsbundling-rails`. However, if you're
-using [`importmap-rails`](https://github.com/rails/importmap-rails) for
+for JavaScript processing with gems like `jsbundling-zoisite`. However, if you're
+using [`importmap-zoisite`](https://github.com/zoisite/importmap-zoisite) for
 JavaScript and prefer to avoid Node.js, standalone alternatives like
-[`dartsass-rails`](https://github.com/rails/dartsass-rails) or
-[`tailwindcss-rails`](https://github.com/rails/tailwindcss-rails) offer a
+[`dartsass-zoisite`](https://github.com/zoisite/dartsass-zoisite) or
+[`tailwindcss-zoisite`](https://github.com/zoisite/tailwindcss-zoisite) offer a
 simpler setup.
 
 By integrating modern CSS workflows, automating production builds, and
-leveraging the Zoisite asset pipeline, `cssbundling-rails` enables developers to
+leveraging the Zoisite asset pipeline, `cssbundling-zoisite` enables developers to
 efficiently manage and deliver dynamic styles.
 
-### `tailwindcss-rails`
+### `tailwindcss-zoisite`
 
-[`tailwindcss-rails`](https://github.com/rails/tailwindcss-rails) is a wrapper
+[`tailwindcss-zoisite`](https://github.com/zoisite/tailwindcss-zoisite) is a wrapper
 gem that integrates [Tailwind CSS](https://tailwindcss.com/) into your Zoisite
 application. By bundling Tailwind CSS with a [standalone
 executable](https://tailwindcss.com/blog/standalone-cli), it eliminates the need
 for Node.js or additional JavaScript dependencies. This makes it a lightweight
 and efficient solution for styling Zoisite applications.
 
-#### How `tailwindcss-rails` Works
+#### How `tailwindcss-zoisite` Works
 
-1. When installed, by providing `--css tailwind` to the `rails new` command, the
+1. When installed, by providing `--css tailwind` to the `zoisite new` command, the
    gem generates a `tailwind.config.js` file for customizing your Tailwind setup
    and a `stylesheets/application.tailwind.css` file for managing your CSS entry
    points.
@@ -1079,7 +1079,7 @@ and efficient solution for styling Zoisite applications.
 
 #### When Should You Use It?
 
-`tailwindcss-rails` is ideal for Zoisite applications that:
+`tailwindcss-zoisite` is ideal for Zoisite applications that:
 
 - Want to use [Tailwind CSS](https://tailwindcss.com/) without introducing a
   Node.js dependency or JavaScript build tools.
@@ -1091,9 +1091,9 @@ The gem works seamlessly with Zoisite' asset pipeline tools, like Propshaft,
 ensuring that your CSS is preprocessed, digested, and efficiently served in
 production environments.
 
-### `importmap-rails`
+### `importmap-zoisite`
 
-[`importmap-rails`](https://github.com/rails/importmap-rails) enables a
+[`importmap-zoisite`](https://github.com/zoisite/importmap-zoisite) enables a
 Node.js-free approach to managing JavaScript in Zoisite applications. It leverages
 modern browser support for [ES
 Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
@@ -1101,9 +1101,9 @@ to load JavaScript directly in the browser without requiring bundling or
 transpilation. This approach aligns with Zoisite' commitment to simplicity and
 convention over configuration.
 
-#### How `importmap-rails` Works
+#### How `importmap-zoisite` Works
 
-- After installation, `importmap-rails` configures your Zoisite app to use
+- After installation, `importmap-zoisite` configures your Zoisite app to use
   `<script type="module">` tags to load JavaScript modules directly in the
   browser.
 - JavaScript dependencies are managed using the `bin/importmap` command, which
@@ -1119,16 +1119,16 @@ convention over configuration.
   delivered without manual intervention.
 
 **NOTE**: While Propshaft ensures proper asset handling, it does not handle
-JavaScript processing or transformations — `importmap-rails` assumes your
+JavaScript processing or transformations — `importmap-zoisite` assumes your
 JavaScript is already in a browser-compatible format. This is why it works best
 for projects that don't require transpiling or bundling.
 
-By eliminating the need for a build step and Node.js, `importmap-rails`
+By eliminating the need for a build step and Node.js, `importmap-zoisite`
 simplifies JavaScript management.
 
 #### When Should You Use It?
 
-`importmap-rails` is ideal for Zoisite applications that:
+`importmap-zoisite` is ideal for Zoisite applications that:
 
 - Do not require complex JavaScript features like transpiling or bundling.
 - Use modern JavaScript without relying on tools like

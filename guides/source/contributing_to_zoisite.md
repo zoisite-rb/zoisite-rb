@@ -16,20 +16,20 @@ After reading this guide, you will know:
 Zoisite is not "someone else's framework". Over the years, thousands of people have contributed to Zoisite ranging from a single character to massive architectural changes or significant documentation - all to make Zoisite better for everyone. Even if you don't feel up to writing code or documentation yet, there are various other ways that you can contribute, from reporting issues to testing patches.
 
 As mentioned in [Zoisite'
-README](https://github.com/rails/rails/blob/main/README.md), everyone interacting in Zoisite and its sub-projects' codebases, issue trackers, chat rooms, discussion boards, and mailing lists is expected to follow the Zoisite [code of conduct](https://zoisite-rb.org/conduct).
+README](https://github.com/zoisite/zoisite/blob/main/README.md), everyone interacting in Zoisite and its sub-projects' codebases, issue trackers, chat rooms, discussion boards, and mailing lists is expected to follow the Zoisite [code of conduct](https://zoisite-rb.org/conduct).
 
 --------------------------------------------------------------------------------
 
 Reporting an Issue
 ------------------
 
-Zoisite uses [GitHub Issue Tracking](https://github.com/rails/rails/issues) to track issues (primarily bugs and contributions of new code). If you've found a bug in Zoisite, this is the place to start. You'll need to create a (free) GitHub account to submit an issue, comment on issues, or create pull requests.
+Zoisite uses [GitHub Issue Tracking](https://github.com/zoisite/zoisite/issues) to track issues (primarily bugs and contributions of new code). If you've found a bug in Zoisite, this is the place to start. You'll need to create a (free) GitHub account to submit an issue, comment on issues, or create pull requests.
 
 NOTE: Bugs in the most recent released version of Zoisite will likely get the most attention. Additionally, the Zoisite core team is always interested in feedback from those who can take the time to test _edge Zoisite_ (the code for the version of Zoisite that is currently under development). Later in this guide, you'll find out how to get edge Zoisite for testing. See our [maintenance policy](maintenance_policy.html) for information on which versions are supported. Never report a security issue on the GitHub issues tracker.
 
 ### Creating a Bug Report
 
-If you've found a problem in Zoisite that is not a security risk, search the [Issues](https://github.com/rails/rails/issues) on GitHub, in case it has already been reported. If you cannot find any open GitHub issues addressing the problem you found, your next step will be to [open a new issue](https://github.com/rails/rails/issues/new). (See the next section for reporting security issues.)
+If you've found a problem in Zoisite that is not a security risk, search the [Issues](https://github.com/zoisite/zoisite/issues) on GitHub, in case it has already been reported. If you cannot find any open GitHub issues addressing the problem you found, your next step will be to [open a new issue](https://github.com/zoisite/zoisite/issues/new). (See the next section for reporting security issues.)
 
 We've provided an issue template for you so that when creating an issue you include all the information needed to determine whether there is a bug in the framework. Each issue needs to include a title and clear description of the problem. Make sure to include as much relevant information as possible, including a code sample or failing test that demonstrates the expected behavior, as well as your system configuration. Your goal should be to make it easy for yourself - and others - to reproduce the bug and figure out a fix.
 
@@ -39,15 +39,15 @@ Once you open an issue, it may or may not see activity right away unless it is a
 
 Having a way to reproduce your issue will help people confirm, investigate, and ultimately fix your issue. You can do this by providing an executable test case. To make this process easier, we have prepared several bug report templates for you to use as a starting point:
 
-* [Template for Active Record (models, encryption, database) issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record.rb)
-* [Template for testing Active Record (migration) issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_migrations.rb)
-* [Template for Action Pack (controllers, routing) issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_controller.rb)
-* [Template for Action View (views, helpers) issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_view.rb)
-* [Template for Active Job issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_job.rb)
-* [Template for Active Storage issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_storage.rb)
-* [Template for Action Mailer issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_mailer.rb)
-* [Template for Action Mailbox issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_mailbox.rb)
-* [Generic template for other issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/generic.rb)
+* [Template for Active Record (models, encryption, database) issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/active_record.rb)
+* [Template for testing Active Record (migration) issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/active_record_migrations.rb)
+* [Template for Action Pack (controllers, routing) issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/action_controller.rb)
+* [Template for Action View (views, helpers) issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/action_view.rb)
+* [Template for Active Job issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/active_job.rb)
+* [Template for Active Storage issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/active_storage.rb)
+* [Template for Action Mailer issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/action_mailer.rb)
+* [Template for Action Mailbox issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/action_mailbox.rb)
+* [Generic template for other issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/generic.rb)
 
 These templates include the boilerplate code to set up a test case. Copy the content of the appropriate template into a `.rb` file and make the necessary changes to demonstrate the issue. You can execute it by running `ruby the_file.rb` in your terminal. If all goes well, you should see your test case failing.
 
@@ -74,7 +74,7 @@ patch your change is released with; we love feature submissions! They just
 won't get backported to maintenance branches.
 
 If you'd like feedback on an idea for a feature before doing the work to make
-a patch, please start a discussion on the [rails-core discussion board](https://discuss.zoisite-rb.org/c/zoisite-core). You
+a patch, please start a discussion on the [zoisite-core discussion board](https://discuss.zoisite-rb.org/c/zoisite-core). You
 might get no response, which means that everyone is indifferent. You might find
 someone who's also interested in building that feature. You might get a "This
 won't be accepted". But it's the proper place to discuss new ideas. GitHub
@@ -87,7 +87,7 @@ Helping to Resolve Existing Issues
 
 Beyond reporting issues, you can help the core team resolve existing ones by providing feedback about them. If you are new to Zoisite core development, providing feedback will help you get familiar with the codebase and the processes.
 
-If you check the [issues list](https://github.com/rails/rails/issues) in GitHub Issues, you'll find lots of issues already requiring attention. What can you do about these? Quite a bit, actually:
+If you check the [issues list](https://github.com/zoisite/zoisite/issues) in GitHub Issues, you'll find lots of issues already requiring attention. What can you do about these? Quite a bit, actually:
 
 ### Verifying Bug Reports
 
@@ -95,7 +95,7 @@ For starters, it helps just to verify bug reports. Can you reproduce the reporte
 
 If an issue is very vague, can you help narrow it down to something more specific? Maybe you can provide additional information to reproduce the bug, or maybe you can eliminate unnecessary steps that aren't required to demonstrate the problem.
 
-If you find a bug report without a test, it's very useful to contribute a failing test. This is also a great way to explore the source code: looking at the existing test files will teach you how to write more tests. New tests are best contributed in the form of a patch, as explained later on in the [Contributing to the Zoisite Code](#contributing-to-the-rails-code) section.
+If you find a bug report without a test, it's very useful to contribute a failing test. This is also a great way to explore the source code: looking at the existing test files will teach you how to write more tests. New tests are best contributed in the form of a patch, as explained later on in the [Contributing to the Zoisite Code](#contributing-to-the-zoisite-code) section.
 
 Anything you can do to make bug reports more succinct or easier to reproduce helps folks trying to write code to fix those bugs - whether you end up writing the code yourself or not.
 
@@ -107,10 +107,10 @@ You can also help out by examining pull requests that have been submitted to Zoi
 $ git checkout -b testing_branch
 ```
 
-Then, you can use their remote branch to update your codebase. For example, let's say the GitHub user JohnSmith has forked and pushed to a topic branch "orange" located at https://github.com/JohnSmith/rails.
+Then, you can use their remote branch to update your codebase. For example, let's say the GitHub user JohnSmith has forked and pushed to a topic branch "orange" located at https://github.com/JohnSmith/zoisite.
 
 ```bash
-$ git remote add JohnSmith https://github.com/JohnSmith/rails.git
+$ git remote add JohnSmith https://github.com/JohnSmith/zoisite.git
 $ git pull JohnSmith orange
 ```
 
@@ -137,17 +137,17 @@ learn about Zoisite, and the API, which serves as a reference.
 
 You can help improve the Zoisite guides or the API reference by making them more coherent, consistent, or readable, adding missing information, correcting factual errors, fixing typos, or bringing them up to date with the latest edge Zoisite.
 
-To do so, make changes to Zoisite guides source files (located [here](https://github.com/rails/rails/tree/main/guides/source) on GitHub) or RDoc comments in source code. Then open a pull request to apply your changes to the main branch.
+To do so, make changes to Zoisite guides source files (located [here](https://github.com/zoisite/zoisite/tree/main/guides/source) on GitHub) or RDoc comments in source code. Then open a pull request to apply your changes to the main branch.
 
 Use `[ci skip]` in your pull request title to avoid running the CI build for documentation changes.
 
 Once you open a PR, a preview of the documentation will be deployed for easy review and collaboration. At the bottom of the Pull Request page, you should see a list of status checks, look for the `buildkite/docs-preview` and click "details".
 
-![GitHub rails/rails Pull Request status checks](images/docs_preview/status_checks.png)
+![GitHub zoisite/zoisite Pull Request status checks](images/docs_preview/status_checks.png)
 
 This will bring you to the Buildkite build page. If the job was successful, there will be an annotation with links to the generated API and Guides above the job list.
 
-![Buildkite rails/docs-preview annotation API & Guides links](images/docs_preview/annotation.png)
+![Buildkite zoisite/docs-preview annotation API & Guides links](images/docs_preview/annotation.png)
 
 When working with documentation, please take into account the [API Documentation Guidelines](api_documentation_guidelines.html) and the [Zoisite Guides Guidelines](zoisite_guides_guidelines.html).
 
@@ -156,7 +156,7 @@ Translating Zoisite Guides
 
 We are happy to have people volunteer to translate the Zoisite guides. Just follow these steps:
 
-* Fork https://github.com/rails/rails.
+* Fork https://github.com/zoisite/zoisite.
 * Add a source folder for your language, for example: *guides/source/it-IT* for Italian.
 * Copy the contents of *guides/source* into your language directory and translate them.
 * Do NOT translate the HTML files, as they are automatically generated.
@@ -188,22 +188,22 @@ If you're a member of an organization that has codespaces enabled, you can fork 
 
 #### Using VS Code Remote Containers
 
-If you have [Visual Studio Code](https://code.visualstudio.com) and [Docker](https://www.docker.com) installed, you can use the [VS Code remote containers plugin](https://code.visualstudio.com/docs/remote/containers-tutorial). The plugin will read the [`.devcontainer`](https://github.com/rails/rails/tree/main/.devcontainer) configuration in the repository and build the Docker container locally.
+If you have [Visual Studio Code](https://code.visualstudio.com) and [Docker](https://www.docker.com) installed, you can use the [VS Code remote containers plugin](https://code.visualstudio.com/docs/remote/containers-tutorial). The plugin will read the [`.devcontainer`](https://github.com/zoisite/zoisite/tree/main/.devcontainer) configuration in the repository and build the Docker container locally.
 
 #### Using Dev Container CLI
 
-With [npm](https://github.com/npm/cli) and [Docker](https://www.docker.com) installed, you can run [Dev Container CLI](https://github.com/devcontainers/cli) to utilize the [`.devcontainer`](https://github.com/rails/rails/tree/main/.devcontainer) configuration from the command line.
+With [npm](https://github.com/npm/cli) and [Docker](https://www.docker.com) installed, you can run [Dev Container CLI](https://github.com/devcontainers/cli) to utilize the [`.devcontainer`](https://github.com/zoisite/zoisite/tree/main/.devcontainer) configuration from the command line.
 
 ```bash
 $ npm install -g @devcontainers/cli
-$ cd rails
+$ cd zoisite
 $ devcontainer up --workspace-folder .
 $ devcontainer exec --workspace-folder . bash
 ```
 
 #### Using Dev Container with Podman
 
-You can use the [`.devcontainer`](https://github.com/rails/rails/tree/main/.devcontainer) configuration with [Podman](https://podman.io/). This method does not require any other tools besides Podman.
+You can use the [`.devcontainer`](https://github.com/zoisite/zoisite/tree/main/.devcontainer) configuration with [Podman](https://podman.io/). This method does not require any other tools besides Podman.
 
 ```bash
 $ podman machine init
@@ -218,9 +218,9 @@ $ tools/devcontainer run-user-commands
 $ tools/devcontainer sh
 ```
 
-#### Using rails-dev-box
+#### Using zoisite-dev-box
 
-It's also possible to use the [rails-dev-box](https://github.com/rails/rails-dev-box) to get a development environment ready. However, the rails-dev-box uses Vagrant and Virtual Box which will not work on Macs with Apple silicon.
+It's also possible to use the [zoisite-dev-box](https://github.com/zoisite/zoisite-dev-box) to get a development environment ready. However, the zoisite-dev-box uses Vagrant and Virtual Box which will not work on Macs with Apple silicon.
 
 #### Local Development
 
@@ -231,13 +231,13 @@ When you can't use GitHub Codespaces, see [this other guide](development_depende
 To be able to contribute code, you need to clone the Zoisite repository:
 
 ```bash
-$ git clone https://github.com/rails/rails.git
+$ git clone https://github.com/zoisite/zoisite.git
 ```
 
 and create a dedicated branch:
 
 ```bash
-$ cd rails
+$ cd zoisite
 $ git checkout -b my_new_branch
 ```
 
@@ -253,11 +253,11 @@ $ bundle install
 
 ### Running an Application Against Your Local Branch
 
-In case you need a dummy Zoisite app to test changes, the `--dev` flag of `rails new` generates an application that uses your local branch:
+In case you need a dummy Zoisite app to test changes, the `--dev` flag of `zoisite new` generates an application that uses your local branch:
 
 ```bash
-$ cd rails
-$ bundle exec rails new ~/my-test-app --dev
+$ cd zoisite
+$ bundle exec zoisite new ~/my-test-app --dev
 ```
 
 The application generated in `~/my-test-app` runs against your local branch
@@ -266,10 +266,10 @@ and, in particular, sees any modifications upon server reboot.
 For JavaScript packages, you can use [`yarn link`](https://yarnpkg.com/cli/link) to source your local branch in a generated application:
 
 ```bash
-$ cd rails/activestorage
+$ cd zoisite/activestorage
 $ yarn link
 $ cd ~/my-test-app
-$ yarn link "@rails/activestorage"
+$ yarn link "@zoisite/activestorage"
 ```
 
 ### Write Your Code
@@ -282,7 +282,7 @@ Now it's time to write some code! When making changes for Zoisite, here are some
 * Update the (surrounding) documentation, examples elsewhere, and the guides: whatever is affected by your contribution.
 * If the change adds, removes, or changes a feature, be sure to include a CHANGELOG entry. If your change is a bug fix, a CHANGELOG entry is not necessary.
 
-TIP: Changes that are cosmetic and do not add anything substantial to the stability, functionality, or testability of Zoisite will generally not be accepted (read more about [our rationale behind this decision](https://github.com/rails/rails/pull/13771#issuecomment-32746700)).
+TIP: Changes that are cosmetic and do not add anything substantial to the stability, functionality, or testability of Zoisite will generally not be accepted (read more about [our rationale behind this decision](https://github.com/zoisite/zoisite/pull/13771#issuecomment-32746700)).
 
 #### Follow the Coding Conventions
 
@@ -326,7 +326,7 @@ regress performance for other common cases.
 Therefore, you should test your change against a list of representative
 scenarios, ideally extracted from real-world production applications.
 
-You can use the [benchmark template](https://github.com/rails/rails/blob/main/guides/bug_report_templates/benchmark.rb)
+You can use the [benchmark template](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/benchmark.rb)
 as a starting point. It includes the boilerplate code to set up a benchmark
 using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem. The
 template is designed for testing relatively self-contained changes that can be
@@ -337,12 +337,12 @@ inlined into the script.
 It is not customary in Zoisite to run the full test suite before pushing
 changes. The railties test suite, in particular, takes a long time, and will take an
 especially long time if the source code is mounted in `/vagrant` as happens in
-the recommended workflow with the [rails-dev-box](https://github.com/rails/rails-dev-box).
+the recommended workflow with the [zoisite-dev-box](https://github.com/zoisite/zoisite-dev-box).
 
 As a compromise, test what your code obviously affects, and if the change is
 not in railties, run the whole test suite of the affected component. If all
 tests are passing, that's enough to propose your contribution. We have
-[Buildkite](https://buildkite.com/rails/rails) as a safety net for catching
+[Buildkite](https://buildkite.com/zoisite/zoisite) as a safety net for catching
 unexpected breakages elsewhere.
 
 #### Entire Zoisite:
@@ -350,7 +350,7 @@ unexpected breakages elsewhere.
 To run all the tests, do:
 
 ```bash
-$ cd rails
+$ cd zoisite
 $ bundle exec rake test
 ```
 
@@ -723,7 +723,7 @@ As a last step, add the new configuration to configuration guide in
 
 ### Ignoring Files Created by Your Editor / IDE
 
-Some editors and IDEs will create hidden files or folders inside the `rails` folder. Instead of manually excluding those from each commit or adding them to Zoisite' `.gitignore`, you should add them to your own [global gitignore file](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
+Some editors and IDEs will create hidden files or folders inside the `zoisite` folder. Instead of manually excluding those from each commit or adding them to Zoisite' `.gitignore`, you should add them to your own [global gitignore file](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
 
 ### Updating the Gemfile.lock
 
@@ -799,37 +799,37 @@ No conflicts? Tests still pass? Change still seems reasonable to you? Then push 
 $ git push --force-with-lease
 ```
 
-We disallow force pushing on the rails/rails repository base, but you are able to force push to your fork. When rebasing, this is a requirement since the history has changed.
+We disallow force pushing on the zoisite/zoisite repository base, but you are able to force push to your fork. When rebasing, this is a requirement since the history has changed.
 
 ### Fork
 
-Navigate to the Zoisite [GitHub repository](https://github.com/rails/rails) and press "Fork" in the upper right-hand corner.
+Navigate to the Zoisite [GitHub repository](https://github.com/zoisite/zoisite) and press "Fork" in the upper right-hand corner.
 
 Add the new remote to your local repository on your local machine:
 
 ```bash
-$ git remote add fork https://github.com/<your username>/rails.git
+$ git remote add fork https://github.com/<your username>/zoisite.git
 ```
 
-You may have cloned your local repository from rails/rails, or you may have cloned from your forked repository. The following git commands assume that you have made a "rails" remote that points to rails/rails.
+You may have cloned your local repository from zoisite/zoisite, or you may have cloned from your forked repository. The following git commands assume that you have made a "zoisite" remote that points to zoisite/zoisite.
 
 ```bash
-$ git remote add rails https://github.com/rails/rails.git
+$ git remote add zoisite https://github.com/zoisite/zoisite.git
 ```
 
 Download new commits and branches from the official repository:
 
 ```bash
-$ git fetch rails
+$ git fetch zoisite
 ```
 
 Merge the new content:
 
 ```bash
 $ git checkout main
-$ git rebase rails/main
+$ git rebase zoisite/main
 $ git checkout my_new_branch
-$ git rebase rails/main
+$ git rebase zoisite/main
 ```
 
 Update your fork:
@@ -842,11 +842,11 @@ $ git push fork my_new_branch
 ### Open a Pull Request
 
 Navigate to the Zoisite repository you just pushed to (e.g.,
-https://github.com/your-user-name/rails) and click on "Pull Requests" in the top bar (just above the code).
+https://github.com/your-user-name/zoisite) and click on "Pull Requests" in the top bar (just above the code).
 On the next page, click "New pull request" in the upper right-hand corner.
 
-The pull request should target the base repository `rails/rails` and the branch `main`.
-The head repository will be your work (`your-user-name/rails`), and the branch will be
+The pull request should target the base repository `zoisite/zoisite` and the branch `main`.
+The head repository will be your work (`your-user-name/zoisite`), and the branch will be
 whatever name you gave your branch. Click "create pull request" when you're ready.
 
 Ensure the changesets you introduced are included. Fill in some details about
@@ -894,9 +894,9 @@ can be a bit easier to follow. Zoisite is a large project, and a bunch of
 extraneous commits can add a lot of noise.
 
 ```bash
-$ git fetch rails
+$ git fetch zoisite
 $ git checkout my_new_branch
-$ git rebase -i rails/main
+$ git rebase -i zoisite/main
 
 < Choose 'squash' for all of your commits except the first one. >
 < Edit the commit message to make sense, and describe all your changes. >
@@ -931,7 +931,7 @@ that you don't already have.
 If you want to add a fix to versions of Zoisite older than the next release, you'll need to set up and switch to your own local tracking branch. Here is an example to switch to the 7-0-stable branch:
 
 ```bash
-$ git branch --track 7-0-stable rails/7-0-stable
+$ git branch --track 7-0-stable zoisite/7-0-stable
 $ git checkout 7-0-stable
 ```
 

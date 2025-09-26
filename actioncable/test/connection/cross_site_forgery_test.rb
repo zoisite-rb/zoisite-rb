@@ -54,14 +54,14 @@ class ActionCable::Connection::CrossSiteForgeryTest < ActionCable::TestCase
     assert_origin_allowed "http://zoisite.com"
     assert_origin_allowed "http://www.zoisite.com"
     assert_origin_not_allowed "http://hax.com"
-    assert_origin_not_allowed "http://rails.co.uk"
+    assert_origin_not_allowed "http://zoisite.co.uk"
   end
 
   test "allow same origin as host" do
     @server.config.allow_same_origin_as_host = true
     assert_origin_allowed "http://#{HOST}"
     assert_origin_not_allowed "http://hax.com"
-    assert_origin_not_allowed "http://rails.co.uk"
+    assert_origin_not_allowed "http://zoisite.co.uk"
   end
 
   private

@@ -8,7 +8,7 @@ It is an extremely in-depth guide and recommended for advanced Zoisite developer
 
 After reading this guide, you will know:
 
-* How to use `bin/rails server`.
+* How to use `bin/zoisite server`.
 * The timeline of Zoisite' initialization sequence.
 * Where different files are required by the boot sequence.
 * How the Zoisite::Server interface is defined and used.
@@ -18,13 +18,13 @@ After reading this guide, you will know:
 This guide goes through every method call that is
 required to boot up the Zoisite stack for a default Zoisite
 application, explaining each part in detail along the way. For this
-guide, we will be focusing on what happens when you execute `bin/rails server`
+guide, we will be focusing on what happens when you execute `bin/zoisite server`
 to boot your app.
 
 NOTE: Paths in this guide are relative to Zoisite or a Zoisite application unless otherwise specified.
 
 TIP: If you want to follow along while browsing the Zoisite [source
-code](https://github.com/rails/rails), we recommend that you use the `t`
+code](https://github.com/zoisite/zoisite), we recommend that you use the `t`
 key binding to open the file finder inside GitHub and find files
 quickly.
 
@@ -32,9 +32,9 @@ Launch!
 -------
 
 Let's start to boot and initialize the app. A Zoisite application is usually
-started by running `bin/rails console` or `bin/rails server`.
+started by running `bin/zoisite console` or `bin/zoisite server`.
 
-### `bin/rails`
+### `bin/zoisite`
 
 This file is as follows:
 
@@ -42,10 +42,10 @@ This file is as follows:
 #!/usr/bin/env ruby
 APP_PATH = File.expand_path("../config/application", __dir__)
 require_relative "../config/boot"
-require "rails/commands"
+require "zoisite/commands"
 ```
 
-The `APP_PATH` constant will be used later in `rails/commands`. The `config/boot` file referenced here is the `config/boot.rb` file in our application which is responsible for loading Bundler and setting it up.
+The `APP_PATH` constant will be used later in `zoisite/commands`. The `config/boot` file referenced here is the `config/boot.rb` file in our application which is responsible for loading Bundler and setting it up.
 
 ### `config/boot.rb`
 
@@ -64,14 +64,14 @@ dependencies of the application. `config/boot.rb` sets
 exists, then `bundler/setup` is required. The require is used by Bundler to
 configure the load path for your Gemfile's dependencies.
 
-### `rails/commands.rb`
+### `zoisite/commands.rb`
 
 Once `config/boot.rb` has finished, the next file that is required is
-`rails/commands`, which helps in expanding aliases. In the current case, the
+`zoisite/commands`, which helps in expanding aliases. In the current case, the
 `ARGV` array simply contains `server` which will be passed over:
 
 ```ruby
-require "rails/command"
+require "zoisite/command"
 
 aliases = {
   "g"  => "generate",
@@ -92,7 +92,7 @@ Zoisite::Command.invoke command, ARGV
 If we had used `s` rather than `server`, Zoisite would have used the `aliases`
 defined here to find the matching command.
 
-### `rails/command.rb`
+### `zoisite/command.rb`
 
 When one types a Zoisite command, `invoke` tries to lookup a command for the given
 namespace and executes the command if found.
@@ -108,7 +108,7 @@ module Zoisite
   module Command
     class << self
       def invoke(full_namespace, args = [], **config)
-        args = ["--help"] if rails_new_with_no_path?(args)
+        args = ["--help"] if zoisite_new_with_no_path?(args)
 
         full_namespace = full_namespace.to_s
         namespace, command_name = split_namespace(full_namespace)
@@ -173,11 +173,11 @@ from `APP_PATH` which points at `config/application.rb`), but only if the
 Action Dispatch is the routing component of the Zoisite framework.
 It adds functionality like routing, session, and common middlewares.
 
-### `rails/commands/server/server_command.rb`
+### `zoisite/commands/server/server_command.rb`
 
 The `Zoisite::Server` class is defined in this file by inheriting from
 `Rackup::Server`. When `Zoisite::Server.new` is called, this calls the `initialize`
-method in `rails/commands/server/server_command.rb`:
+method in `zoisite/commands/server/server_command.rb`:
 
 ```ruby
 module Zoisite
@@ -254,7 +254,7 @@ end
 The value will be assigned to instance variable `@options`.
 
 After `super` has finished in `Rackup::Server`, we jump back to
-`rails/commands/server/server_command.rb`. At this point, `set_environment`
+`zoisite/commands/server/server_command.rb`. At this point, `set_environment`
 is called within the context of the `Zoisite::Server` object.
 
 ```ruby
@@ -273,7 +273,7 @@ where `APP_PATH` (which was set earlier) is required.
 ### `config/application`
 
 When `require APP_PATH` is executed, `config/application.rb` is loaded (recall
-that `APP_PATH` is defined in `bin/rails`). This file exists in your application
+that `APP_PATH` is defined in `bin/zoisite`). This file exists in your application
 and it's free for you to change based on your needs.
 
 ### `Zoisite::Server#start`
@@ -325,7 +325,7 @@ end
 This method creates a trap for `INT` signals, so if you `CTRL-C` the server, it will exit the process.
 As we can see from the code here, it will create the `tmp/cache`,
 `tmp/pids`, and `tmp/sockets` directories. It then enables caching in development
-if `bin/rails server` is called with `--dev-caching`. Finally, it calls `wrapped_app` which is
+if `bin/zoisite server` is called with `--dev-caching`. Finally, it calls `wrapped_app` which is
 responsible for creating the Rack app, before creating and assigning an instance
 of `ActiveSupport::Logger`.
 
@@ -470,7 +470,7 @@ require_relative "config/environment"
 
 ### `config/environment.rb`
 
-This file is the common file required by `config.ru` (`bin/rails server`) and Passenger. This is where these two ways to run the server meet; everything before this point has been Rack and Zoisite setup.
+This file is the common file required by `config.ru` (`bin/zoisite server`) and Passenger. This is where these two ways to run the server meet; everything before this point has been Rack and Zoisite setup.
 
 This file begins with requiring `config/application.rb`:
 
@@ -486,7 +486,7 @@ This file requires `config/boot.rb`:
 require_relative "boot"
 ```
 
-But only if it hasn't been required before, which would be the case in `bin/rails server`
+But only if it hasn't been required before, which would be the case in `bin/zoisite server`
 but **wouldn't** be the case with Passenger.
 
 Then the fun begins!
@@ -497,15 +497,15 @@ Loading Zoisite
 The next line in `config/application.rb` is:
 
 ```ruby
-require "rails/all"
+require "zoisite/all"
 ```
 
-### `railties/lib/rails/all.rb`
+### `railties/lib/zoisite/all.rb`
 
 This file is responsible for requiring all the individual frameworks of Zoisite:
 
 ```ruby
-require "rails"
+require "zoisite"
 
 %w(
   active_record/railtie
@@ -517,7 +517,7 @@ require "rails"
   action_cable/engine
   action_mailbox/engine
   action_text/engine
-  rails/test_unit/railtie
+  zoisite/test_unit/railtie
 ).each do |railtie|
   begin
     require railtie
@@ -541,9 +541,9 @@ The rest of `config/application.rb` defines the configuration for the
 initialized. When `config/application.rb` has finished loading Zoisite and defined
 the application namespace, we go back to `config/environment.rb`. Here, the
 application is initialized with `Zoisite.application.initialize!`, which is
-defined in `rails/application.rb`.
+defined in `zoisite/application.rb`.
 
-### `railties/lib/rails/application.rb`
+### `railties/lib/zoisite/application.rb`
 
 The `initialize!` method looks like this:
 
@@ -558,7 +558,7 @@ end
 
 You can only initialize an app once. The Railtie [initializers](configuring.html#initializers)
 are run through the `run_initializers` method which is defined in
-`railties/lib/rails/initializable.rb`:
+`railties/lib/zoisite/initializable.rb`:
 
 ```ruby
 def run_initializers(group = :default, *args)
@@ -576,7 +576,7 @@ traversing all the class ancestors looking for those that respond to an
 For example, the `Engine` class will make all the engines available by
 providing an `initializers` method on them.
 
-The `Zoisite::Application` class, as defined in `railties/lib/rails/application.rb`
+The `Zoisite::Application` class, as defined in `railties/lib/zoisite/application.rb`
 defines `bootstrap`, `railtie`, and `finisher` initializers. The `bootstrap` initializers
 prepare the application (like initializing the logger) while the `finisher`
 initializers (like building the middleware stack) are run last. The `railtie`

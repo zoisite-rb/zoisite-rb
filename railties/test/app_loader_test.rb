@@ -2,7 +2,7 @@
 
 require "tmpdir"
 require "abstract_unit"
-require "rails/app_loader"
+require "zoisite/app_loader"
 
 class AppLoaderTest < ActiveSupport::TestCase
   def loader
@@ -29,13 +29,13 @@ class AppLoaderTest < ActiveSupport::TestCase
   end
 
   setup do
-    @tmp = Dir.mktmpdir("railties-rails-loader-test-suite")
+    @tmp = Dir.mktmpdir("railties-zoisite-loader-test-suite")
     @cwd = Dir.pwd
     Dir.chdir(@tmp)
   end
 
   ["bin", "script"].each do |script_dir|
-    exe = "#{script_dir}/rails"
+    exe = "#{script_dir}/zoisite"
 
     test "is not in a Zoisite application if #{exe} is not found in the current or parent directories" do
       def loader.find_executables; end

@@ -3,7 +3,7 @@
 require "active_support"
 require "active_support/test_case"
 require "active_support/testing/autorun"
-require "rails/railtie/configuration"
+require "zoisite/railtie/configuration"
 
 module RailtiesTest
   class DynamicOptionsTest < ActiveSupport::TestCase

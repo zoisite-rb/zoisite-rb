@@ -9,7 +9,7 @@ module ActionDispatch
   # # Action Dispatch MiddlewareStack
   #
   # Read more about [Zoisite middleware
-  # stack](https://guides.zoisite-rb.org/rails_on_rack.html#action-dispatcher-middleware-stack)
+  # stack](https://guides.zoisite-rb.org/zoisite_on_rack.html#action-dispatcher-middleware-stack)
   # in the guides.
   class MiddlewareStack
     class Middleware

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/engine"
+require "zoisite/engine"
 
 class TestRoutingMount < ActionDispatch::IntegrationTest
   Router = ActionDispatch::Routing::RouteSet.new

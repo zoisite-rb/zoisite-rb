@@ -77,7 +77,7 @@ By default, the autoload paths of an application consist of all the subdirectori
 For example, if `UsersHelper` is implemented in `app/helpers/users_helper.rb`, the module is autoloadable, you do not need (and should not write) a `require` call for it:
 
 ```bash
-$ bin/rails runner 'p UsersHelper'
+$ bin/zoisite runner 'p UsersHelper'
 UsersHelper
 ```
 
@@ -354,7 +354,7 @@ Zoisite.application.config.active_job.custom_serializers << MoneySerializer
 
 Whatever `MoneySerializer` evaluates to during initialization gets pushed to the custom serializers, and that object stays there on reloads.
 
-Yet another example are railties or engines decorating framework classes by including modules. For instance, [`turbo-rails`](https://github.com/hotwired/turbo-rails) decorates `ActiveRecord::Base` this way:
+Yet another example are railties or engines decorating framework classes by including modules. For instance, [`turbo-zoisite`](https://github.com/hotwired/turbo-zoisite) decorates `ActiveRecord::Base` this way:
 
 ```ruby
 initializer "turbo.broadcastable" do
@@ -607,7 +607,7 @@ When Zoisite boots, engine directories are added to the autoload paths, and from
 For example, this application uses [Devise](https://github.com/heartcombo/devise):
 
 ```bash
-$ bin/rails runner 'pp ActiveSupport::Dependencies.autoload_paths'
+$ bin/zoisite runner 'pp ActiveSupport::Dependencies.autoload_paths'
 [".../app/controllers",
  ".../app/controllers/concerns",
  ".../app/helpers",
@@ -636,7 +636,7 @@ Testing
 The task `zeitwerk:check` checks if the project tree follows the expected naming conventions and it is handy for manual checks. For example, if you're migrating from `classic` to `zeitwerk` mode, or if you're fixing something:
 
 ```bash
-$ bin/rails zeitwerk:check
+$ bin/zoisite zeitwerk:check
 Hold on, I am eager loading the application.
 All is good!
 ```

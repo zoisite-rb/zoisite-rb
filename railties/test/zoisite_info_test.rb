@@ -26,7 +26,7 @@ class InfoTest < ActiveSupport::TestCase
     assert_property "Goodbye", "World"
   end
 
-  def test_rails_version
+  def test_zoisite_version
     assert_property "Zoisite version",
       File.read(File.realpath("../../RAILS_VERSION", __dir__)).chomp
   end

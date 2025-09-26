@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/code_statistics_calculator"
+require "zoisite/code_statistics_calculator"
 
 class CodeStatisticsCalculatorTest < ActiveSupport::TestCase
   def setup

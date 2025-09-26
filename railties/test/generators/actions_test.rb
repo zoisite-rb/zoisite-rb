@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/app/app_generator"
+require "zoisite/generators/zoisite/app/app_generator"
 require "env_helpers"
 
 class ActionsTest < Zoisite::Generators::TestCase
@@ -26,7 +26,7 @@ class ActionsTest < Zoisite::Generators::TestCase
   end
 
   def test_invoke_other_generator_with_full_namespace
-    action :invoke, "rails:model", ["my_model"]
+    action :invoke, "zoisite:model", ["my_model"]
     assert_file "app/models/my_model.rb", /MyModel/
   end
 
@@ -49,30 +49,30 @@ class ActionsTest < Zoisite::Generators::TestCase
   def test_add_source_with_block_adds_source_to_gemfile_with_gem
     run_generator
     action :add_source, "http://gems.github.com" do
-      gem "rspec-rails"
+      gem "rspec-zoisite"
     end
-    assert_file "Gemfile", /\n\nsource "http:\/\/gems\.github\.com" do\n  gem "rspec-rails"\nend\n\z/
+    assert_file "Gemfile", /\n\nsource "http:\/\/gems\.github\.com" do\n  gem "rspec-zoisite"\nend\n\z/
   end
 
   def test_add_source_with_block_adds_source_to_gemfile_after_gem
     run_generator
     action :gem, "will-paginate"
     action :add_source, "http://gems.github.com" do
-      gem "rspec-rails"
+      gem "rspec-zoisite"
     end
-    assert_file "Gemfile", /\ngem "will-paginate"\n\nsource "http:\/\/gems\.github\.com" do\n  gem "rspec-rails"\nend\n\z/
+    assert_file "Gemfile", /\ngem "will-paginate"\n\nsource "http:\/\/gems\.github\.com" do\n  gem "rspec-zoisite"\nend\n\z/
   end
 
   def test_add_source_should_create_newline_between_blocks
     run_generator
     action :add_source, "http://gems.github.com" do
-      gem "rspec-rails"
+      gem "rspec-zoisite"
     end
 
     action :add_source, "http://gems2.github.com" do
       gem "fakeweb"
     end
-    assert_file "Gemfile", /\n\nsource "http:\/\/gems\.github\.com" do\n  gem "rspec-rails"\nend\n\nsource "http:\/\/gems2\.github\.com" do\n  gem "fakeweb"\nend\n\z/
+    assert_file "Gemfile", /\n\nsource "http:\/\/gems\.github\.com" do\n  gem "rspec-zoisite"\nend\n\nsource "http:\/\/gems2\.github\.com" do\n  gem "fakeweb"\nend\n\z/
   end
 
   def test_gem_should_put_gem_dependency_in_gemfile
@@ -102,10 +102,10 @@ class ActionsTest < Zoisite::Generators::TestCase
     File.open("Gemfile", "a") { |f| f.write("# Some content...") }
 
     action :gem, "rspec"
-    action :gem, "rspec-rails"
+    action :gem, "rspec-zoisite"
 
     assert_file "Gemfile", /^gem "rspec"$/
-    assert_file "Gemfile", /^gem "rspec-rails"$/
+    assert_file "Gemfile", /^gem "rspec-zoisite"$/
   end
 
   def test_gem_should_include_options
@@ -136,10 +136,10 @@ class ActionsTest < Zoisite::Generators::TestCase
     run_generator
 
     action :gem, "rspec", require: false
-    action :gem, "rspec-rails", group: [:development, :test]
+    action :gem, "rspec-zoisite", group: [:development, :test]
 
     assert_file "Gemfile", /^gem "rspec", require: false$/
-    assert_file "Gemfile", /^gem "rspec-rails", group: \[:development, :test\]$/
+    assert_file "Gemfile", /^gem "rspec-zoisite", group: \[:development, :test\]$/
   end
 
   def test_gem_falls_back_to_inspect_if_string_contains_single_quote
@@ -162,14 +162,14 @@ class ActionsTest < Zoisite::Generators::TestCase
     run_generator
 
     action :gem_group, :development, :test do
-      gem "rspec-rails"
+      gem "rspec-zoisite"
     end
 
     action :gem_group, :test do
       gem "fakeweb"
     end
 
-    assert_file "Gemfile", /\n\ngroup :development, :test do\n  gem "rspec-rails"\nend\n\ngroup :test do\n  gem "fakeweb"\nend\n\z/
+    assert_file "Gemfile", /\n\ngroup :development, :test do\n  gem "rspec-zoisite"\nend\n\ngroup :test do\n  gem "fakeweb"\nend\n\z/
   end
 
   def test_gem_group_should_indent_comments
@@ -255,43 +255,43 @@ class ActionsTest < Zoisite::Generators::TestCase
 
   def test_gem_with_gemfile_without_newline_at_the_end
     run_generator
-    File.open("Gemfile", "a") { |f| f.write('gem "rspec-rails"') }
+    File.open("Gemfile", "a") { |f| f.write('gem "rspec-zoisite"') }
 
     action :gem, "will-paginate"
-    assert_file "Gemfile", /gem "rspec-rails"\ngem "will-paginate"\n\z/
+    assert_file "Gemfile", /gem "rspec-zoisite"\ngem "will-paginate"\n\z/
   end
 
   def test_gem_group_with_gemfile_without_newline_at_the_end
     run_generator
-    File.open("Gemfile", "a") { |f| f.write('gem "rspec-rails"') }
+    File.open("Gemfile", "a") { |f| f.write('gem "rspec-zoisite"') }
 
     action :gem_group, :test do
       gem "fakeweb"
     end
 
-    assert_file "Gemfile", /gem "rspec-rails"\n\ngroup :test do\n  gem "fakeweb"\nend\n\z/
+    assert_file "Gemfile", /gem "rspec-zoisite"\n\ngroup :test do\n  gem "fakeweb"\nend\n\z/
   end
 
   def test_add_source_with_gemfile_without_newline_at_the_end
     run_generator
-    File.open("Gemfile", "a") { |f| f.write('gem "rspec-rails"') }
+    File.open("Gemfile", "a") { |f| f.write('gem "rspec-zoisite"') }
 
     action :add_source, "http://gems.github.com" do
       gem "fakeweb"
     end
 
-    assert_file "Gemfile", /gem "rspec-rails"\n\nsource "http:\/\/gems\.github\.com" do\n  gem "fakeweb"\nend\n\z/
+    assert_file "Gemfile", /gem "rspec-zoisite"\n\nsource "http:\/\/gems\.github\.com" do\n  gem "fakeweb"\nend\n\z/
   end
 
   def test_github_with_gemfile_without_newline_at_the_end
     run_generator
-    File.open("Gemfile", "a") { |f| f.write('gem "rspec-rails"') }
+    File.open("Gemfile", "a") { |f| f.write('gem "rspec-zoisite"') }
 
     action :github, "user/repo" do
       gem "fakeweb"
     end
 
-    assert_file "Gemfile", /gem "rspec-rails"\n\ngithub "user\/repo" do\n  gem "fakeweb"\nend\n\z/
+    assert_file "Gemfile", /gem "rspec-zoisite"\n\ngithub "user\/repo" do\n  gem "fakeweb"\nend\n\z/
   end
 
   def test_environment_should_include_data_in_environment_initializer_block
@@ -450,7 +450,7 @@ class ActionsTest < Zoisite::Generators::TestCase
 
   test "rake should run rake with the default environment" do
     assert_runs "rake log:clear", env: { "RAILS_ENV" => "development" } do
-      with_rails_env nil do
+      with_zoisite_env nil do
         action :rake, "log:clear"
       end
     end
@@ -464,7 +464,7 @@ class ActionsTest < Zoisite::Generators::TestCase
 
   test "rake with RAILS_ENV set should run rake with the RAILS_ENV environment" do
     assert_runs "rake log:clear", env: { "RAILS_ENV" => "production" } do
-      with_rails_env "production" do
+      with_zoisite_env "production" do
         action :rake, "log:clear"
       end
     end
@@ -472,7 +472,7 @@ class ActionsTest < Zoisite::Generators::TestCase
 
   test "rake with env option and RAILS_ENV set should run rake with the env environment" do
     assert_runs "rake log:clear", env: { "RAILS_ENV" => "production" } do
-      with_rails_env "staging" do
+      with_zoisite_env "staging" do
         action :rake, "log:clear", env: "production"
       end
     end
@@ -498,81 +498,81 @@ class ActionsTest < Zoisite::Generators::TestCase
     end
   end
 
-  test "rails_command should run rails with the default environment" do
-    assert_runs "rails log:clear", env: { "RAILS_ENV" => "development" } do
-      with_rails_env nil do
-        action :rails_command, "log:clear"
+  test "zoisite_command should run zoisite with the default environment" do
+    assert_runs "zoisite log:clear", env: { "RAILS_ENV" => "development" } do
+      with_zoisite_env nil do
+        action :zoisite_command, "log:clear"
       end
     end
   end
 
-  test "rails_command with env option should run rails with the env environment" do
-    assert_runs "rails log:clear", env: { "RAILS_ENV" => "production" } do
-      action :rails_command, "log:clear", env: "production"
+  test "zoisite_command with env option should run zoisite with the env environment" do
+    assert_runs "zoisite log:clear", env: { "RAILS_ENV" => "production" } do
+      action :zoisite_command, "log:clear", env: "production"
     end
   end
 
-  test "rails_command with RAILS_ENV set should run rails with the RAILS_ENV environment" do
-    assert_runs "rails log:clear", env: { "RAILS_ENV" => "production" } do
-      with_rails_env "production" do
-        action :rails_command, "log:clear"
+  test "zoisite_command with RAILS_ENV set should run zoisite with the RAILS_ENV environment" do
+    assert_runs "zoisite log:clear", env: { "RAILS_ENV" => "production" } do
+      with_zoisite_env "production" do
+        action :zoisite_command, "log:clear"
       end
     end
   end
 
-  test "rails_command with env option and RAILS_ENV set should run rails with the env environment" do
-    assert_runs "rails log:clear", env: { "RAILS_ENV" => "production" } do
-      with_rails_env "staging" do
-        action :rails_command, "log:clear", env: "production"
+  test "zoisite_command with env option and RAILS_ENV set should run zoisite with the env environment" do
+    assert_runs "zoisite log:clear", env: { "RAILS_ENV" => "production" } do
+      with_zoisite_env "staging" do
+        action :zoisite_command, "log:clear", env: "production"
       end
     end
   end
 
-  test "rails_command with sudo option should run rails with sudo" do
-    assert_runs "sudo rails log:clear" do
-      with_rails_env nil do
-        action :rails_command, "log:clear", sudo: true
+  test "zoisite_command with sudo option should run zoisite with sudo" do
+    assert_runs "sudo zoisite log:clear" do
+      with_zoisite_env nil do
+        action :zoisite_command, "log:clear", sudo: true
       end
     end
   end
 
-  test "rails_command with capture option should run rails with capture" do
-    assert_runs "rails log:clear", capture: true do
-      with_rails_env nil do
-        action :rails_command, "log:clear", capture: true
+  test "zoisite_command with capture option should run zoisite with capture" do
+    assert_runs "zoisite log:clear", capture: true do
+      with_zoisite_env nil do
+        action :zoisite_command, "log:clear", capture: true
       end
     end
   end
 
-  test "rails_command with abort_on_failure option should raise on failure" do
+  test "zoisite_command with abort_on_failure option should raise on failure" do
     run_generator
     capture(:stderr) do
       assert_raises SystemExit do
-        action :rails_command, "invalid", abort_on_failure: true
+        action :zoisite_command, "invalid", abort_on_failure: true
       end
     end
   end
 
-  test "rails_command with inline option" do
+  test "zoisite_command with inline option" do
     run_generator
     assert_not_called(generator, :run) do
-      action :rails_command, "generate model MyModel", inline: true
+      action :zoisite_command, "generate model MyModel", inline: true
     end
     assert_file "app/models/my_model.rb", /MyModel/
   end
 
-  test "rails_command with inline option should raise on failure" do
+  test "zoisite_command with inline option should raise on failure" do
     run_generator
     error = assert_raises do
-      action :rails_command, "generate model 1234567890", inline: true
+      action :zoisite_command, "generate model 1234567890", inline: true
     end
     assert_match(/1234567890/, error.message)
   end
 
-  test "rails_command with quiet option" do
+  test "zoisite_command with quiet option" do
     generator(default_arguments, quiet: true)
-    assert_runs "rails new myapp", capture: true do
-      action :rails_command, "new myapp"
+    assert_runs "zoisite new myapp", capture: true do
+      action :zoisite_command, "new myapp"
     end
   end
 

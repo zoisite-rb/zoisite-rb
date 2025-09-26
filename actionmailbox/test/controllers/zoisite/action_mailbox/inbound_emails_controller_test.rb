@@ -4,9 +4,9 @@ require "test_helper"
 
 class Zoisite::Conductor::ActionMailbox::InboundEmailsControllerTest < ActionDispatch::IntegrationTest
   test "create inbound email" do
-    with_rails_env("development") do
+    with_zoisite_env("development") do
       assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-        post rails_conductor_inbound_emails_path, params: {
+        post zoisite_conductor_inbound_emails_path, params: {
           mail: {
             from: "Jason Fried <jason@37signals.com>",
             to: "Replies <replies@example.com>",
@@ -31,9 +31,9 @@ class Zoisite::Conductor::ActionMailbox::InboundEmailsControllerTest < ActionDis
   end
 
   test "create inbound email with bcc" do
-    with_rails_env("development") do
+    with_zoisite_env("development") do
       assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-        post rails_conductor_inbound_emails_path, params: {
+        post zoisite_conductor_inbound_emails_path, params: {
           mail: {
             from: "Jason Fried <jason@37signals.com>",
             bcc: "Replies <replies@example.com>",
@@ -52,9 +52,9 @@ class Zoisite::Conductor::ActionMailbox::InboundEmailsControllerTest < ActionDis
   end
 
   test "create inbound email with attachments" do
-    with_rails_env("development") do
+    with_zoisite_env("development") do
       assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-        post rails_conductor_inbound_emails_path, params: {
+        post zoisite_conductor_inbound_emails_path, params: {
           mail: {
             from: "Jason Fried <jason@37signals.com>",
             to: "Replies <replies@example.com>",
@@ -73,9 +73,9 @@ class Zoisite::Conductor::ActionMailbox::InboundEmailsControllerTest < ActionDis
   end
 
   test "create inbound email with empty attachment" do
-    with_rails_env("development") do
+    with_zoisite_env("development") do
       assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-        post rails_conductor_inbound_emails_path, params: {
+        post zoisite_conductor_inbound_emails_path, params: {
           mail: {
             from: "",
             to: "",
@@ -96,11 +96,11 @@ class Zoisite::Conductor::ActionMailbox::InboundEmailsControllerTest < ActionDis
   end
 
   private
-    def with_rails_env(env)
-      old_rails_env = Zoisite.env
+    def with_zoisite_env(env)
+      old_zoisite_env = Zoisite.env
       Zoisite.env = env
       yield
     ensure
-      Zoisite.env = old_rails_env
+      Zoisite.env = old_zoisite_env
     end
 end

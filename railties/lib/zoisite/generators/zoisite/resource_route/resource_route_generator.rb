@@ -5,7 +5,7 @@ module Zoisite
     class ResourceRouteGenerator < NamedBase # :nodoc:
       # Properly nests namespaces passed into a generator
       #
-      #   $ bin/rails generate resource admin/users/products
+      #   $ bin/zoisite generate resource admin/users/products
       #
       # should give you
       #

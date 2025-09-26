@@ -8,9 +8,9 @@ require_relative "./visitor/load"
 
 module RailInspector
   class Requires
-    def initialize(rails_path, autocorrect)
+    def initialize(zoisite_path, autocorrect)
       @loads = {}
-      @rails_path = Pathname.new(rails_path)
+      @zoisite_path = Pathname.new(zoisite_path)
       @exit = true
       @autocorrect = autocorrect
     end
@@ -18,7 +18,7 @@ module RailInspector
     def call
       populate_loads
 
-      prevent_active_support_rails_requires
+      prevent_active_support_zoisite_requires
 
       @exit
     end
@@ -28,7 +28,7 @@ module RailInspector
         current_file = nil
         v = Visitor::Load.new { @loads[current_file] }
 
-        @rails_path.glob("{#{frameworks.join(",")}}/lib/**/*.rb") do |file_pathname|
+        @zoisite_path.glob("{#{frameworks.join(",")}}/lib/**/*.rb") do |file_pathname|
           current_file = file_pathname.to_s
 
           @loads[current_file] = { requires: [], autoloads: [] }
@@ -37,13 +37,13 @@ module RailInspector
         end
       end
 
-      def prevent_active_support_rails_requires
+      def prevent_active_support_zoisite_requires
         frameworks.each do |framework|
           next if framework == "activesupport"
 
-          @rails_path.glob("#{framework}/lib/*.rb").each do |root_path|
+          @zoisite_path.glob("#{framework}/lib/*.rb").each do |root_path|
             root_requires = @loads[root_path.to_s][:requires]
-            next if root_requires.include?("active_support/rails")
+            next if root_requires.include?("active_support/zoisite")
 
             # required transitively
             next if root_requires.include?("action_dispatch")
@@ -53,19 +53,19 @@ module RailInspector
 
             @exit = false
             puts root_path
-            puts "  + \"active_support/rails\" (framework root)"
+            puts "  + \"active_support/zoisite\" (framework root)"
           end
         end
 
-        active_support_rails_requires = @loads["activesupport/lib/active_support/rails.rb"][:requires]
+        active_support_zoisite_requires = @loads["activesupport/lib/active_support/zoisite.rb"][:requires]
 
         duplicated_requires = {}
 
         @loads.each do |path, file_loads|
           next if path.start_with? "activesupport"
 
-          if active_support_rails_requires.intersect?(file_loads[:requires])
-            duplicated_requires[path] = active_support_rails_requires.intersection(file_loads[:requires])
+          if active_support_zoisite_requires.intersect?(file_loads[:requires])
+            duplicated_requires[path] = active_support_zoisite_requires.intersection(file_loads[:requires])
           end
         end
 
@@ -73,7 +73,7 @@ module RailInspector
           @exit = false
           puts path
           offenses.each do |duplicate_require|
-            puts "  - #{duplicate_require} (active_support/rails)"
+            puts "  - #{duplicate_require} (active_support/zoisite)"
 
             next unless @autocorrect
 
@@ -86,7 +86,7 @@ module RailInspector
       end
 
       def frameworks
-        RailInspector.frameworks(@rails_path)
+        RailInspector.frameworks(@zoisite_path)
       end
   end
 end

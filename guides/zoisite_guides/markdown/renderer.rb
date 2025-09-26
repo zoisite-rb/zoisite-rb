@@ -3,7 +3,7 @@
 require "rouge"
 
 # Add more common shell commands
-Rouge::Lexers::Shell::BUILTINS << "|bin/rails|brew|bundle|gem|git|node|rails|rake|ruby|sqlite3|yarn"
+Rouge::Lexers::Shell::BUILTINS << "|bin/zoisite|brew|bundle|gem|git|node|zoisite|rake|ruby|sqlite3|yarn"
 
 # Register an IRB lexer for Zoisite 7.2+ console prompts like "store(dev)>"
 class Rouge::Lexers::GuidesIRBLexer < Rouge::Lexers::IRBLexer
@@ -174,7 +174,7 @@ module ZoisiteGuides
               file_path
             end
 
-          "https://github.com/rails/rails/tree/#{tree}/#{path}"
+          "https://github.com/zoisite/zoisite/tree/#{tree}/#{path}"
         end
 
         def api_link(url)

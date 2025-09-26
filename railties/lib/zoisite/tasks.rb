@@ -13,5 +13,5 @@ require "rake"
 ).tap { |arr|
   arr << "statistics" if Rake.application.current_scope.empty?
 }.each do |task|
-  load "rails/tasks/#{task}.rake"
+  load "zoisite/tasks/#{task}.rake"
 end

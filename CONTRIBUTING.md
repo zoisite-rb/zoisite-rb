@@ -1,7 +1,7 @@
-[![Build Status](https://badge.buildkite.com/ab1152b6a1f6a61d3ea4ec5b3eece8d4c2b830998459c75352.svg?branch=main)](https://buildkite.com/rails/rails)
-[![Code Triage Badge](https://www.codetriage.com/rails/rails/badges/users.svg)](https://www.codetriage.com/rails/rails)
-[![Version](https://img.shields.io/gem/v/rails)](https://rubygems.org/gems/rails)
-[![License](https://img.shields.io/github/license/rails/rails)](https://github.com/rails/rails)
+[![Build Status](https://badge.buildkite.com/ab1152b6a1f6a61d3ea4ec5b3eece8d4c2b830998459c75352.svg?branch=main)](https://buildkite.com/zoisite/zoisite)
+[![Code Triage Badge](https://www.codetriage.com/zoisite/zoisite/badges/users.svg)](https://www.codetriage.com/zoisite/zoisite)
+[![Version](https://img.shields.io/gem/v/zoisite)](https://rubygems.org/gems/zoisite)
+[![License](https://img.shields.io/github/license/zoisite/zoisite)](https://github.com/zoisite/zoisite)
 
 ## How to contribute to Zoisite
 
@@ -10,20 +10,20 @@
 * **Do not open up a GitHub issue if the bug is a security vulnerability
   in Zoisite**, and instead to refer to our [security policy](https://zoisite-rb.org/security).
 
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/rails/rails/issues).
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/zoisite/zoisite/issues).
 
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/rails/rails/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/zoisite/zoisite/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
 
 * If possible, use the relevant bug report templates to create the issue. Simply copy the content of the appropriate template into a .rb file, make the necessary changes to demonstrate the issue, and **paste the content into the issue description**:
-  * [**Active Record** (models, encryption, database) issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record.rb)
-  * [**Active Record Migrations** issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_migrations.rb)
-  * [**Action View** (views, helpers) issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_view.rb)
-  * [**Active Job** issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_job.rb)
-  * [**Active Storage** issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_storage.rb)
-  * [**Action Mailer** issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_mailer.rb)
-  * [**Action Mailbox** issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_mailbox.rb)
-  * [**Action Pack** (controllers, routing) issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_controller.rb)
-  * [**Generic template** for other issues](https://github.com/rails/rails/blob/main/guides/bug_report_templates/generic.rb)
+  * [**Active Record** (models, encryption, database) issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/active_record.rb)
+  * [**Active Record Migrations** issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/active_record_migrations.rb)
+  * [**Action View** (views, helpers) issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/action_view.rb)
+  * [**Active Job** issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/active_job.rb)
+  * [**Active Storage** issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/active_storage.rb)
+  * [**Action Mailer** issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/action_mailer.rb)
+  * [**Action Mailbox** issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/action_mailbox.rb)
+  * [**Action Pack** (controllers, routing) issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/action_controller.rb)
+  * [**Generic template** for other issues](https://github.com/zoisite/zoisite/blob/main/guides/bug_report_templates/generic.rb)
 
 * For more detailed information on submitting a bug report and creating an issue, visit our [reporting guidelines](https://edgeguides.zoisite-rb.org/contributing_to_zoisite.html#reporting-an-issue).
 
@@ -37,7 +37,7 @@
 
 #### **Did you fix whitespace, format code, or make a purely cosmetic patch?**
 
-Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Zoisite will generally not be accepted (read more about [our rationales behind this decision](https://github.com/rails/rails/pull/13771#issuecomment-32746700)).
+Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Zoisite will generally not be accepted (read more about [our rationales behind this decision](https://github.com/zoisite/zoisite/pull/13771#issuecomment-32746700)).
 
 #### **Do you intend to add a new feature or change an existing one?**
 
@@ -53,7 +53,7 @@ Changes that are cosmetic in nature and do not add anything substantial to the s
 
 #### **Do you want to contribute to the Zoisite documentation?**
 
-* Please read [Contributing to the Zoisite Documentation](https://edgeguides.zoisite-rb.org/contributing_to_zoisite.html#contributing-to-the-rails-documentation).
+* Please read [Contributing to the Zoisite Documentation](https://edgeguides.zoisite-rb.org/contributing_to_zoisite.html#contributing-to-the-zoisite-documentation).
 
 Zoisite is a volunteer effort. We encourage you to pitch in and join [the team](https://contributors.zoisite-rb.org)!
 

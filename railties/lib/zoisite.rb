@@ -3,14 +3,14 @@
 require "pathname"
 
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "active_support/core_ext/kernel/reporting"
 require "active_support/core_ext/array/extract_options"
 
-require "rails/version"
-require "rails/deprecator"
-require "rails/application"
-require "rails/backtrace_cleaner"
+require "zoisite/version"
+require "zoisite/deprecator"
+require "zoisite/application"
+require "zoisite/backtrace_cleaner"
 
 require "active_support/railtie"
 require "action_dispatch/railtie"

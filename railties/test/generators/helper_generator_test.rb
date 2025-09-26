@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/helper/helper_generator"
+require "zoisite/generators/zoisite/helper/helper_generator"
 
 ObjectHelper = Class.new
 AnotherObjectHelperTest = Class.new

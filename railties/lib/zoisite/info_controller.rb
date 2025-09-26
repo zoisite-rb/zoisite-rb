@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/application_controller"
+require "zoisite/application_controller"
 require "action_dispatch/routing/inspector"
 
 class Zoisite::InfoController < Zoisite::ApplicationController # :nodoc:

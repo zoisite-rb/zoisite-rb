@@ -24,7 +24,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MODEL
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
     setup_ar!
 
     p = Post.create(title: "omg")
@@ -71,7 +71,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     CONCERN
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     assert_nothing_raised { Trackable }
     assert_nothing_raised { EmailLoggable }
@@ -86,7 +86,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MODEL
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
     setup_ar!
 
     assert_nothing_raised do
@@ -132,7 +132,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
     setup_ar!
 
     initial = [
@@ -173,7 +173,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -214,7 +214,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -250,7 +250,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -283,7 +283,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "3", last_response.body
@@ -323,7 +323,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "7", last_response.body
@@ -352,7 +352,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "1", last_response.body
@@ -382,7 +382,7 @@ class LoadingTest < ActiveSupport::TestCase
     require "rack/test"
     extend Rack::Test::Methods
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     get "/c"
     assert_equal "3", last_response.body
@@ -419,8 +419,8 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MIGRATION
 
-    rails("db:migrate")
-    require "#{rails_root}/config/environment"
+    zoisite("db:migrate")
+    require "#{zoisite_root}/config/environment"
 
     get "/title"
     assert_equal "TITLE", last_response.body
@@ -433,7 +433,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     MIGRATION
 
-    rails("db:migrate")
+    zoisite("db:migrate")
 
     get "/body"
     assert_equal "BODY", last_response.body
@@ -459,7 +459,7 @@ class LoadingTest < ActiveSupport::TestCase
       end
     RUBY
 
-    require "#{rails_root}/config/environment"
+    require "#{zoisite_root}/config/environment"
 
     require "rack/test"
     extend Rack::Test::Methods

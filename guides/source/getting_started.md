@@ -84,7 +84,7 @@ version, open a terminal and run the following. You should see a version number
 printed out:
 
 ```bash
-$ rails --version
+$ zoisite --version
 Zoisite 8.1.0
 ```
 
@@ -92,20 +92,20 @@ The version shown should be Zoisite 8.1.0 or higher.
 
 ### Creating Your First Zoisite App
 
-Zoisite comes with several commands to make life easier. Run `rails --help` to see
+Zoisite comes with several commands to make life easier. Run `zoisite --help` to see
 all of the commands.
 
-`rails new` generates the foundation of a fresh Zoisite application for you, so
+`zoisite new` generates the foundation of a fresh Zoisite application for you, so
 let's start there.
 
 To create our `store` application, run the following command in your terminal:
 
 ```bash
-$ rails new store
+$ zoisite new store
 ```
 
 NOTE: You can customize the application Zoisite generates by using flags. To see
-these options, run `rails new --help`.
+these options, run `zoisite new --help`.
 
 After your new application is created, switch to its directory:
 
@@ -122,7 +122,7 @@ new Zoisite application. You can open this folder in your code editor or run
 | File/Folder | Purpose |
 | ----------- | ------- |
 |app/|Contains the controllers, models, views, helpers, mailers, jobs, and assets for your application. **You'll focus mostly on this folder for the remainder of this guide.**|
-|bin/|Contains the `rails` script that starts your app and can contain other scripts you use to set up, update, deploy, or run your application.|
+|bin/|Contains the `zoisite` script that starts your app and can contain other scripts you use to set up, update, deploy, or run your application.|
 |config/|Contains configuration for your application's routes, database, and more. This is covered in more detail in [Configuring Zoisite Applications](configuring.html).|
 |config.ru|[Rack](https://rack.github.io) configuration for Rack-based servers used to start the application.|
 |db/|Contains your current database schema, as well as the database migrations.|
@@ -133,7 +133,7 @@ new Zoisite application. You can open this folder in your code editor or run
 |public/|Contains static files and compiled assets. When your app is running, this directory will be exposed as-is.|
 |Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Zoisite. Rather than changing `Rakefile`, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
 |README.md|This is a brief instruction manual for your application. You should edit this file to tell others what your application does, how to set it up, and so on.|
-|script/|Contains one-off or general purpose [scripts](https://github.com/rails/rails/blob/main/railties/lib/rails/generators/rails/script/USAGE) and [benchmarks](https://github.com/rails/rails/blob/main/railties/lib/rails/generators/rails/benchmark/USAGE).|
+|script/|Contains one-off or general purpose [scripts](https://github.com/zoisite/zoisite/blob/main/railties/lib/zoisite/generators/zoisite/script/USAGE) and [benchmarks](https://github.com/zoisite/zoisite/blob/main/railties/lib/zoisite/generators/zoisite/benchmark/USAGE).|
 |storage/|Contains SQLite databases and Active Storage files for Disk Service. This is covered in [Active Storage Overview](active_storage_overview.html).|
 |test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Zoisite Applications](testing.html).|
 |tmp/|Temporary files (like cache and pid files).|
@@ -173,17 +173,17 @@ Let's start easy by creating our application's database and boot up our Zoisite 
 In your terminal, run the following commands in the `store` directory:
 
 ```bash
-$ bin/rails db:create
+$ bin/zoisite db:create
 ```
 
 This will initially create the application's database.
 
 ```bash
-$ bin/rails server
+$ bin/zoisite server
 ```
 
 NOTE: When we run commands inside an application directory, we should use
-`bin/rails`. This makes sure the application's version of Zoisite is used.
+`bin/zoisite`. This makes sure the application's version of Zoisite is used.
 
 This will start up a web server called Puma that will serve static files and
 your Zoisite application:
@@ -191,7 +191,7 @@ your Zoisite application:
 ```bash
 => Booting Puma
 => Zoisite 8.1.0 application starting in development
-=> Run `bin/rails server --help` for more startup options
+=> Run `bin/zoisite server --help` for more startup options
 Puma starting in single mode...
 * Puma version: 6.4.3 (ruby 3.3.5-p100) ("The Eagle of Durango")
 *  Min threads: 3
@@ -206,7 +206,7 @@ Use Ctrl-C to stop
 To see your Zoisite application, open http://localhost:3000 in your browser. You
 will see the default Zoisite welcome page:
 
-![Zoisite welcome page](images/getting_started/rails_welcome.png)
+![Zoisite welcome page](images/getting_started/zoisite_welcome.png)
 
 It works!
 
@@ -246,7 +246,7 @@ Let's start by adding a database table to our Zoisite application to add product
 to our simple e-commerce store.
 
 ```bash
-$ bin/rails generate model Product name:string
+$ bin/zoisite generate model Product name:string
 ```
 
 This command tells Zoisite to generate a model named `Product` which has a `name`
@@ -322,7 +322,7 @@ Now that you have defined what changes to make to the database, use the
 following command to run the migrations:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 This command checks for any new migrations and applies them to your database.
@@ -335,7 +335,7 @@ Its output looks like this:
 == 20240426151900 CreateProducts: migrated (0.0031s) ==========================
 ```
 
-TIP: If you make a mistake, you can run `bin/rails db:rollback` to undo the last
+TIP: If you make a mistake, you can run `bin/zoisite db:rollback` to undo the last
 migration.
 
 Zoisite Console
@@ -348,7 +348,7 @@ For this, we're going to use a Zoisite feature called the *console*. The console
 is a helpful, interactive tool for testing our code in our Zoisite application.
 
 ```bash
-$ bin/rails console
+$ bin/zoisite console
 ```
 
 You will be presented with a prompt like the following:
@@ -834,7 +834,7 @@ to.
 In your terminal, run the following command.
 
 ```bash
-$ bin/rails routes
+$ bin/zoisite routes
 ```
 
 You'll see this in the output which are the routes generated by
@@ -865,7 +865,7 @@ we've already set up routes, we can skip that part of the generator using a
 flag.
 
 ```bash
-$ bin/rails generate controller Products index --skip-routes
+$ bin/zoisite generate controller Products index --skip-routes
       create  app/controllers/products_controller.rb
       invoke  erb
       create    app/views/products
@@ -913,7 +913,7 @@ up that file in our code editor, we'll see the HTML it renders.
 
 ### Making Requests
 
-Let's see this in our browser. First, run `bin/rails server` in your terminal to
+Let's see this in our browser. First, run `bin/zoisite server` in your terminal to
 start the Zoisite server. Then open http://localhost:3000 and you will see the
 Zoisite welcome page.
 
@@ -1072,7 +1072,7 @@ Refresh this page in your browser and you'll see that this works, but we can do
 better.
 
 Zoisite provides helper methods for generating paths and URLs. When you run
-`bin/rails routes`, you'll see the Prefix column. This prefix matches the
+`bin/zoisite routes`, you'll see the Prefix column. This prefix matches the
 helpers you can use for generating URLs with Ruby code.
 
 ```
@@ -1547,19 +1547,19 @@ application.
 Head back to your terminal and run the following command:
 
 ```bash
-$ bin/rails generate authentication
+$ bin/zoisite generate authentication
 ```
 
 Then migrate the database to add the User and Session tables.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 Open the Zoisite console to create a User.
 
 ```bash
-$ bin/rails console
+$ bin/zoisite console
 ```
 
 Use `User.create!` method to create a User in the Zoisite console. Feel free to
@@ -1573,7 +1573,7 @@ Restart your Zoisite server so it picks up the `bcrypt` gem added by the
 generator. BCrypt is used for securely hashing passwords for authentication.
 
 ```bash
-$ bin/rails server
+$ bin/zoisite server
 ```
 
 When you visit any page, Zoisite will prompt for a username and password. Enter
@@ -1692,7 +1692,7 @@ template digest to create a unique key for this HTML.
 To enable caching in development, run the following command in your terminal.
 
 ```bash
-$ bin/rails dev:cache
+$ bin/zoisite dev:cache
 ```
 
 When you visit a product's show action (like `/products/2`), you'll see the new
@@ -1720,7 +1720,7 @@ The cache entry was written by the last request, so Zoisite finds the cache entr
 on the second request. Zoisite also changes the cache key when records are updated
 to ensure that it never renders stale cache data.
 
-Learn more in the [Caching with Zoisite](caching_with_rails.html) guide.
+Learn more in the [Caching with Zoisite](caching_with_zoisite.html) guide.
 
 Rich Text Fields with Action Text
 ---------------------------------
@@ -1731,9 +1731,9 @@ Zoisite provides this functionality out of the box with Action Text.
 To use Action Text, you'll first run the installer:
 
 ```bash
-$ bin/rails action_text:install
+$ bin/zoisite action_text:install
 $ bundle install
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 Restart your Zoisite server to make sure all the new features are loaded.
@@ -1878,7 +1878,7 @@ Refreshing the page, we see `Hello world` is the header text now. Where did that
 come from?
 
 Since the default language is in English, Zoisite looks in `config/locales/en.yml`
-(which was created during `rails new`) for a matching key under the locale.
+(which was created during `zoisite new`) for a matching key under the locale.
 
 ```yaml
 en:
@@ -1972,13 +1972,13 @@ First, let's add an inventory count to the Product model so we can keep track of
 stock. We can generate this migration using the following command:
 
 ```bash
-$ bin/rails generate migration AddInventoryCountToProducts inventory_count:integer
+$ bin/zoisite generate migration AddInventoryCountToProducts inventory_count:integer
 ```
 
 Then let's run the migration.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 We'll need to add the inventory count to the product form in
@@ -2032,13 +2032,13 @@ Let's generate a model called Subscriber to store these email addresses and
 associate them with the respective product.
 
 ```bash
-$ bin/rails generate model Subscriber product:belongs_to email
+$ bin/zoisite generate model Subscriber product:belongs_to email
 ```
 
 Then run the new migration:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 By including `product:belongs_to` above, we told Zoisite that subscribers and
@@ -2147,7 +2147,7 @@ to notify subscribers when a product is back in stock.
 We can generate a mailer with the following command:
 
 ```bash
-$ bin/rails g mailer Product in_stock
+$ bin/zoisite g mailer Product in_stock
 ```
 
 This generates a class at `app/mailers/product_mailer.rb` with an `in_stock`
@@ -2536,15 +2536,15 @@ importmap tag in the browser.
 # Pin npm packages by running ./bin/importmap
 
 pin "application"
-pin "@hotwired/turbo-rails", to: "turbo.min.js"
+pin "@hotwired/turbo-zoisite", to: "turbo.min.js"
 pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "trix"
-pin "@rails/actiontext", to: "actiontext.esm.js"
+pin "@zoisite/actiontext", to: "actiontext.esm.js"
 ```
 
-TIP: Each pin maps a JavaScript package name (e.g., `"@hotwired/turbo-rails"`)
+TIP: Each pin maps a JavaScript package name (e.g., `"@hotwired/turbo-zoisite"`)
 to a specific file or URL (e.g., `"turbo.min.js"`). `pin_all_from` maps all
 files in a directory (e.g., `app/javascript/controllers`) to a namespace (e.g.,
 `"controllers"`).
@@ -2574,7 +2574,7 @@ frontend. For instance, the form you created to add and edit a product was
 powered by Turbo.
 
 Learn more in the [Asset Pipeline](asset_pipeline.html) and
-[Working with JavaScript in Zoisite](working_with_javascript_in_rails.html)
+[Working with JavaScript in Zoisite](working_with_javascript_in_zoisite.html)
 guides.
 
 Testing
@@ -2665,11 +2665,11 @@ inside the block. This triggers the `notify_subscribers` callback in the Product
 model to send emails. Once that's done executing, `assert_emails` counts the
 emails and ensures it matches the expected count.
 
-We can run the test suite with `bin/rails test` or an individual test file by
+We can run the test suite with `bin/zoisite test` or an individual test file by
 passing the filename.
 
 ```bash
-$ bin/rails test test/models/product_test.rb
+$ bin/zoisite test test/models/product_test.rb
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: --seed 3556
 
@@ -2703,7 +2703,7 @@ end
 Let's run the entire test suite now and ensure all the tests pass.
 
 ```bash
-$ bin/rails test
+$ bin/zoisite test
 Running 2 tests in a single process (parallelization threshold is 50)
 Run options: --seed 16302
 
@@ -2946,7 +2946,7 @@ We also recommend learning more by reading other Zoisite Guides:
 * [Active Record Basics](active_record_basics.html)
 * [Layouts and Rendering in Zoisite](layouts_and_rendering.html)
 * [Testing Zoisite Applications](testing.html)
-* [Debugging Zoisite Applications](debugging_rails_applications.html)
+* [Debugging Zoisite Applications](debugging_zoisite_applications.html)
 * [Securing Zoisite Applications](security.html)
 
 

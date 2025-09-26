@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators/test_unit"
-require "rails/generators/resource_helpers"
+require "zoisite/generators/test_unit"
+require "zoisite/generators/resource_helpers"
 
 module TestUnit # :nodoc:
   module Generators # :nodoc:

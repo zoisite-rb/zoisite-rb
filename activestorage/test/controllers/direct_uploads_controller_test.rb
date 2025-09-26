@@ -27,7 +27,7 @@ if SERVICE_CONFIGURATIONS[:s3] && SERVICE_CONFIGURATIONS[:s3][:access_key_id].pr
         }
       }
 
-      post rails_direct_uploads_url, params: { blob: {
+      post zoisite_direct_uploads_url, params: { blob: {
         filename: "hello.txt", byte_size: 6, checksum: checksum, content_type: "text/plain", metadata: metadata } }
 
       response.parsed_body.tap do |details|
@@ -73,7 +73,7 @@ if SERVICE_CONFIGURATIONS[:gcs]
         }
       }
 
-      post rails_direct_uploads_url, params: { blob: {
+      post zoisite_direct_uploads_url, params: { blob: {
         filename: "hello.txt", byte_size: 6, checksum: checksum, content_type: "text/plain", metadata: metadata } }
 
       response.parsed_body.tap do |details|
@@ -103,7 +103,7 @@ class ActiveStorage::DiskDirectUploadsControllerTest < ActionDispatch::Integrati
       "library_ID" => "12345"
     }
 
-    post rails_direct_uploads_url, params: { blob: {
+    post zoisite_direct_uploads_url, params: { blob: {
       filename: "hello.txt", byte_size: 6, checksum: checksum, content_type: "text/plain", metadata: metadata } }
 
     response.parsed_body.tap do |details|
@@ -113,7 +113,7 @@ class ActiveStorage::DiskDirectUploadsControllerTest < ActionDispatch::Integrati
       assert_equal checksum, details["checksum"]
       assert_equal metadata, details["metadata"]
       assert_equal "text/plain", details["content_type"]
-      assert_match(/rails\/active_storage\/disk/, details["direct_upload"]["url"])
+      assert_match(/zoisite\/active_storage\/disk/, details["direct_upload"]["url"])
       assert_equal({ "Content-Type" => "text/plain" }, details["direct_upload"]["headers"])
     end
   end
@@ -129,7 +129,7 @@ class ActiveStorage::DiskDirectUploadsControllerTest < ActionDispatch::Integrati
     }
 
     set_include_root_in_json(true) do
-      post rails_direct_uploads_url, params: { blob: {
+      post zoisite_direct_uploads_url, params: { blob: {
         filename: "hello.txt", byte_size: 6, checksum: checksum, content_type: "text/plain", metadata: metadata } }
     end
 

@@ -64,7 +64,7 @@ if ActiveRecord::Base.lease_connection.supports_virtual_columns?
       column = VirtualColumn.columns_hash["lower_name"]
       assert_predicate column, :virtual?
       assert_predicate column, :virtual_stored? if @connection.database_version >= 18_00_00
-      assert_equal "rails", VirtualColumn.take.lower_name
+      assert_equal "zoisite", VirtualColumn.take.lower_name
     end
 
     if ActiveRecord::Base.lease_connection.database_version >= 18_00_00

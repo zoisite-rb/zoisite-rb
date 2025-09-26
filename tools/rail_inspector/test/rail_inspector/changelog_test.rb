@@ -22,7 +22,7 @@ class TestChangelog < Minitest::Test
     assert_valid_entry <<~CHANGELOG
       *   Cool change.
 
-          *1337-rails-c0d3r*
+          *1337-zoisite-c0d3r*
     CHANGELOG
   end
 

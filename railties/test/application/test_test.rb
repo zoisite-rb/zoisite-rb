@@ -110,7 +110,7 @@ module ApplicationTests
     end
 
     test "ruby schema migrations" do
-      output  = rails("generate", "model", "user", "name:string")
+      output  = zoisite("generate", "model", "user", "name:string")
       version = output.match(/(\d+)_create_users\.rb/)[1]
 
       app_file "test/models/user_test.rb", <<-RUBY
@@ -147,7 +147,7 @@ module ApplicationTests
     end
 
     test "sql structure migrations" do
-      output  = rails("generate", "model", "user", "name:string")
+      output  = zoisite("generate", "model", "user", "name:string")
       version = output.match(/(\d+)_create_users\.rb/)[1]
 
       app_file "test/models/user_test.rb", <<-RUBY
@@ -186,7 +186,7 @@ module ApplicationTests
     end
 
     test "sql structure migrations when adding column to existing table" do
-      output_1  = rails("generate", "model", "user", "name:string")
+      output_1  = zoisite("generate", "model", "user", "name:string")
       version_1 = output_1.match(/(\d+)_create_users\.rb/)[1]
 
       app_file "test/models/user_test.rb", <<-RUBY
@@ -211,7 +211,7 @@ module ApplicationTests
 
       assert_successful_test_run("models/user_test.rb")
 
-      output_2  = rails("generate", "migration", "add_email_to_users")
+      output_2  = zoisite("generate", "migration", "add_email_to_users")
       version_2 = output_2.match(/(\d+)_add_email_to_users\.rb/)[1]
 
       app_file "test/models/user_test.rb", <<-RUBY
@@ -236,7 +236,7 @@ module ApplicationTests
     end
 
     test "automatically synchronizes test schema after rollback" do
-      output  = rails("generate", "model", "user", "name:string")
+      output  = zoisite("generate", "model", "user", "name:string")
       version = output.match(/(\d+)_create_users\.rb/)[1]
 
       app_file "test/models/user_test.rb", <<-RUBY
@@ -275,7 +275,7 @@ Expected: ["id", "name"]
     end
 
     test "hooks for plugins" do
-      output  = rails("generate", "model", "user", "name:string")
+      output  = zoisite("generate", "model", "user", "name:string")
       version = output.match(/(\d+)_create_users\.rb/)[1]
 
       app_file "lib/tasks/hooks.rake", <<-RUBY
@@ -321,7 +321,7 @@ Expected: ["id", "name"]
     end
 
     test "schema for all the models is loaded when tests are run in eager load context" do
-      output = rails("generate", "model", "user", "name:string")
+      output = zoisite("generate", "model", "user", "name:string")
       version = output.match(/(\d+)_create_users\.rb/)[1]
 
       app_file "db/schema.rb", <<-RUBY
@@ -350,9 +350,9 @@ Expected: ["id", "name"]
 
     test "database-dependent attribute types are resolved when parallel tests are run in eager load context" do
       use_postgresql
-      rails "db:drop", "db:create"
+      zoisite "db:drop", "db:create"
 
-      output = rails("generate", "model", "user")
+      output = zoisite("generate", "model", "user")
       version = output.match(/(\d+)_create_users\.rb/)[1]
 
       app_file "db/schema.rb", <<~RUBY
@@ -385,7 +385,7 @@ Expected: ["id", "name"]
 
       assert_successful_test_run "models/user_test.rb"
     ensure
-      rails "db:drop" rescue nil
+      zoisite "db:drop" rescue nil
     end
 
     private
@@ -403,7 +403,7 @@ Expected: ["id", "name"]
       end
 
       def run_test_file(name)
-        rails "test", "#{app_path}/test/#{name}", allow_failure: true
+        zoisite "test", "#{app_path}/test/#{name}", allow_failure: true
       end
   end
 end

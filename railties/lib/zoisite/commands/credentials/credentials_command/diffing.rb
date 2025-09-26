@@ -2,8 +2,8 @@
 
 module Zoisite::Command::CredentialsCommand::Diffing # :nodoc:
   GITATTRIBUTES_ENTRY = <<~END
-    config/credentials/*.yml.enc diff=rails_credentials
-    config/credentials.yml.enc diff=rails_credentials
+    config/credentials/*.yml.enc diff=zoisite_credentials
+    config/credentials.yml.enc diff=zoisite_credentials
   END
 
   def enroll_project_in_credentials_diffing
@@ -39,11 +39,11 @@ module Zoisite::Command::CredentialsCommand::Diffing # :nodoc:
     end
 
     def diffing_driver_configured?
-      system "git config --get diff.rails_credentials.textconv", out: File::NULL
+      system "git config --get diff.zoisite_credentials.textconv", out: File::NULL
     end
 
     def configure_diffing_driver
-      system "git config diff.rails_credentials.textconv '#{executable(:diff)}'"
+      system "git config diff.zoisite_credentials.textconv '#{executable(:diff)}'"
       say "Configured Git diff driver for credentials."
     end
 

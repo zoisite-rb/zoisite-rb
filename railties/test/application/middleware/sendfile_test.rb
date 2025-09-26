@@ -59,13 +59,13 @@ module ApplicationTests
       make_basic_app do |app|
         app.config.action_dispatch.x_sendfile_header = "X-Sendfile"
         app.config.public_file_server.enabled = true
-        app.paths["public"] = File.join(rails_root, "public")
+        app.paths["public"] = File.join(zoisite_root, "public")
       end
 
       app_file "public/foo.txt", "foo"
 
       get "/foo.txt", "HTTP_X_SENDFILE_TYPE" => "X-Sendfile"
-      assert_equal File.join(rails_root, "public/foo.txt"), last_response.headers["X-Sendfile"]
+      assert_equal File.join(zoisite_root, "public/foo.txt"), last_response.headers["X-Sendfile"]
     end
   end
 end

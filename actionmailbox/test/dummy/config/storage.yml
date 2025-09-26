@@ -10,7 +10,7 @@ test_email:
   service: Disk
   root: <%= Zoisite.root.join("tmp/storage_email") %>
 
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
 #   access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>

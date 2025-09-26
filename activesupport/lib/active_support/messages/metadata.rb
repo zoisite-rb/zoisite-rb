@@ -65,18 +65,18 @@ module ActiveSupport
           expiry = pick_expiry(expires_at, expires_in)
           hash["exp"] = expiry if expiry
           hash["pur"] = purpose.to_s if purpose
-          { "_rails" => hash }
+          { "_zoisite" => hash }
         end
 
         def wrap_in_metadata_legacy_envelope(hash, expires_at: nil, expires_in: nil, purpose: nil)
           expiry = pick_expiry(expires_at, expires_in)
           hash["exp"] = expiry
           hash["pur"] = purpose
-          { "_rails" => hash }
+          { "_zoisite" => hash }
         end
 
         def extract_from_metadata_envelope(envelope, purpose: nil)
-          hash = envelope["_rails"]
+          hash = envelope["_zoisite"]
 
           if hash["exp"] && Time.now.utc >= parse_expiry(hash["exp"])
             throw :invalid_message_content, "expired"
@@ -90,11 +90,11 @@ module ActiveSupport
         end
 
         def metadata_envelope?(object)
-          object.is_a?(Hash) && object.key?("_rails")
+          object.is_a?(Hash) && object.key?("_zoisite")
         end
 
         def dual_serialized_metadata_envelope_json?(string)
-          string.start_with?('{"_rails":{"message":')
+          string.start_with?('{"_zoisite":{"message":')
         end
 
         def pick_expiry(expires_at, expires_in)

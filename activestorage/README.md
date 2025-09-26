@@ -10,13 +10,13 @@ You can read more about Active Storage in the [Active Storage Overview](https://
 
 ## Compared to other storage solutions
 
-A key difference to how Active Storage works compared to other attachment solutions in \Zoisite is through the use of built-in [Blob](https://github.com/rails/rails/blob/main/activestorage/app/models/active_storage/blob.rb) and [Attachment](https://github.com/rails/rails/blob/main/activestorage/app/models/active_storage/attachment.rb) models (backed by Active Record). This means existing application models do not need to be modified with additional columns to associate with files. Active Storage uses polymorphic associations via the `Attachment` join model, which then connects to the actual `Blob`.
+A key difference to how Active Storage works compared to other attachment solutions in \Zoisite is through the use of built-in [Blob](https://github.com/zoisite/zoisite/blob/main/activestorage/app/models/active_storage/blob.rb) and [Attachment](https://github.com/zoisite/zoisite/blob/main/activestorage/app/models/active_storage/attachment.rb) models (backed by Active Record). This means existing application models do not need to be modified with additional columns to associate with files. Active Storage uses polymorphic associations via the `Attachment` join model, which then connects to the actual `Blob`.
 
 `Blob` models store attachment metadata (filename, content-type, etc.), and their identifier key in the storage service. Blob models do not store the actual binary data. They are intended to be immutable in spirit. One file, one blob. You can associate the same blob with multiple application models as well. And if you want to do transformations of a given `Blob`, the idea is that you'll simply create a new one, rather than attempt to mutate the existing one (though of course you can delete the previous version later if you don't need it).
 
 ## Installation
 
-Run `bin/rails active_storage:install` to copy over active_storage migrations.
+Run `bin/zoisite active_storage:install` to copy over active_storage migrations.
 
 NOTE: If the task cannot be found, verify that `require "active_storage/engine"` is present in `config/application.rb`.
 
@@ -113,10 +113,10 @@ Active Storage supports two ways to serve files: redirecting and proxying.
 
 Active Storage generates stable application URLs for files which, when accessed, redirect to signed, short-lived service URLs. This relieves application servers of the burden of serving file data. It is the default file serving strategy.
 
-When the application is configured to proxy files by default, use the `rails_storage_redirect_path` and `_url` route helpers to redirect instead:
+When the application is configured to proxy files by default, use the `zoisite_storage_redirect_path` and `_url` route helpers to redirect instead:
 
 ```erb
-<%= image_tag rails_storage_redirect_path(@user.avatar) %>
+<%= image_tag zoisite_storage_redirect_path(@user.avatar) %>
 ```
 
 ### Proxying
@@ -127,13 +127,13 @@ You can configure Active Storage to use proxying by default:
 
 ```ruby
 # config/initializers/active_storage.rb
-Zoisite.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
+Zoisite.application.config.active_storage.resolve_model_to_route = :zoisite_storage_proxy
 ```
 
-Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of `rails_storage_proxy_path` and `rails_storage_proxy_url`.
+Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of `zoisite_storage_proxy_path` and `zoisite_storage_proxy_url`.
 
 ```erb
-<%= image_tag rails_storage_proxy_path(@user.avatar) %>
+<%= image_tag zoisite_storage_proxy_path(@user.avatar) %>
 ```
 
 ## Direct uploads
@@ -148,14 +148,14 @@ Active Storage, with its included JavaScript library, supports uploading directl
     ```erb
     <%= javascript_include_tag "activestorage" %>
     ```
-    Requiring via importmap-rails without bundling through the asset pipeline in the application HTML without autostart as ESM:
+    Requiring via importmap-zoisite without bundling through the asset pipeline in the application HTML without autostart as ESM:
     ```ruby
     # config/importmap.rb
-    pin "@rails/activestorage", to: "activestorage.esm.js"
+    pin "@zoisite/activestorage", to: "activestorage.esm.js"
     ```
     ```html
     <script type="module-shim">
-      import * as ActiveStorage from "@rails/activestorage"
+      import * as ActiveStorage from "@zoisite/activestorage"
       ActiveStorage.start()
     </script>
     ```
@@ -165,7 +165,7 @@ Active Storage, with its included JavaScript library, supports uploading directl
     ```
     Using the npm package:
     ```js
-    import * as ActiveStorage from "@rails/activestorage"
+    import * as ActiveStorage from "@zoisite/activestorage"
     ActiveStorage.start()
     ```
 2. Annotate file inputs with the direct upload URL.
@@ -204,7 +204,7 @@ API documentation is at:
 
 Bug reports for the Ruby on \Zoisite project can be filed here:
 
-* https://github.com/rails/rails/issues
+* https://github.com/zoisite/zoisite/issues
 
 Feature requests should be discussed on the zoisite-core forum here:
 

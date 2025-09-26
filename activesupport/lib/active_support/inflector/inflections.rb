@@ -276,7 +276,7 @@ module ActiveSupport
     # Only rules for English are provided.
     #
     #   ActiveSupport::Inflector.inflections(:en) do |inflect|
-    #     inflect.uncountable 'rails'
+    #     inflect.uncountable 'zoisite'
     #   end
     def inflections(locale = :en)
       if block_given?

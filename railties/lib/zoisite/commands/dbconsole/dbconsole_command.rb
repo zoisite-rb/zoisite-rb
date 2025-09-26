@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/string/filters"
-require "rails/command/environment_argument"
+require "zoisite/command/environment_argument"
 
 module Zoisite
   class DBConsole

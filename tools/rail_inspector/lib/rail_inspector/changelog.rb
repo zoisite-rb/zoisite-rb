@@ -221,11 +221,11 @@ module RailInspector
     end
 
     class Runner
-      attr_reader :formatter, :rails_path
+      attr_reader :formatter, :zoisite_path
 
-      def initialize(rails_path)
+      def initialize(zoisite_path)
         @formatter = Formatter.new
-        @rails_path = Pathname.new(rails_path)
+        @zoisite_path = Pathname.new(zoisite_path)
       end
 
       def call
@@ -252,7 +252,7 @@ module RailInspector
         end
 
         def changelog_paths
-          Dir[rails_path.join("*/CHANGELOG.md")]
+          Dir[zoisite_path.join("*/CHANGELOG.md")]
         end
     end
 

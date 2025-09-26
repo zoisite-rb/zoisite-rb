@@ -89,7 +89,7 @@ routing.html).
 
 Or show a helpful command to see more options to dig deeper:
 
-TIP: For further help with generators, run `bin/rails generate --help`.
+TIP: For further help with generators, run `bin/zoisite generate --help`.
 
 ### WARNING
 

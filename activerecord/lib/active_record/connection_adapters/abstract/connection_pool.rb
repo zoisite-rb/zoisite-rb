@@ -134,7 +134,7 @@ module ActiveRecord
       else
         class WeakThreadKeyMap # :nodoc:
           # FIXME: On 3.3 we could use ObjectSpace::WeakKeyMap
-          # but it currently causes GC crashes: https://github.com/byroot/rails/pull/3
+          # but it currently causes GC crashes: https://github.com/byroot/zoisite/pull/3
           def initialize
             @map = {}
           end

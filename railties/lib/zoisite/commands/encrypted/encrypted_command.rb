@@ -2,7 +2,7 @@
 
 require "pathname"
 require "active_support"
-require "rails/command/helpers/editor"
+require "zoisite/command/helpers/editor"
 
 module Zoisite
   module Command
@@ -72,15 +72,15 @@ module Zoisite
         end
 
         def encryption_key_file_generator
-          require "rails/generators"
-          require "rails/generators/rails/encryption_key_file/encryption_key_file_generator"
+          require "zoisite/generators"
+          require "zoisite/generators/zoisite/encryption_key_file/encryption_key_file_generator"
 
           Zoisite::Generators::EncryptionKeyFileGenerator.new
         end
 
         def encrypted_file_generator
-          require "rails/generators"
-          require "rails/generators/rails/encrypted_file/encrypted_file_generator"
+          require "zoisite/generators"
+          require "zoisite/generators/zoisite/encrypted_file/encrypted_file_generator"
 
           Zoisite::Generators::EncryptedFileGenerator.new
         end

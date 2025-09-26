@@ -91,7 +91,7 @@ class Person < ApplicationRecord
 end
 ```
 
-We can see how it works by looking at some `bin/rails console` output:
+We can see how it works by looking at some `bin/zoisite console` output:
 
 ```irb
 irb> p = Person.new(name: "Jane Doe")

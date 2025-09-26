@@ -1528,7 +1528,7 @@ for more details.
 To run the tests you can use the following command:
 
 ```bash
-$ bin/rails test
+$ bin/zoisite test
 
 Run options: --seed 14596
 

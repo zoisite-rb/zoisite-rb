@@ -1355,10 +1355,10 @@ module ActionView
       # To force the radio button to be checked pass <tt>checked: true</tt> in the
       # +options+ hash. You may pass HTML options there as well.
       #
-      #   # Let's say that @article.category returns "rails":
-      #   radio_button("article", "category", "rails")
+      #   # Let's say that @article.category returns "zoisite":
+      #   radio_button("article", "category", "zoisite")
       #   radio_button("article", "category", "java")
-      #   # => <input type="radio" id="article_category_rails" name="article[category]" value="rails" checked="checked" />
+      #   # => <input type="radio" id="article_category_zoisite" name="article[category]" value="zoisite" checked="checked" />
       #   #    <input type="radio" id="article_category_java" name="article[category]" value="java" />
       #
       #   # Let's say that @user.receive_newsletter returns "no":
@@ -2482,10 +2482,10 @@ module ActionView
       # To force the radio button to be checked pass <tt>checked: true</tt> in the
       # +options+ hash. You may pass HTML options there as well.
       #
-      #   # Let's say that @article.category returns "rails":
-      #   radio_button("category", "rails")
+      #   # Let's say that @article.category returns "zoisite":
+      #   radio_button("category", "zoisite")
       #   radio_button("category", "java")
-      #   # => <input type="radio" id="article_category_rails" name="article[category]" value="rails" checked="checked" />
+      #   # => <input type="radio" id="article_category_zoisite" name="article[category]" value="zoisite" checked="checked" />
       #   #    <input type="radio" id="article_category_java" name="article[category]" value="java" />
       #
       #   # Let's say that @user.receive_newsletter returns "no":

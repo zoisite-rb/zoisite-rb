@@ -136,7 +136,7 @@ as needed.
 You can generate a new api Zoisite app:
 
 ```bash
-$ rails new my_api --api
+$ zoisite new my_api --api
 ```
 
 This will do three main things for you:
@@ -157,13 +157,13 @@ To see how our newly created API handles generating a new resource, let's create
 a new Group resource. Each group will have a name.
 
 ```bash
-$ bin/rails g scaffold Group name:string
+$ bin/zoisite g scaffold Group name:string
 ```
 
 Before we can use our scaffolded code, we need to update our database scheme.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 Now if we open our `GroupsController`, we should notice that with an API Zoisite
@@ -312,7 +312,7 @@ An API application comes with the following middleware by default:
 - `Rack::ConditionalGet`
 - `Rack::ETag`
 
-See the [internal middleware](rails_on_rack.html#internal-middleware-stack)
+See the [internal middleware](zoisite_on_rack.html#internal-middleware-stack)
 section of the Rack guide for further information on them.
 
 Other plugins, including Active Record, may add additional middleware. In
@@ -322,7 +322,7 @@ building, and make sense in an API-only Zoisite application.
 You can get a list of all middleware in your application via:
 
 ```bash
-$ bin/rails middleware
+$ bin/zoisite middleware
 ```
 
 ### Using Rack::Cache
@@ -506,7 +506,7 @@ controller modules by default:
 | `ActionController::Head` | Support for returning a response with no content, only headers. |
 
 Other plugins may add additional modules. You can get a list of all modules
-included into `ActionController::API` in the rails console:
+included into `ActionController::API` in the zoisite console:
 
 ```irb
 irb> ActionController::API.ancestors - ActionController::Metal.ancestors

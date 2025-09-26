@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails"
+require "zoisite"
 require "action_controller/railtie"
 require "active_job/railtie"
 require "active_record/railtie"

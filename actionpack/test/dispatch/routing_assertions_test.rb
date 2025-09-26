@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/engine"
+require "zoisite/engine"
 require "controller/fake_controllers"
 
 class SecureArticlesController < ArticlesController

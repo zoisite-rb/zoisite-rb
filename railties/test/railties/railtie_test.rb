@@ -9,7 +9,7 @@ module RailtiesTest
     def setup
       build_app
       FileUtils.rm_rf("#{app_path}/config/environments")
-      require "rails/all"
+      require "zoisite/all"
     end
 
     def teardown
@@ -262,7 +262,7 @@ module RailtiesTest
       require "rake"
       require "rake/testtask"
       require "rdoc/task"
-      load "rails/tasks/engine.rake"
+      load "zoisite/tasks/engine.rake"
 
       assert $ran_block
     end

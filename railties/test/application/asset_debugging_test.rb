@@ -41,7 +41,7 @@ module ApplicationTests
     test "assets are concatenated when debug is off and compile is off either if debug_assets param is provided" do
       # config.assets.debug and config.assets.compile are false for production environment
       ENV["RAILS_ENV"] = "production"
-      rails "assets:precompile", "--trace"
+      zoisite "assets:precompile", "--trace"
 
       # Load app env
       app "production"

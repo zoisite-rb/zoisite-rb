@@ -6,7 +6,7 @@ module Zoisite
   class TestUnitReporter < Minitest::StatisticsReporter
     singleton_class.attr_accessor :app_root
 
-    @executable = "bin/rails test"
+    @executable = "bin/zoisite test"
     singleton_class.attr_accessor :executable
 
     def prerecord(test_class, test_name)

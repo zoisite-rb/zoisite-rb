@@ -2,7 +2,7 @@
 
 require "active_job/railtie"
 require "action_mailer"
-require "rails"
+require "zoisite"
 require "abstract_controller/railties/routes_helpers"
 
 module ActionMailer
@@ -78,9 +78,9 @@ module ActionMailer
 
       if options.show_previews
         app.routes.prepend do
-          get "/rails/mailers" => "rails/mailers#index", internal: true
-          get "/rails/mailers/download/*path" => "rails/mailers#download", internal: true
-          get "/rails/mailers/*path" => "rails/mailers#preview", internal: true
+          get "/zoisite/mailers" => "zoisite/mailers#index", internal: true
+          get "/zoisite/mailers/download/*path" => "zoisite/mailers#download", internal: true
+          get "/zoisite/mailers/*path" => "zoisite/mailers#preview", internal: true
         end
       end
     end

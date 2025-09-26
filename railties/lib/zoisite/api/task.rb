@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rdoc/task"
-require "rails/api/generator"
+require "zoisite/api/generator"
 
 module Zoisite
   module API
@@ -109,9 +109,9 @@ module Zoisite
             lib/**/*.rb
           ),
           exclude: %w(
-            lib/rails/generators/**/templates/**/*.rb
-            lib/rails/test_unit/*
-            lib/rails/api/generator.rb
+            lib/zoisite/generators/**/templates/**/*.rb
+            lib/zoisite/test_unit/*
+            lib/zoisite/api/generator.rb
           )
         }
       }
@@ -142,7 +142,7 @@ module Zoisite
         options << "-e"  << "UTF-8"
 
         options << "-f"  << "api"
-        options << "-T"  << "rails"
+        options << "-T"  << "zoisite"
       end
 
       def configure_rdoc_files
@@ -179,7 +179,7 @@ module Zoisite
       # These variables are used by the sdoc template
       def setup_horo_variables # :nodoc:
         ENV["HORO_PROJECT_NAME"]    = "Ruby on Zoisite"
-        ENV["HORO_PROJECT_VERSION"] = rails_version
+        ENV["HORO_PROJECT_VERSION"] = zoisite_version
         ENV["HORO_BADGE_VERSION"]   = badge_version
         ENV["HORO_CANONICAL_URL"]   = canonical_url
       end
@@ -205,7 +205,7 @@ module Zoisite
     end
 
     class EdgeTask < RepoTask
-      def rails_version
+      def zoisite_version
         "main@#{`git rev-parse HEAD`[0, 7]}"
       end
 
@@ -219,12 +219,12 @@ module Zoisite
     end
 
     class StableTask < RepoTask
-      def rails_version
+      def zoisite_version
         File.read("RAILS_VERSION").strip
       end
 
       def badge_version
-        "v#{rails_version}"
+        "v#{zoisite_version}"
       end
 
       def canonical_url

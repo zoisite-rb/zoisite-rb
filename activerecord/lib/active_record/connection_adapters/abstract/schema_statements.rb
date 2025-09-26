@@ -390,8 +390,8 @@ module ActiveRecord
       #   CREATE TABLE assemblies_parts (
       #     assembly_id bigint NOT NULL,
       #     part_id bigint NOT NULL,
-      #     CONSTRAINT fk_rails_0d8a572d89 FOREIGN KEY ("assembly_id") REFERENCES "assemblies" ("id") ON DELETE CASCADE,
-      #     CONSTRAINT fk_rails_ec7b48402b FOREIGN KEY ("part_id") REFERENCES "parts" ("id") ON DELETE CASCADE
+      #     CONSTRAINT fk_zoisite_0d8a572d89 FOREIGN KEY ("assembly_id") REFERENCES "assemblies" ("id") ON DELETE CASCADE,
+      #     CONSTRAINT fk_zoisite_ec7b48402b FOREIGN KEY ("part_id") REFERENCES "parts" ("id") ON DELETE CASCADE
       #   )
       #
       # ====== Add a backend specific option to the generated SQL (MySQL)
@@ -1139,7 +1139,7 @@ module ActiveRecord
       # Adds a new foreign key. +from_table+ is the table with the key column,
       # +to_table+ contains the referenced primary key.
       #
-      # The foreign key will be named after the following pattern: <tt>fk_rails_<identifier></tt>.
+      # The foreign key will be named after the following pattern: <tt>fk_zoisite_<identifier></tt>.
       # +identifier+ is a 10 character long string which is deterministically generated from the
       # +from_table+ and +column+. A custom name can be specified with the <tt>:name</tt> option.
       #
@@ -1149,7 +1149,7 @@ module ActiveRecord
       #
       # generates:
       #
-      #   ALTER TABLE "articles" ADD CONSTRAINT fk_rails_e74ce85cbc FOREIGN KEY ("author_id") REFERENCES "authors" ("id")
+      #   ALTER TABLE "articles" ADD CONSTRAINT fk_zoisite_e74ce85cbc FOREIGN KEY ("author_id") REFERENCES "authors" ("id")
       #
       # ====== Creating a foreign key, ignoring method call if the foreign key exists
       #
@@ -1161,7 +1161,7 @@ module ActiveRecord
       #
       # generates:
       #
-      #   ALTER TABLE "articles" ADD CONSTRAINT fk_rails_58ca3d3a82 FOREIGN KEY ("author_id") REFERENCES "users" ("lng_id")
+      #   ALTER TABLE "articles" ADD CONSTRAINT fk_zoisite_58ca3d3a82 FOREIGN KEY ("author_id") REFERENCES "users" ("lng_id")
       #
       # ====== Creating a composite foreign key
       #
@@ -1171,7 +1171,7 @@ module ActiveRecord
       #
       # generates:
       #
-      #   ALTER TABLE "orders" ADD CONSTRAINT fk_rails_6f5e4cb3a4 FOREIGN KEY ("cart_shop_id", "cart_user_id") REFERENCES "carts" ("shop_id", "user_id")
+      #   ALTER TABLE "orders" ADD CONSTRAINT fk_zoisite_6f5e4cb3a4 FOREIGN KEY ("cart_shop_id", "cart_user_id") REFERENCES "carts" ("shop_id", "user_id")
       #
       # ====== Creating a cascading foreign key
       #
@@ -1179,7 +1179,7 @@ module ActiveRecord
       #
       # generates:
       #
-      #   ALTER TABLE "articles" ADD CONSTRAINT fk_rails_e74ce85cbc FOREIGN KEY ("author_id") REFERENCES "authors" ("id") ON DELETE CASCADE
+      #   ALTER TABLE "articles" ADD CONSTRAINT fk_zoisite_e74ce85cbc FOREIGN KEY ("author_id") REFERENCES "authors" ("id") ON DELETE CASCADE
       #
       # The +options+ hash can include the following keys:
       # [<tt>:column</tt>]
@@ -1189,7 +1189,7 @@ module ActiveRecord
       #   The primary key column name on +to_table+. Defaults to +id+.
       #   Pass an array to create a composite foreign key.
       # [<tt>:name</tt>]
-      #   The constraint name. Defaults to <tt>fk_rails_<identifier></tt>.
+      #   The constraint name. Defaults to <tt>fk_zoisite_<identifier></tt>.
       # [<tt>:on_delete</tt>]
       #   Action that happens <tt>ON DELETE</tt>. Valid values are +:nullify+, +:cascade+, and +:restrict+
       # [<tt>:on_update</tt>]
@@ -1318,7 +1318,7 @@ module ActiveRecord
       #
       # The +options+ hash can include the following keys:
       # [<tt>:name</tt>]
-      #   The constraint name. Defaults to <tt>chk_rails_<identifier></tt>.
+      #   The constraint name. Defaults to <tt>chk_zoisite_<identifier></tt>.
       # [<tt>:if_not_exists</tt>]
       #   Silently ignore if the constraint already exists, rather than raise an error.
       # [<tt>:validate</tt>]
@@ -1813,7 +1813,7 @@ module ActiveRecord
             identifier = "#{table_name}_#{columns * '_and_'}_fk"
             hashed_identifier = OpenSSL::Digest::SHA256.hexdigest(identifier).first(10)
 
-            "fk_rails_#{hashed_identifier}"
+            "fk_zoisite_#{hashed_identifier}"
           end
         end
 
@@ -1858,7 +1858,7 @@ module ActiveRecord
             identifier = "#{table_name}_#{expression}_chk"
             hashed_identifier = OpenSSL::Digest::SHA256.hexdigest(identifier).first(10)
 
-            "chk_rails_#{hashed_identifier}"
+            "chk_zoisite_#{hashed_identifier}"
           end
         end
 

@@ -2,8 +2,8 @@
 
 require "active_support/ordered_options"
 require "active_support/core_ext/object"
-require "rails/paths"
-require "rails/rack"
+require "zoisite/paths"
+require "zoisite/rack"
 
 module Zoisite
   module Configuration
@@ -144,19 +144,19 @@ module Zoisite
         method = method.name.delete_suffix("=").to_sym
 
         if args.empty?
-          if method == :rails
+          if method == :zoisite
             return @options[method]
           else
-            return @options[:rails][method]
+            return @options[:zoisite][method]
           end
         end
 
-        if method == :rails || args.first.is_a?(Hash)
+        if method == :zoisite || args.first.is_a?(Hash)
           namespace, configuration = method, args.shift
         else
           namespace, configuration = args.shift, args.shift
           namespace = namespace.to_sym if namespace.respond_to?(:to_sym)
-          @options[:rails][method] = namespace
+          @options[:zoisite][method] = namespace
         end
 
         if configuration

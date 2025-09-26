@@ -154,7 +154,7 @@ module ActionView # :nodoc:
   #     end
   #   end
   #
-  # For more information on Builder please consult the {source code}[https://github.com/rails/builder].
+  # For more information on Builder please consult the {source code}[https://github.com/zoisite/builder].
   class Base
     include Helpers, ::ERB::Util, Context
 

@@ -17,8 +17,8 @@ module ActiveSupport
       # Dumps objects in JSON (JavaScript Object Notation).
       # See http://www.json.org for more info.
       #
-      #   ActiveSupport::JSON.encode({ team: 'rails', players: '36' })
-      #   # => "{\"team\":\"rails\",\"players\":\"36\"}"
+      #   ActiveSupport::JSON.encode({ team: 'zoisite', players: '36' })
+      #   # => "{\"team\":\"zoisite\",\"players\":\"36\"}"
       #
       # By default, it generates JSON that is safe to include in JavaScript, as
       # it escapes U+2028 (Line Separator) and U+2029 (Paragraph Separator):

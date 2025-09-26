@@ -26,9 +26,9 @@ require_relative "rail_inspector/version"
 
 module RailInspector
   class << self
-    def frameworks(rails_path)
+    def frameworks(zoisite_path)
       @frameworks ||= begin
-        spec = Gem::Specification.load(rails_path.join("rails.gemspec").to_s)
+        spec = Gem::Specification.load(zoisite_path.join("zoisite.gemspec").to_s)
         names = spec.dependencies.map(&:name)
         names.delete("bundler")
         names

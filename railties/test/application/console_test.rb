@@ -16,7 +16,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
       class Post < ActiveRecord::Base
       end
     CODE
-    system "#{app_path}/bin/rails runner 'Post.lease_connection.create_table :posts'"
+    system "#{app_path}/bin/zoisite runner 'Post.lease_connection.create_table :posts'"
 
     @primary, @replica = PTY.open
   end
@@ -38,7 +38,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
 
     pid = Process.spawn(
       { "TERM" => "dumb", "HOME" => home_tmp_dir }.merge(env),
-      "#{app_path}/bin/rails console #{options}",
+      "#{app_path}/bin/zoisite console #{options}",
       in: @replica, out: @replica, err: @replica
     )
 
@@ -73,7 +73,7 @@ class FullStackConsoleTest < ActiveSupport::TestCase
       config.disable_sandbox = true
     RUBY
 
-    output = `#{app_path}/bin/rails console --sandbox`
+    output = `#{app_path}/bin/zoisite console --sandbox`
 
     assert_includes output, "sandbox mode is disabled"
     assert_equal 1, $?.exitstatus

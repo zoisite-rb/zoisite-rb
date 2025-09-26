@@ -803,7 +803,7 @@ module ActiveRecord
           # CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           #                       "password_digest" varchar COLLATE "NOCASE",
           #                       "o_id" integer,
-          #                       CONSTRAINT "fk_rails_78146ddd2e" FOREIGN KEY ("o_id") REFERENCES "os" ("id"));
+          #                       CONSTRAINT "fk_zoisite_78146ddd2e" FOREIGN KEY ("o_id") REFERENCES "os" ("id"));
           result = query_value(sql, "SCHEMA")
 
           return [] unless result

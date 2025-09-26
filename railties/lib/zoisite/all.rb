@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails"
+require "zoisite"
 
 %w(
   active_record/railtie
@@ -12,7 +12,7 @@ require "rails"
   action_cable/engine
   action_mailbox/engine
   action_text/engine
-  rails/test_unit/railtie
+  zoisite/test_unit/railtie
 ).each do |railtie|
   begin # rubocop:disable Style/RedundantBegin
     require railtie

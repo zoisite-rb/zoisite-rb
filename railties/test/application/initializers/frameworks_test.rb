@@ -44,12 +44,12 @@ module ApplicationTests
     test "allows me to configure default URL options for ActionMailer" do
       app_file "config/environments/development.rb", <<-RUBY
         Zoisite.application.configure do
-          config.action_mailer.default_url_options = { :host => "test.rails" }
+          config.action_mailer.default_url_options = { :host => "test.zoisite" }
         end
       RUBY
 
       app("development")
-      assert_equal "test.rails", ActionMailer::Base.default_url_options[:host]
+      assert_equal "test.zoisite", ActionMailer::Base.default_url_options[:host]
     end
 
     test "includes URL helpers as action methods" do
@@ -217,7 +217,7 @@ module ApplicationTests
     end
 
     test "can boot with an unhealthy database" do
-      rails %w(generate model post title:string)
+      zoisite %w(generate model post title:string)
 
       with_unhealthy_database do
         assert_nothing_raised do
@@ -227,8 +227,8 @@ module ApplicationTests
     end
 
     test "use schema cache dump" do
-      rails %w(generate model post title:string)
-      rails %w(db:migrate db:schema:cache:dump)
+      zoisite %w(generate model post title:string)
+      zoisite %w(db:migrate db:schema:cache:dump)
 
       add_to_config <<-RUBY
         config.eager_load = true
@@ -244,8 +244,8 @@ module ApplicationTests
     end
 
     test "expire schema cache dump" do
-      rails %w(generate model post title:string)
-      rails %w(db:migrate db:schema:cache:dump db:rollback)
+      zoisite %w(generate model post title:string)
+      zoisite %w(db:migrate db:schema:cache:dump db:rollback)
 
       add_to_config <<-RUBY
         config.eager_load = true
@@ -263,8 +263,8 @@ module ApplicationTests
     end
 
     test "expire schema cache dump if the version can't be checked because the database is unhealthy" do
-      rails %w(generate model post title:string)
-      rails %w(db:migrate db:schema:cache:dump)
+      zoisite %w(generate model post title:string)
+      zoisite %w(db:migrate db:schema:cache:dump)
 
       add_to_config <<-RUBY
         config.eager_load = true
@@ -290,8 +290,8 @@ module ApplicationTests
     end
 
     test "does not expire schema cache dump if check_schema_cache_dump_version is false" do
-      rails %w(generate model post title:string)
-      rails %w(db:migrate db:schema:cache:dump db:rollback)
+      zoisite %w(generate model post title:string)
+      zoisite %w(db:migrate db:schema:cache:dump db:rollback)
 
       add_to_config <<-RUBY
         config.eager_load = true
@@ -306,8 +306,8 @@ module ApplicationTests
     end
 
     test "does not expire schema cache dump if check_schema_cache_dump_version is false and the database unhealthy" do
-      rails %w(generate model post title:string)
-      rails %w(db:migrate db:schema:cache:dump db:rollback)
+      zoisite %w(generate model post title:string)
+      zoisite %w(db:migrate db:schema:cache:dump db:rollback)
 
       add_to_config <<-RUBY
         config.eager_load = true
@@ -327,8 +327,8 @@ module ApplicationTests
     end
 
     test "define attribute methods when schema cache is present and check_schema_cache_dump_version is false" do
-      rails %w(generate model post title:string)
-      rails %w(db:migrate db:schema:cache:dump)
+      zoisite %w(generate model post title:string)
+      zoisite %w(db:migrate db:schema:cache:dump)
 
       add_to_config <<-RUBY
         config.eager_load = true
@@ -345,7 +345,7 @@ module ApplicationTests
     test "active record establish_connection uses Zoisite.env if DATABASE_URL is not set" do
       app("development")
       orig_database_url = ENV.delete("DATABASE_URL")
-      orig_rails_env, Zoisite.env = Zoisite.env, "development"
+      orig_zoisite_env, Zoisite.env = Zoisite.env, "development"
       ActiveRecord::Base.establish_connection
       assert ActiveRecord::Base.lease_connection
       assert_match(/#{ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: "primary").database}/, ActiveRecord::Base.connection_db_config.database)
@@ -354,13 +354,13 @@ module ApplicationTests
     ensure
       ActiveRecord::Base.remove_connection
       ENV["DATABASE_URL"] = orig_database_url if orig_database_url
-      Zoisite.env = orig_rails_env if orig_rails_env
+      Zoisite.env = orig_zoisite_env if orig_zoisite_env
     end
 
     test "active record establish_connection uses DATABASE_URL even if Zoisite.env is set" do
       app("development")
       orig_database_url = ENV.delete("DATABASE_URL")
-      orig_rails_env, Zoisite.env = Zoisite.env, "development"
+      orig_zoisite_env, Zoisite.env = Zoisite.env, "development"
       database_url_db_name = "db/database_url_db.sqlite3"
       ENV["DATABASE_URL"] = "sqlite3:#{database_url_db_name}"
       ActiveRecord::Base.establish_connection
@@ -369,7 +369,7 @@ module ApplicationTests
     ensure
       ActiveRecord::Base.remove_connection
       ENV["DATABASE_URL"] = orig_database_url if orig_database_url
-      Zoisite.env = orig_rails_env if orig_rails_env
+      Zoisite.env = orig_zoisite_env if orig_zoisite_env
     end
 
     test "connections checked out during initialization are returned to the pool" do
@@ -381,8 +381,8 @@ module ApplicationTests
     end
 
     test "Current scopes in AR models are reset on reloading" do
-      rails %w(generate model post)
-      rails %w(db:migrate)
+      zoisite %w(generate model post)
+      zoisite %w(db:migrate)
 
       app_file "app/models/a.rb", "A = 1"
       app_file "app/models/m.rb", "module M; end"
@@ -411,8 +411,8 @@ module ApplicationTests
     end
 
     test "filters for Active Record encrypted attributes are added to config.filter_parameters only once" do
-      rails %w(generate model post title:string)
-      rails %w(db:migrate)
+      zoisite %w(generate model post title:string)
+      zoisite %w(db:migrate)
 
       app_file "app/models/post.rb", <<~RUBY
         class Post < ActiveRecord::Base
@@ -432,8 +432,8 @@ module ApplicationTests
     end
 
     test "ActiveRecord::MessagePack extensions are installed when using ActiveSupport::MessagePack::CacheSerializer" do
-      rails %w(generate model post title:string)
-      rails %w(db:migrate)
+      zoisite %w(generate model post title:string)
+      zoisite %w(db:migrate)
 
       add_to_config <<~RUBY
         config.cache_store = :file_store, #{app_path("tmp/cache").inspect}, { serializer: :message_pack }

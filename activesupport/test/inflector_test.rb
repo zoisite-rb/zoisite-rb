@@ -220,7 +220,7 @@ class InflectorTest < ActiveSupport::TestCase
       ["HttpsApis",         "https_apis",         "Https apis",       "Https Apis"],
       ["Html5",             "html5",              "Html5",            "Html5"],
       ["Restfully",         "restfully",          "Restfully",        "Restfully"],
-      ["RoZoisite",           "ro_rails",           "Ro rails",         "Ro Zoisite"]
+      ["RoZoisite",           "ro_zoisite",           "Ro zoisite",         "Ro Zoisite"]
     ].each do |camel, under, human, title|
       assert_equal(camel, ActiveSupport::Inflector.camelize(under))
       assert_equal(camel, ActiveSupport::Inflector.camelize(camel))

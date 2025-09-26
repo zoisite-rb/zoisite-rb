@@ -20,14 +20,14 @@ module Zoisite
   # <tt>"config/routes.rb"</tt>:
   #
   #   Zoisite.application.routes.draw do
-  #     get "healthz" => "rails/health#show", as: :rails_health_check
+  #     get "healthz" => "zoisite/health#show", as: :zoisite_health_check
   #   end
   #
   # The health check will now be accessible via the +/healthz+ path.
   #
   # NOTE: This endpoint does not reflect the status of all of your application's
   # dependencies, such as the database or Redis cluster. Replace
-  # <tt>"rails/health#show"</tt> with your own controller action if you have
+  # <tt>"zoisite/health#show"</tt> with your own controller action if you have
   # application specific needs.
   #
   # Think carefully about what you want to check as it can lead to situations

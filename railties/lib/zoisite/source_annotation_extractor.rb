@@ -9,7 +9,7 @@ rescue LoadError
 end
 
 module Zoisite
-  # Implements the logic behind +Zoisite::Command::NotesCommand+. See <tt>rails notes --help</tt> for usage information.
+  # Implements the logic behind +Zoisite::Command::NotesCommand+. See <tt>zoisite notes --help</tt> for usage information.
   #
   # Annotation objects are triplets <tt>:line</tt>, <tt>:tag</tt>, <tt>:text</tt> that
   # represent the line where the annotation lives, its tag, and its text. Note
@@ -141,7 +141,7 @@ module Zoisite
     #
     # See SourceAnnotationExtractor#find_in for a list of file extensions that will be taken into account.
     #
-    # This class method is the single entry point for the <tt>rails notes</tt> command.
+    # This class method is the single entry point for the <tt>zoisite notes</tt> command.
     def self.enumerate(tag = nil, options = {})
       tag ||= Annotation.tags.join("|")
       extractor = new(tag)

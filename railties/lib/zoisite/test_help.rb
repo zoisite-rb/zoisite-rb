@@ -7,10 +7,10 @@
 abort("Abort testing: Your Zoisite environment is running in production mode!") if Zoisite.env.production?
 
 require "active_support/test_case"
-require "rails/generators/test_case"
+require "zoisite/generators/test_case"
 require "active_support/testing/autorun"
 
-require "rails/testing/maintain_test_schema"
+require "zoisite/testing/maintain_test_schema"
 
 if defined?(ActiveRecord::Base)
   require "active_record/testing/query_assertions"

@@ -17,7 +17,7 @@ module Zoisite
 
     def create
       inbound_email = create_inbound_email(new_mail)
-      redirect_to main_app.rails_conductor_inbound_email_url(inbound_email)
+      redirect_to main_app.zoisite_conductor_inbound_email_url(inbound_email)
     end
 
     private

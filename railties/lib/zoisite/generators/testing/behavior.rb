@@ -3,7 +3,7 @@
 require "active_support/core_ext/hash/reverse_merge"
 require "active_support/core_ext/kernel/reporting"
 require "active_support/testing/stream"
-require "rails/generators"
+require "zoisite/generators"
 
 module Zoisite
   module Generators

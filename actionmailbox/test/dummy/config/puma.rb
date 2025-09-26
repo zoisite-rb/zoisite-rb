@@ -34,5 +34,5 @@ else
   pidfile "tmp/pids/server.pid" if ENV.fetch("RAILS_ENV", "development") == "development"
 end
 
-# Allow puma to be restarted by `bin/rails restart` command.
+# Allow puma to be restarted by `bin/zoisite restart` command.
 plugin :tmp_restart

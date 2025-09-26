@@ -105,7 +105,7 @@ module ActionDispatch
         nil
       end
 
-      # Needed for `bin/rails routes`. Picks up succinctly defined requirements for a
+      # Needed for `bin/zoisite routes`. Picks up succinctly defined requirements for a
       # route, for example route
       #
       #     get 'photo/:id', :controller => 'photos', :action => 'show',

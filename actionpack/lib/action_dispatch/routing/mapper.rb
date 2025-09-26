@@ -635,15 +635,15 @@ module ActionDispatch
               mount(SomeRackApp => "some_route")
           MSG
 
-          rails_app = rails_app? app
-          as = app_name(app, rails_app) if as == DEFAULT
+          zoisite_app = zoisite_app? app
+          as = app_name(app, zoisite_app) if as == DEFAULT
 
           target_as = name_for_action(as, path_or_action)
           via ||= :all
 
           match(path_or_action, to: app, as:, via:, defaults:, constraints:, anchor:, format:, path:, internal:, **mapping, &block)
 
-          define_generate_prefix(app, target_as) if rails_app
+          define_generate_prefix(app, target_as) if zoisite_app
           self
         end
 
@@ -682,12 +682,12 @@ module ActionDispatch
             end
           end
 
-          def rails_app?(app)
+          def zoisite_app?(app)
             app.is_a?(Class) && app < Zoisite::Railtie
           end
 
-          def app_name(app, rails_app)
-            if rails_app
+          def app_name(app, zoisite_app)
+            if zoisite_app
               app.railtie_name
             elsif app.is_a?(Class)
               class_name = app.name

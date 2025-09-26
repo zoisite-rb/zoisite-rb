@@ -3,7 +3,7 @@
 require "isolation/abstract_unit"
 require "rack/test"
 require "base64"
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ApplicationTests
   class MailerPreviewsTest < ActiveSupport::TestCase
@@ -20,47 +20,47 @@ module ApplicationTests
       teardown_app
     end
 
-    test "/rails/mailers is accessible in development" do
+    test "/zoisite/mailers is accessible in development" do
       app("development")
-      get "/rails/mailers"
+      get "/zoisite/mailers"
       assert_equal 200, last_response.status
     end
 
-    test "/rails/mailers is not accessible in production" do
+    test "/zoisite/mailers is not accessible in production" do
       app("production")
-      get("/rails/mailers", {}, { "HTTPS" => "on" })
+      get("/zoisite/mailers", {}, { "HTTPS" => "on" })
       assert_equal 404, last_response.status
     end
 
-    test "/rails/mailers is accessible with correct configuration" do
+    test "/zoisite/mailers is accessible with correct configuration" do
       add_to_config "config.action_mailer.show_previews = true"
       app("production")
-      get "/rails/mailers", {}, { "REMOTE_ADDR" => "4.2.42.42", "HTTPS" => "on" }
+      get "/zoisite/mailers", {}, { "REMOTE_ADDR" => "4.2.42.42", "HTTPS" => "on" }
       assert_equal 200, last_response.status
     end
 
-    test "/rails/mailers is not accessible with show_previews = false" do
+    test "/zoisite/mailers is not accessible with show_previews = false" do
       add_to_config "config.action_mailer.show_previews = false"
       app("development")
-      get "/rails/mailers"
+      get "/zoisite/mailers"
       assert_equal 404, last_response.status
     end
 
-    test "/rails/mailers is accessible with globbing route present" do
+    test "/zoisite/mailers is accessible with globbing route present" do
       app_file "config/routes.rb", <<-RUBY
         Zoisite.application.routes.draw do
           get '*foo', to: 'foo#index'
         end
       RUBY
       app("development")
-      get "/rails/mailers"
+      get "/zoisite/mailers"
       assert_equal 200, last_response.status
     end
 
     test "request without mailer previews links to documentation" do
       app("development")
 
-      get "/rails/mailers"
+      get "/zoisite/mailers"
       assert_select "title", text: "Action Mailer Previews"
       assert_select "h1", text: "Action Mailer Previews"
       assert_select "p", text: "You have not defined any Action Mailer Previews."
@@ -94,11 +94,11 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers"
+      get "/zoisite/mailers"
       assert_select "title", text: "Action Mailer Previews"
       assert_select "h1", text: "Action Mailer Previews"
-      assert_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
-      assert_match '<li><a href="/rails/mailers/notifier/foo">foo</a></li>', last_response.body
+      assert_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
+      assert_match '<li><a href="/zoisite/mailers/notifier/foo">foo</a></li>', last_response.body
     end
 
     test "mailer previews are loaded from custom preview_paths" do
@@ -131,18 +131,18 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers"
-      assert_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
-      assert_match '<li><a href="/rails/mailers/notifier/foo">foo</a></li>', last_response.body
-      assert_match '<h3><a href="/rails/mailers/confirm">Confirm</a></h3>', last_response.body
-      assert_match '<li><a href="/rails/mailers/confirm/foo">foo</a></li>', last_response.body
+      get "/zoisite/mailers"
+      assert_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
+      assert_match '<li><a href="/zoisite/mailers/notifier/foo">foo</a></li>', last_response.body
+      assert_match '<h3><a href="/zoisite/mailers/confirm">Confirm</a></h3>', last_response.body
+      assert_match '<li><a href="/zoisite/mailers/confirm/foo">foo</a></li>', last_response.body
     end
 
     test "mailer previews are reloaded across requests" do
       app("development")
 
-      get "/rails/mailers"
-      assert_no_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
+      get "/zoisite/mailers"
+      assert_no_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
 
       mailer "notifier", <<-RUBY
         class Notifier < ActionMailer::Base
@@ -166,14 +166,14 @@ module ApplicationTests
         end
       RUBY
 
-      get "/rails/mailers"
-      assert_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
+      get "/zoisite/mailers"
+      assert_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
 
       remove_file "test/mailers/previews/notifier_preview.rb"
       sleep(1)
 
-      get "/rails/mailers"
-      assert_no_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
+      get "/zoisite/mailers"
+      assert_no_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
     end
 
     test "mailer preview actions are added and removed" do
@@ -201,10 +201,10 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers"
-      assert_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
-      assert_match '<li><a href="/rails/mailers/notifier/foo">foo</a></li>', last_response.body
-      assert_no_match '<li><a href="/rails/mailers/notifier/bar">bar</a></li>', last_response.body
+      get "/zoisite/mailers"
+      assert_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
+      assert_match '<li><a href="/zoisite/mailers/notifier/foo">foo</a></li>', last_response.body
+      assert_no_match '<li><a href="/zoisite/mailers/notifier/bar">bar</a></li>', last_response.body
 
       mailer "notifier", <<-RUBY
         class Notifier < ActionMailer::Base
@@ -242,10 +242,10 @@ module ApplicationTests
 
       sleep(1)
 
-      get "/rails/mailers"
-      assert_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
-      assert_match '<li><a href="/rails/mailers/notifier/foo">foo</a></li>', last_response.body
-      assert_match '<li><a href="/rails/mailers/notifier/bar">bar</a></li>', last_response.body
+      get "/zoisite/mailers"
+      assert_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
+      assert_match '<li><a href="/zoisite/mailers/notifier/foo">foo</a></li>', last_response.body
+      assert_match '<li><a href="/zoisite/mailers/notifier/bar">bar</a></li>', last_response.body
 
       mailer "notifier", <<-RUBY
         class Notifier < ActionMailer::Base
@@ -269,10 +269,10 @@ module ApplicationTests
 
       sleep(1)
 
-      get "/rails/mailers"
-      assert_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
-      assert_match '<li><a href="/rails/mailers/notifier/foo">foo</a></li>', last_response.body
-      assert_no_match '<li><a href="/rails/mailers/notifier/bar">bar</a></li>', last_response.body
+      get "/zoisite/mailers"
+      assert_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
+      assert_match '<li><a href="/zoisite/mailers/notifier/foo">foo</a></li>', last_response.body
+      assert_no_match '<li><a href="/zoisite/mailers/notifier/bar">bar</a></li>', last_response.body
     end
 
     test "mailer previews are reloaded from custom preview_paths" do
@@ -281,8 +281,8 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers"
-      assert_no_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
+      get "/zoisite/mailers"
+      assert_no_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
 
       mailer "notifier", <<-RUBY
         class Notifier < ActionMailer::Base
@@ -306,14 +306,14 @@ module ApplicationTests
         end
       RUBY
 
-      get "/rails/mailers"
-      assert_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
+      get "/zoisite/mailers"
+      assert_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
 
       remove_file "lib/mailer_previews/notifier_preview.rb"
       sleep(1)
 
-      get "/rails/mailers"
-      assert_no_match '<h3><a href="/rails/mailers/notifier">Notifier</a></h3>', last_response.body
+      get "/zoisite/mailers"
+      assert_no_match '<h3><a href="/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
     end
 
     test "mailer without previews" do
@@ -328,7 +328,7 @@ module ApplicationTests
       RUBY
 
       app("development")
-      get "/rails/mailers/notifier"
+      get "/zoisite/mailers/notifier"
 
       assert_predicate last_response, :ok?
       assert_select "title", text: "Action Mailer Previews for notifier"
@@ -356,17 +356,17 @@ module ApplicationTests
       RUBY
 
       app("development")
-      get "/rails/mailers/notifier"
+      get "/zoisite/mailers/notifier"
 
       assert_predicate last_response, :ok?
       assert_select "title", text: "Action Mailer Previews for notifier"
       assert_select "h1", text: "Action Mailer Previews for notifier"
-      assert_select "ul li a[href=?]", "/rails/mailers/notifier/foo"
+      assert_select "ul li a[href=?]", "/zoisite/mailers/notifier/foo"
     end
 
     test "mailer preview not found" do
       app("development")
-      get "/rails/mailers/notifier"
+      get "/zoisite/mailers/notifier"
       assert_predicate last_response, :not_found?
       assert_match "Mailer preview &#39;notifier&#39; not found", h(last_response.body)
     end
@@ -396,11 +396,11 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/bar"
+      get "/zoisite/mailers/notifier/bar"
       assert_predicate last_response, :not_found?
       assert_match "Email &#39;bar&#39; not found in NotifierPreview", h(last_response.body)
 
-      get "/rails/mailers/download/notifier/bar"
+      get "/zoisite/mailers/download/notifier/bar"
       assert_predicate last_response, :not_found?
       assert_match "Email &#39;bar&#39; not found in NotifierPreview", h(last_response.body)
     end
@@ -426,7 +426,7 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_match "You are trying to preview an email that does not have any content.", last_response.body
       assert_match "notifier#foo", last_response.body
     end
@@ -456,7 +456,7 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo?part=text%2Fhtml"
+      get "/zoisite/mailers/notifier/foo?part=text%2Fhtml"
       assert_predicate last_response, :not_found?
       assert_match "Email part &#39;text/html&#39; not found in NotifierPreview#foo", h(last_response.body)
     end
@@ -487,7 +487,7 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_equal 200, last_response.status
       assert_match '<dd id="from">Ruby on Zoisite &lt;core@zoisite-rb.org&gt;</dd>', last_response.body
       assert_match '<dd id="to">Andrew White &lt;andyw@pixeltrix.co.uk&gt;</dd>', last_response.body
@@ -495,7 +495,7 @@ module ApplicationTests
       assert_no_match '<dd id="smtp_from">', last_response.body
       assert_no_match '<dd id="smtp_to">', last_response.body
 
-      get "/rails/mailers/download/notifier/foo"
+      get "/zoisite/mailers/download/notifier/foo"
       email = Mail.read_from_string(last_response.body)
       assert_equal "attachment; filename=\"foo.eml\"; filename*=UTF-8''foo.eml", last_response.headers["Content-Disposition"]
       assert_equal 200, last_response.status
@@ -531,7 +531,7 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_equal 200, last_response.status
       assert_match '<dd id="from">from@example.com</dd>', last_response.body
       assert_match '<dd id="smtp_from">smtp-from@example.com</dd>', last_response.body
@@ -568,11 +568,11 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo.html"
+      get "/zoisite/mailers/notifier/foo.html"
       assert_equal 200, last_response.status
       assert_match '<option selected value="part=text%2Fhtml">View as HTML email</option>', last_response.body
 
-      get "/rails/mailers/notifier/foo.txt"
+      get "/zoisite/mailers/notifier/foo.txt"
       assert_equal 200, last_response.status
       assert_match '<option selected value="part=text%2Fplain">View as plain-text email</option>', last_response.body
     end
@@ -612,22 +612,22 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo.html"
+      get "/zoisite/mailers/notifier/foo.html"
       assert_equal 200, last_response.status
       assert_match '<option selected value="locale=en">en', last_response.body
       assert_match '<option  value="locale=ja">ja', last_response.body
 
-      get "/rails/mailers/notifier/foo.html?locale=ja"
+      get "/zoisite/mailers/notifier/foo.html?locale=ja"
       assert_equal 200, last_response.status
       assert_match '<option  value="locale=en">en', last_response.body
       assert_match '<option selected value="locale=ja">ja', last_response.body
 
-      get "/rails/mailers/notifier/foo.txt"
+      get "/zoisite/mailers/notifier/foo.txt"
       assert_equal 200, last_response.status
       assert_match '<option selected value="locale=en">en', last_response.body
       assert_match '<option  value="locale=ja">ja', last_response.body
 
-      get "/rails/mailers/notifier/foo.txt?locale=ja"
+      get "/zoisite/mailers/notifier/foo.txt?locale=ja"
       assert_equal 200, last_response.status
       assert_match '<option  value="locale=en">en', last_response.body
       assert_match '<option selected value="locale=ja">ja', last_response.body
@@ -635,7 +635,7 @@ module ApplicationTests
 
     test "preview does not leak I18n global setting changes" do
       I18n.with_locale(:en) do
-        get "/rails/mailers/notifier/foo.txt?locale=ja"
+        get "/zoisite/mailers/notifier/foo.txt?locale=ja"
         assert_equal :en, I18n.locale
       end
     end
@@ -665,9 +665,9 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers", {}, { "SCRIPT_NAME" => "/my_app" }
-      assert_match '<h3><a href="/my_app/rails/mailers/notifier">Notifier</a></h3>', last_response.body
-      assert_match '<li><a href="/my_app/rails/mailers/notifier/foo">foo</a></li>', last_response.body
+      get "/zoisite/mailers", {}, { "SCRIPT_NAME" => "/my_app" }
+      assert_match '<h3><a href="/my_app/zoisite/mailers/notifier">Notifier</a></h3>', last_response.body
+      assert_match '<li><a href="/my_app/zoisite/mailers/notifier/foo">foo</a></li>', last_response.body
     end
 
     test "mailer preview receives query params" do
@@ -700,23 +700,23 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo.txt"
+      get "/zoisite/mailers/notifier/foo.txt"
       assert_equal 200, last_response.status
       assert_match '<iframe name="messageBody" src="?part=text%2Fplain">', last_response.body
       assert_match '<option selected value="part=text%2Fplain">', last_response.body
       assert_match '<option  value="part=text%2Fhtml">', last_response.body
 
-      get "/rails/mailers/notifier/foo?part=text%2Fplain"
+      get "/zoisite/mailers/notifier/foo?part=text%2Fplain"
       assert_equal 200, last_response.status
       assert_match %r[Hello, World!], last_response.body
 
-      get "/rails/mailers/notifier/foo.html?name=Ruby"
+      get "/zoisite/mailers/notifier/foo.html?name=Ruby"
       assert_equal 200, last_response.status
       assert_match '<iframe name="messageBody" src="?name=Ruby&amp;part=text%2Fhtml">', last_response.body
       assert_match '<option selected value="name=Ruby&amp;part=text%2Fhtml">', last_response.body
       assert_match '<option  value="name=Ruby&amp;part=text%2Fplain">', last_response.body
 
-      get "/rails/mailers/notifier/foo?name=Ruby&part=text%2Fhtml"
+      get "/zoisite/mailers/notifier/foo?name=Ruby&part=text%2Fhtml"
       assert_equal 200, last_response.status
       assert_match %r[<p>Hello, Ruby!</p>], last_response.body
     end
@@ -749,18 +749,18 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_equal 200, last_response.status
       assert_match %[<iframe name="messageBody"], last_response.body
       assert_match %[<dt>Attachments:</dt>], last_response.body
       assert_no_match %[Inline:], last_response.body
       assert_match %[<a download="pixel.png" href="data:application/octet-stream;charset=utf-8;base64,iVBORw0K], last_response.body
 
-      get "/rails/mailers/notifier/foo?part=text/plain"
+      get "/zoisite/mailers/notifier/foo?part=text/plain"
       assert_equal 200, last_response.status
       assert_match %r[Hello, World!], last_response.body
 
-      get "/rails/mailers/download/notifier/foo"
+      get "/zoisite/mailers/download/notifier/foo"
       assert_equal 200, last_response.status
       email = Mail.read_from_string(last_response.body)
       assert_equal 2, email.parts.size
@@ -800,18 +800,18 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_equal 200, last_response.status
       assert_match %[<iframe name="messageBody"], last_response.body
       assert_match %[<dt>Attachments:</dt>], last_response.body
       assert_no_match %[Inline:], last_response.body
       assert_match %[<a download="pixel.png" href="data:application/octet-stream;charset=utf-8;base64,iVBORw0K], last_response.body
 
-      get "/rails/mailers/notifier/foo?part=text/plain"
+      get "/zoisite/mailers/notifier/foo?part=text/plain"
       assert_equal 200, last_response.status
       assert_match %r[Hello, World!], last_response.body
 
-      get "/rails/mailers/notifier/foo?part=text/html"
+      get "/zoisite/mailers/notifier/foo?part=text/html"
       assert_equal 200, last_response.status
       assert_match %r[<p>Hello, World!</p>], last_response.body
     end
@@ -849,22 +849,22 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_equal 200, last_response.status
       assert_match %[<iframe name="messageBody"], last_response.body
       assert_match %[<dt>Attachments:</dt>], last_response.body
       assert_match %r[\(Inline:\s+<a download="pixel.png" href="data:application/octet-stream;charset=utf-8;base64,iVBORw0K], last_response.body
 
-      get "/rails/mailers/notifier/foo?part=text/plain"
+      get "/zoisite/mailers/notifier/foo?part=text/plain"
       assert_equal 200, last_response.status
       assert_match %r[Hello, World!], last_response.body
 
-      get "/rails/mailers/notifier/foo?part=text/html"
+      get "/zoisite/mailers/notifier/foo?part=text/html"
       assert_equal 200, last_response.status
       assert_match %r[<p>Hello, World!</p>], last_response.body
       assert_match %r[src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEWzIioca/JlAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJgggo="], last_response.body
 
-      get "/rails/mailers/download/notifier/foo"
+      get "/zoisite/mailers/download/notifier/foo"
       email = Mail.read_from_string(last_response.body)
       assert_equal "inline; filename=pixel.png", email.attachments.inline["pixel.png"].content_disposition
     end
@@ -913,18 +913,18 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_equal 200, last_response.status
       assert_match %[<iframe name="messageBody"], last_response.body
       assert_match %[<dt>Attachments:</dt>], last_response.body
       assert_no_match %[Inline:], last_response.body
       assert_match %[<a download="message.eml" href="data:application/octet-stream;charset=utf-8;base64,RGF0ZTog], last_response.body
 
-      get "/rails/mailers/notifier/foo?part=text/plain"
+      get "/zoisite/mailers/notifier/foo?part=text/plain"
       assert_equal 200, last_response.status
       assert_match %r[Hello, World!], last_response.body
 
-      get "/rails/mailers/notifier/foo?part=text/html"
+      get "/zoisite/mailers/notifier/foo?part=text/html"
       assert_equal 200, last_response.status
       assert_match %r[<p>Hello, World!</p>], last_response.body
     end
@@ -956,10 +956,10 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo?part=text/plain"
+      get "/zoisite/mailers/notifier/foo?part=text/plain"
       assert_equal 200, last_response.status
 
-      get "/rails/mailers/notifier/foo?part=text/html"
+      get "/zoisite/mailers/notifier/foo?part=text/html"
       assert_equal 200, last_response.status
     end
 
@@ -988,7 +988,7 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_match "<title>Mailer Preview for notifier#foo</title>", last_response.body
     end
 
@@ -1016,7 +1016,7 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_match "<dd id=\"to\">to@example.org</dd>", last_response.body
       assert_match "<dd id=\"cc\">cc@example.com</dd>", last_response.body
       assert_match "<dd id=\"bcc\">bcc@example.com</dd>", last_response.body
@@ -1047,7 +1047,7 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo"
+      get "/zoisite/mailers/notifier/foo"
       assert_match "<dd id=\"date\">Fri, 20 Oct 2023 10:20:30 +0000</dd>", last_response.body
     end
 
@@ -1077,7 +1077,7 @@ module ApplicationTests
       app("development")
 
       travel_to(Time.utc(2023, 10, 20, 10, 20, 30)) do
-        get "/rails/mailers/notifier/foo"
+        get "/zoisite/mailers/notifier/foo"
       end
       assert_match "<dd id=\"date\">Fri, 20 Oct 2023 10:20:30 +0000</dd>", last_response.body
     end
@@ -1113,7 +1113,7 @@ module ApplicationTests
 
       app("development")
 
-      get "/rails/mailers/notifier/foo?part=text%2Fplain"
+      get "/zoisite/mailers/notifier/foo?part=text%2Fplain"
       assert_includes last_response.body, "bar"
     end
 

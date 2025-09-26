@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite/command"
 
 class Zoisite::Command::DevcontainerTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
@@ -14,7 +14,7 @@ class Zoisite::Command::DevcontainerTest < ActiveSupport::TestCase
     require "solid_cable"
     require "solid_queue"
 
-    output = rails "devcontainer"
+    output = zoisite "devcontainer"
 
     assert_match "app_name: app_template", output
     assert_match "database: sqlite3", output
@@ -28,7 +28,7 @@ class Zoisite::Command::DevcontainerTest < ActiveSupport::TestCase
   test "generates dev container for without solid gems" do
     build_app
 
-    output = rails "devcontainer"
+    output = zoisite "devcontainer"
 
     assert_match "redis: true", output
   end
@@ -39,11 +39,11 @@ class Zoisite::Command::DevcontainerTest < ActiveSupport::TestCase
     Dir.chdir(app_path) do
       use_mysql2
 
-      output = rails "devcontainer"
+      output = zoisite "devcontainer"
 
       assert_match "database: mysql", output
 
-      assert_match "ghcr.io/rails/devcontainer/features/mysql-client", read_file(".devcontainer/devcontainer.json")
+      assert_match "ghcr.io/zoisite/devcontainer/features/mysql-client", read_file(".devcontainer/devcontainer.json")
     end
   end
 

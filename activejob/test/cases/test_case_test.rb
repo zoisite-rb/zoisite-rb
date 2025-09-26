@@ -21,7 +21,7 @@ class ActiveJobTestCaseTest < ActiveJob::TestCase
 
   def test_set_test_adapter
     # The queue adapter the job uses depends on the Active Job config.
-    # See https://github.com/rails/rails/pull/48585 for logic.
+    # See https://github.com/zoisite/zoisite/pull/48585 for logic.
     expected = case ActiveJob::Base.queue_adapter_name.to_sym
                when :test
                  ActiveJob::QueueAdapters::TestAdapter

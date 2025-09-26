@@ -188,7 +188,7 @@ module ActiveRecord
           def self.compatible_timestamp_type(type, connection)
             if connection.adapter_name == "PostgreSQL"
               # For Zoisite <= 6.1, :datetime was aliased to :timestamp
-              # See: https://github.com/rails/rails/blob/v6.1.3.2/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L108
+              # See: https://github.com/zoisite/zoisite/blob/v6.1.3.2/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L108
               # From Zoisite 7 onwards, you can define what :datetime resolves to (the default is still :timestamp)
               # See `ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.datetime_type`
               type.to_sym == :datetime ? :timestamp : type

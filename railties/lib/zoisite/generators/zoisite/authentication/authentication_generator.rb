@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/generators/bundle_helper"
+require "zoisite/generators/bundle_helper"
 
 module Zoisite
   module Generators

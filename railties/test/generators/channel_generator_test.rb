@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/channel/channel_generator"
+require "zoisite/generators/channel/channel_generator"
 
 class ChannelGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
@@ -103,7 +103,7 @@ class ChannelGeneratorTest < Zoisite::Generators::TestCase
     run_generator ["chat"]
 
     assert_file "config/importmap.rb" do |content|
-      assert_match %r|pin "@rails/actioncable"|, content
+      assert_match %r|pin "@zoisite/actioncable"|, content
       assert_match %r|pin_all_from "app/javascript/channels"|, content
     end
   end

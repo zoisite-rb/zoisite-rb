@@ -49,7 +49,7 @@ if ActiveRecord::Base.lease_connection.supports_virtual_columns?
       column = VirtualColumn.columns_hash["lower_name"]
       assert_predicate column, :virtual?
       assert_not_predicate column, :virtual_stored?
-      assert_equal "rails", VirtualColumn.take.lower_name
+      assert_equal "zoisite", VirtualColumn.take.lower_name
     end
 
     def test_implicit_virtual_column

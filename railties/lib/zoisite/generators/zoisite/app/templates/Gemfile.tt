@@ -5,7 +5,7 @@ source "https://rubygems.org"
 <% end -%>
 <% unless options.minimal? -%>
 
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+# Use Active Model has_secure_password [https://guides.rubyonzoisite.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 <% end -%>
 
@@ -41,7 +41,7 @@ gem "thruster", require: false
 <% end -%>
 <% unless skip_active_storage? -%>
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# Use Active Storage variants [https://guides.rubyonzoisite.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 <% end -%>
 <%- if options.api? -%>
@@ -52,7 +52,7 @@ gem "image_processing", "~> 1.2"
 <% if RUBY_ENGINE == "ruby" -%>
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  # See https://guides.rubyonzoisite.org/debugging_zoisite_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 <%- unless options.skip_bundler_audit? -%>
 
@@ -66,22 +66,22 @@ group :development, :test do
 <%- end -%>
 <%- unless options.skip_rubocop? -%>
 
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
+  # Omakase Ruby styling [https://github.com/zoisite/rubocop-zoisite-omakase/]
+  gem "rubocop-zoisite-omakase", require: false
 <%- end -%>
 end
 <% end -%>
 <%- unless options.api? || options.skip_dev_gems? -%>
 
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
+  # Use console on exceptions pages [https://github.com/zoisite/web-console]
   gem "web-console"
 end
 <%- end -%>
 <%- if depends_on_system_test? -%>
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  # Use system testing [https://guides.rubyonzoisite.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
 end

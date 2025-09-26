@@ -2,7 +2,7 @@
 
 # :markup: markdown
 
-require "rails-html-sanitizer"
+require "zoisite-html-sanitizer"
 
 module ActionText
   module ContentHelper

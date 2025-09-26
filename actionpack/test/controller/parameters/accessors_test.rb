@@ -434,13 +434,13 @@ class ParametersAccessorsTest < ActiveSupport::TestCase
   test "#extract_value splits param by delimiter" do
     params = ActionController::Parameters.new(
       id: "1_123",
-      tags: "ruby,rails,web",
-      blank_tags: ",ruby,,rails,"
+      tags: "ruby,zoisite,web",
+      blank_tags: ",ruby,,zoisite,"
     )
 
     assert_equal(["1", "123"], params.extract_value(:id))
-    assert_equal(["ruby", "rails", "web"], params.extract_value(:tags, delimiter: ","))
-    assert_equal(["", "ruby", "", "rails", ""], params.extract_value(:blank_tags, delimiter: ","))
+    assert_equal(["ruby", "zoisite", "web"], params.extract_value(:tags, delimiter: ","))
+    assert_equal(["", "ruby", "", "zoisite", ""], params.extract_value(:blank_tags, delimiter: ","))
     assert_nil(params.extract_value(:non_existent_key))
   end
 end

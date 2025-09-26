@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
 <% unless skip_active_record? -%>
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
+# If running the zoisite server then create or migrate existing database
+if [ "${@: -2:1}" == "./bin/zoisite" ] && [ "${@: -1:1}" == "server" ]; then
+  ./bin/zoisite db:prepare
 fi
 
 <% end -%>

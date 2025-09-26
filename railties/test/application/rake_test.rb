@@ -26,7 +26,7 @@ module ApplicationTests
     end
 
     test "framework tasks are evaluated only once" do
-      assert_equal ["Zoisite version"], rails("about").scan(/^Zoisite version/)
+      assert_equal ["Zoisite version"], zoisite("about").scan(/^Zoisite version/)
     end
 
     test "tasks can invoke framework tasks via Zoisite::Command.invoke" do
@@ -38,16 +38,16 @@ module ApplicationTests
         end
       RUBY
 
-      assert_match(/^Zoisite version/, rails("invoke_about"))
+      assert_match(/^Zoisite version/, zoisite("invoke_about"))
     end
 
     test "help arguments describe rake tasks" do
       task_description = <<~DESC
-          rails db:migrate
+          zoisite db:migrate
               Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog).
       DESC
 
-      assert_match task_description, rails("db:migrate", "-h")
+      assert_match task_description, zoisite("db:migrate", "-h")
     end
 
     test "task backtrace is silenced" do
@@ -59,7 +59,7 @@ module ApplicationTests
         end
       RUBY
 
-      backtrace = rails("boom", allow_failure: true).lines.grep(/:\d+:in /)
+      backtrace = zoisite("boom", allow_failure: true).lines.grep(/:\d+:in /)
       app_lines, framework_lines = backtrace.partition { |line| line.start_with?(app_path) }
 
       assert_not_empty app_lines
@@ -67,20 +67,20 @@ module ApplicationTests
     end
 
     test "task is protected when previous migration was production" do
-      with_rails_env "production" do
-        rails "generate", "model", "product", "name:string"
-        rails "db:create", "db:migrate"
-        output = rails("db:test:prepare", allow_failure: true)
+      with_zoisite_env "production" do
+        zoisite "generate", "model", "product", "name:string"
+        zoisite "db:create", "db:migrate"
+        output = zoisite("db:test:prepare", allow_failure: true)
 
         assert_match(/ActiveRecord::ProtectedEnvironmentError/, output)
       end
     end
 
     def test_not_protected_when_previous_migration_was_not_production
-      with_rails_env "test" do
-        rails "generate", "model", "product", "name:string"
-        rails "db:create", "db:migrate"
-        output = rails("db:test:prepare", "test")
+      with_zoisite_env "test" do
+        zoisite "generate", "model", "product", "name:string"
+        zoisite "db:create", "db:migrate"
+        output = zoisite("db:test:prepare", "test")
 
         assert_no_match(/ActiveRecord::ProtectedEnvironmentError/, output)
       end
@@ -97,7 +97,7 @@ module ApplicationTests
         Zoisite.application.initialize!
       RUBY
 
-      assert_match("SuperMiddleware", rails("middleware"))
+      assert_match("SuperMiddleware", zoisite("middleware"))
     end
 
     def test_initializers_are_executed_in_rake_tasks
@@ -112,7 +112,7 @@ module ApplicationTests
         end
       RUBY
 
-      output = rails("do_nothing")
+      output = zoisite("do_nothing")
       assert_match "Doing something...", output
     end
 
@@ -133,7 +133,7 @@ module ApplicationTests
         end
       RUBY
 
-      output = rails("do_nothing")
+      output = zoisite("do_nothing")
       assert_match "Hello world", output
     end
 
@@ -154,7 +154,7 @@ module ApplicationTests
         raise 'should not be pre-required for rake even eager_load=true'
       RUBY
 
-      output = rails("do_nothing", "RAILS_ENV=production")
+      output = zoisite("do_nothing", "RAILS_ENV=production")
       assert_match "There is nothing", output
     end
 
@@ -177,12 +177,12 @@ module ApplicationTests
         end
       RUBY
 
-      output = Dir.chdir(app_path) { `bin/rails do_something RAILS_ENV=production` }
+      output = Dir.chdir(app_path) { `bin/zoisite do_something RAILS_ENV=production` }
       assert_equal "Answer: 42\n", output.lines.last
     end
 
     def test_code_statistics
-      assert_match(/Code LOC: \d+\s+Test LOC: \d+\s+ Code to Test Ratio: 1:\w+/, rails("stats"))
+      assert_match(/Code LOC: \d+\s+Test LOC: \d+\s+ Code to Test Ratio: 1:\w+/, zoisite("stats"))
     end
 
     def test_reload_routes
@@ -201,41 +201,41 @@ module ApplicationTests
         end
       RUBY
 
-      output = Dir.chdir(app_path) { `bin/rails do_something` }
+      output = Dir.chdir(app_path) { `bin/zoisite do_something` }
       assert_includes(output.lines.first, "my_great_route")
     end
 
     def test_loading_specific_fixtures
-      rails "generate", "model", "user", "username:string", "password:string"
-      rails "generate", "model", "product", "name:string"
-      rails "db:migrate"
+      zoisite "generate", "model", "user", "username:string", "password:string"
+      zoisite "generate", "model", "product", "name:string"
+      zoisite "db:migrate"
 
-      require "#{rails_root}/config/environment"
+      require "#{zoisite_root}/config/environment"
 
       # loading a specific fixture
-      rails "db:fixtures:load", "FIXTURES=products"
+      zoisite "db:fixtures:load", "FIXTURES=products"
 
       assert_equal 2, Product.count
       assert_equal 0, User.count
     end
 
     def test_loading_only_yml_fixtures
-      rails "db:migrate"
+      zoisite "db:migrate"
 
       app_file "test/fixtures/products.csv", ""
 
-      require "#{rails_root}/config/environment"
+      require "#{zoisite_root}/config/environment"
       assert_nothing_raised do
-        rails "db:fixtures:load"
+        zoisite "db:fixtures:load"
       end
     end
 
     def test_scaffold_tests_pass_by_default
-      rails "generate", "scaffold", "user", "username:string", "password:string"
-      with_rails_env("test") do
-        rails("db:migrate")
+      zoisite "generate", "scaffold", "user", "username:string", "password:string"
+      with_zoisite_env("test") do
+        zoisite("db:migrate")
       end
-      output = rails("test")
+      output = zoisite("test")
 
       assert_match(/7 runs, 11 assertions, 0 failures, 0 errors/, output)
       assert_no_match(/Errors running/, output)
@@ -251,22 +251,22 @@ module ApplicationTests
         end
       RUBY
 
-      rails "generate", "scaffold", "user", "username:string", "password:string"
-      with_rails_env("test") { rails("db:migrate") }
-      output = rails("test")
+      zoisite "generate", "scaffold", "user", "username:string", "password:string"
+      with_zoisite_env("test") { zoisite("db:migrate") }
+      output = zoisite("test")
 
       assert_match(/5 runs, 9 assertions, 0 failures, 0 errors/, output)
       assert_no_match(/Errors running/, output)
     end
 
     def test_scaffold_with_references_columns_tests_pass_by_default
-      rails "generate", "model", "Product"
-      rails "generate", "model", "Cart"
-      rails "generate", "scaffold", "LineItems", "product:references", "cart:belongs_to"
-      with_rails_env("test") do
-        rails("db:migrate")
+      zoisite "generate", "model", "Product"
+      zoisite "generate", "model", "Cart"
+      zoisite "generate", "scaffold", "LineItems", "product:references", "cart:belongs_to"
+      with_zoisite_env("test") do
+        zoisite("db:migrate")
       end
-      output = rails("test")
+      output = zoisite("test")
 
       assert_match(/7 runs, 11 assertions, 0 failures, 0 errors/, output)
       assert_no_match(/Errors running/, output)
@@ -274,41 +274,41 @@ module ApplicationTests
 
     def test_db_test_prepare_when_using_sql_format
       add_to_config "config.active_record.schema_format = :sql"
-      rails "generate", "scaffold", "user", "username:string"
-      rails "db:migrate"
-      output = rails("db:test:prepare", "--trace")
+      zoisite "generate", "scaffold", "user", "username:string"
+      zoisite "db:migrate"
+      output = zoisite("db:test:prepare", "--trace")
       assert_match(/Execute db:test:load_schema/, output)
     end
 
     def test_rake_dump_structure_should_be_called_twice_when_migrate_redo
       add_to_config "config.active_record.schema_format = :sql"
 
-      rails "g", "model", "post", "title:string"
-      output = rails("db:migrate:redo", "--trace")
+      zoisite "g", "model", "post", "title:string"
+      output = zoisite("db:migrate:redo", "--trace")
 
       # expect only Invoke db:structure:dump (first_time)
       assert_no_match(/^\*\* Invoke db:structure:dump\s+$/, output)
     end
 
     def test_rake_dump_schema_cache
-      rails "generate", "model", "post", "title:string"
-      rails "generate", "model", "product", "name:string"
-      rails "db:migrate", "db:schema:cache:dump"
+      zoisite "generate", "model", "post", "title:string"
+      zoisite "generate", "model", "product", "name:string"
+      zoisite "db:migrate", "db:schema:cache:dump"
       assert File.exist?(File.join(app_path, "db", "schema_cache.yml"))
     end
 
     def test_rake_clear_schema_cache
-      rails "db:schema:cache:dump", "db:schema:cache:clear"
+      zoisite "db:schema:cache:dump", "db:schema:cache:clear"
       assert_not File.exist?(File.join(app_path, "db", "schema_cache.yml"))
     end
 
     def test_copy_templates
-      rails "app:templates:copy"
+      zoisite "app:templates:copy"
       %w(controller mailer scaffold).each do |dir|
         assert File.exist?(File.join(app_path, "lib", "templates", "erb", dir))
       end
       %w(controller helper scaffold_controller).each do |dir|
-        assert File.exist?(File.join(app_path, "lib", "templates", "rails", dir))
+        assert File.exist?(File.join(app_path, "lib", "templates", "zoisite", dir))
       end
     end
 
@@ -316,7 +316,7 @@ module ApplicationTests
       app_file "config/initializers/dummy.rb", "puts 'Hello, World!'"
       app_file "template.rb", ""
 
-      output = rails("app:template", "LOCATION=template.rb")
+      output = zoisite("app:template", "LOCATION=template.rb")
       assert_match(/Hello, World!/, output)
     end
   end

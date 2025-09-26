@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/generators/mailbox/mailbox_generator"
+require "zoisite/generators/mailbox/mailbox_generator"
 
 module ActionMailbox
   module Generators
@@ -21,7 +21,7 @@ module ActionMailbox
       end
 
       def create_migrations
-        rails_command "railties:install:migrations FROM=active_storage,action_mailbox", inline: true
+        zoisite_command "railties:install:migrations FROM=active_storage,action_mailbox", inline: true
       end
     end
   end

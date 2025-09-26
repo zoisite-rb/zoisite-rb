@@ -20,7 +20,7 @@ module ActionDispatch
       def test_dashes
         get "/foo-bar-baz", to: "foo#bar"
 
-        env = rails_env "PATH_INFO" => "/foo-bar-baz"
+        env = zoisite_env "PATH_INFO" => "/foo-bar-baz"
         called = false
         router.recognize(env) do |r, params|
           called = true
@@ -32,7 +32,7 @@ module ActionDispatch
         get "/ほげ", to: "foo#bar"
 
         # match the escaped version of /ほげ
-        env = rails_env "PATH_INFO" => "/%E3%81%BB%E3%81%92"
+        env = zoisite_env "PATH_INFO" => "/%E3%81%BB%E3%81%92"
         called = false
         router.recognize(env) do |r, params|
           called = true
@@ -44,7 +44,7 @@ module ActionDispatch
         get "/whois/:domain", domain: /\w+\.[\w.]+/, to: "foo#bar"
         get "/whois/:id(.:format)", to: "foo#baz"
 
-        env = rails_env "PATH_INFO" => "/whois/example.com"
+        env = zoisite_env "PATH_INFO" => "/whois/example.com"
 
         list = []
         router.recognize(env) do |r, params|
@@ -112,7 +112,7 @@ module ActionDispatch
 
       def test_x_cascade
         get "/messages(.:format)", to: "foo#bar"
-        resp = router.serve(rails_env("REQUEST_METHOD" => "GET", "PATH_INFO" => "/lol"))
+        resp = router.serve(zoisite_env("REQUEST_METHOD" => "GET", "PATH_INFO" => "/lol"))
         assert_equal ["Not Found"], resp.last
         assert_equal "pass", resp[1][Constants::X_CASCADE]
         assert_equal 404, resp.first
@@ -131,12 +131,12 @@ module ActionDispatch
       def test_defaults_merge_correctly
         get "/foo(/:id)", to: "foo#bar", id: nil
 
-        env = rails_env "PATH_INFO" => "/foo/10"
+        env = zoisite_env "PATH_INFO" => "/foo/10"
         router.recognize(env) do |r, params|
           assert_equal({ id: "10", controller: "foo", action: "bar" }, params)
         end
 
-        env = rails_env "PATH_INFO" => "/foo"
+        env = zoisite_env "PATH_INFO" => "/foo"
         router.recognize(env) do |r, params|
           assert_equal({ id: nil, controller: "foo", action: "bar" }, params)
         end
@@ -145,7 +145,7 @@ module ActionDispatch
       def test_recognize_with_unbound_regexp
         get "/foo", anchor: false, to: "foo#bar"
 
-        env = rails_env "PATH_INFO" => "/foo/bar"
+        env = zoisite_env "PATH_INFO" => "/foo/bar"
 
         recognized = false
 
@@ -162,7 +162,7 @@ module ActionDispatch
       def test_bound_regexp_keeps_path_info
         get "/foo", to: "foo#bar"
 
-        env = rails_env "PATH_INFO" => "/foo"
+        env = zoisite_env "PATH_INFO" => "/foo"
 
         before = env.env["SCRIPT_NAME"]
 
@@ -181,7 +181,7 @@ module ActionDispatch
         ].each do |path|
           get path, to: "foo#bar"
         end
-        env = rails_env "PATH_INFO" => "/messages/unknown/path"
+        env = zoisite_env "PATH_INFO" => "/messages/unknown/path"
         yielded = false
 
         router.recognize(env) do |*whatever|
@@ -330,7 +330,7 @@ module ActionDispatch
           get "/:controller(/:action(/:id))", to: "foo#bar"
           route = @routes.first
 
-          env = rails_env "PATH_INFO" => request_path
+          env = zoisite_env "PATH_INFO" => request_path
           called = false
 
           router.recognize(env) do |r, params|
@@ -350,7 +350,7 @@ module ActionDispatch
         define_method("test_recognize_#{name}") do
           get "/:segment/*splat", to: "foo#bar"
 
-          env = rails_env "PATH_INFO" => request_path
+          env = zoisite_env "PATH_INFO" => request_path
           called = false
           route = @routes.first
 
@@ -368,7 +368,7 @@ module ActionDispatch
         get "/:controller(/:action(/:id))", controller: /.+?/
         route = @routes.first
 
-        env = rails_env "PATH_INFO" => "/admin/users/show/10"
+        env = zoisite_env "PATH_INFO" => "/admin/users/show/10"
         called   = false
         expected = {
           controller: "admin/users",
@@ -388,7 +388,7 @@ module ActionDispatch
         get "/books(/:action(.:format))", controller: "books"
         route = @routes.first
 
-        env = rails_env "PATH_INFO" => "/books/list.rss"
+        env = zoisite_env "PATH_INFO" => "/books/list.rss"
         expected = { controller: "books", action: "list", format: "rss" }
         called = false
         router.recognize(env) do |r, params|
@@ -403,7 +403,7 @@ module ActionDispatch
       def test_recognize_head_route
         match "/books(/:action(.:format))", via: "head", to: "foo#bar"
 
-        env = rails_env(
+        env = zoisite_env(
           "PATH_INFO" => "/books/list.rss",
           "REQUEST_METHOD" => "HEAD"
         )
@@ -419,7 +419,7 @@ module ActionDispatch
       def test_recognize_head_request_as_get_route
         get "/books(/:action(.:format))", to: "foo#bar"
 
-        env = rails_env "PATH_INFO" => "/books/list.rss",
+        env = zoisite_env "PATH_INFO" => "/books/list.rss",
                         "REQUEST_METHOD" => "HEAD"
 
         called = false
@@ -433,7 +433,7 @@ module ActionDispatch
       def test_recognize_cares_about_get_verbs
         match "/books(/:action(.:format))", to: "foo#bar", via: :get
 
-        env = rails_env "PATH_INFO" => "/books/list.rss",
+        env = zoisite_env "PATH_INFO" => "/books/list.rss",
                         "REQUEST_METHOD" => "POST"
 
         called = false
@@ -447,7 +447,7 @@ module ActionDispatch
       def test_recognize_cares_about_post_verbs
         match "/books(/:action(.:format))", to: "foo#bar", via: :post
 
-        env = rails_env "PATH_INFO" => "/books/list.rss",
+        env = zoisite_env "PATH_INFO" => "/books/list.rss",
                         "REQUEST_METHOD" => "POST"
 
         called = false
@@ -462,7 +462,7 @@ module ActionDispatch
         match "/books(/:action(.:format))", to: "foo#bar", via: [:post, :get]
 
         %w( POST GET ).each do |verb|
-          env = rails_env "PATH_INFO" => "/books/list.rss",
+          env = zoisite_env "PATH_INFO" => "/books/list.rss",
             "REQUEST_METHOD" => verb
 
           called = false
@@ -473,7 +473,7 @@ module ActionDispatch
           assert called
         end
 
-        env = rails_env "PATH_INFO" => "/books/list.rss",
+        env = zoisite_env "PATH_INFO" => "/books/list.rss",
           "REQUEST_METHOD" => "PUT"
 
         called = false
@@ -516,7 +516,7 @@ module ActionDispatch
           end
         end
 
-        def rails_env(env, klass = ActionDispatch::Request)
+        def zoisite_env(env, klass = ActionDispatch::Request)
           klass.new(rack_env(env))
         end
 

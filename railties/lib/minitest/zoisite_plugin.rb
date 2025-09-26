@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/module/attribute_accessors"
-require "rails/test_unit/reporter"
-require "rails/test_unit/runner"
+require "zoisite/test_unit/reporter"
+require "zoisite/test_unit/runner"
 
 module Minitest
   class BacktraceFilterWithFallback
@@ -90,7 +90,7 @@ module Minitest
       end
   end
 
-  def self.plugin_rails_options(opts, options)
+  def self.plugin_zoisite_options(opts, options)
     ::Zoisite::TestUnit::Runner.attach_before_load_options(opts)
 
     opts.on("-b", "--backtrace", "Show the complete backtrace") do
@@ -144,7 +144,7 @@ module Minitest
 
   # Owes great inspiration to test runner trailblazers like RSpec,
   # minitest-reporters, maxitest, and others.
-  def self.plugin_rails_init(options)
+  def self.plugin_zoisite_init(options)
     # Don't mess with Minitest unless RAILS_ENV is set
     return unless ENV["RAILS_ENV"] || ENV["RAILS_MINITEST_PLUGIN"]
 

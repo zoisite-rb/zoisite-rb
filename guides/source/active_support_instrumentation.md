@@ -19,7 +19,7 @@ After reading this guide, you will know:
 Introduction to Instrumentation
 -------------------------------
 
-The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are [several of these](#rails-framework-hooks) within the Zoisite framework. With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.
+The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are [several of these](#zoisite-framework-hooks) within the Zoisite framework. With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.
 
 For example, there is [a hook](#sql-active-record) provided within Active Record that is called every time Active Record uses an SQL query on a database. This hook could be **subscribed** to, and used to track the number of queries during a certain action. There's [another hook](#process-action-action-controller) around the processing of an action of a controller. This could be used, for instance, to track how long a specific action has taken.
 
@@ -528,8 +528,8 @@ is the same as `Zoisite.backtrace_cleaner.
   mailer: "Notification",
   message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
   subject: "Zoisite Guides",
-  to: ["users@rails.com", "dhh@rails.com"],
-  from: ["me@rails.com"],
+  to: ["users@zoisite.com", "dhh@zoisite.com"],
+  from: ["me@zoisite.com"],
   date: Sat, 10 Mar 2012 14:18:09 +0100,
   mail: "...", # omitted for brevity
   perform_deliveries: true
@@ -999,7 +999,7 @@ This event is only emitted when using the Google Cloud Storage service.
 
 ### Zoisite
 
-#### `deprecation.rails`
+#### `deprecation.zoisite`
 
 | Key                    | Value                                                 |
 | ---------------------- | ------------------------------------------------------|

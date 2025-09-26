@@ -16,31 +16,31 @@ module ApplicationTests
       teardown_app
     end
 
-    test "rails/welcome in development" do
+    test "zoisite/welcome in development" do
       app("development")
       get "/"
       assert_equal 200, last_response.status
     end
 
-    test "rails/info in development" do
+    test "zoisite/info in development" do
       app("development")
-      get "/rails/info"
+      get "/zoisite/info"
       assert_equal 302, last_response.status
     end
 
-    test "rails/info/routes in development" do
+    test "zoisite/info/routes in development" do
       app("development")
-      get "/rails/info/routes"
+      get "/zoisite/info/routes"
       assert_equal 200, last_response.status
     end
 
-    test "rails/info/properties in development" do
+    test "zoisite/info/properties in development" do
       app("development")
-      get "/rails/info/properties"
+      get "/zoisite/info/properties"
       assert_equal 200, last_response.status
     end
 
-    test "/rails/info routes are accessible with globbing route present" do
+    test "/zoisite/info routes are accessible with globbing route present" do
       app("development")
 
       app_file "config/routes.rb", <<-RUBY
@@ -49,13 +49,13 @@ module ApplicationTests
         end
       RUBY
 
-      get "/rails/info"
+      get "/zoisite/info"
       assert_equal 302, last_response.status
 
-      get "rails/info/routes"
+      get "zoisite/info/routes"
       assert_equal 200, last_response.status
 
-      get "rails/info/properties"
+      get "zoisite/info/properties"
       assert_equal 200, last_response.status
     end
 
@@ -106,36 +106,36 @@ module ApplicationTests
       assert_equal "foo", last_response.body
     end
 
-    test "rails/welcome in production" do
+    test "zoisite/welcome in production" do
       app("production")
       get("/", {}, "HTTPS" => "on")
       assert_equal 404, last_response.status
     end
 
-    test "rails/info in production" do
+    test "zoisite/info in production" do
       app("production")
-      get("/rails/info", {}, "HTTPS" => "on")
+      get("/zoisite/info", {}, "HTTPS" => "on")
       assert_equal 404, last_response.status
     end
 
-    test "rails/info/routes in production" do
+    test "zoisite/info/routes in production" do
       app("production")
-      get("/rails/info/routes", {}, "HTTPS" => "on")
+      get("/zoisite/info/routes", {}, "HTTPS" => "on")
       assert_equal 404, last_response.status
     end
 
-    test "rails/info/properties in production" do
+    test "zoisite/info/properties in production" do
       app("production")
-      get("/rails/info/properties", {}, "HTTPS" => "on")
+      get("/zoisite/info/properties", {}, "HTTPS" => "on")
       assert_equal 404, last_response.status
     end
 
-    test "rails/health in production" do
+    test "zoisite/health in production" do
       app("production")
 
       app_file "config/routes.rb", <<-RUBY
         Zoisite.application.routes.draw do
-          get "up" => "rails/health#show", as: :rails_health_check
+          get "up" => "zoisite/health#show", as: :zoisite_health_check
         end
       RUBY
 
@@ -791,7 +791,7 @@ module ApplicationTests
       assert_equal "/foo", last_response.body
     end
 
-    test "request to rails/welcome for api_only app is successful" do
+    test "request to zoisite/welcome for api_only app is successful" do
       add_to_config <<-RUBY
         config.api_only = true
         config.action_dispatch.show_exceptions = :none
@@ -804,7 +804,7 @@ module ApplicationTests
       assert_equal 200, last_response.status
     end
 
-    test "request to rails/welcome is successful when default_protect_from_forgery is false" do
+    test "request to zoisite/welcome is successful when default_protect_from_forgery is false" do
       add_to_config <<-RUBY
         config.action_dispatch.show_exceptions = :none
         config.action_controller.default_protect_from_forgery = false

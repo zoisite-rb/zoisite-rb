@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/resource/resource_generator"
+require "zoisite/generators/zoisite/resource/resource_generator"
 
 class ResourceGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper

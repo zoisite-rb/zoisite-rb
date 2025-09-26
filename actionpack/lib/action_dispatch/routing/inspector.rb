@@ -76,7 +76,7 @@ module ActionDispatch
 
     ##
     # This class is just used for displaying route information when someone
-    # executes `bin/rails routes` or looks at the RoutingError page. People should
+    # executes `bin/zoisite routes` or looks at the RoutingError page. People should
     # not use this class.
     class RoutesInspector # :nodoc:
       def initialize(routes)

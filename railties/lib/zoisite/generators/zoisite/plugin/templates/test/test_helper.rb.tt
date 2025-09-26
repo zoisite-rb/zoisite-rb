@@ -8,7 +8,7 @@ ActiveRecord::Migrator.migrations_paths = [ File.expand_path("../<%= options[:du
 ActiveRecord::Migrator.migrations_paths << File.expand_path("../db/migrate", __dir__)
 <% end -%>
 <% end -%>
-require "rails/test_help"
+require "zoisite/test_help"
 
 <% unless options[:skip_active_record] -%>
 # Load fixtures from the engine

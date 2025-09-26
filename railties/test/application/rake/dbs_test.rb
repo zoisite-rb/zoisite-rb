@@ -29,12 +29,12 @@ module ApplicationTests
 
       def db_create_and_drop(expected_database, environment_loaded: true)
         Dir.chdir(app_path) do
-          output = rails("db:create")
+          output = zoisite("db:create")
           assert_match(/Created database/, output)
           assert File.exist?(expected_database)
           yield if block_given?
           assert_equal expected_database, ActiveRecord::Base.connection_db_config.database if environment_loaded
-          output = rails("db:drop")
+          output = zoisite("db:drop")
           assert_match(/Dropped database/, output)
           assert_not File.exist?(expected_database)
         end
@@ -66,7 +66,7 @@ module ApplicationTests
             database: storage/development.sqlite3
         YAML
 
-        with_rails_env "development" do
+        with_zoisite_env "development" do
           db_create_and_drop database_url_db_name do
             assert_not File.exist?("#{app_path}/storage/test.sqlite3")
             assert_not File.exist?("#{app_path}/storage/development.sqlite3")
@@ -217,15 +217,15 @@ module ApplicationTests
       def with_database_existing
         Dir.chdir(app_path) do
           set_database_url
-          rails "db:create"
+          zoisite "db:create"
           yield
-          rails "db:drop"
+          zoisite "db:drop"
         end
       end
 
       test "db:create failure because database exists" do
         with_database_existing do
-          output = rails("db:create")
+          output = zoisite("db:create")
           assert_match(/already exists/, output)
         end
       end
@@ -242,7 +242,7 @@ module ApplicationTests
       unless Process.uid.zero?
         test "db:create failure because bad permissions" do
           with_bad_permissions do
-            output = rails("db:create", allow_failure: true)
+            output = zoisite("db:create", allow_failure: true)
             assert_match("Couldn't create '#{database_url_db_name}' database. Please check your configuration.", output)
             assert_equal 1, $?.exitstatus
           end
@@ -251,7 +251,7 @@ module ApplicationTests
         test "db:drop failure because bad permissions" do
           with_database_existing do
             with_bad_permissions do
-              output = rails("db:drop", allow_failure: true)
+              output = zoisite("db:drop", allow_failure: true)
               assert_match(/Couldn't drop/, output)
               assert_equal 1, $?.exitstatus
             end
@@ -263,32 +263,32 @@ module ApplicationTests
         use_postgresql
 
         begin
-          rails %w(db:create db:migrate db:schema:cache:dump)
+          zoisite %w(db:create db:migrate db:schema:cache:dump)
 
-          rails "db:drop"
-          rails "db:create"
+          zoisite "db:drop"
+          zoisite "db:create"
           assert_equal 0, $?.exitstatus
         ensure
-          rails "db:drop" rescue nil
+          zoisite "db:drop" rescue nil
         end
       end
 
       test "db:drop failure because database does not exist" do
-        output = rails("db:drop:_unsafe", "--trace")
+        output = zoisite("db:drop:_unsafe", "--trace")
         assert_match(/does not exist/, output)
       end
 
       test "db:truncate_all truncates all non-internal tables" do
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
           require "#{app_path}/config/environment"
           Book.create!(title: "Remote")
           assert_equal 1, Book.count
           schema_migrations = ActiveRecord::Base.lease_connection.execute("SELECT * from \"#{ActiveRecord::Base.schema_migrations_table_name}\"")
           internal_metadata = ActiveRecord::Base.lease_connection.execute("SELECT * from \"#{ActiveRecord::Base.internal_metadata_table_name}\"")
 
-          rails "db:truncate_all"
+          zoisite "db:truncate_all"
 
           assert_equal(
             schema_migrations,
@@ -303,10 +303,10 @@ module ApplicationTests
       end
 
       test "db:truncate_all does not truncate any tables when environment is protected" do
-        with_rails_env "production" do
+        with_zoisite_env "production" do
           Dir.chdir(app_path) do
-            rails "generate", "model", "book", "title:string"
-            rails "db:migrate"
+            zoisite "generate", "model", "book", "title:string"
+            zoisite "db:migrate"
             require "#{app_path}/config/environment"
             Book.create!(title: "Remote")
             assert_equal 1, Book.count
@@ -314,7 +314,7 @@ module ApplicationTests
             internal_metadata = ActiveRecord::Base.lease_connection.execute("SELECT * from \"#{ActiveRecord::Base.internal_metadata_table_name}\"")
             books = ActiveRecord::Base.lease_connection.execute("SELECT * from \"books\"")
 
-            output = rails("db:truncate_all", allow_failure: true)
+            output = zoisite("db:truncate_all", allow_failure: true)
             assert_match(/ActiveRecord::ProtectedEnvironmentError/, output)
 
             assert_equal(
@@ -332,9 +332,9 @@ module ApplicationTests
       end
 
       def db_migrate_and_status(expected_database)
-        rails "generate", "model", "book", "title:string"
-        rails "db:migrate"
-        output = rails("db:migrate:status")
+        zoisite "generate", "model", "book", "title:string"
+        zoisite "db:migrate"
+        output = zoisite("db:migrate:status")
         assert_match(%r{database:\s+\S*#{Regexp.escape(expected_database)}}, output)
         assert_match(/up\s+\d{14}\s+Create books/, output)
       end
@@ -358,8 +358,8 @@ module ApplicationTests
           end
         RUBY
 
-        rails "db:migrate"
-        list_tables = lambda { rails("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
+        zoisite "db:migrate"
+        list_tables = lambda { zoisite("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
 
         assert_equal "[\"ar_internal_metadata\", \"comments\", \"schema_migrations\"]", list_tables[]
       end
@@ -387,9 +387,9 @@ module ApplicationTests
           end
         RUBY
 
-        rails "db:migrate"
-        primary_tables = lambda { rails("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
-        queue_tables = lambda { rails("runner", "p ActiveRecord::Base.connects_to(database: { writing: :queue }).first.lease_connection.tables.sort").strip }
+        zoisite "db:migrate"
+        primary_tables = lambda { zoisite("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
+        queue_tables = lambda { zoisite("runner", "p ActiveRecord::Base.connects_to(database: { writing: :queue }).first.lease_connection.tables.sort").strip }
 
         assert_equal "[\"ar_internal_metadata\", \"comments\", \"schema_migrations\"]", primary_tables[]
         assert_equal "[\"ar_internal_metadata\", \"executions\", \"schema_migrations\"]", queue_tables[]
@@ -401,14 +401,14 @@ module ApplicationTests
              create_table(:comments) {}
           end
         MIGRATION
-        rails("db:migrate")
+        zoisite("db:migrate")
         app_file "db/migrate/01_a_migration.rb", <<-MIGRATION
           class AMigration < ActiveRecord::Migration::Current
              create_table(:comments) { |t| t.string :title }
           end
         MIGRATION
 
-        rails("db:migrate:reset")
+        zoisite("db:migrate:reset")
 
         assert File.read("#{app_path}/db/schema.rb").include?("title")
       end
@@ -416,8 +416,8 @@ module ApplicationTests
       def db_schema_dump
         Dir.chdir(app_path) do
           args = ["generate", "model", "book", "title:string"]
-          rails args
-          rails "db:migrate", "db:schema:dump"
+          zoisite args
+          zoisite "db:migrate", "db:schema:dump"
           assert_match(/create_table "books"/, File.read("db/schema.rb"))
         end
       end
@@ -425,8 +425,8 @@ module ApplicationTests
       def db_schema_sql_dump
         Dir.chdir(app_path) do
           args = ["generate", "model", "book", "title:string"]
-          rails args
-          rails "db:migrate", "db:schema:dump"
+          zoisite args
+          zoisite "db:migrate", "db:schema:dump"
           assert_match(/CREATE TABLE/, File.read("db/structure.sql"))
         end
       end
@@ -464,10 +464,10 @@ module ApplicationTests
 
       def db_schema_cache_dump
         Dir.chdir(app_path) do
-          rails "db:schema:cache:dump"
+          zoisite "db:schema:cache:dump"
 
-          cache_size = lambda { rails("runner", "p ActiveRecord::Base.schema_cache.size").strip }
-          cache_tables = lambda { rails("runner", "p ActiveRecord::Base.schema_cache.columns('books')").strip }
+          cache_size = lambda { zoisite("runner", "p ActiveRecord::Base.schema_cache.size").strip }
+          cache_tables = lambda { zoisite("runner", "p ActiveRecord::Base.schema_cache.columns('books')").strip }
 
           assert_equal "12", cache_size[]
           assert_includes cache_tables[], "id", "expected cache_tables to include an id entry"
@@ -531,31 +531,31 @@ module ApplicationTests
       test "db:schema:cache:dump dumps virtual columns" do
         Dir.chdir(app_path) do
           use_postgresql
-          rails "db:drop", "db:create"
+          zoisite "db:drop", "db:create"
 
-          rails "runner", <<~RUBY
+          zoisite "runner", <<~RUBY
             ActiveRecord::Base.lease_connection.create_table(:books) do |t|
               t.integer :pages
               t.virtual :pages_plus_1, type: :integer, as: "pages + 1", stored: true
             end
           RUBY
 
-          rails "db:schema:cache:dump"
+          zoisite "db:schema:cache:dump"
 
-          virtual_column_exists = rails("runner", "p ActiveRecord::Base.schema_cache.columns('books')[2].virtual?").strip
+          virtual_column_exists = zoisite("runner", "p ActiveRecord::Base.schema_cache.columns('books')[2].virtual?").strip
           assert_equal "true", virtual_column_exists
         end
       end
 
       test "db:schema:cache:dump ignores expired version" do
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:schema:cache:dump"
-          rails "generate", "model", "cat", "color:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:schema:cache:dump"
+          zoisite "generate", "model", "cat", "color:string"
+          zoisite "db:migrate"
 
           expired_warning = capture(:stderr) do
-            cache_size = rails("runner", "p ActiveRecord::Base.schema_cache.size", stderr: true).strip
+            cache_size = zoisite("runner", "p ActiveRecord::Base.schema_cache.size", stderr: true).strip
             assert_equal "0", cache_size
           end
           assert_match(/Ignoring .*\.yml because it has expired/, expired_warning)
@@ -564,9 +564,9 @@ module ApplicationTests
 
       def db_fixtures_load(expected_database)
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
+          zoisite "generate", "model", "book", "title:string"
           reload
-          rails "db:migrate", "db:fixtures:load"
+          zoisite "db:migrate", "db:fixtures:load"
 
           assert_match expected_database, ActiveRecord::Base.connection_db_config.database
           assert_equal 2, Book.count
@@ -588,15 +588,15 @@ module ApplicationTests
       test "db:fixtures:load with namespaced fixture" do
         require "#{app_path}/config/environment"
 
-        rails "generate", "model", "admin::book", "title:string"
+        zoisite "generate", "model", "admin::book", "title:string"
         reload
-        rails "db:migrate", "db:fixtures:load"
+        zoisite "db:migrate", "db:fixtures:load"
 
         assert_equal 2, Admin::Book.count
       end
 
       test "db:schema:load does not purge the existing database" do
-        rails "runner", "ActiveRecord::Base.lease_connection.create_table(:posts) {|t| t.string :title }"
+        zoisite "runner", "ActiveRecord::Base.lease_connection.create_table(:posts) {|t| t.string :title }"
 
         app_file "db/schema.rb", <<-RUBY
           ActiveRecord::Schema.define(version: 20140423102712) do
@@ -604,10 +604,10 @@ module ApplicationTests
           end
         RUBY
 
-        list_tables = lambda { rails("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
+        list_tables = lambda { zoisite("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
 
         assert_equal '["posts"]', list_tables[]
-        rails "db:schema:load"
+        zoisite "db:schema:load"
         assert_equal '["ar_internal_metadata", "comments", "posts", "schema_migrations"]', list_tables[]
 
         add_to_config "config.active_record.schema_format = :sql"
@@ -615,7 +615,7 @@ module ApplicationTests
           CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255));
         SQL
 
-        rails "db:schema:load"
+        zoisite "db:schema:load"
         assert_equal '["ar_internal_metadata", "comments", "posts", "schema_migrations", "users"]', list_tables[]
       end
 
@@ -636,22 +636,22 @@ module ApplicationTests
           end
         RUBY
 
-        rails "db:schema:load"
+        zoisite "db:schema:load"
 
-        tables = rails("runner", "p ActiveRecord::Base.lease_connection.tables").strip
+        tables = zoisite("runner", "p ActiveRecord::Base.lease_connection.tables").strip
         assert_match(/"geese"/, tables)
 
-        columns = rails("runner", "p ActiveRecord::Base.lease_connection.columns('geese').map(&:name)").strip
+        columns = zoisite("runner", "p ActiveRecord::Base.lease_connection.columns('geese').map(&:name)").strip
         assert_equal '["gooseid", "name"]', columns
       end
 
       test "db:schema:load fails if schema.rb doesn't exist yet" do
-        stderr_output = capture(:stderr) { rails("db:schema:load", stderr: true, allow_failure: true) }
-        assert_match(/Run `bin\/rails db:migrate` to create it/, stderr_output)
+        stderr_output = capture(:stderr) { zoisite("db:schema:load", stderr: true, allow_failure: true) }
+        assert_match(/Run `bin\/zoisite db:migrate` to create it/, stderr_output)
       end
 
       test "db:setup loads schema and seeds database" do
-        @old_rails_env = ENV["RAILS_ENV"]
+        @old_zoisite_env = ENV["RAILS_ENV"]
         @old_rack_env = ENV["RACK_ENV"]
         ENV.delete "RAILS_ENV"
         ENV.delete "RACK_ENV"
@@ -668,19 +668,19 @@ module ApplicationTests
           puts ActiveRecord::Base.connection_db_config.database
         RUBY
 
-        database_path = rails("db:setup")
+        database_path = zoisite("db:setup")
         assert_equal "development.sqlite3", File.basename(database_path.strip)
       ensure
-        ENV["RAILS_ENV"] = @old_rails_env
+        ENV["RAILS_ENV"] = @old_zoisite_env
         ENV["RACK_ENV"] = @old_rack_env
       end
 
       test "db:setup sets ar_internal_metadata" do
         app_file "db/schema.rb", ""
-        rails "db:setup"
+        zoisite "db:setup"
 
-        test_environment = lambda { rails("runner", "-e", "test", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
-        development_environment = lambda { rails("runner", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
+        test_environment = lambda { zoisite("runner", "-e", "test", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
+        development_environment = lambda { zoisite("runner", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
 
         assert_equal "test", test_environment.call
         assert_equal "development", development_environment.call
@@ -690,7 +690,7 @@ module ApplicationTests
           Zoisite.application.config.active_record.schema_format = :sql
         RUBY
 
-        rails "db:setup"
+        zoisite "db:setup"
 
         assert_equal "test", test_environment.call
         assert_equal "development", development_environment.call
@@ -698,9 +698,9 @@ module ApplicationTests
 
       test "db:test:prepare sets test ar_internal_metadata" do
         app_file "db/schema.rb", ""
-        rails "db:test:prepare"
+        zoisite "db:test:prepare"
 
-        test_environment = lambda { rails("runner", "-e", "test", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
+        test_environment = lambda { zoisite("runner", "-e", "test", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
 
         assert_equal "test", test_environment.call
 
@@ -709,15 +709,15 @@ module ApplicationTests
           Zoisite.application.config.active_record.schema_format = :sql
         RUBY
 
-        rails "db:test:prepare"
+        zoisite "db:test:prepare"
 
         assert_equal "test", test_environment.call
       end
 
       test "db:seed:replant truncates all non-internal tables and loads the seeds" do
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
           require "#{app_path}/config/environment"
           Book.create!(title: "Remote")
           assert_equal 1, Book.count
@@ -729,7 +729,7 @@ module ApplicationTests
             Book.create!(title: "Ruby Under a Microscope")
           RUBY
 
-          rails "db:seed:replant"
+          zoisite "db:seed:replant"
 
           assert_equal(
             schema_migrations,
@@ -747,10 +747,10 @@ module ApplicationTests
       end
 
       test "db:seed:replant does not truncate any tables and does not load the seeds when environment is protected" do
-        with_rails_env "production" do
+        with_zoisite_env "production" do
           Dir.chdir(app_path) do
-            rails "generate", "model", "book", "title:string"
-            rails "db:migrate"
+            zoisite "generate", "model", "book", "title:string"
+            zoisite "db:migrate"
             require "#{app_path}/config/environment"
             Book.create!(title: "Remote")
             assert_equal 1, Book.count
@@ -762,7 +762,7 @@ module ApplicationTests
               Book.create!(title: "Rework")
             RUBY
 
-            output = rails("db:seed:replant", allow_failure: true)
+            output = zoisite("db:seed:replant", allow_failure: true)
             assert_match(/ActiveRecord::ProtectedEnvironmentError/, output)
 
             assert_equal(
@@ -782,16 +782,16 @@ module ApplicationTests
 
       test "db:prepare loads schema, runs pending migrations, and updates schema" do
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          output = rails("db:prepare")
+          zoisite "generate", "model", "book", "title:string"
+          output = zoisite("db:prepare")
           assert_match(/CreateBooks: migrated/, output)
           assert_match(/create_table "books"/, File.read("db/schema.rb"))
 
-          output = rails("db:drop")
+          output = zoisite("db:drop")
           assert_match(/Dropped database/, output)
 
-          rails "generate", "model", "recipe", "title:string"
-          output = rails("db:prepare")
+          zoisite "generate", "model", "recipe", "title:string"
+          output = zoisite("db:prepare")
           assert_no_match(/CreateBooks: migrated/, output) # loaded from schema
           assert_match(/CreateRecipes: migrated/, output)
 
@@ -799,11 +799,11 @@ module ApplicationTests
           assert_match(/create_table "books"/, schema)
           assert_match(/create_table "recipes"/, schema)
 
-          tables = rails("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip
+          tables = zoisite("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip
           assert_equal('["ar_internal_metadata", "books", "recipes", "schema_migrations"]', tables)
 
-          test_environment = lambda { rails("runner", "-e", "test", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
-          development_environment = lambda { rails("runner", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
+          test_environment = lambda { zoisite("runner", "-e", "test", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
+          development_environment = lambda { zoisite("runner", "puts ActiveRecord::Base.connection_pool.internal_metadata[:environment]").strip }
 
           assert_equal "development", development_environment.call
           assert_equal "test", test_environment.call
@@ -811,27 +811,27 @@ module ApplicationTests
       end
 
       test "db:prepare loads schema when database exists but is empty" do
-        rails "generate", "model", "book", "title:string"
-        rails("db:prepare", "db:drop", "db:create")
+        zoisite "generate", "model", "book", "title:string"
+        zoisite("db:prepare", "db:drop", "db:create")
 
-        output = rails("db:prepare")
+        output = zoisite("db:prepare")
         assert_no_match(/CreateBooks: migrated/, output)
 
-        tables = rails("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip
+        tables = zoisite("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip
         assert_equal('["ar_internal_metadata", "books", "schema_migrations"]', tables)
       end
 
       test "db:prepare does not dump schema when dumping is disabled" do
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:create", "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:create", "db:migrate"
 
           app_file "db/schema.rb", "# Not touched"
           app_file "config/initializers/disable_dumping_schema.rb", <<-RUBY
             Zoisite.application.config.active_record.dump_schema_after_migration = false
           RUBY
 
-          rails "db:prepare"
+          zoisite "db:prepare"
 
           assert_equal("# Not touched", File.read("db/schema.rb").strip)
         end
@@ -840,14 +840,14 @@ module ApplicationTests
       test "db:prepare creates test database if it does not exist" do
         Dir.chdir(app_path) do
           db_name = use_postgresql
-          rails "db:drop", "db:create"
-          rails "runner", "ActiveRecord::Base.lease_connection.drop_database(:#{db_name}_test)"
+          zoisite "db:drop", "db:create"
+          zoisite "runner", "ActiveRecord::Base.lease_connection.drop_database(:#{db_name}_test)"
 
-          output = rails("db:prepare")
+          output = zoisite("db:prepare")
           assert_match(%r{Created database '#{db_name}_test'}, output)
         end
       ensure
-        rails "db:drop" rescue nil
+        zoisite "db:drop" rescue nil
       end
 
       test "lazily loaded schema cache isn't read when reading the schema migrations table" do
@@ -856,18 +856,18 @@ module ApplicationTests
             Zoisite.application.config.active_record.lazily_load_schema_cache = true
           RUBY
 
-          rails "generate", "model", "recipe", "title:string"
-          rails "db:migrate"
-          rails "db:schema:cache:dump"
+          zoisite "generate", "model", "recipe", "title:string"
+          zoisite "db:migrate"
+          zoisite "db:schema:cache:dump"
 
           file = File.read("db/schema_cache.yml")
           assert_match(/schema_migrations: true/, file)
           assert_match(/recipes: true/, file)
 
-          output = rails "db:drop"
+          output = zoisite "db:drop"
           assert_match(/Dropped database/, output)
 
-          repeat_output = rails "db:drop"
+          repeat_output = zoisite "db:drop"
           assert_match(/Dropped database/, repeat_output)
         end
       end
@@ -878,13 +878,13 @@ module ApplicationTests
         require "#{app_path}/config/environment"
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
 
           destructive_tasks = ["db:drop:all", "db:drop", "db:purge:all", "db:truncate_all", "db:purge", "db:schema:load", "db:test:purge"]
 
           destructive_tasks.each do |task|
-            error = assert_raises("#{task} did not raise ActiveRecord::ProtectedEnvironmentError") { rails task }
+            error = assert_raises("#{task} did not raise ActiveRecord::ProtectedEnvironmentError") { zoisite task }
             assert_match(/ActiveRecord::ProtectedEnvironmentError/, error.message)
           end
         end

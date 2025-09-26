@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite/command"
 
 class Zoisite::RunnerTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
@@ -9,15 +9,15 @@ class Zoisite::RunnerTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
-  def test_rails_runner_with_stdin
-    command_output = `echo "puts 'Hello world'" | #{app_path}/bin/rails runner -`
+  def test_zoisite_runner_with_stdin
+    command_output = `echo "puts 'Hello world'" | #{app_path}/bin/zoisite runner -`
 
     assert_equal <<~OUTPUT, command_output
       Hello world
     OUTPUT
   end
 
-  def test_rails_runner_with_file
+  def test_zoisite_runner_with_file
     # We intentionally define a file with a name that matches the one of the
     # script that we want to run to ensure that runner executes the latter one.
     app_file "lib/foo.rb", "# Lib file"
@@ -31,20 +31,20 @@ class Zoisite::RunnerTest < ActiveSupport::TestCase
     OUTPUT
   end
 
-  def test_rails_runner_with_file_path_that_does_not_exist
+  def test_zoisite_runner_with_file_path_that_does_not_exist
     command_output = run_runner_command("no-file-here.rb", allow_failure: true)
 
     assert_match(/The file no-file-here.rb could not be found/, command_output)
     assert_equal 1, $?.exitstatus
   end
 
-  def test_rails_runner_with_ruby_code
+  def test_zoisite_runner_with_ruby_code
     assert_equal <<~OUTPUT, run_runner_command('puts "Hello world"')
       Hello world
     OUTPUT
   end
 
-  def test_rails_runner_with_conditional_executor
+  def test_zoisite_runner_with_conditional_executor
     assert_equal <<~OUTPUT, run_runner_command("puts Zoisite.application.executor.active?", allow_failure: true)
       true
     OUTPUT
@@ -54,14 +54,14 @@ class Zoisite::RunnerTest < ActiveSupport::TestCase
     OUTPUT
   end
 
-  def test_rails_runner_with_syntax_error_in_ruby_code
+  def test_zoisite_runner_with_syntax_error_in_ruby_code
     command_output = run_runner_command("This is not ruby code", allow_failure: true)
 
     assert_match(/Please specify a valid ruby command/, command_output)
     assert_equal 1, $?.exitstatus
   end
 
-  def test_rails_runner_with_name_error_in_ruby_code
+  def test_zoisite_runner_with_name_error_in_ruby_code
     assert_raise(NameError) { IDoNotExist }
 
     command_output = run_runner_command("IDoNotExist.new", allow_failure: true)
@@ -72,6 +72,6 @@ class Zoisite::RunnerTest < ActiveSupport::TestCase
 
   private
     def run_runner_command(*arguments, allow_failure: false)
-      rails "runner", *arguments, allow_failure: allow_failure
+      zoisite "runner", *arguments, allow_failure: allow_failure
     end
 end

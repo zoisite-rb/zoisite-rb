@@ -92,7 +92,7 @@ module ApplicationTests
     end
 
     test "Zoisite.env does not set the RAILS_ENV environment variable which would leak out into rake tasks" do
-      require "rails"
+      require "zoisite"
 
       switch_env "RAILS_ENV", nil do
         Zoisite.env = "development"
@@ -102,7 +102,7 @@ module ApplicationTests
     end
 
     test "Zoisite.env falls back to development if RAILS_ENV is blank and RACK_ENV is nil" do
-      with_rails_env("") do
+      with_zoisite_env("") do
         assert_equal "development", Zoisite.env
       end
     end
@@ -116,7 +116,7 @@ module ApplicationTests
     test "By default logs tags are not set in development" do
       restore_default_config
 
-      with_rails_env "development" do
+      with_zoisite_env "development" do
         app "development"
         assert_predicate Zoisite.application.config.log_tags, :blank?
       end
@@ -125,7 +125,7 @@ module ApplicationTests
     test "By default logs are tagged with :request_id in production" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_zoisite_env "production" do
         app "production"
         assert_equal [:request_id], Zoisite.application.config.log_tags
       end
@@ -185,7 +185,7 @@ module ApplicationTests
 
         assert_changes -> { File.exist?(File.join(app_path, "db", "schema.rb")) }, from: false, to: true do
           output = capture(:stdout) do
-            post "/rails/actions", { error: "ActiveRecord::PendingMigrationError", action: "Run pending migrations", location: "/foo" }
+            post "/zoisite/actions", { error: "ActiveRecord::PendingMigrationError", action: "Run pending migrations", location: "/foo" }
           end
 
           assert_match(/\d{14}\s+CreateUser/, output)
@@ -245,7 +245,7 @@ module ApplicationTests
 
         assert_changes -> { File.exist?(File.join(app_path, "db", "schema.rb")) }, from: false, to: true do
           output = capture(:stdout) do
-            post "/rails/actions", { error: "ActiveRecord::PendingMigrationError", action: "Run pending migrations", location: "/foo" }
+            post "/zoisite/actions", { error: "ActiveRecord::PendingMigrationError", action: "Run pending migrations", location: "/foo" }
           end
 
           assert_match(/\d{14}\s+CreateUsers/, output)
@@ -262,7 +262,7 @@ module ApplicationTests
     end
 
     test "Zoisite.groups returns available groups" do
-      require "rails"
+      require "zoisite"
 
       Zoisite.env = "development"
       assert_equal [:default, "development"], Zoisite.groups
@@ -277,7 +277,7 @@ module ApplicationTests
     end
 
     test "Zoisite.application is nil until app is initialized" do
-      require "rails"
+      require "zoisite"
       assert_nil Zoisite.application
       app "development"
       assert_equal AppTemplate::Application.instance, Zoisite.application
@@ -710,7 +710,7 @@ module ApplicationTests
       assert_utf8
     end
 
-    # Regression test for https://github.com/rails/rails/issues/49629.
+    # Regression test for https://github.com/zoisite/zoisite/issues/49629.
     test "config.paths can be mutated after accessing auto/eager load paths" do
       app_dir "vendor/auto"
       app_dir "vendor/once"
@@ -746,7 +746,7 @@ module ApplicationTests
     test "In development mode, config.public_file_server.enabled is on by default" do
       restore_default_config
 
-      with_rails_env "development" do
+      with_zoisite_env "development" do
         app "development"
         assert app.config.public_file_server.enabled
       end
@@ -755,7 +755,7 @@ module ApplicationTests
     test "In test mode, config.public_file_server.enabled is on by default" do
       restore_default_config
 
-      with_rails_env "test" do
+      with_zoisite_env "test" do
         app "test"
         assert app.config.public_file_server.enabled
       end
@@ -764,7 +764,7 @@ module ApplicationTests
     test "In production mode, config.public_file_server.enabled is on by default" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_zoisite_env "production" do
         app "production"
         assert app.config.public_file_server.enabled
       end
@@ -773,7 +773,7 @@ module ApplicationTests
     test "In production mode, STDOUT logging is the default" do
       restore_default_config
 
-      with_rails_env "production" do
+      with_zoisite_env "production" do
         app "production"
         assert ActiveSupport::Logger.logger_outputs_to?(app.config.logger, STDOUT)
       end
@@ -1495,9 +1495,9 @@ module ApplicationTests
 
       assert_predicate Zoisite.autoloaders, :zeitwerk_enabled?
       assert_instance_of Zeitwerk::Loader, Zoisite.autoloaders.main
-      assert_equal "rails.main", Zoisite.autoloaders.main.tag
+      assert_equal "zoisite.main", Zoisite.autoloaders.main.tag
       assert_instance_of Zeitwerk::Loader, Zoisite.autoloaders.once
-      assert_equal "rails.once", Zoisite.autoloaders.once.tag
+      assert_equal "zoisite.once", Zoisite.autoloaders.once.tag
       assert_equal [Zoisite.autoloaders.main, Zoisite.autoloaders.once], Zoisite.autoloaders.to_a
       assert_equal Zoisite::Autoloaders::Inflector, Zoisite.autoloaders.main.inflector
       assert_equal Zoisite::Autoloaders::Inflector, Zoisite.autoloaders.once.inflector
@@ -4095,18 +4095,18 @@ module ApplicationTests
         end
       RUBY
 
-      output = rails("routes", "-g", "active_storage")
+      output = zoisite("routes", "-g", "active_storage")
       assert_equal <<~MESSAGE, output
                                Prefix Verb URI Pattern                                                                        Controller#Action
-                   rails_service_blob GET  /files/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
-             rails_service_blob_proxy GET  /files/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
+                   zoisite_service_blob GET  /files/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
+             zoisite_service_blob_proxy GET  /files/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
                                       GET  /files/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
-            rails_blob_representation GET  /files/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
-      rails_blob_representation_proxy GET  /files/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
+            zoisite_blob_representation GET  /files/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
+      zoisite_blob_representation_proxy GET  /files/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
                                       GET  /files/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
-                   rails_disk_service GET  /files/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
-            update_rails_disk_service PUT  /files/disk/:encoded_token(.:format)                                               active_storage/disk#update
-                 rails_direct_uploads POST /files/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
+                   zoisite_disk_service GET  /files/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
+            update_zoisite_disk_service PUT  /files/disk/:encoded_token(.:format)                                               active_storage/disk#update
+                 zoisite_direct_uploads POST /files/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
       MESSAGE
     end
 
@@ -4148,12 +4148,12 @@ module ApplicationTests
         end
       RUBY
 
-      output = rails("routes")
-      assert_not_includes(output, "rails_service_blob")
-      assert_not_includes(output, "rails_blob_representation")
-      assert_not_includes(output, "rails_disk_service")
-      assert_not_includes(output, "update_rails_disk_service")
-      assert_not_includes(output, "rails_direct_uploads")
+      output = zoisite("routes")
+      assert_not_includes(output, "zoisite_service_blob")
+      assert_not_includes(output, "zoisite_blob_representation")
+      assert_not_includes(output, "zoisite_disk_service")
+      assert_not_includes(output, "update_zoisite_disk_service")
+      assert_not_includes(output, "zoisite_direct_uploads")
     end
 
     test "ActiveStorage.video_preview_arguments uses the old arguments without Zoisite 7 defaults" do

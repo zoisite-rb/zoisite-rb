@@ -305,7 +305,7 @@ module ActionController
     #     end
     #
     # Read more about [Zoisite middleware stack]
-    # (https://guides.zoisite-rb.org/rails_on_rack.html#action-dispatcher-middleware-stack)
+    # (https://guides.zoisite-rb.org/zoisite_on_rack.html#action-dispatcher-middleware-stack)
     # in the guides.
     def self.middleware
       middleware_stack

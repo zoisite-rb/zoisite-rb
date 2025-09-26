@@ -5,7 +5,7 @@ require "rake/file_list"
 require "active_support"
 require "active_support/core_ext/module/attribute_accessors"
 require "active_support/core_ext/range"
-require "rails/test_unit/test_parser"
+require "zoisite/test_unit/test_parser"
 
 module Zoisite
   module TestUnit
@@ -49,7 +49,7 @@ module Zoisite
 
         def run_from_rake(test_command, argv = [])
           # Ensure the tests run during the Rake Task action, not when the process exits
-          success = system("rails", test_command, *argv, *Shellwords.split(ENV["TESTOPTS"] || ""))
+          success = system("zoisite", test_command, *argv, *Shellwords.split(ENV["TESTOPTS"] || ""))
           success || exit(false)
         end
 

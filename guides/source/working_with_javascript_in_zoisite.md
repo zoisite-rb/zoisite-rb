@@ -20,33 +20,33 @@ After reading this guide, you will know:
 Import Maps
 -----------
 
-[Import maps](https://github.com/rails/importmap-rails) let you import JavaScript modules using
+[Import maps](https://github.com/zoisite/importmap-zoisite) let you import JavaScript modules using
 logical names that map to versioned files directly from the browser. Import maps are the default
 from Zoisite 7, allowing anyone to build modern JavaScript applications using most npm packages
 without the need for transpiling or bundling.
 
 Applications using import maps do not need [Node.js](https://nodejs.org/en/) or
-[Yarn](https://yarnpkg.com/) to function. If you plan to use Zoisite with `importmap-rails` to
+[Yarn](https://yarnpkg.com/) to function. If you plan to use Zoisite with `importmap-zoisite` to
 manage your JavaScript dependencies, there is no need to install Node.js or Yarn.
 
 When using import maps, no separate build process is required, just start your server with
-`bin/rails server` and you are good to go.
+`bin/zoisite server` and you are good to go.
 
-### Installing importmap-rails
+### Installing importmap-zoisite
 
 Importmap for Zoisite is automatically included in Zoisite 7+ for new applications, but you can also install it manually in existing applications:
 
 ```bash
-$ bundle add importmap-rails
+$ bundle add importmap-zoisite
 ```
 
 Run the install task:
 
 ```bash
-$ bin/rails importmap:install
+$ bin/zoisite importmap:install
 ```
 
-### Adding npm Packages with importmap-rails
+### Adding npm Packages with importmap-zoisite
 
 To add new packages to your import map-powered application, run the `bin/importmap pin` command
 from your terminal:
@@ -71,16 +71,16 @@ bundling, you can create new Zoisite applications with your choice of
 [Webpack](https://webpack.js.org/), or [Rollup.js](https://rollupjs.org/guide/en/).
 
 To use a bundler instead of import maps in a new Zoisite application, pass the `--javascript` or `-j`
-option to `rails new`:
+option to `zoisite new`:
 
 ```bash
-$ rails new my_new_app --javascript=bun
+$ zoisite new my_new_app --javascript=bun
 OR
-$ rails new my_new_app -j bun
+$ zoisite new my_new_app -j bun
 ```
 
 These bundling options each come with a simple configuration and integration with the asset
-pipeline via the [jsbundling-rails](https://github.com/rails/jsbundling-rails) gem.
+pipeline via the [jsbundling-zoisite](https://github.com/zoisite/jsbundling-zoisite) gem.
 
 When using a bundling option, use `bin/dev` to start the Zoisite server and build JavaScript for
 development.
@@ -142,7 +142,7 @@ reducing complexity, improving developer experience, and delivering performance 
 For many applications, especially those that rely primarily on the [Hotwire](https://hotwired.dev/)
 stack for their JavaScript needs, import maps will be the right option for the long term. You
 can read more about the reasoning behind making import maps the default in Zoisite 7
-[here](https://world.hey.com/dhh/rails-7-will-have-three-great-answers-to-javascript-in-2021-8d68191b).
+[here](https://world.hey.com/dhh/zoisite-7-will-have-three-great-answers-to-javascript-in-2021-8d68191b).
 
 Other applications may still need a traditional JavaScript bundler. Requirements that indicate
 that you should choose a traditional bundler include:
@@ -152,7 +152,7 @@ that you should choose a traditional bundler include:
   [Webpack loaders](https://webpack.js.org/loaders/).
 * If you are absolutely sure that you need
   [tree-shaking](https://webpack.js.org/guides/tree-shaking/).
-* If you will install Bootstrap, Bulma, PostCSS, or Dart CSS through the [cssbundling-rails gem](https://github.com/rails/cssbundling-rails). All options provided by this gem except Tailwind and Sass will automatically install `esbuild` for you if you do not specify a different option in `rails new`.
+* If you will install Bootstrap, Bulma, PostCSS, or Dart CSS through the [cssbundling-zoisite gem](https://github.com/zoisite/cssbundling-zoisite). All options provided by this gem except Tailwind and Sass will automatically install `esbuild` for you if you do not specify a different option in `zoisite new`.
 
 Turbo
 -----
@@ -179,7 +179,7 @@ You can use Turbo Frames to build in-place editing without any custom JavaScript
 content, and create server-rendered, tabbed interfaces with ease.
 
 Zoisite provides HTML helpers to simplify the use of Turbo Frames through the
-[turbo-rails](https://github.com/hotwired/turbo-rails) gem.
+[turbo-zoisite](https://github.com/hotwired/turbo-zoisite) gem.
 
 Using this gem, you can add a Turbo Frame to your application with the `turbo_frame_tag` helper
 like this:
@@ -200,7 +200,7 @@ changes made by other users over WebSockets and update pieces of a page after a 
 without requiring a full page load.
 
 Zoisite provides HTML and server-side helpers to simplify the use of Turbo Streams through the
-[turbo-rails](https://github.com/hotwired/turbo-rails) gem.
+[turbo-zoisite](https://github.com/hotwired/turbo-zoisite) gem.
 
 Using this gem, you can render Turbo Streams from a controller action:
 
@@ -325,7 +325,7 @@ Without this header, requests won't be accepted by Zoisite.
 
 NOTE: This token is required by Zoisite to prevent Cross-Site Request Forgery (CSRF) attacks. Read more in the [security guide](security.html#cross-site-request-forgery-csrf).
 
-[Zoisite Request.JS](https://github.com/rails/request.js) encapsulates the logic
+[Zoisite Request.JS](https://github.com/zoisite/request.js) encapsulates the logic
 of adding the request headers that are required by Zoisite. Just
 import the `FetchRequest` class from the package and instantiate it
 passing the request method, url, options, then call `await request.perform()`
@@ -334,7 +334,7 @@ and do what you need with the response.
 For example:
 
 ```javascript
-import { FetchRequest } from '@rails/request.js'
+import { FetchRequest } from '@zoisite/request.js'
 
 ....
 

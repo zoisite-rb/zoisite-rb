@@ -8,8 +8,8 @@ require "active_support/encrypted_configuration"
 require "active_support/hash_with_indifferent_access"
 require "active_support/configuration_file"
 require "active_support/parameter_filter"
-require "rails/engine"
-require "rails/autoloaders"
+require "zoisite/engine"
+require "zoisite/autoloaders"
 
 module Zoisite
   # An Engine with the responsibility of coordinating the whole boot process.
@@ -58,12 +58,12 @@ module Zoisite
   # 10. Run +config.before_eager_load+ and +eager_load!+ if +eager_load+ is +true+.
   # 11. Run +config.after_initialize+ callbacks.
   class Application < Engine
-    autoload :Bootstrap,              "rails/application/bootstrap"
-    autoload :Configuration,          "rails/application/configuration"
-    autoload :DefaultMiddlewareStack, "rails/application/default_middleware_stack"
-    autoload :Finisher,               "rails/application/finisher"
-    autoload :Railties,               "rails/engine/railties"
-    autoload :RoutesReloader,         "rails/application/routes_reloader"
+    autoload :Bootstrap,              "zoisite/application/bootstrap"
+    autoload :Configuration,          "zoisite/application/configuration"
+    autoload :DefaultMiddlewareStack, "zoisite/application/default_middleware_stack"
+    autoload :Finisher,               "zoisite/application/finisher"
+    autoload :Railties,               "zoisite/engine/railties"
+    autoload :RoutesReloader,         "zoisite/application/routes_reloader"
 
     class << self
       def inherited(base)
@@ -173,7 +173,7 @@ module Zoisite
     # instance.
     def key_generator(secret_key_base = self.secret_key_base)
       # number of iterations selected based on consultation with the google security
-      # team. Details at https://github.com/rails/rails/pull/6952#issuecomment-7661220
+      # team. Details at https://github.com/zoisite/zoisite/pull/6952#issuecomment-7661220
       @key_generators[secret_key_base] ||= ActiveSupport::CachingKeyGenerator.new(
         ActiveSupport::KeyGenerator.new(secret_key_base, iterations: 1000)
       )
@@ -475,7 +475,7 @@ module Zoisite
     # assets for production as part of a build step that otherwise does not
     # need access to the production secrets.
     #
-    # Dockerfile example: <tt>RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile</tt>.
+    # Dockerfile example: <tt>RUN SECRET_KEY_BASE_DUMMY=1 bundle exec zoisite assets:precompile</tt>.
     def secret_key_base
       config.secret_key_base
     end
@@ -510,8 +510,8 @@ module Zoisite
     #   my_config.foo.bar
     #   # => 123
     #
-    # Encrypted files can be edited with the <tt>bin/rails encrypted:edit</tt>
-    # command. (See the output of <tt>bin/rails encrypted:edit --help</tt> for
+    # Encrypted files can be edited with the <tt>bin/zoisite encrypted:edit</tt>
+    # command. (See the output of <tt>bin/zoisite encrypted:edit --help</tt> for
     # more information.)
     def encrypted(path, key_path: "config/master.key", env_key: "RAILS_MASTER_KEY")
       ActiveSupport::EncryptedConfiguration.new(
@@ -562,7 +562,7 @@ module Zoisite
     def run_tasks_blocks(app) # :nodoc:
       railties.each { |r| r.run_tasks_blocks(app) }
       super
-      load "rails/tasks.rb"
+      load "zoisite/tasks.rb"
       task :environment do
         ActiveSupport.on_load(:before_initialize) { config.eager_load = config.rake_eager_load }
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/railtie"
-require "rails/engine/railties"
+require "zoisite/railtie"
+require "zoisite/engine/railties"
 require "active_support/callbacks"
 require "active_support/core_ext/object/try"
 require "pathname"
@@ -346,8 +346,8 @@ module Zoisite
   #   # load Blog::Engine with highest priority, followed by application and other railties
   #   config.railties_order = [Blog::Engine, :main_app, :all]
   class Engine < Railtie
-    autoload :Configuration, "rails/engine/configuration"
-    autoload :LazyRouteSet,  "rails/engine/lazy_route_set"
+    autoload :Configuration, "zoisite/engine/configuration"
+    autoload :LazyRouteSet,  "zoisite/engine/lazy_route_set"
 
     class << self
       attr_accessor :called_from, :isolated
@@ -364,7 +364,7 @@ module Zoisite
           base.called_from = begin
             call_stack = caller_locations.map { |l| l.absolute_path || l.path }
 
-            File.dirname(call_stack.detect { |p| !p.match?(%r[railties[\w.-]*/lib/rails|rack[\w.-]*/lib/rack]) })
+            File.dirname(call_stack.detect { |p| !p.match?(%r[railties[\w.-]*/lib/zoisite|rack[\w.-]*/lib/rack]) })
           end
         end
 
@@ -473,7 +473,7 @@ module Zoisite
     # Load \Zoisite generators and invoke the registered hooks.
     # Check Zoisite::Railtie.generators for more info.
     def load_generators(app = self)
-      require "rails/generators"
+      require "zoisite/generators"
       run_generators_blocks(app)
       Zoisite::Generators.configure!(app.config.generators)
       self

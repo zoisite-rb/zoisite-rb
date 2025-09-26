@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "rails/generators/named_base"
-require "rails/generators/active_model"
-require "rails/generators/active_record/migration"
+require "zoisite/generators/named_base"
+require "zoisite/generators/active_model"
+require "zoisite/generators/active_record/migration"
 require "active_record"
 
 module ActiveRecord

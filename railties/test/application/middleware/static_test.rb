@@ -18,7 +18,7 @@ module ApplicationTests
     end
 
     # Regression test to #8907
-    # See https://github.com/rails/rails/commit/9cc82b77196d21a5c7021f6dca59ab9b2b158a45#commitcomment-2416514
+    # See https://github.com/zoisite/zoisite/commit/9cc82b77196d21a5c7021f6dca59ab9b2b158a45#commitcomment-2416514
     test "doesn't set Cache-Control header when it is nil" do
       app_file "public/foo.html", "static"
 

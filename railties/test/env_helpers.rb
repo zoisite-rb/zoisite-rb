@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "rails"
+require "zoisite"
 
 module EnvHelpers
   private
-    def with_rails_env(env, &block)
+    def with_zoisite_env(env, &block)
       Zoisite.instance_variable_set :@_env, nil
       switch_env "RAILS_ENV", env do
         switch_env "RACK_ENV", nil, &block

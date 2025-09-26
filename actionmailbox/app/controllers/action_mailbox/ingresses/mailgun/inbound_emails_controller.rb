@@ -24,7 +24,7 @@ module ActionMailbox
   # 1. Give Action Mailbox your Mailgun Signing key (which you can find under Settings -> Security & Users -> API security in Mailgun)
   #    so it can authenticate requests to the Mailgun ingress.
   #
-  #    Use <tt>bin/rails credentials:edit</tt> to add your Signing key to your application's encrypted credentials under
+  #    Use <tt>bin/zoisite credentials:edit</tt> to add your Signing key to your application's encrypted credentials under
   #    +action_mailbox.mailgun_signing_key+, where Action Mailbox will automatically find it:
   #
   #        action_mailbox:
@@ -38,10 +38,10 @@ module ActionMailbox
   #        config.action_mailbox.ingress = :mailgun
   #
   # 3. {Configure Mailgun}[https://documentation.mailgun.com/en/latest/user_manual.html#receiving-forwarding-and-storing-messages]
-  #    to forward inbound emails to +/rails/action_mailbox/mailgun/inbound_emails/mime+.
+  #    to forward inbound emails to +/zoisite/action_mailbox/mailgun/inbound_emails/mime+.
   #
   #    If your application lived at <tt>https://example.com</tt>, you would specify the fully-qualified URL
-  #    <tt>https://example.com/rails/action_mailbox/mailgun/inbound_emails/mime</tt>.
+  #    <tt>https://example.com/zoisite/action_mailbox/mailgun/inbound_emails/mime</tt>.
   class Ingresses::Mailgun::InboundEmailsController < ActionMailbox::BaseController
     before_action :authenticate
     param_encoding :create, "body-mime", Encoding::ASCII_8BIT

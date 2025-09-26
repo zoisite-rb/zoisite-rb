@@ -3,7 +3,7 @@
 module Zoisite
   # TODO: Move this to Zoisite::Conductor gem
   class Conductor::BaseController < ActionController::Base
-    layout "rails/conductor"
+    layout "zoisite/conductor"
     before_action :ensure_development_env
 
     private

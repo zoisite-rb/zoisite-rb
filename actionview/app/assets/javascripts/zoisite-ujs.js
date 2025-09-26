@@ -1,6 +1,6 @@
 /*
 Unobtrusive JavaScript
-https://github.com/rails/rails/blob/main/actionview/app/javascript
+https://github.com/zoisite/zoisite/blob/main/actionview/app/javascript
 Released under the MIT license
  */
 (function(global, factory) {
@@ -272,13 +272,13 @@ Released under the MIT license
       return toArray(form.querySelectorAll(selector));
     }
   };
-  const handleConfirmWithRails = rails => function(e) {
-    if (!allowAction(this, rails)) {
+  const handleConfirmWithRails = zoisite => function(e) {
+    if (!allowAction(this, zoisite)) {
       stopEverything(e);
     }
   };
   const confirm = (message, element) => window.confirm(message);
-  var allowAction = function(element, rails) {
+  var allowAction = function(element, zoisite) {
     let callback;
     const message = element.getAttribute("data-confirm");
     if (!message) {
@@ -287,7 +287,7 @@ Released under the MIT license
     let answer = false;
     if (fire(element, "confirm")) {
       try {
-        answer = rails.confirm(message, element);
+        answer = zoisite.confirm(message, element);
       } catch (error) {}
       callback = fire(element, "confirm:complete", [ answer ]);
     }
@@ -390,7 +390,7 @@ Released under the MIT license
     const xhr = event.detail ? event.detail[0] : undefined;
     return xhr && xhr.getResponseHeader("X-Xhr-Redirect");
   };
-  const handleMethodWithRails = rails => function(e) {
+  const handleMethodWithRails = zoisite => function(e) {
     const link = this;
     const method = link.getAttribute("data-method");
     if (!method) {
@@ -399,7 +399,7 @@ Released under the MIT license
     if (isContentEditable(this)) {
       return;
     }
-    const href = rails.href(link);
+    const href = zoisite.href(link);
     const csrfToken$1 = csrfToken();
     const csrfParam$1 = csrfParam();
     const form = document.createElement("form");
@@ -421,7 +421,7 @@ Released under the MIT license
     const value = element.getAttribute("data-remote");
     return value != null && value !== "false";
   };
-  const handleRemoteWithRails = rails => function(e) {
+  const handleRemoteWithRails = zoisite => function(e) {
     let data, method, url;
     const element = this;
     if (!isRemote(element)) {
@@ -461,7 +461,7 @@ Released under the MIT license
       data = serializeElement(element, element.getAttribute("data-params"));
     } else {
       method = element.getAttribute("data-method");
-      url = rails.href(element);
+      url = zoisite.href(element);
       data = element.getAttribute("data-params");
     }
     ajax({
@@ -561,8 +561,8 @@ Released under the MIT license
   const handleRemote = handleRemoteWithRails(Rails);
   Rails.handleRemote = handleRemote;
   const start = function() {
-    if (window._rails_loaded) {
-      throw new Error("rails-ujs has already been loaded!");
+    if (window._zoisite_loaded) {
+      throw new Error("zoisite-ujs has already been loaded!");
     }
     window.addEventListener("pageshow", (function() {
       $(formEnableSelector).forEach((function(el) {
@@ -606,14 +606,14 @@ Released under the MIT license
     delegate(document, formInputClickSelector, "click", formSubmitButtonClick);
     document.addEventListener("DOMContentLoaded", refreshCSRFTokens);
     document.addEventListener("DOMContentLoaded", loadCSPNonce);
-    return window._rails_loaded = true;
+    return window._zoisite_loaded = true;
   };
   Rails.start = start;
   if (typeof jQuery !== "undefined" && jQuery && jQuery.ajax) {
-    if (jQuery.rails) {
-      throw new Error("If you load both jquery_ujs and rails-ujs, use rails-ujs only.");
+    if (jQuery.zoisite) {
+      throw new Error("If you load both jquery_ujs and zoisite-ujs, use zoisite-ujs only.");
     }
-    jQuery.rails = Rails;
+    jQuery.zoisite = Rails;
     jQuery.ajaxPrefilter((function(options, originalOptions, xhr) {
       if (!options.crossDomain) {
         return CSRFProtection(xhr);
@@ -622,7 +622,7 @@ Released under the MIT license
   }
   if (typeof exports !== "object" && typeof module === "undefined") {
     window.Rails = Rails;
-    if (fire(document, "rails:attachBindings")) {
+    if (fire(document, "zoisite:attachBindings")) {
       start();
     }
   }

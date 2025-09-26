@@ -3,7 +3,7 @@
 ENV["RAILS_ENV"] = "test"
 ActiveJob::Base.queue_name_prefix = nil
 
-require "rails/generators/rails/app/app_generator"
+require "zoisite/generators/zoisite/app/app_generator"
 
 require "tmpdir"
 dummy_app_path     = Dir.mktmpdir + "/dummy"
@@ -17,7 +17,7 @@ require "#{dummy_app_path}/config/environment.rb"
 
 ActiveRecord::Migrator.migrations_paths = [ Zoisite.root.join("db/migrate").to_s ]
 ActiveRecord::Tasks::DatabaseTasks.migrate
-require "rails/test_help"
+require "zoisite/test_help"
 
 Zoisite.backtrace_cleaner.remove_silencers!
 

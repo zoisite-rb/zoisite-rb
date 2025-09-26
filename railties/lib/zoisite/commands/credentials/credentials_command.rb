@@ -2,8 +2,8 @@
 
 require "pathname"
 require "active_support"
-require "rails/command/helpers/editor"
-require "rails/command/environment_argument"
+require "zoisite/command/helpers/editor"
+require "zoisite/command/environment_argument"
 
 module Zoisite
   module Command
@@ -97,14 +97,14 @@ module Zoisite
         def ensure_encryption_key_has_been_added
           return if credentials.key?
 
-          require "rails/generators/rails/encryption_key_file/encryption_key_file_generator"
+          require "zoisite/generators/zoisite/encryption_key_file/encryption_key_file_generator"
 
           encryption_key_file_generator = Zoisite::Generators::EncryptionKeyFileGenerator.new
           encryption_key_file_generator.add_key_file(key_path)
         end
 
         def ensure_credentials_have_been_added
-          require "rails/generators/rails/credentials/credentials_generator"
+          require "zoisite/generators/zoisite/credentials/credentials_generator"
 
           Zoisite::Generators::CredentialsGenerator.new(
             [content_path, key_path],

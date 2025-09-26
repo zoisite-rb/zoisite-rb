@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/code_statistics"
+require "zoisite/code_statistics"
 
 class CodeStatisticsTest < ActiveSupport::TestCase
   def setup

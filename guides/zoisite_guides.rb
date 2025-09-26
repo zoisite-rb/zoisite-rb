@@ -10,7 +10,7 @@ $:.unshift as_lib if File.directory?(as_lib)
 $:.unshift ap_lib if File.directory?(ap_lib)
 $:.unshift av_lib if File.directory?(av_lib)
 
-require "rails_guides/generator"
+require "zoisite_guides/generator"
 require "active_support/core_ext/object/blank"
 
 env_value = ->(name) { ENV[name].presence }

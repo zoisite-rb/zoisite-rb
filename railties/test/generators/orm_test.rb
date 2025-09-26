@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/scaffold_controller/scaffold_controller_generator"
-require "rails/generators/rails/model/model_generator"
+require "zoisite/generators/zoisite/scaffold_controller/scaffold_controller_generator"
+require "zoisite/generators/zoisite/model/model_generator"
 
 # Mock out two ORMs
 module ORMWithGenerators
@@ -27,7 +27,7 @@ class ScaffoldOrmTest < Zoisite::Generators::TestCase
     assert_equal ORMWithGenerators::Generators::ActiveModel, g.send(:orm_class)
   end
 
-  def test_orm_class_returns_rails_generator_if_unsupported_custom_orm_set
+  def test_orm_class_returns_zoisite_generator_if_unsupported_custom_orm_set
     g = generator ["Foo"], orm: "ORMWithoutGenerators"
     assert_equal Zoisite::Generators::ActiveModel, g.send(:orm_class)
   end

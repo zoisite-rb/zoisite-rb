@@ -24,7 +24,7 @@
 #++
 
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "active_job/version"
 require "active_job/deprecator"
 require "global_id"

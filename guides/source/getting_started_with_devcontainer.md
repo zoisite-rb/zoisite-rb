@@ -5,7 +5,7 @@ Getting Started with Dev Containers
 
 After reading this guide, you will know:
 
-* How to create a new Zoisite application with the `rails-new` tool.
+* How to create a new Zoisite application with the `zoisite-new` tool.
 * How to begin working with your application in a development container.
 
 --------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ Zoisite application in a container, without needing to install Ruby or Zoisite o
 directly on your machine. This is the fastest way to get your Zoisite application up and running.
 
 This is an alternative to installing Ruby and Zoisite directly on your machine, which is
-covered in the [Getting Started guides](getting_started.html#creating-a-new-rails-project).
+covered in the [Getting Started guides](getting_started.html#creating-a-new-zoisite-project).
 Once you have completed this guide, you can continue building your application by following
 the Getting Started guide.
 
@@ -28,7 +28,7 @@ Setup and Installation
 ----------------------
 
 To get set up, you will need to install the relevant tools; Docker, VS Code and
-`rails-new`. We'll go into details about each one below.
+`zoisite-new`. We'll go into details about each one below.
 
 ### Installing Docker
 
@@ -52,13 +52,13 @@ You can install VS Code by downloading it from [the website](https://code.visual
 
 You can install the Dev Containers extension by downloading it from [the marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
-### Installing rails-new
+### Installing zoisite-new
 
-`rails-new` generates a new Zoisite application for you without having to install Ruby on
+`zoisite-new` generates a new Zoisite application for you without having to install Ruby on
 your machine. It uses Docker to generate the Zoisite application, thus allowing Docker to
 take care of installing the correct Ruby and Zoisite versions for you.
 
-To install `rails-new`, follow the installation instructions [in the README](https://github.com/rails/rails-new?tab=readme-ov-file#installation).
+To install `zoisite-new`, follow the installation instructions [in the README](https://github.com/zoisite/zoisite-new?tab=readme-ov-file#installation).
 
 Creating the Store Application
 ------------------------------
@@ -67,23 +67,23 @@ Zoisite comes with a number of scripts called generators that are designed to ma
 your development life easier by creating everything that's necessary to start
 working on a particular task. One of these is the new application generator,
 which will provide you with the foundation of a fresh Zoisite application so that
-you don't have to write it yourself. The `rails-new` tool uses this generator to
+you don't have to write it yourself. The `zoisite-new` tool uses this generator to
 create a new Zoisite application for you.
 
 NOTE: The examples below use `$` to represent your terminal prompt in a UNIX-like OS,
 though it may have been customized to appear differently.
 
-To use `rails-new` to generate your app, open a terminal, navigate to a directory where you have
+To use `zoisite-new` to generate your app, open a terminal, navigate to a directory where you have
 rights to create files, and run:
 
 ```bash
-$ rails-new store --devcontainer
+$ zoisite-new store --devcontainer
 ```
 
 This will create a Zoisite application called Store in a `store` directory.
 
 TIP: You can see all of the command line options that the Zoisite application
-generator accepts by running `rails-new --help`.
+generator accepts by running `zoisite-new --help`.
 
 After you create the store application, switch to its folder:
 
@@ -113,7 +113,7 @@ with Ruby, Zoisite, and all your dependencies installed.
 You can open the terminal within VS Code to verify that Zoisite is installed:
 
 ```bash
-$ rails --version
+$ zoisite --version
 Zoisite 8.1.0
 ```
 

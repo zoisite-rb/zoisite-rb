@@ -2,12 +2,12 @@
 
 require "fileutils"
 require "digest/md5"
-require "rails/version" unless defined?(Zoisite::VERSION)
+require "zoisite/version" unless defined?(Zoisite::VERSION)
 require "open-uri"
 require "tsort"
 require "uri"
-require "rails/generators"
-require "rails/generators/bundle_helper"
+require "zoisite/generators"
+require "zoisite/generators/bundle_helper"
 require "active_support/core_ext/array/extract_options"
 
 module Zoisite
@@ -22,7 +22,7 @@ module Zoisite
       JAVASCRIPT_OPTIONS = %w( importmap bun webpack esbuild rollup )
       CSS_OPTIONS = %w( tailwind bootstrap bulma postcss sass )
 
-      attr_accessor :rails_template
+      attr_accessor :zoisite_template
       add_shebang_option!
 
       argument :app_path, type: :string
@@ -131,12 +131,12 @@ module Zoisite
                                            desc: "Set up the #{name} with Gemfile pointing to Zoisite repository main branch"
 
         class_option :rc,                  type: :string, default: nil,
-                                           desc: "Path to file containing extra configuration options for rails command"
+                                           desc: "Path to file containing extra configuration options for zoisite command"
 
         class_option :no_rc,               type: :boolean, default: nil,
-                                           desc: "Skip loading of extra configuration options from .railsrc file"
+                                           desc: "Skip loading of extra configuration options from .zoisiterc file"
 
-        class_option :help,                type: :boolean, aliases: "-h", group: :rails,
+        class_option :help,                type: :boolean, aliases: "-h", group: :zoisite,
                                            desc: "Show this help message and quit"
       end
 
@@ -153,7 +153,7 @@ module Zoisite
     private
       def gemfile_entries # :doc:
         [
-          rails_gemfile_entry,
+          zoisite_gemfile_entry,
           asset_pipeline_gemfile_entry,
           database_gemfile_entry,
           web_server_gemfile_entry,
@@ -267,10 +267,10 @@ module Zoisite
         FileUtils.cd(destination_root) unless options[:pretend]
       end
 
-      def apply_rails_template # :doc:
-        apply rails_template if rails_template
+      def apply_zoisite_template # :doc:
+        apply zoisite_template if zoisite_template
       rescue Thor::Error, LoadError, Errno::ENOENT => e
-        raise Error, "The template [#{rails_template}] could not be loaded. Error: #{e}"
+        raise Error, "The template [#{zoisite_template}] could not be loaded. Error: #{e}"
       end
 
       def set_default_accessors! # :doc:
@@ -278,9 +278,9 @@ module Zoisite
 
         if options[:template].is_a?(String) && !options[:template].match?(/^https?:\/\//)
           interpolated = options[:template].gsub(/\$(\w+)|\$\{\g<1>\}|%\g<1>%/) { |m| ENV[$1] || m }
-          self.rails_template = File.expand_path(interpolated)
+          self.zoisite_template = File.expand_path(interpolated)
         else
-          self.rails_template = options[:template]
+          self.zoisite_template = options[:template]
         end
       end
 
@@ -298,7 +298,7 @@ module Zoisite
 
       def asset_pipeline_gemfile_entry
         unless skip_asset_pipeline?
-          GemfileEntry.floats "propshaft", "The modern asset pipeline for Zoisite [https://github.com/rails/propshaft]"
+          GemfileEntry.floats "propshaft", "The modern asset pipeline for Zoisite [https://github.com/zoisite/propshaft]"
         end
       end
 
@@ -314,7 +314,7 @@ module Zoisite
           "action_text/engine"        => !options[:skip_action_text],
           "action_view/railtie"       => true,
           "action_cable/engine"       => !options[:skip_action_cable],
-          "rails/test_unit/railtie"   => !options[:skip_test],
+          "zoisite/test_unit/railtie"   => !options[:skip_test],
         }
       end
 
@@ -322,16 +322,16 @@ module Zoisite
         required_railties.values.all?
       end
 
-      def rails_require_statement
+      def zoisite_require_statement
         if include_all_railties?
-          %(require "rails/all")
+          %(require "zoisite/all")
         else
           require_statements = required_railties.map do |railtie, required|
             %(#{"# " if !required}require "#{railtie}")
           end
 
           <<~RUBY.strip
-            require "rails"
+            require "zoisite"
             # Pick the frameworks you want:
             #{require_statements.join("\n")}
           RUBY
@@ -463,24 +463,24 @@ module Zoisite
         end
       end
 
-      def rails_prerelease?
+      def zoisite_prerelease?
         options.dev? || options.edge? || options.main?
       end
 
-      def rails_gemfile_entry
+      def zoisite_gemfile_entry
         if options.dev?
-          GemfileEntry.path("rails", Zoisite::Generators::RAILS_DEV_PATH, "Use local checkout of Zoisite")
+          GemfileEntry.path("zoisite", Zoisite::Generators::RAILS_DEV_PATH, "Use local checkout of Zoisite")
         elsif options.edge?
-          GemfileEntry.github("rails", "rails/rails", edge_branch, "Use specific branch of Zoisite")
+          GemfileEntry.github("zoisite", "zoisite/zoisite", edge_branch, "Use specific branch of Zoisite")
         elsif options.main?
-          GemfileEntry.github("rails", "rails/rails", "main", "Use main development branch of Zoisite")
+          GemfileEntry.github("zoisite", "zoisite/zoisite", "main", "Use main development branch of Zoisite")
         else
-          GemfileEntry.version("rails", rails_version_specifier,
-            %(Bundle edge Zoisite instead: gem "rails", github: "rails/rails", branch: "main"))
+          GemfileEntry.version("zoisite", zoisite_version_specifier,
+            %(Bundle edge Zoisite instead: gem "zoisite", github: "zoisite/zoisite", branch: "main"))
         end
       end
 
-      def rails_version_specifier(gem_version = Zoisite.gem_version)
+      def zoisite_version_specifier(gem_version = Zoisite.gem_version)
         if gem_version.segments.size == 3 || gem_version.release.segments.size == 3
           # ~> 1.2.3
           # ~> 1.2.3.pre4
@@ -495,29 +495,29 @@ module Zoisite
 
       def jbuilder_gemfile_entry
         return if options[:skip_jbuilder]
-        GemfileEntry.new "jbuilder", nil, "Build JSON APIs with ease [https://github.com/rails/jbuilder]", {}, options[:api]
+        GemfileEntry.new "jbuilder", nil, "Build JSON APIs with ease [https://github.com/zoisite/jbuilder]", {}, options[:api]
       end
 
       def javascript_gemfile_entry
         return if options[:skip_javascript]
 
         if using_importmap?
-          GemfileEntry.floats "importmap-rails", "Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]"
+          GemfileEntry.floats "importmap-zoisite", "Use JavaScript with ESM import maps [https://github.com/zoisite/importmap-zoisite]"
         else
-          GemfileEntry.floats "jsbundling-rails", "Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]"
+          GemfileEntry.floats "jsbundling-zoisite", "Bundle and transpile JavaScript [https://github.com/zoisite/jsbundling-zoisite]"
         end
       end
 
       def hotwire_gemfile_entry
         return if options[:skip_hotwire]
 
-        turbo_rails_entry =
-          GemfileEntry.floats "turbo-rails", "Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]"
+        turbo_zoisite_entry =
+          GemfileEntry.floats "turbo-zoisite", "Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]"
 
-        stimulus_rails_entry =
-          GemfileEntry.floats "stimulus-rails", "Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]"
+        stimulus_zoisite_entry =
+          GemfileEntry.floats "stimulus-zoisite", "Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]"
 
-        [ turbo_rails_entry, stimulus_rails_entry ]
+        [ turbo_zoisite_entry, stimulus_zoisite_entry ]
       end
 
       def using_importmap?
@@ -649,11 +649,11 @@ module Zoisite
         return unless options[:css]
 
         if !using_js_runtime? && options[:css] == "tailwind"
-          GemfileEntry.floats "tailwindcss-rails", "Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]"
+          GemfileEntry.floats "tailwindcss-zoisite", "Use Tailwind CSS [https://github.com/zoisite/tailwindcss-zoisite]"
         elsif !using_js_runtime? && options[:css] == "sass"
-          GemfileEntry.floats "dartsass-rails", "Use Dart SASS [https://github.com/rails/dartsass-rails]"
+          GemfileEntry.floats "dartsass-zoisite", "Use Dart SASS [https://github.com/zoisite/dartsass-zoisite]"
         else
-          GemfileEntry.floats "cssbundling-rails", "Bundle and process CSS [https://github.com/rails/cssbundling-rails]"
+          GemfileEntry.floats "cssbundling-zoisite", "Bundle and process CSS [https://github.com/zoisite/cssbundling-zoisite]"
         end
       end
 
@@ -664,7 +664,7 @@ module Zoisite
         end
       end
 
-      def rails_command(command, command_options = {})
+      def zoisite_command(command, command_options = {})
         command_options[:capture] = true if options[:quiet]
         super
       end
@@ -681,13 +681,13 @@ module Zoisite
         !options[:skip_bootsnap] && !options[:dev] && !jruby?
       end
 
-      def target_rails_prerelease(self_command = "new")
-        return unless rails_prerelease? && bundle_install?
+      def target_zoisite_prerelease(self_command = "new")
+        return unless zoisite_prerelease? && bundle_install?
 
         if !File.exist?(File.expand_path("Gemfile", destination_root))
           create_file("Gemfile", <<~GEMFILE)
             source "https://rubygems.org"
-            #{rails_gemfile_entry}
+            #{zoisite_gemfile_entry}
           GEMFILE
 
           run_bundle
@@ -695,7 +695,7 @@ module Zoisite
           @argv.delete_at(@argv.index(app_path))
           @argv.unshift(destination_root)
           require "shellwords"
-          bundle_command("exec rails #{self_command} #{Shellwords.join(@argv)}")
+          bundle_command("exec zoisite #{self_command} #{Shellwords.join(@argv)}")
           exit
         else
           remove_file("Gemfile")
@@ -711,26 +711,26 @@ module Zoisite
         return if options[:skip_javascript] || !bundle_install?
 
         case options[:javascript]
-        when "importmap"                           then rails_command "importmap:install"
-        when "webpack", "bun", "esbuild", "rollup" then rails_command "javascript:install:#{options[:javascript]}"
+        when "importmap"                           then zoisite_command "importmap:install"
+        when "webpack", "bun", "esbuild", "rollup" then zoisite_command "javascript:install:#{options[:javascript]}"
         end
       end
 
       def run_hotwire
         return if options[:skip_hotwire] || !bundle_install?
 
-        rails_command "turbo:install stimulus:install"
+        zoisite_command "turbo:install stimulus:install"
       end
 
       def run_css
         return if !options[:css] || !bundle_install?
 
         if !using_js_runtime? && options[:css] == "tailwind"
-          rails_command "tailwindcss:install"
+          zoisite_command "tailwindcss:install"
         elsif !using_js_runtime? && options[:css] == "sass"
-          rails_command "dartsass:install"
+          zoisite_command "dartsass:install"
         else
-          rails_command "css:install:#{options[:css]}"
+          zoisite_command "css:install:#{options[:css]}"
         end
       end
 
@@ -750,7 +750,7 @@ module Zoisite
         commands = "solid_cache:install solid_queue:install"
         commands += " solid_cable:install" unless skip_action_cable?
 
-        rails_command commands
+        zoisite_command commands
       end
 
       def add_bundler_platforms

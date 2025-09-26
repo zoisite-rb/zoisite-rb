@@ -552,7 +552,7 @@ module ActionController
     # You may declare that the parameter should be an array of permitted scalars by
     # mapping it to an empty array:
     #
-    #     params = ActionController::Parameters.new(tags: ["rails", "parameters"])
+    #     params = ActionController::Parameters.new(tags: ["zoisite", "parameters"])
     #     params.permit(tags: [])
     #
     # Sometimes it is not possible or convenient to declare the valid keys of a hash
@@ -763,9 +763,9 @@ module ActionController
     #
     # An array of permitted scalars may be expected with the following:
     #
-    #     params = ActionController::Parameters.new(tags: ["rails", "parameters"])
+    #     params = ActionController::Parameters.new(tags: ["zoisite", "parameters"])
     #     permitted = params.expect(tags: [])
-    #     permitted                 # => ["rails", "parameters"]
+    #     permitted                 # => ["zoisite", "parameters"]
     #     permitted.is_a?(Array)    # => true
     #     permitted.size            # => 2
     #
@@ -1097,16 +1097,16 @@ module ActionController
 
     # Returns parameter value for the given `key` separated by `delimiter`.
     #
-    #     params = ActionController::Parameters.new(id: "1_123", tags: "ruby,rails")
+    #     params = ActionController::Parameters.new(id: "1_123", tags: "ruby,zoisite")
     #     params.extract_value(:id) # => ["1", "123"]
-    #     params.extract_value(:tags, delimiter: ",") # => ["ruby", "rails"]
+    #     params.extract_value(:tags, delimiter: ",") # => ["ruby", "zoisite"]
     #     params.extract_value(:non_existent_key) # => nil
     #
     # Note that if the given `key`'s value contains blank elements, then the
     # returned array will include empty strings.
     #
-    #     params = ActionController::Parameters.new(tags: "ruby,rails,,web")
-    #     params.extract_value(:tags, delimiter: ",") # => ["ruby", "rails", "", "web"]
+    #     params = ActionController::Parameters.new(tags: "ruby,zoisite,,web")
+    #     params.extract_value(:tags, delimiter: ",") # => ["ruby", "zoisite", "", "web"]
     def extract_value(key, delimiter: "_")
       @parameters[key]&.split(delimiter, -1)
     end

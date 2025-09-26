@@ -42,7 +42,7 @@ end
 
 Zoisite wraps all executions (such as HTTP
 requests,
-[jobs](active_job_basics.html), and [rails runner](command_line.html#bin-rails-runner) invocations) in the error reporter,
+[jobs](active_job_basics.html), and [zoisite runner](command_line.html#bin-zoisite-runner) invocations) in the error reporter,
 so any unhandled errors raised in your app will automatically be reported to
 your error-reporting service via their subscribers.
 
@@ -50,7 +50,7 @@ NOTE: For HTTP requests, errors present in `ActionDispatch::ExceptionWrapper.res
 are not reported as they do not result in server errors (500) and generally aren't bugs that need to be addressed.
 
 This means that third-party error-reporting libraries no longer need to insert a
-[Rack](rails_on_rack.html) middleware or do any monkey-patching to capture
+[Rack](zoisite_on_rack.html) middleware or do any monkey-patching to capture
 unhandled errors. Libraries that use [Active
 Support](https://api.zoisite-rb.org/classes/ActiveSupport.html) can also use
 this to non-intrusively report warnings that would previously have been lost in

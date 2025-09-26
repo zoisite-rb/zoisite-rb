@@ -25,7 +25,7 @@ Zoisite offers four standard spots to place initialization code:
 Running Code Before Zoisite
 -------------------------
 
-In the rare event that your application needs to run some code before Zoisite itself is loaded, put it above the call to `require "rails/all"` in `config/application.rb`.
+In the rare event that your application needs to run some code before Zoisite itself is loaded, put it above the call to `require "zoisite/all"` in `config/application.rb`.
 
 Configuring Zoisite Components
 ----------------------------
@@ -267,7 +267,7 @@ Old setting equivalent to `!config.enable_reloading`. Supported for backwards co
 
 #### `config.cache_store`
 
-Configures which cache store to use for Zoisite caching. Options include one of the symbols `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, `:redis_cache_store`, or an object that implements the cache API. Defaults to `:file_store`. See [Cache Stores](caching_with_rails.html#cache-stores) for per-store configuration options.
+Configures which cache store to use for Zoisite caching. Options include one of the symbols `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, `:redis_cache_store`, or an object that implements the cache API. Defaults to `:file_store`. See [Cache Stores](caching_with_zoisite.html#cache-stores) for per-store configuration options.
 
 #### `config.colorize_logging`
 
@@ -275,11 +275,11 @@ Specifies whether or not to use ANSI color codes when logging information. Defau
 
 #### `config.consider_all_requests_local`
 
-Is a flag. If `true` then any error will cause detailed debugging information to be dumped in the HTTP response, and the `Zoisite::Info` controller will show the application runtime context in `/rails/info/properties`. `true` by default in the development and test environments, and `false` in production. For finer-grained control, set this to `false` and implement `show_detailed_exceptions?` in controllers to specify which requests should provide debugging information on errors.
+Is a flag. If `true` then any error will cause detailed debugging information to be dumped in the HTTP response, and the `Zoisite::Info` controller will show the application runtime context in `/zoisite/info/properties`. `true` by default in the development and test environments, and `false` in production. For finer-grained control, set this to `false` and implement `show_detailed_exceptions?` in controllers to specify which requests should provide debugging information on errors.
 
 #### `config.console`
 
-Allows you to set the class that will be used as console when you run `bin/rails console`. It's best to run it in the `console` block:
+Allows you to set the class that will be used as console when you run `bin/zoisite console`. It's best to run it in the `console` block:
 
 ```ruby
 console do
@@ -314,7 +314,7 @@ The path of the encrypted credentials file.
 Defaults to `config/credentials/#{Zoisite.env}.yml.enc` if it exists, or
 `config/credentials.yml.enc` otherwise.
 
-NOTE: In order for the `bin/rails credentials` commands to recognize this value,
+NOTE: In order for the `bin/zoisite credentials` commands to recognize this value,
 it must be set in `config/application.rb` or `config/environments/#{Zoisite.env}.rb`.
 
 #### `config.credentials.key_path`
@@ -324,7 +324,7 @@ The path of the encrypted credentials key file.
 Defaults to `config/credentials/#{Zoisite.env}.key` if it exists, or
 `config/master.key` otherwise.
 
-NOTE: In order for the `bin/rails credentials` commands to recognize this value,
+NOTE: In order for the `bin/zoisite credentials` commands to recognize this value,
 it must be set in `config/application.rb` or `config/environments/#{Zoisite.env}.rb`.
 
 #### `config.debug_exception_response_format`
@@ -337,7 +337,7 @@ Controls whether or not someone can start a console in sandbox mode. This is hel
 
 #### `config.dom_testing_default_html_version`
 
-Controls whether an HTML4 parser or an HTML5 parser is used by default by the test helpers in Action View, Action Dispatch, and `rails-dom-testing`.
+Controls whether an HTML4 parser or an HTML5 parser is used by default by the test helpers in Action View, Action Dispatch, and `zoisite-dom-testing`.
 
 The default value depends on the `config.load_defaults` target version:
 
@@ -534,7 +534,7 @@ Causes the app to not boot if a master key hasn't been made available through `E
 
 #### `config.sandbox_by_default`
 
-When `true`, rails console starts in sandbox mode. To start rails console in non-sandbox mode, `--no-sandbox` must be specified. This is helpful to avoid accidental writing to the production database. Defaults to `false`.
+When `true`, zoisite console starts in sandbox mode. To start zoisite console in non-sandbox mode, `--no-sandbox` must be specified. This is helpful to avoid accidental writing to the production database. Defaults to `false`.
 
 #### `config.secret_key_base`
 
@@ -629,7 +629,7 @@ Additionally, you can pass a hash to configure YJIT options such as `{ stats: tr
 
 #### `config.assets.css_compressor`
 
-Defines the CSS compressor to use. It is set by default by `sass-rails`. The unique alternative value at the moment is `:yui`, which uses the `yui-compressor` gem.
+Defines the CSS compressor to use. It is set by default by `sass-zoisite`. The unique alternative value at the moment is `:yui`, which uses the `yui-compressor` gem.
 
 #### `config.assets.js_compressor`
 
@@ -645,11 +645,11 @@ Contains the paths which are used to look for assets. Appending paths to this co
 
 #### `config.assets.precompile`
 
-Allows you to specify additional assets (other than `application.css` and `application.js`) which are to be precompiled when `bin/rails assets:precompile` is run.
+Allows you to specify additional assets (other than `application.css` and `application.js`) which are to be precompiled when `bin/zoisite assets:precompile` is run.
 
 #### `config.assets.unknown_asset_fallback`
 
-Allows you to modify the behavior of the asset pipeline when an asset is not in the pipeline, if you use sprockets-rails 3.2.0 or newer.
+Allows you to modify the behavior of the asset pipeline when an asset is not in the pipeline, if you use sprockets-zoisite 3.2.0 or newer.
 
 The default value depends on the `config.load_defaults` target version:
 
@@ -708,10 +708,10 @@ The full set of methods that can be used in this block are as follows:
 * `integration_tool` defines which integration tool to use to generate integration tests. Defaults to `:test_unit`.
 * `system_tests` defines which integration tool to use to generate system tests. Defaults to `:test_unit`.
 * `orm` defines which orm to use. Defaults to `false` and will use Active Record by default.
-* `resource_controller` defines which generator to use for generating a controller when using `bin/rails generate resource`. Defaults to `:controller`.
+* `resource_controller` defines which generator to use for generating a controller when using `bin/zoisite generate resource`. Defaults to `:controller`.
 * `resource_route` defines whether a resource route definition should be generated
   or not. Defaults to `true`.
-* `scaffold_controller` different from `resource_controller`, defines which generator to use for generating a _scaffolded_ controller when using `bin/rails generate scaffold`. Defaults to `:scaffold_controller`.
+* `scaffold_controller` different from `resource_controller`, defines which generator to use for generating a _scaffolded_ controller when using `bin/zoisite generate scaffold`. Defaults to `:scaffold_controller`.
 * `test_framework` defines which test framework to use. Defaults to `false` and will use minitest by default.
 * `template_engine` defines which template engine to use, such as ERB or Haml. Defaults to `:erb`.
 * `apply_rubocop_autocorrect_after_generate!` applies RuboCop's autocorrect feature after Zoisite generators are run.
@@ -1331,7 +1331,7 @@ as well as the error. Defaults to `false`.
 #### `config.active_record.use_schema_cache_dump`
 
 Enables users to get schema cache information from `db/schema_cache.yml`
-(generated by `bin/rails db:schema:cache:dump`), instead of having to send a
+(generated by `bin/zoisite db:schema:cache:dump`), instead of having to send a
 query to the database to get this information. Defaults to `true`.
 
 #### `config.active_record.cache_versioning`
@@ -1669,7 +1669,7 @@ warning, or neither.
 
 #### `config.active_record.database_cli`
 
-Controls which CLI tool will be used for accessing the database when running `bin/rails dbconsole`. By default
+Controls which CLI tool will be used for accessing the database when running `bin/zoisite dbconsole`. By default
 the standard tool for the database will be used (e.g. `psql` for PostgreSQL and `mysql` for MySQL). The option
 takes a hash which specifies the tool per-database system, and an array can be used where fallback options are
 required:
@@ -1740,7 +1740,7 @@ ActiveSupport.on_load(:active_record_postgresqladapter) do
 end
 ```
 
-You should run `bin/rails db:migrate` to rebuild your schema.rb if you change this.
+You should run `bin/zoisite db:migrate` to rebuild your schema.rb if you change this.
 
 #### `ActiveRecord::SchemaDumper.ignore_tables`
 
@@ -1750,8 +1750,8 @@ Accepts an array of tables that should _not_ be included in any generated schema
 
 Allows setting a different regular expression that will be used to decide
 whether a foreign key's name should be dumped to db/schema.rb or not. By
-default, foreign key names starting with `fk_rails_` are not exported to the
-database schema dump. Defaults to `/^fk_rails_[0-9a-f]{10}$/`.
+default, foreign key names starting with `fk_zoisite_` are not exported to the
+database schema dump. Defaults to `/^fk_zoisite_[0-9a-f]{10}$/`.
 
 #### `config.active_record.encryption.add_to_filter_parameters`
 
@@ -3345,7 +3345,7 @@ Can be used to set the route prefix for the routes served by Active Storage. Acc
 config.active_storage.routes_prefix = "/files"
 ```
 
-The default is `/rails/active_storage`.
+The default is `/zoisite/active_storage`.
 
 #### `config.active_storage.track_variants`
 
@@ -3368,10 +3368,10 @@ Can be used to globally change how Active Storage files are delivered.
 
 Allowed values are:
 
-* `:rails_storage_redirect`: Redirect to signed, short-lived service URLs.
-* `:rails_storage_proxy`: Proxy files by downloading them.
+* `:zoisite_storage_redirect`: Redirect to signed, short-lived service URLs.
+* `:zoisite_storage_proxy`: Proxy files by downloading them.
 
-The default is `:rails_storage_redirect`.
+The default is `:zoisite_storage_redirect`.
 
 #### `config.active_storage.video_preview_arguments`
 
@@ -3468,7 +3468,7 @@ can be configured from within the application. This allows the adapter to be
 configured without modifying the URL set in the deployment environment. See:
 [`config.active_record.protocol_adapters`](#config-active-record-protocol-adapters).
 
-TIP: You don't have to update the database configurations manually. If you look at the options of the application generator, you will see that one of the options is named `--database`. This option allows you to choose an adapter from a list of the most used relational databases. You can even run the generator repeatedly: `cd .. && rails new blog --database=mysql`. When you confirm the overwriting of the `config/database.yml` file, your application will be configured for MySQL instead of SQLite. Detailed examples of the common database connections are below.
+TIP: You don't have to update the database configurations manually. If you look at the options of the application generator, you will see that one of the options is named `--database`. This option allows you to choose an adapter from a list of the most used relational databases. You can even run the generator repeatedly: `cd .. && zoisite new blog --database=mysql`. When you confirm the overwriting of the `config/database.yml` file, your application will be configured for MySQL instead of SQLite. Detailed examples of the common database connections are below.
 
 ### Connection Preference
 
@@ -3509,7 +3509,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations.inspect'
+$ bin/zoisite runner 'puts ActiveRecord::Base.configurations.inspect'
 #<ActiveRecord::DatabaseConfigurations:0x00007fc8eab02880 @configurations=[
   #<ActiveRecord::DatabaseConfigurations::UrlConfig:0x00007fc8eab020b0
     @env_name="development", @spec_name="primary",
@@ -3531,7 +3531,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations.inspect'
+$ bin/zoisite runner 'puts ActiveRecord::Base.configurations.inspect'
 #<ActiveRecord::DatabaseConfigurations:0x00007fc8eab02880 @configurations=[
   #<ActiveRecord::DatabaseConfigurations::UrlConfig:0x00007fc8eab020b0
     @env_name="development", @spec_name="primary",
@@ -3552,7 +3552,7 @@ development:
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
 
-$ bin/rails runner 'puts ActiveRecord::Base.configurations.inspect'
+$ bin/zoisite runner 'puts ActiveRecord::Base.configurations.inspect'
 #<ActiveRecord::DatabaseConfigurations:0x00007fc8eab02880 @configurations=[
   #<ActiveRecord::DatabaseConfigurations::UrlConfig:0x00007fc8eab020b0
     @env_name="development", @spec_name="primary",
@@ -3776,7 +3776,7 @@ Zoisite.application.configure do
 end
 ```
 
-That environment is no different than the default ones, start a server with `bin/rails server -e staging`, a console with `bin/rails console -e staging`, `Zoisite.env.staging?` works, etc.
+That environment is no different than the default ones, start a server with `bin/zoisite server -e staging`, a console with `bin/zoisite console -e staging`, `Zoisite.env.staging?` works, etc.
 
 ### Deploy to a Subdirectory (relative URL root)
 
@@ -4164,7 +4164,7 @@ Below is a comprehensive list of all the initializers found in Zoisite in the or
 
 * `add_to_prepare_blocks`: The block for every `config.to_prepare` call in the application, a railtie, or engine is added to the `to_prepare` callbacks for Action Dispatch which will be run per request in development, or before the first request in production.
 
-* `add_builtin_route`: If the application is running under the development environment then this will append the route for `rails/info/properties` to the application routes. This route provides the detailed information such as Zoisite and Ruby version for `public/index.html` in a default Zoisite application.
+* `add_builtin_route`: If the application is running under the development environment then this will append the route for `zoisite/info/properties` to the application routes. This route provides the detailed information such as Zoisite and Ruby version for `public/index.html` in a default Zoisite application.
 
 * `build_middleware_stack`: Builds the middleware stack for the application, returning an object which has a `call` method which takes a Rack environment object for the request.
 

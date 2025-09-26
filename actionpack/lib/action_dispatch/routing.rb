@@ -241,7 +241,7 @@ module ActionDispatch
   #
   # ## View a list of all your routes
   #
-  #     $ bin/rails routes
+  #     $ bin/zoisite routes
   #
   # Target a specific controller with `-c`, or grep routes using `-g`. Useful in
   # conjunction with `--expanded` which displays routes vertically.

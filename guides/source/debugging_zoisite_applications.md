@@ -244,7 +244,7 @@ config.active_job.verbose_enqueue_logs = true
 ```
 
 ```irb
-# bin/rails console
+# bin/zoisite console
 ActiveJob.verbose_enqueue_logs = true
 ```
 
@@ -322,7 +322,7 @@ The contents of the block, and therefore the string interpolation, are only
 evaluated if debug is enabled. This performance savings are only really
 noticeable with large amounts of logging, but it's a good practice to employ.
 
-INFO: This section was written by [Jon Cairns at a Stack Overflow answer](https://stackoverflow.com/questions/16546730/logging-in-rails-is-there-any-performance-hit/16546935#16546935)
+INFO: This section was written by [Jon Cairns at a Stack Overflow answer](https://stackoverflow.com/questions/16546730/logging-in-zoisite-is-there-any-performance-hit/16546935#16546935)
 and it is licensed under [cc by-sa 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 Debugging with the `debug` Gem
@@ -366,7 +366,7 @@ Once your app evaluates the debugging statement, it'll enter the debugging sessi
 
 ```ruby
 Processing by PostsController#index as HTML
-[2, 11] in ~/projects/rails-guide-example/app/controllers/posts_controller.rb
+[2, 11] in ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb
      2|   before_action :set_post, only: %i[ show edit update destroy ]
      3|
      4|   # GET /posts or /posts.json
@@ -377,7 +377,7 @@ Processing by PostsController#index as HTML
      9|
     10|   # GET /posts/1 or /posts/1.json
     11|   def show
-=>#0    PostsController#index at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:7
+=>#0    PostsController#index at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:7
   #1    ActionController::BasicImplicitRender#send_action(method="index", args=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-8.1.0.alpha/lib/action_controller/metal/basic_implicit_render.rb:6
   # and 72 frames (use `bt' command for all frames)
 (rdbg)
@@ -443,7 +443,7 @@ Besides direct evaluation, the debugger also helps you collect a rich amount of 
 When used without any options, `backtrace` lists all the frames on the stack:
 
 ```ruby
-=>#0    PostsController#index at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:7
+=>#0    PostsController#index at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:7
   #1    ActionController::BasicImplicitRender#send_action(method="index", args=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-2.0.alpha/lib/action_controller/metal/basic_implicit_render.rb:6
   #2    AbstractController::Base#process_action(method_name="index", args=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-8.1.0.alpha/lib/abstract_controller/base.rb:214
   #3    ActionController::Rendering#process_action(#arg_rest=nil) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-8.1.0.alpha/lib/action_controller/metal/rendering.rb:53
@@ -532,7 +532,7 @@ And to remove them, you can use:
 **Set a breakpoint on a specified line number - e.g. `b 28`**
 
 ```ruby
-[20, 29] in ~/projects/rails-guide-example/app/controllers/posts_controller.rb
+[20, 29] in ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb
     20|   end
     21|
     22|   # POST /posts or /posts.json
@@ -543,16 +543,16 @@ And to remove them, you can use:
     27|     respond_to do |format|
     28|       if @post.save
     29|         format.html { redirect_to @post, notice: "Post was successfully created." }
-=>#0    PostsController#create at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:25
+=>#0    PostsController#create at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:25
   #1    ActionController::BasicImplicitRender#send_action(method="create", args=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-7.0.0.alpha2/lib/action_controller/metal/basic_implicit_render.rb:6
   # and 72 frames (use `bt' command for all frames)
 (rdbg) b 28    # break command
-#0  BP - Line  /Users/st0012/projects/rails-guide-example/app/controllers/posts_controller.rb:28 (line)
+#0  BP - Line  /Users/st0012/projects/zoisite-guide-example/app/controllers/posts_controller.rb:28 (line)
 ```
 
 ```ruby
 (rdbg) c    # continue command
-[23, 32] in ~/projects/rails-guide-example/app/controllers/posts_controller.rb
+[23, 32] in ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb
     23|   def create
     24|     @post = Post.new(post_params)
     25|     debugger
@@ -563,17 +563,17 @@ And to remove them, you can use:
     30|         format.json { render :show, status: :created, location: @post }
     31|       else
     32|         format.html { render :new, status: :unprocessable_entity }
-=>#0    block {|format=#<ActionController::MimeResponds::Collec...|} in create at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:28
+=>#0    block {|format=#<ActionController::MimeResponds::Collec...|} in create at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:28
   #1    ActionController::MimeResponds#respond_to(mimes=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-7.0.0.alpha2/lib/action_controller/metal/mime_responds.rb:205
   # and 74 frames (use `bt' command for all frames)
 
-Stop by #0  BP - Line  /Users/st0012/projects/rails-guide-example/app/controllers/posts_controller.rb:28 (line)
+Stop by #0  BP - Line  /Users/st0012/projects/zoisite-guide-example/app/controllers/posts_controller.rb:28 (line)
 ```
 
 Set a breakpoint on a given method call - e.g. `b @post.save`.
 
 ```ruby
-[20, 29] in ~/projects/rails-guide-example/app/controllers/posts_controller.rb
+[20, 29] in ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb
     20|   end
     21|
     22|   # POST /posts or /posts.json
@@ -584,7 +584,7 @@ Set a breakpoint on a given method call - e.g. `b @post.save`.
     27|     respond_to do |format|
     28|       if @post.save
     29|         format.html { redirect_to @post, notice: "Post was successfully created." }
-=>#0    PostsController#create at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:25
+=>#0    PostsController#create at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:25
   #1    ActionController::BasicImplicitRender#send_action(method="create", args=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-7.0.0.alpha2/lib/action_controller/metal/basic_implicit_render.rb:6
   # and 72 frames (use `bt' command for all frames)
 (rdbg) b @post.save    # break command
@@ -606,7 +606,7 @@ Set a breakpoint on a given method call - e.g. `b @post.save`.
     47|     def save!(**) # :nodoc:
     48|       SuppressorRegistry.suppressed[self.class.name] ? true : super
 =>#0    ActiveRecord::Suppressor#save(#arg_rest=nil) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/activerecord-7.0.0.alpha2/lib/active_record/suppressor.rb:44
-  #1    block {|format=#<ActionController::MimeResponds::Collec...|} in create at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:28
+  #1    block {|format=#<ActionController::MimeResponds::Collec...|} in create at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:28
   # and 75 frames (use `bt' command for all frames)
 
 Stop by #0  BP - Method  @post.save at /Users/st0012/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/activerecord-7.0.0.alpha2/lib/active_record/suppressor.rb:43
@@ -617,7 +617,7 @@ Stop by #0  BP - Method  @post.save at /Users/st0012/.rbenv/versions/3.0.1/lib/r
 Stop when an exception is raised - e.g. `catch ActiveRecord::RecordInvalid`.
 
 ```ruby
-[20, 29] in ~/projects/rails-guide-example/app/controllers/posts_controller.rb
+[20, 29] in ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb
     20|   end
     21|
     22|   # POST /posts or /posts.json
@@ -628,7 +628,7 @@ Stop when an exception is raised - e.g. `catch ActiveRecord::RecordInvalid`.
     27|     respond_to do |format|
     28|       if @post.save!
     29|         format.html { redirect_to @post, notice: "Post was successfully created." }
-=>#0    PostsController#create at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:25
+=>#0    PostsController#create at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:25
   #1    ActionController::BasicImplicitRender#send_action(method="create", args=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-7.0.0.alpha2/lib/action_controller/metal/basic_implicit_render.rb:6
   # and 72 frames (use `bt' command for all frames)
 (rdbg) catch ActiveRecord::RecordInvalid    # command
@@ -660,7 +660,7 @@ Stop by #1  BP - Catch  "ActiveRecord::RecordInvalid"
 Stop when the instance variable is changed - e.g. `watch @_response_body`.
 
 ```ruby
-[20, 29] in ~/projects/rails-guide-example/app/controllers/posts_controller.rb
+[20, 29] in ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb
     20|   end
     21|
     22|   # POST /posts or /posts.json
@@ -671,7 +671,7 @@ Stop when the instance variable is changed - e.g. `watch @_response_body`.
     27|     respond_to do |format|
     28|       if @post.save!
     29|         format.html { redirect_to @post, notice: "Post was successfully created." }
-=>#0    PostsController#create at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:25
+=>#0    PostsController#create at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:25
   #1    ActionController::BasicImplicitRender#send_action(method="create", args=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-7.0.0.alpha2/lib/action_controller/metal/basic_implicit_render.rb:6
   # and 72 frames (use `bt' command for all frames)
 (rdbg) watch @_response_body    # command
@@ -715,7 +715,7 @@ In addition to different types of breakpoints, you can also specify options to a
 Please also note that the first 3 options: `do:`, `pre:` and `if:` are also available for the debug statements we mentioned earlier. For example:
 
 ```ruby
-[2, 11] in ~/projects/rails-guide-example/app/controllers/posts_controller.rb
+[2, 11] in ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb
      2|   before_action :set_post, only: %i[ show edit update destroy ]
      3|
      4|   # GET /posts or /posts.json
@@ -726,7 +726,7 @@ Please also note that the first 3 options: `do:`, `pre:` and `if:` are also avai
      9|
     10|   # GET /posts/1 or /posts/1.json
     11|   def show
-=>#0    PostsController#index at ~/projects/rails-guide-example/app/controllers/posts_controller.rb:7
+=>#0    PostsController#index at ~/projects/zoisite-guide-example/app/controllers/posts_controller.rb:7
   #1    ActionController::BasicImplicitRender#send_action(method="index", args=[]) at ~/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/actionpack-7.0.0.alpha2/lib/action_controller/metal/basic_implicit_render.rb:6
   # and 72 frames (use `bt' command for all frames)
 (rdbg:binding.break) info
@@ -888,7 +888,7 @@ application. Here is a list of useful plugins for debugging:
 * [Better Errors](https://github.com/charliesome/better_errors) Replaces the
   standard Zoisite error page with a new one containing more contextual information,
   like source code and variable inspection.
-* [ZoisitePanel](https://github.com/dejan/rails_panel) Chrome extension for Zoisite
+* [ZoisitePanel](https://github.com/dejan/zoisite_panel) Chrome extension for Zoisite
   development that will end your tailing of development.log. Have all information
   about your Zoisite app requests in the browser — in the Developer Tools panel.
   Provides insight to db/rendering/total times, parameter list, rendered views and
@@ -898,5 +898,5 @@ application. Here is a list of useful plugins for debugging:
 References
 ----------
 
-* [web-console Homepage](https://github.com/rails/web-console)
+* [web-console Homepage](https://github.com/zoisite/web-console)
 * [debug homepage](https://github.com/ruby/debug)

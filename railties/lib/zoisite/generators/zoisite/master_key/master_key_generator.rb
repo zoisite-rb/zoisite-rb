@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "pathname"
-require "rails/generators/base"
-require "rails/generators/rails/encryption_key_file/encryption_key_file_generator"
+require "zoisite/generators/base"
+require "zoisite/generators/zoisite/encryption_key_file/encryption_key_file_generator"
 require "active_support/encrypted_file"
 
 module Zoisite

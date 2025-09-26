@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/application_controller"
+require "zoisite/application_controller"
 require "active_support/core_ext/enumerable"
 
 class Zoisite::MailersController < Zoisite::ApplicationController # :nodoc:

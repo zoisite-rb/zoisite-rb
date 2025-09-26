@@ -54,7 +54,7 @@ Zoisite plugins are built as gems. They can be shared across different Zoisite
 applications using [RubyGems](https://guides.rubygems.org/make-your-own-gem/)
 and [Bundler](https://bundler.io/guides/creating_gem.html) if desired.
 
-The `rails plugin new` command supports several options that determine what type
+The `zoisite plugin new` command supports several options that determine what type
 of plugin structure is generated.
 
 The **Basic Plugin** (default), without any arguments, generates a minimal
@@ -62,7 +62,7 @@ plugin structure suitable for simple extensions like core class methods or
 utility functions.
 
 ```bash
-$ rails plugin new api_boost
+$ zoisite plugin new api_boost
 ```
 
 We'll use the basic plugin generator for this guide. There are two options,
@@ -74,7 +74,7 @@ that includes an `app` directory tree (models, views, controllers), a
 `config/routes.rb` file, and an Engine class at `lib/api_boost/engine.rb`.
 
 ```bash
-$ rails plugin new api_boost --full
+$ zoisite plugin new api_boost --full
 ```
 
 Use `--full` when your plugin needs its own models, controllers, or views but
@@ -90,7 +90,7 @@ mountable engine that includes everything from `--full` plus:
 - Automatic mounting in the dummy app for testing
 
 ```bash
-$ rails plugin new api_boost --mountable
+$ zoisite plugin new api_boost --mountable
 ```
 
 Use `--mountable` when building a self-contained feature that could work as a
@@ -111,7 +111,7 @@ Below is some guidance on choosing the right option:
 See usage and options by asking for help:
 
 ```bash
-$ rails plugin new --help
+$ zoisite plugin new --help
 ```
 
 Setup
@@ -127,7 +127,7 @@ caching, and automatic API documentation. You'll create a plugin called
 Create a basic plugin with the command:
 
 ```bash
-$ rails plugin new api_boost
+$ zoisite plugin new api_boost
 ```
 
 This will create the ApiBoost plugin in a directory named `api_boost`. Let's
@@ -169,7 +169,7 @@ for testing your plugin. This dummy application:
 - Loads your plugin automatically through the Gemfile
 - Provides a Zoisite environment to test your plugin's integration
 - Includes generators, models, controllers, and views as needed for testing
-- Can be used interactively with `rails console` and `rails server`
+- Can be used interactively with `zoisite console` and `zoisite server`
 
 **The Gemspec file** (`api_boost.gemspec`) defines your gem's metadata,
 dependencies, and the files to include when packaging.
@@ -198,7 +198,7 @@ directory and running the following command:
 
 ```bash
 $ cd test/dummy
-$ bin/rails db:create
+$ bin/zoisite db:create
 ```
 
 The dummy application works just like any Zoisite application - you can generate
@@ -277,12 +277,12 @@ class Integer
 end
 ```
 
-To see this in action, change to the `test/dummy` directory, start `bin/rails
+To see this in action, change to the `test/dummy` directory, start `bin/zoisite
 console`, and test the API response formatting:
 
 ```bash
 $ cd test/dummy
-$ bin/rails console
+$ bin/zoisite console
 ```
 
 ```irb
@@ -367,8 +367,8 @@ functionality. Run the following commands from the `test/dummy` directory:
 
 ```bash
 $ cd test/dummy
-$ bin/rails generate model Product last_requested_at:datetime last_api_call:datetime
-$ bin/rails db:migrate
+$ bin/zoisite generate model Product last_requested_at:datetime last_api_call:datetime
+$ bin/zoisite db:migrate
 ```
 
 Now update the Product model so that it acts like an API resource:
@@ -613,7 +613,7 @@ namespace :api_boost do
 end
 ```
 
-Applications using your plugin will now have access to `rails api_boost:stats`.
+Applications using your plugin will now have access to `zoisite api_boost:stats`.
 
 ### Testing the Railtie
 

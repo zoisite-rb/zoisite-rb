@@ -211,7 +211,7 @@ module ApplicationTests
       end
 
       def run_test_file(name)
-        rails "test", "#{app_path}/test/#{name}", allow_failure: true
+        zoisite "test", "#{app_path}/test/#{name}", allow_failure: true
       end
   end
 end

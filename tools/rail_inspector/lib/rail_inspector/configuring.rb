@@ -48,16 +48,16 @@ module RailInspector
 
     attr_reader :errors, :files
 
-    def initialize(rails_path)
+    def initialize(zoisite_path)
       @errors = []
-      @files = Files.new(rails_path)
+      @files = Files.new(zoisite_path)
 
-      @files[:application_configuration] = "railties/lib/rails/application/configuration.rb"
+      @files[:application_configuration] = "railties/lib/zoisite/application/configuration.rb"
       @files[:doc_path] = "guides/source/configuring.md"
-      @files[:rails_version] = "RAILS_VERSION"
+      @files[:zoisite_version] = "RAILS_VERSION"
 
-      @files[:new_framework_defaults] = "railties/lib/rails/generators/rails/app/templates/config/initializers/new_framework_defaults_%{version}.rb.tt" % {
-        version: rails_version.tr(".", "_")
+      @files[:new_framework_defaults] = "railties/lib/zoisite/generators/zoisite/app/templates/config/initializers/new_framework_defaults_%{version}.rb.tt" % {
+        version: zoisite_version.tr(".", "_")
       }
     end
 
@@ -71,7 +71,7 @@ module RailInspector
         ),
         Check::NewFrameworkDefaultsFile.new(
           self,
-          framework_defaults_by_version[rails_version].keys,
+          framework_defaults_by_version[zoisite_version].keys,
           files.new_framework_defaults.read
         ),
       ].each(&:check)
@@ -81,8 +81,8 @@ module RailInspector
       @doc ||= Configuring::Document.parse(files.doc_path.read)
     end
 
-    def rails_version
-      @rails_version ||= files.rails_version.read.to_f.to_s
+    def zoisite_version
+      @zoisite_version ||= files.zoisite_version.read.to_f.to_s
     end
 
     def write!
@@ -93,7 +93,7 @@ module RailInspector
       return unless errors.any?
 
       errors.join("\n") + "\n" +
-        "Make sure new configurations are added to configuring.md#rails-general-configuration in alphabetical order.\n" +
+        "Make sure new configurations are added to configuring.md#zoisite-general-configuration in alphabetical order.\n" +
         "Errors may be autocorrectable with the --autocorrect flag"
     end
 

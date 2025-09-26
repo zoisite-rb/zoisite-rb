@@ -1,7 +1,7 @@
 name: "<%= options[:app_name] %>"
 
 services:
-  rails-app:
+  zoisite-app:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile

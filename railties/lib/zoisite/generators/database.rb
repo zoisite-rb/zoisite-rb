@@ -159,7 +159,7 @@ module Zoisite
         end
 
         def feature_name
-          "ghcr.io/rails/devcontainer/features/mysql-client"
+          "ghcr.io/zoisite/devcontainer/features/mysql-client"
         end
       end
 
@@ -202,7 +202,7 @@ module Zoisite
         end
 
         def feature_name
-          "ghcr.io/rails/devcontainer/features/postgres-client"
+          "ghcr.io/zoisite/devcontainer/features/postgres-client"
         end
       end
 
@@ -260,7 +260,7 @@ module Zoisite
         end
 
         def feature_name
-          "ghcr.io/rails/devcontainer/features/sqlite3"
+          "ghcr.io/zoisite/devcontainer/features/sqlite3"
         end
       end
 

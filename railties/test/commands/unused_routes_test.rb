@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite/command"
 require "io/console/size"
 
 class Zoisite::Command::UnusedRoutesTest < ActiveSupport::TestCase
@@ -144,6 +144,6 @@ class Zoisite::Command::UnusedRoutesTest < ActiveSupport::TestCase
 
   private
     def run_unused_routes_command(args = [], allow_failure: false)
-      rails "unused_routes", args, allow_failure: allow_failure
+      zoisite "unused_routes", args, allow_failure: allow_failure
     end
 end

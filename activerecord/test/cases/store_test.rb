@@ -221,7 +221,7 @@ class StoreTest < ActiveRecord::TestCase
 
   test "serialize stored nested attributes" do
     user = Admin::User.find_by_name("Jamis")
-    user.update(settings: { "color" => { "jenny" => "blue" }, homepage: "rails" })
+    user.update(settings: { "color" => { "jenny" => "blue" }, homepage: "zoisite" })
 
     assert_equal true, user.settings.instance_of?(ActiveSupport::HashWithIndifferentAccess)
     assert_equal "blue", user.settings[:color][:jenny]
@@ -230,10 +230,10 @@ class StoreTest < ActiveRecord::TestCase
 
   test "store takes precedence when updating store and accessor" do
     user = Admin::User.find_by_name("Jamis")
-    user.update(settings: { homepage: "rails" }, homepage: "not rails")
+    user.update(settings: { homepage: "zoisite" }, homepage: "not zoisite")
 
-    assert_equal "rails", user.settings[:homepage]
-    assert_equal "rails", user.homepage
+    assert_equal "zoisite", user.settings[:homepage]
+    assert_equal "zoisite", user.homepage
   end
 
   def test_convert_store_attributes_from_Hash_to_HashWithIndifferentAccess_saving_the_data_and_access_attributes_indifferently

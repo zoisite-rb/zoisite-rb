@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite/command"
 require "io/console/size"
 
 class Zoisite::Command::RoutesTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
-  test "singular resource output in rails routes" do
+  test "singular resource output in zoisite routes" do
     app_file "config/routes.rb", <<-RUBY
       Zoisite.application.routes.draw do
         resource :post
@@ -25,7 +25,7 @@ class Zoisite::Command::RoutesTest < ActiveSupport::TestCase
                                     PUT    /post(.:format)                                         posts#update
                                     DELETE /post(.:format)                                         posts#destroy
                                     POST   /post(.:format)                                         posts#create
-      rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format) action_mailbox/ingresses/postmark/inbound_emails#create
+      zoisite_postmark_inbound_emails POST   /zoisite/action_mailbox/postmark/inbound_emails(.:format) action_mailbox/ingresses/postmark/inbound_emails#create
     OUTPUT
 
     assert_equal <<~OUTPUT, run_routes_command([ "-c", "UserPermissionController" ])
@@ -40,7 +40,7 @@ class Zoisite::Command::RoutesTest < ActiveSupport::TestCase
     OUTPUT
   end
 
-  test "rails routes with global search key" do
+  test "zoisite routes with global search key" do
     app_file "config/routes.rb", <<-RUBY
       Zoisite.application.routes.draw do
         get '/cart', to: 'cart#show'
@@ -52,29 +52,29 @@ class Zoisite::Command::RoutesTest < ActiveSupport::TestCase
     assert_equal <<~MESSAGE, run_routes_command([ "-g", "show" ])
                          Prefix Verb URI Pattern                                                                                       Controller#Action
                            cart GET  /cart(.:format)                                                                                   cart#show
-  rails_conductor_inbound_email GET  /rails/conductor/action_mailbox/inbound_emails/:id(.:format)                                      rails/conductor/action_mailbox/inbound_emails#show
-             rails_service_blob GET  /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
-       rails_service_blob_proxy GET  /rails/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
-                                GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
-      rails_blob_representation GET  /rails/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
-rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
-                                GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
-             rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
+  zoisite_conductor_inbound_email GET  /zoisite/conductor/action_mailbox/inbound_emails/:id(.:format)                                      zoisite/conductor/action_mailbox/inbound_emails#show
+             zoisite_service_blob GET  /zoisite/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
+       zoisite_service_blob_proxy GET  /zoisite/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
+                                GET  /zoisite/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
+      zoisite_blob_representation GET  /zoisite/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
+zoisite_blob_representation_proxy GET  /zoisite/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
+                                GET  /zoisite/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
+             zoisite_disk_service GET  /zoisite/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
     MESSAGE
 
     assert_equal <<~MESSAGE, run_routes_command([ "-g", "POST" ])
                                      Prefix Verb URI Pattern                                                            Controller#Action
                                             POST /cart(.:format)                                                        cart#create
-              rails_postmark_inbound_emails POST /rails/action_mailbox/postmark/inbound_emails(.:format)                action_mailbox/ingresses/postmark/inbound_emails#create
-                 rails_relay_inbound_emails POST /rails/action_mailbox/relay/inbound_emails(.:format)                   action_mailbox/ingresses/relay/inbound_emails#create
-              rails_sendgrid_inbound_emails POST /rails/action_mailbox/sendgrid/inbound_emails(.:format)                action_mailbox/ingresses/sendgrid/inbound_emails#create
-              rails_mandrill_inbound_emails POST /rails/action_mailbox/mandrill/inbound_emails(.:format)                action_mailbox/ingresses/mandrill/inbound_emails#create
-               rails_mailgun_inbound_emails POST /rails/action_mailbox/mailgun/inbound_emails/mime(.:format)            action_mailbox/ingresses/mailgun/inbound_emails#create
-                                            POST /rails/conductor/action_mailbox/inbound_emails(.:format)               rails/conductor/action_mailbox/inbound_emails#create
-      rails_conductor_inbound_email_sources POST /rails/conductor/action_mailbox/inbound_emails/sources(.:format)       rails/conductor/action_mailbox/inbound_emails/sources#create
-      rails_conductor_inbound_email_reroute POST /rails/conductor/action_mailbox/:inbound_email_id/reroute(.:format)    rails/conductor/action_mailbox/reroutes#create
-   rails_conductor_inbound_email_incinerate POST /rails/conductor/action_mailbox/:inbound_email_id/incinerate(.:format) rails/conductor/action_mailbox/incinerates#create
-                       rails_direct_uploads POST /rails/active_storage/direct_uploads(.:format)                         active_storage/direct_uploads#create
+              zoisite_postmark_inbound_emails POST /zoisite/action_mailbox/postmark/inbound_emails(.:format)                action_mailbox/ingresses/postmark/inbound_emails#create
+                 zoisite_relay_inbound_emails POST /zoisite/action_mailbox/relay/inbound_emails(.:format)                   action_mailbox/ingresses/relay/inbound_emails#create
+              zoisite_sendgrid_inbound_emails POST /zoisite/action_mailbox/sendgrid/inbound_emails(.:format)                action_mailbox/ingresses/sendgrid/inbound_emails#create
+              zoisite_mandrill_inbound_emails POST /zoisite/action_mailbox/mandrill/inbound_emails(.:format)                action_mailbox/ingresses/mandrill/inbound_emails#create
+               zoisite_mailgun_inbound_emails POST /zoisite/action_mailbox/mailgun/inbound_emails/mime(.:format)            action_mailbox/ingresses/mailgun/inbound_emails#create
+                                            POST /zoisite/conductor/action_mailbox/inbound_emails(.:format)               zoisite/conductor/action_mailbox/inbound_emails#create
+      zoisite_conductor_inbound_email_sources POST /zoisite/conductor/action_mailbox/inbound_emails/sources(.:format)       zoisite/conductor/action_mailbox/inbound_emails/sources#create
+      zoisite_conductor_inbound_email_reroute POST /zoisite/conductor/action_mailbox/:inbound_email_id/reroute(.:format)    zoisite/conductor/action_mailbox/reroutes#create
+   zoisite_conductor_inbound_email_incinerate POST /zoisite/conductor/action_mailbox/:inbound_email_id/incinerate(.:format) zoisite/conductor/action_mailbox/incinerates#create
+                       zoisite_direct_uploads POST /zoisite/active_storage/direct_uploads(.:format)                         active_storage/direct_uploads#create
     MESSAGE
 
     assert_equal <<~MESSAGE, run_routes_command([ "-g", "basketballs" ])
@@ -83,7 +83,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
     MESSAGE
   end
 
-  test "rails routes with matching path" do
+  test "zoisite routes with matching path" do
     app_file "config/routes.rb", <<-RUBY
       Zoisite.application.routes.draw do
         resources :photos
@@ -118,7 +118,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
     MESSAGE
   end
 
-  test "rails routes with controller search key" do
+  test "zoisite routes with controller search key" do
     app_file "config/routes.rb", <<-RUBY
       Zoisite.application.routes.draw do
         get '/cart', to: 'cart#show'
@@ -149,7 +149,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
     assert_equal expected_perm_output, output
   end
 
-  test "rails routes with namespaced controller search key" do
+  test "zoisite routes with namespaced controller search key" do
     app_file "config/routes.rb", <<-RUBY
       Zoisite.application.routes.draw do
         namespace :admin do
@@ -179,7 +179,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
                                     PUT    /admin/post(.:format)                                   admin/posts#update
                                     DELETE /admin/post(.:format)                                   admin/posts#destroy
                                     POST   /admin/post(.:format)                                   admin/posts#create
-      rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format) action_mailbox/ingresses/postmark/inbound_emails#create
+      zoisite_postmark_inbound_emails POST   /zoisite/action_mailbox/postmark/inbound_emails(.:format) action_mailbox/ingresses/postmark/inbound_emails#create
     OUTPUT
 
     expected_permission_output = <<~OUTPUT
@@ -197,7 +197,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
     assert_equal expected_permission_output, run_routes_command([ "-c", "UserPermissionController" ])
   end
 
-  test "rails routes displays message when no routes are defined" do
+  test "zoisite routes displays message when no routes are defined" do
     app_file "config/routes.rb", <<-RUBY
       Zoisite.application.routes.draw do
       end
@@ -205,33 +205,33 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
 
     assert_equal <<~MESSAGE, run_routes_command
                                   Prefix Verb URI Pattern                                                                                       Controller#Action
-           rails_postmark_inbound_emails POST /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
-              rails_relay_inbound_emails POST /rails/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
-           rails_sendgrid_inbound_emails POST /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                           action_mailbox/ingresses/sendgrid/inbound_emails#create
-     rails_mandrill_inbound_health_check GET  /rails/action_mailbox/mandrill/inbound_emails(.:format)                                           action_mailbox/ingresses/mandrill/inbound_emails#health_check
-           rails_mandrill_inbound_emails POST /rails/action_mailbox/mandrill/inbound_emails(.:format)                                           action_mailbox/ingresses/mandrill/inbound_emails#create
-            rails_mailgun_inbound_emails POST /rails/action_mailbox/mailgun/inbound_emails/mime(.:format)                                       action_mailbox/ingresses/mailgun/inbound_emails#create
-          rails_conductor_inbound_emails GET  /rails/conductor/action_mailbox/inbound_emails(.:format)                                          rails/conductor/action_mailbox/inbound_emails#index
-                                         POST /rails/conductor/action_mailbox/inbound_emails(.:format)                                          rails/conductor/action_mailbox/inbound_emails#create
-       new_rails_conductor_inbound_email GET  /rails/conductor/action_mailbox/inbound_emails/new(.:format)                                      rails/conductor/action_mailbox/inbound_emails#new
-           rails_conductor_inbound_email GET  /rails/conductor/action_mailbox/inbound_emails/:id(.:format)                                      rails/conductor/action_mailbox/inbound_emails#show
-new_rails_conductor_inbound_email_source GET  /rails/conductor/action_mailbox/inbound_emails/sources/new(.:format)                              rails/conductor/action_mailbox/inbound_emails/sources#new
-   rails_conductor_inbound_email_sources POST /rails/conductor/action_mailbox/inbound_emails/sources(.:format)                                  rails/conductor/action_mailbox/inbound_emails/sources#create
-   rails_conductor_inbound_email_reroute POST /rails/conductor/action_mailbox/:inbound_email_id/reroute(.:format)                               rails/conductor/action_mailbox/reroutes#create
-rails_conductor_inbound_email_incinerate POST /rails/conductor/action_mailbox/:inbound_email_id/incinerate(.:format)                            rails/conductor/action_mailbox/incinerates#create
-                      rails_service_blob GET  /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
-                rails_service_blob_proxy GET  /rails/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
-                                         GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
-               rails_blob_representation GET  /rails/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
-         rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
-                                         GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
-                      rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
-               update_rails_disk_service PUT  /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
-                    rails_direct_uploads POST /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
+           zoisite_postmark_inbound_emails POST /zoisite/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
+              zoisite_relay_inbound_emails POST /zoisite/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
+           zoisite_sendgrid_inbound_emails POST /zoisite/action_mailbox/sendgrid/inbound_emails(.:format)                                           action_mailbox/ingresses/sendgrid/inbound_emails#create
+     zoisite_mandrill_inbound_health_check GET  /zoisite/action_mailbox/mandrill/inbound_emails(.:format)                                           action_mailbox/ingresses/mandrill/inbound_emails#health_check
+           zoisite_mandrill_inbound_emails POST /zoisite/action_mailbox/mandrill/inbound_emails(.:format)                                           action_mailbox/ingresses/mandrill/inbound_emails#create
+            zoisite_mailgun_inbound_emails POST /zoisite/action_mailbox/mailgun/inbound_emails/mime(.:format)                                       action_mailbox/ingresses/mailgun/inbound_emails#create
+          zoisite_conductor_inbound_emails GET  /zoisite/conductor/action_mailbox/inbound_emails(.:format)                                          zoisite/conductor/action_mailbox/inbound_emails#index
+                                         POST /zoisite/conductor/action_mailbox/inbound_emails(.:format)                                          zoisite/conductor/action_mailbox/inbound_emails#create
+       new_zoisite_conductor_inbound_email GET  /zoisite/conductor/action_mailbox/inbound_emails/new(.:format)                                      zoisite/conductor/action_mailbox/inbound_emails#new
+           zoisite_conductor_inbound_email GET  /zoisite/conductor/action_mailbox/inbound_emails/:id(.:format)                                      zoisite/conductor/action_mailbox/inbound_emails#show
+new_zoisite_conductor_inbound_email_source GET  /zoisite/conductor/action_mailbox/inbound_emails/sources/new(.:format)                              zoisite/conductor/action_mailbox/inbound_emails/sources#new
+   zoisite_conductor_inbound_email_sources POST /zoisite/conductor/action_mailbox/inbound_emails/sources(.:format)                                  zoisite/conductor/action_mailbox/inbound_emails/sources#create
+   zoisite_conductor_inbound_email_reroute POST /zoisite/conductor/action_mailbox/:inbound_email_id/reroute(.:format)                               zoisite/conductor/action_mailbox/reroutes#create
+zoisite_conductor_inbound_email_incinerate POST /zoisite/conductor/action_mailbox/:inbound_email_id/incinerate(.:format)                            zoisite/conductor/action_mailbox/incinerates#create
+                      zoisite_service_blob GET  /zoisite/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
+                zoisite_service_blob_proxy GET  /zoisite/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
+                                         GET  /zoisite/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
+               zoisite_blob_representation GET  /zoisite/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
+         zoisite_blob_representation_proxy GET  /zoisite/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
+                                         GET  /zoisite/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
+                      zoisite_disk_service GET  /zoisite/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
+               update_zoisite_disk_service PUT  /zoisite/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
+                    zoisite_direct_uploads POST /zoisite/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
     MESSAGE
   end
 
-  test "rails routes with expanded option" do
+  test "zoisite routes with expanded option" do
     app_file "config/routes.rb", <<-RUBY
       Zoisite.application.routes.draw do
         get '/cart', to: 'cart#show'
@@ -246,7 +246,7 @@ rails_conductor_inbound_email_incinerate POST /rails/conductor/action_mailbox/:i
     output.gsub!(/\.rb:\d+$/, ".rb:XX")
     output.gsub!(/ \([\d.]+\) /, " (X.X.X) ")
 
-    rails_gem_root = File.expand_path("../../../../", __FILE__)
+    zoisite_gem_root = File.expand_path("../../../../", __FILE__)
 
     assert_equal <<~MESSAGE, output
       --[ Route 1 ]--------------
@@ -256,147 +256,147 @@ rails_conductor_inbound_email_incinerate POST /rails/conductor/action_mailbox/:i
       Controller#Action | cart#show
       Source Location   | #{app_path}/config/routes.rb:XX
       --[ Route 2 ]--------------
-      Prefix            | rails_postmark_inbound_emails
+      Prefix            | zoisite_postmark_inbound_emails
       Verb              | POST
-      URI               | /rails/action_mailbox/postmark/inbound_emails(.:format)
+      URI               | /zoisite/action_mailbox/postmark/inbound_emails(.:format)
       Controller#Action | action_mailbox/ingresses/postmark/inbound_emails#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 3 ]--------------
-      Prefix            | rails_relay_inbound_emails
+      Prefix            | zoisite_relay_inbound_emails
       Verb              | POST
-      URI               | /rails/action_mailbox/relay/inbound_emails(.:format)
+      URI               | /zoisite/action_mailbox/relay/inbound_emails(.:format)
       Controller#Action | action_mailbox/ingresses/relay/inbound_emails#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 4 ]--------------
-      Prefix            | rails_sendgrid_inbound_emails
+      Prefix            | zoisite_sendgrid_inbound_emails
       Verb              | POST
-      URI               | /rails/action_mailbox/sendgrid/inbound_emails(.:format)
+      URI               | /zoisite/action_mailbox/sendgrid/inbound_emails(.:format)
       Controller#Action | action_mailbox/ingresses/sendgrid/inbound_emails#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 5 ]--------------
-      Prefix            | rails_mandrill_inbound_health_check
+      Prefix            | zoisite_mandrill_inbound_health_check
       Verb              | GET
-      URI               | /rails/action_mailbox/mandrill/inbound_emails(.:format)
+      URI               | /zoisite/action_mailbox/mandrill/inbound_emails(.:format)
       Controller#Action | action_mailbox/ingresses/mandrill/inbound_emails#health_check
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 6 ]--------------
-      Prefix            | rails_mandrill_inbound_emails
+      Prefix            | zoisite_mandrill_inbound_emails
       Verb              | POST
-      URI               | /rails/action_mailbox/mandrill/inbound_emails(.:format)
+      URI               | /zoisite/action_mailbox/mandrill/inbound_emails(.:format)
       Controller#Action | action_mailbox/ingresses/mandrill/inbound_emails#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 7 ]--------------
-      Prefix            | rails_mailgun_inbound_emails
+      Prefix            | zoisite_mailgun_inbound_emails
       Verb              | POST
-      URI               | /rails/action_mailbox/mailgun/inbound_emails/mime(.:format)
+      URI               | /zoisite/action_mailbox/mailgun/inbound_emails/mime(.:format)
       Controller#Action | action_mailbox/ingresses/mailgun/inbound_emails#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 8 ]--------------
-      Prefix            | rails_conductor_inbound_emails
+      Prefix            | zoisite_conductor_inbound_emails
       Verb              | GET
-      URI               | /rails/conductor/action_mailbox/inbound_emails(.:format)
-      Controller#Action | rails/conductor/action_mailbox/inbound_emails#index
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      URI               | /zoisite/conductor/action_mailbox/inbound_emails(.:format)
+      Controller#Action | zoisite/conductor/action_mailbox/inbound_emails#index
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 9 ]--------------
       Prefix            |#{" "}
       Verb              | POST
-      URI               | /rails/conductor/action_mailbox/inbound_emails(.:format)
-      Controller#Action | rails/conductor/action_mailbox/inbound_emails#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      URI               | /zoisite/conductor/action_mailbox/inbound_emails(.:format)
+      Controller#Action | zoisite/conductor/action_mailbox/inbound_emails#create
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 10 ]-------------
-      Prefix            | new_rails_conductor_inbound_email
+      Prefix            | new_zoisite_conductor_inbound_email
       Verb              | GET
-      URI               | /rails/conductor/action_mailbox/inbound_emails/new(.:format)
-      Controller#Action | rails/conductor/action_mailbox/inbound_emails#new
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      URI               | /zoisite/conductor/action_mailbox/inbound_emails/new(.:format)
+      Controller#Action | zoisite/conductor/action_mailbox/inbound_emails#new
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 11 ]-------------
-      Prefix            | rails_conductor_inbound_email
+      Prefix            | zoisite_conductor_inbound_email
       Verb              | GET
-      URI               | /rails/conductor/action_mailbox/inbound_emails/:id(.:format)
-      Controller#Action | rails/conductor/action_mailbox/inbound_emails#show
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      URI               | /zoisite/conductor/action_mailbox/inbound_emails/:id(.:format)
+      Controller#Action | zoisite/conductor/action_mailbox/inbound_emails#show
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 12 ]-------------
-      Prefix            | new_rails_conductor_inbound_email_source
+      Prefix            | new_zoisite_conductor_inbound_email_source
       Verb              | GET
-      URI               | /rails/conductor/action_mailbox/inbound_emails/sources/new(.:format)
-      Controller#Action | rails/conductor/action_mailbox/inbound_emails/sources#new
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      URI               | /zoisite/conductor/action_mailbox/inbound_emails/sources/new(.:format)
+      Controller#Action | zoisite/conductor/action_mailbox/inbound_emails/sources#new
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 13 ]-------------
-      Prefix            | rails_conductor_inbound_email_sources
+      Prefix            | zoisite_conductor_inbound_email_sources
       Verb              | POST
-      URI               | /rails/conductor/action_mailbox/inbound_emails/sources(.:format)
-      Controller#Action | rails/conductor/action_mailbox/inbound_emails/sources#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      URI               | /zoisite/conductor/action_mailbox/inbound_emails/sources(.:format)
+      Controller#Action | zoisite/conductor/action_mailbox/inbound_emails/sources#create
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 14 ]-------------
-      Prefix            | rails_conductor_inbound_email_reroute
+      Prefix            | zoisite_conductor_inbound_email_reroute
       Verb              | POST
-      URI               | /rails/conductor/action_mailbox/:inbound_email_id/reroute(.:format)
-      Controller#Action | rails/conductor/action_mailbox/reroutes#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      URI               | /zoisite/conductor/action_mailbox/:inbound_email_id/reroute(.:format)
+      Controller#Action | zoisite/conductor/action_mailbox/reroutes#create
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 15 ]-------------
-      Prefix            | rails_conductor_inbound_email_incinerate
+      Prefix            | zoisite_conductor_inbound_email_incinerate
       Verb              | POST
-      URI               | /rails/conductor/action_mailbox/:inbound_email_id/incinerate(.:format)
-      Controller#Action | rails/conductor/action_mailbox/incinerates#create
-      Source Location   | #{rails_gem_root}/actionmailbox/config/routes.rb:XX
+      URI               | /zoisite/conductor/action_mailbox/:inbound_email_id/incinerate(.:format)
+      Controller#Action | zoisite/conductor/action_mailbox/incinerates#create
+      Source Location   | #{zoisite_gem_root}/actionmailbox/config/routes.rb:XX
       --[ Route 16 ]-------------
-      Prefix            | rails_service_blob
+      Prefix            | zoisite_service_blob
       Verb              | GET
-      URI               | /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)
+      URI               | /zoisite/active_storage/blobs/redirect/:signed_id/*filename(.:format)
       Controller#Action | active_storage/blobs/redirect#show
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
       --[ Route 17 ]-------------
-      Prefix            | rails_service_blob_proxy
+      Prefix            | zoisite_service_blob_proxy
       Verb              | GET
-      URI               | /rails/active_storage/blobs/proxy/:signed_id/*filename(.:format)
+      URI               | /zoisite/active_storage/blobs/proxy/:signed_id/*filename(.:format)
       Controller#Action | active_storage/blobs/proxy#show
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
       --[ Route 18 ]-------------
       Prefix            |#{" "}
       Verb              | GET
-      URI               | /rails/active_storage/blobs/:signed_id/*filename(.:format)
+      URI               | /zoisite/active_storage/blobs/:signed_id/*filename(.:format)
       Controller#Action | active_storage/blobs/redirect#show
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
       --[ Route 19 ]-------------
-      Prefix            | rails_blob_representation
+      Prefix            | zoisite_blob_representation
       Verb              | GET
-      URI               | /rails/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format)
+      URI               | /zoisite/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format)
       Controller#Action | active_storage/representations/redirect#show
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
       --[ Route 20 ]-------------
-      Prefix            | rails_blob_representation_proxy
+      Prefix            | zoisite_blob_representation_proxy
       Verb              | GET
-      URI               | /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)
+      URI               | /zoisite/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)
       Controller#Action | active_storage/representations/proxy#show
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
       --[ Route 21 ]-------------
       Prefix            |#{" "}
       Verb              | GET
-      URI               | /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)
+      URI               | /zoisite/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)
       Controller#Action | active_storage/representations/redirect#show
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
       --[ Route 22 ]-------------
-      Prefix            | rails_disk_service
+      Prefix            | zoisite_disk_service
       Verb              | GET
-      URI               | /rails/active_storage/disk/:encoded_key/*filename(.:format)
+      URI               | /zoisite/active_storage/disk/:encoded_key/*filename(.:format)
       Controller#Action | active_storage/disk#show
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
       --[ Route 23 ]-------------
-      Prefix            | update_rails_disk_service
+      Prefix            | update_zoisite_disk_service
       Verb              | PUT
-      URI               | /rails/active_storage/disk/:encoded_token(.:format)
+      URI               | /zoisite/active_storage/disk/:encoded_token(.:format)
       Controller#Action | active_storage/disk#update
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
       --[ Route 24 ]-------------
-      Prefix            | rails_direct_uploads
+      Prefix            | zoisite_direct_uploads
       Verb              | POST
-      URI               | /rails/active_storage/direct_uploads(.:format)
+      URI               | /zoisite/active_storage/direct_uploads(.:format)
       Controller#Action | active_storage/direct_uploads#create
-      Source Location   | #{rails_gem_root}/activestorage/config/routes.rb:XX
+      Source Location   | #{zoisite_gem_root}/activestorage/config/routes.rb:XX
     MESSAGE
   end
 
-  test "rails routes with unused option" do
+  test "zoisite routes with unused option" do
     app_file "config/routes.rb", <<-RUBY
       Zoisite.application.routes.draw do
       end
@@ -409,6 +409,6 @@ rails_conductor_inbound_email_incinerate POST /rails/conductor/action_mailbox/:i
 
   private
     def run_routes_command(args = [])
-      rails "routes", args
+      zoisite "routes", args
     end
 end

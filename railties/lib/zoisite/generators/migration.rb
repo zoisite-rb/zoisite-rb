@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/generators/actions/create_migration"
+require "zoisite/generators/actions/create_migration"
 
 module Zoisite
   module Generators

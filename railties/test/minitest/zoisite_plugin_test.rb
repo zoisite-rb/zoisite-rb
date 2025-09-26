@@ -8,7 +8,7 @@ class Minitest::ZoisitePluginTest < ActiveSupport::TestCase
   end
 
   test "replaces backtrace filter with one that silences gem lines" do
-    backtrace = ["lib/my_code.rb", backtrace_gem_line("rails")]
+    backtrace = ["lib/my_code.rb", backtrace_gem_line("zoisite")]
 
     with_plugin do
       assert_equal backtrace.take(1), Minitest.backtrace_filter.filter(backtrace)
@@ -16,7 +16,7 @@ class Minitest::ZoisitePluginTest < ActiveSupport::TestCase
   end
 
   test "replacement backtrace filter never returns an empty backtrace" do
-    backtrace = [backtrace_gem_line("rails")]
+    backtrace = [backtrace_gem_line("zoisite")]
 
     with_plugin do
       assert_equal backtrace, Minitest.backtrace_filter.filter(backtrace)
@@ -24,7 +24,7 @@ class Minitest::ZoisitePluginTest < ActiveSupport::TestCase
   end
 
   test "replacement backtrace filter silences Minitest lines when all lines are gem lines" do
-    backtrace = [backtrace_gem_line("rails"), backtrace_gem_line("minitest")]
+    backtrace = [backtrace_gem_line("zoisite"), backtrace_gem_line("minitest")]
 
     with_plugin do
       assert_equal backtrace.take(1), Minitest.backtrace_filter.filter(backtrace)
@@ -85,7 +85,7 @@ class Minitest::ZoisitePluginTest < ActiveSupport::TestCase
       original_reporter, Minitest.reporter = Minitest.reporter, Minitest::CompositeReporter.new(*initial_reporters)
 
       options = Minitest.process_args(args)
-      Minitest.plugin_rails_init(options)
+      Minitest.plugin_zoisite_init(options)
 
       yield
     ensure

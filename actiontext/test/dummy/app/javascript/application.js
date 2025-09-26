@@ -1,2 +1,2 @@
 import "trix"
-import "@rails/actiontext"
+import "@zoisite/actiontext"

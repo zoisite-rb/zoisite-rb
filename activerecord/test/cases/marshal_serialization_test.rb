@@ -15,8 +15,8 @@ class MarshalSerializationTest < ActiveRecord::TestCase
     ActiveRecord::Marshalling.format_version = @previous_format_version
   end
 
-  def test_deserializing_rails_6_1_marshal_basic
-    topic = Marshal.load(marshal_fixture("rails_6_1_topic"))
+  def test_deserializing_zoisite_6_1_marshal_basic
+    topic = Marshal.load(marshal_fixture("zoisite_6_1_topic"))
 
     assert_not_predicate topic, :new_record?
     assert_equal 1, topic.id
@@ -24,8 +24,8 @@ class MarshalSerializationTest < ActiveRecord::TestCase
     assert_equal "Have a nice day", topic.content
   end
 
-  def test_deserializing_rails_6_1_marshal_with_loaded_association_cache
-    topic = Marshal.load(marshal_fixture("rails_6_1_topic_associations"))
+  def test_deserializing_zoisite_6_1_marshal_with_loaded_association_cache
+    topic = Marshal.load(marshal_fixture("zoisite_6_1_topic_associations"))
 
     assert_not_predicate topic, :new_record?
     assert_equal 1, topic.id
@@ -35,8 +35,8 @@ class MarshalSerializationTest < ActiveRecord::TestCase
     assert_predicate topic.replies.first.association(:topic), :loaded?
   end
 
-  def test_deserializing_rails_7_1_marshal_basic
-    topic = Marshal.load(marshal_fixture("rails_7_1_topic"))
+  def test_deserializing_zoisite_7_1_marshal_basic
+    topic = Marshal.load(marshal_fixture("zoisite_7_1_topic"))
 
     assert_not_predicate topic, :new_record?
     assert_equal 1, topic.id
@@ -44,8 +44,8 @@ class MarshalSerializationTest < ActiveRecord::TestCase
     assert_equal "Have a nice day", topic.content
   end
 
-  def test_deserializing_rails_7_1_marshal_with_loaded_association_cache
-    topic = Marshal.load(marshal_fixture("rails_7_1_topic_associations"))
+  def test_deserializing_zoisite_7_1_marshal_with_loaded_association_cache
+    topic = Marshal.load(marshal_fixture("zoisite_7_1_topic_associations"))
 
     assert_not_predicate topic, :new_record?
     assert_equal 1, topic.id
@@ -56,7 +56,7 @@ class MarshalSerializationTest < ActiveRecord::TestCase
     assert_same topic, topic.replies.first.topic
   end
 
-  def test_rails_6_1_rountrip
+  def test_zoisite_6_1_rountrip
     topic = Topic.find(1)
     topic.replies.to_a
     topic = Marshal.load(Marshal.dump(topic))
@@ -68,7 +68,7 @@ class MarshalSerializationTest < ActiveRecord::TestCase
     assert_predicate topic.association(:replies), :loaded?
   end
 
-  def test_rails_7_1_rountrip
+  def test_zoisite_7_1_rountrip
     ActiveRecord::Marshalling.format_version = 7.1
 
     topic = Topic.find(1)

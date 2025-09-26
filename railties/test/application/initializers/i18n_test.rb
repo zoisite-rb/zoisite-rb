@@ -9,7 +9,7 @@ module ApplicationTests
     def setup
       build_app
       FileUtils.rm_rf "#{app_path}/config/environments"
-      require "rails/all"
+      require "zoisite/all"
     end
 
     def teardown

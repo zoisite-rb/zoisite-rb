@@ -3,7 +3,7 @@
 module Zoisite
   module Command
     class NewCommand < Base # :nodoc:
-      self.bin = "rails"
+      self.bin = "zoisite"
 
       no_commands do
         def help
@@ -13,7 +13,7 @@ module Zoisite
 
       def perform(*)
         say "Can't initialize a new Zoisite application within the directory of another, please change to a non-Zoisite directory first.\n"
-        say "Type 'rails' for help."
+        say "Type 'zoisite' for help."
         exit 1
       end
     end

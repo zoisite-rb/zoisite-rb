@@ -337,27 +337,27 @@ class CookiesTest < ActionController::TestCase
       head :ok
     end
 
-    def rails_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_on
+    def zoisite_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_on
       # cookies.encrypted[:favorite] = { value: "5-2-Stable Chocolate Cookies", expires: 1000.years }
       cookies[:favorite] = "KvH5lIHvX5vPQkLIK63r/NuIMwzWky8M0Zwk8SZ6DwUv8+srf36geR4nWq5KmhsZIYXA8NRdCZYIfxMKJsOFlz77Gf+Fq8vBBCWJTp95rx39A28TCUTJEyMhCNJO5eie7Skef76Qt5Jo/SCnIADAhzyGQkGBopKRcA==--qXZZFWGbCy6N8AGy--WswoH+xHrNh9MzSXDpB2fA=="
 
       head :ok
     end
 
-    def rails_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_off
+    def zoisite_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_off
       cookies[:favorite] = "rTG4zs5UufEFAr+ppKwh+MDMymKyAUMOSaWyYa3uUVmD8sMQqyiyQBxgYeAncDHVZIlo4y+kDVSzp66u1/7BNYpnmFe8ES/YT2m8ckNA23jBDmnRZ9CTNfMIRXjFtfxO9YxEOzzhn0ZiA0/zFtr5wkluXtxplOz959Q7MgLOyvTze2h9p8A=--QHOS3rAEGq/HCxXs--xQNra8dk24Idc2qBtpMLpg=="
 
       head :ok
     end
 
-    def rails_5_2_stable_signed_cookie_with_authenticated_encryption_flag_on
+    def zoisite_5_2_stable_signed_cookie_with_authenticated_encryption_flag_on
       # cookies.signed[:favorite] = { value: "5-2-Stable Choco Chip Cookie", expires: 1000.years }
       cookies[:favorite] = "eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaUUxTFRJdFUzUmhZbXhsSUVOb2IyTnZJRU5vYVhBZ1EyOXZhMmxsQmpvR1JWUT0iLCJleHAiOiIzMDE4LTA3LTExVDE2OjExOjI2Ljc1M1oiLCJwdXIiOm51bGx9fQ==--7df5d885b78b70a501d6e82140ae91b24060ac00"
 
       head :ok
     end
 
-    def rails_5_2_stable_signed_cookie_with_authenticated_encryption_flag_off
+    def zoisite_5_2_stable_signed_cookie_with_authenticated_encryption_flag_off
       cookies[:favorite] = "BAhJIiE1LTItU3RhYmxlIENob2NvIENoaXAgQ29va2llBjoGRVQ=--50bbdbf8d64f5a3ec3e54878f54d4f55b6cb3aff"
 
       head :ok
@@ -1609,10 +1609,10 @@ class CookiesTest < ActionController::TestCase
     assert_nil cookies.signed[:user_id]
   end
 
-  def test_read_rails_5_2_stable_encrypted_cookies_if_config_is_false
+  def test_read_zoisite_5_2_stable_encrypted_cookies_if_config_is_false
     request.env["action_dispatch.use_cookies_with_metadata"] = false
 
-    get :rails_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_on
+    get :zoisite_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_on
 
     assert_equal "5-2-Stable Chocolate Cookies", cookies.encrypted[:favorite]
 
@@ -1620,15 +1620,15 @@ class CookiesTest < ActionController::TestCase
       assert_nil cookies.encrypted[:favorite]
     end
 
-    get :rails_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_off
+    get :zoisite_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_off
 
     assert_equal "5-2-Stable Chocolate Cookies", cookies.encrypted[:favorite]
   end
 
-  def test_read_rails_5_2_stable_signed_cookies_if_config_is_false
+  def test_read_zoisite_5_2_stable_signed_cookies_if_config_is_false
     request.env["action_dispatch.use_cookies_with_metadata"] = false
 
-    get :rails_5_2_stable_signed_cookie_with_authenticated_encryption_flag_on
+    get :zoisite_5_2_stable_signed_cookie_with_authenticated_encryption_flag_on
 
     assert_equal "5-2-Stable Choco Chip Cookie", cookies.signed[:favorite]
 
@@ -1636,15 +1636,15 @@ class CookiesTest < ActionController::TestCase
       assert_nil cookies.signed[:favorite]
     end
 
-    get :rails_5_2_stable_signed_cookie_with_authenticated_encryption_flag_off
+    get :zoisite_5_2_stable_signed_cookie_with_authenticated_encryption_flag_off
 
     assert_equal "5-2-Stable Choco Chip Cookie", cookies.signed[:favorite]
   end
 
-  def test_read_rails_5_2_stable_encrypted_cookies_if_use_metadata_config_is_true
+  def test_read_zoisite_5_2_stable_encrypted_cookies_if_use_metadata_config_is_true
     request.env["action_dispatch.use_cookies_with_metadata"] = true
 
-    get :rails_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_on
+    get :zoisite_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_on
 
     assert_equal "5-2-Stable Chocolate Cookies", cookies.encrypted[:favorite]
 
@@ -1652,15 +1652,15 @@ class CookiesTest < ActionController::TestCase
       assert_nil cookies.encrypted[:favorite]
     end
 
-    get :rails_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_off
+    get :zoisite_5_2_stable_encrypted_cookie_with_authenticated_encryption_flag_off
 
     assert_equal "5-2-Stable Chocolate Cookies", cookies.encrypted[:favorite]
   end
 
-  def test_read_rails_5_2_stable_signed_cookies_if_use_metadata_config_is_true
+  def test_read_zoisite_5_2_stable_signed_cookies_if_use_metadata_config_is_true
     request.env["action_dispatch.use_cookies_with_metadata"] = true
 
-    get :rails_5_2_stable_signed_cookie_with_authenticated_encryption_flag_on
+    get :zoisite_5_2_stable_signed_cookie_with_authenticated_encryption_flag_on
 
     assert_equal "5-2-Stable Choco Chip Cookie", cookies.signed[:favorite]
 
@@ -1668,7 +1668,7 @@ class CookiesTest < ActionController::TestCase
       assert_nil cookies.signed[:favorite]
     end
 
-    get :rails_5_2_stable_signed_cookie_with_authenticated_encryption_flag_off
+    get :zoisite_5_2_stable_signed_cookie_with_authenticated_encryption_flag_off
 
     assert_equal "5-2-Stable Choco Chip Cookie", cookies.signed[:favorite]
   end

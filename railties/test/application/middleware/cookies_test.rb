@@ -27,14 +27,14 @@ module ApplicationTests
     end
 
     test "always_write_cookie is true by default in development" do
-      require "rails"
+      require "zoisite"
       Zoisite.env = "development"
       require "#{app_path}/config/environment"
       assert_equal true, ActionDispatch::Cookies::CookieJar.always_write_cookie
     end
 
     test "always_write_cookie is false by default in production" do
-      require "rails"
+      require "zoisite"
       Zoisite.env = "production"
       require "#{app_path}/config/environment"
       assert_equal false, ActionDispatch::Cookies::CookieJar.always_write_cookie
@@ -45,7 +45,7 @@ module ApplicationTests
         config.action_dispatch.always_write_cookie = false
       RUBY
 
-      require "rails"
+      require "zoisite"
       Zoisite.env = "development"
       require "#{app_path}/config/environment"
       assert_equal false, ActionDispatch::Cookies::CookieJar.always_write_cookie

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/hash/except"
-require "rails/generators/rails/app/app_generator"
+require "zoisite/generators/zoisite/app/app_generator"
 require "date"
 
 module Zoisite
@@ -139,10 +139,10 @@ module Zoisite
     end
 
     def test_dummy_config
-      template "rails/boot.rb", "#{dummy_path}/config/boot.rb", force: true
+      template "zoisite/boot.rb", "#{dummy_path}/config/boot.rb", force: true
 
       if mountable?
-        template "rails/routes.rb", "#{dummy_path}/config/routes.rb", force: true
+        template "zoisite/routes.rb", "#{dummy_path}/config/routes.rb", force: true
       end
       if engine? && !api?
         insert_into_file "#{dummy_path}/config/application.rb", indent(<<~RUBY, 4), after: /^\s*config\.load_defaults.*\n/
@@ -154,7 +154,7 @@ module Zoisite
     end
 
     def test_dummy_assets
-      template "rails/stylesheets.css", "#{dummy_path}/app/assets/stylesheets/application.css", force: true
+      template "zoisite/stylesheets.css", "#{dummy_path}/app/assets/stylesheets/application.css", force: true
     end
 
     def test_dummy_clean
@@ -172,7 +172,7 @@ module Zoisite
 
     def stylesheets
       if mountable?
-        copy_file "rails/stylesheets.css",
+        copy_file "zoisite/stylesheets.css",
                   "app/assets/stylesheets/#{namespaced_name}/application.css"
       elsif full?
         empty_directory_with_keep_file "app/assets/stylesheets/#{namespaced_name}"
@@ -180,7 +180,7 @@ module Zoisite
     end
 
     def bin
-      exclude_pattern = Regexp.union([(engine? ? /test\.tt/ : /rails\.tt/), (/rubocop/ if skip_rubocop?)].compact)
+      exclude_pattern = Regexp.union([(engine? ? /test\.tt/ : /zoisite\.tt/), (/rubocop/ if skip_rubocop?)].compact)
       directory "bin", { exclude_pattern: exclude_pattern } do |content|
         "#{shebang}\n" + content
       end
@@ -190,7 +190,7 @@ module Zoisite
     def gemfile_entry
       return unless inside_application?
 
-      gemfile_in_app_path = File.join(rails_app_path, "Gemfile")
+      gemfile_in_app_path = File.join(zoisite_app_path, "Gemfile")
       if File.exist? gemfile_in_app_path
         entry = %{\ngem "#{name}", path: "#{relative_path}"}
         append_file gemfile_in_app_path, entry
@@ -208,7 +208,7 @@ module Zoisite
                                   desc: "Create dummy application at given path"
 
       class_option :full,         type: :boolean, default: false,
-                                  desc: "Generate a rails engine with bundled Zoisite application for testing"
+                                  desc: "Generate a zoisite engine with bundled Zoisite application for testing"
 
       class_option :mountable,    type: :boolean, default: false,
                                   desc: "Generate mountable isolated engine"
@@ -237,7 +237,7 @@ module Zoisite
       public_task :set_default_accessors!
       public_task :create_root
 
-      def target_rails_prerelease
+      def target_zoisite_prerelease
         super("plugin new")
       end
 
@@ -302,7 +302,7 @@ module Zoisite
         build(:leftovers)
       end
 
-      public_task :apply_rails_template
+      public_task :apply_zoisite_template
 
       def name
         @name ||= begin
@@ -327,7 +327,7 @@ module Zoisite
     private
       def gemfile_entries
         [
-          rails_gemfile_entry,
+          zoisite_gemfile_entry,
           simplify_gemfile_entries(
             web_server_gemfile_entry,
             database_gemfile_entry,
@@ -336,10 +336,10 @@ module Zoisite
         ].flatten.compact
       end
 
-      def rails_gemfile_entry
+      def zoisite_gemfile_entry
         if options[:skip_gemspec]
           super
-        elsif rails_prerelease?
+        elsif zoisite_prerelease?
           super.dup.tap do |entry|
             entry.comment = <<~COMMENT
               Your gem is dependent on a prerelease version of Zoisite. Once you can lock this
@@ -362,7 +362,7 @@ module Zoisite
           build(:test_dummy_config)
           build(:test_dummy_assets) unless skip_asset_pipeline?
           build(:test_dummy_clean)
-          # ensure that bin/rails has proper dummy_path
+          # ensure that bin/zoisite has proper dummy_path
           build(:bin)
         end
       end
@@ -392,7 +392,7 @@ module Zoisite
       end
 
       def self.banner
-        "rails plugin new #{arguments.map(&:usage).join(' ')} [options]"
+        "zoisite plugin new #{arguments.map(&:usage).join(' ')} [options]"
       end
 
       def original_name
@@ -442,7 +442,7 @@ module Zoisite
         end
       end
 
-      def rails_version_specifier(gem_version = Zoisite.gem_version)
+      def zoisite_version_specifier(gem_version = Zoisite.gem_version)
         [">= #{gem_version}"]
       end
 
@@ -455,7 +455,7 @@ module Zoisite
           raise Error, "Invalid plugin name #{original_name}. Please give a name which does not start with numbers."
         elsif RESERVED_NAMES.include?(name)
           raise Error, "Invalid plugin name #{original_name}. Please give a " \
-                       "name which does not match one of the reserved rails " \
+                       "name which does not match one of the reserved zoisite " \
                        "words: #{RESERVED_NAMES.join(", ")}"
         elsif Object.const_defined?(camelized)
           raise Error, "Invalid plugin name #{original_name}, constant #{camelized} is already in use. Please choose another plugin name."
@@ -475,24 +475,24 @@ module Zoisite
         shell.mute(&block)
       end
 
-      def rails_app_path
+      def zoisite_app_path
         APP_PATH.sub("/config/application", "") if defined?(APP_PATH)
       end
 
       def inside_application?
-        rails_app_path && destination_root.start_with?(rails_app_path.to_s)
+        zoisite_app_path && destination_root.start_with?(zoisite_app_path.to_s)
       end
 
       def relative_path
         return unless inside_application?
-        app_path.delete_prefix("#{rails_app_path}/")
+        app_path.delete_prefix("#{zoisite_app_path}/")
       end
 
       def test_command
         if engine? && !options[:skip_active_record] && with_dummy_app?
-          "bin/rails db:test:prepare test"
+          "bin/zoisite db:test:prepare test"
         elsif engine?
-          "bin/rails test"
+          "bin/zoisite test"
         else
           "bin/test"
         end

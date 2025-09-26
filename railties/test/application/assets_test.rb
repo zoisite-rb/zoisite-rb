@@ -21,14 +21,14 @@ module ApplicationTests
     def precompile!(env = nil)
       with_env env.to_h do
         quietly do
-          rails ["assets:precompile", "--trace"]
+          zoisite ["assets:precompile", "--trace"]
         end
       end
     end
 
     def clean_assets!
       quietly do
-        rails ["assets:clobber"]
+        zoisite ["assets:clobber"]
       end
     end
 
@@ -101,9 +101,9 @@ module ApplicationTests
     end
 
     test "propshaft cache is not shared between environments" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css", "body { background: url('rails.png'); }"
+      app_file "app/assets/stylesheets/application.css", "body { background: url('zoisite.png'); }"
       add_to_env_config "production", 'config.assets.prefix = "production_assets"'
 
       precompile!
@@ -111,14 +111,14 @@ module ApplicationTests
       assert_file_exists("#{app_path}/public/assets/application-*.css")
 
       file = Dir["#{app_path}/public/assets/application-*.css"].first
-      assert_match(/assets\/rails-([0-z]+)\.png/, File.read(file))
+      assert_match(/assets\/zoisite-([0-z]+)\.png/, File.read(file))
 
       precompile! RAILS_ENV: "production"
 
       assert_file_exists("#{app_path}/public/production_assets/application-*.css")
 
       file = Dir["#{app_path}/public/production_assets/application-*.css"].first
-      assert_match(/production_assets\/rails-([0-z]+)\.png/, File.read(file))
+      assert_match(/production_assets\/zoisite-([0-z]+)\.png/, File.read(file))
     end
 
     test "asset pipeline should use a Propshaft::Assembly" do
@@ -130,16 +130,16 @@ module ApplicationTests
     end
 
     test "precompile creates a manifest file with all the assets listed" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css", "body { background: url('rails.png'); }"
+      app_file "app/assets/stylesheets/application.css", "body { background: url('zoisite.png'); }"
 
       precompile!
 
       manifest = Dir["#{app_path}/public/assets/.manifest.json"].first
       assets = ActiveSupport::JSON.decode(File.read(manifest))
       assert_match(/application-([0-z]+)\.css/, digested_path(assets, "application.css"))
-      assert_match(/rails-([0-z]+)\.png/, digested_path(assets, "rails.png"))
+      assert_match(/zoisite-([0-z]+)\.png/, digested_path(assets, "zoisite.png"))
     end
 
     test "the manifest file should be saved by default in the same assets folder" do
@@ -174,21 +174,21 @@ module ApplicationTests
     end
 
     test "precompile properly refers files referenced with url" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css", "p { background-image: url('rails.png') }"
+      app_file "app/assets/stylesheets/application.css", "p { background-image: url('zoisite.png') }"
 
       precompile!
 
       file = Dir["#{app_path}/public/assets/application-*.css"].first
-      assert_match(/\/assets\/rails-([0-z]+)\.png/, File.read(file))
+      assert_match(/\/assets\/zoisite-([0-z]+)\.png/, File.read(file))
     end
 
     test "precompile shouldn't use the digests present in manifest.json" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
 
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css", "p { background-image: url('rails.png') }"
+      app_file "app/assets/stylesheets/application.css", "p { background-image: url('zoisite.png') }"
 
       precompile! RAILS_ENV: "production"
 
@@ -196,7 +196,7 @@ module ApplicationTests
       assets = ActiveSupport::JSON.decode(File.read(manifest))
       asset_path = assets["application.css"]
 
-      app_file "app/assets/images/rails.png", "p { url: change }"
+      app_file "app/assets/images/zoisite.png", "p { url: change }"
 
       precompile!
 
@@ -205,14 +205,14 @@ module ApplicationTests
     end
 
     test "precompile appends the SHA1 hash to files referenced with url and run in production" do
-      app_file "app/assets/images/rails.png", "notactuallyapng"
+      app_file "app/assets/images/zoisite.png", "notactuallyapng"
       remove_file "app/assets/stylesheets/application.css"
-      app_file "app/assets/stylesheets/application.css", "p { background-image: url('rails.png') }"
+      app_file "app/assets/stylesheets/application.css", "p { background-image: url('zoisite.png') }"
 
       precompile! RAILS_ENV: "production"
 
       file = Dir["#{app_path}/public/assets/application-*.css"].first
-      assert_match(/\/assets\/rails-([0-z]+)\.png/, File.read(file))
+      assert_match(/\/assets\/zoisite-([0-z]+)\.png/, File.read(file))
     end
 
     test "precompile should handle utf8 filenames" do

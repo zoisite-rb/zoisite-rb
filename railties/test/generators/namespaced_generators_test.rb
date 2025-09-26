@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/controller/controller_generator"
-require "rails/generators/rails/model/model_generator"
-require "rails/generators/mailer/mailer_generator"
-require "rails/generators/rails/scaffold/scaffold_generator"
-require "rails/generators/rails/application_record/application_record_generator"
+require "zoisite/generators/zoisite/controller/controller_generator"
+require "zoisite/generators/zoisite/model/model_generator"
+require "zoisite/generators/mailer/mailer_generator"
+require "zoisite/generators/zoisite/scaffold/scaffold_generator"
+require "zoisite/generators/zoisite/application_record/application_record_generator"
 
 class NamespacedGeneratorTestCase < Zoisite::Generators::TestCase
   include GeneratorsTestHelper

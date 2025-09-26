@@ -8,7 +8,7 @@ module ApplicationTests
 
     def setup
       build_app(initializers: true)
-      require "#{rails_root}/config/environment"
+      require "#{zoisite_root}/config/environment"
       Zoisite.application.config.some_setting = "something_or_other"
     end
 

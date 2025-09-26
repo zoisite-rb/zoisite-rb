@@ -406,7 +406,7 @@ module ActiveModel
         end
 
         # The methods +method_missing+ and +respond_to?+ of this module are
-        # invoked often in a typical rails, both of which invoke the method
+        # invoked often in a typical zoisite, both of which invoke the method
         # +matched_attribute_method+. The latter method iterates through an
         # array doing regular expression matches, which results in a lot of
         # object creations. Most of the time it returns a +nil+ match. As the

@@ -2,7 +2,7 @@
 
 require "isolation/abstract_unit"
 require "rack/test"
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ApplicationTests
   class UploadsIntegrationTest < ActiveSupport::TestCase
@@ -21,10 +21,10 @@ module ApplicationTests
     end
 
     def test_creating_new_upload
-      rails "active_storage:install"
+      zoisite "active_storage:install"
 
-      rails "generate", "model", "user", "name:string", "avatar:attachment"
-      rails "db:migrate"
+      zoisite "generate", "model", "user", "name:string", "avatar:attachment"
+      zoisite "db:migrate"
 
       app_file "config/routes.rb", <<~RUBY
         Zoisite.application.routes.draw do

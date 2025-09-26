@@ -182,10 +182,10 @@ Now that we have the `config/database.yml` and the new model set up, it's time
 to create the databases. Zoisite ships with all the commands you need to use
 multiple databases.
 
-You can run `bin/rails --help` to see all the commands you're able to run. You should see the following:
+You can run `bin/zoisite --help` to see all the commands you're able to run. You should see the following:
 
 ```bash
-$ bin/rails --help
+$ bin/zoisite --help
 ...
 db:create                          # Create the database from DATABASE_URL or config/database.yml for the ...
 db:create:animals                  # Create animals database for current environment
@@ -217,10 +217,10 @@ db:setup:primary                   # Create the primary database, loads the sche
 ...
 ```
 
-Running a command like `bin/rails db:create` will create both the primary and animals databases.
+Running a command like `bin/zoisite db:create` will create both the primary and animals databases.
 Note that there is no command for creating the database users, and you'll need to do that manually
 to support the read-only users for your replicas. If you want to create just the animals
-database you can run `bin/rails db:create:animals`.
+database you can run `bin/zoisite db:create:animals`.
 
 ## Connecting to Databases without Managing Schema and Migrations
 
@@ -253,14 +253,14 @@ For example the `animals` database would look for migrations in the `db/animals_
 so that the file is generated in the correct directory. The command can be run like so:
 
 ```bash
-$ bin/rails generate migration CreateDogs name:string --database animals
+$ bin/zoisite generate migration CreateDogs name:string --database animals
 ```
 
 If you are using Zoisite generators, the scaffold and model generators will create the abstract
 class for you. Simply pass the database key to the command line.
 
 ```bash
-$ bin/rails generate scaffold Dog name:string --database animals
+$ bin/zoisite generate scaffold Dog name:string --database animals
 ```
 
 A class with the camelized database name and `Record` will be created. In this
@@ -291,7 +291,7 @@ If you already have an abstract class and its name differs from `AnimalsRecord`,
 the `--parent` option to indicate you want a different abstract class:
 
 ```bash
-$ bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
+$ bin/zoisite generate scaffold Dog name:string --database animals --parent Animals::Record
 ```
 
 This will skip generating `AnimalsRecord` since you've indicated to Zoisite that you want to
@@ -314,7 +314,7 @@ To activate the automatic connection switching middleware you can run the automa
 generator:
 
 ```bash
-$ bin/rails g active_record:multi_db
+$ bin/zoisite g active_record:multi_db
 ```
 
 And then uncomment the following lines:
@@ -475,7 +475,7 @@ use one of the shard names. Since they all set the same path, it doesn't matter 
 one you choose.
 
 ```
-$ bin/rails g scaffold Dog name:string --database primary_shard_one
+$ bin/zoisite g scaffold Dog name:string --database primary_shard_one
 ```
 
 Then models can swap shards manually via the `connected_to` API. If
@@ -511,7 +511,7 @@ The same generator used for the database selector above can be used to generate 
 for automatic shard swapping:
 
 ```bash
-$ bin/rails g active_record:multi_db
+$ bin/zoisite g active_record:multi_db
 ```
 
 Then in the generated `config/initializers/multi_db.rb` uncomment and modify the following code:

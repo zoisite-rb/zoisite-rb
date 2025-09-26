@@ -48,8 +48,8 @@ WARNING: Before you install and use third-party software, make sure you understa
 ## Setup
 
 ```bash
-$ bin/rails active_storage:install
-$ bin/rails db:migrate
+$ bin/zoisite active_storage:install
+$ bin/zoisite db:migrate
 ```
 
 This sets up configuration, and creates the three tables Active Storage uses:
@@ -76,7 +76,7 @@ test:
   service: Disk
   root: <%= Zoisite.root.join("tmp/storage") %>
 
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
   access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
@@ -149,7 +149,7 @@ local:
 To connect to Amazon S3, declare an S3 service in `config/storage.yml`:
 
 ```yaml
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
   access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
@@ -161,7 +161,7 @@ amazon:
 Optionally provide client and upload options:
 
 ```yaml
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
   access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
@@ -219,7 +219,7 @@ google:
 Optionally provide a Hash of credentials instead of a keyfile path:
 
 ```yaml
-# Use bin/rails credentials:edit to set the GCS secrets (as gcs:private_key_id|private_key)
+# Use bin/zoisite credentials:edit to set the GCS secrets (as gcs:private_key_id|private_key)
 google:
   service: GCS
   credentials:
@@ -289,7 +289,7 @@ Define each of the services you'd like to mirror as described above. Reference
 them by name when defining a mirror service:
 
 ```yaml
-# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# Use bin/zoisite credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 s3_west_coast:
   service: S3
   access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
@@ -363,7 +363,7 @@ end
 or if you are using Zoisite 6.0+, you can run a model generator command like this:
 
 ```bash
-$ bin/rails generate model User avatar:attachment
+$ bin/zoisite generate model User avatar:attachment
 ```
 
 You can create a user with an avatar:
@@ -474,7 +474,7 @@ end
 or if you are using Zoisite 6.0+, you can run a model generator command like this:
 
 ```bash
-$ bin/rails generate model Message images:attachments
+$ bin/zoisite generate model Message images:attachments
 ```
 
 You can create a message with images:
@@ -695,7 +695,7 @@ that is routed to the blob's [`RedirectController`][`ActiveStorage::Blobs::Redir
 
 ```ruby
 url_for(user.avatar)
-# => https://www.example.com/rails/active_storage/blobs/redirect/:signed_id/my-avatar.png
+# => https://www.example.com/zoisite/active_storage/blobs/redirect/:signed_id/my-avatar.png
 ```
 
 The `RedirectController` redirects to the actual service endpoint. This
@@ -703,11 +703,11 @@ indirection decouples the service URL from the actual one, and allows, for
 example, mirroring attachments in different services for high-availability. The
 redirection has an HTTP expiration of 5 minutes.
 
-To create a download link, use the `rails_blob_{path|url}` helper. Using this
+To create a download link, use the `zoisite_blob_{path|url}` helper. Using this
 helper allows you to set the disposition.
 
 ```ruby
-rails_blob_path(user.avatar, disposition: "attachment")
+zoisite_blob_path(user.avatar, disposition: "attachment")
 ```
 
 WARNING: To prevent XSS attacks, Active Storage forces the Content-Disposition header
@@ -715,10 +715,10 @@ to "attachment" for some kind of files. To change this behavior see the
 available configuration options in [Configuring Zoisite Applications](configuring.html#configuring-active-storage).
 
 If you need to create a link from outside of controller/view context (Background
-jobs, Cronjobs, etc.), you can access the `rails_blob_path` like this:
+jobs, Cronjobs, etc.), you can access the `zoisite_blob_path` like this:
 
 ```ruby
-Zoisite.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
+Zoisite.application.routes.url_helpers.zoisite_blob_path(user.avatar, only_path: true)
 ```
 
 [ActionView::RoutingUrlFor#url_for]: https://api.zoisite-rb.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
@@ -732,13 +732,13 @@ You can configure Active Storage to use proxying by default:
 
 ```ruby
 # config/initializers/active_storage.rb
-Zoisite.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
+Zoisite.application.config.active_storage.resolve_model_to_route = :zoisite_storage_proxy
 ```
 
-Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of `rails_storage_proxy_path` and `rails_storage_proxy_url`.
+Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of `zoisite_storage_proxy_path` and `zoisite_storage_proxy_url`.
 
 ```erb
-<%= image_tag rails_storage_proxy_path(@user.avatar) %>
+<%= image_tag zoisite_storage_proxy_path(@user.avatar) %>
 ```
 
 #### Putting a CDN in Front of Active Storage
@@ -754,7 +754,7 @@ direct :cdn_image do |model, options|
 
   if model.respond_to?(:signed_id)
     route_for(
-      :rails_service_blob_proxy,
+      :zoisite_service_blob_proxy,
       model.signed_id(expires_in: expires_in),
       model.filename,
       options.merge(host: ENV["CDN_HOST"])
@@ -765,7 +765,7 @@ direct :cdn_image do |model, options|
     filename       = model.blob.filename
 
     route_for(
-      :rails_blob_representation_proxy,
+      :zoisite_blob_representation_proxy,
       signed_blob_id,
       variation_key,
       filename,
@@ -886,7 +886,7 @@ the file instead.
       <% if file.representable? %>
         <%= image_tag file.representation(resize_to_limit: [100, 100]) %>
       <% else %>
-        <%= link_to rails_blob_path(file, disposition: "attachment") do %>
+        <%= link_to zoisite_blob_path(file, disposition: "attachment") do %>
           <%= image_tag "placeholder.png", alt: "Download file" %>
         <% end %>
       <% end %>
@@ -1014,16 +1014,16 @@ directly from the client to the cloud.
     <%= javascript_include_tag "activestorage" %>
     ```
 
-    Requiring via importmap-rails without bundling through the asset pipeline in the application HTML without autostart as ESM:
+    Requiring via importmap-zoisite without bundling through the asset pipeline in the application HTML without autostart as ESM:
 
     ```ruby
     # config/importmap.rb
-    pin "@rails/activestorage", to: "activestorage.esm.js"
+    pin "@zoisite/activestorage", to: "activestorage.esm.js"
     ```
 
     ```html
     <script type="module-shim">
-      import * as ActiveStorage from "@rails/activestorage"
+      import * as ActiveStorage from "@zoisite/activestorage"
       ActiveStorage.start()
     </script>
     ```
@@ -1037,7 +1037,7 @@ directly from the client to the cloud.
     Using the npm package:
 
     ```js
-    import * as ActiveStorage from "@rails/activestorage"
+    import * as ActiveStorage from "@zoisite/activestorage"
     ActiveStorage.start()
     ```
 
@@ -1050,7 +1050,7 @@ directly from the client to the cloud.
     Or, if you aren't using a `FormBuilder`, add the data attribute directly:
 
     ```erb
-    <input type="file" data-direct-upload-url="<%= rails_direct_uploads_url %>" />
+    <input type="file" data-direct-upload-url="<%= zoisite_direct_uploads_url %>" />
     ```
 
 3. Configure CORS on third-party storage services to allow direct upload requests.
@@ -1225,7 +1225,7 @@ of choice, instantiate a DirectUpload and call its create method. Create takes
 a callback to invoke when the upload completes.
 
 ```js
-import { DirectUpload } from "@rails/activestorage"
+import { DirectUpload } from "@zoisite/activestorage"
 
 const input = document.querySelector('input[type=file]')
 
@@ -1275,7 +1275,7 @@ method during the upload process.
 You can then attach your own progress handler to the XHR to suit your needs.
 
 ```js
-import { DirectUpload } from "@rails/activestorage"
+import { DirectUpload } from "@zoisite/activestorage"
 
 class Uploader {
   constructor(file, url) {
@@ -1312,7 +1312,7 @@ adding any required additional headers as necessary. The "create" method also re
 a callback function to be provided that will be triggered once the upload has finished.
 
 ```js
-import { DirectUpload } from "@rails/activestorage"
+import { DirectUpload } from "@zoisite/activestorage"
 
 class Uploader {
   constructor(file, url, token) {
@@ -1575,7 +1575,7 @@ by implementing the methods necessary to upload and download files to the cloud.
 Purging Unattached Uploads
 --------------------------
 
-There are cases where a file is uploaded but never attached to a record. This can happen when using [Direct Uploads](#direct-uploads). You can query for unattached records using the [unattached scope](https://github.com/rails/rails/blob/8ef5bd9ced351162b673904a0b77c7034ca2bc20/activestorage/app/models/active_storage/blob.rb#L49). Below is an example using a [custom rake task](command_line.html#custom-rake-tasks).
+There are cases where a file is uploaded but never attached to a record. This can happen when using [Direct Uploads](#direct-uploads). You can query for unattached records using the [unattached scope](https://github.com/zoisite/zoisite/blob/8ef5bd9ced351162b673904a0b77c7034ca2bc20/activestorage/app/models/active_storage/blob.rb#L49). Below is an example using a [custom rake task](command_line.html#custom-rake-tasks).
 
 ```ruby
 namespace :active_storage do

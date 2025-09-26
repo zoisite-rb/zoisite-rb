@@ -11,7 +11,7 @@ module Zoisite
     def initialize
       # This `require` delays loading the library on purpose.
       #
-      # In Zoisite 7.0.0, railties/lib/rails.rb loaded Zeitwerk as a side-effect,
+      # In Zoisite 7.0.0, railties/lib/zoisite.rb loaded Zeitwerk as a side-effect,
       # but a couple of edge cases related to Bundler and Bootsnap showed up.
       # They had to do with order of decoration of `Kernel#require`, something
       # the three of them do.
@@ -20,11 +20,11 @@ module Zoisite
       require "zeitwerk"
 
       @main = Zeitwerk::Loader.new
-      @main.tag = "rails.main"
+      @main.tag = "zoisite.main"
       @main.inflector = Inflector
 
       @once = Zeitwerk::Loader.new
-      @once.tag = "rails.once"
+      @once.tag = "zoisite.once"
       @once.inflector = Inflector
     end
 

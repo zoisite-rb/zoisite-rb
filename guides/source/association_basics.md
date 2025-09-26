@@ -126,7 +126,7 @@ model, you would create a migration to add the `author_id` column to the `books`
 table:
 
 ```bash
-rails generate migration AddAuthorToBooks author:references
+zoisite generate migration AddAuthorToBooks author:references
 ```
 
 This migration will add the `author_id` column and set up the foreign key
@@ -1770,7 +1770,7 @@ behaviors. They will also each have their own controller.
 First, we generate the base `Vehicle` model with shared fields:
 
 ```bash
-$ bin/rails generate model vehicle type:string color:string price:decimal{10.2}
+$ bin/zoisite generate model vehicle type:string color:string price:decimal{10.2}
 ```
 
 Here, the `type` field is crucial for STI as it stores the model name (`Car`,
@@ -1786,7 +1786,7 @@ the `vehicles` table.
 To generate the `Car` model:
 
 ```bash
-$ bin/rails generate model car --parent=Vehicle
+$ bin/zoisite generate model car --parent=Vehicle
 ```
 
 For this, we can use the `--parent=PARENT` option, which will generate a model
@@ -1968,14 +1968,14 @@ In order to apply this to our example above, we need to regenerate our models.
 First, let's generate the base `Entry` model which will act as our superclass:
 
 ```bash
-$ bin/rails generate model entry entryable_type:string entryable_id:integer
+$ bin/zoisite generate model entry entryable_type:string entryable_id:integer
 ```
 
 Then, we will generate new `Message` and `Comment` models for delegation:
 
 ```bash
-$ bin/rails generate model message subject:string body:string
-$ bin/rails generate model comment content:string
+$ bin/zoisite generate model message subject:string body:string
+$ bin/zoisite generate model comment content:string
 ```
 
 After running the generators, our models should look like this:
@@ -2234,7 +2234,7 @@ These need to be backed up by a migration to create the `assemblies_parts`
 table.
 
 ```bash
-$ bin/rails generate migration CreateAssembliesPartsJoinTable assemblies parts
+$ bin/zoisite generate migration CreateAssembliesPartsJoinTable assemblies parts
 ```
 
 You can then fill out the migration and ensure that the table is created without

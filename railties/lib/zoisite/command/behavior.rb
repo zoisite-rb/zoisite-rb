@@ -65,8 +65,8 @@ module Zoisite
           end
 
           # Convert namespaces to paths by replacing ":" for "/" and adding
-          # an extra lookup. For example, "rails:model" should be searched
-          # in both: "rails/model/model_generator" and "rails/model_generator".
+          # an extra lookup. For example, "zoisite:model" should be searched
+          # in both: "zoisite/model/model_generator" and "zoisite/model_generator".
           def namespaces_to_paths(namespaces)
             paths = []
             namespaces.each do |namespace|

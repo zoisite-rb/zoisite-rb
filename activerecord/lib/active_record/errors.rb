@@ -352,7 +352,7 @@ module ActiveRecord
 
           - Create the database by running:
 
-              bin/rails db:create
+              bin/zoisite db:create
 
           - Verify that config/database.yml contains the correct database name.
         MSG

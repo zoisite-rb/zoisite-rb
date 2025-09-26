@@ -38,7 +38,7 @@ Active Job provides a Zoisite generator to create jobs. The following will creat
 a job in `app/jobs` (with an attached test case under `test/jobs`):
 
 ```bash
-$ bin/rails generate job guests_cleanup
+$ bin/zoisite generate job guests_cleanup
 invoke  test_unit
 create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
@@ -47,7 +47,7 @@ create  app/jobs/guests_cleanup_job.rb
 You can also create a job that will run on a specific queue:
 
 ```bash
-$ bin/rails generate job guests_cleanup --queue urgent
+$ bin/zoisite generate job guests_cleanup --queue urgent
 ```
 
 If you don't want to use a generator, you could create your own file inside of
@@ -72,7 +72,7 @@ If you already have an abstract class and its name differs from
 different abstract class:
 
 ```bash
-$ bin/rails generate job process_payment --parent=payment_job
+$ bin/zoisite generate job process_payment --parent=payment_job
 ```
 
 ```ruby
@@ -176,7 +176,7 @@ used in the configuration for `config.solid_queue.connects_to`.
 You can then run `db:prepare` to ensure the `queue` database in `development` has all the required tables:
 
 ```bash
-$ bin/rails db:prepare
+$ bin/zoisite db:prepare
 ```
 
 TIP: You can find the default generated schema for the `queue` database in
@@ -221,7 +221,7 @@ production:
 Make sure you run `db:prepare` so your database is ready to use:
 
 ```bash
-$ bin/rails db:prepare
+$ bin/zoisite db:prepare
 ```
 
 
@@ -274,9 +274,9 @@ settings. Below are some of the configuration options you can set in
 | **concurrency_maintenance**          | Whether the dispatcher performs concurrency maintenance work.                                       | true                                          |
 
 You can read more about these [configuration options in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#configuration).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#configuration).
 There are also [additional configuration
-options](https://github.com/rails/solid_queue?tab=readme-ov-file#other-configuration-settings)
+options](https://github.com/zoisite/solid_queue?tab=readme-ov-file#other-configuration-settings)
 that can be set in `config/<environment>.rb` to further configure Solid Queue in
 your Zoisite Application.
 
@@ -311,7 +311,7 @@ down polling performance in SQLite and PostgreSQL due to the need for a `DISTINC
 query to identify all matching queues, which can be slow on large tables in these RDBMS.
 For better performance, it’s best to specify exact queue names instead of using
 wildcards. Read more about this in [Queues specification and performance in the
-Solid Queue documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#queues-specification-and-performance)
+Solid Queue documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#queues-specification-and-performance)
 
 Active Job supports positive integer priorities when enqueuing jobs (see
 [Priority section](#priority)). Within a single queue, jobs are picked based on
@@ -339,7 +339,7 @@ are marked as failed, and errors like `SolidQueue::Processes::ProcessExitError`
 or `SolidQueue::Processes::ProcessPrunedError` are raised. Heartbeat settings
 help manage and detect expired processes. Read more about [Threads, Processes
 and Signals in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#threads-processes-and-signals).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#threads-processes-and-signals).
 
 ### Errors When Enqueuing
 
@@ -351,7 +351,7 @@ third-party gems like `Turbo::Streams::BroadcastJob`.
 
 For recurring tasks, any errors encountered while enqueuing are logged, but they
 won’t be raised. Read more about [Errors When Enqueuing in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#errors-when-enqueuing).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#errors-when-enqueuing).
 
 ### Concurrency Controls
 
@@ -391,7 +391,7 @@ This ensures that only one job for a given contact can run at a time, regardless
 of the job class.
 
 Read more about [Concurrency Controls in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#concurrency-controls).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#concurrency-controls).
 
 ### Error Reporting on Jobs
 
@@ -449,7 +449,7 @@ You can also configure Solid Queue to use the same database as your app while
 avoiding relying on transactional integrity by setting up a separate database
 connection for Solid Queue jobs. Read more about [Transactional Integrity in the
 Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#jobs-and-transactional-integrity)
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#jobs-and-transactional-integrity)
 
 ### Recurring Tasks
 
@@ -476,12 +476,12 @@ include kwargs as the last element in the array. This allows jobs to run
 periodically at specified times.
 
 Read more about [Recurring Tasks in the Solid Queue
-documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#recurring-tasks).
+documentation](https://github.com/zoisite/solid_queue?tab=readme-ov-file#recurring-tasks).
 
 ### Job Tracking and Management
 
 A tool like
-[`mission_control-jobs`](https://github.com/rails/mission_control-jobs) can help
+[`mission_control-jobs`](https://github.com/zoisite/mission_control-jobs) can help
 centralize the monitoring and management of failed jobs. It provides insights
 into job statuses, failure reasons, and retry behaviors, enabling you to track
 and resolve issues more effectively.
@@ -885,7 +885,7 @@ ActiveJob supports the following types of arguments by default:
 ### GlobalID
 
 Active Job supports
-[GlobalID](https://github.com/rails/globalid/blob/main/README.md) for
+[GlobalID](https://github.com/zoisite/globalid/blob/main/README.md) for
 parameters. This makes it possible to pass live Active Record objects to your
 job instead of class/id pairs, which you then have to manually deserialize.
 Before, jobs would look like this:
@@ -1034,7 +1034,7 @@ Debugging
 ---------
 
 If you need help figuring out where jobs are coming from, you can enable
-[verbose logging](debugging_rails_applications.html#verbose-enqueue-logs).
+[verbose logging](debugging_zoisite_applications.html#verbose-enqueue-logs).
 
 Alternate Queuing Backends
 --------------------------
@@ -1090,5 +1090,5 @@ Here is a noncomprehensive list of documentation:
 - [Sneakers](https://github.com/jondot/sneakers/wiki/How-To:-Zoisite-Background-Jobs-with-ActiveJob)
 - [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 - [Delayed Job](https://github.com/collectiveidea/delayed_job#active-job)
-- [Que](https://github.com/que-rb/que#additional-rails-specific-setup)
+- [Que](https://github.com/que-rb/que#additional-zoisite-specific-setup)
 - [Good Job](https://github.com/bensheldon/good_job#readme)

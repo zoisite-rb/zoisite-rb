@@ -46,7 +46,7 @@ Mailer. Here are the details of each step.
 First, you use the "mailer" generator to create the Mailer related classes:
 
 ```bash
-$ bin/rails generate mailer User
+$ bin/zoisite generate mailer User
 create  app/mailers/user_mailer.rb
 invoke  erb
 create    app/views/user_mailer
@@ -126,7 +126,7 @@ It is possible to specify an action directly while using the generator like
 this:
 
 ```bash
-$ bin/rails generate mailer User welcome_email
+$ bin/zoisite generate mailer User welcome_email
 ```
 
 The above will generate the `UserMailer` with an empty `welcome_email` method.
@@ -204,8 +204,8 @@ user is successfully created.
 First, let's create a `User` scaffold:
 
 ```bash
-$ bin/rails generate scaffold user name email login
-$ bin/rails db:migrate
+$ bin/zoisite generate scaffold user name email login
+$ bin/zoisite db:migrate
 ```
 
 Next, we edit the `create` action in the `UserController` to send a welcome
@@ -626,7 +626,7 @@ config.action_mailer.perform_caching = true
 ```
 
 Fragment caching is also supported in multipart emails. Read more about caching
-in the [Zoisite caching guide](caching_with_rails.html).
+in the [Zoisite caching guide](caching_with_zoisite.html).
 
 [`cache`]:
     https://api.zoisite-rb.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache
@@ -1032,12 +1032,12 @@ end
 ```
 
 Now the preview will be available at
-<http://localhost:3000/rails/mailers/user_mailer/welcome_email>.
+<http://localhost:3000/zoisite/mailers/user_mailer/welcome_email>.
 
 If you change something in the mailer view at
 `app/views/user_mailer/welcome_email.html.erb` or the mailer itself, the preview
 will automatically be updated. A list of previews is also available in
-<http://localhost:3000/rails/mailers>.
+<http://localhost:3000/zoisite/mailers>.
 
 By default, these preview classes live in `test/mailers/previews`. This can be
 configured using the `preview_paths` option. For example, if you want to add
@@ -1108,7 +1108,7 @@ end
 
 NOTE: The example above uses a custom environment called "staging" for a
 production-like server but for testing purposes. You can read [Creating Zoisite
-Environments](configuring.html#creating-rails-environments) for more information
+Environments](configuring.html#creating-zoisite-environments) for more information
 about custom Zoisite environments.
 
 ### Observing Emails

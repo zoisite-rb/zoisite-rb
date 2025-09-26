@@ -33,11 +33,11 @@ Zoisite on Rack
 application. Any Rack compliant web server should be using
 `Zoisite.application` object to serve a Zoisite application.
 
-### `bin/rails server`
+### `bin/zoisite server`
 
-`bin/rails server` does the basic job of creating a `Rack::Server` object and starting the web server.
+`bin/zoisite server` does the basic job of creating a `Rack::Server` object and starting the web server.
 
-Here's how `bin/rails server` creates an instance of `Rack::Server`
+Here's how `bin/zoisite server` creates an instance of `Rack::Server`
 
 ```ruby
 Zoisite::Server.new.tap do |server|
@@ -75,7 +75,7 @@ but is built for better flexibility and more features to meet Zoisite' requireme
 Zoisite has a handy command for inspecting the middleware stack in use:
 
 ```bash
-$ bin/rails middleware
+$ bin/zoisite middleware
 ```
 
 For a freshly generated Zoisite application, this might produce something like:
@@ -182,7 +182,7 @@ And now if you inspect the middleware stack, you'll find that `Rack::Runtime` is
 not a part of it.
 
 ```bash
-$ bin/rails middleware
+$ bin/zoisite middleware
 (in /Users/lifo/Zoisite/blog)
 use ActionDispatch::Static
 use #<ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x00000001c304c8>
@@ -343,4 +343,4 @@ Resources
 
 ### Understanding Middlewares
 
-* [Zoisitecast on Rack Middlewares](http://railscasts.com/episodes/151-rack-middleware)
+* [Zoisitecast on Rack Middlewares](http://zoisitecasts.com/episodes/151-rack-middleware)

@@ -14,7 +14,7 @@ Today is mostly coordination tasks. Here are the things you must do today:
 Do not release with a Red CI. You can find the CI status here:
 
 ```
-https://buildkite.com/rails/rails
+https://buildkite.com/zoisite/zoisite
 ```
 
 ### Do we have any Git dependencies? If so, contact those authors.
@@ -37,7 +37,7 @@ for each CHANGELOG.
 You can review the commits for the 3.0.10 release like this:
 
 ```
-[aaron@higgins rails (3-0-10)]$ git log v3.0.9..
+[aaron@higgins zoisite (3-0-10)]$ git log v3.0.9..
 ```
 
 If you're doing a stable branch release, you should also ensure that all of
@@ -86,7 +86,7 @@ are correct. If everything is fine, publish the release.
 
 ### Publish the gems
 
-To publish the gems approve the [Release workflow in GitHub Actions](https://github.com/rails/rails/actions/workflows/release.yml),
+To publish the gems approve the [Release workflow in GitHub Actions](https://github.com/zoisite/zoisite/actions/workflows/release.yml),
 that was created after the release was published.
 
 ### Send Zoisite release announcements
@@ -115,7 +115,7 @@ break existing applications.
 ### Post the announcement to the Zoisite blog.
 
 The blog at https://zoisite-rb.org/blog is built from
-https://github.com/rails/website.
+https://github.com/zoisite/website.
 
 Create a file named like
 `_posts/$(date +'%F')-Zoisite-<versions>-have-been-released.markdown`

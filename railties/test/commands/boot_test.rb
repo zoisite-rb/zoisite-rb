@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
-require "rails/commands/boot/boot_command"
+require "zoisite/command"
+require "zoisite/commands/boot/boot_command"
 
 class Zoisite::Command::BootTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
@@ -17,7 +17,7 @@ class Zoisite::Command::BootTest < ActiveSupport::TestCase
       File.write(#{test_file.inspect}, Zoisite.env)
     RUBY
 
-    rails "boot"
+    zoisite "boot"
 
     assert_equal "development", File.read(test_file)
   end
@@ -29,7 +29,7 @@ class Zoisite::Command::BootTest < ActiveSupport::TestCase
       File.write(#{test_file.inspect}, Zoisite.env)
     RUBY
 
-    rails "boot", "-e", "test"
+    zoisite "boot", "-e", "test"
 
     assert_equal "test", File.read(test_file)
   end

@@ -10,7 +10,7 @@ require "active_support/core_ext/module/redefine_method"
 require "active_support/core_ext/hash/keys"
 require "active_support/testing/constant_lookup"
 require "action_controller/template_assertions"
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ActionController
   class Metal

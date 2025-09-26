@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/system_test/system_test_generator"
+require "zoisite/generators/zoisite/system_test/system_test_generator"
 
 class SystemTestGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper

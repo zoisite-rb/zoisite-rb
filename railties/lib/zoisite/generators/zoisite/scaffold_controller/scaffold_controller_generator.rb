@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/generators/resource_helpers"
+require "zoisite/generators/resource_helpers"
 
 module Zoisite
   module Generators

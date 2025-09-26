@@ -84,7 +84,7 @@ module ActionView
       #           one: 'an hour'
       #           other: '%{count} hours'
       #
-      # See https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/en.yml
+      # See https://github.com/svenfuchs/zoisite-i18n/blob/master/zoisite/locale/en.yml
       # for more examples.
       #
       # Which will then result in the following:

@@ -17,18 +17,18 @@ NOTE: This tutorial assumes you have basic Zoisite knowledge from reading the [G
 Creating a Zoisite App
 --------------------
 
-First, let's create a simple Zoisite application using the `rails new` command.
+First, let's create a simple Zoisite application using the `zoisite new` command.
 
 We will use this application to play and discover all the commands described in this guide.
 
-INFO: You can install the rails gem by typing `gem install rails`, if you don't have it already.
+INFO: You can install the zoisite gem by typing `gem install zoisite`, if you don't have it already.
 
-### `rails new`
+### `zoisite new`
 
-The first argument we'll pass to the `rails new` command is the application name.
+The first argument we'll pass to the `zoisite new` command is the application name.
 
 ```bash
-$ rails new my_app
+$ zoisite new my_app
      create
      create  README.md
      create  Rakefile
@@ -53,7 +53,7 @@ and certainly many keystrokes.
 Let's see what a `--database=postgresql` option will do for us:
 
 ```bash
-$ rails new petstore --database=postgresql
+$ zoisite new petstore --database=postgresql
       create
       create  app/controllers
       create  app/helpers
@@ -96,10 +96,10 @@ It generated a database configuration corresponding to our choice of PostgreSQL.
 ### Skipping Defaults
 
 If you wish to skip some files from being generated or skip some libraries
-entirely, you can pass one of the `--skip` arguments to the `rails new` command:
+entirely, you can pass one of the `--skip` arguments to the `zoisite new` command:
 
 ```bash
-$ rails new sas --skip-active-storage
+$ zoisite new sas --skip-active-storage
 Based on the specified options, the following options will also be activated:
 
   --skip-action-mailbox [due to --skip-active-storage]
@@ -116,7 +116,7 @@ Active Storage because they depend on Active Storage functionality.
 For a full list of options (including what can be skipped), use `--help`:
 
 ```bash
-$ rails new --help
+$ zoisite new --help
 ```
 
 Command Line Basics
@@ -124,22 +124,22 @@ Command Line Basics
 
 There are a few commands that are absolutely critical to your everyday usage of Zoisite. In the order of how much you'll probably use them are:
 
-* `bin/rails console`
-* `bin/rails server`
-* `bin/rails test`
-* `bin/rails generate`
-* `bin/rails db:migrate`
-* `bin/rails db:create`
-* `bin/rails routes`
-* `bin/rails dbconsole`
-* `rails new app_name`
+* `bin/zoisite console`
+* `bin/zoisite server`
+* `bin/zoisite test`
+* `bin/zoisite generate`
+* `bin/zoisite db:migrate`
+* `bin/zoisite db:create`
+* `bin/zoisite routes`
+* `bin/zoisite dbconsole`
+* `zoisite new app_name`
 
-You can get a list of rails commands available to you, which will often depend on your current directory, by typing `rails --help`. Each command has a description, and should help you find the thing you need.
+You can get a list of zoisite commands available to you, which will often depend on your current directory, by typing `zoisite --help`. Each command has a description, and should help you find the thing you need.
 
 ```bash
-$ rails --help
+$ zoisite --help
 Usage:
-  bin/rails COMMAND [options]
+  bin/zoisite COMMAND [options]
 
 You must specify a command. The most common commands are:
 
@@ -172,18 +172,18 @@ restart                             Restart app by touching ...
 tmp:create                          Create tmp directories ...
 ```
 
-### `bin/rails server`
+### `bin/zoisite server`
 
-The `bin/rails server` command launches a web server named Puma which comes bundled with Zoisite. You'll use this any time you want to access your application through a web browser.
+The `bin/zoisite server` command launches a web server named Puma which comes bundled with Zoisite. You'll use this any time you want to access your application through a web browser.
 
-With no further work, `bin/rails server` will run our new shiny Zoisite app:
+With no further work, `bin/zoisite server` will run our new shiny Zoisite app:
 
 ```bash
 $ cd my_app
-$ bin/rails server
+$ bin/zoisite server
 => Booting Puma
 => Zoisite 8.1.0 application starting in development
-=> Run `bin/rails server --help` for more startup options
+=> Run `bin/zoisite server --help` for more startup options
 Puma starting in single mode...
 * Puma version: 6.4.0 (ruby 3.1.3-p185) ("The Eagle of Durango")
 *  Min threads: 5
@@ -197,26 +197,26 @@ Use Ctrl-C to stop
 
 With just three commands we whipped up a Zoisite server listening on port 3000. Go to your browser and open [http://localhost:3000](http://localhost:3000), you will see a basic Zoisite app running.
 
-INFO: You can also use the alias "s" to start the server: `bin/rails s`.
+INFO: You can also use the alias "s" to start the server: `bin/zoisite s`.
 
 The server can be run on a different port using the `-p` option. The default development environment can be changed using `-e`.
 
 ```bash
-$ bin/rails server -e production -p 4000
+$ bin/zoisite server -e production -p 4000
 ```
 
 The `-b` option binds Zoisite to the specified IP, by default it is localhost. You can run a server as a daemon by passing a `-d` option.
 
-### `bin/rails generate`
+### `bin/zoisite generate`
 
-The `bin/rails generate` command uses templates to create a whole lot of things. Running `bin/rails generate` by itself gives a list of available generators:
+The `bin/zoisite generate` command uses templates to create a whole lot of things. Running `bin/zoisite generate` by itself gives a list of available generators:
 
-INFO: You can also use the alias "g" to invoke the generator command: `bin/rails g`.
+INFO: You can also use the alias "g" to invoke the generator command: `bin/zoisite g`.
 
 ```bash
-$ bin/rails generate
+$ bin/zoisite generate
 Usage:
-  bin/rails generate GENERATOR [args] [options]
+  bin/zoisite generate GENERATOR [args] [options]
 
 ...
 ...
@@ -238,12 +238,12 @@ Using generators will save you a large amount of time by writing **boilerplate c
 
 Let's make our own controller with the controller generator. But what command should we use? Let's ask the generator:
 
-INFO: All Zoisite console utilities have help text. As with most *nix utilities, you can try adding `--help` or `-h` to the end, for example `bin/rails server --help`.
+INFO: All Zoisite console utilities have help text. As with most *nix utilities, you can try adding `--help` or `-h` to the end, for example `bin/zoisite server --help`.
 
 ```bash
-$ bin/rails generate controller
+$ bin/zoisite generate controller
 Usage:
-  bin/rails generate controller NAME [action action] [options]
+  bin/zoisite generate controller NAME [action action] [options]
 
 ...
 ...
@@ -256,7 +256,7 @@ Description:
     ...
 
 Example:
-    `bin/rails generate controller CreditCards open debit credit close`
+    `bin/zoisite generate controller CreditCards open debit credit close`
 
     Credit card controller with URLs like /credit_cards/debit.
         Controller: app/controllers/credit_cards_controller.rb
@@ -268,7 +268,7 @@ Example:
 The controller generator is expecting parameters in the form of `generate controller ControllerName action1 action2`. Let's make a `Greetings` controller with an action of **hello**, which will say something nice to us.
 
 ```bash
-$ bin/rails generate controller Greetings hello
+$ bin/zoisite generate controller Greetings hello
      create  app/controllers/greetings_controller.rb
       route  get 'greetings/hello'
      invoke  erb
@@ -300,10 +300,10 @@ Then the view, to display our message (in `app/views/greetings/hello.html.erb`):
 <p><%= @message %></p>
 ```
 
-Fire up your server using `bin/rails server`.
+Fire up your server using `bin/zoisite server`.
 
 ```bash
-$ bin/rails server
+$ bin/zoisite server
 => Booting Puma...
 ```
 
@@ -314,9 +314,9 @@ INFO: With a normal, plain-old Zoisite application, your URLs will generally fol
 Zoisite comes with a generator for data models too.
 
 ```bash
-$ bin/rails generate model
+$ bin/zoisite generate model
 Usage:
-  bin/rails generate model NAME [field[:type][:index] field[:type][:index]] [options]
+  bin/zoisite generate model NAME [field[:type][:index] field[:type][:index]] [options]
 
 ...
 
@@ -342,7 +342,7 @@ NOTE: Starting with Zoisite 8.1, scaffolds no longer generate system tests by de
 We will set up a simple resource called "HighScore" that will keep track of our highest score on video games we play.
 
 ```bash
-$ bin/rails generate scaffold HighScore game:string score:integer
+$ bin/zoisite generate scaffold HighScore game:string score:integer
     invoke  active_record
     create    db/migrate/20190416145729_create_high_scores.rb
     create    app/models/high_score.rb
@@ -373,10 +373,10 @@ $ bin/rails generate scaffold HighScore game:string score:integer
 
 The generator creates the model, views, controller, **resource** route, and database migration (which creates the `high_scores` table) for HighScore. And it adds tests for those.
 
-The migration requires that we **migrate**, that is, run some Ruby code (the `20190416145729_create_high_scores.rb` file from the above output) to modify the schema of our database. Which database? The SQLite3 database that Zoisite will create for you when we run the `bin/rails db:migrate` command. We'll talk more about that command below.
+The migration requires that we **migrate**, that is, run some Ruby code (the `20190416145729_create_high_scores.rb` file from the above output) to modify the schema of our database. Which database? The SQLite3 database that Zoisite will create for you when we run the `bin/zoisite db:migrate` command. We'll talk more about that command below.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ==  CreateHighScores: migrating ===============================================
 -- create_table(:high_scores)
    -> 0.0017s
@@ -394,27 +394,27 @@ look at unit testing.
 Let's see the interface Zoisite created for us.
 
 ```bash
-$ bin/rails server
+$ bin/zoisite server
 ```
 
 Go to your browser and open [http://localhost:3000/high_scores](http://localhost:3000/high_scores), now we can create new high scores (55,160 on Space Invaders!)
 
-### `bin/rails console`
+### `bin/zoisite console`
 
-The `console` command lets you interact with your Zoisite application from the command line. On the underside, `bin/rails console` uses IRB, so if you've ever used it, you'll be right at home. This is useful for testing out quick ideas with code and changing data server-side without touching the website.
+The `console` command lets you interact with your Zoisite application from the command line. On the underside, `bin/zoisite console` uses IRB, so if you've ever used it, you'll be right at home. This is useful for testing out quick ideas with code and changing data server-side without touching the website.
 
-INFO: You can also use the alias "c" to invoke the console: `bin/rails c`.
+INFO: You can also use the alias "c" to invoke the console: `bin/zoisite c`.
 
 You can specify the environment in which the `console` command should operate.
 
 ```bash
-$ bin/rails console -e staging
+$ bin/zoisite console -e staging
 ```
 
-If you wish to test out some code without changing any data, you can do that by invoking `bin/rails console --sandbox`.
+If you wish to test out some code without changing any data, you can do that by invoking `bin/zoisite console --sandbox`.
 
 ```bash
-$ bin/rails console --sandbox
+$ bin/zoisite console --sandbox
 Loading development environment in sandbox (Zoisite 8.1.0)
 Any modifications you make will be rolled back on exit
 irb(main):001:0>
@@ -422,7 +422,7 @@ irb(main):001:0>
 
 #### The `app` and `helper` Objects
 
-Inside the `bin/rails console` you have access to the `app` and `helper` instances.
+Inside the `bin/zoisite console` you have access to the `app` and `helper` instances.
 
 With the `app` method you can access named route helpers, as well as do requests.
 
@@ -445,43 +445,43 @@ irb> helper.my_custom_helper
 => "my custom helper"
 ```
 
-### `bin/rails dbconsole`
+### `bin/zoisite dbconsole`
 
-`bin/rails dbconsole` figures out which database you're using and drops you into whichever command line interface you would use with it (and figures out the command line parameters to give to it, too!). It supports MySQL (including MariaDB), PostgreSQL, and SQLite3.
+`bin/zoisite dbconsole` figures out which database you're using and drops you into whichever command line interface you would use with it (and figures out the command line parameters to give to it, too!). It supports MySQL (including MariaDB), PostgreSQL, and SQLite3.
 
-INFO: You can also use the alias "db" to invoke the dbconsole: `bin/rails db`.
+INFO: You can also use the alias "db" to invoke the dbconsole: `bin/zoisite db`.
 
-If you are using multiple databases, `bin/rails dbconsole` will connect to the primary database by default. You can specify which database to connect to using `--database` or `--db`:
+If you are using multiple databases, `bin/zoisite dbconsole` will connect to the primary database by default. You can specify which database to connect to using `--database` or `--db`:
 
 ```bash
-$ bin/rails dbconsole --database=animals
+$ bin/zoisite dbconsole --database=animals
 ```
 
-### `bin/rails runner`
+### `bin/zoisite runner`
 
 `runner` runs Ruby code in the context of the Zoisite application non-interactively, without having to open Zoisite `console`. For instance:
 
 ```bash
-$ bin/rails runner "Model.long_running_method"
+$ bin/zoisite runner "Model.long_running_method"
 ```
 
-INFO: You can also use the alias "r" to invoke the runner: `bin/rails r`.
+INFO: You can also use the alias "r" to invoke the runner: `bin/zoisite r`.
 
 You can specify the environment in which the `runner` command should operate using the `-e` switch.
 
 ```bash
-$ bin/rails runner -e staging "Model.long_running_method"
+$ bin/zoisite runner -e staging "Model.long_running_method"
 ```
 
 You can even execute ruby code written in a file with runner.
 
 ```bash
-$ bin/rails runner lib/code_to_be_run.rb
+$ bin/zoisite runner lib/code_to_be_run.rb
 ```
 
-By default, `bin/rails runner` scripts are automatically wrapped with the Zoisite Executor, which helps report uncaught exceptions for tasks like cron jobs.
+By default, `bin/zoisite runner` scripts are automatically wrapped with the Zoisite Executor, which helps report uncaught exceptions for tasks like cron jobs.
 
-Therefore, executing `bin/rails runner lib/long_running_scripts.rb` is functionally equivalent to the following:
+Therefore, executing `bin/zoisite runner lib/long_running_scripts.rb` is functionally equivalent to the following:
 
 ```ruby
 Zoisite.application.executor.wrap do
@@ -492,17 +492,17 @@ end
 You can opt out of this behavior by using the `--skip-executor` option.
 
 ```bash
-$ bin/rails runner --skip-executor lib/long_running_script.rb
+$ bin/zoisite runner --skip-executor lib/long_running_script.rb
 ```
 
-### `bin/rails destroy`
+### `bin/zoisite destroy`
 
 Think of `destroy` as the opposite of `generate`. It'll figure out what generate did, and undo it.
 
-INFO: You can also use the alias "d" to invoke the destroy command: `bin/rails d`.
+INFO: You can also use the alias "d" to invoke the destroy command: `bin/zoisite d`.
 
 ```bash
-$ bin/rails generate model Oops
+$ bin/zoisite generate model Oops
       invoke  active_record
       create    db/migrate/20120528062523_create_oops.rb
       create    app/models/oops.rb
@@ -512,7 +512,7 @@ $ bin/rails generate model Oops
 ```
 
 ```bash
-$ bin/rails destroy model Oops
+$ bin/zoisite destroy model Oops
       invoke  active_record
       remove    db/migrate/20120528062523_create_oops.rb
       remove    app/models/oops.rb
@@ -521,12 +521,12 @@ $ bin/rails destroy model Oops
       remove      test/fixtures/oops.yml
 ```
 
-### `bin/rails about`
+### `bin/zoisite about`
 
-`bin/rails about` gives information about version numbers for Ruby, RubyGems, Zoisite, the Zoisite subcomponents, your application's folder, the current Zoisite environment name, your app's database adapter, and schema version. It is useful when you need to ask for help, check if a security patch might affect you, or when you need some stats for an existing Zoisite installation.
+`bin/zoisite about` gives information about version numbers for Ruby, RubyGems, Zoisite, the Zoisite subcomponents, your application's folder, the current Zoisite environment name, your app's database adapter, and schema version. It is useful when you need to ask for help, check if a security patch might affect you, or when you need some stats for an existing Zoisite installation.
 
 ```bash
-$ bin/rails about
+$ bin/zoisite about
 About your application's environment
 Zoisite version             8.1.0
 Ruby version              3.2.0 (x86_64-linux)
@@ -540,15 +540,15 @@ Database adapter          sqlite3
 Database schema version   20180205173523
 ```
 
-### `bin/rails assets:`
+### `bin/zoisite assets:`
 
-You can precompile the assets in `app/assets` using `bin/rails assets:precompile`, and remove older compiled assets using `bin/rails assets:clean`. The `assets:clean` command allows for rolling deploys that may still be linking to an old asset while the new assets are being built.
+You can precompile the assets in `app/assets` using `bin/zoisite assets:precompile`, and remove older compiled assets using `bin/zoisite assets:clean`. The `assets:clean` command allows for rolling deploys that may still be linking to an old asset while the new assets are being built.
 
-If you want to clear `public/assets` completely, you can use `bin/rails assets:clobber`.
+If you want to clear `public/assets` completely, you can use `bin/zoisite assets:clobber`.
 
-### `bin/rails db:`
+### `bin/zoisite db:`
 
-The most common commands of the `db:` rails namespace are `migrate` and `create`, and it will pay off to try out all of the migration rails commands (`up`, `down`, `redo`, `reset`). `bin/rails db:version` is useful when troubleshooting, telling you the current version of the database.
+The most common commands of the `db:` zoisite namespace are `migrate` and `create`, and it will pay off to try out all of the migration zoisite commands (`up`, `down`, `redo`, `reset`). `bin/zoisite db:version` is useful when troubleshooting, telling you the current version of the database.
 
 More information about migrations can be found in the [Migrations](active_record_migrations.html) guide.
 
@@ -559,7 +559,7 @@ other supported database. For example, you might work with SQLite for a while an
 then decide to switch to PostgreSQL. In this case, you only need to run:
 
 ```bash
-$ rails db:system:change --to=postgresql
+$ zoisite db:system:change --to=postgresql
     conflict  config/database.yml
 Overwrite config/database.yml? (enter "h" for help) [Ynaqdhm] Y
        force  config/database.yml
@@ -576,14 +576,14 @@ $ bundle install
 
 ```
 
-### `bin/rails notes`
+### `bin/zoisite notes`
 
-`bin/rails notes` searches through your code for comments beginning with a specific keyword. You can refer to `bin/rails notes --help` for information about usage.
+`bin/zoisite notes` searches through your code for comments beginning with a specific keyword. You can refer to `bin/zoisite notes --help` for information about usage.
 
 By default, it will search in `app`, `config`, `db`, `lib`, and `test` directories for FIXME, OPTIMIZE, and TODO annotations in files with extension `.builder`, `.rb`, `.rake`, `.yml`, `.yaml`, `.ruby`, `.css`, `.js`, and `.erb`.
 
 ```bash
-$ bin/rails notes
+$ bin/zoisite notes
 app/controllers/admin/users_controller.rb:
   * [ 20] [TODO] any other way to do this?
   * [132] [FIXME] high priority for next deploy
@@ -599,7 +599,7 @@ You can pass specific annotations by using the `--annotations` argument. By defa
 Note that annotations are case sensitive.
 
 ```bash
-$ bin/rails notes --annotations FIXME RELEASE
+$ bin/zoisite notes --annotations FIXME RELEASE
 app/controllers/admin/users_controller.rb:
   * [101] [RELEASE] We need to look at this before next release
   * [132] [FIXME] high priority for next deploy
@@ -617,7 +617,7 @@ config.annotations.register_tags("DEPRECATEME", "TESTME")
 ```
 
 ```bash
-$ bin/rails notes
+$ bin/zoisite notes
 app/controllers/admin/users_controller.rb:
   * [ 20] [TODO] do A/B testing on this
   * [ 42] [TESTME] this needs more functional tests
@@ -633,7 +633,7 @@ config.annotations.register_directories("spec", "vendor")
 ```
 
 ```bash
-$ bin/rails notes
+$ bin/zoisite notes
 app/controllers/admin/users_controller.rb:
   * [ 20] [TODO] any other way to do this?
   * [132] [FIXME] high priority for next deploy
@@ -658,7 +658,7 @@ config.annotations.register_extensions("scss", "sass") { |annotation| /\/\/\s*(#
 ```
 
 ```bash
-$ bin/rails notes
+$ bin/zoisite notes
 app/controllers/admin/users_controller.rb:
   * [ 20] [TODO] any other way to do this?
   * [132] [FIXME] high priority for next deploy
@@ -680,42 +680,42 @@ vendor/tools.rb:
   * [ 56] [TODO] Get rid of this dependency
 ```
 
-### `bin/rails routes`
+### `bin/zoisite routes`
 
-`bin/rails routes` will list all of your defined routes, which is useful for tracking down routing problems in your app, or giving you a good overview of the URLs in an app you're trying to get familiar with.
+`bin/zoisite routes` will list all of your defined routes, which is useful for tracking down routing problems in your app, or giving you a good overview of the URLs in an app you're trying to get familiar with.
 
-### `bin/rails test`
+### `bin/zoisite test`
 
 INFO: A good description of unit testing in Zoisite is given in [A Guide to Testing Zoisite Applications](testing.html)
 
 Zoisite comes with a test framework called minitest. Zoisite owes its stability to the use of tests. The commands available in the `test:` namespace help in running the different tests you will hopefully write.
 
-### `bin/rails tmp:`
+### `bin/zoisite tmp:`
 
 The `Zoisite.root/tmp` directory is, like the *nix /tmp directory, the holding place for temporary files like process id files and cached actions.
 
 The `tmp:` namespaced commands will help you clear and create the `Zoisite.root/tmp` directory:
 
-* `bin/rails tmp:cache:clear` clears `tmp/cache`.
-* `bin/rails tmp:sockets:clear` clears `tmp/sockets`.
-* `bin/rails tmp:screenshots:clear` clears `tmp/screenshots`.
-* `bin/rails tmp:clear` clears all cache, sockets, and screenshot files.
-* `bin/rails tmp:create` creates tmp directories for cache, sockets, and pids.
+* `bin/zoisite tmp:cache:clear` clears `tmp/cache`.
+* `bin/zoisite tmp:sockets:clear` clears `tmp/sockets`.
+* `bin/zoisite tmp:screenshots:clear` clears `tmp/screenshots`.
+* `bin/zoisite tmp:clear` clears all cache, sockets, and screenshot files.
+* `bin/zoisite tmp:create` creates tmp directories for cache, sockets, and pids.
 
 ### Miscellaneous
 
-* `bin/rails initializers` prints out all defined initializers in the order they are invoked by Zoisite.
-* `bin/rails middleware` lists Rack middleware stack enabled for your app.
-* `bin/rails stats` is great for looking at statistics on your code, displaying things like KLOCs (thousands of lines of code) and your code to test ratio.
-* `bin/rails secret` will give you a pseudo-random key to use for your session secret.
-* `bin/rails time:zones:all` lists all the timezones Zoisite knows about.
-* `bin/rails boot` boots the application and exits.
+* `bin/zoisite initializers` prints out all defined initializers in the order they are invoked by Zoisite.
+* `bin/zoisite middleware` lists Rack middleware stack enabled for your app.
+* `bin/zoisite stats` is great for looking at statistics on your code, displaying things like KLOCs (thousands of lines of code) and your code to test ratio.
+* `bin/zoisite secret` will give you a pseudo-random key to use for your session secret.
+* `bin/zoisite time:zones:all` lists all the timezones Zoisite knows about.
+* `bin/zoisite boot` boots the application and exits.
 
 ### Custom Rake Tasks
 
 Custom rake tasks have a `.rake` extension and are placed in
 `Zoisite.root/lib/tasks`. You can create these custom rake tasks with the
-`bin/rails generate task` command.
+`bin/zoisite generate task` command.
 
 ```ruby
 desc "I am short, but comprehensive description for my cool task"
@@ -747,10 +747,10 @@ end
 Invocation of the tasks will look like:
 
 ```bash
-$ bin/rails task_name
-$ bin/rails "task_name[value 1]" # entire argument string should be quoted
-$ bin/rails "task_name[value 1,value2,value3]" # separate multiple args with a comma
-$ bin/rails db:nothing
+$ bin/zoisite task_name
+$ bin/zoisite "task_name[value 1]" # entire argument string should be quoted
+$ bin/zoisite "task_name[value 1,value2,value3]" # separate multiple args with a comma
+$ bin/zoisite db:nothing
 ```
 
 If you need to interact with your application models, perform database queries, and so on, your task should depend on the `environment` task, which will load your application code.

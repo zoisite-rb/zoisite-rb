@@ -9,7 +9,7 @@ class ActiveStorage::Representations::RedirectControllerWithVariantsTest < Actio
   end
 
   test "showing variant inline" do
-    get rails_blob_representation_url(
+    get zoisite_blob_representation_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: ActiveStorage::Variation.encode(resize_to_limit: [100, 100]))
@@ -24,7 +24,7 @@ class ActiveStorage::Representations::RedirectControllerWithVariantsTest < Actio
   end
 
   test "showing variant with invalid signed blob ID" do
-    get rails_blob_representation_url(
+    get zoisite_blob_representation_url(
       filename: @blob.filename,
       signed_blob_id: "invalid",
       variation_key: ActiveStorage::Variation.encode(resize_to_limit: [100, 100]))
@@ -33,7 +33,7 @@ class ActiveStorage::Representations::RedirectControllerWithVariantsTest < Actio
   end
 
   test "showing variant with invalid variation key" do
-    get rails_blob_representation_url(
+    get zoisite_blob_representation_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: "invalid")
@@ -50,7 +50,7 @@ class ActiveStorage::Representations::RedirectControllerWithVariantsWithStrictLo
 
   test "showing existing variant record inline" do
     with_strict_loading_by_default do
-      get rails_blob_representation_url(
+      get zoisite_blob_representation_url(
         filename: @blob.filename,
         signed_blob_id: @blob.signed_id,
         variation_key: ActiveStorage::Variation.encode(resize_to_limit: [100, 100]))
@@ -73,7 +73,7 @@ class ActiveStorage::Representations::RedirectControllerWithPreviewsTest < Actio
   end
 
   test "showing preview inline" do
-    get rails_blob_representation_url(
+    get zoisite_blob_representation_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: ActiveStorage::Variation.encode(resize_to_limit: [100, 100]))
@@ -89,7 +89,7 @@ class ActiveStorage::Representations::RedirectControllerWithPreviewsTest < Actio
   end
 
   test "showing preview with invalid signed blob ID" do
-    get rails_blob_representation_url(
+    get zoisite_blob_representation_url(
       filename: @blob.filename,
       signed_blob_id: "invalid",
       variation_key: ActiveStorage::Variation.encode(resize_to_limit: [100, 100]))
@@ -98,7 +98,7 @@ class ActiveStorage::Representations::RedirectControllerWithPreviewsTest < Actio
   end
 
   test "showing preview with invalid variation key" do
-    get rails_blob_representation_url(
+    get zoisite_blob_representation_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: "invalid")
@@ -115,7 +115,7 @@ class ActiveStorage::Representations::RedirectControllerWithPreviewsWithStrictLo
 
   test "showing existing preview record inline" do
     with_strict_loading_by_default do
-      get rails_blob_representation_url(
+      get zoisite_blob_representation_url(
         filename: @blob.filename,
         signed_blob_id: @blob.signed_id,
         variation_key: ActiveStorage::Variation.encode(resize_to_limit: [100, 100]))
@@ -139,7 +139,7 @@ class ActiveStorage::Representations::RedirectControllerWithOpenRedirectTest < A
       with_raise_on_open_redirects(:s3) do
         blob = create_file_blob filename: "racecar.jpg", service_name: :s3
 
-        get rails_blob_representation_url(
+        get zoisite_blob_representation_url(
           filename: blob.filename,
           signed_blob_id: blob.signed_id,
           variation_key: ActiveStorage::Variation.encode(resize_to_limit: [100, 100]))
@@ -154,7 +154,7 @@ class ActiveStorage::Representations::RedirectControllerWithOpenRedirectTest < A
       with_raise_on_open_redirects(:gcs) do
         blob = create_file_blob filename: "racecar.jpg", service_name: :gcs
 
-        get rails_blob_representation_url(
+        get zoisite_blob_representation_url(
           filename: blob.filename,
           signed_blob_id: blob.signed_id,
           variation_key: ActiveStorage::Variation.encode(resize_to_limit: [100, 100]))

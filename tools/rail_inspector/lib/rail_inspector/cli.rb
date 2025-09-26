@@ -12,18 +12,18 @@ module RailInspector
     end
 
     desc "changelogs RAILS_PATH", "Check CHANGELOG files for common issues"
-    def changelogs(rails_path)
+    def changelogs(zoisite_path)
       require_relative "./changelog"
 
-      exit Changelog::Runner.new(rails_path).call
+      exit Changelog::Runner.new(zoisite_path).call
     end
 
     desc "configuration RAILS_PATH", "Check various Configuration issues"
     option :autocorrect, type: :boolean, aliases: :a
-    def configuration(rails_path)
+    def configuration(zoisite_path)
       require_relative "./configuring"
 
-      checker = Configuring.new(rails_path)
+      checker = Configuring.new(zoisite_path)
       checker.check
 
       puts checker.error_message if checker.errors.any?
@@ -34,10 +34,10 @@ module RailInspector
 
     desc "requires RAILS_PATH", "Check for autoloads being required"
     option :autocorrect, type: :boolean, aliases: :a
-    def requires(rails_path)
+    def requires(zoisite_path)
       require_relative "./requires"
 
-      exit Requires.new(rails_path, options[:autocorrect]).call
+      exit Requires.new(zoisite_path, options[:autocorrect]).call
     end
   end
 end

@@ -19,13 +19,13 @@ module ApplicationTests
 
       def db_create_and_drop(namespace, expected_database)
         Dir.chdir(app_path) do
-          output = rails("db:create")
+          output = zoisite("db:create")
           assert_match(/Created database/, output)
           assert_match_namespace(namespace, output)
           assert_no_match(/already exists/, output)
           assert File.exist?(expected_database)
 
-          output = rails("db:drop")
+          output = zoisite("db:drop")
           assert_match(/Dropped database/, output)
           assert_match_namespace(namespace, output)
           assert_no_match(/does not exist/, output)
@@ -35,12 +35,12 @@ module ApplicationTests
 
       def db_create_and_drop_namespace(namespace, expected_database)
         Dir.chdir(app_path) do
-          output = rails("db:create:#{namespace}")
+          output = zoisite("db:create:#{namespace}")
           assert_match(/Created database/, output)
           assert_match_namespace(namespace, output)
           assert File.exist?(expected_database)
 
-          output = rails("db:drop:#{namespace}")
+          output = zoisite("db:drop:#{namespace}")
           assert_match(/Dropped database/, output)
           assert_match_namespace(namespace, output)
           assert_not File.exist?(expected_database)
@@ -58,8 +58,8 @@ module ApplicationTests
       def db_migrate_and_migrate_status
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails "db:migrate"
-          output = rails "db:migrate:status"
+          zoisite "db:migrate"
+          output = zoisite "db:migrate:status"
           assert_match(/up     \d+  Create books/, output)
           assert_match(/up     \d+  Create dogs/, output)
         end
@@ -68,8 +68,8 @@ module ApplicationTests
       def db_migrate_and_schema_cache_dump
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails "db:migrate", "--trace"
-          rails "db:schema:cache:dump", "--trace"
+          zoisite "db:migrate", "--trace"
+          zoisite "db:schema:cache:dump", "--trace"
           assert File.exist?("db/schema_cache.yml")
           assert File.exist?("db/animals_schema_cache.yml")
         end
@@ -78,9 +78,9 @@ module ApplicationTests
       def db_migrate_and_schema_cache_dump_and_schema_cache_clear
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails "db:migrate"
-          rails "db:schema:cache:dump"
-          rails "db:schema:cache:clear"
+          zoisite "db:migrate"
+          zoisite "db:schema:cache:dump"
+          zoisite "db:schema:cache:clear"
           assert_not File.exist?("db/schema_cache.yml")
           assert_not File.exist?("db/animals_schema_cache.yml")
         end
@@ -92,7 +92,7 @@ module ApplicationTests
 
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails "db:migrate", "db:schema:dump"
+          zoisite "db:migrate", "db:schema:dump"
 
           if schema_format == "ruby"
             schema_dump = File.read("db/schema.rb")
@@ -106,10 +106,10 @@ module ApplicationTests
             assert_match(/CREATE TABLE (?:IF NOT EXISTS )?"dogs"/, schema_dump_animals)
           end
 
-          rails "db:schema:load"
+          zoisite "db:schema:load"
 
-          ar_tables = lambda { rails("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
-          animals_tables = lambda { rails("runner", "p AnimalsBase.lease_connection.tables.sort").strip }
+          ar_tables = lambda { zoisite("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
+          animals_tables = lambda { zoisite("runner", "p AnimalsBase.lease_connection.tables.sort").strip }
 
           assert_equal '["ar_internal_metadata", "books", "schema_migrations"]', ar_tables[]
           assert_equal '["ar_internal_metadata", "dogs", "schema_migrations"]', animals_tables[]
@@ -122,7 +122,7 @@ module ApplicationTests
 
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails "db:migrate:#{database}", "db:schema:dump:#{database}"
+          zoisite "db:migrate:#{database}", "db:schema:dump:#{database}"
 
           if schema_format == "ruby"
             if database == "primary"
@@ -146,10 +146,10 @@ module ApplicationTests
             end
           end
 
-          rails "db:schema:load:#{database}"
+          zoisite "db:schema:load:#{database}"
 
-          ar_tables = lambda { rails("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
-          animals_tables = lambda { rails("runner", "p AnimalsBase.lease_connection.tables.sort").strip }
+          ar_tables = lambda { zoisite("runner", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
+          animals_tables = lambda { zoisite("runner", "p AnimalsBase.lease_connection.tables.sort").strip }
 
           if database == "primary"
             assert_equal '["ar_internal_metadata", "books", "schema_migrations"]', ar_tables[]
@@ -173,7 +173,7 @@ module ApplicationTests
           assert_not(File.exist?("db/structure.sql"))
           assert_not(File.exist?("db/animals_structure.sql"))
 
-          rails("db:migrate:#{name}")
+          zoisite("db:migrate:#{name}")
 
           if schema_format == "ruby"
             if name == "primary"
@@ -206,13 +206,13 @@ module ApplicationTests
         Dir.chdir(app_path) do
           generate_models_for_animals
 
-          rails("db:migrate:#{name}", "db:schema:dump:#{name}")
+          zoisite("db:migrate:#{name}", "db:schema:dump:#{name}")
 
-          output = rails("db:test:prepare:#{name}", "--trace")
+          output = zoisite("db:test:prepare:#{name}", "--trace")
           assert_match(/Execute db:test:load_schema:#{name}/, output)
 
-          ar_tables = lambda { rails("runner", "-e", "test", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
-          animals_tables = lambda { rails("runner",  "-e", "test", "p AnimalsBase.lease_connection.tables.sort").strip }
+          ar_tables = lambda { zoisite("runner", "-e", "test", "p ActiveRecord::Base.lease_connection.tables.sort").strip }
+          animals_tables = lambda { zoisite("runner",  "-e", "test", "p AnimalsBase.lease_connection.tables.sort").strip }
 
           if name == "primary"
             assert_equal '["ar_internal_metadata", "books", "schema_migrations"]', ar_tables[]
@@ -227,7 +227,7 @@ module ApplicationTests
       def db_migrate_namespaced(namespace)
         Dir.chdir(app_path) do
           generate_models_for_animals
-          output = rails("db:migrate:#{namespace}")
+          output = zoisite("db:migrate:#{namespace}")
           if namespace == "primary"
             assert_match(/CreateBooks: migrated/, output)
           else
@@ -239,7 +239,7 @@ module ApplicationTests
       def db_migrate_status_namespaced(namespace)
         Dir.chdir(app_path) do
           generate_models_for_animals
-          output = rails("db:migrate:status:#{namespace}")
+          output = zoisite("db:migrate:status:#{namespace}")
           if namespace == "primary"
             assert_match(/up     \d+  Create books/, output)
           else
@@ -250,9 +250,9 @@ module ApplicationTests
 
       def db_setup
         Dir.chdir(app_path) do
-          rails "db:migrate"
-          rails "db:drop"
-          output = rails("db:setup")
+          zoisite "db:migrate"
+          zoisite "db:drop"
+          output = zoisite("db:setup")
           assert_match(/Created database/, output)
           ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
             assert_match_namespace(db_config.name, output)
@@ -263,9 +263,9 @@ module ApplicationTests
 
       def db_setup_namespaced(namespace, expected_database)
         Dir.chdir(app_path) do
-         rails "db:migrate"
-         rails "db:drop:#{namespace}"
-         output = rails("db:setup:#{namespace}")
+         zoisite "db:migrate"
+         zoisite "db:drop:#{namespace}"
+         output = zoisite("db:setup:#{namespace}")
          assert_match(/Created database/, output)
          assert_match_namespace(namespace, output)
          assert File.exist?(expected_database)
@@ -274,8 +274,8 @@ module ApplicationTests
 
       def db_reset
         Dir.chdir(app_path) do
-          rails "db:migrate"
-          output = rails("db:reset")
+          zoisite "db:migrate"
+          output = zoisite("db:reset")
           assert_match(/Dropped database/, output)
           assert_match(/Created database/, output)
           ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
@@ -287,8 +287,8 @@ module ApplicationTests
 
       def db_reset_namespaced(namespace, expected_database)
         Dir.chdir(app_path) do
-          rails "db:migrate"
-          output = rails("db:reset:#{namespace}")
+          zoisite "db:migrate"
+          output = zoisite("db:reset:#{namespace}")
           assert_match(/Dropped database/, output)
           assert_match(/Created database/, output)
           assert_match_namespace(namespace, output)
@@ -299,19 +299,19 @@ module ApplicationTests
       def db_up_and_down(version, namespace = nil)
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails("db:migrate")
+          zoisite("db:migrate")
 
           if namespace
-            down_output = rails("db:migrate:down:#{namespace}", "VERSION=#{version}")
-            up_output = rails("db:migrate:up:#{namespace}", "VERSION=#{version}")
+            down_output = zoisite("db:migrate:down:#{namespace}", "VERSION=#{version}")
+            up_output = zoisite("db:migrate:up:#{namespace}", "VERSION=#{version}")
           else
             exception = assert_raises RuntimeError do
-              down_output = rails("db:migrate:down", "VERSION=#{version}")
+              down_output = zoisite("db:migrate:down", "VERSION=#{version}")
             end
             assert_match("You're using a multiple database application", exception.message)
 
             exception = assert_raises RuntimeError do
-              up_output = rails("db:migrate:up", "VERSION=#{version}")
+              up_output = zoisite("db:migrate:up", "VERSION=#{version}")
             end
             assert_match("You're using a multiple database application", exception.message)
           end
@@ -331,13 +331,13 @@ module ApplicationTests
       def db_migrate_and_rollback(namespace = nil)
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails("db:migrate")
+          zoisite("db:migrate")
 
           if namespace
-            rollback_output = rails("db:rollback:#{namespace}")
+            rollback_output = zoisite("db:rollback:#{namespace}")
           else
             exception = assert_raises RuntimeError do
-              rollback_output = rails("db:rollback")
+              rollback_output = zoisite("db:rollback")
             end
             assert_match("You're using a multiple database application", exception.message)
           end
@@ -357,13 +357,13 @@ module ApplicationTests
       def db_migrate_redo(namespace = nil)
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails("db:migrate")
+          zoisite("db:migrate")
 
           if namespace
-            redo_output = rails("db:migrate:redo:#{namespace}")
+            redo_output = zoisite("db:migrate:redo:#{namespace}")
           else
             exception = assert_raises RuntimeError do
-              redo_output = rails("db:migrate:redo")
+              redo_output = zoisite("db:migrate:redo")
             end
             assert_match("You're using a multiple database application", exception.message)
           end
@@ -385,7 +385,7 @@ module ApplicationTests
       def db_prepare
         Dir.chdir(app_path) do
           generate_models_for_animals
-          output = rails("db:prepare")
+          output = zoisite("db:prepare")
 
           ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
             if db_config.name == "primary"
@@ -427,8 +427,8 @@ module ApplicationTests
       end
 
       def generate_models_for_animals
-        rails "generate", "model", "book", "title:string"
-        rails "generate", "model", "dog", "name:string"
+        zoisite "generate", "model", "book", "title:string"
+        zoisite "generate", "model", "dog", "name:string"
         write_models_for_animals
         reload
       end
@@ -446,7 +446,7 @@ module ApplicationTests
           db_create_and_drop_namespace db_config.name, db_config.database
         ensure
           # secondary databases might have been created by check_protected_environments task
-          rails("db:drop:all")
+          zoisite("db:drop:all")
         end
       end
 
@@ -463,7 +463,7 @@ module ApplicationTests
           generate_models_for_animals
 
           assert_nothing_raised do
-            rails("db:migrate", "foo")
+            zoisite("db:migrate", "foo")
           end
         end
       end
@@ -480,10 +480,10 @@ module ApplicationTests
 
           generate_models_for_animals
 
-          rails("db:migrate:primary")
+          zoisite("db:migrate:primary")
 
           assert_nothing_raised do
-            rails("db:migrate:animals", "foo")
+            zoisite("db:migrate:animals", "foo")
           end
         end
       end
@@ -500,12 +500,12 @@ module ApplicationTests
 
           generate_models_for_animals
 
-          rails("db:migrate:primary")
+          zoisite("db:migrate:primary")
 
-          rails "db:migrate:animals", "db:schema:dump:animals"
+          zoisite "db:migrate:animals", "db:schema:dump:animals"
 
           assert_nothing_raised do
-            rails("db:schema:load:animals", "foo")
+            zoisite("db:schema:load:animals", "foo")
           end
         end
       end
@@ -527,12 +527,12 @@ module ApplicationTests
             EOS
           end
 
-          rails("db:migrate:primary", "db:migrate:animals")
+          zoisite("db:migrate:primary", "db:migrate:animals")
 
-          development_runner_output = rails("runner", "puts Dog.type_for_attribute(:name).type")
+          development_runner_output = zoisite("runner", "puts Dog.type_for_attribute(:name).type")
           assert_match(/string/, development_runner_output)
 
-          test_output = rails("test", "test/models/dog_test.rb")
+          test_output = zoisite("test", "test/models/dog_test.rb")
           assert_match(/string/, test_output)
 
           # Simulate a schema change
@@ -540,11 +540,11 @@ module ApplicationTests
           content.gsub!(/t\.string "name"/, "t.text \"name\"")
           File.write("db/animals_schema.rb", content)
 
-          rails("db:schema:load:animals")
-          development_runner_output = rails("runner", "puts Dog.type_for_attribute(:name).type")
+          zoisite("db:schema:load:animals")
+          development_runner_output = zoisite("runner", "puts Dog.type_for_attribute(:name).type")
           assert_match(/text/, development_runner_output)
 
-          test_output = rails("test", "test/models/dog_test.rb")
+          test_output = zoisite("test", "test/models/dog_test.rb")
           assert_match(/text/, test_output)
         end
       end
@@ -572,7 +572,7 @@ module ApplicationTests
         MIGRATION
 
         Dir.chdir(app_path) do
-          output = rails "db:migrate"
+          output = zoisite "db:migrate"
           entries = output.scan(/^== (\d+).+migrated/).map(&:first).map(&:to_i)
           assert_equal [1, 2, 3, 4], entries
         end
@@ -596,9 +596,9 @@ module ApplicationTests
         MIGRATION
 
         Dir.chdir(app_path) do
-          rails "db:migrate:up:primary", "VERSION=01_one_migration.rb"
-          rails "db:migrate:up:primary", "VERSION=03_three_migration.rb"
-          output = rails "db:migrate"
+          zoisite "db:migrate:up:primary", "VERSION=01_one_migration.rb"
+          zoisite "db:migrate:up:primary", "VERSION=03_three_migration.rb"
+          output = zoisite "db:migrate"
           entries = output.scan(/^== (\d+).+migrated/).map(&:first).map(&:to_i)
           assert_equal [2], entries
         end
@@ -627,7 +627,7 @@ module ApplicationTests
         MIGRATION
 
         Dir.chdir(app_path) do
-          output = rails "db:prepare"
+          output = zoisite "db:prepare"
           entries = output.scan(/^== (\d+).+migrated/).map(&:first).map(&:to_i)
           assert_equal [1, 2, 3, 4] * 2, entries # twice because for test env too
         end
@@ -656,7 +656,7 @@ module ApplicationTests
 
         Dir.chdir(app_path) do
           # Run the first two migrations to get the schema files.
-          rails "db:prepare"
+          zoisite "db:prepare"
 
           assert File.exist?("db/schema.rb")
           assert File.exist?("db/animals_schema.rb")
@@ -674,7 +674,7 @@ module ApplicationTests
 
         Dir.chdir(app_path) do
           # Run the new migration and assert that only the animals schema was updated.
-          rails "db:prepare"
+          zoisite "db:prepare"
 
           assert_equal primary_mtime, File.mtime("db/schema.rb")
           assert_not_equal animals_mtime, File.mtime("db/animals_schema.rb")
@@ -708,7 +708,7 @@ module ApplicationTests
         MIGRATION
 
         Dir.chdir(app_path) do
-          output = rails "db:migrate"
+          output = zoisite "db:migrate"
           entries = output.scan(/^== (\d+).+migrated/).map(&:first).map(&:to_i)
 
           assert_match(/dogs/, output)
@@ -822,8 +822,8 @@ module ApplicationTests
         MIGRATION
 
         Dir.chdir(app_path) do
-          rails("db:migrate:up:primary", "VERSION=01")
-          rails("db:migrate:down:primary", "VERSION=01")
+          zoisite("db:migrate:up:primary", "VERSION=01")
+          zoisite("db:migrate:down:primary", "VERSION=01")
 
           assert File.exist?("db/schema.rb"), "should dump schema for primary database"
           assert_not File.exist?("db/animals_schema.rb"), "should not dump schema for animals database"
@@ -882,12 +882,12 @@ module ApplicationTests
 
       test "db:rollback:namespace dumps schema only for specific database" do
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "generate", "model", "dog", "name:string", "--database animals"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "generate", "model", "dog", "name:string", "--database animals"
+          zoisite "db:migrate"
           File.delete("db/animals_schema.rb")
 
-          rails "db:rollback:primary"
+          zoisite "db:rollback:primary"
 
           assert File.exist?("db/schema.rb"), "should dump schema for primary database"
           assert_not File.exist?("db/animals_schema.rb"), "should not dump schema for animals database"
@@ -917,31 +917,31 @@ module ApplicationTests
       test "db:prepare setup the database even if schema does not exist" do
         Dir.chdir(app_path) do
           use_postgresql(multi_db: true) # bug doesn't exist with sqlite3
-          output = rails("db:drop")
+          output = zoisite("db:drop")
           assert_match(/Dropped database/, output)
 
-          rails "generate", "model", "recipe", "title:string"
-          output = rails("db:prepare")
+          zoisite "generate", "model", "recipe", "title:string"
+          output = zoisite("db:prepare")
           assert_match(/CreateRecipes: migrated/, output)
         end
       ensure
-        rails "db:drop" rescue nil
+        zoisite "db:drop" rescue nil
       end
 
       test "schema_cache is loaded on all connection db in multi-db app if it exists for the connection" do
         require "#{app_path}/config/environment"
         db_migrate_and_schema_cache_dump
 
-        cache_size_a = rails("runner", "p ActiveRecord::Base.schema_cache.size").strip
+        cache_size_a = zoisite("runner", "p ActiveRecord::Base.schema_cache.size").strip
         assert_equal "12", cache_size_a
 
-        cache_tables_a = rails("runner", "p ActiveRecord::Base.schema_cache.columns('books')").strip
+        cache_tables_a = zoisite("runner", "p ActiveRecord::Base.schema_cache.columns('books')").strip
         assert_includes cache_tables_a, "title", "expected cache_tables_a to include a title entry"
 
-        cache_size_b = rails("runner", "p AnimalsBase.schema_cache.size", stderr: true).strip
+        cache_size_b = zoisite("runner", "p AnimalsBase.schema_cache.size", stderr: true).strip
         assert_equal "12", cache_size_b, "expected the cache size for animals to be valid since it was dumped"
 
-        cache_tables_b = rails("runner", "p AnimalsBase.schema_cache.columns('dogs')").strip
+        cache_tables_b = zoisite("runner", "p AnimalsBase.schema_cache.columns('dogs')").strip
         assert_includes cache_tables_b, "name", "expected cache_tables_b to include a name entry"
       end
 
@@ -958,7 +958,7 @@ module ApplicationTests
           end
         MIGRATION
 
-        output = rails("db:abort_if_pending_migrations", allow_failure: true)
+        output = zoisite("db:abort_if_pending_migrations", allow_failure: true)
         assert_match(/You have 1 pending migration/, output)
       end
 
@@ -970,9 +970,9 @@ module ApplicationTests
           end
         MIGRATION
 
-        output = rails("db:abort_if_pending_migrations:primary")
+        output = zoisite("db:abort_if_pending_migrations:primary")
         assert_no_match(/You have \d+ pending migration/, output)
-        output = rails("db:abort_if_pending_migrations:animals", allow_failure: true)
+        output = zoisite("db:abort_if_pending_migrations:animals", allow_failure: true)
         assert_match(/You have 1 pending migration/, output)
       end
 
@@ -983,8 +983,8 @@ module ApplicationTests
           primary_version = File.basename(Dir[File.join(app_path, "db", "migrate", "*.rb")].first).to_i
           animals_version = File.basename(Dir[File.join(app_path, "db", "animals_migrate", "*.rb")].first).to_i
 
-          rails("db:migrate")
-          output = rails("db:version")
+          zoisite("db:migrate")
+          output = zoisite("db:version")
 
           assert_match(/database: storage\/development.sqlite3\nCurrent version: #{primary_version}/, output)
           assert_match(/database: storage\/development_animals.sqlite3\nCurrent version: #{animals_version}/, output)
@@ -998,12 +998,12 @@ module ApplicationTests
           primary_version = File.basename(Dir[File.join(app_path, "db", "migrate", "*.rb")].first).to_i
           animals_version = File.basename(Dir[File.join(app_path, "db", "animals_migrate", "*.rb")].first).to_i
 
-          rails("db:migrate")
+          zoisite("db:migrate")
 
-          output = rails("db:version:primary")
+          output = zoisite("db:version:primary")
           assert_match(/Current version: #{primary_version}/, output)
 
-          output = rails("db:version:animals")
+          output = zoisite("db:version:animals")
           assert_match(/Current version: #{animals_version}/, output)
         end
       end
@@ -1036,7 +1036,7 @@ module ApplicationTests
         require "#{app_path}/config/environment"
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails "db:migrate"
+          zoisite "db:migrate"
           assert_not File.read("db/schema.rb").include?("director")
 
 
@@ -1055,7 +1055,7 @@ module ApplicationTests
             end
           MIGRATION
 
-          rails "db:migrate:reset:primary"
+          zoisite "db:migrate:reset:primary"
 
           assert File.read("db/schema.rb").include?("director")
           assert File.mtime("db/schema.rb") > primary_mtime
@@ -1072,20 +1072,20 @@ module ApplicationTests
       test "db:prepare setups missing database without clearing existing one" do
         require "#{app_path}/config/environment"
         Dir.chdir(app_path) do
-          # Bug not visible on SQLite3. Can be simplified when https://github.com/rails/rails/issues/36383 resolved
+          # Bug not visible on SQLite3. Can be simplified when https://github.com/zoisite/zoisite/issues/36383 resolved
           use_postgresql(multi_db: true)
           generate_models_for_animals
 
-          rails "db:create:animals", "db:migrate:animals", "db:create:primary", "db:migrate:primary", "db:schema:dump"
-          rails "db:drop:primary"
+          zoisite "db:create:animals", "db:migrate:animals", "db:create:primary", "db:migrate:primary", "db:schema:dump"
+          zoisite "db:drop:primary"
           Dog.create!
-          output = rails("db:prepare")
+          output = zoisite("db:prepare")
 
           assert_match(/Created database/, output)
           assert_equal 1, Dog.count
         ensure
           Dog.lease_connection.disconnect!
-          rails "db:drop" rescue nil
+          zoisite "db:drop" rescue nil
         end
       end
 
@@ -1094,25 +1094,25 @@ module ApplicationTests
         Dir.chdir(app_path) do
           use_postgresql(multi_db: true)
 
-          rails "db:drop"
+          zoisite "db:drop"
           generate_models_for_animals
-          rails "generate", "model", "recipe", "title:string"
+          zoisite "generate", "model", "recipe", "title:string"
 
           app_file "db/seeds.rb", <<-RUBY
             Dog.create!
           RUBY
 
-          rails("db:prepare")
+          zoisite("db:prepare")
 
           assert_equal 1, Dog.count
         ensure
           Dog.lease_connection.disconnect!
-          rails "db:drop" rescue nil
+          zoisite "db:drop" rescue nil
         end
       end
 
       test "db:seed uses primary database connection" do
-        @old_rails_env = ENV["RAILS_ENV"]
+        @old_zoisite_env = ENV["RAILS_ENV"]
         @old_rack_env = ENV["RACK_ENV"]
         ENV.delete "RAILS_ENV"
         ENV.delete "RACK_ENV"
@@ -1123,10 +1123,10 @@ module ApplicationTests
           print Book.lease_connection.pool.db_config.database
         RUBY
 
-        output = rails("db:seed")
+        output = zoisite("db:seed")
         assert_equal "storage/development.sqlite3", output
       ensure
-        ENV["RAILS_ENV"] = @old_rails_env
+        ENV["RAILS_ENV"] = @old_zoisite_env
         ENV["RACK_ENV"] = @old_rack_env
       end
 
@@ -1204,8 +1204,8 @@ module ApplicationTests
         EOS
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
 
           assert_not File.exist?("db/schema.rb"), "should not dump schema when configured not to"
           assert_not File.exist?("db/secondary_schema.rb"), "should not dump schema when configured not to"
@@ -1226,8 +1226,8 @@ module ApplicationTests
         EOS
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
 
           assert_not File.exist?("db/schema.rb"), "should not dump schema when configured not to"
           assert_not File.exist?("db/secondary_schema.rb"), "should not dump schema when configured not to"
@@ -1247,8 +1247,8 @@ module ApplicationTests
         EOS
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate:primary", "db:migrate:secondary"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate:primary", "db:migrate:secondary"
 
           assert File.exist?("db/schema.rb"), "should not dump schema when configured not to"
           assert_not File.exist?("db/secondary_schema.rb"), "should not dump schema when configured not to"
@@ -1268,8 +1268,8 @@ module ApplicationTests
         EOS
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate:primary", "db:migrate:secondary"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate:primary", "db:migrate:secondary"
 
           assert_not File.exist?("db/schema.rb"), "should not dump schema when configured not to"
           assert File.exist?("db/secondary_schema.rb"), "should dump schema when configured to"
@@ -1288,8 +1288,8 @@ module ApplicationTests
         EOS
 
         Dir.chdir(app_path) do
-          rails "generate", "model", "book", "title:string"
-          rails "db:migrate"
+          zoisite "generate", "model", "book", "title:string"
+          zoisite "db:migrate"
 
           assert File.exist?("db/schema.rb"), "should dump schema when configured to"
           assert File.exist?("db/secondary_schema.rb"), "should dump schema when configured to"
@@ -1312,7 +1312,7 @@ module ApplicationTests
         EOS
 
         Dir.chdir(app_path) do
-          output = rails("db:test:prepare", "--trace")
+          output = zoisite("db:test:prepare", "--trace")
           assert_match(/Execute db:test:prepare/, output)
         end
       end
@@ -1414,17 +1414,17 @@ module ApplicationTests
           assert_not File.exist?("db/animals_schema.rb")
 
           error = assert_raises do
-            rails "db:migrate:animals" ### Task not defined
+            zoisite "db:migrate:animals" ### Task not defined
           end
           assert_includes error.message, "Unrecognized command"
 
-          rails "db:migrate"
+          zoisite "db:migrate"
           assert File.exist?("storage/default.sqlite3")
           assert_not File.exist?("storage/development_animals.sqlite3")
           assert File.exist?("db/schema.rb")
           assert_not File.exist?("db/animals_schema.rb")
 
-          rails "db:drop"
+          zoisite "db:drop"
           assert_not File.exist?("storage/default.sqlite3")
           assert_not File.exist?("storage/development_animals.sqlite3")
         end
@@ -1454,17 +1454,17 @@ module ApplicationTests
           assert_not File.exist?("db/animals_schema.rb")
 
           error = assert_raises do
-            rails "db:migrate:animals" ### Task not defined
+            zoisite "db:migrate:animals" ### Task not defined
           end
           assert_includes error.message, "Unrecognized command"
 
-          rails "db:migrate"
+          zoisite "db:migrate"
           assert_not File.exist?("storage/development.sqlite3")
           assert File.exist?("storage/development_animals.sqlite3")
           assert_not File.exist?("db/schema.rb")
           assert File.exist?("db/animals_schema.rb")
 
-          rails "db:drop"
+          zoisite "db:drop"
 
           assert_not File.exist?("storage/development.sqlite3")
           assert_not File.exist?("storage/development_animals.sqlite3")
@@ -1495,17 +1495,17 @@ module ApplicationTests
           assert_not File.exist?("db/animals_schema.rb")
 
           error = assert_raises do
-            rails "db:migrate:animals" ### Task not defined
+            zoisite "db:migrate:animals" ### Task not defined
           end
           assert_includes error.message, "Unrecognized command"
 
-          rails "db:migrate"
+          zoisite "db:migrate"
           assert_not File.exist?("storage/development.sqlite3")
           assert File.exist?("storage/development_animals.sqlite3")
           assert_not File.exist?("db/schema.rb")
           assert File.exist?("db/animals_schema.rb")
 
-          rails "db:drop"
+          zoisite "db:drop"
 
           assert_not File.exist?("storage/development.sqlite3")
           assert_not File.exist?("storage/development_animals.sqlite3")
@@ -1519,12 +1519,12 @@ module ApplicationTests
 
         Dir.chdir(app_path) do
           generate_models_for_animals
-          rails "db:migrate"
+          zoisite "db:migrate"
 
           destructive_tasks = ["db:drop:animals", "db:schema:load:animals", "db:test:purge:animals"]
 
           destructive_tasks.each do |task|
-            error = assert_raises("#{task} did not raise ActiveRecord::ProtectedEnvironmentError") { rails task }
+            error = assert_raises("#{task} did not raise ActiveRecord::ProtectedEnvironmentError") { zoisite task }
             assert_match(/ActiveRecord::ProtectedEnvironmentError/, error.message)
           end
         end
@@ -1558,8 +1558,8 @@ module ApplicationTests
         Dir.chdir(app_path) do
           assert_not File.exist?("db/schema.rb")
           assert_not File.exist?("db/animals_structure.sql")
-          rails "db:migrate"
-          rails "db:schema:dump"
+          zoisite "db:migrate"
+          zoisite "db:schema:dump"
           assert File.exist?("db/schema.rb")
           assert File.exist?("db/animals_structure.sql")
         end
@@ -1591,8 +1591,8 @@ module ApplicationTests
         Dir.chdir(app_path) do
           assert_not File.exist?("db/schema.rb")
           assert_not File.exist?("db/animals_structure.sql")
-          rails "db:migrate"
-          rails "db:schema:dump"
+          zoisite "db:migrate"
+          zoisite "db:schema:dump"
           assert File.exist?("db/schema.rb")
           assert File.exist?("db/animals_structure.sql")
         end
@@ -1614,7 +1614,7 @@ module ApplicationTests
 
         Dir.chdir(app_path) do
           assert_raises "Invalid schema format" do
-            rails "db:migrate"
+            zoisite "db:migrate"
           end
         end
       end
@@ -1655,9 +1655,9 @@ module ApplicationTests
             EOS
           end
 
-          rails "db:migrate"
-          rails "db:schema:dump"
-          output = rails "test"
+          zoisite "db:migrate"
+          zoisite "db:schema:dump"
+          output = zoisite "test"
           assert_match(/1 runs, 1 assertions, 0 failures, 0 errors, 0 skips/, output)
         end
       end

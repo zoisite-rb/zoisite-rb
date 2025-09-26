@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators/base"
-require "rails/generators/generated_attribute"
+require "zoisite/generators/base"
+require "zoisite/generators/generated_attribute"
 
 module Zoisite
   module Generators

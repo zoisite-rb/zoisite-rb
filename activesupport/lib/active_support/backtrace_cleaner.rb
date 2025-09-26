@@ -148,7 +148,7 @@ module ActiveSupport
     # Adds a filter from the block provided. Each line in the backtrace will be
     # mapped against this filter.
     #
-    #   # Will turn "/my/rails/root/app/models/person.rb" into "app/models/person.rb"
+    #   # Will turn "/my/zoisite/root/app/models/person.rb" into "app/models/person.rb"
     #   root = "#{Zoisite.root}/"
     #   backtrace_cleaner.add_filter { |line| line.delete_prefix(root) }
     def add_filter(&block)

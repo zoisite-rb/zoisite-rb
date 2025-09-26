@@ -2,8 +2,8 @@
 
 require "abstract_unit"
 require "env_helpers"
-require "rails/command"
-require "rails/commands/console/console_command"
+require "zoisite/command"
+require "zoisite/commands/console/console_command"
 
 class Zoisite::ConsoleTest < ActiveSupport::TestCase
   include EnvHelpers
@@ -19,11 +19,11 @@ class Zoisite::ConsoleTest < ActiveSupport::TestCase
   end
 
   def setup
-    @prev_rails_env = Zoisite.env
+    @prev_zoisite_env = Zoisite.env
   end
 
   def teardown
-    Zoisite.env = @prev_rails_env
+    Zoisite.env = @prev_zoisite_env
   end
 
   def test_sandbox_option
@@ -87,15 +87,15 @@ class Zoisite::ConsoleTest < ActiveSupport::TestCase
     assert_equal("#{magenta}custom_env#{clear}", irb_console.colorized_env)
   end
 
-  def test_default_environment_with_no_rails_env
-    with_rails_env nil do
+  def test_default_environment_with_no_zoisite_env
+    with_zoisite_env nil do
       start
       assert_match(/\sdevelopment\s/, output)
     end
   end
 
-  def test_default_environment_with_rails_env
-    with_rails_env "special-production" do
+  def test_default_environment_with_zoisite_env
+    with_zoisite_env "special-production" do
       start
       assert_match(/\sspecial-production\s/, output)
     end
@@ -123,7 +123,7 @@ class Zoisite::ConsoleTest < ActiveSupport::TestCase
     assert_match(/\sspecial-production\s/, output)
   end
 
-  def test_rails_env_is_dev_when_environment_option_is_dev_and_dev_env_is_present
+  def test_zoisite_env_is_dev_when_environment_option_is_dev_and_dev_env_is_present
     Zoisite::Command::ConsoleCommand.class_eval do
       alias_method :old_environments, :available_environments
 
@@ -146,8 +146,8 @@ class Zoisite::ConsoleTest < ActiveSupport::TestCase
 
   private
     def start(argv = [])
-      rails_console = Zoisite::Console.new(app, parse_arguments(argv))
-      @output = capture(:stdout) { rails_console.start }
+      zoisite_console = Zoisite::Console.new(app, parse_arguments(argv))
+      @output = capture(:stdout) { zoisite_console.start }
     end
 
     def app

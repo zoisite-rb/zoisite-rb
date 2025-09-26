@@ -9,11 +9,11 @@ module ActionView
     # This module provides methods for generating asset paths and
     # URLs.
     #
-    #   image_path("rails.png")
-    #   # => "/assets/rails.png"
+    #   image_path("zoisite.png")
+    #   # => "/assets/zoisite.png"
     #
-    #   image_url("rails.png")
-    #   # => "http://www.example.com/assets/rails.png"
+    #   image_url("zoisite.png")
+    #   # => "http://www.example.com/assets/zoisite.png"
     #
     # === Using asset hosts
     #
@@ -29,8 +29,8 @@ module ActionView
     #
     # Helpers take that into account:
     #
-    #   image_tag("rails.png")
-    #   # => <img src="http://assets.example.com/assets/rails.png" />
+    #   image_tag("zoisite.png")
+    #   # => <img src="http://assets.example.com/assets/zoisite.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="http://assets.example.com/assets/application.css" rel="stylesheet" />
     #
@@ -42,8 +42,8 @@ module ActionView
     # <tt>assets%d.example.com</tt> will spread the asset requests over
     # "assets0.example.com", ..., "assets3.example.com".
     #
-    #   image_tag("rails.png")
-    #   # => <img src="http://assets0.example.com/assets/rails.png" />
+    #   image_tag("zoisite.png")
+    #   # => <img src="http://assets0.example.com/assets/zoisite.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="http://assets2.example.com/assets/application.css" rel="stylesheet" />
     #
@@ -68,8 +68,8 @@ module ActionView
     #   ActionController::Base.asset_host = Proc.new { |source|
     #     "http://assets#{OpenSSL::Digest::SHA256.hexdigest(source).to_i(16) % 2 + 1}.example.com"
     #   }
-    #   image_tag("rails.png")
-    #   # => <img src="http://assets1.example.com/assets/rails.png" />
+    #   image_tag("zoisite.png")
+    #   # => <img src="http://assets1.example.com/assets/zoisite.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="http://assets2.example.com/assets/application.css" rel="stylesheet" />
     #
@@ -78,7 +78,7 @@ module ActionView
     # you need fewer/more than four hosts, custom host names, etc.
     #
     # As you see the proc takes a +source+ parameter. That's a string with the
-    # absolute path of the asset, for example "/assets/rails.png".
+    # absolute path of the asset, for example "/assets/zoisite.png".
     #
     #    ActionController::Base.asset_host = Proc.new { |source|
     #      if source.end_with?('.css')
@@ -87,8 +87,8 @@ module ActionView
     #        "http://assets.example.com"
     #      end
     #    }
-    #   image_tag("rails.png")
-    #   # => <img src="http://assets.example.com/assets/rails.png" />
+    #   image_tag("zoisite.png")
+    #   # => <img src="http://assets.example.com/assets/zoisite.png" />
     #   stylesheet_link_tag("application")
     #   # => <link href="http://stylesheets.example.com/assets/application.css" rel="stylesheet" />
     #
@@ -99,7 +99,7 @@ module ActionView
     # have SSL certificates for each of the asset hosts this technique allows you
     # to avoid warnings in the client about mixed media.
     # Note that the +request+ parameter might not be supplied, e.g. when the assets
-    # are precompiled with the command <tt>bin/rails assets:precompile</tt>. Make sure to use a
+    # are precompiled with the command <tt>bin/zoisite assets:precompile</tt>. Make sure to use a
     # +Proc+ instead of a lambda, since a +Proc+ allows missing parameters and sets them
     # to +nil+.
     #
@@ -122,7 +122,7 @@ module ActionView
       URI_REGEXP = %r{^[-a-z]+://|^(?:cid|data):|^//}i
 
       # This is the entry point for all assets.
-      # When using an asset pipeline gem (e.g. propshaft or sprockets-rails), the
+      # When using an asset pipeline gem (e.g. propshaft or sprockets-zoisite), the
       # behavior is "enhanced". You can bypass the asset pipeline by passing in
       # <tt>skip_pipeline: true</tt> to the options.
       #

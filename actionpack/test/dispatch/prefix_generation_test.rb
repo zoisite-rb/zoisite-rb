@@ -2,7 +2,7 @@
 
 require "abstract_unit"
 require "rack/test"
-require "rails/engine"
+require "zoisite/engine"
 
 module TestGenerationPrefix
   class Post

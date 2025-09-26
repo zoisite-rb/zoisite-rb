@@ -171,7 +171,7 @@ module ActiveSupport
       #
       # Returns the ActiveRecord::FixtureSet collection.
       #
-      # In your +test_helper.rb+ you must have <tt>require "rails/test_help"</tt>.
+      # In your +test_helper.rb+ you must have <tt>require "zoisite/test_help"</tt>.
 
       # :singleton-method: fixture_paths=
       #
@@ -184,7 +184,7 @@ module ActiveSupport
       #
       #   ActiveSupport::TestCase.fixture_paths << "component1/test/fixtures"
       #
-      # In your +test_helper.rb+ you must have <tt>require "rails/test_help"</tt>.
+      # In your +test_helper.rb+ you must have <tt>require "zoisite/test_help"</tt>.
     end
 
     alias_method :method_name, :name

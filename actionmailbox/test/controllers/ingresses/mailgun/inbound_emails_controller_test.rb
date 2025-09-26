@@ -10,7 +10,7 @@ class ActionMailbox::Ingresses::Mailgun::InboundEmailsControllerTest < ActionDis
   test "receiving an inbound email from Mailgun" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
       travel_to "2018-10-09 15:15:00 EDT"
-      post rails_mailgun_inbound_emails_url, params: {
+      post zoisite_mailgun_inbound_emails_url, params: {
         timestamp: 1539112500,
         token: "7VwW7k6Ak7zcTwoSoNm7aTtbk1g67MKAnsYLfUB7PdszbgR5Xi",
         signature: "ef24c5225322217bb065b80bb54eb4f9206d764e3e16abab07f0a64d1cf477cc",
@@ -28,7 +28,7 @@ class ActionMailbox::Ingresses::Mailgun::InboundEmailsControllerTest < ActionDis
   test "receiving an inbound email from Mailgun with non UTF-8 characters" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
       travel_to "2018-10-09 15:15:00 EDT"
-      post rails_mailgun_inbound_emails_url, params: {
+      post zoisite_mailgun_inbound_emails_url, params: {
         timestamp: 1539112500,
         token: "7VwW7k6Ak7zcTwoSoNm7aTtbk1g67MKAnsYLfUB7PdszbgR5Xi",
         signature: "ef24c5225322217bb065b80bb54eb4f9206d764e3e16abab07f0a64d1cf477cc",
@@ -46,7 +46,7 @@ class ActionMailbox::Ingresses::Mailgun::InboundEmailsControllerTest < ActionDis
   test "add X-Original-To to email from Mailgun" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
       travel_to "2018-10-09 15:15:00 EDT"
-      post rails_mailgun_inbound_emails_url, params: {
+      post zoisite_mailgun_inbound_emails_url, params: {
         timestamp: 1539112500,
         token: "7VwW7k6Ak7zcTwoSoNm7aTtbk1g67MKAnsYLfUB7PdszbgR5Xi",
         signature: "ef24c5225322217bb065b80bb54eb4f9206d764e3e16abab07f0a64d1cf477cc",
@@ -65,7 +65,7 @@ class ActionMailbox::Ingresses::Mailgun::InboundEmailsControllerTest < ActionDis
   test "rejecting a delayed inbound email from Mailgun" do
     assert_no_difference -> { ActionMailbox::InboundEmail.count } do
       travel_to "2018-10-09 15:26:00 EDT"
-      post rails_mailgun_inbound_emails_url, params: {
+      post zoisite_mailgun_inbound_emails_url, params: {
         timestamp: 1539112500,
         token: "7VwW7k6Ak7zcTwoSoNm7aTtbk1g67MKAnsYLfUB7PdszbgR5Xi",
         signature: "ef24c5225322217bb065b80bb54eb4f9206d764e3e16abab07f0a64d1cf477cc",
@@ -79,7 +79,7 @@ class ActionMailbox::Ingresses::Mailgun::InboundEmailsControllerTest < ActionDis
   test "rejecting a forged inbound email from Mailgun" do
     assert_no_difference -> { ActionMailbox::InboundEmail.count } do
       travel_to "2018-10-09 15:15:00 EDT"
-      post rails_mailgun_inbound_emails_url, params: {
+      post zoisite_mailgun_inbound_emails_url, params: {
         timestamp: 1539112500,
         token: "Zx8mJBiGmiiyyfWnho3zKyjCg2pxLARoCuBM7X9AKCioShGiMX",
         signature: "ef24c5225322217bb065b80bb54eb4f9206d764e3e16abab07f0a64d1cf477cc",
@@ -94,7 +94,7 @@ class ActionMailbox::Ingresses::Mailgun::InboundEmailsControllerTest < ActionDis
     switch_key_to nil do
       assert_raises ArgumentError do
         travel_to "2018-10-09 15:15:00 EDT"
-        post rails_mailgun_inbound_emails_url, params: {
+        post zoisite_mailgun_inbound_emails_url, params: {
           timestamp: 1539112500,
           token: "7VwW7k6Ak7zcTwoSoNm7aTtbk1g67MKAnsYLfUB7PdszbgR5Xi",
           signature: "ef24c5225322217bb065b80bb54eb4f9206d764e3e16abab07f0a64d1cf477cc",
@@ -108,7 +108,7 @@ class ActionMailbox::Ingresses::Mailgun::InboundEmailsControllerTest < ActionDis
     switch_key_to "" do
       assert_raises ArgumentError do
         travel_to "2018-10-09 15:15:00 EDT"
-        post rails_mailgun_inbound_emails_url, params: {
+        post zoisite_mailgun_inbound_emails_url, params: {
           timestamp: 1539112500,
           token: "7VwW7k6Ak7zcTwoSoNm7aTtbk1g67MKAnsYLfUB7PdszbgR5Xi",
           signature: "ef24c5225322217bb065b80bb54eb4f9206d764e3e16abab07f0a64d1cf477cc",

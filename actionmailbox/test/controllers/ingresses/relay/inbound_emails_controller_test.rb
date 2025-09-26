@@ -7,7 +7,7 @@ class ActionMailbox::Ingresses::Relay::InboundEmailsControllerTest < ActionDispa
 
   test "receiving an inbound email relayed from an SMTP server" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-      post rails_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
+      post zoisite_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
         params: file_fixture("../files/welcome.eml").read
     end
 
@@ -20,7 +20,7 @@ class ActionMailbox::Ingresses::Relay::InboundEmailsControllerTest < ActionDispa
 
   test "receiving an inbound email relayed from an SMTP server with non UTF-8 characters" do
     assert_difference -> { ActionMailbox::InboundEmail.count }, +1 do
-      post rails_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
+      post zoisite_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
            params: file_fixture("../files/invalid_utf.eml").read
     end
 
@@ -33,7 +33,7 @@ class ActionMailbox::Ingresses::Relay::InboundEmailsControllerTest < ActionDispa
 
   test "rejecting a request with no body" do
     assert_no_difference -> { ActionMailbox::InboundEmail.count } do
-      post rails_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
+      post zoisite_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
         env: { "rack.input" => nil }
     end
 
@@ -42,7 +42,7 @@ class ActionMailbox::Ingresses::Relay::InboundEmailsControllerTest < ActionDispa
 
   test "rejecting an unauthorized inbound email" do
     assert_no_difference -> { ActionMailbox::InboundEmail.count } do
-      post rails_relay_inbound_emails_url, headers: { "Content-Type" => "message/rfc822" },
+      post zoisite_relay_inbound_emails_url, headers: { "Content-Type" => "message/rfc822" },
         params: file_fixture("../files/welcome.eml").read
     end
 
@@ -51,7 +51,7 @@ class ActionMailbox::Ingresses::Relay::InboundEmailsControllerTest < ActionDispa
 
   test "rejecting an inbound email of an unsupported media type" do
     assert_no_difference -> { ActionMailbox::InboundEmail.count } do
-      post rails_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "text/plain" },
+      post zoisite_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "text/plain" },
         params: file_fixture("../files/welcome.eml").read
     end
 
@@ -61,7 +61,7 @@ class ActionMailbox::Ingresses::Relay::InboundEmailsControllerTest < ActionDispa
   test "raising when the configured password is nil" do
     switch_password_to nil do
       assert_raises ArgumentError do
-        post rails_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
+        post zoisite_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
           params: file_fixture("../files/welcome.eml").read
       end
     end
@@ -70,7 +70,7 @@ class ActionMailbox::Ingresses::Relay::InboundEmailsControllerTest < ActionDispa
   test "raising when the configured password is blank" do
     switch_password_to "" do
       assert_raises ArgumentError do
-        post rails_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
+        post zoisite_relay_inbound_emails_url, headers: { "Authorization" => credentials, "Content-Type" => "message/rfc822" },
           params: file_fixture("../files/welcome.eml").read
       end
     end

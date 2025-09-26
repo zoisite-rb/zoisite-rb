@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/paths"
+require "zoisite/paths"
 require "minitest/mock"
 
 class PathsTest < ActiveSupport::TestCase

@@ -57,7 +57,7 @@ module Zoisite
       end
 
       # Convenience method to hide this generator from the available ones when
-      # running rails generator command.
+      # running zoisite generator command.
       def self.hide!
         Zoisite::Generators.hide_namespace(namespace)
       end
@@ -79,13 +79,13 @@ module Zoisite
       #
       # For example, if the user invoke the controller generator as:
       #
-      #   $ bin/rails generate controller Account --test-framework=test_unit
+      #   $ bin/zoisite generate controller Account --test-framework=test_unit
       #
       # The controller generator will then try to invoke the following generators:
       #
-      #   "rails:test_unit", "test_unit:controller", "test_unit"
+      #   "zoisite:test_unit", "test_unit:controller", "test_unit"
       #
-      # Notice that "rails:generators:test_unit" could be loaded as well, what
+      # Notice that "zoisite:generators:test_unit" could be loaded as well, what
       # \Zoisite looks for is the first and last parts of the namespace. This is what
       # allows any test framework to hook into \Zoisite as long as it provides any
       # of the hooks above.
@@ -118,27 +118,27 @@ module Zoisite
       #
       #   "test_unit:controller", "test_unit"
       #
-      # Similarly, if you want it to also look up in the rails namespace, you
+      # Similarly, if you want it to also look up in the zoisite namespace, you
       # just need to provide the +:in+ value:
       #
       #   class AwesomeGenerator < Zoisite::Generators::Base
-      #     hook_for :test_framework, in: :rails, as: :controller
+      #     hook_for :test_framework, in: :zoisite, as: :controller
       #   end
       #
       # And the lookup is exactly the same as previously:
       #
-      #   "rails:test_unit", "test_unit:controller", "test_unit"
+      #   "zoisite:test_unit", "test_unit:controller", "test_unit"
       #
       # ==== Switches
       #
       # All hooks come with switches for user interface. If you do not want
       # to use any test framework, you can do:
       #
-      #   $ bin/rails generate controller Account --skip-test-framework
+      #   $ bin/zoisite generate controller Account --skip-test-framework
       #
       # Or similarly:
       #
-      #   $ bin/rails generate controller Account --no-test-framework
+      #   $ bin/zoisite generate controller Account --no-test-framework
       #
       # ==== Boolean hooks
       #
@@ -150,11 +150,11 @@ module Zoisite
       #
       # Then, if you want webrat to be invoked, just supply:
       #
-      #   $ bin/rails generate controller Account --webrat
+      #   $ bin/zoisite generate controller Account --webrat
       #
       # The hooks lookup is similar as above:
       #
-      #   "rails:generators:webrat", "webrat:generators:controller", "webrat"
+      #   "zoisite:generators:webrat", "webrat:generators:controller", "webrat"
       #
       # ==== Custom invocations
       #
@@ -327,7 +327,7 @@ module Zoisite
 
         # Use \Zoisite default banner.
         def self.banner # :doc:
-          "bin/rails generate #{namespace.delete_prefix("rails:")} #{arguments.map(&:usage).join(' ')} [options]".gsub(/\s+/, " ")
+          "bin/zoisite generate #{namespace.delete_prefix("zoisite:")} #{arguments.map(&:usage).join(' ')} [options]".gsub(/\s+/, " ")
         end
 
         # Sets the base_name taking into account the current class namespace.
@@ -364,8 +364,8 @@ module Zoisite
             c[name]
           elsif base_name && (c = config[base_name.to_sym]) && c.key?(name)
             c[name]
-          elsif config[:rails].key?(name)
-            config[:rails][name]
+          elsif config[:zoisite].key?(name)
+            config[:zoisite][name]
           else
             default
           end

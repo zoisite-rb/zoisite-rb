@@ -34,7 +34,7 @@ permitted: false
   end
 
   # Ensure no deprecation warning from comparing AC::Parameters against Hash
-  # See https://github.com/rails/rails/issues/44940
+  # See https://github.com/zoisite/zoisite/issues/44940
   test "identical arrays can be permitted" do
     params = {
       key1: {

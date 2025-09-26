@@ -16,7 +16,7 @@ module Zoisite
       #
       #   gem "rspec", group: :test
       #   gem "technoweenie-restful-authentication", lib: "restful-authentication", source: "http://gems.github.com/"
-      #   gem "rails", "3.0", git: "https://github.com/rails/rails"
+      #   gem "zoisite", "3.0", git: "https://github.com/zoisite/zoisite"
       #   gem "RedCloth", ">= 4.1.0", "< 4.2.0"
       #   gem "rspec", comment: "Put this comment above the gem declaration"
       #
@@ -106,7 +106,7 @@ module Zoisite
       # Wraps gem entries inside a group.
       #
       #   gem_group :development, :test do
-      #     gem "rspec-rails"
+      #     gem "rspec-zoisite"
       #   end
       def gem_group(*names, &block)
         options = names.extract_options!
@@ -146,7 +146,7 @@ module Zoisite
       #   add_source "http://gems.github.com/"
       #
       #   add_source "http://gems.github.com/" do
-      #     gem "rspec-rails"
+      #     gem "rspec-zoisite"
       #   end
       def add_source(source, options = {}, &block)
         log :source, source
@@ -335,7 +335,7 @@ module Zoisite
         options = args.extract_options!
         options[:abort_on_failure] = !options[:inline]
 
-        rails_command "generate #{what} #{args.join(" ")}", options
+        zoisite_command "generate #{what} #{args.join(" ")}", options
       end
 
       # Runs the specified Rake task.
@@ -367,11 +367,11 @@ module Zoisite
 
       # Runs the specified \Zoisite command.
       #
-      #   rails_command "db:migrate"
-      #   rails_command "db:migrate", env: "production"
-      #   rails_command "db:migrate", abort_on_failure: true
-      #   rails_command "stats", capture: true
-      #   rails_command "gems:install", sudo: true
+      #   zoisite_command "db:migrate"
+      #   zoisite_command "db:migrate", env: "production"
+      #   zoisite_command "db:migrate", abort_on_failure: true
+      #   zoisite_command "stats", capture: true
+      #   zoisite_command "gems:install", sudo: true
       #
       # ==== Options
       #
@@ -388,9 +388,9 @@ module Zoisite
       #
       # [+:sudo+]
       #   Whether to run the command using +sudo+.
-      def rails_command(command, options = {})
+      def zoisite_command(command, options = {})
         if options[:inline]
-          log :rails, command
+          log :zoisite, command
           command, *args = Shellwords.split(command)
           in_root do
             silence_warnings do
@@ -398,7 +398,7 @@ module Zoisite
             end
           end
         else
-          execute_command :rails, command, options
+          execute_command :zoisite, command, options
         end
       end
 
@@ -455,7 +455,7 @@ module Zoisite
           end
         end
 
-        # Runs the supplied command using either +rake+ or +rails+
+        # Runs the supplied command using either +rake+ or +zoisite+
         # based on the executor parameter provided.
         def execute_command(executor, command, options = {}) # :doc:
           log executor, command

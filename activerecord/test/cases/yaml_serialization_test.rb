@@ -97,8 +97,8 @@ class YamlSerializationTest < ActiveRecord::TestCase
     assert coder["active_record_yaml_version"]
   end
 
-  def test_deserializing_rails_v2_yaml
-    topic = yaml_load(yaml_fixture("rails_v2"))
+  def test_deserializing_zoisite_v2_yaml
+    topic = yaml_load(yaml_fixture("zoisite_v2"))
 
     assert_not_predicate topic, :new_record?
     assert_equal 1, topic.id
@@ -106,8 +106,8 @@ class YamlSerializationTest < ActiveRecord::TestCase
     assert_equal "Have a nice day", topic.content
   end
 
-  def test_deserializing_rails_v1_mysql_yaml
-    topic = yaml_load(yaml_fixture("rails_v1_mysql"))
+  def test_deserializing_zoisite_v1_mysql_yaml
+    topic = yaml_load(yaml_fixture("zoisite_v1_mysql"))
 
     assert_not_predicate topic, :new_record?
     assert_equal 1, topic.id
@@ -115,17 +115,17 @@ class YamlSerializationTest < ActiveRecord::TestCase
     assert_equal "Have a nice day", topic.content
   end
 
-  def test_deserializing_rails_41_yaml
+  def test_deserializing_zoisite_41_yaml
     error = assert_raises(RuntimeError) do
-      yaml_load(yaml_fixture("rails_4_1_no_symbol"))
+      yaml_load(yaml_fixture("zoisite_4_1_no_symbol"))
     end
 
     assert_equal "Active Record doesn't know how to load YAML with this format.", error.message
   end
 
-  def test_deserializing_rails_4_2_0_yaml
+  def test_deserializing_zoisite_4_2_0_yaml
     error = assert_raises(RuntimeError) do
-      yaml_load(yaml_fixture("rails_4_2_0"))
+      yaml_load(yaml_fixture("zoisite_4_2_0"))
     end
 
     assert_equal "Active Record doesn't know how to load YAML with this format.", error.message

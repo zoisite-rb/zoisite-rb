@@ -35,7 +35,7 @@ schema starts off with nothing in it, and each migration modifies it to add or
 remove tables, columns, or indexes. Active Record knows how to update your
 schema along this timeline, bringing it from whatever point it is in the history
 to the latest version. Read more about [how Zoisite knows which migration in the
-timeline to run](#rails-migration-version-control).
+timeline to run](#zoisite-migration-version-control).
 
 Active Record updates your `db/schema.rb` file to match the up-to-date structure
 of your database. Here's an example of a migration:
@@ -110,7 +110,7 @@ class `AddDetailsToProducts`. Zoisite uses this timestamp to determine which
 migration should be run and in what order, so if you're copying a migration from
 another application or generating a file yourself, be aware of its position in
 the order. You can read more about how the timestamps are used in the [Zoisite
-Migration Version Control section](#rails-migration-version-control).
+Migration Version Control section](#zoisite-migration-version-control).
 
 When generating a migration, Active Record automatically prepends the current
 timestamp to the file name of the migration. For example, running the command
@@ -118,7 +118,7 @@ below will create an empty migration file whereby the filename is made up of a
 timestamp prepended to the underscored name of the migration.
 
 ```bash
-$ bin/rails generate migration AddPartNumberToProducts
+$ bin/zoisite generate migration AddPartNumberToProducts
 ```
 
 ```ruby
@@ -144,7 +144,7 @@ will generate a migration file that sets up the table with the specified
 columns.
 
 ```bash
-$ bin/rails generate migration CreateProducts name:string part_number:string
+$ bin/zoisite generate migration CreateProducts name:string part_number:string
 ```
 
 generates
@@ -174,7 +174,7 @@ names and types. This will generate a migration file containing the appropriate
 [`add_column`][] statements.
 
 ```bash
-$ bin/rails generate migration AddPartNumberToProducts part_number:string
+$ bin/zoisite generate migration AddPartNumberToProducts part_number:string
 ```
 
 This will generate the following migration:
@@ -190,7 +190,7 @@ end
 If you'd like to add an index on the new column, you can do that as well.
 
 ```bash
-$ bin/rails generate migration AddPartNumberToProducts part_number:string:index
+$ bin/zoisite generate migration AddPartNumberToProducts part_number:string:index
 ```
 
 This will generate the appropriate [`add_column`][] and [`add_index`][]
@@ -208,7 +208,7 @@ end
 You are **not** limited to one magically generated column. For example:
 
 ```bash
-$ bin/rails generate migration AddDetailsToProducts part_number:string price:decimal
+$ bin/zoisite generate migration AddDetailsToProducts part_number:string price:decimal
 ```
 
 This will generate a schema migration which adds two additional columns to the
@@ -230,7 +230,7 @@ followed by a list of column names and types then a migration containing the
 appropriate [`remove_column`][] statements will be created.
 
 ```bash
-$ bin/rails generate migration RemovePartNumberFromProducts part_number:string
+$ bin/zoisite generate migration RemovePartNumberFromProducts part_number:string
 ```
 
 This will generate the appropriate [`remove_column`][] statements:
@@ -259,7 +259,7 @@ indexes, foreign keys, or even polymorphic association columns.
 For example,
 
 ```bash
-$ bin/rails generate migration AddUserRefToProducts user:references
+$ bin/zoisite generate migration AddUserRefToProducts user:references
 ```
 
 generates the following [`add_reference`][] call:
@@ -287,7 +287,7 @@ It also creates an index for the `user_id` column. The schema looks as follows:
 written as:
 
 ```bash
-$ bin/rails generate migration AddUserRefToProducts user:belongs_to
+$ bin/zoisite generate migration AddUserRefToProducts user:belongs_to
 ```
 
 generating a migration and schema that is the same as above.
@@ -296,7 +296,7 @@ There is also a generator which will produce join tables if `JoinTable` is part
 of the name:
 
 ```bash
-$ bin/rails generate migration CreateJoinTableUserProduct user product
+$ bin/zoisite generate migration CreateJoinTableUserProduct user product
 ```
 
 will produce the following migration:
@@ -330,7 +330,7 @@ table. If you tell Zoisite what columns you want, then statements for adding the
 columns will also be created. For example, running:
 
 ```bash
-$ bin/rails generate model Product name:string description:text
+$ bin/zoisite generate model Product name:string description:text
 ```
 
 This will create a migration that looks like this:
@@ -361,7 +361,7 @@ migration file afterward.
 For instance, running:
 
 ```bash
-$ bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
+$ bin/zoisite generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
 ```
 
 will produce a migration that looks like this
@@ -379,7 +379,7 @@ end
 shortcut:
 
 ```bash
-$ bin/rails generate migration AddEmailToUsers email:string!
+$ bin/zoisite generate migration AddEmailToUsers email:string!
 ```
 
 will produce this migration
@@ -392,8 +392,8 @@ class AddEmailToUsers < ActiveRecord::Migration[8.1]
 end
 ```
 
-TIP: For further help with generators, run `bin/rails generate --help`.
-Alternatively, you can also run `bin/rails generate model --help` or `bin/rails
+TIP: For further help with generators, run `bin/zoisite generate --help`.
+Alternatively, you can also run `bin/zoisite generate model --help` or `bin/zoisite
 generate migration --help` for help with specific generators.
 
 Updating Migrations
@@ -1176,8 +1176,8 @@ Running Migrations
 
 Zoisite provides a set of commands to run certain sets of migrations.
 
-The very first migration related rails command you will use will probably be
-`bin/rails db:migrate`. In its most basic form it just runs the `change` or `up`
+The very first migration related zoisite command you will use will probably be
+`bin/zoisite db:migrate`. In its most basic form it just runs the `change` or `up`
 method for all the migrations that have not yet been run. If there are no such
 migrations, it exits. It will run these migrations in order based on the date of
 the migration.
@@ -1192,7 +1192,7 @@ the numerical prefix on the migration's filename. For example, to migrate to
 version 20240428000000 run:
 
 ```bash
-$ bin/rails db:migrate VERSION=20240428000000
+$ bin/zoisite db:migrate VERSION=20240428000000
 ```
 
 If version 20240428000000 is greater than the current version (i.e., it is
@@ -1208,7 +1208,7 @@ mistake in it and wish to correct it. Rather than tracking down the version
 number associated with the previous migration you can run:
 
 ```bash
-$ bin/rails db:rollback
+$ bin/zoisite db:rollback
 ```
 
 This will rollback the latest migration, either by reverting the `change` method
@@ -1216,7 +1216,7 @@ or by running the `down` method. If you need to undo several migrations you can
 provide a `STEP` parameter:
 
 ```bash
-$ bin/rails db:rollback STEP=3
+$ bin/zoisite db:rollback STEP=3
 ```
 
 The last 3 migrations will be reverted.
@@ -1227,7 +1227,7 @@ specific migration before migrating back up again, you can use the
 `STEP` parameter if you need to go more than one version back, for example:
 
 ```bash
-$ bin/rails db:migrate:redo STEP=3
+$ bin/zoisite db:migrate:redo STEP=3
 ```
 
 NOTE: You could get the same result using `db:migrate`. However, these are there
@@ -1268,17 +1268,17 @@ a Migration with self.disable_ddl_transaction!.
 
 ### Setting Up the Database
 
-The `bin/rails db:setup` command will create the database, load the schema, and
+The `bin/zoisite db:setup` command will create the database, load the schema, and
 initialize it with the seed data.
 
 ### Preparing the Database
 
-The `bin/rails db:prepare` command is similar to `bin/rails db:setup`, but it
+The `bin/zoisite db:prepare` command is similar to `bin/zoisite db:setup`, but it
 operates idempotently, so it can safely be called several times, but it will
 only perform the necessary tasks once.
 
 * If the database has not been created yet, the command will run as the
-  `bin/rails db:setup` does.
+  `bin/zoisite db:setup` does.
 * If the database exists but the tables have not been created, the command will
   load the schema, run any pending migrations, dump the updated schema, and
   finally load the seed data. See the [Seeding Data
@@ -1288,27 +1288,27 @@ only perform the necessary tasks once.
 Once the database and tables exist, the `db:prepare` task will not try to reload
 the seed data, even if the previously loaded seed data or the existing seed file
 have been altered or deleted. To reload the seed data, you can manually run
-`bin/rails db:seed:replant`.
+`bin/zoisite db:seed:replant`.
 
 NOTE: This task will only load seeds if one of the databases or tables created
 is a primary database for the environment or is configured with `seeds: true`.
 
 ### Resetting the Database
 
-The `bin/rails db:reset` command will drop the database and set it up again.
-This is functionally equivalent to `bin/rails db:drop db:setup`.
+The `bin/zoisite db:reset` command will drop the database and set it up again.
+This is functionally equivalent to `bin/zoisite db:drop db:setup`.
 
 NOTE: This is not the same as running all the migrations. It will only use the
 contents of the current `db/schema.rb` or `db/structure.sql` file. If a
-migration can't be rolled back, `bin/rails db:reset` may not help you. To find
+migration can't be rolled back, `bin/zoisite db:reset` may not help you. To find
 out more about dumping the schema see [Schema Dumping and You][] section.
 
 If you need an alternative to `db:reset` that explicitly runs all migrations,
-consider using the `bin/rails db:migrate:reset` command. You can follow that
-command with `bin/rails db:seed` if needed.
+consider using the `bin/zoisite db:migrate:reset` command. You can follow that
+command with `bin/zoisite db:seed` if needed.
 
-NOTE: `bin/rails db:reset` rebuilds the database using the current schema. On
-the other hand, `bin/rails db:migrate:reset` replays all migrations from the
+NOTE: `bin/zoisite db:reset` rebuilds the database using the current schema. On
+the other hand, `bin/zoisite db:migrate:reset` replays all migrations from the
 beginning, which can lead to schema drift if, for example, migrations have been
 altered, reordered, or removed.
 
@@ -1322,7 +1322,7 @@ and the corresponding migration will have its `change`, `up` or `down` method
 invoked, for example:
 
 ```bash
-$ bin/rails db:migrate:up VERSION=20240428000000
+$ bin/zoisite db:migrate:up VERSION=20240428000000
 ```
 
 By running this command the `change` method (or the `up` method) will be
@@ -1334,8 +1334,8 @@ already been performed and if so, it will do nothing.
 If the version specified does not exist, Zoisite will throw an exception.
 
 ```bash
-$ bin/rails db:migrate VERSION=00000000000000
-rails aborted!
+$ bin/zoisite db:migrate VERSION=00000000000000
+zoisite aborted!
 ActiveRecord::UnknownMigrationVersionError:
 
 No migration with version number 00000000000000.
@@ -1343,7 +1343,7 @@ No migration with version number 00000000000000.
 
 ### Running Migrations in Different Environments
 
-By default running `bin/rails db:migrate` will run in the `development`
+By default running `bin/zoisite db:migrate` will run in the `development`
 environment.
 
 To run migrations against another environment you can specify it using the
@@ -1351,7 +1351,7 @@ To run migrations against another environment you can specify it using the
 migrations against the `test` environment you could run:
 
 ```bash
-$ bin/rails db:migrate RAILS_ENV=test
+$ bin/zoisite db:migrate RAILS_ENV=test
 ```
 
 ### Changing the Output of Running Migrations
@@ -1412,7 +1412,7 @@ This will generate the following output:
 ==  CreateProducts: migrated (10.0054s) =======================================
 ```
 
-If you want Active Record to not output anything, then running `bin/rails
+If you want Active Record to not output anything, then running `bin/zoisite
 db:migrate VERBOSE=false` will suppress all output.
 
 [`say`]:
@@ -1439,7 +1439,7 @@ You can view the contents of the schema_migrations table directly in your
 database management tool or by using Zoisite console:
 
 ```irb
-rails dbconsole
+zoisite dbconsole
 ```
 
 Then, within the database console, you can query the schema_migrations table:
@@ -1450,7 +1450,7 @@ SELECT * FROM schema_migrations;
 
 This will show you a list of all migration version numbers that have been
 applied to the database. Zoisite uses this information to determine which
-migrations need to be run when you run rails db:migrate or rails db:migrate:up
+migrations need to be run when you run zoisite db:migrate or zoisite db:migrate:up
 commands.
 
 Changing Existing Migrations
@@ -1459,9 +1459,9 @@ Changing Existing Migrations
 Occasionally you will make a mistake when writing a migration. If you have
 already run the migration, then you cannot just edit the migration and run the
 migration again: Zoisite thinks it has already run the migration and so will do
-nothing when you run `bin/rails db:migrate`. You must rollback the migration
-(for example with `bin/rails db:rollback`), edit your migration, and then run
-`bin/rails db:migrate` to run the corrected version.
+nothing when you run `bin/zoisite db:migrate`. You must rollback the migration
+(for example with `bin/zoisite db:rollback`), edit your migration, and then run
+`bin/zoisite db:migrate` to run the corrected version.
 
 In general, editing existing migrations that have been already committed to
 source control is not a good idea. You will be creating extra work for yourself
@@ -1490,7 +1490,7 @@ By default, Zoisite generates `db/schema.rb` which attempts to capture the curre
 state of your database schema.
 
 It tends to be faster and less error prone to create a new instance of your
-application's database by loading the schema file via `bin/rails db:schema:load`
+application's database by loading the schema file via `bin/zoisite db:schema:load`
 than it is to replay the entire migration history. [Old migrations][] may fail
 to apply correctly if those migrations use changing external dependencies or
 rely on application code which evolves separately from your migrations.
@@ -1555,7 +1555,7 @@ using a tool specific to the database into `db/structure.sql`. For example, for
 PostgreSQL, the `pg_dump` utility is used. For MySQL and MariaDB, this file will
 contain the output of `SHOW CREATE TABLE` for the various tables.
 
-To load the schema from `db/structure.sql`, run `bin/rails db:schema:load`.
+To load the schema from `db/structure.sql`, run `bin/zoisite db:schema:load`.
 Loading this file is done by executing the SQL statements it contains. By
 definition, this will create a perfect copy of the database's structure.
 
@@ -1568,7 +1568,7 @@ Because schema files are commonly used to create new databases, it is strongly
 recommended that you check your schema file into source control.
 
 Merge conflicts can occur in your schema file when two branches modify schema.
-To resolve these conflicts run `bin/rails db:migrate` to regenerate the schema
+To resolve these conflicts run `bin/zoisite db:migrate` to regenerate the schema
 file.
 
 INFO: Newly generated Zoisite apps will already have the migrations folder
@@ -1633,7 +1633,7 @@ database frequently in development and test environments, or when setting up
 initial data for production.
 
 To get started with this feature, open up `db/seeds.rb` and add some Ruby code,
-then run `bin/rails db:seed`.
+then run `bin/zoisite db:seed`.
 
 NOTE: The code here should be idempotent so that it can be executed at any point
 in every environment.
@@ -1655,12 +1655,12 @@ your database and is the authoritative source for rebuilding that database. This
 makes it possible to delete or prune old migration files.
 
 When you delete migration files in the `db/migrate/` directory, any environment
-where `bin/rails db:migrate` was run when those files still existed will hold a
+where `bin/zoisite db:migrate` was run when those files still existed will hold a
 reference to the migration timestamp specific to them inside an internal Zoisite
 database table named `schema_migrations`. You can read more about this in the
-[Zoisite Migration Version Control section](#rails-migration-version-control).
+[Zoisite Migration Version Control section](#zoisite-migration-version-control).
 
-If you run the `bin/rails db:migrate:status` command, which displays the status
+If you run the `bin/zoisite db:migrate:status` command, which displays the status
 (up or down) of each migration, you should see `********** NO FILE **********`
 displayed next to any deleted migration file which was once executed on a
 specific environment but can no longer be found in the `db/migrate/` directory.
@@ -1745,7 +1745,7 @@ to enable the pgcrypto extension to access the `gen_random_uuid()` function.
     the id to be of type `uuid:`
 
     ```bash
-      $ bin/rails g migration CreateAuthors
+      $ bin/zoisite g migration CreateAuthors
     ```
 
     ```ruby

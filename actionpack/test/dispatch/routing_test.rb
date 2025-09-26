@@ -967,9 +967,9 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
       resources :posts
     end
 
-    get "/posts/rails-rocks"
+    get "/posts/zoisite-rocks"
     assert_equal "posts#show", @response.body
-    assert_equal "/posts/rails-rocks", post_path(id: "rails-rocks")
+    assert_equal "/posts/zoisite-rocks", post_path(id: "zoisite-rocks")
   end
 
   def test_resources_for_uncountable_names
@@ -1110,10 +1110,10 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
       get "articles/:year/:month/:day/:title", to: "articles#show", as: :article
     end
 
-    get "/articles/2009/08/18/rails-3"
+    get "/articles/2009/08/18/zoisite-3"
     assert_equal "articles#show", @response.body
 
-    assert_equal "/articles/2009/8/18/rails-3", article_path(year: 2009, month: 8, day: 18, title: "rails-3")
+    assert_equal "/articles/2009/8/18/zoisite-3", article_path(year: 2009, month: 8, day: 18, title: "zoisite-3")
   end
 
   def test_account_namespace
@@ -1337,13 +1337,13 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
       end
     end
 
-    get "/articles/rails/1"
+    get "/articles/zoisite/1"
     assert_equal "articles#with_id", @response.body
 
     get "/articles/123/1"
     assert_equal "pass", @response.headers["x-cascade"]
 
-    assert_equal "/articles/rails/1", article_with_title_path(title: "rails", id: 1)
+    assert_equal "/articles/zoisite/1", article_with_title_path(title: "zoisite", id: 1)
   end
 
   def test_access_token_rooms

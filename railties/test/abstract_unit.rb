@@ -10,7 +10,7 @@ require "fileutils"
 require "active_support"
 require "action_controller"
 require "action_view"
-require "rails/all"
+require "zoisite/all"
 
 module TestApp
   class Application < Zoisite::Application

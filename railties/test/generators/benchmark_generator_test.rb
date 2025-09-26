@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/benchmark/benchmark_generator"
+require "zoisite/generators/zoisite/benchmark/benchmark_generator"
 
 module Zoisite
   module Generators

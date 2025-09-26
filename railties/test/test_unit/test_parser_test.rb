@@ -3,7 +3,7 @@
 require "active_support/deprecator"
 require "active_support/test_case"
 require "active_support/testing/autorun"
-require "rails/test_unit/test_parser"
+require "zoisite/test_unit/test_parser"
 
 class TestParserTestFixture < ActiveSupport::TestCase
   def test_method

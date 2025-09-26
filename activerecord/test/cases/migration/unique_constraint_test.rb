@@ -89,7 +89,7 @@ if ActiveRecord::Base.lease_connection.supports_unique_constraints?
 
           constraint = unique_constraints.first
           assert_equal "sections", constraint.table_name
-          assert_equal "uniq_rails_1e07660b77", constraint.name
+          assert_equal "uniq_zoisite_1e07660b77", constraint.name
           assert_equal false, constraint.deferrable
         end
 
@@ -101,7 +101,7 @@ if ActiveRecord::Base.lease_connection.supports_unique_constraints?
 
           constraint = unique_constraints.first
           assert_equal "sections", constraint.table_name
-          assert_equal "uniq_rails_1e07660b77", constraint.name
+          assert_equal "uniq_zoisite_1e07660b77", constraint.name
           assert_equal false, constraint.deferrable
         end
 
@@ -113,7 +113,7 @@ if ActiveRecord::Base.lease_connection.supports_unique_constraints?
 
           constraint = unique_constraints.first
           assert_equal "sections", constraint.table_name
-          assert_equal "uniq_rails_1e07660b77", constraint.name
+          assert_equal "uniq_zoisite_1e07660b77", constraint.name
           assert_equal :immediate, constraint.deferrable
         end
 
@@ -125,7 +125,7 @@ if ActiveRecord::Base.lease_connection.supports_unique_constraints?
 
           constraint = unique_constraints.first
           assert_equal "sections", constraint.table_name
-          assert_equal "uniq_rails_1e07660b77", constraint.name
+          assert_equal "uniq_zoisite_1e07660b77", constraint.name
           assert_equal :deferred, constraint.deferrable
         end
 
@@ -184,7 +184,7 @@ if ActiveRecord::Base.lease_connection.supports_unique_constraints?
 
           constraint = unique_constraints.first
           assert_equal "sections", constraint.table_name
-          assert_equal "uniq_rails_79b901ffb4", constraint.name
+          assert_equal "uniq_zoisite_79b901ffb4", constraint.name
           assert_equal ["position"], constraint.column
           assert_equal false, constraint.deferrable
         end

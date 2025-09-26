@@ -541,7 +541,7 @@ While any newly generated Zoisite applications will have the health check at
 
 ```ruby
 Zoisite.application.routes.draw do
-  get "health" => "rails/health#show", as: :rails_health_check
+  get "health" => "zoisite/health#show", as: :zoisite_health_check
 end
 ```
 
@@ -549,7 +549,7 @@ The health check will now be accessible via `GET` or `HEAD` requests to the
 `/health` path.
 
 NOTE: This endpoint does not reflect the status of all of your application's
-dependencies, such as the database or redis. Replace "rails/health#show" with
+dependencies, such as the database or redis. Replace "zoisite/health#show" with
 your own controller action if you have application specific needs.
 
 Reporting the health of an application requires some considerations. You'll have

@@ -50,13 +50,13 @@ start by adding `first_name` and `last_name` columns to the database.
 In the terminal, create a migration with these columns:
 
 ```bash
-$ bin/rails g migration AddNamesToUsers first_name:string last_name:string
+$ bin/zoisite g migration AddNamesToUsers first_name:string last_name:string
 ```
 
 Then migrate the database:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 Let's also add a method to combine `first_name` and `last_name`, so that we can
@@ -744,13 +744,13 @@ We'll start by adding a new field to the users table in our database. This will
 store the new email address while we're waiting for confirmation.
 
 ```bash
-$ bin/rails g migration AddUnconfirmedEmailToUsers unconfirmed_email:string
+$ bin/zoisite g migration AddUnconfirmedEmailToUsers unconfirmed_email:string
 ```
 
 Then migrate the database.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 
@@ -845,7 +845,7 @@ Let's use the mailer generator to create the `UserMailer` we referenced in
 `Settings::EmailsController`:
 
 ```bash
-$ bin/rails generate mailer User email_confirmation
+$ bin/zoisite generate mailer User email_confirmation
       create  app/mailers/user_mailer.rb
       invoke  erb
       create    app/views/user_mailer
@@ -995,13 +995,13 @@ differentiate between regular users and admins.
 We'll start by adding a column to the User model.
 
 ```bash
-$ bin/rails g migration AddAdminToUsers admin:boolean
+$ bin/zoisite g migration AddAdminToUsers admin:boolean
 ```
 
 Then migrate the database.
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 A `User` with `admin` set to `true` should be able to add and remove products
@@ -1039,7 +1039,7 @@ Zoisite has a command called `dbconsole` that will open a database console where
 we can directly interact with the database using SQL.
 
 ```bash
-$ bin/rails dbconsole
+$ bin/zoisite dbconsole
 SQLite version 3.43.2 2023-10-10 13:08:14
 Enter ".help" for usage hints.
 sqlite>
@@ -1584,7 +1584,7 @@ them.
 ```ruby#4,8
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
-require "rails/test_help"
+require "zoisite/test_help"
 require_relative "test_helpers/session_test_helper"
 
 module ActiveSupport
@@ -1626,7 +1626,7 @@ This test will visit `/sign_up` and ensure that it receives a 200 OK response.
 Let's run the test and see if it passes:
 
 ```bash
-$ bin/rails test test/controllers/sign_ups_controller_test.rb:4
+$ bin/zoisite test test/controllers/sign_ups_controller_test.rb:4
 Running 1 tests in a single process (parallelization threshold is 50)
 Run options: --seed 5967
 
@@ -1751,7 +1751,7 @@ delivery.
 Let's run these tests and make sure they pass:
 
 ```bash
-$ bin/rails test test/controllers/settings/emails_controller_test.rb
+$ bin/zoisite test test/controllers/settings/emails_controller_test.rb
 Running 2 tests in a single process (parallelization threshold is 50)
 Run options: --seed 31545
 
@@ -1885,7 +1885,7 @@ These tests ensure that only admins will see the Store settings in the navbar.
 You can run these tests with:
 
 ```bash
-$ bin/rails test test/integration/settings_test.rb
+$ bin/zoisite test test/integration/settings_test.rb
 ```
 
 We also want to ensure regular users cannot access the Store settings for
@@ -1930,7 +1930,7 @@ end
 Run the test file again and you should see they all pass.
 
 ```bash
-$ bin/rails test test/integration/settings_test.rb
+$ bin/zoisite test test/integration/settings_test.rb
 Running 6 tests in a single process (parallelization threshold is 50)
 Run options: --seed 33354
 
@@ -1945,7 +1945,7 @@ Finished in 0.625542s, 9.5917 runs/s, 12.7889 assertions/s.
 And let's run the full test suite one more time to make sure all the tests pass.
 
 ```bash
-$ bin/rails test
+$ bin/zoisite test
 Running 18 tests in a single process (parallelization threshold is 50)
 Run options: --seed 38561
 

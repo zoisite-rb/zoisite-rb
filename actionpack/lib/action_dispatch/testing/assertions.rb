@@ -2,7 +2,7 @@
 
 # :markup: markdown
 
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 require "action_dispatch/testing/assertions/response"
 require "action_dispatch/testing/assertions/routing"
 

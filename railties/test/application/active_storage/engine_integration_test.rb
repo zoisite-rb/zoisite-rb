@@ -15,10 +15,10 @@ module ApplicationTests
 
       File.write app_path("Gemfile"), <<~GEMFILE
         source "https://rubygems.org"
-        gem "rails", path: "#{RAILS_FRAMEWORK_ROOT}"
+        gem "zoisite", path: "#{RAILS_FRAMEWORK_ROOT}"
 
         gem "propshaft"
-        gem "importmap-rails"
+        gem "importmap-zoisite"
         gem "sqlite3"
       GEMFILE
 
@@ -66,8 +66,8 @@ module ApplicationTests
       def run_command(cmd)
         Dir.chdir(app_path) do
           Bundler.with_original_env do
-            with_rails_env "development" do
-              `bin/rails runner "#{cmd}" 2>&1`
+            with_zoisite_env "development" do
+              `bin/zoisite runner "#{cmd}" 2>&1`
             end
           end
         end

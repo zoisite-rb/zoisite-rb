@@ -14,7 +14,7 @@ class HelpTest < ActiveSupport::TestCase
   end
 
   test "lists common commands and extended commands with descriptions" do
-    output = rails("help")
+    output = zoisite("help")
     assert_match "You must specify a command. The most common commands are:", output
     assert_match "  generate     Generate new code (short-cut alias: \"g\")", output
     assert_match "In addition to those commands", output
@@ -27,29 +27,29 @@ class HelpTest < ActiveSupport::TestCase
   end
 
   test "short-cut alias works" do
-    output = rails("-h")
+    output = zoisite("-h")
     assert_match "You must specify a command. The most common commands are:", output
     assert_match "  generate     Generate new code (short-cut alias: \"g\")", output
     assert_match "In addition to those commands", output
   end
 
   test "when no arguments are passed lists the common commands only" do
-    output = rails("")
+    output = zoisite("")
     assert_match "You must specify a command. The most common commands are:", output
     assert_match "  generate     Generate new code (short-cut alias: \"g\")", output
     assert_no_match "In addition to those commands", output
   end
 
   test "outside application root it lists gem commands" do
-    output = gem_rails("")
+    output = gem_zoisite("")
     assert_match "You must specify a command:", output
     assert_match "  new          Create a new Zoisite application.", output
   end
 
   private
-    def gem_rails(cmd)
+    def gem_zoisite(cmd)
       capture(:stdout) do
-        system("#{Gem.ruby} #{RAILS_FRAMEWORK_ROOT}/railties/exe/rails #{cmd}", exception: true)
+        system("#{Gem.ruby} #{RAILS_FRAMEWORK_ROOT}/railties/exe/zoisite #{cmd}", exception: true)
       end
     end
 end

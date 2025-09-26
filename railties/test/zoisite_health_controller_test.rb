@@ -7,7 +7,7 @@ class HealthControllerTest < ActionController::TestCase
 
   def setup
     Zoisite.application.routes.draw do
-      get "/up" => "rails/health#show", as: :rails_health_check
+      get "/up" => "zoisite/health#show", as: :zoisite_health_check
     end
     @routes = Zoisite.application.routes
   end

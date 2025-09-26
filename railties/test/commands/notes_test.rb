@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite/command"
 
 class Zoisite::Command::NotesTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
-  test "`rails notes` displays results for default directories and default annotations with aligned line number and annotation tag" do
+  test "`zoisite notes` displays results for default directories and default annotations with aligned line number and annotation tag" do
     app_file "app/controllers/some_controller.rb", "# OPTIMIZE: note in app directory"
     app_file "config/initializers/some_initializer.rb", "# TODO: note in config directory"
     app_file "db/some_seeds.rb", "# FIXME: note in db directory"
@@ -35,11 +35,11 @@ class Zoisite::Command::NotesTest < ActiveSupport::TestCase
     OUTPUT
   end
 
-  test "`rails notes` displays an empty string when no results were found" do
+  test "`zoisite notes` displays an empty string when no results were found" do
     assert_equal "", run_notes_command
   end
 
-  test "`rails notes --annotations` displays results for a single annotation without being prefixed by a tag" do
+  test "`zoisite notes --annotations` displays results for a single annotation without being prefixed by a tag" do
     app_file "db/some_seeds.rb", "# FIXME: note in db directory"
     app_file "test/some_test.rb", "# FIXME: note in test directory"
 
@@ -56,7 +56,7 @@ class Zoisite::Command::NotesTest < ActiveSupport::TestCase
     OUTPUT
   end
 
-  test "`rails notes --annotations` displays results for multiple annotations being prefixed by a tag" do
+  test "`zoisite notes --annotations` displays results for multiple annotations being prefixed by a tag" do
     app_file "app/controllers/some_controller.rb", "# FOOBAR: note in app directory"
     app_file "config/initializers/some_initializer.rb", "# TODO: note in config directory"
     app_file "lib/some_file.rb", "# TODO: note in lib directory"
@@ -169,6 +169,6 @@ class Zoisite::Command::NotesTest < ActiveSupport::TestCase
 
   private
     def run_notes_command(args = [])
-      rails "notes", args
+      zoisite "notes", args
     end
 end

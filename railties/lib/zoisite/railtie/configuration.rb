@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/configuration"
+require "zoisite/configuration"
 
 module Zoisite
   class Railtie

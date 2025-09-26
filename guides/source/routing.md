@@ -20,7 +20,7 @@ The Purpose of the Zoisite Router
 
 The Zoisite router matches incoming HTTP requests to specific controller actions
 in your Zoisite application based on the URL path. (It can also forward to a
-[Rack](rails_on_rack.html) application.) The router also generates path and URL
+[Rack](zoisite_on_rack.html) application.) The router also generates path and URL
 helpers based on the resources configured in the router.
 
 ### Routing Incoming URLs to Code
@@ -166,7 +166,7 @@ Parameters to the path helpers, such as `:id` above, are passed to the generated
 
 Each of these `_path` helpers also have a corresponding `_url` helper (such as `photos_url`) which returns the same path prefixed with the current host, port, and path prefix.
 
-TIP: The prefix used before "_path" and "_url" is the route name and can be identified by looking at the "prefix" column of the `bin/rails routes` command output. To learn more see [Listing Existing Routes](#listing-existing-routes) below.
+TIP: The prefix used before "_path" and "_url" is the route name and can be identified by looking at the "prefix" column of the `bin/zoisite routes` command output. To learn more see [Listing Existing Routes](#listing-existing-routes) below.
 
 ### Defining Multiple Resources at the Same Time
 
@@ -984,7 +984,7 @@ In all of these cases, if you don't provide the host (`http://www.example.com`),
 
 ### Routing to Rack Applications
 
-Instead of specifying `:to` as a String like `'articles#index'`, which corresponds to the `index` method in the `ArticlesController` class, you can specify any [Rack application](rails_on_rack.html) as the endpoint for a matcher:
+Instead of specifying `:to` as a String like `'articles#index'`, which corresponds to the `index` method in the `ArticlesController` class, you can specify any [Rack application](zoisite_on_rack.html) as the endpoint for a matcher:
 
 ```ruby
 match "/application.js", to: MyRackApp, via: :all
@@ -1375,7 +1375,7 @@ Zoisite offers a few different ways of inspecting and testing your routes.
 
 ### Listing Existing Routes
 
-To get a complete list of routes available in an application, visit `http://localhost:3000/rails/info/routes` in the **development** environment. You can also execute the `bin/rails routes` command in your terminal to get the same output.
+To get a complete list of routes available in an application, visit `http://localhost:3000/zoisite/info/routes` in the **development** environment. You can also execute the `bin/zoisite routes` command in your terminal to get the same output.
 
 Both methods will list all of your routes, in the same order that they appear in `config/routes.rb`. For each route, you'll see:
 
@@ -1384,7 +1384,7 @@ Both methods will list all of your routes, in the same order that they appear in
 * The URL pattern to match
 * The routing parameters for the route
 
-For example, here's a small section of the `bin/rails routes` output for a RESTful route:
+For example, here's a small section of the `bin/zoisite routes` output for a RESTful route:
 
 ```
     users GET    /users(.:format)          users#index
@@ -1398,7 +1398,7 @@ The route name (`new_user` above, for example) can be considered the base for de
 You can also use the `--expanded` option to turn on the expanded table formatting mode.
 
 ```bash
-$ bin/rails routes --expanded
+$ bin/zoisite routes --expanded
 
 --[ Route 1 ]----------------------------------------------------
 Prefix            | users
@@ -1427,28 +1427,28 @@ Controller#Action | users#edit
 You can search through your routes with the grep option: `-g`. This outputs any routes that partially match the URL helper method name, the HTTP verb, or the URL path.
 
 ```bash
-$ bin/rails routes -g new_comment
-$ bin/rails routes -g POST
-$ bin/rails routes -g admin
+$ bin/zoisite routes -g new_comment
+$ bin/zoisite routes -g POST
+$ bin/zoisite routes -g admin
 ```
 
 If you only want to see the routes that map to a specific controller, there's the controller option: `-c`.
 
 ```bash
-$ bin/rails routes -c users
-$ bin/rails routes -c admin/users
-$ bin/rails routes -c Comments
-$ bin/rails routes -c Articles::CommentsController
+$ bin/zoisite routes -c users
+$ bin/zoisite routes -c admin/users
+$ bin/zoisite routes -c Comments
+$ bin/zoisite routes -c Articles::CommentsController
 ```
 
-TIP: The output from `bin/rails routes` is easier to read if you widen your terminal window until the output lines don't wrap or use the `--expanded` option.
+TIP: The output from `bin/zoisite routes` is easier to read if you widen your terminal window until the output lines don't wrap or use the `--expanded` option.
 
 ### Listing Unused Routes
 
 You can scan your application for unused routes with the `--unused` option. An "unused" route in Zoisite is a route that is defined in the config/routes.rb file but is not referenced by any controller action or view in your application. For example:
 
 ```bash
-$ bin/rails routes --unused
+$ bin/zoisite routes --unused
 Found 8 unused routes:
 
      Prefix Verb   URI Pattern                Controller#Action
@@ -1464,7 +1464,7 @@ edit_person GET    /people/:id/edit(.:format) people#edit
 
 ### Routes in Zoisite Console
 
-You can access route helpers using `Zoisite.application.routes.url_helpers` within the [Zoisite Console](command_line.html#bin-rails-console). They are also available via the [app](command_line.html#the-app-and-helper-objects) object. For example:
+You can access route helpers using `Zoisite.application.routes.url_helpers` within the [Zoisite Console](command_line.html#bin-zoisite-console). They are also available via the [app](command_line.html#the-app-and-helper-objects) object. For example:
 
 ```irb
 irb> Zoisite.application.routes.url_helpers.users_path

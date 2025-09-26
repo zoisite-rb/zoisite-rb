@@ -140,15 +140,15 @@ module Zoisite
       initializer :add_internal_routes do |app|
         if Zoisite.env.development?
           app.routes.prepend do
-            get "/rails/info/properties" => "rails/info#properties", internal: true
-            get "/rails/info/routes"     => "rails/info#routes",     internal: true
-            get "/rails/info/notes"      => "rails/info#notes",      internal: true
-            get "/rails/info"            => "rails/info#index",      internal: true
+            get "/zoisite/info/properties" => "zoisite/info#properties", internal: true
+            get "/zoisite/info/routes"     => "zoisite/info#routes",     internal: true
+            get "/zoisite/info/notes"      => "zoisite/info#notes",      internal: true
+            get "/zoisite/info"            => "zoisite/info#index",      internal: true
           end
 
           routes_reloader.run_after_load_paths = -> do
             app.routes.append do
-              get "/" => "rails/welcome#index", internal: true
+              get "/" => "zoisite/welcome#index", internal: true
             end
           end
         end

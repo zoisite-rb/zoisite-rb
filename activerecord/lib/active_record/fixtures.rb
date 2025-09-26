@@ -15,14 +15,14 @@ module ActiveRecord
   # \Fixtures are a way of organizing data that you want to test against; in short, sample data.
   #
   # They are stored in YAML files, one file per model, which are by default placed in either
-  # <tt><your-rails-app>/test/fixtures/</tt> or in the <tt>test/fixtures</tt>
+  # <tt><your-zoisite-app>/test/fixtures/</tt> or in the <tt>test/fixtures</tt>
   # folder under any of your application's engines.
   #
   # The location can also be changed with ActiveSupport::TestCase.fixture_paths=,
-  # once you have <tt>require "rails/test_help"</tt> in your +test_helper.rb+.
+  # once you have <tt>require "zoisite/test_help"</tt> in your +test_helper.rb+.
   #
   # The fixture file ends with the +.yml+ file extension, for example:
-  # <tt><your-rails-app>/test/fixtures/web_sites.yml</tt>).
+  # <tt><your-zoisite-app>/test/fixtures/web_sites.yml</tt>).
   #
   # The format of a fixture file looks like this:
   #
@@ -195,7 +195,7 @@ module ActiveRecord
   #     end
   #   end
   #
-  # If you preload your test database with all fixture data (probably by running <tt>bin/rails db:fixtures:load</tt>)
+  # If you preload your test database with all fixture data (probably by running <tt>bin/zoisite db:fixtures:load</tt>)
   # and use transactional tests, then you may omit all fixtures declarations in your test cases since
   # all the data's already there and every case rolls back its changes.
   #
@@ -516,7 +516,7 @@ module ActiveRecord
   # It's possible to set the fixture's model class directly in the YAML file.
   # This is helpful when fixtures are loaded outside tests and
   # +set_fixture_class+ is not available (e.g.
-  # when running <tt>bin/rails db:fixtures:load</tt>).
+  # when running <tt>bin/zoisite db:fixtures:load</tt>).
   #
   #   _fixture:
   #     model_class: User

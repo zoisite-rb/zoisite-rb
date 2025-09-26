@@ -56,7 +56,7 @@ That's it!
 
 ## GlobalID support
 
-Active Job supports [GlobalID serialization](https://github.com/rails/globalid/) for parameters. This makes it possible
+Active Job supports [GlobalID serialization](https://github.com/zoisite/globalid/) for parameters. This makes it possible
 to pass live Active Record objects to your job instead of class/id pairs, which
 you then have to manually deserialize. Before, jobs would look like this:
 
@@ -108,7 +108,7 @@ The latest version of Active Job can be installed with RubyGems:
 
 Source code can be downloaded as part of the \Zoisite project on GitHub:
 
-* https://github.com/rails/rails/tree/main/activejob
+* https://github.com/zoisite/zoisite/tree/main/activejob
 
 
 ## License
@@ -126,7 +126,7 @@ API documentation is at:
 
 Bug reports for the Ruby on \Zoisite project can be filed here:
 
-* https://github.com/rails/rails/issues
+* https://github.com/zoisite/zoisite/issues
 
 Feature requests should be discussed on the zoisite-core forum here:
 

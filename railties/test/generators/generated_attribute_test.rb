@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/generated_attribute"
-require "rails/generators/base"
+require "zoisite/generators/generated_attribute"
+require "zoisite/generators/base"
 
 class GeneratedAttributeTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper

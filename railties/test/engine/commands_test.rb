@@ -20,14 +20,14 @@ class Zoisite::Engine::CommandsTest < ActiveSupport::TestCase
 
   def test_help_command_work_inside_engine
     output = capture(:stderr) do
-      in_plugin_context(plugin_path) { `bin/rails --help` }
+      in_plugin_context(plugin_path) { `bin/zoisite --help` }
     end
     assert_no_match "NameError", output
   end
 
   def test_runner_command_work_inside_engine
     output = capture(:stdout) do
-      in_plugin_context(plugin_path) { system({ "RAILS_ENV" => "test" }, "bin/rails runner 'puts Zoisite.env'") }
+      in_plugin_context(plugin_path) { system({ "RAILS_ENV" => "test" }, "bin/zoisite runner 'puts Zoisite.env'") }
     end
 
     assert_equal "test", output.strip
@@ -86,7 +86,7 @@ class Zoisite::Engine::CommandsTest < ActiveSupport::TestCase
 
     def spawn_command(command, fd, env: {})
       in_plugin_context(plugin_path) do
-        Process.spawn(env, "bin/rails #{command}", in: fd, out: fd, err: fd)
+        Process.spawn(env, "bin/zoisite #{command}", in: fd, out: fd, err: fd)
       end
     end
 

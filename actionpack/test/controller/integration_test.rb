@@ -2,7 +2,7 @@
 
 require "abstract_unit"
 require "controller/fake_controllers"
-require "rails/engine"
+require "zoisite/engine"
 require "launchy"
 
 class SessionTest < ActiveSupport::TestCase

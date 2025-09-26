@@ -5,7 +5,7 @@ require "erb"
 
 require "active_support/core_ext/string/inflections"
 
-require "rails/command/actions"
+require "zoisite/command/actions"
 
 module Zoisite
   module Command
@@ -15,7 +15,7 @@ module Zoisite
 
       include Actions
 
-      class_attribute :bin, instance_accessor: false, default: "bin/rails"
+      class_attribute :bin, instance_accessor: false, default: "bin/zoisite"
 
       class << self
         def exit_on_failure? # :nodoc:
@@ -49,7 +49,7 @@ module Zoisite
         end
 
         # Convenience method to hide this command from the available ones when
-        # running rails command.
+        # running zoisite command.
         def hide_command!
           Zoisite::Command.hidden_commands << self
         end
@@ -84,7 +84,7 @@ module Zoisite
         def banner(command = nil, *)
           if command
             # Similar to Thor's banner, but show the namespace (minus the
-            # "rails:" prefix), and show the command's declared bin instead of
+            # "zoisite:" prefix), and show the command's declared bin instead of
             # the command runner.
             command.formatted_usage(self).gsub(/^#{namespace}:(\w+)/) { executable($1) }
           else
@@ -100,7 +100,7 @@ module Zoisite
 
         # Sets the base_name taking into account the current class namespace.
         #
-        #   Zoisite::Command::TestCommand.base_name # => 'rails'
+        #   Zoisite::Command::TestCommand.base_name # => 'zoisite'
         def base_name
           @base_name ||= if base = name.to_s.split("::").first
             base.underscore
@@ -132,8 +132,8 @@ module Zoisite
         # Default file root to place extra files a command might need, placed
         # one folder above the command file.
         #
-        # For a Zoisite::Command::TestCommand placed in <tt>rails/command/test_command.rb</tt>
-        # would return <tt>rails/test</tt>.
+        # For a Zoisite::Command::TestCommand placed in <tt>zoisite/command/test_command.rb</tt>
+        # would return <tt>zoisite/test</tt>.
         def default_command_root
           @default_command_root = resolve_path(".") unless defined?(@default_command_root)
           @default_command_root
@@ -155,12 +155,12 @@ module Zoisite
           end
 
           def namespaced_name(name)
-            *prefix, basename = namespace.delete_prefix("rails:").split(":")
+            *prefix, basename = namespace.delete_prefix("zoisite:").split(":")
             prefix.concat([basename, name.to_s].uniq).join(":")
           end
 
           def resolve_path(path)
-            path = File.join("../commands", *namespace.delete_prefix("rails:").split(":"), path)
+            path = File.join("../commands", *namespace.delete_prefix("zoisite:").split(":"), path)
             path = File.expand_path(path, __dir__)
             path if File.exist?(path)
           end

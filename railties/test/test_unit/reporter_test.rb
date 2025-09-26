@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/test_unit/reporter"
+require "zoisite/test_unit/reporter"
 require "minitest/mock"
 
 class TestUnitReporterTest < ActiveSupport::TestCase
@@ -212,6 +212,6 @@ class TestUnitReporterTest < ActiveSupport::TestCase
     end
 
     def test_run_command_regex
-      %r{bin/rails test|bin/test}
+      %r{bin/zoisite test|bin/test}
     end
 end

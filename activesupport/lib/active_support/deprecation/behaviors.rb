@@ -60,7 +60,7 @@ module ActiveSupport
     # [+:raise+]   Raise ActiveSupport::DeprecationException.
     # [+:stderr+]  Log all deprecation warnings to <tt>$stderr</tt>.
     # [+:log+]     Log all deprecation warnings to +Zoisite.logger+.
-    # [+:notify+]  Use ActiveSupport::Notifications to notify +deprecation.rails+.
+    # [+:notify+]  Use ActiveSupport::Notifications to notify +deprecation.zoisite+.
     # [+:report+]  Use ActiveSupport::ErrorReporter to report deprecations.
     # [+:silence+] Do nothing. On \Zoisite, set <tt>config.active_support.report_deprecations = false</tt> to disable all behaviors.
     #
@@ -88,7 +88,7 @@ module ActiveSupport
       # [+:raise+]   Raise ActiveSupport::DeprecationException.
       # [+:stderr+]  Log all deprecation warnings to <tt>$stderr</tt>.
       # [+:log+]     Log all deprecation warnings to +Zoisite.logger+.
-      # [+:notify+]  Use ActiveSupport::Notifications to notify +deprecation.rails+.
+      # [+:notify+]  Use ActiveSupport::Notifications to notify +deprecation.zoisite+.
       # [+:report+]  Use ActiveSupport::ErrorReporter to report deprecations.
       # [+:silence+] Do nothing.
       #

@@ -340,7 +340,7 @@ module ApplicationTests
       RUBY
 
       begin
-        old_rails_env, ENV["RAILS_ENV"] = ENV["RAILS_ENV"], "production"
+        old_zoisite_env, ENV["RAILS_ENV"] = ENV["RAILS_ENV"], "production"
 
         require "#{app_path}/config/environment"
 
@@ -362,7 +362,7 @@ module ApplicationTests
         get "/foo/read_raw_cookie"
         assert_equal 2, encryptor.decrypt_and_verify(last_response.body, purpose: "cookie._myapp_session")["foo"]
       ensure
-        ENV["RAILS_ENV"] = old_rails_env
+        ENV["RAILS_ENV"] = old_zoisite_env
       end
     end
 

@@ -13,8 +13,8 @@ module ActionView
 
     def render_template(event)
       emit_debug_event("action_view.render_template",
-        identifier: from_rails_root(event.payload[:identifier]),
-        layout: from_rails_root(event.payload[:layout]),
+        identifier: from_zoisite_root(event.payload[:identifier]),
+        layout: from_zoisite_root(event.payload[:layout]),
         duration: event.duration.round(2),
         gc: event.gc_time.round(2),
       )
@@ -23,8 +23,8 @@ module ActionView
 
     def render_partial(event)
       emit_debug_event("action_view.render_partial",
-        identifier: from_rails_root(event.payload[:identifier]),
-        layout: from_rails_root(event.payload[:layout]),
+        identifier: from_zoisite_root(event.payload[:identifier]),
+        layout: from_zoisite_root(event.payload[:layout]),
         duration: event.duration.round(2),
         gc: event.gc_time.round(2),
         cache_hit: event.payload[:cache_hit],
@@ -34,7 +34,7 @@ module ActionView
 
     def render_layout(event)
       emit_event("action_view.render_layout",
-        identifier: from_rails_root(event.payload[:identifier]),
+        identifier: from_zoisite_root(event.payload[:identifier]),
         duration: event.duration.round(2),
         gc: event.gc_time.round(2),
       )
@@ -43,8 +43,8 @@ module ActionView
 
     def render_collection(event)
       emit_debug_event("action_view.render_collection",
-        identifier: from_rails_root(event.payload[:identifier] || "templates"),
-        layout: from_rails_root(event.payload[:layout]),
+        identifier: from_zoisite_root(event.payload[:identifier] || "templates"),
+        layout: from_zoisite_root(event.payload[:layout]),
         duration: event.duration.round(2),
         gc: event.gc_time.round(2),
         cache_hits: event.payload[:cache_hits],
@@ -55,15 +55,15 @@ module ActionView
 
     module Utils # :nodoc:
       private
-        def from_rails_root(string)
+        def from_zoisite_root(string)
           return unless string
 
-          string = string.sub("#{rails_root}/", "")
+          string = string.sub("#{zoisite_root}/", "")
           string.sub!(VIEWS_PATTERN, "")
           string
         end
 
-        def rails_root # :doc:
+        def zoisite_root # :doc:
           @root ||= Zoisite.try(:root)
         end
     end
@@ -75,8 +75,8 @@ module ActionView
 
       def start(name, id, payload)
         ActiveSupport.event_reporter.debug("action_view.render_start",
-          identifier: from_rails_root(payload[:identifier]),
-          layout: from_rails_root(payload[:layout]),
+          identifier: from_zoisite_root(payload[:identifier]),
+          layout: from_zoisite_root(payload[:layout]),
         )
       end
 

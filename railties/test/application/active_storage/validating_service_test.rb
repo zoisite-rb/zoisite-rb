@@ -2,7 +2,7 @@
 
 require "isolation/abstract_unit"
 require "rack/test"
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ApplicationTests
   class ValidatingServiceTest < ActiveSupport::TestCase
@@ -21,10 +21,10 @@ module ApplicationTests
     end
 
     def test_boot_application_with_model_using_active_storage_should_not_load_active_storage_blob
-      rails "active_storage:install"
+      zoisite "active_storage:install"
 
-      rails "generate", "model", "user", "name:string", "avatar:attachment"
-      rails "db:migrate"
+      zoisite "generate", "model", "user", "name:string", "avatar:attachment"
+      zoisite "db:migrate"
 
       app_file "config/routes.rb", <<~RUBY
         Zoisite.application.routes.draw do
@@ -44,7 +44,7 @@ module ApplicationTests
 
       assert_nothing_raised do
         with_env "RAILS_ENV" => "production" do
-          rails ["environment", "--trace"]
+          zoisite ["environment", "--trace"]
         end
       end
     end

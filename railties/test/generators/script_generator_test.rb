@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/script/script_generator"
+require "zoisite/generators/zoisite/script/script_generator"
 
 module Zoisite
   module Generators

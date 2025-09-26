@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/source_annotation_extractor"
+require "zoisite/source_annotation_extractor"
 
 module Zoisite
   module Command

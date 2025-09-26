@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/code_statistics_calculator"
+require "zoisite/code_statistics_calculator"
 require "active_support/core_ext/enumerable"
 
 module Zoisite
@@ -48,7 +48,7 @@ module Zoisite
     class_attribute :test_types, default: TEST_TYPES
     class_attribute :pattern, default: PATTERN
 
-    # Add directories to the output of the <tt>bin/rails stats</tt> command.
+    # Add directories to the output of the <tt>bin/zoisite stats</tt> command.
     #
     #   Zoisite::CodeStatistics.register_directory("My Directory", "path/to/dir")
     #

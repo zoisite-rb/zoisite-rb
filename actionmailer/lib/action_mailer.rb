@@ -29,7 +29,7 @@ require "action_mailer/deprecator"
 
 # Common Active Support usage in Action Mailer
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "active_support/core_ext/class"
 require "active_support/core_ext/module/attr_internal"
 require "active_support/core_ext/string/inflections"

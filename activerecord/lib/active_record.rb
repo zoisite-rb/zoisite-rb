@@ -24,7 +24,7 @@
 #++
 
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "active_support/ordered_options"
 require "active_support/core_ext/array/conversions"
 require "active_model"
@@ -419,7 +419,7 @@ module ActiveRecord
   ##
   # :singleton-method: dump_schema_after_migration
   # Specify whether schema dump should happen at the end of the
-  # bin/rails db:migrate command. This is true by default, which is useful for the
+  # bin/zoisite db:migrate command. This is true by default, which is useful for the
   # development environment. This should ideally be false in the production
   # environment where dumping schema is rarely needed.
   singleton_class.attr_accessor :dump_schema_after_migration

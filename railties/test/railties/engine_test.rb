@@ -32,7 +32,7 @@ module RailtiesTest
       teardown_app
     end
 
-    def boot_rails
+    def boot_zoisite
       require "#{app_path}/config/environment"
     end
 
@@ -51,11 +51,11 @@ module RailtiesTest
     end
 
     test "rake environment can be called in the engine" do
-      boot_rails
+      boot_zoisite
 
       @plugin.write "Rakefile", <<-RUBY
         APP_RAKEFILE = '#{app_path}/Rakefile'
-        load "rails/tasks/engine.rake"
+        load "zoisite/tasks/engine.rake"
         task :foo => :environment do
           puts "Task ran"
         end
@@ -93,7 +93,7 @@ module RailtiesTest
       RUBY
 
       restrict_frameworks
-      boot_rails
+      boot_zoisite
 
       Dir.chdir(app_path) do
         output = `bundle exec rake bukkits:install:migrations`
@@ -146,7 +146,7 @@ module RailtiesTest
       RUBY
 
       restrict_frameworks
-      boot_rails
+      boot_zoisite
 
       Dir.chdir(app_path) do
         output = `bundle exec rake bukkits:install:migrations DATABASE=animals`
@@ -197,7 +197,7 @@ module RailtiesTest
 
       add_to_config("config.railties_order = [Bukkits::Engine, Blog::Engine, :all, :main_app]")
 
-      boot_rails
+      boot_zoisite
 
       Dir.chdir(app_path) do
         output = `bundle exec rake railties:install:migrations`.split("\n")
@@ -236,7 +236,7 @@ module RailtiesTest
       RUBY
 
       restrict_frameworks
-      boot_rails
+      boot_zoisite
 
       Dir.chdir(app_path) do
         output = `bundle exec rake railties:install:migrations`.split("\n")
@@ -262,12 +262,12 @@ module RailtiesTest
 
       @plugin.write "Rakefile", <<-RUBY
         APP_RAKEFILE = '#{app_path}/Rakefile'
-        load "rails/tasks/engine.rake"
+        load "zoisite/tasks/engine.rake"
       RUBY
 
       add_to_config "ActiveRecord.timestamped_migrations = false"
 
-      boot_rails
+      boot_zoisite
 
       Dir.chdir(@plugin.path) do
         output = `bundle exec rake app:bukkits:install:migrations`
@@ -281,7 +281,7 @@ module RailtiesTest
     end
 
     test "no rake task without migrations" do
-      boot_rails
+      boot_zoisite
       require "rake"
       require "rdoc/task"
       require "rake/testtask"
@@ -290,7 +290,7 @@ module RailtiesTest
     end
 
     test "puts its lib directory on load path" do
-      boot_rails
+      boot_zoisite
       require "another"
       assert_equal "Another", Another.name
     end
@@ -309,7 +309,7 @@ module RailtiesTest
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       assert_includes $test_autoload_once_paths, "#{app_path}/app/helpers"
       assert_includes $test_autoload_paths, "#{app_path}/app/controllers"
@@ -317,13 +317,13 @@ module RailtiesTest
 
     test "puts its models directory on autoload path" do
       @plugin.write "app/models/my_bukkit.rb", "class MyBukkit ; end"
-      boot_rails
+      boot_zoisite
       assert_nothing_raised { MyBukkit }
     end
 
     test "puts its controllers directory on autoload path" do
       @plugin.write "app/controllers/bukkit_controller.rb", "class BukkitController ; end"
-      boot_rails
+      boot_zoisite
       assert_nothing_raised { BukkitController }
     end
 
@@ -348,7 +348,7 @@ module RailtiesTest
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/testing")
 
@@ -365,7 +365,7 @@ module RailtiesTest
 
       @plugin.write "app/views/bukkit/index.html.erb", "Hello bukkits"
 
-      boot_rails
+      boot_zoisite
 
       require "action_controller"
       require "rack/mock"
@@ -384,7 +384,7 @@ module RailtiesTest
       @plugin.write "app/views/bukkit/index.html.erb", "Hello bukkits"
       app_file "app/views/bukkit/index.html.erb", "Hi bukkits"
 
-      boot_rails
+      boot_zoisite
 
       require "action_controller"
       require "rack/mock"
@@ -395,7 +395,7 @@ module RailtiesTest
     test "adds its fixtures path to fixture_paths" do
       @plugin.write "test/fixtures/bukkits.yml", ""
 
-      boot_rails
+      boot_zoisite
 
       test_class = Class.new
       test_class.singleton_class.attr_accessor :fixture_paths
@@ -422,11 +422,11 @@ module RailtiesTest
 
       @plugin.write "app/views/bukkit_mailer/foo.html.erb", "Bukkit"
 
-      boot_rails
+      boot_zoisite
 
-      get "/rails/mailers"
-      assert_match '<h3><a href="/rails/mailers/bukkit_mailer">Bukkit Mailer</a></h3>', last_response.body
-      assert_match '<li><a href="/rails/mailers/bukkit_mailer/foo">foo</a></li>', last_response.body
+      get "/zoisite/mailers"
+      assert_match '<h3><a href="/zoisite/mailers/bukkit_mailer">Bukkit Mailer</a></h3>', last_response.body
+      assert_match '<li><a href="/zoisite/mailers/bukkit_mailer/foo">foo</a></li>', last_response.body
     end
 
     test "adds helpers to controller views" do
@@ -447,7 +447,7 @@ module RailtiesTest
 
       @plugin.write "app/views/bukkit/index.html.erb", "Hello <%= bukkits %>"
 
-      boot_rails
+      boot_zoisite
 
       require "rack/mock"
       response = BukkitController.action(:index).call(Rack::MockRequest.env_for("/"))
@@ -458,7 +458,7 @@ module RailtiesTest
       @plugin.write "app/anything/foo.rb", <<-RUBY
         module Foo; end
       RUBY
-      boot_rails
+      boot_zoisite
       assert Foo
     end
 
@@ -475,7 +475,7 @@ module RailtiesTest
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get "/sprokkit"
       assert_equal "I am a Sprokkit", last_response.body
@@ -511,7 +511,7 @@ module RailtiesTest
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get "/foo"
       assert_equal "foo", last_response.body
@@ -528,7 +528,7 @@ module RailtiesTest
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
       require "rake"
       require "rdoc/task"
       require "rake/testtask"
@@ -553,7 +553,7 @@ module RailtiesTest
           baz: "1"
       YAML
 
-      boot_rails
+      boot_zoisite
 
       expected_locales = %W(
         #{app_path}/config/locales/en/models.yml
@@ -589,7 +589,7 @@ en:
   foo: "3"
       YAML
 
-      boot_rails
+      boot_zoisite
 
       expected_locales = %W(
         #{RAILS_FRAMEWORK_ROOT}/activesupport/lib/active_support/locale/en.yml
@@ -630,7 +630,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get "/admin/foo/bar"
       assert_equal 200, last_response.status
@@ -643,7 +643,7 @@ en:
         $plugin_initializer = true
       RUBY
 
-      boot_rails
+      boot_zoisite
       assert $plugin_initializer
     end
 
@@ -661,7 +661,7 @@ en:
       RUBY
 
       add_to_config "config.middleware.use Bukkits"
-      boot_rails
+      boot_zoisite
 
       assert_includes Zoisite.application.middleware.map(&:klass), Bukkits, "Bukkits middleware should be in the middleware stack"
     end
@@ -676,7 +676,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       initializers = Zoisite.application.initializers.tsort
       dummy_index  = initializers.index  { |i| i.name == "dummy_initializer" }
@@ -717,7 +717,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/bukkits")
       assert_equal "HELLO WORLD", last_response.body
@@ -744,7 +744,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/arunagw")
       assert_equal "arunagw", last_response.body
@@ -770,7 +770,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/bukkits/foo")
       assert_equal "foo", last_response.body
@@ -797,7 +797,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       assert Bukkits::Engine.config.environment_loaded
       assert Bukkits::Engine.config.additional_environment_loaded
@@ -817,7 +817,7 @@ en:
         get "/other" => "other#index"
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       env = Rack::MockRequest.env_for("/engine")
       Bukkits::Engine.call(env)
@@ -946,7 +946,7 @@ en:
 
       add_to_config("config.action_dispatch.show_exceptions = :none")
 
-      boot_rails
+      boot_zoisite
 
       assert_equal "bukkits_", Bukkits.table_name_prefix
       assert_equal "bukkits", Bukkits::Engine.engine_name
@@ -1026,7 +1026,7 @@ en:
 
       add_to_config("config.action_dispatch.show_exceptions = :none")
 
-      boot_rails
+      boot_zoisite
 
       get("/bukkits/posts/new")
       assert_match(/name="post\[title\]"/, last_response.body)
@@ -1065,7 +1065,7 @@ en:
 
       add_to_config("config.action_dispatch.show_exceptions = :none")
 
-      boot_rails
+      boot_zoisite
 
       get("/bukkits/foo")
       assert_equal "ok", last_response.body
@@ -1130,7 +1130,7 @@ en:
 
       add_to_config("config.action_dispatch.show_exceptions = :none")
 
-      boot_rails
+      boot_zoisite
 
       get("/bukkits/foo")
       assert_equal "/bukkits/awesome/bar", last_response.body
@@ -1147,7 +1147,7 @@ en:
         Zoisite.application.config.app_seeds_loaded = true
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       Zoisite.application.load_seed
       assert Zoisite.application.config.app_seeds_loaded
@@ -1162,7 +1162,7 @@ en:
         Zoisite.application.config.seeding_wrapped_by_executor = Zoisite.application.executor.active?
       RUBY
 
-      boot_rails
+      boot_zoisite
       Zoisite.application.load_seed
 
       assert_predicate Zoisite.application.config, :seeding_wrapped_by_executor
@@ -1186,7 +1186,7 @@ en:
         Zoisite.application.config.seeds_attributes_foo = SeedsAttributes.foo
       RUBY
 
-      boot_rails
+      boot_zoisite
       Zoisite.application.load_seed
 
       assert Zoisite.application.config.seeds_job_ran
@@ -1202,10 +1202,10 @@ en:
         Zoisite.application.config.app_seeds_loaded = true
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       # In a real app, config.active_job would be undefined when
-      # NOT requiring rails/all AND NOT requiring active_job/railtie
+      # NOT requiring zoisite/all AND NOT requiring active_job/railtie
       # that doesn't work as expected in this test environment, so:
       undefine_config_option(:active_job)
       assert_raise(NoMethodError) { Zoisite.application.config.active_job }
@@ -1221,7 +1221,7 @@ en:
 
     test "skips nonexistent seed data" do
       FileUtils.rm "#{app_path}/db/seeds.rb"
-      boot_rails
+      boot_zoisite
       assert_nil Zoisite.application.load_seed
     end
 
@@ -1250,7 +1250,7 @@ en:
         Zoisite.application.routes.draw do end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       assert_equal AppTemplate::LoadedFirst::Engine, AppTemplate.railtie_namespace
     end
@@ -1282,7 +1282,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/foo")
       assert_equal "foo", last_response.body
@@ -1316,7 +1316,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       app_generators = Zoisite.application.config.generators
       assert_equal :mongoid, app_generators.orm
@@ -1338,7 +1338,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       generators = Bukkits::Engine.config.generators
       assert_equal :active_record, generators.orm
@@ -1361,7 +1361,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       assert_equal "foo", Bukkits.table_name_prefix
     end
@@ -1386,7 +1386,7 @@ en:
         config.active_record.table_name_prefix = "ar_prefix_"
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       assert_equal "ar_prefix_bukkits_posts", Bukkits::Post.table_name
       assert_equal "ar_prefix_bukkits_", Bukkits.table_name_prefix
@@ -1400,7 +1400,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       assert_equal Bukkits::Engine.instance, Zoisite::Engine.find(@plugin.path)
 
@@ -1447,7 +1447,7 @@ en:
 
       add_to_config("config.action_dispatch.show_exceptions = :none")
 
-      boot_rails
+      boot_zoisite
 
       assert_equal [:bar, :baz], Bukkits::Engine.helpers.public_instance_methods.sort
     end
@@ -1524,7 +1524,7 @@ en:
       add_to_config("config.railties_order = [:all, :main_app, Blog::Engine]")
       add_to_env_config "development", "config.assets.digest = false"
 
-      boot_rails
+      boot_zoisite
 
       get("/foo")
       assert_equal "Bukkit's foo partial", last_response.body.strip
@@ -1595,7 +1595,7 @@ en:
 
       add_to_config("config.railties_order = [Bukkits::Engine]")
 
-      boot_rails
+      boot_zoisite
 
       get("/foo")
       assert_equal "Bukkit's foo partial", last_response.body.strip
@@ -1640,7 +1640,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       expected = <<-TEXT
         script_name:
@@ -1691,7 +1691,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/bukkits/bukkit", {}, { "SCRIPT_NAME" => "/foo" })
       assert_equal "/foo/bar", last_response.body
@@ -1748,7 +1748,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       expected = <<~TEXT
         main_app.bar_path: /foo/bar
@@ -1801,7 +1801,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/through_fruits")
       assert_equal "/fruits/bukkits/posts", last_response.body
@@ -1844,7 +1844,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/through_fruits")
       assert_equal "/fruits/1/bukkits/posts", last_response.body
@@ -1876,7 +1876,7 @@ en:
         end
       RUBY
 
-      boot_rails
+      boot_zoisite
 
       get("/fruits/1/bukkits/posts")
       assert_equal "/fruits/2/bukkits/posts", last_response.body
@@ -1885,7 +1885,7 @@ en:
     test "active_storage:install task works within engine" do
       @plugin.write "Rakefile", <<-RUBY
         APP_RAKEFILE = '#{app_path}/Rakefile'
-        load "rails/tasks/engine.rake"
+        load "zoisite/tasks/engine.rake"
       RUBY
 
       Dir.chdir(@plugin.path) do
@@ -1899,7 +1899,7 @@ en:
     test "active_storage:update task works within engine" do
       @plugin.write "Rakefile", <<-RUBY
         APP_RAKEFILE = '#{app_path}/Rakefile'
-        load "rails/tasks/engine.rake"
+        load "zoisite/tasks/engine.rake"
       RUBY
 
       Dir.chdir(@plugin.path) do
@@ -1921,18 +1921,18 @@ en:
 
     # Restrict frameworks to load in order to avoid engine frameworks affect tests.
     def restrict_frameworks
-      remove_from_config('require "rails/all"')
+      remove_from_config('require "zoisite/all"')
       remove_from_config('require_relative "boot"')
       remove_from_env_config("development", "config.active_storage.*")
       frameworks = <<~RUBY
-        require "rails"
+        require "zoisite"
         require "active_model/railtie"
         require "active_job/railtie"
         require "active_record/railtie"
         require "action_controller/railtie"
         require "action_mailer/railtie"
         require "action_view/railtie"
-        require "rails/test_unit/railtie"
+        require "zoisite/test_unit/railtie"
       RUBY
       environment = File.read("#{app_path}/config/application.rb")
       File.open("#{app_path}/config/application.rb", "w") { |f| f.puts frameworks + "\n" + environment }

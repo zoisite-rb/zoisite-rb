@@ -6,4 +6,4 @@ unless defined?(APP_PATH)
   end
 end
 
-require "rails/commands"
+require "zoisite/commands"

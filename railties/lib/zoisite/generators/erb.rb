@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/generators/named_base"
+require "zoisite/generators/named_base"
 
 module Erb # :nodoc:
   module Generators # :nodoc:

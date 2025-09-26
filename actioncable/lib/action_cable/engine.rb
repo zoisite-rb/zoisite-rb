@@ -2,7 +2,7 @@
 
 # :markup: markdown
 
-require "rails"
+require "zoisite"
 require "action_cable"
 require "active_support/core_ext/hash/indifferent_access"
 

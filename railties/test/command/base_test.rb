@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "rails/command"
-require "rails/commands/generate/generate_command"
-require "rails/commands/notes/notes_command"
-require "rails/commands/credentials/credentials_command"
-require "rails/commands/db/system/change/change_command"
+require "zoisite/command"
+require "zoisite/commands/generate/generate_command"
+require "zoisite/commands/notes/notes_command"
+require "zoisite/commands/credentials/credentials_command"
+require "zoisite/commands/db/system/change/change_command"
 
 class Zoisite::Command::BaseTest < ActiveSupport::TestCase
   test "printing commands returns command and description if present" do
@@ -39,22 +39,22 @@ class Zoisite::Command::BaseTest < ActiveSupport::TestCase
     overview = capture(:stdout) do
       Zoisite::Command::HelpfulCommand.perform("help", [], {})
     end
-    assert_match "bin/rails helpful:foo PATH", overview
+    assert_match "bin/zoisite helpful:foo PATH", overview
     assert_match "description of foo", overview
-    assert_match "bin/rails helpful:bar [paths...]", overview
+    assert_match "bin/zoisite helpful:bar [paths...]", overview
     assert_match "description of bar", overview
 
     foo_help = capture(:stdout) do
       Zoisite::Command::HelpfulCommand.perform("foo", ["--help"], {})
     end
-    assert_match "bin/rails helpful:foo PATH", foo_help
+    assert_match "bin/zoisite helpful:foo PATH", foo_help
     assert_match "description of foo", foo_help
     assert_no_match "helpful:bar", foo_help
 
     bar_help = capture(:stdout) do
       Zoisite::Command::HelpfulCommand.perform("bar", ["--help"], {})
     end
-    assert_match "bin/rails helpful:bar [paths...]", bar_help
+    assert_match "bin/zoisite helpful:bar [paths...]", bar_help
     assert_match "description of bar", bar_help
     assert_no_match "helpful:foo", bar_help
   end
@@ -70,20 +70,20 @@ class Zoisite::Command::BaseTest < ActiveSupport::TestCase
     main_help = capture(:stdout) do
       Zoisite::Command::Nesting::NestedCommand.perform("nested", ["--help"], {})
     end
-    assert_match %r"Usage:\s+bin/rails nesting:nested$", main_help
+    assert_match %r"Usage:\s+bin/zoisite nesting:nested$", main_help
 
     foo_help = capture(:stdout) do
       Zoisite::Command::Nesting::NestedCommand.perform("foo", ["--help"], {})
     end
-    assert_match %r"Usage:\s+bin/rails nesting:nested:foo$", foo_help
+    assert_match %r"Usage:\s+bin/zoisite nesting:nested:foo$", foo_help
   end
 
   test "::executable returns bin and command name" do
-    assert_equal "bin/rails generate", Zoisite::Command::GenerateCommand.executable
+    assert_equal "bin/zoisite generate", Zoisite::Command::GenerateCommand.executable
   end
 
   test "::executable integrates subcommand when given" do
-    assert_equal "bin/rails generate:help", Zoisite::Command::GenerateCommand.executable(:help)
+    assert_equal "bin/zoisite generate:help", Zoisite::Command::GenerateCommand.executable(:help)
   end
 
   test "::executable integrates ::bin" do

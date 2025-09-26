@@ -27,7 +27,7 @@ module ApplicationTests
       RUBY
 
       exception = assert_raises do
-        rails("runner", "ContinuableJob.perform_now")
+        zoisite("runner", "ContinuableJob.perform_now")
       end
       assert_includes exception.message, "ActiveJob::Continuation::CheckpointError: Cannot checkpoint job with open transactions"
     end

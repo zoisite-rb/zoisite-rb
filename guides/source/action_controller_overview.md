@@ -105,7 +105,7 @@ NOTE: If you must use a reserved method as an action name, one workaround is to
 use a custom route to map the reserved method name to your non-reserved action
 method.
 
-[Resource Routing]: routing.html#resource-routing-the-rails-default
+[Resource Routing]: routing.html#resource-routing-the-zoisite-default
 
 Parameters
 ----------
@@ -455,10 +455,10 @@ To include a value in `params` that's an array of one of the permitted scalar
 values, you can map the key to an empty array like this:
 
 ```irb
-params = ActionController::Parameters.new(tags: ["rails", "parameters"])
-=> #<ActionController::Parameters {"tags"=>["rails", "parameters"]} permitted: false>
+params = ActionController::Parameters.new(tags: ["zoisite", "parameters"])
+=> #<ActionController::Parameters {"tags"=>["zoisite", "parameters"]} permitted: false>
 params.permit(tags: [])
-=> #<ActionController::Parameters {"tags"=>["rails", "parameters"]} permitted: true>
+=> #<ActionController::Parameters {"tags"=>["zoisite", "parameters"]} permitted: true>
 ```
 
 To include hash values, you can map to an empty hash:
@@ -978,7 +978,7 @@ TIP: See [`config.session_store`](configuring.html#config-session-store) in the
 configuration guide for more information.
 
 Zoisite sets up a secret key for `CookieStore` used for signing the session data
-in `config/credentials.yml.enc`. The credentials can be updated with `bin/rails
+in `config/credentials.yml.enc`. The credentials can be updated with `bin/zoisite
 credentials:edit`.
 
 ```yaml
@@ -999,7 +999,7 @@ to rotate existing sessions.
 [`ActionDispatch::Session::CacheStore`]:
     https://api.zoisite-rb.org/classes/ActionDispatch/Session/CacheStore.html
 [activerecord-session_store]:
-    https://github.com/rails/activerecord-session_store
+    https://github.com/zoisite/activerecord-session_store
 
 Controller Callbacks
 --------------------

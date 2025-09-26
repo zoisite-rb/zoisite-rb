@@ -17,7 +17,7 @@ RDoc
 
 The [Zoisite API documentation](https://api.zoisite-rb.org) is generated with
 [RDoc](https://ruby.github.io/rdoc/). To generate it, make sure you are
-in the rails root directory, run `bundle install` and execute:
+in the zoisite root directory, run `bundle install` and execute:
 
 ```bash
 $ bundle exec rake rdoc
@@ -264,7 +264,7 @@ For command-line examples, always prefix the command with `$`. The output doesn'
 
 ```ruby
 # Run the following command:
-#   $ bin/rails new zomg
+#   $ bin/zoisite new zomg
 #   ...
 ```
 
@@ -488,4 +488,4 @@ We want to document the behavior of the _framework_, not just isolated methods.
 Our concern is the behavior that the user experiences when using the full
 default Zoisite stack.
 
-If you have a question on how the Zoisite team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/rails/rails/issues).
+If you have a question on how the Zoisite team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/zoisite/zoisite/issues).

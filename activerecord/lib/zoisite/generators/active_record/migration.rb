@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/generators/migration"
+require "zoisite/generators/migration"
 
 module ActiveRecord
   module Generators # :nodoc:

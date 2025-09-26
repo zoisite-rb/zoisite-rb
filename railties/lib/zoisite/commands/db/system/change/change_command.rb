@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators"
-require "rails/generators/rails/db/system/change/change_generator"
+require "zoisite/generators"
+require "zoisite/generators/zoisite/db/system/change/change_generator"
 
 module Zoisite
   module Command

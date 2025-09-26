@@ -371,7 +371,7 @@ class ZeitwerkIntegrationTest < ActiveSupport::TestCase
 
     out, _err = capture_io { boot }
 
-    assert_match %r/^Zeitwerk@rails.main: autoload set for ApplicationRecord/, out
-    assert_match %r/^Zeitwerk@rails.once: autoload set for Utils/, out
+    assert_match %r/^Zeitwerk@zoisite.main: autoload set for ApplicationRecord/, out
+    assert_match %r/^Zeitwerk@zoisite.once: autoload set for Utils/, out
   end
 end

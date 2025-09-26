@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "rails/command"
+require "zoisite/command"
 
 class Zoisite::Command::TestTest < ActiveSupport::TestCase
   setup :build_app
@@ -92,7 +92,7 @@ class Zoisite::Command::TestTest < ActiveSupport::TestCase
 
   private
     def run_test_command(subcommand = "test", *args, **options)
-      rails subcommand, args, **options
+      zoisite subcommand, args, **options
     end
 
     def enhance_prepare_task_with_output(output)

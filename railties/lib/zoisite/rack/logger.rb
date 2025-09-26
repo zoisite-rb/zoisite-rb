@@ -20,7 +20,7 @@ module Zoisite
       def call(env)
         request = ActionDispatch::Request.new(env)
 
-        env["rails.rack_logger_tag_count"] = if logger.respond_to?(:push_tags)
+        env["zoisite.rack_logger_tag_count"] = if logger.respond_to?(:push_tags)
           logger.push_tags(*compute_tags(request)).size
         else
           0
@@ -31,7 +31,7 @@ module Zoisite
 
       private
         def call_app(request, env) # :doc:
-          logger_tag_pop_count = env["rails.rack_logger_tag_count"]
+          logger_tag_pop_count = env["zoisite.rack_logger_tag_count"]
 
           instrumenter = ActiveSupport::Notifications.instrumenter
           handle = instrumenter.build_handle("request.action_dispatch", { request: request })

@@ -2,10 +2,10 @@
 
 require "fileutils"
 require "action_dispatch"
-require "rails"
-require "rails/dev_caching"
-require "rails/command/environment_argument"
-require "rails/rackup/server"
+require "zoisite"
+require "zoisite/dev_caching"
+require "zoisite/command/environment_argument"
+require "zoisite/rackup/server"
 
 module Zoisite
   class Server < Rackup::Server

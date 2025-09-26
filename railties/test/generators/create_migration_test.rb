@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "generators/generators_test_helper"
-require "rails/generators/rails/migration/migration_generator"
+require "zoisite/generators/zoisite/migration/migration_generator"
 
 class CreateMigrationTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper

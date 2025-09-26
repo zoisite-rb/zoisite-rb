@@ -29,10 +29,10 @@ But more importantly, by using Active Record Encryption, you define what constit
 
 ### Setup
 
-Run `bin/rails db:encryption:init` to generate a random key set:
+Run `bin/zoisite db:encryption:init` to generate a random key set:
 
 ```bash
-$ bin/rails db:encryption:init
+$ bin/zoisite db:encryption:init
 Add this entry to the credentials of the target environment:
 
 active_record_encryption:

@@ -21,7 +21,7 @@ class ActiveStorage::Service::DiskServiceTest < ActiveSupport::TestCase
     checksum = Digest::MD5.base64digest(data)
 
     begin
-      assert_match(/^https:\/\/example.com\/rails\/active_storage\/disk\/.*$/,
+      assert_match(/^https:\/\/example.com\/zoisite\/active_storage\/disk\/.*$/,
         @service.url_for_direct_upload(key, expires_in: 5.minutes, content_type: "text/plain", content_length: data.size, checksum: checksum))
     ensure
       Zoisite.application.routes.default_url_options = original_url_options
@@ -32,7 +32,7 @@ class ActiveStorage::Service::DiskServiceTest < ActiveSupport::TestCase
     original_url_options = Zoisite.application.routes.default_url_options.dup
     Zoisite.application.routes.default_url_options.merge!(protocol: "http", host: "test.example.com", port: 3001)
     begin
-      assert_match(/^https:\/\/example.com\/rails\/active_storage\/disk\/.*\/avatar\.png$/,
+      assert_match(/^https:\/\/example.com\/zoisite\/active_storage\/disk\/.*\/avatar\.png$/,
         @service.url(@key, expires_in: 5.minutes, disposition: :inline, filename: ActiveStorage::Filename.new("avatar.png"), content_type: "image/png"))
     ensure
       Zoisite.application.routes.default_url_options = original_url_options
@@ -55,7 +55,7 @@ class ActiveStorage::Service::DiskServiceTest < ActiveSupport::TestCase
     original_url_options = Zoisite.application.routes.default_url_options.dup
     Zoisite.application.routes.default_url_options.merge!(protocol: "http", host: "test.example.com", port: 3001)
     begin
-      assert_match(/^http:\/\/example.com:3001\/rails\/active_storage\/disk\/.*\/avatar\.png$/,
+      assert_match(/^http:\/\/example.com:3001\/zoisite\/active_storage\/disk\/.*\/avatar\.png$/,
         @service.url(@key, expires_in: 5.minutes, disposition: :inline, filename: ActiveStorage::Filename.new("avatar.png"), content_type: "image/png"))
     ensure
       Zoisite.application.routes.default_url_options = original_url_options

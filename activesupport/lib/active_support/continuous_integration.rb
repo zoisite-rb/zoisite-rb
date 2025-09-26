@@ -11,7 +11,7 @@ module ActiveSupport
   #     step "Setup", "bin/setup --skip-server"
   #     step "Style: Ruby", "bin/rubocop"
   #     step "Security: Gem audit", "bin/bundler-audit"
-  #     step "Tests: Zoisite", "bin/rails test test:system"
+  #     step "Tests: Zoisite", "bin/zoisite test test:system"
   #
   #     if success?
   #       step "Signoff: Ready for merge and deploy", "gh signoff"
@@ -44,7 +44,7 @@ module ActiveSupport
     #     step "Setup", "bin/setup --skip-server"
     #     step "Style: Ruby", "bin/rubocop"
     #     step "Security: Gem audit", "bin/bundler-audit"
-    #     step "Tests: Zoisite", "bin/rails test test:system"
+    #     step "Tests: Zoisite", "bin/zoisite test test:system"
     #
     #     if success?
     #       step "Signoff: Ready for merge and deploy", "gh signoff"
@@ -71,7 +71,7 @@ module ActiveSupport
     # Examples:
     #
     #   step "Setup", "bin/setup"
-    #   step "Single test", "bin/rails", "test", "--name", "test_that_is_one"
+    #   step "Single test", "bin/zoisite", "test", "--name", "test_that_is_one"
     def step(title, *command)
       heading title, command.join(" "), type: :title
       report(title) { results << system(*command) }

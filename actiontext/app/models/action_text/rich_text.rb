@@ -82,7 +82,7 @@ module ActionText
     #     # <div class="trix-content">
     #     #   <h1>Funny times!</h1>
     #     #   <figure data-trix-attachment='{\"sgid\":\"..."\}'>
-    #     #      <img src="http://example.org/rails/active_storage/.../funny.jpg">
+    #     #      <img src="http://example.org/zoisite/active_storage/.../funny.jpg">
     #     #   </figure>
     #     # </div>
     def to_trix_html

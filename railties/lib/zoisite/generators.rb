@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "thor/group"
-require "rails/command"
+require "zoisite/command"
 
 require "active_support/core_ext/array/extract_options"
 require "active_support/core_ext/enumerable"
@@ -14,20 +14,20 @@ module Zoisite
   module Generators
     include Zoisite::Command::Behavior
 
-    autoload :Actions,         "rails/generators/actions"
-    autoload :ActiveModel,     "rails/generators/active_model"
-    autoload :Base,            "rails/generators/base"
-    autoload :Migration,       "rails/generators/migration"
-    autoload :Database,        "rails/generators/database"
-    autoload :AppName,         "rails/generators/app_name"
-    autoload :NamedBase,       "rails/generators/named_base"
-    autoload :ResourceHelpers, "rails/generators/resource_helpers"
-    autoload :TestCase,        "rails/generators/test_case"
+    autoload :Actions,         "zoisite/generators/actions"
+    autoload :ActiveModel,     "zoisite/generators/active_model"
+    autoload :Base,            "zoisite/generators/base"
+    autoload :Migration,       "zoisite/generators/migration"
+    autoload :Database,        "zoisite/generators/database"
+    autoload :AppName,         "zoisite/generators/app_name"
+    autoload :NamedBase,       "zoisite/generators/named_base"
+    autoload :ResourceHelpers, "zoisite/generators/resource_helpers"
+    autoload :TestCase,        "zoisite/generators/test_case"
 
     mattr_accessor :namespace
 
     DEFAULT_ALIASES = {
-      rails: {
+      zoisite: {
         actions: "-a",
         orm: "-o",
         javascripts: ["-j", "--js"],
@@ -44,7 +44,7 @@ module Zoisite
     }
 
     DEFAULT_OPTIONS = {
-      rails: {
+      zoisite: {
         api: false,
         assets: true,
         force_plural: false,
@@ -116,7 +116,7 @@ module Zoisite
       def api_only!
         hide_namespaces "assets", "helper", "css", "js"
 
-        options[:rails].merge!(
+        options[:zoisite].merge!(
           api: true,
           assets: false,
           helper: false,
@@ -129,16 +129,16 @@ module Zoisite
 
       # Returns an array of generator namespaces that are hidden.
       # Generator namespaces may be hidden for a variety of reasons.
-      # Some are aliased such as "rails:migration" and can be
+      # Some are aliased such as "zoisite:migration" and can be
       # invoked with the shorter "migration".
       def hidden_namespaces
         @hidden_namespaces ||= begin
-          orm      = options[:rails][:orm]
-          test     = options[:rails][:test_framework]
-          template = options[:rails][:template_engine]
+          orm      = options[:zoisite][:orm]
+          test     = options[:zoisite][:test_framework]
+          template = options[:zoisite][:template_engine]
 
           [
-            "rails",
+            "zoisite",
             "resource_route",
             "#{orm}:migration",
             "#{orm}:model",
@@ -171,7 +171,7 @@ module Zoisite
       # Show help message with available generators.
       def help(command = "generate")
         puts "Usage:"
-        puts "  bin/rails #{command} GENERATOR [args] [options]"
+        puts "  bin/zoisite #{command} GENERATOR [args] [options]"
         puts
         puts "General options:"
         puts "  -h, [--help]     # Print generator's options and usage"
@@ -205,19 +205,19 @@ module Zoisite
           groups[base] << namespace
         end
 
-        rails = groups.delete("rails")
-        rails.map! { |n| n.delete_prefix("rails:") }
-        rails.delete("app")
-        rails.delete("plugin")
-        rails.delete("encrypted_file")
-        rails.delete("encryption_key_file")
-        rails.delete("master_key")
-        rails.delete("credentials")
-        rails.delete("db:system:change")
+        zoisite = groups.delete("zoisite")
+        zoisite.map! { |n| n.delete_prefix("zoisite:") }
+        zoisite.delete("app")
+        zoisite.delete("plugin")
+        zoisite.delete("encrypted_file")
+        zoisite.delete("encryption_key_file")
+        zoisite.delete("master_key")
+        zoisite.delete("credentials")
+        zoisite.delete("db:system:change")
 
         hidden_namespaces.each { |n| groups.delete(n.to_s) }
 
-        [[ "rails", rails ]] + groups.sort.to_a
+        [[ "zoisite", zoisite ]] + groups.sort.to_a
       end
 
       # Zoisite finds namespaces similar to Thor, it only adds one rule:
@@ -225,13 +225,13 @@ module Zoisite
       # Generators names must end with "_generator.rb". This is required because Zoisite
       # looks in load paths and loads the generator just before it's going to be used.
       #
-      #   find_by_namespace :webrat, :rails, :integration
+      #   find_by_namespace :webrat, :zoisite, :integration
       #
       # Will search for the following generators:
       #
-      #   "rails:webrat", "webrat:integration", "webrat"
+      #   "zoisite:webrat", "webrat:integration", "webrat"
       #
-      # Notice that "rails:generators:webrat" could be loaded as well, what
+      # Notice that "zoisite:generators:webrat" could be loaded as well, what
       # Zoisite looks for is the first and last parts of the namespace.
       def find_by_namespace(name, base = nil, context = nil) # :nodoc:
         lookups = []
@@ -241,7 +241,7 @@ module Zoisite
         unless base || context
           unless name.to_s.include?(?:)
             lookups << "#{name}:#{name}"
-            lookups << "rails:#{name}"
+            lookups << "zoisite:#{name}"
           end
           lookups << "#{name}"
         end
@@ -272,7 +272,7 @@ module Zoisite
 
           puts <<~MSG
             #{error.detailed_message}
-            Run `bin/rails generate --help` for more options.
+            Run `bin/zoisite generate --help` for more options.
           MSG
           exit 1
         end
@@ -310,7 +310,7 @@ module Zoisite
         end
 
         def lookup_paths # :doc:
-          @lookup_paths ||= %w( rails/generators generators )
+          @lookup_paths ||= %w( zoisite/generators generators )
         end
 
         def file_lookup_paths # :doc:

@@ -68,7 +68,7 @@ module Zoisite
           end
         RUBY
 
-        output = rails("test", "test/integration/my_test.rb")
+        output = zoisite("test", "test/integration/my_test.rb")
         assert_match("https://example.org", output)
       end
 
@@ -125,7 +125,7 @@ module Zoisite
         require "#{app_path}/config/environment"
 
         assert_equal(
-          { controller: "rails/engine/lazy_route_set_test/users", action: "index" },
+          { controller: "zoisite/engine/lazy_route_set_test/users", action: "index" },
           Zoisite.application.routes.recognize_path("/users")
         )
       end
@@ -137,7 +137,7 @@ module Zoisite
         req = ActionDispatch::Request.new(::Rack::MockRequest.env_for(path))
 
         assert_equal(
-          { controller: "rails/engine/lazy_route_set_test/users", action: "index" },
+          { controller: "zoisite/engine/lazy_route_set_test/users", action: "index" },
           Zoisite.application.routes.recognize_path_with_request(req, path, {})
         )
       end
@@ -156,7 +156,7 @@ module Zoisite
               root to: proc { [200, {}, []] }
 
               resources :products
-              resources :users, module: "rails/engine/lazy_route_set_test"
+              resources :users, module: "zoisite/engine/lazy_route_set_test"
               resolve("Comment") { "https://example.org" }
 
               mount Plugin::Engine, at: "/plugin"

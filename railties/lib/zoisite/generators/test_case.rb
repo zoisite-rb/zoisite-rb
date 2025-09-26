@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "rails/generators"
-require "rails/generators/testing/behavior"
-require "rails/generators/testing/setup_and_teardown"
-require "rails/generators/testing/assertions"
+require "zoisite/generators"
+require "zoisite/generators/testing/behavior"
+require "zoisite/generators/testing/setup_and_teardown"
+require "zoisite/generators/testing/assertions"
 require "fileutils"
 
 module Zoisite

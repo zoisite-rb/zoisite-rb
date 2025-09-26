@@ -24,7 +24,7 @@ def patches_section(advisory)
     commit = IO.popen(%W[git log --format=format:%H --grep=#{advisory[:cve_id]} v#{patched_versions}], &:read)
     raise "git log failed" unless $?.success?
     branch = patched_versions[/^\d+\.\d+/]
-    desc << "* #{branch} - https://github.com/rails/rails/commit/#{commit}.patch\n"
+    desc << "* #{branch} - https://github.com/zoisite/zoisite/commit/#{commit}.patch\n"
   end
   ["Patches", desc]
 end
@@ -56,7 +56,7 @@ EOS
   end).join("\n\n")
 end
 
-uri = URI("https://api.github.com/repos/rails/rails/security-advisories")
+uri = URI("https://api.github.com/repos/zoisite/zoisite/security-advisories")
 json = Net::HTTP.get(uri)
 advisories = JSON.parse(json, symbolize_names: true)
 

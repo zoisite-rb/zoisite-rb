@@ -11,7 +11,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsTest < ActionDi
   end
 
   test "showing variant attachment" do
-    get rails_blob_representation_proxy_url(
+    get zoisite_blob_representation_proxy_url(
       disposition: :attachment,
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
@@ -23,7 +23,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsTest < ActionDi
   end
 
   test "showing variant inline" do
-    get rails_blob_representation_proxy_url(
+    get zoisite_blob_representation_proxy_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: ActiveStorage::Variation.encode(@transformations))
@@ -35,7 +35,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsTest < ActionDi
 
   test "showing untracked variant" do
     without_variant_tracking do
-      get rails_blob_representation_proxy_url(
+      get zoisite_blob_representation_proxy_url(
         disposition: :attachment,
         filename: @blob.filename,
         signed_blob_id: @blob.signed_id,
@@ -48,7 +48,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsTest < ActionDi
   end
 
   test "showing variant with invalid signed blob ID" do
-    get rails_blob_representation_proxy_url(
+    get zoisite_blob_representation_proxy_url(
       filename: @blob.filename,
       signed_blob_id: "invalid",
       variation_key: ActiveStorage::Variation.encode(@transformations))
@@ -57,7 +57,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsTest < ActionDi
   end
 
   test "showing variant with invalid variation key" do
-    get rails_blob_representation_proxy_url(
+    get zoisite_blob_representation_proxy_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: "invalid")
@@ -66,7 +66,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsTest < ActionDi
   end
 
   test "sessions are disabled" do
-    get rails_blob_representation_proxy_url(
+    get zoisite_blob_representation_proxy_url(
       disposition: :attachment,
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
@@ -85,7 +85,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsWithStrictLoadi
 
   test "showing existing variant record"  do
     with_strict_loading_by_default do
-      get rails_blob_representation_proxy_url(
+      get zoisite_blob_representation_proxy_url(
         filename: @blob.filename,
         signed_blob_id: @blob.signed_id,
         variation_key: ActiveStorage::Variation.encode(@transformations))
@@ -104,7 +104,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsWithStrictLoadi
     end
 
     @blob.service.stub(:download, mock_download) do
-      get rails_blob_representation_proxy_url(
+      get zoisite_blob_representation_proxy_url(
         filename: @blob.filename,
         signed_blob_id: @blob.signed_id,
         variation_key: ActiveStorage::Variation.encode(@transformations))
@@ -120,7 +120,7 @@ class ActiveStorage::Representations::ProxyControllerWithVariantsWithStrictLoadi
     end
 
     @blob.service.stub(:download, mock_download) do
-      get rails_blob_representation_proxy_url(
+      get zoisite_blob_representation_proxy_url(
         filename: @blob.filename,
         signed_blob_id: @blob.signed_id,
         variation_key: ActiveStorage::Variation.encode(@transformations))
@@ -137,7 +137,7 @@ class ActiveStorage::Representations::ProxyControllerWithPreviewsTest < ActionDi
   end
 
   test "showing preview inline" do
-    get rails_blob_representation_proxy_url(
+    get zoisite_blob_representation_proxy_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: ActiveStorage::Variation.encode(@transformations))
@@ -148,7 +148,7 @@ class ActiveStorage::Representations::ProxyControllerWithPreviewsTest < ActionDi
   end
 
   test "showing preview with invalid signed blob ID" do
-    get rails_blob_representation_proxy_url(
+    get zoisite_blob_representation_proxy_url(
       filename: @blob.filename,
       signed_blob_id: "invalid",
       variation_key: ActiveStorage::Variation.encode(@transformations))
@@ -157,7 +157,7 @@ class ActiveStorage::Representations::ProxyControllerWithPreviewsTest < ActionDi
   end
 
   test "showing preview with invalid variation key" do
-    get rails_blob_representation_proxy_url(
+    get zoisite_blob_representation_proxy_url(
       filename: @blob.filename,
       signed_blob_id: @blob.signed_id,
       variation_key: "invalid")
@@ -175,7 +175,7 @@ class ActiveStorage::Representations::ProxyControllerWithPreviewsWithStrictLoadi
 
   test "showing existing preview record" do
     with_strict_loading_by_default do
-      get rails_blob_representation_proxy_url(
+      get zoisite_blob_representation_proxy_url(
         filename: @blob.filename,
         signed_blob_id: @blob.signed_id,
         variation_key: ActiveStorage::Variation.encode(@transformations))

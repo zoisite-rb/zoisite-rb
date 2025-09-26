@@ -27,7 +27,7 @@ module ActionMailbox
   #
   # 2. Generate a strong password that Action Mailbox can use to authenticate requests to the SendGrid ingress.
   #
-  #    Use <tt>bin/rails credentials:edit</tt> to add the password to your application's encrypted credentials under
+  #    Use <tt>bin/zoisite credentials:edit</tt> to add the password to your application's encrypted credentials under
   #    +action_mailbox.ingress_password+, where Action Mailbox will automatically find it:
   #
   #        action_mailbox:
@@ -36,11 +36,11 @@ module ActionMailbox
   #    Alternatively, provide the password in the +RAILS_INBOUND_EMAIL_PASSWORD+ environment variable.
   #
   # 3. {Configure SendGrid Inbound Parse}[https://sendgrid.com/docs/for-developers/parsing-email/setting-up-the-inbound-parse-webhook/]
-  #    to forward inbound emails to +/rails/action_mailbox/sendgrid/inbound_emails+ with the username +actionmailbox+ and
+  #    to forward inbound emails to +/zoisite/action_mailbox/sendgrid/inbound_emails+ with the username +actionmailbox+ and
   #    the password you previously generated. If your application lived at <tt>https://example.com</tt>, you would
   #    configure SendGrid with the following fully-qualified URL:
   #
-  #        https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/sendgrid/inbound_emails
+  #        https://actionmailbox:PASSWORD@example.com/zoisite/action_mailbox/sendgrid/inbound_emails
   #
   #    *NOTE:* When configuring your SendGrid Inbound Parse webhook, be sure to check the box labeled *"Post the raw,
   #    full MIME message."* Action Mailbox needs the raw MIME message to work.

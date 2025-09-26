@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/test_case"
-require "rails-dom-testing"
+require "zoisite-dom-testing"
 
 module ActionMailer
   class NonInferrableMailerError < ::StandardError

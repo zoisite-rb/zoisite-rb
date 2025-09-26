@@ -6,7 +6,7 @@ require "fileutils"
 require "yaml"
 require "date"
 
-require "rails_guides/epub_packer"
+require "zoisite_guides/epub_packer"
 
 module Epub # :nodoc:
   extend self
@@ -32,7 +32,7 @@ module Epub # :nodoc:
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
           <rootfiles>
-              <rootfile full-path="OEBPS/rails_guides.opf" media-type="application/oebps-package+xml"/>
+              <rootfile full-path="OEBPS/zoisite_guides.opf" media-type="application/oebps-package+xml"/>
           </rootfiles>
         </container>
         CONTENT
@@ -60,22 +60,22 @@ module Epub # :nodoc:
         # opf file: item->id and itemref->idref attributes does not support values starting with a number
         toc = File.read("toc.ncx")
         toc_html = File.read("toc.html")
-        opf = File.read("rails_guides.opf")
+        opf = File.read("zoisite_guides.opf")
 
         doc = open_toc_doc(toc)
         doc.each do |c|
           name = c[:src]
 
           if is_name_invalid(name)
-            FileUtils.mv(name, "rails_#{name}")
-            toc.gsub!(name, "rails_#{name}")
-            toc_html.gsub!(name, "rails_#{name}")
-            opf.gsub!(name, "rails_#{name}")
+            FileUtils.mv(name, "zoisite_#{name}")
+            toc.gsub!(name, "zoisite_#{name}")
+            toc_html.gsub!(name, "zoisite_#{name}")
+            opf.gsub!(name, "zoisite_#{name}")
           end
         end
         File.write("toc.ncx", toc)
         File.write("toc.html", toc_html)
-        File.write("rails_guides.opf", opf)
+        File.write("zoisite_guides.opf", opf)
       end
     end
 

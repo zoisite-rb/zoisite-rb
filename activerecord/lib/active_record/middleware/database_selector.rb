@@ -24,7 +24,7 @@ module ActiveRecord
     # To use the DatabaseSelector in your application with default settings,
     # run the provided generator.
     #
-    #   $ bin/rails g active_record:multi_db
+    #   $ bin/zoisite g active_record:multi_db
     #
     # This will create a file named +config/initializers/multi_db.rb+ with the
     # following contents:
@@ -45,7 +45,7 @@ module ActiveRecord
     #   config.active_record.database_resolver = MyResolver
     #   config.active_record.database_resolver_context = MyResolver::MySession
     #
-    # Note: If you are using <tt>rails new my_app --minimal</tt> you will need
+    # Note: If you are using <tt>zoisite new my_app --minimal</tt> you will need
     # to call <tt>require "active_support/core_ext/integer/time"</tt> to load
     # the core extension in order to use +2.seconds+
     class DatabaseSelector

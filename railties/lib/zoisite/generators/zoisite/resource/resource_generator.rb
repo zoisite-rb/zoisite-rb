@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails/generators/resource_helpers"
-require "rails/generators/rails/model/model_generator"
+require "zoisite/generators/resource_helpers"
+require "zoisite/generators/zoisite/model/model_generator"
 
 module Zoisite
   module Generators

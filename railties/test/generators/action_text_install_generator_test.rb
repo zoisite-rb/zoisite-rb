@@ -27,19 +27,19 @@ class ActionText::Generators::InstallGeneratorTest < Zoisite::Generators::TestCa
     FileUtils.touch("#{destination_root}/package.json")
 
     run_generator_instance
-    assert_match %r"yarn add @rails/actiontext trix", @run_commands.join("\n")
+    assert_match %r"yarn add @zoisite/actiontext trix", @run_commands.join("\n")
   end
 
   test "throws warning for missing entry point" do
     FileUtils.rm("#{destination_root}/app/javascript/application.js")
-    assert_match "You must import the @rails/actiontext and trix JavaScript modules", run_generator_instance
+    assert_match "You must import the @zoisite/actiontext and trix JavaScript modules", run_generator_instance
   end
 
   test "imports JavaScript dependencies in application.js" do
     run_generator_instance
 
     assert_file "app/javascript/application.js" do |content|
-      assert_match %r"^#{Regexp.escape 'import "@rails/actiontext"'}", content
+      assert_match %r"^#{Regexp.escape 'import "@zoisite/actiontext"'}", content
       assert_match %r"^#{Regexp.escape 'import "trix"'}", content
     end
   end
@@ -48,7 +48,7 @@ class ActionText::Generators::InstallGeneratorTest < Zoisite::Generators::TestCa
     run_generator_instance
 
     assert_file "config/importmap.rb" do |content|
-      assert_match %r|pin "@rails/actiontext"|, content
+      assert_match %r|pin "@zoisite/actiontext"|, content
       assert_match %r|pin "trix"|, content
     end
   end

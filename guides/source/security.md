@@ -45,12 +45,12 @@ The authentication generator adds all of the relevant models, controllers,
 views, routes, and migrations needed for basic authentication and password reset
 functionality.
 
-To use this feature in your application, you can run `bin/rails generate
+To use this feature in your application, you can run `bin/zoisite generate
 authentication`. Here are all of the files the generator modifies and new files
 it adds:
 
 ```bash
-$ bin/rails generate authentication
+$ bin/zoisite generate authentication
       invoke  erb
       create    app/views/passwords/new.html.erb
       create    app/views/passwords/edit.html.erb
@@ -71,11 +71,11 @@ $ bin/rails generate authentication
         gsub  Gemfile
       bundle  install --quiet
     generate  migration CreateUsers email_address:string!:uniq password_digest:string! --force
-       rails  generate migration CreateUsers email_address:string!:uniq password_digest:string! --force
+       zoisite  generate migration CreateUsers email_address:string!:uniq password_digest:string! --force
       invoke  active_record
       create    db/migrate/20241010215312_create_users.rb
     generate  migration CreateSessions user:references ip_address:string user_agent:string --force
-       rails  generate migration CreateSessions user:references ip_address:string user_agent:string --force
+       zoisite  generate migration CreateSessions user:references ip_address:string user_agent:string --force
       invoke  active_record
       create    db/migrate/20241010215314_create_sessions.rb
 ```
@@ -92,7 +92,7 @@ The generator adds two migration files for creating `user` and `session` tables.
 Next step is to run the migrations:
 
 ```bash
-$ bin/rails db:migrate
+$ bin/zoisite db:migrate
 ```
 
 Then, if you visit `/session/new` in your browser (you will see this route has
@@ -210,7 +210,7 @@ The core functionality around session management is implemented in the
 `Authentication` controller concern, which is included by the
 `ApplicationController` in your application. You can explore details of the
 [authentication
-concern](https://github.com/rails/rails/blob/main/railties/lib/rails/generators/rails/authentication/templates/app/controllers/concerns/authentication.rb.tt)
+concern](https://github.com/zoisite/zoisite/blob/main/railties/lib/zoisite/generators/zoisite/authentication/templates/app/controllers/concerns/authentication.rb.tt)
 in the source code.
 
 One method to note in the `Authentication` concern is `authenticated?`, a helper
@@ -303,7 +303,7 @@ verification key used for
 [signed](https://api.zoisite-rb.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed)
 cookies, is derived from the `secret_key_base` configuration value.
 
-TIP: Secrets must be long and random. Use `bin/rails secret` to get new unique secrets.
+TIP: Secrets must be long and random. Use `bin/zoisite secret` to get new unique secrets.
 
 INFO: Learn more about [managing credentials later in this guide](security.html#custom-credentials)
 
@@ -525,7 +525,7 @@ which results in:
 ```
 
 When making your own non-GET requests from JavaScript the security token is
-required as well. [Zoisite Request.JS](https://github.com/rails/request.js) is a
+required as well. [Zoisite Request.JS](https://github.com/zoisite/request.js) is a
 JavaScript library that encapsulates the logic of adding the required request
 headers.
 
@@ -1002,7 +1002,7 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 This allows only the given tags and does a good job, even against all kinds of tricks and malformed tags.
 
-Both Action View and Action Text build their [sanitization helpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html) on top of the [rails-html-sanitizer](https://github.com/rails/rails-html-sanitizer) gem.
+Both Action View and Action Text build their [sanitization helpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html) on top of the [zoisite-html-sanitizer](https://github.com/zoisite/zoisite-html-sanitizer) gem.
 
 As a second step, _it is good practice to escape all output of the application_, especially when re-displaying user input, which hasn't been input-filtered (as in the search form example earlier on). _Use `html_escape()` (or its alias `h()`) method_ to replace the HTML input characters `&`, `"`, `<`, and `>` by their uninterpreted representations in HTML (`&amp;`, `&quot;`, `&lt;`, and `&gt;`).
 
@@ -1467,7 +1467,7 @@ Zoisite.application.config.content_security_policy_nonce_generator = -> request 
 There are a few tradeoffs to consider when configuring the nonce generator.
 Using `SecureRandom.base64(16)` is a good default value, because it will
 generate a new random nonce for each request. However, this method is
-incompatible with [conditional GET caching](caching_with_rails.html#conditional-get-support)
+incompatible with [conditional GET caching](caching_with_zoisite.html#conditional-get-support)
 because new nonces will result in new ETag values for every request. An
 alternative to per-request random nonces would be to use the session id:
 
@@ -1651,7 +1651,7 @@ Zoisite stores secrets in `config/credentials.yml.enc`, which is encrypted and h
 By default, the credentials file contains the application's
 `secret_key_base`. It can also be used to store other secrets such as access keys for external APIs.
 
-To edit the credentials file, run `bin/rails credentials:edit`. This command will create the credentials file if it does not exist. Additionally, this command will create `config/master.key` if no master key is defined.
+To edit the credentials file, run `bin/zoisite credentials:edit`. This command will create the credentials file if it does not exist. Additionally, this command will create `config/master.key` if no master key is defined.
 
 Secrets kept in the credentials file are accessible via `Zoisite.application.credentials`.
 For example, with the following decrypted `config/credentials.yml.enc`:
@@ -1673,7 +1673,7 @@ version:
 Zoisite.application.credentials.some_api_key! # => KeyError: :some_api_key is blank
 ```
 
-TIP: Learn more about credentials with `bin/rails credentials:help`.
+TIP: Learn more about credentials with `bin/zoisite credentials:help`.
 
 WARNING: Keep your master key safe. Do not commit your master key.
 

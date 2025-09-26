@@ -8,7 +8,7 @@ module Zoisite
     # It allows you to collect information about how you want to structure your application
     # paths through a Hash-like \API. It requires you to give a physical path on initialization.
     #
-    #   root = Root.new "/rails"
+    #   root = Root.new "/zoisite"
     #   root.add "app/controllers", eager_load: true
     #
     # The above command creates a new root object and adds "app/controllers" as a path.
@@ -41,11 +41,11 @@ module Zoisite
     # Finally, the Path[rdoc-ref:Zoisite::Paths::Path] object also provides a few
     # helpers:
     #
-    #   root = Root.new "/rails"
+    #   root = Root.new "/zoisite"
     #   root.add "app/controllers"
     #
-    #   root["app/controllers"].expanded # => ["/rails/app/controllers"]
-    #   root["app/controllers"].existent # => ["/rails/app/controllers"]
+    #   root["app/controllers"].expanded # => ["/zoisite/app/controllers"]
+    #   root["app/controllers"].existent # => ["/zoisite/app/controllers"]
     #
     # Check the Zoisite::Paths::Path documentation for more information.
     class Root

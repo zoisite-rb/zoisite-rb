@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "active_support"
-require "active_support/rails"
+require "active_support/zoisite"
 require "active_support/core_ext/enumerable"
-require "rails/deprecator"
+require "zoisite/deprecator"
 
 require "thor"
 
@@ -54,7 +54,7 @@ module Zoisite
 
       # Receives a namespace, arguments, and the behavior to invoke the command.
       def invoke(full_namespace, args = [], **config)
-        args = ["--help"] if rails_new_with_no_path?(args)
+        args = ["--help"] if zoisite_new_with_no_path?(args)
 
         full_namespace = full_namespace.to_s
         namespace, command_name = split_namespace(full_namespace)
@@ -85,12 +85,12 @@ module Zoisite
       #
       # Will search for the following commands:
       #
-      #   "webrat", "webrat:integration", "rails:webrat", "rails:webrat:integration"
+      #   "webrat", "webrat:integration", "zoisite:webrat", "zoisite:webrat:integration"
       #
       def find_by_namespace(namespace, command_name = nil) # :nodoc:
         lookups = [ namespace ]
         lookups << "#{namespace}:#{command_name}" if command_name
-        lookups.concat lookups.map { |lookup| "rails:#{lookup}" }
+        lookups.concat lookups.map { |lookup| "zoisite:#{lookup}" }
 
         lookup(lookups)
 
@@ -118,7 +118,7 @@ module Zoisite
       end
 
       private
-        def rails_new_with_no_path?(args)
+        def zoisite_new_with_no_path?(args)
           args == ["new"]
         end
 
@@ -155,7 +155,7 @@ module Zoisite
         end
 
         def lookup_paths # :doc:
-          @lookup_paths ||= %w( rails/commands commands )
+          @lookup_paths ||= %w( zoisite/commands commands )
         end
 
         def file_lookup_paths # :doc:
