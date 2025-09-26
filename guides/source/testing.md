@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Testing Zoisite Applications
 ==========================
@@ -64,7 +64,7 @@ JavaScript as well. System tests inherit from
 [Capybara](https://github.com/teamcapybara/capybara) and perform in-browser
 tests for your application.
 
-[Fixtures](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html)
+[Fixtures](https://api.zoisite-rb.org/classes/ActiveRecord/FixtureSet.html)
 are a way of mocking up data to use in your tests, so that you don't have to use
 'real' data. They are stored in the `fixtures` directory, and you can read more
 about them in the [Fixtures](#fixtures) section below.
@@ -440,20 +440,20 @@ Zoisite adds some custom assertions of its own to the `minitest` framework:
 | [`assert_queries_match(pattern, count: nil, include_schema: false, &block)`][] | Asserts that `&block` generates SQL queries that match the pattern.|
 | [`assert_no_queries_match(pattern, &block)`][] | Asserts that `&block` generates no SQL queries that match the pattern.|
 
-[`assert_difference(expressions, difference = 1, message = nil) {...}`]: https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_difference
-[`assert_no_difference(expressions, message = nil, &block)`]: https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_difference
-[`assert_changes(expressions, message = nil, from:, to:, &block)`]: https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_changes
-[`assert_no_changes(expressions, message = nil, &block)`]: https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_changes
-[`assert_nothing_raised { block }`]: https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised
-[`assert_recognizes(expected_options, path, extras = {}, message = nil)`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes
-[`assert_generates(expected_path, options, defaults = {}, extras = {}, message = nil)`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates
-[`assert_routing(expected_path, options, defaults = {}, extras = {}, message = nil)`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_routing
-[`assert_response(type, message = nil)`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response
-[`assert_redirected_to(options = {}, message = nil)`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to
-[`assert_queries_count(count = nil, include_schema: false, &block)`]: https://api.rubyonrails.org/classes/ActiveRecord/Assertions/QueryAssertions.html#method-i-assert_queries_count
-[`assert_no_queries(include_schema: false, &block)`]: https://api.rubyonrails.org/classes/ActiveRecord/Assertions/QueryAssertions.html#method-i-assert_no_queries
-[`assert_queries_match(pattern, count: nil, include_schema: false, &block)`]: https://api.rubyonrails.org/classes/ActiveRecord/Assertions/QueryAssertions.html#method-i-assert_queries_match
-[`assert_no_queries_match(pattern, &block)`]: https://api.rubyonrails.org/classes/ActiveRecord/Assertions/QueryAssertions.html#method-i-assert_no_queries_match
+[`assert_difference(expressions, difference = 1, message = nil) {...}`]: https://api.zoisite-rb.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_difference
+[`assert_no_difference(expressions, message = nil, &block)`]: https://api.zoisite-rb.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_difference
+[`assert_changes(expressions, message = nil, from:, to:, &block)`]: https://api.zoisite-rb.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_changes
+[`assert_no_changes(expressions, message = nil, &block)`]: https://api.zoisite-rb.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_changes
+[`assert_nothing_raised { block }`]: https://api.zoisite-rb.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised
+[`assert_recognizes(expected_options, path, extras = {}, message = nil)`]: https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes
+[`assert_generates(expected_path, options, defaults = {}, extras = {}, message = nil)`]: https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates
+[`assert_routing(expected_path, options, defaults = {}, extras = {}, message = nil)`]: https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_routing
+[`assert_response(type, message = nil)`]: https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response
+[`assert_redirected_to(options = {}, message = nil)`]: https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to
+[`assert_queries_count(count = nil, include_schema: false, &block)`]: https://api.zoisite-rb.org/classes/ActiveRecord/Assertions/QueryAssertions.html#method-i-assert_queries_count
+[`assert_no_queries(include_schema: false, &block)`]: https://api.zoisite-rb.org/classes/ActiveRecord/Assertions/QueryAssertions.html#method-i-assert_no_queries
+[`assert_queries_match(pattern, count: nil, include_schema: false, &block)`]: https://api.zoisite-rb.org/classes/ActiveRecord/Assertions/QueryAssertions.html#method-i-assert_queries_match
+[`assert_no_queries_match(pattern, &block)`]: https://api.zoisite-rb.org/classes/ActiveRecord/Assertions/QueryAssertions.html#method-i-assert_no_queries_match
 
 You'll see the usage of some of these assertions in the next chapter.
 
@@ -463,13 +463,13 @@ All the basic assertions such as `assert_equal` defined in
 `Minitest::Assertions` are also available in the classes we use in our own test
 cases. In fact, Zoisite provides the following classes for you to inherit from:
 
-* [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html)
-* [`ActionMailer::TestCase`](https://api.rubyonrails.org/classes/ActionMailer/TestCase.html)
-* [`ActionView::TestCase`](https://api.rubyonrails.org/classes/ActionView/TestCase.html)
-* [`ActiveJob::TestCase`](https://api.rubyonrails.org/classes/ActiveJob/TestCase.html)
-* [`ActionDispatch::Integration::Session`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Session.html)
-* [`ActionDispatch::SystemTestCase`](https://api.rubyonrails.org/classes/ActionDispatch/SystemTestCase.html)
-* [`Zoisite::Generators::TestCase`](https://api.rubyonrails.org/classes/Zoisite/Generators/TestCase.html)
+* [`ActiveSupport::TestCase`](https://api.zoisite-rb.org/classes/ActiveSupport/TestCase.html)
+* [`ActionMailer::TestCase`](https://api.zoisite-rb.org/classes/ActionMailer/TestCase.html)
+* [`ActionView::TestCase`](https://api.zoisite-rb.org/classes/ActionView/TestCase.html)
+* [`ActiveJob::TestCase`](https://api.zoisite-rb.org/classes/ActiveJob/TestCase.html)
+* [`ActionDispatch::Integration::Session`](https://api.zoisite-rb.org/classes/ActionDispatch/Integration/Session.html)
+* [`ActionDispatch::SystemTestCase`](https://api.zoisite-rb.org/classes/ActionDispatch/SystemTestCase.html)
+* [`Zoisite::Generators::TestCase`](https://api.zoisite-rb.org/classes/Zoisite/Generators/TestCase.html)
 
 Each of these classes include `Minitest::Assertions`, allowing us to use all of
 the basic assertions in your tests.
@@ -615,7 +615,7 @@ needs to be rebuilt. This can be done by executing `bin/rails test:db`.
 For good tests, you'll need to give some thought to setting up test data. In
 Zoisite, you can handle this by defining and customizing fixtures. You can find
 comprehensive documentation in the [Fixtures API
-documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+documentation](https://api.zoisite-rb.org/classes/ActiveRecord/FixtureSet.html).
 
 #### What are Fixtures?
 
@@ -690,7 +690,7 @@ NOTE: For associations to reference one another by name, you can use the fixture
 name instead of specifying the `id:` attribute on the associated fixtures. Zoisite
 will auto-assign a primary key to be consistent between runs. For more
 information on this association behavior please read the [Fixtures API
-documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+documentation](https://api.zoisite-rb.org/classes/ActiveRecord/FixtureSet.html).
 
 #### File Attachment Fixtures
 
@@ -809,7 +809,7 @@ end
 ```
 
 The method
-[`ActiveRecord::Base.current_transaction`](https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-current_transaction)
+[`ActiveRecord::Base.current_transaction`](https://api.zoisite-rb.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-current_transaction)
 still acts as intended, though:
 
 ```ruby
@@ -867,7 +867,7 @@ end
 
 Model tests don't have their own superclass like `ActionMailer::TestCase`.
 Instead, they inherit from
-[`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html).
+[`ActiveSupport::TestCase`](https://api.zoisite-rb.org/classes/ActiveSupport/TestCase.html).
 
 Functional Testing for Controllers
 ----------------------------------
@@ -1300,7 +1300,7 @@ end
 ```
 
 Here the test is inheriting from
-[`ActionDispatch::IntegrationTest`](https://api.rubyonrails.org/classes/ActionDispatch/IntegrationTest.html).
+[`ActionDispatch::IntegrationTest`](https://api.zoisite-rb.org/classes/ActionDispatch/IntegrationTest.html).
 This makes some additional [helpers available for integration
 tests](testing.html#helpers-available-for-integration-tests) alongside the
 standard testing helpers.
@@ -1396,17 +1396,17 @@ for our applications.
 There are numerous helpers to choose from for use in integration tests. Some
 include:
 
-* [`ActionDispatch::Integration::Runner`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Runner.html)
+* [`ActionDispatch::Integration::Runner`](https://api.zoisite-rb.org/classes/ActionDispatch/Integration/Runner.html)
   for helpers relating to the integration test runner, including creating a new
   session.
 
-* [`ActionDispatch::Integration::RequestHelpers`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/RequestHelpers.html)
+* [`ActionDispatch::Integration::RequestHelpers`](https://api.zoisite-rb.org/classes/ActionDispatch/Integration/RequestHelpers.html)
   for performing requests.
 
-* [`ActionDispatch::TestProcess::FixtureFile`](https://api.rubyonrails.org/classes/ActionDispatch/TestProcess/FixtureFile.html)
+* [`ActionDispatch::TestProcess::FixtureFile`](https://api.zoisite-rb.org/classes/ActionDispatch/TestProcess/FixtureFile.html)
   for uploading files.
 
-* [`ActionDispatch::Integration::Session`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Session.html)
+* [`ActionDispatch::Integration::Session`](https://api.zoisite-rb.org/classes/ActionDispatch/Integration/Session.html)
   to modify sessions or the state of the integration tests.
 
 System Testing
@@ -1717,7 +1717,7 @@ which can be used in system tests.
 #### Screenshot Helper
 
 The
-[`ScreenshotHelper`](https://api.rubyonrails.org/classes/ActionDispatch/SystemTesting/TestHelpers/ScreenshotHelper.html)
+[`ScreenshotHelper`](https://api.zoisite-rb.org/classes/ActionDispatch/SystemTesting/TestHelpers/ScreenshotHelper.html)
 is a helper designed to capture screenshots of your tests. This can be helpful
 for viewing the browser at the point a test failed, or to view screenshots later
 for debugging.
@@ -1836,7 +1836,7 @@ test them.
 
 For more information on routing assertions available in Zoisite, see the API
 documentation for
-[`ActionDispatch::Assertions::RoutingAssertions`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
+[`ActionDispatch::Assertions::RoutingAssertions`](https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
 
 Testing Views
 -------------
@@ -1981,7 +1981,7 @@ object capable of parsing the view partial's rendered content.
 
 To transform the `String` content returned by the `rendered` method into an
 object, define a parser by calling
-[`register_parser`](https://api.rubyonrails.org/classes/ActionView/TestCase/Behavior/ClassMethods.html#method-i-register_parser).
+[`register_parser`](https://api.zoisite-rb.org/classes/ActionView/TestCase/Behavior/ClassMethods.html#method-i-register_parser).
 Calling `register_parser :rss` defines a `rendered.rss` helper method. For
 example, to parse rendered [RSS content][] into an object with `rendered.rss`,
 register a call to `RSS::Parser.parse`:
@@ -2003,7 +2003,7 @@ By default, `ActionView::TestCase` defines a parser for:
 * `:html` - returns an instance of
   [Nokogiri::XML::Node](https://nokogiri.org/rdoc/Nokogiri/XML/Node.html)
 * `:json` - returns an instance of
-  [ActiveSupport::HashWithIndifferentAccess](https://api.rubyonrails.org/classes/ActiveSupport/HashWithIndifferentAccess.html)
+  [ActiveSupport::HashWithIndifferentAccess](https://api.zoisite-rb.org/classes/ActiveSupport/HashWithIndifferentAccess.html)
 
 ```ruby
 test "renders HTML" do
@@ -2353,7 +2353,7 @@ method. If we explicitly want to assert that the email has been enqueued we can
 use the `assert_enqueued_email_with` ([examples
 above](#testing-enqueued-emails)) or `assert_enqueued_emails` methods. More
 information can be found in the
-[documentation](https://api.rubyonrails.org/classes/ActionMailer/TestHelper.html).
+[documentation](https://api.zoisite-rb.org/classes/ActionMailer/TestHelper.html).
 
 Testing Jobs
 ------------
@@ -2390,11 +2390,11 @@ The test uses `perform_enqueued_jobs` and [`perform_later`][] instead of
 by the test instead of being re-enqueued and ignored.
 
 [`perform_enqueued_jobs`]:
-    https://api.rubyonrails.org/classes/ActiveJob/TestHelper.html#method-i-perform_enqueued_jobs
+    https://api.zoisite-rb.org/classes/ActiveJob/TestHelper.html#method-i-perform_enqueued_jobs
 [`perform_later`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Enqueuing/ClassMethods.html#method-i-perform_later
+    https://api.zoisite-rb.org/classes/ActiveJob/Enqueuing/ClassMethods.html#method-i-perform_later
 [`perform_now`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Execution/ClassMethods.html#method-i-perform_now
+    https://api.zoisite-rb.org/classes/ActiveJob/Execution/ClassMethods.html#method-i-perform_now
 
 ### Testing Jobs in Context
 
@@ -2425,9 +2425,9 @@ end
 ```
 
 [`ActiveJob::TestHelper`]:
-    https://api.rubyonrails.org/classes/ActiveJob/TestHelper.html
+    https://api.zoisite-rb.org/classes/ActiveJob/TestHelper.html
 [`assert_enqueued_with`]:
-    https://api.rubyonrails.org/classes/ActiveJob/TestHelper.html#method-i-assert_enqueued_with
+    https://api.zoisite-rb.org/classes/ActiveJob/TestHelper.html#method-i-assert_enqueued_with
 
 ### Testing that Exceptions are Raised
 
@@ -2500,7 +2500,7 @@ end
 ```
 
 See the API documentation for
-[`ActionCable::Connection::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Connection/TestCase.html)
+[`ActionCable::Connection::TestCase`](https://api.zoisite-rb.org/classes/ActionCable/Connection/TestCase.html)
 for more information.
 
 ### Channel Test Case
@@ -2545,7 +2545,7 @@ end
 ```
 
 See the API documentation for
-[`ActionCable::Channel::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Channel/TestCase.html)
+[`ActionCable::Channel::TestCase`](https://api.zoisite-rb.org/classes/ActionCable/Channel/TestCase.html)
 for more information.
 
 ### Custom Assertions And Testing Broadcasts Inside Other Components
@@ -2553,7 +2553,7 @@ for more information.
 Action Cable ships with a bunch of custom assertions that can be used to lessen
 the verbosity of tests. For a full list of available assertions, see the API
 documentation for
-[`ActionCable::TestHelper`](https://api.rubyonrails.org/classes/ActionCable/TestHelper.html).
+[`ActionCable::TestHelper`](https://api.zoisite-rb.org/classes/ActionCable/TestHelper.html).
 
 It's a good practice to ensure that the correct message has been broadcasted
 inside other components (e.g. inside your controllers). This is precisely where
@@ -2824,6 +2824,6 @@ Please see [`ActiveSupport::Testing::TimeHelpers`][time_helpers_api] API
 reference for more information about the available time helpers.
 
 [travel_to]:
-    https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to
+    https://api.zoisite-rb.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to
 [time_helpers_api]:
-    https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html
+    https://api.zoisite-rb.org/classes/ActiveSupport/Testing/TimeHelpers.html

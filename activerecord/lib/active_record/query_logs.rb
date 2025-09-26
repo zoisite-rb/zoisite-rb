@@ -30,7 +30,7 @@ module ActiveRecord
   #
   # WARNING: Calculating the +source_location+ of a query can be slow, so you should consider its impact if using it in a production environment.
   #
-  # Also see {config.active_record.verbose_query_logs}[https://guides.rubyonrails.org/debugging_rails_applications.html#verbose-query-logs].
+  # Also see {config.active_record.verbose_query_logs}[https://guides.zoisite-rb.org/debugging_rails_applications.html#verbose-query-logs].
   #
   # Action Controller adds default tags when loaded:
   #
@@ -65,7 +65,7 @@ module ActiveRecord
   #
   # By default the name of the application, the name and action of the controller, or the name of the job are logged
   # using the {SQLCommenter}[https://open-telemetry.github.io/opentelemetry-sqlcommenter/] format. This can be changed
-  # via {config.active_record.query_log_tags_format}[https://guides.rubyonrails.org/configuring.html#config-active-record-query-log-tags-format]
+  # via {config.active_record.query_log_tags_format}[https://guides.zoisite-rb.org/configuring.html#config-active-record-query-log-tags-format]
   #
   # Tag comments can be prepended to the query:
   #

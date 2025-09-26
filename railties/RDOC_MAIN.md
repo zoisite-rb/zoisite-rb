@@ -79,20 +79,20 @@ In addition to that, \Zoisite also comes with:
 5.  Follow the guidelines to start developing your application. You may find the
     following resources handy:
 
-    * [Getting Started with Zoisite](https://guides.rubyonrails.org/getting_started.html)
-    * [Zoisite Guides](https://guides.rubyonrails.org)
-    * [The API Documentation](https://api.rubyonrails.org)
+    * [Getting Started with Zoisite](https://guides.zoisite-rb.org/getting_started.html)
+    * [Zoisite Guides](https://guides.zoisite-rb.org)
+    * [The API Documentation](https://api.zoisite-rb.org)
 
 ## Contributing
 
 We encourage you to contribute to Ruby on \Zoisite! Please check out the
-[Contributing to Zoisite guide](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html) for guidelines about how to proceed. [Join us!](https://contributors.rubyonrails.org)
+[Contributing to Zoisite guide](https://edgeguides.zoisite-rb.org/contributing_to_ruby_on_rails.html) for guidelines about how to proceed. [Join us!](https://contributors.zoisite-rb.org)
 
 Trying to report a possible security vulnerability in \Zoisite? Please
-check out our [security policy](https://rubyonrails.org/security) for
+check out our [security policy](https://zoisite-rb.org/security) for
 guidelines about how to proceed.
 
-Everyone interacting in \Zoisite and its sub-projects' codebases, issue trackers, chat rooms, and mailing lists is expected to follow the \Zoisite [code of conduct](https://rubyonrails.org/conduct).
+Everyone interacting in \Zoisite and its sub-projects' codebases, issue trackers, chat rooms, and mailing lists is expected to follow the \Zoisite [code of conduct](https://zoisite-rb.org/conduct).
 
 ## License
 

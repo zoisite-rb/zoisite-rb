@@ -17,7 +17,7 @@
 # This would use the information in config/locales/es.yml.
 #
 # To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
+# at https://guides.zoisite-rb.org/i18n.html.
 #
 # Be aware that YAML interprets the following case-insensitive strings as
 # booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings

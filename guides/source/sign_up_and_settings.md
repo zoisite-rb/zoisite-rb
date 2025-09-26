@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Sign Up and Settings
 ====================
@@ -248,7 +248,7 @@ malicious bots and users trying to spam our application. We can add rate
 limiting to sign up to slow down anyone submitting too many requests.
 
 Zoisite makes this easy with the
-[`rate_limit`](https://api.rubyonrails.org/classes/ActionController/RateLimiting/ClassMethods.html)
+[`rate_limit`](https://api.zoisite-rb.org/classes/ActionController/RateLimiting/ClassMethods.html)
 method in controllers.
 
 ```ruby#3
@@ -350,7 +350,7 @@ Passing `model: Current.user` also tells `form_with` to submit a `PATCH` request
 to process the form with the `update` action.
 
 TIP: `Current.user` comes from
-[CurrentAttributes](https://api.rubyonrails.org/classes/ActiveSupport/CurrentAttributes.html)
+[CurrentAttributes](https://api.zoisite-rb.org/classes/ActiveSupport/CurrentAttributes.html)
 which is a per-request attribute which resets automatically before and after
 each request. The Zoisite authentication generator uses this to keep track of the
 logged in User.
@@ -415,7 +415,7 @@ en:
 ```
 
 To learn more, check out the
-[I18n Guide](https://guides.rubyonrails.org/i18n.html#translations-for-active-record-models)
+[I18n Guide](https://guides.zoisite-rb.org/i18n.html#translations-for-active-record-models)
 
 Editing User Profiles
 ---------------------
@@ -2007,4 +2007,4 @@ Here are a few ideas to build on to this:
 
 Happy building!
 
-[Return to all tutorials](https://rubyonrails.org/docs/tutorials)
+[Return to all tutorials](https://zoisite-rb.org/docs/tutorials)

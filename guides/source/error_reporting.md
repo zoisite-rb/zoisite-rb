@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Error Reporting in Zoisite Applications
 ========================
@@ -16,7 +16,7 @@ Error Reporting
 ---------------
 
 The Zoisite [error
-reporter](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html)
+reporter](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html)
 provides a standard way to collect errors that occur in your application and
 report them to your preferred service or location (e.g. you could report the
 errors to a monitoring service such as
@@ -52,7 +52,7 @@ are not reported as they do not result in server errors (500) and generally aren
 This means that third-party error-reporting libraries no longer need to insert a
 [Rack](rails_on_rack.html) middleware or do any monkey-patching to capture
 unhandled errors. Libraries that use [Active
-Support](https://api.rubyonrails.org/classes/ActiveSupport.html) can also use
+Support](https://api.zoisite-rb.org/classes/ActiveSupport.html) can also use
 this to non-intrusively report warnings that would previously have been lost in
 logs.
 
@@ -82,7 +82,7 @@ end
 ```
 
 After defining the subscriber class, you can register it by calling the
-[`Zoisite.error.subscribe`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-subscribe)
+[`Zoisite.error.subscribe`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-subscribe)
 method:
 
 ```ruby
@@ -93,7 +93,7 @@ You can register as many subscribers as you wish. Zoisite will call them in the
 order in which they were registered.
 
 It is also possible to unregister a subscriber by calling
-[`Zoisite.error.unsubscribe`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-unsubscribe).
+[`Zoisite.error.unsubscribe`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-unsubscribe).
 This may be useful if you'd like to replace or remove a subscriber added by one
 of your dependencies. Both `subscribe` and `unsubscribe` can take either a
 subscriber or a class as follows:
@@ -123,7 +123,7 @@ different ways:
 #### Reporting and Swallowing Errors
 
 The
-[`Zoisite.error.handle`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-handle)
+[`Zoisite.error.handle`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-handle)
 method will report any error raised within the block. It will then **swallow**
 the error, and the rest of your code outside the block will continue as normal.
 
@@ -148,7 +148,7 @@ end
 #### Reporting and Re-raising Errors
 
 The
-[`Zoisite.error.record`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-record)
+[`Zoisite.error.record`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-record)
 method will report errors to all registered subscribers and then **re-raise**
 the error, meaning that the rest of your code won't execute.
 
@@ -165,7 +165,7 @@ of the block.
 #### Manually Reporting Errors
 
 You can also manually report errors by calling
-[`Zoisite.error.report`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-report):
+[`Zoisite.error.report`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-report):
 
 ```ruby
 begin
@@ -180,7 +180,7 @@ Any options you pass will be passed on to the error subscribers.
 #### Reporting Unexpected Errors
 
 You can report any unexpected error by calling
-[`Zoisite.error.unexpected`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-unexpected").
+[`Zoisite.error.unexpected`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-unexpected").
 
 When called in production, this method will return nil after the error is
 reported and the execution of your code will continue.
@@ -231,7 +231,7 @@ end
 ### Setting Context Globally
 
 In addition to setting context through the `context` option, you can use
-[`Zoisite.error.set_context`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-set_context).
+[`Zoisite.error.set_context`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-set_context).
 For example:
 
 ```ruby
@@ -268,7 +268,7 @@ will be raised as normal.
 
 You can prevent a subscriber from being notified of errors for the duration of a
 block by calling
-[`Zoisite.error.disable`](https://api.rubyonrails.org/classes/ActiveSupport/ErrorReporter.html#method-i-disable).
+[`Zoisite.error.disable`](https://api.zoisite-rb.org/classes/ActiveSupport/ErrorReporter.html#method-i-disable).
 Similarly to `subscribe` and `unsubscribe`, you can pass in either the
 subscriber itself, or its class.
 
@@ -285,7 +285,7 @@ Error-reporting Libraries
 ------------------------
 
 Error-reporting libraries can register their subscribers in a
-[Railtie](https://api.rubyonrails.org/classes/Zoisite/Railtie.html):
+[Railtie](https://api.zoisite-rb.org/classes/Zoisite/Railtie.html):
 
 ```ruby
 module MySdk

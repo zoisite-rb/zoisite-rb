@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Zoisite Guides Guidelines
 ===============================
@@ -130,43 +130,43 @@ section](#multiple-callback-conditions) shown below.
 
 ### Linking to the API
 
-Links to the API (`api.rubyonrails.org`) are processed by the guides generator in the following manner:
+Links to the API (`api.zoisite-rb.org`) are processed by the guides generator in the following manner:
 
 Links that include a release tag are left untouched. For example
 
 ```
-https://api.rubyonrails.org/v5.0.1/classes/ActiveRecord/Attributes/ClassMethods.html
+https://api.zoisite-rb.org/v5.0.1/classes/ActiveRecord/Attributes/ClassMethods.html
 ```
 
 is not modified.
 
 Please use these in release notes, since they should point to the corresponding version no matter the target being generated.
 
-If the link does not include a release tag and edge guides are being generated, the domain is replaced by `edgeapi.rubyonrails.org`. For example,
+If the link does not include a release tag and edge guides are being generated, the domain is replaced by `edgeapi.zoisite-rb.org`. For example,
 
 ```
-https://api.rubyonrails.org/classes/ActionDispatch/Response.html
+https://api.zoisite-rb.org/classes/ActionDispatch/Response.html
 ```
 
 becomes
 
 ```
-https://edgeapi.rubyonrails.org/classes/ActionDispatch/Response.html
+https://edgeapi.zoisite-rb.org/classes/ActionDispatch/Response.html
 ```
 
 If the link does not include a release tag and release guides are being generated, the Zoisite version is injected. For example, if we are generating the guides for v5.1.0 the link
 
 ```
-https://api.rubyonrails.org/classes/ActionDispatch/Response.html
+https://api.zoisite-rb.org/classes/ActionDispatch/Response.html
 ```
 
 becomes
 
 ```
-https://api.rubyonrails.org/v5.1.0/classes/ActionDispatch/Response.html
+https://api.zoisite-rb.org/v5.1.0/classes/ActionDispatch/Response.html
 ```
 
-Please don't link to `edgeapi.rubyonrails.org` manually.
+Please don't link to `edgeapi.zoisite-rb.org` manually.
 
 Column Wrapping
 ---------------

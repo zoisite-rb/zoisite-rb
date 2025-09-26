@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Working with JavaScript in Zoisite
 ================================
@@ -358,4 +358,4 @@ security token as a default header yourself. To get the token, have a look at
 document.head.querySelector("meta[name=csrf-token]")?.content
 ```
 
-[`csrf_meta_tags`]: https://api.rubyonrails.org/classes/ActionView/Helpers/CsrfHelper.html#method-i-csrf_meta_tags
+[`csrf_meta_tags`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/CsrfHelper.html#method-i-csrf_meta_tags

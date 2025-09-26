@@ -16,9 +16,9 @@ module ActiveJob
   #
   # For testing and development Active Job has three built-in adapters:
   #
-  # * {Active Job Async}[https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters/AsyncAdapter.html]
-  # * {Active Job Inline}[https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters/InlineAdapter.html]
-  # * {Active Job Test}[https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters/TestAdapter.html]
+  # * {Active Job Async}[https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters/AsyncAdapter.html]
+  # * {Active Job Inline}[https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters/InlineAdapter.html]
+  # * {Active Job Test}[https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters/TestAdapter.html]
   #
   # === Backends Features
   #

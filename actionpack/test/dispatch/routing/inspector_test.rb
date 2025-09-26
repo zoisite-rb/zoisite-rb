@@ -379,7 +379,7 @@ module ActionDispatch
 
         assert_equal [
           "No routes were found for this grep pattern.",
-          "For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
@@ -391,7 +391,7 @@ module ActionDispatch
           "",
           "Please add some routes in config/routes.rb.",
           "",
-          "For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
@@ -432,7 +432,7 @@ module ActionDispatch
 
         assert_equal [
           "No routes were found for this controller.",
-          "For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
@@ -443,7 +443,7 @@ module ActionDispatch
 
         assert_equal [
           "No routes were found for this grep pattern.",
-          "For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
@@ -455,7 +455,7 @@ module ActionDispatch
           "",
           "Please add some routes in config/routes.rb.",
           "",
-          "For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html."
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html."
         ], output
       end
 
@@ -510,7 +510,7 @@ module ActionDispatch
         assert_equal [
           "Routes for application:",
           "No routes were found for this grep pattern.",
-          "For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html.",
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html.",
           "",
           "Routes for Blog::Engine:",
           "Prefix Verb URI Pattern     Controller#Action",
@@ -536,7 +536,7 @@ module ActionDispatch
         assert_equal [
           "Routes for application:",
           "No routes were found for this grep pattern.",
-          "For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html.",
+          "For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html.",
           "",
           "Routes for Blog::Engine:",
           "No routes were found for this grep pattern.",

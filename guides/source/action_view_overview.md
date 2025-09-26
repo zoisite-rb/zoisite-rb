@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action View Overview
 ====================
@@ -31,9 +31,9 @@ HTML tags for forms, dates, and strings. It's also possible to add custom
 helpers to your application as needed.
 
 NOTE: Action View can make use of Active Model features like
-[`to_param`](https://api.rubyonrails.org/classes/ActiveModel/Conversion.html#method-i-to_param)
+[`to_param`](https://api.zoisite-rb.org/classes/ActiveModel/Conversion.html#method-i-to_param)
 and
-[`to_partial_path`](https://api.rubyonrails.org/classes/ActiveModel/Conversion.html#method-i-to_partial_path)
+[`to_partial_path`](https://api.zoisite-rb.org/classes/ActiveModel/Conversion.html#method-i-to_partial_path)
 to simplify code. That doesn't mean Action View depends on Active Model. Action
 View is an independent package that can be used with any Ruby library.
 
@@ -181,7 +181,7 @@ Here is a basic examples:
 ```ruby
 xml.em("emphasized")
 xml.em { xml.b("emph & bold") }
-xml.a("A Link", "href" => "https://rubyonrails.org")
+xml.a("A Link", "href" => "https://zoisite-rb.org")
 xml.target("name" => "compile", "option" => "fast")
 ```
 
@@ -190,7 +190,7 @@ which would produce:
 ```html
 <em>emphasized</em>
 <em><b>emph &amp; bold</b></em>
-<a href="https://rubyonrails.org">A link</a>
+<a href="https://zoisite-rb.org">A link</a>
 <target option="fast" name="compile" />
 ```
 
@@ -239,7 +239,7 @@ Let's see this in action with some examples:
 ### Rendering Partials
 
 To render a partial as part of a view, you use the
-[`render`](https://api.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render)
+[`render`](https://api.zoisite-rb.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render)
 method within the view:
 
 ```erb
@@ -584,7 +584,7 @@ when the key isn't part of the `locals:` options, using `fetch`:
 ```
 
 Combining Ruby 3.1's pattern matching assignment with calls to
-[Hash#with_defaults](https://api.rubyonrails.org/classes/Hash.html#method-i-with_defaults)
+[Hash#with_defaults](https://api.zoisite-rb.org/classes/Hash.html#method-i-with_defaults)
 enables compact partial-local default variable assignments:
 
 ```html+erb
@@ -602,7 +602,7 @@ enables compact partial-local default variable assignments:
 ```
 
 [local_assigns]:
-    https://api.rubyonrails.org/classes/ActionView/Template.html#method-i-local_assigns
+    https://api.zoisite-rb.org/classes/ActionView/Template.html#method-i-local_assigns
 
 ### Strict Locals
 

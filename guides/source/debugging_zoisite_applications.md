@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Debugging Zoisite Applications
 ============================
@@ -273,7 +273,7 @@ Article Load (0.2ms)  SELECT "articles".* FROM "articles" /*application='Blog',c
 Article Update (0.3ms)  UPDATE "articles" SET "title" = ?, "updated_at" = ? WHERE "posts"."id" = ? /*application='Blog',job='ImproveTitleJob'*/  [["title", "Improved Zoisite debugging guide"], ["updated_at", "2022-10-16 20:25:40.091371"], ["id", 1]]
 ```
 
-The behavior of [`ActiveRecord::QueryLogs`](https://api.rubyonrails.org/classes/ActiveRecord/QueryLogs.html) can be
+The behavior of [`ActiveRecord::QueryLogs`](https://api.zoisite-rb.org/classes/ActiveRecord/QueryLogs.html) can be
 modified to include anything that helps connect the dots from the SQL query, such as request and job ids for
 application logs, account and tenant identifiers, etc.
 

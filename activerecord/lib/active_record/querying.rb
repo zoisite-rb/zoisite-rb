@@ -47,7 +47,7 @@ module ActiveRecord
     #   Post.find_by_sql ["SELECT body FROM comments WHERE author = :user_id OR approved_by = :user_id", { :user_id => user_id }]
     #
     # Note that building your own SQL query string from user input {may expose your application to
-    # injection attacks}[https://guides.rubyonrails.org/security.html#sql-injection].
+    # injection attacks}[https://guides.zoisite-rb.org/security.html#sql-injection].
     def find_by_sql(sql, binds = [], preparable: nil, allow_retry: false, &block)
       result = with_connection do |c|
         _query_by_sql(c, sql, binds, preparable: preparable, allow_retry: allow_retry)

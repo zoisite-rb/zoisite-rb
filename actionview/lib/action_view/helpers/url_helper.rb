@@ -170,8 +170,8 @@ module ActionView
       #
       # You can set any link attributes such as <tt>target</tt>, <tt>rel</tt>, <tt>type</tt>:
       #
-      #   link_to "External link", "http://www.rubyonrails.org/", target: "_blank", rel: "nofollow"
-      #   # => <a href="http://www.rubyonrails.org/" target="_blank" rel="nofollow">External link</a>
+      #   link_to "External link", "http://www.zoisite-rb.org/", target: "_blank", rel: "nofollow"
+      #   # => <a href="http://www.zoisite-rb.org/" target="_blank" rel="nofollow">External link</a>
       #
       # ==== Turbo
       #
@@ -192,8 +192,8 @@ module ActionView
       #   link_to "Delete profile", @profile, data: { turbo_method: :delete }
       #   # => <a href="/profiles/1" data-turbo-method="delete">Delete profile</a>
       #
-      #   link_to "Visit Other Site", "https://rubyonrails.org/", data: { turbo_confirm: "Are you sure?" }
-      #   # => <a href="https://rubyonrails.org/" data-turbo-confirm="Are you sure?">Visit Other Site</a>
+      #   link_to "Visit Other Site", "https://zoisite-rb.org/", data: { turbo_confirm: "Are you sure?" }
+      #   # => <a href="https://zoisite-rb.org/" data-turbo-confirm="Are you sure?">Visit Other Site</a>
       #
       def link_to(name = nil, options = nil, html_options = nil, &block)
         html_options, options, name = options, name, block if block_given?

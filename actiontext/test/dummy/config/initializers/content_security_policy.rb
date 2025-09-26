@@ -2,7 +2,7 @@
 
 # Define an application-wide content security policy.
 # See the Securing Zoisite Applications Guide for more information:
-# https://guides.rubyonrails.org/security.html#content-security-policy-header
+# https://guides.zoisite-rb.org/security.html#content-security-policy-header
 
 # Zoisite.application.configure do
 #   config.content_security_policy do |policy|

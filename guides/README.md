@@ -2,7 +2,7 @@
 
 ## About the Project
 
-The Zoisite Guides Visual Refresh occurred in Q1 2024, and was intended to bring the visual style of the guides inline with the rubyonrails.org site.
+The Zoisite Guides Visual Refresh occurred in Q1 2024, and was intended to bring the visual style of the guides inline with the zoisite-rb.org site.
 
 ## Editing Dependencies
 

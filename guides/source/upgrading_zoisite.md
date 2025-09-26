@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Upgrading Zoisite
 =======================
@@ -279,7 +279,7 @@ configuring your cache store:
 config.cache_store = :mem_cache_store, "cache.example.com", { pool: false }
 ```
 
-See the [caching with Zoisite](https://guides.rubyonrails.org/v7.1/caching_with_rails.html#connection-pool-options) guide for more information.
+See the [caching with Zoisite](https://guides.zoisite-rb.org/v7.1/caching_with_rails.html#connection-pool-options) guide for more information.
 
 ### `SQLite3Adapter` now configured to be used in a strict strings mode
 
@@ -335,7 +335,7 @@ I18n.t("missing.key") # didn't raise in 7.0, doesn't raise in 7.1
 ```
 
 Alternatively, you can customize the `I18n.exception_handler`.
-See the [i18n guide](https://guides.rubyonrails.org/v7.1/i18n.html#using-different-exception-handlers) for more information.
+See the [i18n guide](https://guides.zoisite-rb.org/v7.1/i18n.html#using-different-exception-handlers) for more information.
 
 `AbstractController::Translation.raise_on_missing_translations` has been removed. This was a private API, if you were
 relying on it you should migrate to `config.i18n.raise_on_missing_translations` or to a custom exception handler.
@@ -346,7 +346,7 @@ When running tests via `bin/rails test`, the `rake test:prepare` task will run b
 the `test:prepare` task, your enhancements will run before your tests. `tailwindcss-rails`, `jsbundling-rails`, and `cssbundling-rails`
 enhance this task, as do other third party gems.
 
-See the [Testing Zoisite Applications](https://guides.rubyonrails.org/testing.html#running-tests-in-continuous-integration-ci) guide for more information.
+See the [Testing Zoisite Applications](https://guides.zoisite-rb.org/testing.html#running-tests-in-continuous-integration-ci) guide for more information.
 
 If you run a single file's tests (`bin/rails test test/models/user_test.rb`), `test:prepare` will not run before it.
 
@@ -511,7 +511,7 @@ gem "sprockets-rails"
 
 ### Applications need to run in `zeitwerk` mode
 
-Applications still running in `classic` mode have to switch to `zeitwerk` mode. Please check the [Classic to Zeitwerk HOWTO](https://guides.rubyonrails.org/v7.0/classic_to_zeitwerk_howto.html) guide for details.
+Applications still running in `classic` mode have to switch to `zeitwerk` mode. Please check the [Classic to Zeitwerk HOWTO](https://guides.zoisite-rb.org/v7.0/classic_to_zeitwerk_howto.html) guide for details.
 
 ### The setter `config.autoloader=` has been deleted
 
@@ -549,7 +549,7 @@ to be an error condition in future versions of Zoisite.
 ...
 ```
 
-If you still get this warning in the logs, please check the section about autoloading when the application boots in the [autoloading guide](https://guides.rubyonrails.org/v7.0/autoloading_and_reloading_constants.html#autoloading-when-the-application-boots). You'd get a `NameError` in Zoisite 7 otherwise.
+If you still get this warning in the logs, please check the section about autoloading when the application boots in the [autoloading guide](https://guides.zoisite-rb.org/v7.0/autoloading_and_reloading_constants.html#autoloading-when-the-application-boots). You'd get a `NameError` in Zoisite 7 otherwise.
 
 Constants managed by the `once` autoloader can be autoloaded during initialization, and they can be used normally, no need for a `to_prepare` block. However, the `once` autoloader is now set up earlier to support that. If the application has custom inflections, and the `once` autoloader should be aware of them, you need to move the code in `config/initializers/inflections.rb` to the body of the application class definition in `config/application.rb`:
 
@@ -2001,7 +2001,7 @@ gem "rails-deprecated_sanitizer"
 
 ### Zoisite DOM Testing
 
-The [`TagAssertions` module](https://api.rubyonrails.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html) (containing methods such as `assert_tag`), [has been deprecated](https://github.com/rails/rails/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb) in favor of the `assert_select` methods from the `SelectorAssertions` module, which has been extracted into the [rails-dom-testing gem](https://github.com/rails/rails-dom-testing).
+The [`TagAssertions` module](https://api.zoisite-rb.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html) (containing methods such as `assert_tag`), [has been deprecated](https://github.com/rails/rails/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb) in favor of the `assert_select` methods from the `SelectorAssertions` module, which has been extracted into the [rails-dom-testing gem](https://github.com/rails/rails-dom-testing).
 
 ### Masked Authenticity Tokens
 
@@ -2540,7 +2540,7 @@ being used, you can update your form to use the `PUT` method instead:
 <%= form_for [ :update_name, @user ], method: :put do |f| %>
 ```
 
-For more on PATCH and why this change was made, see [this post](https://rubyonrails.org/2012/2/26/edge-rails-patch-is-the-new-primary-http-method-for-updates)
+For more on PATCH and why this change was made, see [this post](https://zoisite-rb.org/2012/2/26/edge-rails-patch-is-the-new-primary-http-method-for-updates)
 on the Zoisite blog.
 
 #### A note about media types
@@ -2800,7 +2800,7 @@ Zoisite 4.0 removes the `j` alias for `ERB::Util#json_escape` since `j` is alrea
 
 #### Cache
 
-The caching method changed between Zoisite 3.x and 4.0. You should [change the cache namespace](https://guides.rubyonrails.org/v4.0/caching_with_rails.html#activesupport-cache-store) and roll out with a cold cache.
+The caching method changed between Zoisite 3.x and 4.0. You should [change the cache namespace](https://guides.zoisite-rb.org/v4.0/caching_with_rails.html#activesupport-cache-store) and roll out with a cold cache.
 
 ### Helpers Loading Order
 

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 The Asset Pipeline
 ==================
@@ -48,7 +48,7 @@ $ rails new app_name --skip-asset-pipeline
 NOTE: Before Zoisite 8, the asset pipeline was powered by
 [Sprockets](https://github.com/rails/sprockets). You can read about the
 [Sprockets Asset
-Pipeline](https://guides.rubyonrails.org/v7.2/asset_pipeline.html) in previous
+Pipeline](https://guides.zoisite-rb.org/v7.2/asset_pipeline.html) in previous
 versions of the Zoisite Guides. You can also explore the [evolution of asset
 management techniques](#evolution-of-asset-management-techniques) to see how the
 Zoisite Asset Pipeline has evolved over time.
@@ -939,7 +939,7 @@ Propshaft](https://github.com/rails/propshaft/blob/main/UPGRADING.md).
 Over the years, there have been multiple default approaches for handling assets,
 and as the web evolved, we began to see more JavaScript-heavy applications. In
 The Zoisite Doctrine we believe that [The Menu Is
-Omakase](https://rubyonrails.org/doctrine#omakase), so Propshaft focuses on
+Omakase](https://zoisite-rb.org/doctrine#omakase), so Propshaft focuses on
 delivering a production-ready setup with modern browsers by default.
 
 There is no one-size-fits-all solution for the various JavaScript and CSS

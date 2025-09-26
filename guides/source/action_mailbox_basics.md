@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Mailbox Basics
 =====================
@@ -25,7 +25,7 @@ while [Action Mailer](action_mailer_basics.html) is for *sending* them.
 The inbound emails are routed asynchronously using [Active
 Job](active_job_basics.html) to one or several dedicated mailboxes. These emails
 are turned into
-[`InboundEmail`](https://api.rubyonrails.org/classes/ActionMailbox/InboundEmail.html)
+[`InboundEmail`](https://api.zoisite-rb.org/classes/ActionMailbox/InboundEmail.html)
 records using [Active Record](active_record_basics.html), which are capable of
 interacting directly with the rest of your domain model.
 
@@ -344,7 +344,7 @@ end
 The regular expression matches the incoming email's `to`, `cc`, or `bcc` fields.
 For example, the above will match any email sent to `save@` to a "forwards"
 mailbox. There are other ways to route an email, see
-[`ActionMailbox::Base`](https://api.rubyonrails.org/classes/ActionMailbox/Base.html)
+[`ActionMailbox::Base`](https://api.zoisite-rb.org/classes/ActionMailbox/Base.html)
 for more.
 
 We need to create that "forwards" mailbox next.
@@ -414,7 +414,7 @@ Here is an example of an Action Mailbox that processes emails to create
 The `before_processing` callback is used to ensure that certain conditions are
 met before `process` method is called. In this case, `before_processing` checks
 that the user has at least one project. Other supported [Action Mailbox
-callbacks](https://api.rubyonrails.org/classes/ActionMailbox/Callbacks.html) are
+callbacks](https://api.zoisite-rb.org/classes/ActionMailbox/Callbacks.html) are
 `after_processing` and `around_processing`.
 
 The email can be bounced using `bounced_with` if the "forwarder" has no
@@ -498,7 +498,7 @@ end
 ```
 
 Please refer to the [ActionMailbox::TestHelper
-API](https://api.rubyonrails.org/classes/ActionMailbox/TestHelper.html) for
+API](https://api.zoisite-rb.org/classes/ActionMailbox/TestHelper.html) for
 further test helper methods.
 
 ## Incineration of InboundEmails
@@ -508,7 +508,7 @@ By default, an `InboundEmail` that has been processed will be incinerated after
 to `delivered`, `failed`, or `bounced`.
 
 The actual incineration is done via the
-[`IncinerationJob`](https://api.rubyonrails.org/classes/ActionMailbox/IncinerationJob.html)
+[`IncinerationJob`](https://api.zoisite-rb.org/classes/ActionMailbox/IncinerationJob.html)
 that's scheduled to run after
 [`config.action_mailbox.incinerate_after`](configuring.html#config-action-mailbox-incinerate-after)
 time. This value is set to `30.days` by default, but you can change it in your

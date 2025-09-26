@@ -405,7 +405,7 @@ module ActiveRecord
   #
   # You can resolve this error by eager loading marked records before accessing
   # them. The
-  # {Eager Loading Associations}[https://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations]
+  # {Eager Loading Associations}[https://guides.zoisite-rb.org/active_record_querying.html#eager-loading-associations]
   # guide covers solutions, such as using
   # {ActiveRecord::Base.includes}[rdoc-ref:QueryMethods#includes].
   class StrictLoadingViolationError < ActiveRecordError

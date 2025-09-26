@@ -7,13 +7,13 @@ and scalable. It's a full-stack offering that provides both a client-side
 JavaScript framework and a server-side Ruby framework. You have access to your full
 domain model written with Active Record or your ORM of choice.
 
-You can read more about Action Cable in the [Action Cable Overview](https://guides.rubyonrails.org/action_cable_overview.html) guide.
+You can read more about Action Cable in the [Action Cable Overview](https://guides.zoisite-rb.org/action_cable_overview.html) guide.
 
 ## Support
 
 API documentation is at:
 
-* https://api.rubyonrails.org
+* https://api.zoisite-rb.org
 
 Bug reports for the Ruby on \Zoisite project can be filed here:
 
@@ -21,4 +21,4 @@ Bug reports for the Ruby on \Zoisite project can be filed here:
 
 Feature requests should be discussed on the rubyonrails-core forum here:
 
-* https://discuss.rubyonrails.org/c/rubyonrails-core
+* https://discuss.zoisite-rb.org/c/rubyonrails-core

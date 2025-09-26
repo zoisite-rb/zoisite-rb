@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Migrations
 ========================
@@ -313,13 +313,13 @@ end
 ```
 
 [`add_column`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column
 [`add_index`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index
 [`add_reference`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference
 [`remove_column`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_column
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_column
 
 ### Other Generators that Create Migrations
 
@@ -534,7 +534,7 @@ end
 ```
 
 [`create_table`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_table
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_table
 
 #### Comments
 
@@ -608,7 +608,7 @@ end
 ```
 
 [`create_join_table`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_join_table
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_join_table
 
 ### Changing Tables
 
@@ -631,7 +631,7 @@ string column called `part_number` and add an index on it. Finally, it renames
 the `upccode` column to `upc_code`.
 
 [`change_table`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table
 
 ### Changing Columns
 
@@ -679,11 +679,11 @@ NOTE: You could also write the above `change_column_default` migration as
 example, this would make your migration irreversible.
 
 [`change_column`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column
 [`change_column_default`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_default
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_default
 [`change_column_null`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_null
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_null
 
 ### Column Modifiers
 
@@ -745,7 +745,7 @@ add_reference :users, :role, foreign_key: true
 ```
 
 For more `add_reference` options, visit the [API
-documentation](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
+documentation](https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
 
 References can also be removed:
 
@@ -874,13 +874,13 @@ And for the object yielded by `change_table`, see
 [`ActiveRecord::ConnectionAdapters::Table`][].
 
 [`execute`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/DatabaseStatements.html#method-i-execute
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/DatabaseStatements.html#method-i-execute
 [`ActiveRecord::ConnectionAdapters::SchemaStatements`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html
 [`ActiveRecord::ConnectionAdapters::TableDefinition`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html
 [`ActiveRecord::ConnectionAdapters::Table`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/Table.html
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/Table.html
 
 ### Using the `change` Method
 
@@ -922,37 +922,37 @@ If you need to use any other methods, you should use `reversible` or write the
 `up` and `down` methods instead of using the `change` method.
 
 [`add_check_constraint`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_check_constraint
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_check_constraint
 [`add_foreign_key`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key
 [`add_timestamps`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_timestamps
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_timestamps
 [`change_column_comment`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_comment
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_comment
 [`change_table_comment`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table_comment
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table_comment
 [`drop_join_table`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_join_table
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_join_table
 [`drop_table`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_table
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_table
 [`remove_check_constraint`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_check_constraint
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_check_constraint
 [`remove_foreign_key`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key
 [`remove_index`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_index
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_index
 [`remove_reference`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_reference
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_reference
 [`remove_timestamps`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_timestamps
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_timestamps
 [`rename_column`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_column
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_column
 [`remove_columns`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_columns
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_columns
 [`rename_index`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_index
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_index
 [`rename_table`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_table
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_table
 
 ### Using `reversible`
 
@@ -1034,7 +1034,7 @@ be run after the `users.address` column is removed and before the `distributors`
 table is dropped.
 
 [`reversible`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Migration.html#method-i-reversible
+    https://api.zoisite-rb.org/classes/ActiveRecord/Migration.html#method-i-reversible
 
 ### Using the `up`/`down` Methods
 
@@ -1169,7 +1169,7 @@ would have involved a few more steps:
 This is all taken care of by `revert`.
 
 [`revert`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Migration.html#method-i-revert
+    https://api.zoisite-rb.org/classes/ActiveRecord/Migration.html#method-i-revert
 
 Running Migrations
 ------------------
@@ -1416,11 +1416,11 @@ If you want Active Record to not output anything, then running `bin/rails
 db:migrate VERBOSE=false` will suppress all output.
 
 [`say`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Migration.html#method-i-say
+    https://api.zoisite-rb.org/classes/ActiveRecord/Migration.html#method-i-say
 [`say_with_time`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Migration.html#method-i-say_with_time
+    https://api.zoisite-rb.org/classes/ActiveRecord/Migration.html#method-i-say_with_time
 [`suppress_messages`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Migration.html#method-i-suppress_messages
+    https://api.zoisite-rb.org/classes/ActiveRecord/Migration.html#method-i-suppress_messages
 
 ### Zoisite Migration Version Control
 

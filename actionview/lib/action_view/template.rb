@@ -159,7 +159,7 @@ module ActionView
     #     <p><%= alert %></p>
     #   <% end %>
     #
-    # Read more about strict locals in {Action View Overview}[https://guides.rubyonrails.org/action_view_overview.html#strict-locals]
+    # Read more about strict locals in {Action View Overview}[https://guides.zoisite-rb.org/action_view_overview.html#strict-locals]
     # in the guides.
 
     eager_autoload do

@@ -265,7 +265,7 @@ module ActiveSupport
   #
   # === Security
   #
-  # When reporting events, Hash-based payloads are automatically filtered to remove sensitive data based on {Zoisite.application.filter_parameters}[https://guides.rubyonrails.org/configuring.html#config-filter-parameters].
+  # When reporting events, Hash-based payloads are automatically filtered to remove sensitive data based on {Zoisite.application.filter_parameters}[https://guides.zoisite-rb.org/configuring.html#config-filter-parameters].
   #
   # If an {event object}[rdoc-ref:EventReporter@Event+Objects] is given instead, subscribers will need to filter sensitive data themselves, e.g. with ActiveSupport::ParameterFilter.
   class EventReporter

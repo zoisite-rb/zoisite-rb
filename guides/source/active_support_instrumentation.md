@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Support Instrumentation
 ==============================
@@ -80,9 +80,9 @@ ActiveSupport::Notifications.subscribe(/action_controller/) do |event|
 end
 ```
 
-[`ActiveSupport::Notifications::Event`]: https://api.rubyonrails.org/classes/ActiveSupport/Notifications/Event.html
-[`ActiveSupport::Notifications.monotonic_subscribe`]: https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html#method-c-monotonic_subscribe
-[`ActiveSupport::Notifications.subscribe`]: https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html#method-c-subscribe
+[`ActiveSupport::Notifications::Event`]: https://api.zoisite-rb.org/classes/ActiveSupport/Notifications/Event.html
+[`ActiveSupport::Notifications.monotonic_subscribe`]: https://api.zoisite-rb.org/classes/ActiveSupport/Notifications.html#method-c-monotonic_subscribe
+[`ActiveSupport::Notifications.subscribe`]: https://api.zoisite-rb.org/classes/ActiveSupport/Notifications.html#method-c-subscribe
 
 Zoisite Framework Hooks
 ---------------------
@@ -361,8 +361,8 @@ The `:cache_hits` key is only included if the collection is rendered with `cache
 }
 ```
 
-[`ActionDispatch::Request`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html
-[`ActionDispatch::Response`]: https://api.rubyonrails.org/classes/ActionDispatch/Response.html
+[`ActionDispatch::Request`]: https://api.zoisite-rb.org/classes/ActionDispatch/Request.html
+[`ActionDispatch::Response`]: https://api.zoisite-rb.org/classes/ActionDispatch/Response.html
 
 ### Active Record
 
@@ -750,12 +750,12 @@ This event is only emitted when using [`MemoryStore`][ActiveSupport::Cache::Memo
 }
 ```
 
-[ActiveSupport::Cache::FileStore]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/FileStore.html
-[ActiveSupport::Cache::MemCacheStore]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/MemCacheStore.html
-[ActiveSupport::Cache::MemoryStore]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/MemoryStore.html
-[ActiveSupport::Cache::RedisCacheStore]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/RedisCacheStore.html
-[ActiveSupport::Cache::Store#fetch]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch
-[ActiveSupport::Cache::Store#fetch_multi]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch_multi
+[ActiveSupport::Cache::FileStore]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/FileStore.html
+[ActiveSupport::Cache::MemCacheStore]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/MemCacheStore.html
+[ActiveSupport::Cache::MemoryStore]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/MemoryStore.html
+[ActiveSupport::Cache::RedisCacheStore]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/RedisCacheStore.html
+[ActiveSupport::Cache::Store#fetch]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch
+[ActiveSupport::Cache::Store#fetch_multi]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch_multi
 
 ### Active Support: Messages
 
@@ -987,7 +987,7 @@ This event is only emitted when using the Google Cloud Storage service.
 }
 ```
 
-[`ActionMailbox::Base`]: https://api.rubyonrails.org/classes/ActionMailbox/Base.html
+[`ActionMailbox::Base`]: https://api.zoisite-rb.org/classes/ActionMailbox/Base.html
 
 ### Railties
 
@@ -1058,4 +1058,4 @@ end
 You should follow Zoisite conventions when defining your own events. The format is: `event.library`.
 If your application is sending Tweets, you should create an event named `tweet.twitter`.
 
-[`ActiveSupport::Notifications.instrument`]: https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html#method-c-instrument
+[`ActiveSupport::Notifications.instrument`]: https://api.zoisite-rb.org/classes/ActiveSupport/Notifications.html#method-c-instrument

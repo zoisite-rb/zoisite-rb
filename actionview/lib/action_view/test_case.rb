@@ -10,7 +10,7 @@ require "rails-dom-testing"
 module ActionView
   # = Action View Test Case
   #
-  # Read more about <tt>ActionView::TestCase</tt> in {Testing Zoisite Applications}[https://guides.rubyonrails.org/testing.html#testing-view-partials]
+  # Read more about <tt>ActionView::TestCase</tt> in {Testing Zoisite Applications}[https://guides.zoisite-rb.org/testing.html#testing-view-partials]
   # in the guides.
   class TestCase < ActiveSupport::TestCase
     class TestController < ActionController::Base

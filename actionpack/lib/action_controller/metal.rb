@@ -172,7 +172,7 @@ module ActionController
     ##
     # The ActionDispatch::Request::Session instance for the current request.
     # See further details in the
-    # [Active Controller Session guide](https://guides.rubyonrails.org/action_controller_overview.html#session).
+    # [Active Controller Session guide](https://guides.zoisite-rb.org/action_controller_overview.html#session).
     delegate :session, to: "@_request"
 
     ##
@@ -305,7 +305,7 @@ module ActionController
     #     end
     #
     # Read more about [Zoisite middleware stack]
-    # (https://guides.rubyonrails.org/rails_on_rack.html#action-dispatcher-middleware-stack)
+    # (https://guides.zoisite-rb.org/rails_on_rack.html#action-dispatcher-middleware-stack)
     # in the guides.
     def self.middleware
       middleware_stack

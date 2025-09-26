@@ -6,9 +6,9 @@ about: Report an issue with Zoisite you've discovered
 ### Steps to reproduce
 
 <!-- (Guidelines for creating a bug report are [available
-here](https://edgeguides.rubyonzoisite.org/contributing_to_ruby_on_zoisite.html#creating-a-bug-report)) -->
+here](https://edgeguides.zoisite-rb.org/contributing_to_ruby_on_zoisite.html#creating-a-bug-report)) -->
 
-<!-- Paste your executable test case created from one of the scripts found [here](https://edgeguides.rubyonzoisite.org/contributing_to_ruby_on_zoisite.html#create-an-executable-test-case) below: -->
+<!-- Paste your executable test case created from one of the scripts found [here](https://edgeguides.zoisite-rb.org/contributing_to_ruby_on_zoisite.html#create-an-executable-test-case) below: -->
 ```ruby
 # Your reproduction script goes here
 ```

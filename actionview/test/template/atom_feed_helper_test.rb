@@ -118,12 +118,12 @@ class ScrollsController < ActionController::Base
         end
   EOT
   FEEDS["feed_with_overridden_ids"] = <<-EOT
-        atom_feed({:id => 'tag:test.rubyonrails.org,2008:test/'}) do |feed|
+        atom_feed({:id => 'tag:test.zoisite-rb.org,2008:test/'}) do |feed|
           feed.title("My great blog!")
           feed.updated(@scrolls.first.created_at)
 
           @scrolls.each do |scroll|
-            feed.entry(scroll, :id => "tag:test.rubyonrails.org,2008:"+scroll.id.to_s) do |entry|
+            feed.entry(scroll, :id => "tag:test.zoisite-rb.org,2008:"+scroll.id.to_s) do |entry|
               entry.title(scroll.title)
               entry.content(scroll.body, :type => 'html')
               entry.tag!('app:edited', Time.now)
@@ -311,9 +311,9 @@ class AtomFeedTest < ActionController::TestCase
   def test_feed_should_allow_overriding_ids
     with_restful_routing(:scrolls) do
       get :index, params: { id: "feed_with_overridden_ids" }
-      assert_select "id", text: "tag:test.rubyonrails.org,2008:test/"
-      assert_select "entry id", text: "tag:test.rubyonrails.org,2008:1"
-      assert_select "entry id", text: "tag:test.rubyonrails.org,2008:2"
+      assert_select "id", text: "tag:test.zoisite-rb.org,2008:test/"
+      assert_select "entry id", text: "tag:test.zoisite-rb.org,2008:1"
+      assert_select "entry id", text: "tag:test.zoisite-rb.org,2008:2"
     end
   end
 

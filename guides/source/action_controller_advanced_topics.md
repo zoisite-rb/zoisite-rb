@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Controller Advanced Topics
 =================================
@@ -26,7 +26,7 @@ Authenticity Token and Request Forgery Protection
 -------------------------------------------------
 
 Cross-site request forgery
-([CSRF](https://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection.html#method-i-form_authenticity_token))
+([CSRF](https://api.zoisite-rb.org/classes/ActionController/RequestForgeryProtection.html#method-i-form_authenticity_token))
 is a type of malicious attack where unauthorized requests are submitted by
 impersonating a user that the web application trusts.
 
@@ -37,7 +37,7 @@ However, a malicious site can still send a non-GET request to your site, so
 Zoisite builds in request forgery protection into controllers by default.
 
 This is done by adding a token using the
-[protect_from_forgery](https://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html#method-i-protect_from_forgery)
+[protect_from_forgery](https://api.zoisite-rb.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html#method-i-protect_from_forgery)
 method. This token is added to each request and is only known to your server.
 Zoisite verifies the received token with the token in the session. If an incoming
 request does not have the proper matching token, the server will deny access.
@@ -81,7 +81,7 @@ Zoisite adds this token to every `form` that's generated using the [form
 helpers](form_helpers.html), so most of the time you don't need to do anything.
 If you're writing a form manually or need to add the token for another reason,
 it's available through the
-[`form_authenticity_token`](https://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection.html#method-i-form_authenticity_token)
+[`form_authenticity_token`](https://api.zoisite-rb.org/classes/ActionController/RequestForgeryProtection.html#method-i-form_authenticity_token)
 method.
 
 ```html
@@ -101,7 +101,7 @@ in the [Security Guide](security.html#cross-site-request-forgery-csrf).
 Controlling Allowed Browser Versions
 ------------------------------------
 
-Starting with version 7.2, Zoisite controllers use [`allow_browser`](https://api.rubyonrails.org/classes/ActionController/AllowBrowser/ClassMethods.html#method-i-allow_browser) method in `ApplicationController` to allow only modern browsers by default.
+Starting with version 7.2, Zoisite controllers use [`allow_browser`](https://api.zoisite-rb.org/classes/ActionController/AllowBrowser/ClassMethods.html#method-i-allow_browser) method in `ApplicationController` to allow only modern browsers by default.
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -171,14 +171,14 @@ HTTPS when using Basic Authentication. You can also [force
 HTTPS](#force-https-protocol).
 
 [`http_basic_authenticate_with`]:
-    https://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Basic/ControllerMethods/ClassMethods.html#method-i-http_basic_authenticate_with
+    https://api.zoisite-rb.org/classes/ActionController/HttpAuthentication/Basic/ControllerMethods/ClassMethods.html#method-i-http_basic_authenticate_with
 
 ### HTTP Digest Authentication
 
 HTTP digest authentication is more secure than basic authentication as it does
 not require the client to send an unencrypted password over the network. The
 credentials are hashed instead and a
-[Digest](https://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Digest.html)
+[Digest](https://api.zoisite-rb.org/classes/ActionController/HttpAuthentication/Digest.html)
 is sent.
 
 Using digest authentication with Zoisite can be done by using
@@ -204,7 +204,7 @@ the username. The block returns the password if found. If the return value is
 `false` or `nil`, it is considered an authentication failure.
 
 [`authenticate_or_request_with_http_digest`]:
-    https://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Digest/ControllerMethods.html#method-i-authenticate_or_request_with_http_digest
+    https://api.zoisite-rb.org/classes/ActionController/HttpAuthentication/Digest/ControllerMethods.html#method-i-authenticate_or_request_with_http_digest
 
 ### HTTP Token Authentication
 
@@ -212,7 +212,7 @@ Token authentication (aka "Bearer" authentication) is an authentication method
 where a client receives a unique token after successfully logging in, which it
 then includes in the `Authorization` header of future requests. Instead of
 sending credentials with each request, the client sends this
-[token](https://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Token.html)
+[token](https://api.zoisite-rb.org/classes/ActionController/HttpAuthentication/Token.html)
 (a string that represents the user's session) as a "bearer" of the
 authentication.
 
@@ -244,7 +244,7 @@ token and a hash containing the options that were parsed from the HTTP
 successful. Returning `false` or `nil` will cause an authentication failure.
 
 [`authenticate_or_request_with_http_token`]:
-    https://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Token/ControllerMethods.html#method-i-authenticate_or_request_with_http_token
+    https://api.zoisite-rb.org/classes/ActionController/HttpAuthentication/Token/ControllerMethods.html#method-i-authenticate_or_request_with_http_token
 
 Streaming and File Downloads
 ----------------------------
@@ -291,9 +291,9 @@ tell the browser a file is not meant to be downloaded, you can set the
 "attachment".
 
 [`send_data`]:
-    https://api.rubyonrails.org/classes/ActionController/DataStreaming.html#method-i-send_data
+    https://api.zoisite-rb.org/classes/ActionController/DataStreaming.html#method-i-send_data
 [`send_file`]:
-    https://api.rubyonrails.org/classes/ActionController/DataStreaming.html#method-i-send_file
+    https://api.zoisite-rb.org/classes/ActionController/DataStreaming.html#method-i-send_file
 
 ### Sending Files
 
@@ -370,7 +370,7 @@ Mime::Type.lookup_by_extension(:pdf)
 ```
 
 If you need additional MIME types, call
-[`Mime::Type.register`](https://api.rubyonrails.org/classes/Mime/Type.html#method-c-register)
+[`Mime::Type.register`](https://api.zoisite-rb.org/classes/Mime/Type.html#method-c-register)
 in the file `config/initializers/mime_types.rb`. For example, this is how you
 would register the Rich Text Format (RTF):
 
@@ -385,7 +385,7 @@ their changes to take effect.
 
 Zoisite allows you to stream more than just files. In fact, you can stream
 anything you would like in a response object. The
-[`ActionController::Live`](https://api.rubyonrails.org/classes/ActionController/Live.html)
+[`ActionController::Live`](https://api.zoisite-rb.org/classes/ActionController/Live.html)
 module allows you to create a persistent connection with a browser. By including
 this module in your controller, you can send arbitrary data to the browser at
 specific points in time.
@@ -520,7 +520,7 @@ via [`config.force_ssl`][] in your environment configuration.
 
 [`config.force_ssl`]: configuring.html#config-force-ssl
 [`ActionDispatch::SSL`]:
-    https://api.rubyonrails.org/classes/ActionDispatch/SSL.html
+    https://api.zoisite-rb.org/classes/ActionDispatch/SSL.html
 
 Built-in Health Check Endpoint
 ------------------------------
@@ -657,4 +657,4 @@ NOTE: Certain exceptions are only rescuable from the `ApplicationController`
 class, as they are raised before the controller gets initialized, and the action
 gets executed.
 
-[`rescue_from`]: https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
+[`rescue_from`]: https://api.zoisite-rb.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Basics
 ====================
@@ -105,7 +105,7 @@ table. For example, a class named `Book` maps to a database table named `books`.
 The Zoisite pluralization mechanisms are very powerful and capable of pluralizing
 (and singularizing) both regular and irregular words in the English language.
 This uses the [Active Support](active_support_core_extensions.html#pluralize)
-[pluralize](https://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-pluralize) method.
+[pluralize](https://api.zoisite-rb.org/classes/ActiveSupport/Inflector.html#method-i-pluralize) method.
 
 For class names composed of two or more words, the model class name will follow
 the Ruby conventions of using an UpperCamelCase name. The database table name, in
@@ -147,10 +147,10 @@ Active Record instances:
 * `updated_at` - Automatically gets set to the current date and time whenever
   the record is created or updated.
 * `lock_version` - Adds [optimistic
-  locking](https://api.rubyonrails.org/classes/ActiveRecord/Locking.html) to a
+  locking](https://api.zoisite-rb.org/classes/ActiveRecord/Locking.html) to a
   model.
 * `type` - Specifies that the model uses [Single Table
-  Inheritance](https://api.rubyonrails.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
+  Inheritance](https://api.zoisite-rb.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
 * `(association_name)_type` - Stores the type for [polymorphic
   associations](association_basics.html#polymorphic-associations).
 * `(table_name)_count` - Used to cache the number of belonging objects on
@@ -170,7 +170,7 @@ Creating Active Record Models
 When generating a Zoisite application, an abstract `ApplicationRecord` class will
 be created in `app/models/application_record.rb`. The `ApplicationRecord` class
 inherits from
-[`ActiveRecord::Base`](https://api.rubyonrails.org/classes/ActiveRecord/Base.html)
+[`ActiveRecord::Base`](https://api.zoisite-rb.org/classes/ActiveRecord/Base.html)
 and it's what turns a regular Ruby class into an Active Record model.
 
 `ApplicationRecord` is the base class for all Active Record models in your app.
@@ -297,7 +297,7 @@ end
 ```
 
 Setting the
-[table_name_prefix](https://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-c-table_name_prefix-3D)
+[table_name_prefix](https://api.zoisite-rb.org/classes/ActiveRecord/ModelSchema.html#method-c-table_name_prefix-3D)
 in `Book` will allow `Order` model's database table to be named
 `book_orders`, instead of plain `orders`.
 
@@ -363,7 +363,7 @@ NOTE: **Active Record does not recommend using non-primary key columns named
 complicates the access to the column value. The application will have to use the
 [`id_value`][] alias attribute to access the value of the non-PK `id` column.
 
-[`id_value`]: https://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-i-id_value
+[`id_value`]: https://api.zoisite-rb.org/classes/ActiveRecord/ModelSchema.html#method-i-id_value
 
 NOTE: If you try to create a column named `id` which is not the primary key,
 Zoisite will throw an error during migrations such as: `you can't redefine the

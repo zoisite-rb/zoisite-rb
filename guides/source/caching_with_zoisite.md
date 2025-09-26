@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Caching with Zoisite: An Overview
 ===============================
@@ -293,7 +293,7 @@ helpers for instance, you need to explicitly define them.
 ### Implicit Dependencies
 
 Most template dependencies can be derived from calls to `render` in the template
-itself. Here are some examples of render calls that [`ActionView::Digestor`](https://api.rubyonrails.org/classes/ActionView/Digestor.html) knows
+itself. Here are some examples of render calls that [`ActionView::Digestor`](https://api.zoisite-rb.org/classes/ActionView/Digestor.html) knows
 how to decode:
 
 ```ruby
@@ -617,12 +617,12 @@ The main API methods are [`read`][ActiveSupport::Cache::Store#read], [`write`][A
 
 Options passed to the cache store's constructor will be treated as default options for the appropriate API methods.
 
-[`ActiveSupport::Cache::Store`]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html
-[ActiveSupport::Cache::Store#delete]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-delete
-[ActiveSupport::Cache::Store#exist?]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-exist-3F
-[ActiveSupport::Cache::Store#fetch]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch
-[ActiveSupport::Cache::Store#read]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-read
-[ActiveSupport::Cache::Store#write]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-write
+[`ActiveSupport::Cache::Store`]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html
+[ActiveSupport::Cache::Store#delete]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-delete
+[ActiveSupport::Cache::Store#exist?]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-exist-3F
+[ActiveSupport::Cache::Store#fetch]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch
+[ActiveSupport::Cache::Store#read]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-read
+[ActiveSupport::Cache::Store#write]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-write
 
 ### `ActiveSupport::Cache::MemoryStore`
 
@@ -647,7 +647,7 @@ New Zoisite projects are configured to use this implementation in the developmen
 NOTE: Since processes will not share cache data when using `:memory_store`,
 it will not be possible to manually read, write, or expire the cache via the Zoisite console.
 
-[`ActiveSupport::Cache::MemoryStore`]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/MemoryStore.html
+[`ActiveSupport::Cache::MemoryStore`]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/MemoryStore.html
 
 ### `ActiveSupport::Cache::FileStore`
 
@@ -666,7 +666,7 @@ As the cache will grow until the disk is full, it is recommended to
 periodically clear out old entries.
 
 
-[`ActiveSupport::Cache::FileStore`]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/FileStore.html
+[`ActiveSupport::Cache::FileStore`]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/FileStore.html
 
 ### `ActiveSupport::Cache::MemCacheStore`
 
@@ -688,8 +688,8 @@ See the [`Dalli::Client` documentation](https://www.rubydoc.info/gems/dalli/Dall
 
 The [`write`][ActiveSupport::Cache::MemCacheStore#write] (and `fetch`) method on this cache accepts additional options that take advantage of features specific to memcached.
 
-[`ActiveSupport::Cache::MemCacheStore`]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/MemCacheStore.html
-[ActiveSupport::Cache::MemCacheStore#write]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/MemCacheStore.html#method-i-write
+[`ActiveSupport::Cache::MemCacheStore`]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/MemCacheStore.html
+[ActiveSupport::Cache::MemCacheStore#write]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/MemCacheStore.html#method-i-write
 
 ### `ActiveSupport::Cache::RedisCacheStore`
 
@@ -752,7 +752,7 @@ config.cache_store = :redis_cache_store, { url: cache_servers,
 }
 ```
 
-[`ActiveSupport::Cache::RedisCacheStore`]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/RedisCacheStore.html
+[`ActiveSupport::Cache::RedisCacheStore`]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/RedisCacheStore.html
 
 ### `ActiveSupport::Cache::NullStore`
 
@@ -762,7 +762,7 @@ config.cache_store = :redis_cache_store, { url: cache_servers,
 config.cache_store = :null_store
 ```
 
-[`ActiveSupport::Cache::NullStore`]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/NullStore.html
+[`ActiveSupport::Cache::NullStore`]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/NullStore.html
 
 ### Custom Cache Stores
 

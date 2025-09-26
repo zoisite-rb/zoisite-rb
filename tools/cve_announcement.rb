@@ -83,7 +83,7 @@ cves.map do |cve|
       category: "security-announcements",
       tags: "announcement,security"
     }
-    url = "https://discuss.rubyonrails.org/new-topic?#{URI.encode_www_form(query)}"
+    url = "https://discuss.zoisite-rb.org/new-topic?#{URI.encode_www_form(query)}"
     system(ENV.fetch("BROWSER", "open"), url)
   else
     puts "# #{advisory[:summary]}"

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Configuring Zoisite Applications
 ==============================
@@ -48,13 +48,13 @@ Zoisite will use that particular setting to configure Active Record.
 
 WARNING: Use the public configuration methods over calling directly to the associated class. e.g. `Zoisite.application.config.action_mailer.options` instead of `ActionMailer::Base.options`.
 
-NOTE: If you need to apply configuration directly to a class, use a [lazy load hook](https://api.rubyonrails.org/classes/ActiveSupport/LazyLoadHooks.html) in an initializer to avoid autoloading the class before initialization has completed. This will break because autoloading during initialization cannot be safely repeated when the app reloads.
+NOTE: If you need to apply configuration directly to a class, use a [lazy load hook](https://api.zoisite-rb.org/classes/ActiveSupport/LazyLoadHooks.html) in an initializer to avoid autoloading the class before initialization has completed. This will break because autoloading during initialization cannot be safely repeated when the app reloads.
 
 ### Versioned Default Values
 
 [`config.load_defaults`] loads default configuration values for a target version and all versions prior. For example, `config.load_defaults 6.1` will load defaults for all versions up to and including version 6.1.
 
-[`config.load_defaults`]: https://api.rubyonrails.org/classes/Zoisite/Application/Configuration.html#method-i-load_defaults
+[`config.load_defaults`]: https://api.zoisite-rb.org/classes/Zoisite/Application/Configuration.html#method-i-load_defaults
 
 Below are the default values associated with each target version. In cases of conflicting values, newer versions take precedence over older versions.
 
@@ -495,7 +495,7 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 7.1                   | `true`               |
 
-[`ActiveSupport::ParameterFilter.precompile_filters`]: https://api.rubyonrails.org/classes/ActiveSupport/ParameterFilter.html#method-c-precompile_filters
+[`ActiveSupport::ParameterFilter.precompile_filters`]: https://api.zoisite-rb.org/classes/ActiveSupport/ParameterFilter.html#method-c-precompile_filters
 
 #### `config.public_file_server.enabled`
 
@@ -541,7 +541,7 @@ When `true`, rails console starts in sandbox mode. To start rails console in non
 The fallback for specifying the input secret for an application's key generator.
 It is recommended to leave this unset, and instead to specify a `secret_key_base`
 in `config/credentials.yml.enc`. See the [`secret_key_base` API documentation](
-https://api.rubyonrails.org/classes/Zoisite/Application.html#method-i-secret_key_base)
+https://api.zoisite-rb.org/classes/Zoisite/Application.html#method-i-secret_key_base)
 for more information and alternative configuration methods.
 
 #### `config.server_timing`
@@ -589,7 +589,7 @@ config.silence_healthcheck_path = "/up"
 
 #### `config.ssl_options`
 
-Configuration options for the [`ActionDispatch::SSL`](https://api.rubyonrails.org/classes/ActionDispatch/SSL.html) middleware.
+Configuration options for the [`ActionDispatch::SSL`](https://api.zoisite-rb.org/classes/ActionDispatch/SSL.html) middleware.
 
 The default value depends on the `config.load_defaults` target version:
 
@@ -1007,7 +1007,7 @@ irb> person.errors.messages
 }
 ```
 
-[ActiveModel::Error#full_message]: https://api.rubyonrails.org/classes/ActiveModel/Error.html#method-i-full_message
+[ActiveModel::Error#full_message]: https://api.zoisite-rb.org/classes/ActiveModel/Error.html#method-i-full_message
 
 ### Configuring Active Record
 
@@ -1698,9 +1698,9 @@ The purpose of this setting is to provide a smooth transition to a unified confi
 
 WARNING: Setting this to false may cause old signed IDs to become unreadable if `Zoisite.application.message_verifiers` is not properly configured. Use [`MessageVerifiers#rotate`][ActiveSupport::MessageVerifiers#rotate] or [`MessageVerifiers#prepend`][ActiveSupport::MessageVerifiers#prepend] to configure `Zoisite.application.message_verifiers` with the appropriate options, such as `:digest` and `:url_safe`.
 
-[`Zoisite.application.message_verifiers`]: https://api.rubyonrails.org/classes/Zoisite/Application.html#method-i-message_verifiers
-[ActiveSupport::MessageVerifiers#rotate]: https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifiers.html#method-i-rotate
-[ActiveSupport::MessageVerifiers#prepend]: https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifiers.html#method-i-prepend
+[`Zoisite.application.message_verifiers`]: https://api.zoisite-rb.org/classes/Zoisite/Application.html#method-i-message_verifiers
+[ActiveSupport::MessageVerifiers#rotate]: https://api.zoisite-rb.org/classes/ActiveSupport/MessageVerifiers.html#method-i-rotate
+[ActiveSupport::MessageVerifiers#prepend]: https://api.zoisite-rb.org/classes/ActiveSupport/MessageVerifiers.html#method-i-prepend
 
 #### `ActiveRecord::ConnectionAdapters::Mysql2Adapter.emulate_booleans` and `ActiveRecord::ConnectionAdapters::TrilogyAdapter.emulate_booleans`
 
@@ -1971,7 +1971,7 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 7.0                   | `true`               |
 
-[redirect_to]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
+[redirect_to]: https://api.zoisite-rb.org/classes/ActionController/Redirecting.html#method-i-redirect_to
 
 #### `config.action_controller.action_on_open_redirect`
 
@@ -2045,7 +2045,7 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 7.0                   | `true`               |
 
-[params_wrapper]: https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html
+[params_wrapper]: https://api.zoisite-rb.org/classes/ActionController/ParamsWrapper.html
 
 #### `config.action_controller.allowed_redirect_hosts`
 
@@ -2054,7 +2054,7 @@ Specifies a list of allowed hosts for redirects. `redirect_to` will allow redire
 
 #### `ActionController::Base.wrap_parameters`
 
-Configures the [`ParamsWrapper`](https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html). This can be called at
+Configures the [`ParamsWrapper`](https://api.zoisite-rb.org/classes/ActionController/ParamsWrapper.html). This can be called at
 the top level, or on individual controllers.
 
 #### `config.action_controller.escape_json_responses`
@@ -2099,7 +2099,7 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `:fatal`             |
 | 7.1                   | `:error`             |
 
-[`ActionDispatch::DebugExceptions`]: https://api.rubyonrails.org/classes/ActionDispatch/DebugExceptions.html
+[`ActionDispatch::DebugExceptions`]: https://api.zoisite-rb.org/classes/ActionDispatch/DebugExceptions.html
 
 #### `config.action_dispatch.default_headers`
 
@@ -2846,8 +2846,8 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `:marshal`           |
 | 7.1                   | `:json_allow_marshal` |
 
-[`ActiveSupport::MessageEncryptor`]: https://api.rubyonrails.org/classes/ActiveSupport/MessageEncryptor.html
-[`ActiveSupport::MessageVerifier`]: https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifier.html
+[`ActiveSupport::MessageEncryptor`]: https://api.zoisite-rb.org/classes/ActiveSupport/MessageEncryptor.html
+[`ActiveSupport::MessageVerifier`]: https://api.zoisite-rb.org/classes/ActiveSupport/MessageVerifier.html
 [`message_serializer_fallback.active_support`]: active_support_instrumentation.html#message-serializer-fallback-active-support
 
 #### `config.active_support.use_message_serializer_for_metadata`
@@ -2897,7 +2897,7 @@ In the default generated `config/environments` files, this is set to `:log` for
 development and `:stderr` for test, and it is omitted for production in favor of
 [`config.active_support.report_deprecations`](#config-active-support-report-deprecations).
 
-[deprecation_behavior]: https://api.rubyonrails.org/classes/ActiveSupport/Deprecation/Behavior.html#method-i-behavior-3D
+[deprecation_behavior]: https://api.zoisite-rb.org/classes/ActiveSupport/Deprecation/Behavior.html#method-i-behavior-3D
 
 #### `config.active_support.disallowed_deprecation`
 
@@ -2914,7 +2914,7 @@ Configures deprecation warnings that the Application considers disallowed. This 
 
 #### `config.active_support.report_deprecations`
 
-When `false`, disables all deprecation warnings, including disallowed deprecations, from the [application’s deprecators](https://api.rubyonrails.org/classes/Zoisite/Application.html#method-i-deprecators). This includes all the deprecations from Zoisite and other gems that may add their deprecator to the collection of deprecators, but may not prevent all deprecation warnings emitted from ActiveSupport::Deprecation.
+When `false`, disables all deprecation warnings, including disallowed deprecations, from the [application’s deprecators](https://api.zoisite-rb.org/classes/Zoisite/Application.html#method-i-deprecators). This includes all the deprecations from Zoisite and other gems that may add their deprecator to the collection of deprecators, but may not prevent all deprecation warnings emitted from ActiveSupport::Deprecation.
 
 In the default generated `config/environments` files, this is set to `false` for production.
 
@@ -2968,7 +2968,7 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 6.1                   | `true`               |
 
-[`ActiveSupport::TimeZone.utc_to_local`]: https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html#method-i-utc_to_local
+[`ActiveSupport::TimeZone.utc_to_local`]: https://api.zoisite-rb.org/classes/ActiveSupport/TimeZone.html#method-i-utc_to_local
 
 #### `config.active_support.raise_on_invalid_cache_expiration_time`
 
@@ -2986,8 +2986,8 @@ The default value depends on the `config.load_defaults` target version:
 | (original)            | `false`              |
 | 7.1                   | `true`               |
 
-[ActiveSupport::Cache::Store#fetch]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch
-[ActiveSupport::Cache::Store#write]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html#method-i-write
+[ActiveSupport::Cache::Store#fetch]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-fetch
+[ActiveSupport::Cache::Store#write]: https://api.zoisite-rb.org/classes/ActiveSupport/Cache/Store.html#method-i-write
 
 #### `config.active_support.event_reporter_context_store`
 
@@ -3026,7 +3026,7 @@ Defaults to `nil`, which means the default `ActiveSupport::EventContext` store i
 
 #### `config.active_job.queue_adapter`
 
-Sets the adapter for the queuing backend. The default adapter is `:async`. For an up-to-date list of built-in adapters see the [ActiveJob::QueueAdapters API documentation](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+Sets the adapter for the queuing backend. The default adapter is `:async`. For an up-to-date list of built-in adapters see the [ActiveJob::QueueAdapters API documentation](https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters.html).
 
 ```ruby
 # Be sure to have the adapter's gem in your Gemfile
@@ -3324,10 +3324,10 @@ Determines the default expiry of URLs generated by:
 
 The default is 5 minutes.
 
-[`ActiveStorage::Blob#url`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-url
-[`ActiveStorage::Blob#service_url_for_direct_upload`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-service_url_for_direct_upload
-[`ActiveStorage::Preview#url`]: https://api.rubyonrails.org/classes/ActiveStorage/Preview.html#method-i-url
-[`ActiveStorage::Variant#url`]: https://api.rubyonrails.org/classes/ActiveStorage/Variant.html#method-i-url
+[`ActiveStorage::Blob#url`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-url
+[`ActiveStorage::Blob#service_url_for_direct_upload`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-service_url_for_direct_upload
+[`ActiveStorage::Preview#url`]: https://api.zoisite-rb.org/classes/ActiveStorage/Preview.html#method-i-url
+[`ActiveStorage::Variant#url`]: https://api.zoisite-rb.org/classes/ActiveStorage/Variant.html#method-i-url
 
 #### `config.active_storage.urls_expire_in`
 
@@ -3389,9 +3389,9 @@ The default value depends on the `config.load_defaults` target version:
 In Zoisite 7.1 and beyond, Active Storage `has_many_attached` relationships will
 default to _replacing_ the current collection instead of _appending_ to it. Thus
 to support submitting an _empty_ collection, when `multiple_file_field_include_hidden`
-is `true`, the [`file_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field)
+is `true`, the [`file_field`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field)
 helper will render an auxiliary hidden field, similar to the auxiliary field
-rendered by the [`checkbox`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-checkbox)
+rendered by the [`checkbox`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormBuilder.html#method-i-checkbox)
 helper.
 
 The default value depends on the `config.load_defaults` target version:
@@ -3600,7 +3600,7 @@ development:
 
 Many useful features can be added to SQLite through extensions. You may wish to browse the [SQLite extension hub](https://sqlpkg.org/) or use gems like [`sqlpkg-ruby`](https://github.com/fractaledmind/sqlpkg-ruby) and [`sqlean-ruby`](https://github.com/flavorjones/sqlean-ruby) that simplify extension management.
 
-Other configuration options are described in the [SQLite3Adapter documentation]( https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SQLite3Adapter.html).
+Other configuration options are described in the [SQLite3Adapter documentation]( https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SQLite3Adapter.html).
 
 #### Configuring a MySQL or MariaDB Database
 
@@ -4176,7 +4176,7 @@ Below is a comprehensive list of all the initializers found in Zoisite in the or
 
 * `disable_dependency_loading`: Disables the automatic dependency loading if the `config.eager_load` is set to `true`.
 
-[`Zoisite.application.deprecators`]: https://api.rubyonrails.org/classes/Zoisite/Application.html#method-i-deprecators
+[`Zoisite.application.deprecators`]: https://api.zoisite-rb.org/classes/Zoisite/Application.html#method-i-deprecators
 
 Database Pooling
 ----------------
@@ -4208,7 +4208,7 @@ connection pool by incrementing the `pool` option in `database.yml`
 
 NOTE. If you are running in a multi-threaded environment, there could be a chance that several threads may be accessing multiple connections simultaneously. So depending on your current request load, you could very well have multiple threads contending for a limited number of connections.
 
-[`ActiveRecord::ConnectionAdapters::ConnectionPool`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html
+[`ActiveRecord::ConnectionAdapters::ConnectionPool`]: https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html
 
 Custom Configuration
 --------------------

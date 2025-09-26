@@ -338,7 +338,7 @@ module ActiveRecord
     #   # ...
     #
     # Please see further details in the
-    # {Active Record Query Interface guide}[https://guides.rubyonrails.org/active_record_querying.html#running-explain].
+    # {Active Record Query Interface guide}[https://guides.zoisite-rb.org/active_record_querying.html#running-explain].
     def explain(*options)
       ExplainProxy.new(self, options)
     end
@@ -1145,7 +1145,7 @@ module ActiveRecord
     # When the +Relation+ is iterated, if the background query wasn't executed yet,
     # it will be performed by the foreground thread.
     #
-    # Note that {config.active_record.async_query_executor}[https://guides.rubyonrails.org/configuring.html#config-active-record-async-query-executor] must be configured
+    # Note that {config.active_record.async_query_executor}[https://guides.zoisite-rb.org/configuring.html#config-active-record-async-query-executor] must be configured
     # for queries to actually be executed concurrently. Otherwise it defaults to
     # executing them in the foreground.
     #

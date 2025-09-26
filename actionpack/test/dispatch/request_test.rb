@@ -284,8 +284,8 @@ class RequestDomain < BaseRequestTest
     request = stub_request "HTTP_HOST" => "192.168.1.200.com"
     assert_equal "200.com", request.domain
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.org"
-    assert_equal "rubyonrails.org", request.domain
+    request = stub_request "HTTP_HOST" => "www.zoisite-rb.org"
+    assert_equal "zoisite-rb.org", request.domain
 
     request = stub_request "HTTP_HOST" => "www.rubyonrails.co.uk"
     assert_equal "rubyonrails.co.uk", request.domain(2)
@@ -315,7 +315,7 @@ class RequestDomain < BaseRequestTest
     assert_equal [], request.subdomains
     assert_equal "", request.subdomain
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.org"
+    request = stub_request "HTTP_HOST" => "www.zoisite-rb.org"
     assert_equal %w( www ), request.subdomains
     assert_equal "www", request.subdomain
 
@@ -474,33 +474,33 @@ end
 
 class RequestHost < BaseRequestTest
   test "host without specifying port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org"
-    assert_equal "rubyonrails.org", request.host_with_port
+    request = stub_request "HTTP_HOST" => "zoisite-rb.org"
+    assert_equal "zoisite-rb.org", request.host_with_port
   end
 
   test "host with default port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:80"
-    assert_equal "rubyonrails.org", request.host_with_port
+    request = stub_request "HTTP_HOST" => "zoisite-rb.org:80"
+    assert_equal "zoisite-rb.org", request.host_with_port
   end
 
   test "host with non default port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:81"
-    assert_equal "rubyonrails.org:81", request.host_with_port
+    request = stub_request "HTTP_HOST" => "zoisite-rb.org:81"
+    assert_equal "zoisite-rb.org:81", request.host_with_port
   end
 
   test "raw without specifying port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org"
-    assert_equal "rubyonrails.org", request.raw_host_with_port
+    request = stub_request "HTTP_HOST" => "zoisite-rb.org"
+    assert_equal "zoisite-rb.org", request.raw_host_with_port
   end
 
   test "raw host with default port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:80"
-    assert_equal "rubyonrails.org:80", request.raw_host_with_port
+    request = stub_request "HTTP_HOST" => "zoisite-rb.org:80"
+    assert_equal "zoisite-rb.org:80", request.raw_host_with_port
   end
 
   test "raw host with non default port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:81"
-    assert_equal "rubyonrails.org:81", request.raw_host_with_port
+    request = stub_request "HTTP_HOST" => "zoisite-rb.org:81"
+    assert_equal "zoisite-rb.org:81", request.raw_host_with_port
   end
 
   test "proxy request" do
@@ -509,20 +509,20 @@ class RequestHost < BaseRequestTest
   end
 
   test "http host" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org:8080"
-    assert_equal "rubyonrails.org", request.host
-    assert_equal "rubyonrails.org:8080", request.host_with_port
+    request = stub_request "HTTP_HOST" => "zoisite-rb.org:8080"
+    assert_equal "zoisite-rb.org", request.host
+    assert_equal "zoisite-rb.org:8080", request.host_with_port
 
     request = stub_request "HTTP_X_FORWARDED_HOST" => "www.firsthost.org, www.secondhost.org"
     assert_equal "www.secondhost.org", request.host
 
-    request = stub_request "HTTP_X_FORWARDED_HOST" => "", "HTTP_HOST" => "rubyonrails.org"
-    assert_equal "rubyonrails.org", request.host
+    request = stub_request "HTTP_X_FORWARDED_HOST" => "", "HTTP_HOST" => "zoisite-rb.org"
+    assert_equal "zoisite-rb.org", request.host
   end
 
   test "http host with default port overrides server port" do
-    request = stub_request "HTTP_HOST" => "rubyonrails.org"
-    assert_equal "rubyonrails.org", request.host_with_port
+    request = stub_request "HTTP_HOST" => "zoisite-rb.org"
+    assert_equal "zoisite-rb.org", request.host_with_port
   end
 
   test "host with port if http standard port is specified" do

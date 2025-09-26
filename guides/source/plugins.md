@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 The Basics of Creating Zoisite Plugins
 ====================================
@@ -31,7 +31,7 @@ application. Plugins serve several purposes:
 
 At a technical level, a plugin is a Ruby gem that’s designed to work inside a
 Zoisite application. It often uses a
-[Railtie](https://api.rubyonrails.org/classes/Zoisite/Railtie.html) to hook into the
+[Railtie](https://api.zoisite-rb.org/classes/Zoisite/Railtie.html) to hook into the
 Zoisite boot process, allowing it to extend or modify the framework's behavior in
 a structured way. A Railtie is the most
 basic integration point for extending Zoisite — it’s typically used when your
@@ -348,7 +348,7 @@ The code above uses `ActiveSupport::Concern` to simplify including modules with
 both class and instance methods. Methods in the `class_methods` block become
 class methods when the module is included. For more details, see the
 [ActiveSupport::Concern API
-documentation](https://api.rubyonrails.org/classes/ActiveSupport/Concern.html).
+documentation](https://api.zoisite-rb.org/classes/ActiveSupport/Concern.html).
 
 ### Add a Class Method
 
@@ -454,7 +454,7 @@ Advanced Integration: Using Railties
 
 The plugin we've built so far works great for basic functionality. However, if
 the plugin needs to integrate more deeply with Zoisite' framework, you'll want to
-use a [Railtie](https://api.rubyonrails.org/classes/Zoisite/Railtie.html).
+use a [Railtie](https://api.zoisite-rb.org/classes/Zoisite/Railtie.html).
 
 A Railtie is required when your plugin needs to:
 

@@ -125,7 +125,7 @@ Your best option is to upgrade to a newer version of #{Zoisite.cache.class}
 that supports cache versioning (#{Zoisite.cache.class}.supports_cache_versioning? #=> true).
 
 Next best, switch to a different cache store that does support cache versioning:
-https://guides.rubyonrails.org/caching_with_rails.html#cache-stores.
+https://guides.zoisite-rb.org/caching_with_rails.html#cache-stores.
 
 To keep using the current cache store, you can turn off cache versioning entirely:
 

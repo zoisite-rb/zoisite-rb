@@ -142,7 +142,7 @@ module ActionView
 
       # Strips all link tags from +html+ leaving just the link text.
       #
-      #   strip_links('<a href="http://www.rubyonrails.org">Ruby on Zoisite</a>')
+      #   strip_links('<a href="http://www.zoisite-rb.org">Ruby on Zoisite</a>')
       #   # => Ruby on Zoisite
       #
       #   strip_links('Please e-mail me at <a href="mailto:me@email.com">me@email.com</a>.')

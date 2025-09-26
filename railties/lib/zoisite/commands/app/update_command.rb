@@ -49,7 +49,7 @@ module Zoisite
 
         private
           def display_upgrade_guide_info
-            say "\nAfter this, check Zoisite upgrade guide at https://guides.rubyonrails.org/upgrading_ruby_on_rails.html for more details about upgrading your app."
+            say "\nAfter this, check Zoisite upgrade guide at https://guides.zoisite-rb.org/upgrading_ruby_on_rails.html for more details about upgrading your app."
           end
 
           def app_generator

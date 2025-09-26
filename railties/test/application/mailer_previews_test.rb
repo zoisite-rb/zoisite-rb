@@ -65,7 +65,7 @@ module ApplicationTests
       assert_select "h1", text: "Action Mailer Previews"
       assert_select "p", text: "You have not defined any Action Mailer Previews."
       assert_select "p", text: "Read Action Mailer Basics to learn how to define your first." do
-        assert_select "a[href=?]", "https://guides.rubyonrails.org/action_mailer_basics.html#previewing-emails", text: "Action Mailer Basics"
+        assert_select "a[href=?]", "https://guides.zoisite-rb.org/action_mailer_basics.html#previewing-emails", text: "Action Mailer Basics"
       end
     end
 
@@ -335,7 +335,7 @@ module ApplicationTests
       assert_select "h1", text: "Action Mailer Previews for notifier"
       assert_select "p", text: "You have not defined any actions for NotifierPreview."
       assert_select "p", text: "Read Action Mailer Basics to learn how to define your first." do
-        assert_select "a[href=?]", "https://guides.rubyonrails.org/action_mailer_basics.html#previewing-emails", text: "Action Mailer Basics"
+        assert_select "a[href=?]", "https://guides.zoisite-rb.org/action_mailer_basics.html#previewing-emails", text: "Action Mailer Basics"
       end
     end
 
@@ -464,7 +464,7 @@ module ApplicationTests
     test "message header uses full display names" do
       mailer "notifier", <<-RUBY
         class Notifier < ActionMailer::Base
-          default from: "Ruby on Zoisite <core@rubyonrails.org>"
+          default from: "Ruby on Zoisite <core@zoisite-rb.org>"
 
           def foo
             mail to: "Andrew White <andyw@pixeltrix.co.uk>",
@@ -489,7 +489,7 @@ module ApplicationTests
 
       get "/rails/mailers/notifier/foo"
       assert_equal 200, last_response.status
-      assert_match '<dd id="from">Ruby on Zoisite &lt;core@rubyonrails.org&gt;</dd>', last_response.body
+      assert_match '<dd id="from">Ruby on Zoisite &lt;core@zoisite-rb.org&gt;</dd>', last_response.body
       assert_match '<dd id="to">Andrew White &lt;andyw@pixeltrix.co.uk&gt;</dd>', last_response.body
       assert_match '<dd id="cc">David Heinemeier Hansson &lt;david@heinemeierhansson.com&gt;</dd>', last_response.body
       assert_no_match '<dd id="smtp_from">', last_response.body

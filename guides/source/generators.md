@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Creating and Customizing Zoisite Generators & Templates
 =====================================================
@@ -100,7 +100,7 @@ Now we can see the new description by invoking `--help` on the new generator.
 The second way to add a description is by creating a file named `USAGE` in the
 same directory as our generator. We are going to do that in the next step.
 
-[`Zoisite::Generators::Base`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Base.html
+[`Zoisite::Generators::Base`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Base.html
 [`Thor::Actions`]: https://www.rubydoc.info/gems/thor/Thor/Actions
 [`create_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#create_file-instance_method
 [`desc`]: https://www.rubydoc.info/gems/thor/Thor#desc-class_method
@@ -183,9 +183,9 @@ We see that [`copy_file`][] created `config/initializers/core_extensions.rb`
 with the contents of our template. (The `file_name` method used in the
 destination path is inherited from `Zoisite::Generators::NamedBase`.)
 
-[`Zoisite::Generators::NamedBase`]: https://api.rubyonrails.org/classes/Zoisite/Generators/NamedBase.html
+[`Zoisite::Generators::NamedBase`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/NamedBase.html
 [`copy_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#copy_file-instance_method
-[`source_root`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Base.html#method-c-source_root
+[`source_root`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Base.html#method-c-source_root
 
 Generator Command Line Options
 ------------------------------
@@ -375,7 +375,7 @@ provide a hook to do so using [`hook_for`][]. We can do the same by including
 the `hook_for` documentation for more information.
 
 [`config.generators`]: configuring.html#configuring-generators
-[`hook_for`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Base.html#method-c-hook_for
+[`hook_for`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Base.html#method-c-hook_for
 
 ### Generators Fallbacks
 
@@ -512,7 +512,7 @@ WARNING: Caution should be taken when executing remote scripts from third partie
 The above `template.rb` file uses helper methods such as `after_bundle` and
 `rails_command` and also adds user interactivity with methods like `yes?`. All
 of these methods are part of the [Zoisite Template
-API](https://edgeapi.rubyonrails.org/classes/Zoisite/Generators/Actions.html). The
+API](https://edgeapi.zoisite-rb.org/classes/Zoisite/Generators/Actions.html). The
 following sections shows how to use more of these methods with examples.
 
 Zoisite Generators API
@@ -811,27 +811,27 @@ RAILS_LOG_TO_STDOUT=true ./bin/test test/generators/actions_test.rb
 In addition to those, Zoisite also provides additional assertions via
 [`Zoisite::Generators::Testing::Assertions`][].
 
-[`Zoisite::Generators::Actions`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html
-[`environment`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-environment
-[`gem`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-gem
-[`generate`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-generate
-[`git`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-git
+[`Zoisite::Generators::Actions`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html
+[`environment`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-environment
+[`gem`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-gem
+[`generate`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-generate
+[`git`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-git
 [`gsub_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#gsub_file-instance_method
-[`initializer`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-initializer
+[`initializer`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-initializer
 [`insert_into_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#insert_into_file-instance_method
 [`inside`]: https://www.rubydoc.info/gems/thor/Thor/Actions#inside-instance_method
-[`lib`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-lib
-[`rails_command`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-rails_command
-[`rake`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-rake
-[`route`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-route
-[`Zoisite::Generators::Testing::Behavior`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Testing/Behavior.html
-[`run_generator`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Testing/Behavior.html#method-i-run_generator
-[`Zoisite::Generators::Testing::Assertions`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Testing/Assertions.html
-[`add_source`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-add_source
-[`after_bundle`]: https://api.rubyonrails.org/classes/Zoisite/Generators/AppGenerator.html#method-i-after_bundle
-[`gem_group`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-gem_group
-[`vendor`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-vendor
-[`rakefile`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-rakefile
+[`lib`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-lib
+[`rails_command`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-rails_command
+[`rake`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-rake
+[`route`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-route
+[`Zoisite::Generators::Testing::Behavior`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Testing/Behavior.html
+[`run_generator`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Testing/Behavior.html#method-i-run_generator
+[`Zoisite::Generators::Testing::Assertions`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Testing/Assertions.html
+[`add_source`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-add_source
+[`after_bundle`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/AppGenerator.html#method-i-after_bundle
+[`gem_group`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-gem_group
+[`vendor`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-vendor
+[`rakefile`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-rakefile
 [`run`]: https://www.rubydoc.info/gems/thor/Thor/Actions#run-instance_method
 [`copy_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#copy_file-instance_method
 [`create_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#create_file-instance_method

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Job Basics
 =================
@@ -114,14 +114,14 @@ GuestsCleanupJob.perform_later(guest1, guest2, filter: "some_filter")
 That's it!
 
 [`perform_later`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Enqueuing/ClassMethods.html#method-i-perform_later
+    https://api.zoisite-rb.org/classes/ActiveJob/Enqueuing/ClassMethods.html#method-i-perform_later
 [`set`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Core/ClassMethods.html#method-i-set
+    https://api.zoisite-rb.org/classes/ActiveJob/Core/ClassMethods.html#method-i-set
 
 ### Enqueue Jobs in Bulk
 
 You can enqueue multiple jobs at once using
-[`perform_all_later`](https://api.rubyonrails.org/classes/ActiveJob.html#method-c-perform_all_later).
+[`perform_all_later`](https://api.zoisite-rb.org/classes/ActiveJob.html#method-c-perform_all_later).
 For more details see [Bulk Enqueuing](#bulk-enqueuing).
 
 Default Backend: Solid Queue
@@ -607,7 +607,7 @@ listen to.
 [`config.active_job.queue_name_prefix`]:
     configuring.html#config-active-job-queue-name-prefix
 [`queue_as`]:
-    https://api.rubyonrails.org/classes/ActiveJob/QueueName/ClassMethods.html#method-i-queue_as
+    https://api.zoisite-rb.org/classes/ActiveJob/QueueName/ClassMethods.html#method-i-queue_as
 
 
 Priority
@@ -669,7 +669,7 @@ backend for more information. Adapter authors are encouraged to treat a lower
 number as more important.
 
 [`queue_with_priority`]:
-    https://api.rubyonrails.org/classes/ActiveJob/QueuePriority/ClassMethods.html#method-i-queue_with_priority
+    https://api.zoisite-rb.org/classes/ActiveJob/QueuePriority/ClassMethods.html#method-i-queue_with_priority
 
 Callbacks
 ---------
@@ -717,17 +717,17 @@ end
 * [`after_perform`][]
 
 [`before_enqueue`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_enqueue
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_enqueue
 [`around_enqueue`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_enqueue
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_enqueue
 [`after_enqueue`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_enqueue
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_enqueue
 [`before_perform`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_perform
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_perform
 [`around_perform`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_perform
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_perform
 [`after_perform`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_perform
+    https://api.zoisite-rb.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_perform
 
 Please note that when enqueuing jobs in bulk using `perform_all_later`,
 callbacks such as `around_enqueue` will not be triggered on the individual jobs.
@@ -737,7 +737,7 @@ Bulk Enqueuing
 --------------
 
 You can enqueue multiple jobs at once using
-[`perform_all_later`](https://api.rubyonrails.org/classes/ActiveJob.html#method-c-perform_all_later).
+[`perform_all_later`](https://api.zoisite-rb.org/classes/ActiveJob.html#method-c-perform_all_later).
 Bulk enqueuing reduces the number of round trips to the queue data store (like
 Redis or a database), making it a more performant operation than enqueuing the
 same jobs individually.
@@ -809,7 +809,7 @@ However, the `perform_all_later` method does fire an
 event which you can subscribe to using `ActiveSupport::Notifications`.
 
 The method
-[`successfully_enqueued?`](https://api.rubyonrails.org/classes/ActiveJob/Core.html#method-i-successfully_enqueued-3F)
+[`successfully_enqueued?`](https://api.zoisite-rb.org/classes/ActiveJob/Core.html#method-i-successfully_enqueued-3F)
 can be used to find out if a given job was successfully enqueued.
 
 ### Queue Backend Support
@@ -987,7 +987,7 @@ If an exception from a job is not rescued, then the job is referred to as
 "failed".
 
 [`rescue_from`]:
-    https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
+    https://api.zoisite-rb.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
 
 ### Retrying or Discarding Failed Jobs
 
@@ -1009,9 +1009,9 @@ end
 ```
 
 [`discard_on`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-discard_on
+    https://api.zoisite-rb.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-discard_on
 [`retry_on`]:
-    https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-retry_on
+    https://api.zoisite-rb.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-retry_on
 
 ### Deserialization
 
@@ -1022,7 +1022,7 @@ If a passed record is deleted after the job is enqueued but before the
 [`ActiveJob::DeserializationError`][] exception.
 
 [`ActiveJob::DeserializationError`]:
-    https://api.rubyonrails.org/classes/ActiveJob/DeserializationError.html
+    https://api.zoisite-rb.org/classes/ActiveJob/DeserializationError.html
 
 Job Testing
 --------------
@@ -1044,7 +1044,7 @@ Resque, Delayed Job, and others). To get an up-to-date list of the adapters see
 the API Documentation for [`ActiveJob::QueueAdapters`][].
 
 [`ActiveJob::QueueAdapters`]:
-    https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html
+    https://api.zoisite-rb.org/classes/ActiveJob/QueueAdapters.html
 
 ### Configuring the Backend
 

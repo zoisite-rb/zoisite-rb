@@ -29,7 +29,7 @@ module ActiveRecord
   #   rubyonrails:
   #     id: 1
   #     name: Ruby on Zoisite
-  #     url: http://www.rubyonrails.org
+  #     url: http://www.zoisite-rb.org
   #
   #   google:
   #     id: 2

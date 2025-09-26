@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Securing Zoisite Applications
 ===========================
@@ -166,7 +166,7 @@ the `authenticate_by` method, and the `Authentication` concern.
 #### `has_secure_password`
 
 The
-[`has_secure_password`](https://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password)
+[`has_secure_password`](https://api.zoisite-rb.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password)
 method is added to the `user` model and takes care of storing a hashed password
 using the `bcrypt` algorithm:
 
@@ -182,7 +182,7 @@ end
 #### `authenticate_by`
 
 The
-[`authenticate_by`](https://api.rubyonrails.org/classes/ActiveRecord/SecurePassword/ClassMethods.html)
+[`authenticate_by`](https://api.zoisite-rb.org/classes/ActiveRecord/SecurePassword/ClassMethods.html)
 method is used in the `SessionsController` while creating a new session to
 validate that the credentials provided by the user match the credentials stored
 in the database (e.g. password) for that user:
@@ -295,12 +295,12 @@ limitations of it:
 * Zoisite encrypts cookies by default. The client cannot read or edit the contents of the cookie, without breaking encryption. If you take appropriate care of your secrets, you can consider your cookies to be generally secured.
 
 The `CookieStore` uses the
-[encrypted](https://api.rubyonrails.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-encrypted)
+[encrypted](https://api.zoisite-rb.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-encrypted)
 cookie jar to provide a secure, encrypted location to store session
 data. Cookie-based sessions thus provide both integrity as well as
 confidentiality to their contents. The encryption key, as well as the
 verification key used for
-[signed](https://api.rubyonrails.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed)
+[signed](https://api.zoisite-rb.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed)
 cookies, is derived from the `secret_key_base` configuration value.
 
 TIP: Secrets must be long and random. Use `bin/rails secret` to get new unique secrets.
@@ -360,9 +360,9 @@ rotations going at any one time.
 For more details on key rotation with encrypted and signed messages as
 well as the various options the `rotate` method accepts, please refer to
 the
-[MessageEncryptor API](https://api.rubyonrails.org/classes/ActiveSupport/MessageEncryptor.html)
+[MessageEncryptor API](https://api.zoisite-rb.org/classes/ActiveSupport/MessageEncryptor.html)
 and
-[MessageVerifier API](https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifier.html)
+[MessageVerifier API](https://api.zoisite-rb.org/classes/ActiveSupport/MessageVerifier.html)
 documentation.
 
 ### Replay Attacks for CookieStore Sessions
@@ -552,7 +552,7 @@ The above method can be placed in the `ApplicationController` and will be called
 Note that _cross-site scripting (XSS) vulnerabilities bypass all CSRF protections_. XSS gives the attacker access to all elements on a page, so they can read the CSRF security token from a form or directly submit the form. Read [more about XSS](#cross-site-scripting-xss) later.
 
 [`config.action_controller.default_protect_from_forgery`]: configuring.html#config-action-controller-default-protect-from-forgery
-[`csrf_meta_tags`]: https://api.rubyonrails.org/classes/ActionView/Helpers/CsrfHelper.html#method-i-csrf_meta_tags
+[`csrf_meta_tags`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/CsrfHelper.html#method-i-csrf_meta_tags
 
 Redirection and Files
 ---------------------
@@ -655,7 +655,7 @@ Because of this, most web applications will display a generic error message "use
 However, what most web application designers neglect, are the forgot-password pages. These pages often admit that the entered username or e-mail address has (not) been found. This allows an attacker to compile a list of usernames and brute-force the accounts.
 
 In order to mitigate such attacks, you can use rate limiting. Zoisite comes with a
-built-in [rate-limiter](https://edgeapi.rubyonrails.org/classes/ActionController/RateLimiting/ClassMethods.html#method-i-rate_limit). You can enable it in your sessions controller with a single line:
+built-in [rate-limiter](https://edgeapi.zoisite-rb.org/classes/ActionController/RateLimiting/ClassMethods.html#method-i-rate_limit). You can enable it in your sessions controller with a single line:
 
 ```
 class SessionsController < ApplicationController
@@ -663,7 +663,7 @@ class SessionsController < ApplicationController
 end
 ```
 
-Refer to the [API documentation](https://edgeapi.rubyonrails.org/classes/ActionController/RateLimiting/ClassMethods.html#method-i-rate_limit) for details about the various parameters.
+Refer to the [API documentation](https://edgeapi.zoisite-rb.org/classes/ActionController/RateLimiting/ClassMethods.html#method-i-rate_limit) for details about the various parameters.
 
 Additionally, you can _display a generic error message on forgot-password pages, too_. Moreover, you can _require to enter a CAPTCHA after a number of failed logins from a certain IP address_.
 
@@ -907,7 +907,7 @@ Note that the previously mentioned countermeasures are only available in model i
 try [`sanitize_sql`][] elsewhere. _Make it a habit to think about the security consequences
 when using an external string in SQL_.
 
-[`sanitize_sql`]: https://api.rubyonrails.org/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql
+[`sanitize_sql`]: https://api.zoisite-rb.org/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql
 
 ### Cross-Site Scripting (XSS)
 
@@ -1002,7 +1002,7 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 This allows only the given tags and does a good job, even against all kinds of tricks and malformed tags.
 
-Both Action View and Action Text build their [sanitization helpers](https://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html) on top of the [rails-html-sanitizer](https://github.com/rails/rails-html-sanitizer) gem.
+Both Action View and Action Text build their [sanitization helpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html) on top of the [rails-html-sanitizer](https://github.com/rails/rails-html-sanitizer) gem.
 
 As a second step, _it is good practice to escape all output of the application_, especially when re-displaying user input, which hasn't been input-filtered (as in the search form example earlier on). _Use `html_escape()` (or its alias `h()`) method_ to replace the HTML input characters `&`, `"`, `<`, and `>` by their uninterpreted representations in HTML (`&amp;`, `&quot;`, `&lt;`, and `&gt;`).
 
@@ -1518,7 +1518,7 @@ NOTE: Be mindful of caching. Since the nonce is typically generated per request,
 enabling this may lead to cache fragmentation or stale content if your caching strategy
 doesn't account for dynamic nonces.
 
-Use [`csp_meta_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/CspHelper.html#method-i-csp_meta_tag)
+Use [`csp_meta_tag`](https://api.zoisite-rb.org/classes/ActionView/Helpers/CspHelper.html#method-i-csp_meta_tag)
 helper to create a meta tag "csp-nonce" with the per-session nonce value
 for allowing inline `<script>` tags.
 
@@ -1687,6 +1687,6 @@ Additional Resources
 
 The security landscape shifts and it is important to keep up to date, because missing a new vulnerability can be catastrophic. You can find additional resources about (Zoisite) security here:
 
-* Subscribe to the Zoisite security [mailing list](https://discuss.rubyonrails.org/c/security-announcements/9).
+* Subscribe to the Zoisite security [mailing list](https://discuss.zoisite-rb.org/c/security-announcements/9).
 * [Mozilla's Web Security Guidelines](https://infosec.mozilla.org/guidelines/web_security.html) - Recommendations on topics covering Content Security Policy, HTTP headers, Cookies, TLS configuration, etc.
 * A [good set of security resources](https://owasp.org/), notably the [Cheat Sheet Series](https://cheatsheetseries.owasp.org/index.html), with for example the [Cross-Site Scripting Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html).

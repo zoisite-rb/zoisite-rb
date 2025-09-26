@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Query Interface
 =============================
@@ -131,35 +131,35 @@ The primary operation of `Model.find(options)` can be summarized as:
 * Instantiate the equivalent Ruby object of the appropriate model for every resulting row.
 * Run `after_find` and then `after_initialize` callbacks, if any.
 
-[`ActiveRecord::Relation`]: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html
-[`annotate`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-annotate
-[`create_with`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-create_with
-[`distinct`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-distinct
-[`eager_load`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-eager_load
-[`extending`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-extending
-[`extract_associated`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-extract_associated
-[`find`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find
-[`from`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-from
-[`group`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-group
-[`having`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-having
-[`includes`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-includes
-[`joins`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-joins
-[`left_outer_joins`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-left_outer_joins
-[`limit`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-limit
-[`lock`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-lock
-[`none`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-none
-[`offset`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-offset
-[`optimizer_hints`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-optimizer_hints
-[`order`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-order
-[`preload`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-preload
-[`readonly`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-readonly
-[`references`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-references
-[`reorder`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-reorder
-[`reselect`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-reselect
-[`regroup`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-regroup
-[`reverse_order`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-reverse_order
-[`select`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-select
-[`where`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-where
+[`ActiveRecord::Relation`]: https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html
+[`annotate`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-annotate
+[`create_with`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-create_with
+[`distinct`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-distinct
+[`eager_load`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-eager_load
+[`extending`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-extending
+[`extract_associated`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-extract_associated
+[`find`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-find
+[`from`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-from
+[`group`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-group
+[`having`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-having
+[`includes`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-includes
+[`joins`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-joins
+[`left_outer_joins`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-left_outer_joins
+[`limit`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-limit
+[`lock`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-lock
+[`none`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-none
+[`offset`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-offset
+[`optimizer_hints`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-optimizer_hints
+[`order`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-order
+[`preload`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-preload
+[`readonly`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-readonly
+[`references`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-references
+[`reorder`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-reorder
+[`reselect`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-reselect
+[`regroup`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-regroup
+[`reverse_order`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-reverse_order
+[`select`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-select
+[`where`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-where
 
 ### Retrieving a Single Object
 
@@ -261,8 +261,8 @@ The [`take!`][] method behaves exactly like `take`, except that it will raise `A
 
 TIP: The retrieved record may vary depending on the database engine.
 
-[`take`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-take
-[`take!`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-take-21
+[`take`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-take
+[`take!`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-take-21
 
 #### `first`
 
@@ -325,8 +325,8 @@ SELECT * FROM customers ORDER BY customers.first_name ASC LIMIT 1
 
 The [`first!`][] method behaves exactly like `first`, except that it will raise `ActiveRecord::RecordNotFound` if no matching record is found.
 
-[`first`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-first
-[`first!`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-first-21
+[`first`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-first
+[`first!`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-first-21
 
 #### `last`
 
@@ -389,8 +389,8 @@ SELECT * FROM customers ORDER BY customers.first_name DESC LIMIT 1
 
 The [`last!`][] method behaves exactly like `last`, except that it will raise `ActiveRecord::RecordNotFound` if no matching record is found.
 
-[`last`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-last
-[`last!`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-last-21
+[`last`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-last
+[`last!`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-last-21
 
 #### `find_by`
 
@@ -431,8 +431,8 @@ This is equivalent to writing:
 Customer.where(first_name: "does not exist").take!
 ```
 
-[`find_by`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find_by
-[`find_by!`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find_by-21
+[`find_by`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-find_by
+[`find_by!`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-find_by-21
 
 ##### Conditions with `:id`
 
@@ -462,7 +462,7 @@ irb> Customer.find_by(id: customer.id_value) # Customer.find_by(id: 10)
 => #<Customer id: 10, store_id: 5, first_name: "Joe">
 ```
 
-[`id_value`]: https://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-i-id_value
+[`id_value`]: https://api.zoisite-rb.org/classes/ActiveRecord/ModelSchema.html#method-i-id_value
 
 ### Retrieving Multiple Objects in Batches
 
@@ -513,7 +513,7 @@ default. This can be overridden with the option `:error_on_ignore`, explained
 below.
 
 [`config.active_record.error_on_ignored_order`]: configuring.html#config-active-record-error-on-ignored-order
-[`find_each`]: https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_each
+[`find_each`]: https://api.zoisite-rb.org/classes/ActiveRecord/Batches.html#method-i-find_each
 
 ##### Options for `find_each`
 
@@ -594,7 +594,7 @@ end
 as long as they have no ordering, since the method needs to force an order
 internally to iterate.
 
-[`find_in_batches`]: https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches
+[`find_in_batches`]: https://api.zoisite-rb.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches
 
 ##### Options for `find_in_batches`
 
@@ -707,7 +707,7 @@ Book.where("title LIKE ?",
   Book.sanitize_sql_like(params[:title]) + "%")
 ```
 
-[`sanitize_sql_like`]: https://api.rubyonrails.org/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql_like
+[`sanitize_sql_like`]: https://api.zoisite-rb.org/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql_like
 
 ### Hash Conditions
 
@@ -825,7 +825,7 @@ Customer.where.not(nullable_country: nil)
 # => [#<Customer id: 2, nullable_country: "UK">]
 ```
 
-[`where.not`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods/WhereChain.html#method-i-not
+[`where.not`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods/WhereChain.html#method-i-not
 
 ### OR Conditions
 
@@ -840,7 +840,7 @@ Customer.where(last_name: "Smith").or(Customer.where(orders_count: [1, 3, 5]))
 SELECT * FROM customers WHERE (customers.last_name = 'Smith' OR customers.orders_count IN (1,3,5))
 ```
 
-[`or`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-or
+[`or`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-or
 
 ### AND Conditions
 
@@ -866,7 +866,7 @@ Customer.where(id: [1, 2]).and(Customer.where(id: [2, 3]))
 SELECT * FROM customers WHERE (customers.id IN (1, 2) AND customers.id IN (2, 3))
 ```
 
-[`and`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-and
+[`and`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-and
 
 Ordering
 --------
@@ -1040,7 +1040,7 @@ FROM orders
 GROUP BY status
 ```
 
-[`count`]: https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html#method-i-count
+[`count`]: https://api.zoisite-rb.org/classes/ActiveRecord/Calculations.html#method-i-count
 
 ### HAVING Conditions
 
@@ -1109,7 +1109,7 @@ Book.order("id desc").merge(Book.unscope(:order))
 # SELECT books.* FROM books
 ```
 
-[`unscope`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-unscope
+[`unscope`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-unscope
 
 ### `only`
 
@@ -1128,7 +1128,7 @@ SELECT * FROM books WHERE id > 10 ORDER BY id DESC
 SELECT * FROM books WHERE id > 10 ORDER BY id DESC LIMIT 20
 ```
 
-[`only`]: https://api.rubyonrails.org/classes/ActiveRecord/SpawnMethods.html#method-i-only
+[`only`]: https://api.zoisite-rb.org/classes/ActiveRecord/SpawnMethods.html#method-i-only
 
 ### `reselect`
 
@@ -1246,7 +1246,7 @@ The SQL executed would be:
 SELECT * FROM books WHERE out_of_print = 1 AND out_of_print = 0
 ```
 
-[`rewhere`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-rewhere
+[`rewhere`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-rewhere
 
 
 ### `regroup`
@@ -1275,7 +1275,7 @@ The SQL executed would be:
 SELECT * FROM books GROUP BY author, id
 ```
 
-[`regroup`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-regroup
+[`regroup`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-regroup
 
 
 Null Relation
@@ -1776,7 +1776,7 @@ To enable for all relations, change the
 To send violations to the logger instead, change
 [`config.active_record.action_on_strict_loading_violation`][] to `:log`.
 
-[`strict_loading`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-strict_loading
+[`strict_loading`]: https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-strict_loading
 [`config.active_record.strict_loading_by_default`]: configuring.html#config-active-record-strict-loading-by-default
 [`config.active_record.action_on_strict_loading_violation`]: configuring.html#config-active-record-action-on-strict-loading-violation
 
@@ -1802,7 +1802,7 @@ user.comments.to_a # => [#<Comment:0x00...]
 user.comments.first.likes.to_a # raises an ActiveRecord::StrictLoadingViolationError
 ```
 
-[`strict_loading!`]: https://api.rubyonrails.org/classes/ActiveRecord/Core.html#method-i-strict_loading-21
+[`strict_loading!`]: https://api.zoisite-rb.org/classes/ActiveRecord/Core.html#method-i-strict_loading-21
 
 ### `strict_loading` option on an association
 
@@ -1851,7 +1851,7 @@ class Book < ApplicationRecord
 end
 ```
 
-[`scope`]: https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Named/ClassMethods.html#method-i-scope
+[`scope`]: https://api.zoisite-rb.org/classes/ActiveRecord/Scoping/Named/ClassMethods.html#method-i-scope
 
 ### Passing in Arguments
 
@@ -1967,7 +1967,7 @@ irb> Book.new
 => #<Book id: nil, out_of_print: nil>
 ```
 
-[`default_scope`]: https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Default/ClassMethods.html#method-i-default_scope
+[`default_scope`]: https://api.zoisite-rb.org/classes/ActiveRecord/Scoping/Default/ClassMethods.html#method-i-default_scope
 
 ### Merging of Scopes
 
@@ -2030,7 +2030,7 @@ SELECT books.* FROM books WHERE (year_published >= 1969) AND (price > 50)
 As you can see above the `default_scope` is being merged in both
 `scope` and `where` conditions.
 
-[`merge`]: https://api.rubyonrails.org/classes/ActiveRecord/SpawnMethods.html#method-i-merge
+[`merge`]: https://api.zoisite-rb.org/classes/ActiveRecord/SpawnMethods.html#method-i-merge
 
 ### Removing All Scoping
 
@@ -2059,7 +2059,7 @@ irb> Book.unscoped { Book.out_of_print }
 SELECT books.* FROM books WHERE books.out_of_print = true
 ```
 
-[`unscoped`]: https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Default/ClassMethods.html#method-i-unscoped
+[`unscoped`]: https://api.zoisite-rb.org/classes/ActiveRecord/Scoping/Default/ClassMethods.html#method-i-unscoped
 
 Dynamic Finders
 ---------------
@@ -2125,9 +2125,9 @@ UPDATE "orders" SET "status" = ?, "updated_at" = ? WHERE "orders"."id" = ?  [["s
 => true
 ```
 
-Full documentation about enums can be found [here](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
+Full documentation about enums can be found [here](https://api.zoisite-rb.org/classes/ActiveRecord/Enum.html).
 
-[`enum`]: https://api.rubyonrails.org/classes/ActiveRecord/Enum.html#method-i-enum
+[`enum`]: https://api.zoisite-rb.org/classes/ActiveRecord/Enum.html#method-i-enum
 
 Understanding Method Chaining
 -----------------------------
@@ -2238,7 +2238,7 @@ end
 The block will only be executed if the customer is being created. The
 second time we run this code, the block will be ignored.
 
-[`find_or_create_by`]: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-find_or_create_by
+[`find_or_create_by`]: https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-find_or_create_by
 
 ### `find_or_create_by!`
 
@@ -2255,7 +2255,7 @@ irb> Customer.find_or_create_by!(first_name: 'Andy')
 ActiveRecord::RecordInvalid: Validation failed: Orders count can't be blank
 ```
 
-[`find_or_create_by!`]: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-find_or_create_by-21
+[`find_or_create_by!`]: https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-find_or_create_by-21
 
 ### `find_or_initialize_by`
 
@@ -2289,7 +2289,7 @@ irb> nina.save
 => true
 ```
 
-[`find_or_initialize_by`]: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-find_or_initialize_by
+[`find_or_initialize_by`]: https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-find_or_initialize_by
 
 Finding by SQL
 --------------
@@ -2303,7 +2303,7 @@ irb> Customer.find_by_sql("SELECT * FROM customers INNER JOIN orders ON customer
 
 `find_by_sql` provides you with a simple way of making custom calls to the database and retrieving instantiated objects.
 
-[`find_by_sql`]: https://api.rubyonrails.org/classes/ActiveRecord/Querying.html#method-i-find_by_sql
+[`find_by_sql`]: https://api.zoisite-rb.org/classes/ActiveRecord/Querying.html#method-i-find_by_sql
 
 ### `select_all`
 
@@ -2317,7 +2317,7 @@ irb> Customer.lease_connection.select_all("SELECT first_name, created_at FROM cu
 => [{"first_name"=>"Rafael", "created_at"=>"2012-11-10 23:23:45.281189"}, {"first_name"=>"Eileen", "created_at"=>"2013-12-09 11:22:35.221282"}]
 ```
 
-[`lease_connection.select_all`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/DatabaseStatements.html#method-i-select_all
+[`lease_connection.select_all`]: https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/DatabaseStatements.html#method-i-select_all
 
 ### `pluck`
 
@@ -2408,7 +2408,7 @@ One way to avoid this is to `unscope` the includes:
 irb> assoc.unscope(:includes).pluck(:id)
 ```
 
-[`pluck`]: https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html#method-i-pluck
+[`pluck`]: https://api.zoisite-rb.org/classes/ActiveRecord/Calculations.html#method-i-pluck
 
 ### `pick`
 
@@ -2427,7 +2427,7 @@ with:
 Customer.where(id: 1).pick(:id)
 ```
 
-[`pick`]: https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html#method-i-pick
+[`pick`]: https://api.zoisite-rb.org/classes/ActiveRecord/Calculations.html#method-i-pick
 
 ### `ids`
 
@@ -2449,7 +2449,7 @@ irb> Customer.ids
 SELECT customer_id FROM customers
 ```
 
-[`ids`]: https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html#method-i-ids
+[`ids`]: https://api.zoisite-rb.org/classes/ActiveRecord/Calculations.html#method-i-ids
 
 Existence of Objects
 --------------------
@@ -2510,7 +2510,7 @@ Customer.first.orders.any?
 Customer.first.orders.many?
 ```
 
-[`exists?`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F
+[`exists?`]: https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F
 
 Calculations
 ------------
@@ -2566,7 +2566,7 @@ This will return a number (possibly a floating-point number such as 3.14159265) 
 
 For options, please see the parent section, [Calculations](#calculations).
 
-[`average`]: https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html#method-i-average
+[`average`]: https://api.zoisite-rb.org/classes/ActiveRecord/Calculations.html#method-i-average
 
 ### `minimum`
 
@@ -2578,7 +2578,7 @@ Order.minimum("subtotal")
 
 For options, please see the parent section, [Calculations](#calculations).
 
-[`minimum`]: https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html#method-i-minimum
+[`minimum`]: https://api.zoisite-rb.org/classes/ActiveRecord/Calculations.html#method-i-minimum
 
 ### `maximum`
 
@@ -2590,7 +2590,7 @@ Order.maximum("subtotal")
 
 For options, please see the parent section, [Calculations](#calculations).
 
-[`maximum`]: https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html#method-i-maximum
+[`maximum`]: https://api.zoisite-rb.org/classes/ActiveRecord/Calculations.html#method-i-maximum
 
 ### `sum`
 
@@ -2602,7 +2602,7 @@ Order.sum("subtotal")
 
 For options, please see the parent section, [Calculations](#calculations).
 
-[`sum`]: https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html#method-i-sum
+[`sum`]: https://api.zoisite-rb.org/classes/ActiveRecord/Calculations.html#method-i-sum
 
 Running EXPLAIN
 ---------------
@@ -2707,7 +2707,7 @@ and may yield this for PostgreSQL:
 (2 rows)
 ```
 
-[`explain`]: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-explain
+[`explain`]: https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-explain
 
 ### Explain Options
 

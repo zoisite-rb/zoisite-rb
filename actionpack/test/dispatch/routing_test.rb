@@ -44,7 +44,7 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
 
   def test_login
     draw do
-      default_url_options host: "rubyonrails.org"
+      default_url_options host: "zoisite-rb.org"
 
       controller :sessions do
         get  "login" => :new
@@ -62,8 +62,8 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
     assert_equal "/login", url_for(controller: "sessions", action: "create", only_path: true)
     assert_equal "/login", url_for(controller: "sessions", action: "new", only_path: true)
 
-    assert_equal "http://rubyonrails.org/login", url_for(controller: "sessions", action: "create")
-    assert_equal "http://rubyonrails.org/login", login_url
+    assert_equal "http://zoisite-rb.org/login", url_for(controller: "sessions", action: "create")
+    assert_equal "http://zoisite-rb.org/login", login_url
   end
 
   def test_login_redirect

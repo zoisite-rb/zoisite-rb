@@ -33,7 +33,7 @@ module ApplicationTests
       app_file "public/about.html", "static"
       add_to_config <<-CONFIG
         config.public_file_server.headers = {
-          "Access-Control-Allow-Origin" => "http://rubyonrails.org",
+          "Access-Control-Allow-Origin" => "http://zoisite-rb.org",
           "Cache-Control"               => "public, max-age=60"
         }
       CONFIG
@@ -42,7 +42,7 @@ module ApplicationTests
 
       get "/about.html"
 
-      assert_equal "http://rubyonrails.org", last_response.headers["Access-Control-Allow-Origin"]
+      assert_equal "http://zoisite-rb.org", last_response.headers["Access-Control-Allow-Origin"]
       assert_equal "public, max-age=60",     last_response.headers["Cache-Control"]
     end
 

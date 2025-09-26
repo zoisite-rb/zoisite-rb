@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Storage Overview
 =======================
@@ -453,9 +453,9 @@ Zoisite will enqueue a job to generate the variant after the attachment is attac
 
 NOTE: Since Active Storage relies on polymorphic associations, and [polymorphic associations](./association_basics.html#polymorphic-associations) rely on storing class names in the database, that data must remain synchronized with the class name used by the Ruby code. When renaming classes that use `has_one_attached`, make sure to also update the class names in the `active_storage_attachments.record_type` polymorphic type column of the corresponding rows.
 
-[`has_one_attached`]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached
-[Attached::One#attach]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-attach
-[Attached::One#attached?]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-attached-3F
+[`has_one_attached`]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached
+[Attached::One#attach]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/One.html#method-i-attach
+[Attached::One#attached?]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/One.html#method-i-attached-3F
 
 ### `has_many_attached`
 
@@ -523,9 +523,9 @@ class Message < ApplicationRecord
 end
 ```
 
-[`has_many_attached`]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached
-[Attached::Many#attach]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Many.html#method-i-attach
-[Attached::Many#attached?]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Many.html#method-i-attached-3F
+[`has_many_attached`]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached
+[Attached::Many#attach]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Many.html#method-i-attach
+[Attached::Many#attached?]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Many.html#method-i-attached-3F
 
 NOTE: Since Active Storage relies on polymorphic associations, and [polymorphic associations](./association_basics.html#polymorphic-associations) rely on storing class names in the database, that data must remain synchronized with the class name used by the Ruby code. When renaming classes that use `has_many_attached`, make sure to also update the class names in the `active_storage_attachments.record_type` polymorphic type column of the corresponding rows.
 
@@ -618,7 +618,7 @@ of each attached file:
 This has the advantage of making it possible to remove existing attachments
 selectively, e.g. by using JavaScript to remove individual hidden fields.
 
-[ActiveStorage::Blob#signed_id]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-signed_id
+[ActiveStorage::Blob#signed_id]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-signed_id
 
 ### Form Validation
 
@@ -638,7 +638,7 @@ Active Storage attachments are Active Record associations behind the scenes, so 
 
 ### `has_one_attached`
 
-[`has_one_attached`](https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached) creates a `has_one` association named `"<name>_attachment"` and a `has_one :through` association named `"<name>_blob"`.
+[`has_one_attached`](https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached) creates a `has_one` association named `"<name>_attachment"` and a `has_one :through` association named `"<name>_blob"`.
 To select every user where the avatar is a PNG, run the following:
 
 ```ruby
@@ -647,14 +647,14 @@ User.joins(:avatar_blob).where(active_storage_blobs: { content_type: "image/png"
 
 ### `has_many_attached`
 
-[`has_many_attached`](https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached) creates a `has_many` association called `"<name>_attachments"` and a `has_many :through` association called `"<name>_blobs"` (note the plural).
+[`has_many_attached`](https://api.zoisite-rb.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached) creates a `has_many` association called `"<name>_attachments"` and a `has_many :through` association called `"<name>_blobs"` (note the plural).
 To select all messages where images are videos rather than photos you can do the following:
 
 ```ruby
 Message.joins(:images_blobs).where(active_storage_blobs: { content_type: "video/mp4" })
 ```
 
-The query will filter on the [**`ActiveStorage::Blob`**](https://api.rubyonrails.org/classes/ActiveStorage/Blob.html), not the [attachment record](https://api.rubyonrails.org/classes/ActiveStorage/Attachment.html) because these are plain SQL joins. You can combine the blob predicates above with any other scope conditions, just as you would with any other Active Record query.
+The query will filter on the [**`ActiveStorage::Blob`**](https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html), not the [attachment record](https://api.zoisite-rb.org/classes/ActiveStorage/Attachment.html) because these are plain SQL joins. You can combine the blob predicates above with any other scope conditions, just as you would with any other Active Record query.
 
 
 Removing Files
@@ -673,8 +673,8 @@ user.avatar.purge
 user.avatar.purge_later
 ```
 
-[Attached::One#purge]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-purge
-[Attached::One#purge_later]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-purge_later
+[Attached::One#purge]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/One.html#method-i-purge
+[Attached::One#purge_later]: https://api.zoisite-rb.org/classes/ActiveStorage/Attached/One.html#method-i-purge_later
 
 Serving Files
 -------------
@@ -721,8 +721,8 @@ jobs, Cronjobs, etc.), you can access the `rails_blob_path` like this:
 Zoisite.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
 ```
 
-[ActionView::RoutingUrlFor#url_for]: https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
-[ActiveStorage::Blob#signed_id]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-signed_id
+[ActionView::RoutingUrlFor#url_for]: https://api.zoisite-rb.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
+[ActiveStorage::Blob#signed_id]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-signed_id
 
 ### Proxy Mode
 
@@ -827,10 +827,10 @@ config.active_storage.draw_routes = false
 
 to prevent files being accessed with the publicly accessible URLs.
 
-[`ActiveStorage::Blobs::RedirectController`]: https://api.rubyonrails.org/classes/ActiveStorage/Blobs/RedirectController.html
-[`ActiveStorage::Blobs::ProxyController`]: https://api.rubyonrails.org/classes/ActiveStorage/Blobs/ProxyController.html
-[`ActiveStorage::Representations::RedirectController`]: https://api.rubyonrails.org/classes/ActiveStorage/Representations/RedirectController.html
-[`ActiveStorage::Representations::ProxyController`]: https://api.rubyonrails.org/classes/ActiveStorage/Representations/ProxyController.html
+[`ActiveStorage::Blobs::RedirectController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blobs/RedirectController.html
+[`ActiveStorage::Blobs::ProxyController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blobs/ProxyController.html
+[`ActiveStorage::Representations::RedirectController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Representations/RedirectController.html
+[`ActiveStorage::Representations::ProxyController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Representations/ProxyController.html
 
 Downloading Files
 -----------------
@@ -856,8 +856,8 @@ end
 
 It's important to know that the file is not yet available in the `after_create` callback but in the `after_create_commit` only.
 
-[Blob#download]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-download
-[Blob#open]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-open
+[Blob#download]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-download
+[Blob#open]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob.html#method-i-open
 
 Analyzing Files
 ---------------
@@ -866,7 +866,7 @@ Active Storage analyzes files once they've been uploaded by queuing a job in Act
 
 Image analysis provides `width` and `height` attributes. Video analysis provides these, as well as `duration`, `angle`, `display_aspect_ratio`, and `video` and `audio` booleans to indicate the presence of those channels. Audio analysis provides `duration` and `bit_rate` attributes.
 
-[`analyzed?`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyzed-3F
+[`analyzed?`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyzed-3F
 
 Displaying Images, Videos, and PDFs
 ---------------
@@ -898,8 +898,8 @@ the file instead.
 Internally, `representation` calls `variant` for images, and `preview` for
 previewable files. You can also call these methods directly.
 
-[`representable?`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-representable-3F
-[`representation`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-representation
+[`representable?`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Representable.html#method-i-representable-3F
+[`representation`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Representable.html#method-i-representation
 
 ### Lazy vs Immediate Loading
 
@@ -946,8 +946,8 @@ end
 ```
 
 [`config.active_storage.track_variants`]: configuring.html#config-active-storage-track-variants
-[`ActiveStorage::Representations::RedirectController`]: https://api.rubyonrails.org/classes/ActiveStorage/Representations/RedirectController.html
-[`ActiveStorage::Attachment`]: https://api.rubyonrails.org/classes/ActiveStorage/Attachment.html
+[`ActiveStorage::Representations::RedirectController`]: https://api.zoisite-rb.org/classes/ActiveStorage/Representations/RedirectController.html
+[`ActiveStorage::Attachment`]: https://api.zoisite-rb.org/classes/ActiveStorage/Attachment.html
 
 ### Transforming Images
 
@@ -978,7 +978,7 @@ processor can be changed by setting [`config.active_storage.variant_processor`][
 [`config.active_storage.variable_content_types`]: configuring.html#config-active-storage-variable-content-types
 [`config.active_storage.variant_processor`]: configuring.html#config-active-storage-variant-processor
 [`config.active_storage.web_image_content_types`]: configuring.html#config-active-storage-web-image-content-types
-[`variant`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-variant
+[`variant`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Representable.html#method-i-variant
 [Vips]: https://www.rubydoc.info/gems/ruby-vips/Vips/Image
 
 ### Previewing Files
@@ -995,8 +995,8 @@ a link to a lazily-generated preview, use the attachment's [`preview`][] method:
 To add support for another format, add your own previewer. See the
 [`ActiveStorage::Preview`][] documentation for more information.
 
-[`preview`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-preview
-[`ActiveStorage::Preview`]: https://api.rubyonrails.org/classes/ActiveStorage/Preview.html
+[`preview`]: https://api.zoisite-rb.org/classes/ActiveStorage/Blob/Representable.html#method-i-preview
+[`ActiveStorage::Preview`]: https://api.zoisite-rb.org/classes/ActiveStorage/Preview.html
 
 Direct Uploads
 --------------
@@ -1381,7 +1381,7 @@ class SignupController < ActionDispatch::IntegrationTest
 end
 ```
 
-[`file_fixture_upload`]: https://api.rubyonrails.org/classes/ActionDispatch/TestProcess/FixtureFile.html#method-i-file_fixture_upload
+[`file_fixture_upload`]: https://api.zoisite-rb.org/classes/ActionDispatch/TestProcess/FixtureFile.html#method-i-file_fixture_upload
 
 ### Discarding Files Created During Tests
 
@@ -1535,7 +1535,7 @@ end
 ```
 
 [fixtures]: testing.html#fixtures
-[`ActiveStorage::FixtureSet`]: https://api.rubyonrails.org/classes/ActiveStorage/FixtureSet.html
+[`ActiveStorage::FixtureSet`]: https://api.zoisite-rb.org/classes/ActiveStorage/FixtureSet.html
 
 ### Configuring services
 
@@ -1569,7 +1569,7 @@ Implementing Support for Other Cloud Services
 
 If you need to support a cloud service other than these, you will need to
 implement the Service. Each service extends
-[`ActiveStorage::Service`](https://api.rubyonrails.org/classes/ActiveStorage/Service.html)
+[`ActiveStorage::Service`](https://api.zoisite-rb.org/classes/ActiveStorage/Service.html)
 by implementing the methods necessary to upload and download files to the cloud.
 
 Purging Unattached Uploads

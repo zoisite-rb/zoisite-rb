@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Encryption
 ========================
@@ -147,7 +147,7 @@ To encrypt Action Text fixtures, you should place them in `fixtures/action_text/
 
 `active_record.encryption` will serialize values using the underlying type before encrypting them, but, unless using a custom `message_serializer`, *they must be serializable as strings*. Structured types like `serialized` are supported out of the box.
 
-If you need to support a custom type, the recommended way is to use a [serialized attribute](https://api.rubyonrails.org/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html). The declaration of the serialized attribute should go **before** the encryption declaration:
+If you need to support a custom type, the recommended way is to use a [serialized attribute](https://api.zoisite-rb.org/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html). The declaration of the serialized attribute should go **before** the encryption declaration:
 
 ```ruby
 # CORRECT

@@ -6,7 +6,7 @@ Files can be uploaded from the server to the cloud or directly from the client t
 
 Image files can furthermore be transformed using on-demand variants for quality, aspect ratio, size, or any other [MiniMagick](https://github.com/minimagick/minimagick) or [Vips](https://www.rubydoc.info/gems/ruby-vips/Vips/Image) supported transformation.
 
-You can read more about Active Storage in the [Active Storage Overview](https://guides.rubyonrails.org/active_storage_overview.html) guide.
+You can read more about Active Storage in the [Active Storage Overview](https://guides.zoisite-rb.org/active_storage_overview.html) guide.
 
 ## Compared to other storage solutions
 
@@ -200,7 +200,7 @@ Active Storage is released under the [MIT License](https://opensource.org/licens
 
 API documentation is at:
 
-* https://api.rubyonrails.org
+* https://api.zoisite-rb.org
 
 Bug reports for the Ruby on \Zoisite project can be filed here:
 
@@ -208,4 +208,4 @@ Bug reports for the Ruby on \Zoisite project can be filed here:
 
 Feature requests should be discussed on the rubyonrails-core forum here:
 
-* https://discuss.rubyonrails.org/c/rubyonrails-core
+* https://discuss.zoisite-rb.org/c/rubyonrails-core

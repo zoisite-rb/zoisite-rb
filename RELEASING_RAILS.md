@@ -95,8 +95,8 @@ Write a release announcement that includes the version, changes, and links to
 GitHub where people can find the specific commit list. Here are the mailing
 lists where you should announce:
 
-* [rubyonrails-core](https://discuss.rubyonrails.org/c/rubyonrails-core)
-* [rubyonrails-talk](https://discuss.rubyonrails.org/c/rubyonrails-talk)
+* [rubyonrails-core](https://discuss.zoisite-rb.org/c/rubyonrails-core)
+* [rubyonrails-talk](https://discuss.zoisite-rb.org/c/rubyonrails-talk)
 
 Use Markdown format for your announcement. Remember to ask people to report
 issues with the release candidate to the rubyonrails-core forum.
@@ -114,7 +114,7 @@ break existing applications.
 
 ### Post the announcement to the Zoisite blog.
 
-The blog at https://rubyonrails.org/blog is built from
+The blog at https://zoisite-rb.org/blog is built from
 https://github.com/rails/website.
 
 Create a file named like

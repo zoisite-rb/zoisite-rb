@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Text Overview
 ====================
@@ -90,7 +90,7 @@ which store the ClassName of the model, and ID of the record, respectively.
 INFO: With polymorphic associations, a model can belong to more than one other
 model, on a single association. Read more about it in the [Active Record
 Associations
-guide](https://guides.rubyonrails.org/association_basics.html#polymorphic-associations).
+guide](https://guides.zoisite-rb.org/association_basics.html#polymorphic-associations).
 
 Hence, if your models containing Action Text content use UUID values as
 identifiers, then all models that use Action Text attributes will need to use
@@ -129,7 +129,7 @@ name the attribute to be something different from `content`.
 Once you have added the `has_rich_text` class method to the model, you can then
 update your views to make use of the rich text editor (Trix) for that field. To
 do so, use a
-[`rich_textarea`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-rich_textarea)
+[`rich_textarea`](https://api.zoisite-rb.org/classes/ActionView/Helpers/FormHelper.html#method-i-rich_textarea)
 for the form field.
 
 ```html+erb
@@ -183,7 +183,7 @@ content as follows:
 the other hand `ActionText::RichText#to_plain_text` returns a string that is not
 HTML safe and should not be rendered in browsers without additional sanitization.
 You can learn more about Action Text's sanitization process in the [`ActionText::RichText`
-documentation](https://api.rubyonrails.org/classes/ActionText/RichText.html).
+documentation](https://api.zoisite-rb.org/classes/ActionText/RichText.html).
 
 NOTE: If there's an attached resource within `content` field, it might not show
 properly unless you have the necessary [dependencies for Active

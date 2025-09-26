@@ -595,7 +595,7 @@ module ActiveRecord
       # <tt>:foreign_key</tt> and <tt>:through</tt> options on the associations
       # will also prevent the association's inverse from being found automatically,
       # as will a custom scopes in some cases. See further details in the
-      # {Active Record Associations guide}[https://guides.rubyonrails.org/association_basics.html#bi-directional-associations].
+      # {Active Record Associations guide}[https://guides.zoisite-rb.org/association_basics.html#bi-directional-associations].
       #
       # The automatic guessing of the inverse association uses a heuristic based
       # on the name of the class, so it may not work for all associations,
@@ -953,7 +953,7 @@ module ActiveRecord
       #    end
       #
       # For more information, see the documentation for the +:inverse_of+ option and the
-      # {Active Record Associations guide}[https://guides.rubyonrails.org/association_basics.html#bi-directional-associations].
+      # {Active Record Associations guide}[https://guides.zoisite-rb.org/association_basics.html#bi-directional-associations].
       #
       # == Deleting from associations
       #

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Getting Started with Engines
 ============================
@@ -1118,7 +1118,7 @@ It is very important that the override _reopens_ the class or module. Using the 
 
 Using `Class#class_eval` is great for simple adjustments, but for more complex
 class modifications, you might want to consider using [`ActiveSupport::Concern`]
-(https://api.rubyonrails.org/classes/ActiveSupport/Concern.html).
+(https://api.zoisite-rb.org/classes/ActiveSupport/Concern.html).
 ActiveSupport::Concern manages load order of interlinked dependent modules and
 classes at run time allowing you to significantly modularize your code.
 

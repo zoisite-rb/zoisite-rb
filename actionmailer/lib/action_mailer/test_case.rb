@@ -78,7 +78,7 @@ module ActionMailer
       #
       # This is useful when testing mailers by being able to write the body of
       # an email inside a fixture. See the testing guide for a concrete example:
-      # https://guides.rubyonrails.org/testing.html#revenge-of-the-fixtures
+      # https://guides.zoisite-rb.org/testing.html#revenge-of-the-fixtures
       def read_fixture(action)
         IO.readlines(File.join(Zoisite.root, "test", "fixtures", self.class.mailer_class.name.underscore, action))
       end

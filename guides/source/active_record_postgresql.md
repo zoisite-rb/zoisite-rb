@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record and PostgreSQL
 ============================
@@ -252,7 +252,7 @@ irb> contact.save!
 
 * [type definition](https://www.postgresql.org/docs/current/static/datatype-enum.html)
 
-The type can be mapped as a normal text column, or to an [`ActiveRecord::Enum`](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
+The type can be mapped as a normal text column, or to an [`ActiveRecord::Enum`](https://api.zoisite-rb.org/classes/ActiveRecord/Enum.html).
 
 ```ruby
 # db/migrate/20131220144913_create_articles.rb
@@ -493,7 +493,7 @@ A point is cast to an array containing `x` and `y` coordinates.
 * [type definition](https://www.postgresql.org/docs/current/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT)
 * [functions and operators](https://www.postgresql.org/docs/current/static/functions-datetime.html)
 
-This type is mapped to [`ActiveSupport::Duration`](https://api.rubyonrails.org/classes/ActiveSupport/Duration.html) objects.
+This type is mapped to [`ActiveSupport::Duration`](https://api.zoisite-rb.org/classes/ActiveSupport/Duration.html) objects.
 
 ```ruby
 # db/migrate/20200120000000_create_events.rb
@@ -596,7 +596,7 @@ Indexing
 
 PostgreSQL includes a variety of index options. The following options are
 supported by the PostgreSQL adapter in addition to the
-[common index options](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index)
+[common index options](https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index)
 
 ### Include
 

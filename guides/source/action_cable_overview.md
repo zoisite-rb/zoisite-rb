@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Cable Overview
 =====================
@@ -139,8 +139,8 @@ can use this approach:
 verified_user = User.find_by(id: cookies.encrypted["_session"]["user_id"])
 ```
 
-[`ActionCable::Connection::Base`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Base.html
-[`identified_by`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Identification/ClassMethods.html#method-i-identified_by
+[`ActionCable::Connection::Base`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Base.html
+[`identified_by`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Identification/ClassMethods.html#method-i-identified_by
 
 #### Exception Handling
 
@@ -162,7 +162,7 @@ module ApplicationCable
 end
 ```
 
-[`rescue_from`]: https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
+[`rescue_from`]: https://api.zoisite-rb.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
 
 #### Connection Callbacks
 
@@ -174,10 +174,10 @@ unsubscribing, or performing an action:
 * [`after_command`][]
 * [`around_command`][]
 
-[`ActionCable::Connection::Callbacks`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Callbacks.html
-[`after_command`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-after_command
-[`around_command`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-around_command
-[`before_command`]: https://api.rubyonrails.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-before_command
+[`ActionCable::Connection::Callbacks`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Callbacks.html
+[`after_command`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-after_command
+[`around_command`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-around_command
+[`before_command`]: https://api.zoisite-rb.org/classes/ActionCable/Connection/Callbacks/ClassMethods.html#method-i-before_command
 
 ### Channels
 
@@ -210,7 +210,7 @@ class AppearanceChannel < ApplicationCable::Channel
 end
 ```
 
-[`ActionCable::Channel::Base`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Base.html
+[`ActionCable::Channel::Base`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Base.html
 
 A consumer could then be subscribed to either or both of these channels.
 
@@ -257,13 +257,13 @@ during the life cycle of a channel:
 * [`before_unsubscribe`][]
 * [`after_unsubscribe`][] (aliased as [`on_unsubscribe`][])
 
-[`ActionCable::Channel::Callbacks`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks.html
-[`after_subscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-after_subscribe
-[`after_unsubscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-after_unsubscribe
-[`before_subscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-before_subscribe
-[`before_unsubscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-before_unsubscribe
-[`on_subscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-on_subscribe
-[`on_unsubscribe`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-on_unsubscribe
+[`ActionCable::Channel::Callbacks`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks.html
+[`after_subscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-after_subscribe
+[`after_unsubscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-after_unsubscribe
+[`before_subscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-before_subscribe
+[`before_unsubscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-before_unsubscribe
+[`on_subscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-on_subscribe
+[`on_unsubscribe`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Callbacks/ClassMethods.html#method-i-on_unsubscribe
 
 ## Client-Side Components
 
@@ -383,10 +383,10 @@ You can then broadcast to this channel by calling [`broadcast_to`][]:
 PostsChannel.broadcast_to(@post, @comment)
 ```
 
-[`broadcast`]: https://api.rubyonrails.org/classes/ActionCable/Server/Broadcasting.html#method-i-broadcast
-[`broadcast_to`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Broadcasting/ClassMethods.html#method-i-broadcast_to
-[`stream_for`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
-[`stream_from`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
+[`broadcast`]: https://api.zoisite-rb.org/classes/ActionCable/Server/Broadcasting.html#method-i-broadcast
+[`broadcast_to`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Broadcasting/ClassMethods.html#method-i-broadcast_to
+[`stream_for`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
+[`stream_from`]: https://api.zoisite-rb.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
 
 ### Broadcastings
 
@@ -813,7 +813,7 @@ HEAD. This uses a URL or path typically set via [`config.action_cable.url`][] in
 environment configuration files.
 
 [`config.action_cable.url`]: configuring.html#config-action-cable-url
-[`action_cable_meta_tag`]: https://api.rubyonrails.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
+[`action_cable_meta_tag`]: https://api.zoisite-rb.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
 
 ### Worker Pool Configuration
 
@@ -885,7 +885,7 @@ spawns, you will also have a new instance of Action Cable, but the Redis or
 PostgreSQL adapter keeps messages synced across connections.
 
 [`config.action_cable.mount_path`]: configuring.html#config-action-cable-mount-path
-[`action_cable_meta_tag`]: https://api.rubyonrails.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
+[`action_cable_meta_tag`]: https://api.zoisite-rb.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
 
 ### Standalone
 

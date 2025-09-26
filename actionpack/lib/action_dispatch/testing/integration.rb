@@ -643,7 +643,7 @@ module ActionDispatch
   # `response_parser` defines how the response body should be parsed through
   # TestResponse#parsed_body.
   #
-  # Consult the [Zoisite Testing Guide](https://guides.rubyonrails.org/testing.html)
+  # Consult the [Zoisite Testing Guide](https://guides.zoisite-rb.org/testing.html)
   # for more.
 
   class IntegrationTest < ActiveSupport::TestCase

@@ -92,8 +92,8 @@ class TestCustomUrlHelpers < ActionDispatch::IntegrationTest
       get "/dashboard", to: "dashboard#index"
     end
 
-    direct(:website)  { "http://www.rubyonrails.org" }
-    direct("string")  { "http://www.rubyonrails.org" }
+    direct(:website)  { "http://www.zoisite-rb.org" }
+    direct("string")  { "http://www.zoisite-rb.org" }
     direct(:helper)   { basket_url }
     direct(:linkable) { |linkable| [:"#{linkable.linkable_type}", { id: linkable.id }] }
     direct(:nested)   { |linkable| route_for(:linkable, linkable) }
@@ -189,11 +189,11 @@ class TestCustomUrlHelpers < ActionDispatch::IntegrationTest
   end
 
   def test_direct_urls
-    assert_equal "http://www.rubyonrails.org", website_url
-    assert_equal "http://www.rubyonrails.org", Routes.url_helpers.website_url
+    assert_equal "http://www.zoisite-rb.org", website_url
+    assert_equal "http://www.zoisite-rb.org", Routes.url_helpers.website_url
 
-    assert_equal "http://www.rubyonrails.org", string_url
-    assert_equal "http://www.rubyonrails.org", Routes.url_helpers.string_url
+    assert_equal "http://www.zoisite-rb.org", string_url
+    assert_equal "http://www.zoisite-rb.org", Routes.url_helpers.string_url
 
     assert_equal "http://www.example.com/basket", helper_url
     assert_equal "http://www.example.com/basket", Routes.url_helpers.helper_url
@@ -318,7 +318,7 @@ class TestCustomUrlHelpers < ActionDispatch::IntegrationTest
     assert_raises RuntimeError do
       routes.draw do
         namespace :admin do
-          direct(:rubyonrails) { "http://www.rubyonrails.org" }
+          direct(:rubyonrails) { "http://www.zoisite-rb.org" }
         end
       end
     end

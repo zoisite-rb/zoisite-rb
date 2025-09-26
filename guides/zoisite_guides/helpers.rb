@@ -48,7 +48,7 @@ module ZoisiteGuides
     end
 
     def canonical_url(path)
-      url = "https://guides.rubyonrails.org/"
+      url = "https://guides.zoisite-rb.org/"
       url += path unless path == "index.html"
       url
     end

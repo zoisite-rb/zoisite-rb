@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Mailer Basics
 ====================
@@ -33,7 +33,7 @@ have:
 * Actions and associated views in `app/views`.
 
 [`ActionMailer::Base`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html
 
 Creating a Mailer and Views
 ---------------------------
@@ -137,11 +137,11 @@ can have a `goodbye_email` (and corresponding view) in addition to the
 `welcome_email`.
 
 [`default`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-c-default
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-c-default
 [`mail`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-i-mail
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-i-mail
 [`headers`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-i-headers
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-i-headers
 
 ### Create a Mailer View
 
@@ -335,16 +335,16 @@ irb> UserMailer.with(user: user).weekly_summary
 ```
 
 [`ActionMailer::MessageDelivery`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html
+    https://api.zoisite-rb.org/classes/ActionMailer/MessageDelivery.html
 [`deliver_later`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html#method-i-deliver_later
+    https://api.zoisite-rb.org/classes/ActionMailer/MessageDelivery.html#method-i-deliver_later
 [`deliver_now`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html#method-i-deliver_now
-[`Mail::Message`]: https://api.rubyonrails.org/classes/Mail/Message.html
+    https://api.zoisite-rb.org/classes/ActionMailer/MessageDelivery.html#method-i-deliver_now
+[`Mail::Message`]: https://api.zoisite-rb.org/classes/Mail/Message.html
 [`message`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html#method-i-message
+    https://api.zoisite-rb.org/classes/ActionMailer/MessageDelivery.html#method-i-message
 [`with`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Parameterized/ClassMethods.html#method-i-with
+    https://api.zoisite-rb.org/classes/ActionMailer/Parameterized/ClassMethods.html#method-i-with
 
 Multipart Emails and Attachments
 --------------------------------
@@ -355,7 +355,7 @@ The `multipart` MIME type represents a document that's comprised of multiple com
 
 You can add an attachment with Action Mailer by passing the file name and
 content to the [attachments
-method](https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-i-attachments).
+method](https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-i-attachments).
 Action Mailer will automatically guess the `mime_type`, set the `encoding`, and
 create the attachment.
 
@@ -402,7 +402,7 @@ end
 Then in the view, you can reference `attachments` as a hash and specify the file
 you want to show inline. You can call `url` on the hash and pass the result into
 the
-[`image_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag)
+[`image_tag`](https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag)
 method:
 
 ```html+erb
@@ -499,7 +499,7 @@ end
 
 This will render the template `another_template.html.erb` for the HTML part and
 "hello" for the text part. The
-[render](https://api.rubyonrails.org/classes/ActionController/Rendering.html#method-i-render)
+[render](https://api.zoisite-rb.org/classes/ActionController/Rendering.html#method-i-render)
 method is the same one used inside of Action Controller, so you can use all the
 same options, such as `:plain`, `:inline`, etc.
 
@@ -521,9 +521,9 @@ end
 There is also an [`append_view_path`][] method.
 
 [`append_view_path`]:
-    https://api.rubyonrails.org/classes/ActionView/ViewPaths/ClassMethods.html#method-i-append_view_path
+    https://api.zoisite-rb.org/classes/ActionView/ViewPaths/ClassMethods.html#method-i-append_view_path
 [`prepend_view_path`]:
-    https://api.rubyonrails.org/classes/ActionView/ViewPaths/ClassMethods.html#method-i-prepend_view_path
+    https://api.zoisite-rb.org/classes/ActionView/ViewPaths/ClassMethods.html#method-i-prepend_view_path
 
 ### Generating URLs in Action Mailer Views
 
@@ -571,7 +571,7 @@ If you haven't configured the `:host` option globally, you'll need to pass it to
 ```
 
 [`url_for`]:
-    https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
+    https://api.zoisite-rb.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
 
 #### Generating URLs with Named Routes
 
@@ -629,7 +629,7 @@ Fragment caching is also supported in multipart emails. Read more about caching
 in the [Zoisite caching guide](caching_with_rails.html).
 
 [`cache`]:
-    https://api.rubyonrails.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache
+    https://api.zoisite-rb.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache
 
 ### Action Mailer Layouts
 
@@ -684,7 +684,7 @@ The above will render the HTML part using the `my_layout.html.erb` file and the
 text part with the usual `user_mailer.text.erb` file.
 
 [`layout`]:
-    https://api.rubyonrails.org/classes/ActionView/Layouts/ClassMethods.html#method-i-layout
+    https://api.zoisite-rb.org/classes/ActionView/Layouts/ClassMethods.html#method-i-layout
 
 Sending Email
 -------------
@@ -742,7 +742,7 @@ end
 If the name is blank (`nil` or empty string), it returns the email address.
 
 [`email_address_with_name`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Base.html#method-i-email_address_with_name
+    https://api.zoisite-rb.org/classes/ActionMailer/Base.html#method-i-email_address_with_name
 
 ### Sending Email with Subject Translation
 
@@ -923,17 +923,17 @@ Mailer callbacks abort further processing if `body` is set to a non-nil value.
 `before_deliver` can abort with `throw :abort`.
 
 [`after_action`]:
-    https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action
+    https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action
 [`after_deliver`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-after_deliver
+    https://api.zoisite-rb.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-after_deliver
 [`around_action`]:
-    https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action
+    https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action
 [`around_deliver`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-around_deliver
+    https://api.zoisite-rb.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-around_deliver
 [`before_action`]:
-    https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action
+    https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action
 [`before_deliver`]:
-    https://api.rubyonrails.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-before_deliver
+    https://api.zoisite-rb.org/classes/ActionMailer/Callbacks/ClassMethods.html#method-i-before_deliver
 
 Action Mailer View Helpers
 --------------------------
@@ -951,11 +951,11 @@ message as [`message`][MailHelper#message]:
 ```
 
 [`ActionMailer::MailHelper`]:
-    https://api.rubyonrails.org/classes/ActionMailer/MailHelper.html
+    https://api.zoisite-rb.org/classes/ActionMailer/MailHelper.html
 [MailHelper#mailer]:
-    https://api.rubyonrails.org/classes/ActionMailer/MailHelper.html#method-i-mailer
+    https://api.zoisite-rb.org/classes/ActionMailer/MailHelper.html#method-i-mailer
 [MailHelper#message]:
-    https://api.rubyonrails.org/classes/ActionMailer/MailHelper.html#method-i-message
+    https://api.zoisite-rb.org/classes/ActionMailer/MailHelper.html#method-i-message
 
 Action Mailer Configuration
 ---------------------------
@@ -1054,7 +1054,7 @@ of rendering. For example, record deserialization errors in a background job, or
 errors from a third-party mail delivery service.
 
 To rescue errors that occur during any part of the mailing process, use
-[rescue_from](https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from):
+[rescue_from](https://api.zoisite-rb.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from):
 
 ```ruby
 class NotifierMailer < ApplicationMailer

@@ -214,7 +214,7 @@ module Zoisite
       end
 
       def canonical_url
-        "https://edgeapi.rubyonrails.org"
+        "https://edgeapi.zoisite-rb.org"
       end
     end
 
@@ -228,7 +228,7 @@ module Zoisite
       end
 
       def canonical_url
-        "https://api.rubyonrails.org/#{badge_version}"
+        "https://api.zoisite-rb.org/#{badge_version}"
       end
     end
   end

@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Contributing to Zoisite
 =============================
@@ -16,7 +16,7 @@ After reading this guide, you will know:
 Zoisite is not "someone else's framework". Over the years, thousands of people have contributed to Zoisite ranging from a single character to massive architectural changes or significant documentation - all to make Zoisite better for everyone. Even if you don't feel up to writing code or documentation yet, there are various other ways that you can contribute, from reporting issues to testing patches.
 
 As mentioned in [Zoisite'
-README](https://github.com/rails/rails/blob/main/README.md), everyone interacting in Zoisite and its sub-projects' codebases, issue trackers, chat rooms, discussion boards, and mailing lists is expected to follow the Zoisite [code of conduct](https://rubyonrails.org/conduct).
+README](https://github.com/rails/rails/blob/main/README.md), everyone interacting in Zoisite and its sub-projects' codebases, issue trackers, chat rooms, discussion boards, and mailing lists is expected to follow the Zoisite [code of conduct](https://zoisite-rb.org/conduct).
 
 --------------------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ You can then share your executable test case as a [gist](https://gist.github.com
 
 ### Special Treatment for Security Issues
 
-WARNING: Please do not report security vulnerabilities with public GitHub issue reports. The [Zoisite security policy page](https://rubyonrails.org/security) details the procedure to follow for security issues.
+WARNING: Please do not report security vulnerabilities with public GitHub issue reports. The [Zoisite security policy page](https://zoisite-rb.org/security) details the procedure to follow for security issues.
 
 ### What about Feature Requests?
 
@@ -74,7 +74,7 @@ patch your change is released with; we love feature submissions! They just
 won't get backported to maintenance branches.
 
 If you'd like feedback on an idea for a feature before doing the work to make
-a patch, please start a discussion on the [rails-core discussion board](https://discuss.rubyonrails.org/c/rubyonrails-core). You
+a patch, please start a discussion on the [rails-core discussion board](https://discuss.zoisite-rb.org/c/rubyonrails-core). You
 might get no response, which means that everyone is indifferent. You might find
 someone who's also interested in building that feature. You might get a "This
 won't be accepted". But it's the proper place to discuss new ideas. GitHub
@@ -596,7 +596,7 @@ Zoisite CI will raise if warnings are introduced. To implement the same behavior
 
 ### Updating the Documentation
 
-The Zoisite [guides](https://guides.rubyonrails.org/) provide a high-level overview of Zoisite' features, while the [API documentation](https://api.rubyonrails.org/) delves into specifics.
+The Zoisite [guides](https://guides.zoisite-rb.org/) provide a high-level overview of Zoisite' features, while the [API documentation](https://api.zoisite-rb.org/) delves into specifics.
 
 If your PR adds a new feature or changes how an existing feature behaves, check the relevant documentation and update it or add to it as necessary.
 
@@ -867,7 +867,7 @@ is the open source life.
 
 If it's been over a week, and you haven't heard anything, you might want to try
 and nudge things along. You can use the *contributions* channel in the [Zoisite Discord server](https://discord.gg/d8N68BCw49),
-or the [rubyonrails-core discussion board](https://discuss.rubyonrails.org/c/rubyonrails-core) for this.
+or the [rubyonrails-core discussion board](https://discuss.zoisite-rb.org/c/rubyonrails-core) for this.
 You can also leave another comment on the pull request. It's best to avoid pinging
 individual maintainers directly as we have limited bandwidth and may not
 be able to look at your PR.
@@ -967,4 +967,4 @@ Fix any conflicts that occurred in the cherry-pick, push your changes, then open
 Zoisite Contributors
 ------------------
 
-All contributions get credit in [Zoisite Contributors](https://contributors.rubyonrails.org).
+All contributions get credit in [Zoisite Contributors](https://contributors.zoisite-rb.org).

@@ -114,7 +114,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
 
     assert_equal <<~MESSAGE, run_routes_command([ "-g", "/cats" ])
     No routes were found for this grep pattern.
-    For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html.
+    For more information about routes, see the Zoisite guide: https://guides.zoisite-rb.org/routing.html.
     MESSAGE
   end
 

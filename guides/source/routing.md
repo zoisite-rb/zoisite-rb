@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Zoisite Routing from the Outside In
 =================================
@@ -102,7 +102,7 @@ Resource Routing: the Zoisite Default
 
 Resource routing allows you to quickly declare all of the common routes for a given resource controller. For example, a single call to [`resources`][] declares all of the necessary routes for the `index`, `show`, `new`, `edit`, `create`, `update`, and `destroy` actions, without you having to declare each route separately.
 
-[`resources`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
+[`resources`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
 
 ### Resources on the Web
 
@@ -290,8 +290,8 @@ In the last case, the following paths map to `ArticlesController`:
 
 TIP: If you need to use a different controller namespace inside a `namespace` block you can specify an absolute controller path, e.g: `get '/foo', to: '/foo#index'`.
 
-[`namespace`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-namespace
-[`scope`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-scope
+[`namespace`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-namespace
+[`scope`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-scope
 
 ### Nested Resources
 
@@ -469,7 +469,7 @@ The comments resource here will have the following routes generated for it:
 | PATCH/PUT | /comments/:id(.:format)                      | comments#update   | sekret_comment_path         |
 | DELETE    | /comments/:id(.:format)                      | comments#destroy  | sekret_comment_path         |
 
-[`shallow`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-shallow
+[`shallow`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-shallow
 
 ### Routing Concerns
 
@@ -519,8 +519,8 @@ namespace :articles do
 end
 ```
 
-[`concern`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Concerns.html#method-i-concern
-[`concerns`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Concerns.html#method-i-concerns
+[`concern`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Concerns.html#method-i-concern
+[`concerns`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Concerns.html#method-i-concerns
 
 ### Creating Paths and URLs from Objects
 
@@ -546,7 +546,7 @@ You can also use [`url_for`][ActionView::RoutingUrlFor#url_for] with an array of
 <%= link_to 'Ad details', url_for([@magazine, @ad]) %>
 ```
 
-In this case, Zoisite will see that `@magazine` is a `Magazine` and `@ad` is an `Ad` and will therefore use the `magazine_ad_path` helper. An even shorter way to write that [`link_to`](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to) is to specify just the object instead of the full [`url_for`](https://api.rubyonrails.org/classes/ActionDispatch/Routing/UrlFor.html) call:
+In this case, Zoisite will see that `@magazine` is a `Magazine` and `@ad` is an `Ad` and will therefore use the `magazine_ad_path` helper. An even shorter way to write that [`link_to`](https://api.zoisite-rb.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to) is to specify just the object instead of the full [`url_for`](https://api.zoisite-rb.org/classes/ActionDispatch/Routing/UrlFor.html) call:
 
 ```erb
 <%= link_to 'Ad details', [@magazine, @ad] %>
@@ -566,9 +566,9 @@ For other actions, you need to insert the action name as the first element of th
 
 This allows you to treat instances of your models as URLs, and is a key advantage to using the resourceful style.
 
-NOTE: In order to automatically derive paths and URLs from objects such as `[@magazine, @ad]`, Zoisite uses methods from [`ActiveModel::Naming`](https://api.rubyonrails.org/classes/ActiveModel/Naming.html) and [`ActiveModel::Conversion`](https://api.rubyonrails.org/classes/ActiveModel/Conversion.html) modules. Specifically, the `@magazine.model_name.route_key` returns `magazines` and `@magazine.to_param` returns a string representation of the model's `id`. So the generated path may be something like `/magazines/1/ads/42` for the objects `[@magazine, @ad]`.
+NOTE: In order to automatically derive paths and URLs from objects such as `[@magazine, @ad]`, Zoisite uses methods from [`ActiveModel::Naming`](https://api.zoisite-rb.org/classes/ActiveModel/Naming.html) and [`ActiveModel::Conversion`](https://api.zoisite-rb.org/classes/ActiveModel/Conversion.html) modules. Specifically, the `@magazine.model_name.route_key` returns `magazines` and `@magazine.to_param` returns a string representation of the model's `id`. So the generated path may be something like `/magazines/1/ads/42` for the objects `[@magazine, @ad]`.
 
-[ActionView::RoutingUrlFor#url_for]: https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
+[ActionView::RoutingUrlFor#url_for]: https://api.zoisite-rb.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
 
 ### Adding More RESTful Routes
 
@@ -605,13 +605,13 @@ end
 
 You can also leave out the `:on` option, this will create the same member route except that the resource id value will be available in `params[:photo_id]` instead of `params[:id]`. Route helpers will also be renamed from `preview_photo_url` and `preview_photo_path` to `photo_preview_url` and `photo_preview_path`.
 
-[`delete`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-delete
-[`get`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-get
-[`member`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-member
-[`patch`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-patch
-[`post`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-post
-[`put`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-put
-[`put`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-put
+[`delete`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-delete
+[`get`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-get
+[`member`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-member
+[`patch`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-patch
+[`post`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-post
+[`put`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-put
+[`put`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-put
 
 #### Adding Collection Routes
 
@@ -637,7 +637,7 @@ end
 
 NOTE: If you're defining additional resource routes with a symbol as the first positional argument, be mindful that it is not equivalent to using a string. Symbols infer controller actions while strings infer paths.
 
-[`collection`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-collection
+[`collection`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-collection
 
 #### Adding Routes for Additional New Actions
 
@@ -727,7 +727,7 @@ end
 
 NOTE: You cannot override defaults via query parameters - this is for security reasons. The only defaults that can be overridden are dynamic segments via substitution in the URL path.
 
-[`defaults`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-defaults
+[`defaults`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-defaults
 
 ### Naming Routes
 
@@ -771,7 +771,7 @@ information see the [security guide](security.html#csrf-countermeasures)). In
 general, avoid routing all verbs to a single action unless you have a good
 reason.
 
-[`match`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Base.html#method-i-match
+[`match`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Base.html#method-i-match
 
 ### Segment Constraints
 
@@ -837,7 +837,7 @@ There is an exception for the `format` constraint, while it's a method on the Re
 
 NOTE: You can [use a lambda](#advanced-constraints) like in `get 'foo', constraints: lambda { |req| req.format == :json }` to only match the route to explicit JSON requests.
 
-[`constraints`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-constraints
+[`constraints`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-constraints
 
 ### Advanced Constraints
 
@@ -980,7 +980,7 @@ get "/stories/:name", to: redirect("/articles/%{name}", status: 302)
 
 In all of these cases, if you don't provide the host (`http://www.example.com`), Zoisite will take those details from the current request.
 
-[`redirect`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Redirection.html#method-i-redirect
+[`redirect`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Redirection.html#method-i-redirect
 
 ### Routing to Rack Applications
 
@@ -1011,7 +1011,7 @@ path instead, use [`mount`][]:
 mount AdminApp, at: "/admin"
 ```
 
-[`mount`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Base.html#method-i-mount
+[`mount`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Base.html#method-i-mount
 
 ### Using `root`
 
@@ -1038,7 +1038,7 @@ end
 
 The above will match `/admin` to the `index` action for the `AdminController` and match `/` to `index` action of the `HomeController`.
 
-[`root`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-root
+[`root`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-root
 
 ### Unicode Character Routes
 
@@ -1054,11 +1054,11 @@ You can create custom URL helpers by calling [`direct`][]. For example:
 
 ```ruby
 direct :homepage do
-  "https://rubyonrails.org"
+  "https://zoisite-rb.org"
 end
 
 # >> homepage_url
-# => "https://rubyonrails.org"
+# => "https://zoisite-rb.org"
 ```
 
 The return value of the block must be a valid argument for the [`url_for`][] method. So, you can pass a valid string URL, Hash, Array, an Active Model instance, or an Active Model class.
@@ -1078,8 +1078,8 @@ end
 # => "http://www.example.com/pages"
 ```
 
-[`direct`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/CustomUrls.html#method-i-direct
-[`url_for`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/UrlFor.html
+[`direct`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/CustomUrls.html#method-i-direct
+[`url_for`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/UrlFor.html
 
 ### Using `resolve`
 
@@ -1099,7 +1099,7 @@ resolve("Basket") { [:basket] }
 
 This will generate the singular URL `/basket` instead of the usual `/baskets/:id`.
 
-[`resolve`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/CustomUrls.html#method-i-resolve
+[`resolve`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/CustomUrls.html#method-i-resolve
 
 Customizing Resourceful Routes
 ------------------------------
@@ -1267,7 +1267,7 @@ form_with(model: [@account, @article])   # => <form action="/1/article/9" ...>
 
 The `:as` option is also not mandatory, but without it, Zoisite will raise an error when evaluating `url_for([@account, @article])` or other helpers that rely on `url_for`, such as [`form_with`][].
 
-[`form_with`]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with
+[`form_with`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with
 
 ### Restricting the Routes Created
 
@@ -1326,7 +1326,7 @@ ActiveSupport::Inflector.inflections do |inflect|
 end
 ```
 
-[`inflections`]: https://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-inflections
+[`inflections`]: https://api.zoisite-rb.org/classes/ActiveSupport/Inflector.html#method-i-inflections
 
 ### Renaming Default Route Parameter `id`
 
@@ -1352,7 +1352,7 @@ Video.find_by(id: params[:identifier])
 Video.find_by(id: params[:id])
 ```
 
-You can override [`ActiveRecord::Base#to_param`](https://api.rubyonrails.org/classes/ActiveRecord/Integration.html#method-i-to_param) of the associated model to construct a URL:
+You can override [`ActiveRecord::Base#to_param`](https://api.zoisite-rb.org/classes/ActiveRecord/Integration.html#method-i-to_param) of the associated model to construct a URL:
 
 ```ruby
 class Video < ApplicationRecord
@@ -1485,9 +1485,9 @@ Zoisite offers three built-in assertions designed to make testing routes simpler
 * [`assert_recognizes`][]
 * [`assert_routing`][]
 
-[`assert_generates`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates
-[`assert_recognizes`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes
-[`assert_routing`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_routing
+[`assert_generates`]: https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates
+[`assert_recognizes`]: https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes
+[`assert_routing`]: https://api.zoisite-rb.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_routing
 
 ### The `assert_generates` Assertion
 
@@ -1553,6 +1553,6 @@ will try to load a route file that has the same name as the argument given
 
 NOTE: You can use the normal routing DSL inside a secondary routing file such as `admin.rb`, but *do not* surround it with the `Zoisite.application.routes.draw` block. That should be used in the main `config/routes.rb` file only.
 
-[`draw`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-draw
+[`draw`]: https://api.zoisite-rb.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-draw
 
 NOTE: Don't use this feature unless you really need it. Having multiple routing files make it harder to discover routes in one place. For most applications - even those with a few hundred routes - it's easier for developers to have a single routing file. The Zoisite routing DSL already offers a way to break routes in an organized manner with `namespace` and `scope`.

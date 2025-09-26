@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Layouts and Rendering in Zoisite
 ==============================
@@ -30,9 +30,9 @@ From the controller's point of view, there are three ways to create an HTTP resp
 * Call [`redirect_to`][] to send an HTTP redirect status code to the browser
 * Call [`head`][] to create a response consisting solely of HTTP headers to send back to the browser
 
-[controller.render]: https://api.rubyonrails.org/classes/ActionController/Rendering.html#method-i-render
-[`redirect_to`]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
-[`head`]: https://api.rubyonrails.org/classes/ActionController/Head.html#method-i-head
+[controller.render]: https://api.zoisite-rb.org/classes/ActionController/Rendering.html#method-i-render
+[`redirect_to`]: https://api.zoisite-rb.org/classes/ActionController/Redirecting.html#method-i-redirect_to
+[`head`]: https://api.zoisite-rb.org/classes/ActionController/Head.html#method-i-head
 
 ### Rendering by Default: Convention Over Configuration in Action
 
@@ -101,7 +101,7 @@ If we want to display the properties of all the books in our view, we can do so 
 <%= link_to "New book", new_book_path %>
 ```
 
-NOTE: The actual rendering is done by nested classes of the module [`ActionView::Template::Handlers`](https://api.rubyonrails.org/classes/ActionView/Template/Handlers.html). This guide does not dig into that process, but it's important to know that the file extension on your view controls the choice of template handler.
+NOTE: The actual rendering is done by nested classes of the module [`ActionView::Template::Handlers`](https://api.zoisite-rb.org/classes/ActionView/Template/Handlers.html). This guide does not dig into that process, but it's important to know that the file extension on your view controls the choice of template handler.
 
 ### Using `render`
 
@@ -503,7 +503,7 @@ end
 
 With this declaration, all of the views in the entire application will use `app/views/layouts/main.html.erb` for their layout.
 
-[`layout`]: https://api.rubyonrails.org/classes/ActionView/Layouts/ClassMethods.html#method-i-layout
+[`layout`]: https://api.zoisite-rb.org/classes/ActionView/Layouts/ClassMethods.html#method-i-layout
 
 ##### Choosing Layouts at Runtime
 
@@ -700,7 +700,7 @@ redirect_back(fallback_location: root_path)
 
 NOTE: `redirect_to` and `redirect_back` do not halt and return immediately from method execution, but simply set HTTP responses. Statements occurring after them in a method will be executed. You can halt by an explicit `return` or some other halting mechanism, if needed.
 
-[`redirect_back`]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_back
+[`redirect_back`]: https://api.zoisite-rb.org/classes/ActionController/Redirecting.html#method-i-redirect_back
 
 #### Getting a Different Redirect Status Code
 
@@ -826,7 +826,7 @@ When Zoisite renders a view as a response, it does so by combining the view with
 * `yield` and [`content_for`][]
 * Partials
 
-[`content_for`]: https://api.rubyonrails.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-content_for
+[`content_for`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-content_for
 
 ### Asset Tag Helpers
 
@@ -843,12 +843,12 @@ You can use these tags in layouts or other views, although the `auto_discovery_l
 
 WARNING: The asset tag helpers do _not_ verify the existence of the assets at the specified locations; they simply assume that you know what you're doing and generate the link.
 
-[`auto_discovery_link_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-auto_discovery_link_tag
-[`javascript_include_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-javascript_include_tag
-[`stylesheet_link_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-stylesheet_link_tag
-[`image_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag
-[`video_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-video_tag
-[`audio_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-audio_tag
+[`auto_discovery_link_tag`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-auto_discovery_link_tag
+[`javascript_include_tag`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-javascript_include_tag
+[`stylesheet_link_tag`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-stylesheet_link_tag
+[`image_tag`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag
+[`video_tag`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-video_tag
+[`audio_tag`]: https://api.zoisite-rb.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-audio_tag
 
 #### Linking to Feeds with the `auto_discovery_link_tag`
 
@@ -1124,7 +1124,7 @@ This will render a file named `_menu.html.erb` at that point within the view bei
 Since view partials rely on the same [Template Inheritance](#template-inheritance)
 as templates and layouts, that code will pull in the partial from `app/views/application/_menu.html.erb`.
 
-[view.render]: https://api.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render
+[view.render]: https://api.zoisite-rb.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render
 
 #### Using Partials to Simplify Views
 

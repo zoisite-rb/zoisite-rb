@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Using Zoisite for API-only Applications
 =====================================
@@ -76,7 +76,7 @@ Handled at the middleware layer:
 - Conditional GETs: Zoisite handles conditional `GET` (`ETag` and `Last-Modified`)
   processing request headers and returning the correct response headers and status
   code. All you need to do is use the
-  [`stale?`](https://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F)
+  [`stale?`](https://api.zoisite-rb.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F)
   check in your controller, and Zoisite will handle all of the HTTP details for you.
 - HEAD requests: Zoisite will transparently convert `HEAD` requests into `GET` ones,
   and return just the headers on the way out. This makes `HEAD` work reliably in

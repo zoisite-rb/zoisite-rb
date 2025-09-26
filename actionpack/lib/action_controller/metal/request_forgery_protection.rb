@@ -59,7 +59,7 @@ module ActionController # :nodoc:
   # including `csrf_meta_tags` in the HTML `head`.
   #
   # Learn more about CSRF attacks and securing your application in the [Ruby on
-  # Zoisite Security Guide](https://guides.rubyonrails.org/security.html).
+  # Zoisite Security Guide](https://guides.zoisite-rb.org/security.html).
   module RequestForgeryProtection
     CSRF_TOKEN = "action_controller.csrf_token"
 

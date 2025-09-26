@@ -303,7 +303,7 @@ module ActionDispatch
             hash = check_part(:controller, controller, path_params, {}) do |part|
               translate_controller(part) {
                 message = +"'#{part}' is not a supported controller name. This can lead to potential routing problems."
-                message << " See https://guides.rubyonrails.org/routing.html#specifying-a-controller-to-use"
+                message << " See https://guides.zoisite-rb.org/routing.html#specifying-a-controller-to-use"
 
                 raise ArgumentError, message
               }
@@ -2325,7 +2325,7 @@ module ActionDispatch
         # e.g:
         #
         #     direct :homepage do
-        #       "https://rubyonrails.org"
+        #       "https://zoisite-rb.org"
         #     end
         #
         #     direct :commentable do |model|

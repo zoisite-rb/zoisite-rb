@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Active Record Associations
 ==========================
@@ -159,13 +159,13 @@ forms of associations. First, let's take a quick look at the situations where
 each association type is appropriate.
 
 [`belongs_to`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to
 [`has_and_belongs_to_many`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many
 [`has_many`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many
 [`has_one`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one
 
 ### `belongs_to`
 
@@ -263,7 +263,7 @@ gains numerous methods related to the association. Some of these are:
 
 We'll discuss some of the common methods, but you can find an exhaustive list in
 the [ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to).
 
 In all of the above methods, `association` is replaced with the symbol passed as
 the first argument to `belongs_to`. For example, given the declaration:
@@ -488,7 +488,7 @@ gains numerous methods related to the association. Some of these are:
 
 We'll discuss some of the common methods, but you can find an exhaustive list in
 the [ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one).
 
 Like with the [`belongs_to` references](#methods-added-by-belongs-to), in all of
 these methods, `association` is replaced with the symbol passed as the first
@@ -730,7 +730,7 @@ methods related to the association. Some of these are:
 
 We'll discuss some of the common methods, but you can find an exhaustive list in
 the [ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many).
 
 In all of these methods, `collection` is replaced with the symbol passed as the
 first argument to `has_many`, and `collection_singular` is replaced with the
@@ -765,31 +765,31 @@ books.reload
 ```
 
 [`collection<<`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-3C-3C
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-3C-3C
 [`collection.build`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-build
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-build
 [`collection.clear`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-clear
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-clear
 [`collection.create`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create
 [`collection.create!`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create-21
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create-21
 [`collection.delete`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-delete
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-delete
 [`collection.destroy`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-destroy
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-destroy
 [`collection.empty?`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-empty-3F
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-empty-3F
 [`collection.exists?`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F
+    https://api.zoisite-rb.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F
 [`collection.find`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-find
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-find
 [`collection.reload`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-reload
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-reload
 [`collection.size`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-size
+    https://api.zoisite-rb.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-size
 [`collection.where`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-where
+    https://api.zoisite-rb.org/classes/ActiveRecord/QueryMethods.html#method-i-where
 
 ##### Managing the Collection
 
@@ -1263,7 +1263,7 @@ gains numerous methods related to the association. Some of these are:
 
 We'll discuss some of the common methods, but you can find an exhaustive list in
 the [ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many).
 
 In all of these methods, `collection` is replaced with the symbol passed as the
 first argument to `has_and_belongs_to_many`, and `collection_singular` is
@@ -1751,7 +1751,7 @@ manager = employee.manager
 ```
 
 [connection.add_reference]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference
+    https://api.zoisite-rb.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference
 
 Single Table Inheritance (STI)
 ------------------------------
@@ -1917,9 +1917,9 @@ These adjustments provide flexibility when integrating Zoisite with existing
 databases or when specific customization is required for your models.
 
 [inheritance_column]:
-    https://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-c-inheritance_column
+    https://api.zoisite-rb.org/classes/ActiveRecord/ModelSchema.html#method-c-inheritance_column
 [`ActiveRecord::SubclassNotFound`]:
-    https://api.rubyonrails.org/classes/ActiveRecord/SubclassNotFound.html
+    https://api.zoisite-rb.org/classes/ActiveRecord/SubclassNotFound.html
 
 ### Considerations
 
@@ -2135,7 +2135,7 @@ triggered as you work with the association.
 
 But what if you want to reload the cache, because data might have been changed
 by some other part of the application? Just call
-[`reload`](https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-reload)
+[`reload`](https://api.zoisite-rb.org/classes/ActiveRecord/Relation.html#method-i-reload)
 on the association:
 
 ```ruby
@@ -2577,7 +2577,7 @@ end
 
 Each association supports numerous options which you can read more about in
 [`Options` section of each association in the ActiveRecord Associations
-API](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html).
+API](https://api.zoisite-rb.org/classes/ActiveRecord/Associations/ClassMethods.html).
 We'll discuss some of the common use cases below.
 
 #### `:class_name`
@@ -3203,7 +3203,7 @@ If for some reason you change the value of an owner model's primary key, and do
 not also update the foreign keys of the counted models, then the counter cache
 may have stale data. In other words, any orphaned models will still count
 towards the counter. To fix a stale counter cache, use
-[`reset_counters`](https://api.rubyonrails.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-reset_counters).
+[`reset_counters`](https://api.zoisite-rb.org/classes/ActiveRecord/CounterCache/ClassMethods.html#method-i-reset_counters).
 
 ### Callbacks
 

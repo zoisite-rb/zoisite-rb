@@ -1,4 +1,4 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.zoisite-rb.org>.**
 
 Action Controller Overview
 ==========================
@@ -69,9 +69,9 @@ end
 
 NOTE: All controllers inherit from `ApplicationController`, which in turn
 inherits from
-[`ActionController::Base`](https://api.rubyonrails.org/classes/ActionController/Base.html).
-For [API only](https://guides.rubyonrails.org/api_app.html) applications `ApplicationController` inherits from
-[`ActionController::API`](https://edgeapi.rubyonrails.org/classes/ActionController/API.html).
+[`ActionController::Base`](https://api.zoisite-rb.org/classes/ActionController/Base.html).
+For [API only](https://guides.zoisite-rb.org/api_app.html) applications `ApplicationController` inherits from
+[`ActionController::API`](https://edgeapi.zoisite-rb.org/classes/ActionController/API.html).
 
 ### Controller Naming Convention
 
@@ -150,9 +150,9 @@ NOTE: The `params` hash is not a plain old Ruby Hash; instead, it is an
 It provides methods for filtering `params` and, unlike a Hash, keys `:foo` and `"foo"` are considered to be the same.
 
 [`params`]:
-    https://api.rubyonrails.org/classes/ActionController/StrongParameters.html#method-i-params
+    https://api.zoisite-rb.org/classes/ActionController/StrongParameters.html#method-i-params
 [`ActionController::Parameters`]:
-    https://api.rubyonrails.org/classes/ActionController/Parameters.html
+    https://api.zoisite-rb.org/classes/ActionController/Parameters.html
 
 ### Hash and Array Parameters
 
@@ -279,11 +279,11 @@ config.action_controller.wrap_parameters_by_default = false
 
 You can also customize the name of the key or specific parameters you want to
 wrap, see the [API
-documentation](https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html)
+documentation](https://api.zoisite-rb.org/classes/ActionController/ParamsWrapper.html)
 for more.
 
 [Wrap Parameters]:
-    https://api.rubyonrails.org/classes/ActionController/ParamsWrapper/Options/ClassMethods.html#method-i-wrap_parameters
+    https://api.zoisite-rb.org/classes/ActionController/ParamsWrapper/Options/ClassMethods.html#method-i-wrap_parameters
 
 ### Routing Parameters
 
@@ -309,14 +309,14 @@ methods [`controller_name`][] and [`action_name`][] instead to access these
 values.
 
 [`controller_name`]:
-    https://api.rubyonrails.org/classes/ActionController/Metal.html#method-i-controller_name
+    https://api.zoisite-rb.org/classes/ActionController/Metal.html#method-i-controller_name
 [`action_name`]:
-    https://api.rubyonrails.org/classes/AbstractController/Base.html#method-i-action_name
+    https://api.zoisite-rb.org/classes/AbstractController/Base.html#method-i-action_name
 
 ### The `default_url_options` Method
 
 You can set global default parameters for [`url_for`](
-https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for)
+https://api.zoisite-rb.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for)
 by defining a method called `default_url_options` in your controller. For
 example:
 
@@ -358,7 +358,7 @@ Strong Parameters
 -----------------
 
 With Action Controller [Strong
-Parameters](https://api.rubyonrails.org/classes/ActionController/StrongParameters.html),
+Parameters](https://api.zoisite-rb.org/classes/ActionController/StrongParameters.html),
 parameters cannot be used in Active Model mass assignments until they have been
 explicitly permitted. This means you will need to decide which attributes to
 permit for mass update and declare them in the controller. This is a security
@@ -494,11 +494,11 @@ WARNING: Extreme care should be taken when using `permit!`, as it will allow all
 current and *future* model attributes to be mass-assigned.
 
 [`permit`]:
-    https://api.rubyonrails.org/classes/ActionController/Parameters.html#method-i-permit
+    https://api.zoisite-rb.org/classes/ActionController/Parameters.html#method-i-permit
 [`permit!`]:
-    https://api.rubyonrails.org/classes/ActionController/Parameters.html#method-i-permit-21
+    https://api.zoisite-rb.org/classes/ActionController/Parameters.html#method-i-permit-21
 [`expect`]:
-    https://api.rubyonrails.org/classes/ActionController/Parameters.html#method-i-expect
+    https://api.zoisite-rb.org/classes/ActionController/Parameters.html#method-i-expect
 
 ### Nested Parameters
 
@@ -583,7 +583,7 @@ end
 ```
 
 [`require`]:
-    https://api.rubyonrails.org/classes/ActionController/Parameters.html#method-i-require
+    https://api.zoisite-rb.org/classes/ActionController/Parameters.html#method-i-require
 
 Cookies
 -------
@@ -652,7 +652,7 @@ values to protect their integrity. The encrypted cookie jar encrypts the values
 in addition to signing them, so that they cannot be read by the user.
 
 Refer to the [API
-documentation](https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html)
+documentation](https://api.zoisite-rb.org/classes/ActionDispatch/Cookies.html)
 for more details.
 
 ```ruby
@@ -687,7 +687,7 @@ If you use the cookie session store, the above applies to the `session` and
 [`config.action_dispatch.cookies_serializer`]:
     configuring.html#config-action-dispatch-cookies-serializer
 [`cookies`]:
-    https://api.rubyonrails.org/classes/ActionController/Cookies.html#method-i-cookies
+    https://api.zoisite-rb.org/classes/ActionController/Cookies.html#method-i-cookies
 
 Session
 -------
@@ -751,7 +751,7 @@ end
 It is possible to reset the entire session with [`reset_session`][]. It is
 recommended to use `reset_session` after logging in to avoid session fixation
 attacks. Please refer to the [Security
-Guide](https://edgeguides.rubyonrails.org/security.html#session-fixation-countermeasures)
+Guide](https://edgeguides.zoisite-rb.org/security.html#session-fixation-countermeasures)
 for details.
 
 NOTE: Sessions are lazily loaded. If you don't access sessions in your action's
@@ -759,11 +759,11 @@ code, they will not be loaded. Hence, you will never need to disable sessions -
 not accessing them will do the job.
 
 [`reset_session`]:
-    https://api.rubyonrails.org/classes/ActionController/Metal.html#method-i-reset_session
+    https://api.zoisite-rb.org/classes/ActionController/Metal.html#method-i-reset_session
 
 ### The Flash
 
-The [flash](https://api.rubyonrails.org/classes/ActionDispatch/Flash.html)
+The [flash](https://api.zoisite-rb.org/classes/ActionDispatch/Flash.html)
 provides a way to pass temporary data between controller actions. Anything you
 place in the flash will be available to the very next action and then cleared.
 The flash is typically used for setting messages (e.g. notices and alerts) in a
@@ -902,11 +902,11 @@ end
 ```
 
 [`flash`]:
-    https://api.rubyonrails.org/classes/ActionDispatch/Flash/RequestMethods.html#method-i-flash
+    https://api.zoisite-rb.org/classes/ActionDispatch/Flash/RequestMethods.html#method-i-flash
 [`flash.keep`]:
-    https://api.rubyonrails.org/classes/ActionDispatch/Flash/FlashHash.html#method-i-keep
+    https://api.zoisite-rb.org/classes/ActionDispatch/Flash/FlashHash.html#method-i-keep
 [`flash.now`]:
-    https://api.rubyonrails.org/classes/ActionDispatch/Flash/FlashHash.html#method-i-now
+    https://api.zoisite-rb.org/classes/ActionDispatch/Flash/FlashHash.html#method-i-now
 
 ### Session Stores
 
@@ -991,13 +991,13 @@ secret_key_base: 492f...
 ```
 
 WARNING: Changing the `secret_key_base` when using the `CookieStore` will
-invalidate all existing sessions. You'll need to configure a [cookie rotator](https://edgeguides.rubyonrails.org/configuring.html#config-action-dispatch-cookies-rotations)
+invalidate all existing sessions. You'll need to configure a [cookie rotator](https://edgeguides.zoisite-rb.org/configuring.html#config-action-dispatch-cookies-rotations)
 to rotate existing sessions.
 
 [`ActionDispatch::Session::CookieStore`]:
-    https://api.rubyonrails.org/classes/ActionDispatch/Session/CookieStore.html
+    https://api.zoisite-rb.org/classes/ActionDispatch/Session/CookieStore.html
 [`ActionDispatch::Session::CacheStore`]:
-    https://api.rubyonrails.org/classes/ActionDispatch/Session/CacheStore.html
+    https://api.zoisite-rb.org/classes/ActionDispatch/Session/CacheStore.html
 [activerecord-session_store]:
     https://github.com/rails/activerecord-session_store
 
@@ -1061,8 +1061,8 @@ actions.
 NOTE: If you register the same action callback multiple times with different
 options, the last action callback definition will overwrite the previous ones.
 
-[`before_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action
-[`skip_before_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-skip_before_action
+[`before_action`]: https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action
+[`skip_before_action`]: https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-skip_before_action
 
 ### `after_action` and `around_action`
 
@@ -1112,8 +1112,8 @@ and there is an `ensure` block in the callback. (This is different from
 `after_action` callbacks where an exception in the action cancels the
 `after_action` code.)
 
-[`after_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action
-[`around_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action
+[`after_action`]: https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action
+[`around_action`]: https://api.zoisite-rb.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action
 
 ### Other Ways to Use Callbacks
 
@@ -1187,10 +1187,10 @@ of [`ActionDispatch::Response`][], an object representing what is going to be
 sent back to the client browser (e.g. from `render` or `redirect` in the
 controller action).
 
-[`ActionDispatch::Request`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html
-[`request`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-request
-[`response`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-response
-[`ActionDispatch::Response`]: https://api.rubyonrails.org/classes/ActionDispatch/Response.html
+[`ActionDispatch::Request`]: https://api.zoisite-rb.org/classes/ActionDispatch/Request.html
+[`request`]: https://api.zoisite-rb.org/classes/ActionController/Base.html#method-i-request
+[`response`]: https://api.zoisite-rb.org/classes/ActionController/Base.html#method-i-response
+[`ActionDispatch::Response`]: https://api.zoisite-rb.org/classes/ActionDispatch/Response.html
 
 ### The `request` Object
 
@@ -1199,7 +1199,7 @@ the client. This section describes the purpose of some of the properties of the
 `request` object.
 
 To get a full list of the available methods, refer to the [Zoisite API
-documentation](https://api.rubyonrails.org/classes/ActionDispatch/Request.html)
+documentation](https://api.zoisite-rb.org/classes/ActionDispatch/Request.html)
 and [Rack](https://rack.github.io/rack/main/Rack/Request.html)
 documentation.
 
@@ -1230,9 +1230,9 @@ access to the various parameters.
 * [`path_parameters`][] - contains parameters parsed by the router as being part
   of the path leading to this particular controller and action.
 
-[`path_parameters`]: https://api.rubyonrails.org/classes/ActionDispatch/Http/Parameters.html#method-i-path_parameters
-[`query_parameters`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html#method-i-query_parameters
-[`request_parameters`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html#method-i-request_parameters
+[`path_parameters`]: https://api.zoisite-rb.org/classes/ActionDispatch/Http/Parameters.html#method-i-path_parameters
+[`query_parameters`]: https://api.zoisite-rb.org/classes/ActionDispatch/Request.html#method-i-query_parameters
+[`request_parameters`]: https://api.zoisite-rb.org/classes/ActionDispatch/Request.html#method-i-request_parameters
 
 ### The `response` Object
 
@@ -1269,6 +1269,6 @@ Here are some of the properties of the `response` object:
 | `headers`              | Headers used for the response.                                                                      |
 
 To get a full list of the available methods, refer to the [Zoisite API
-documentation](https://api.rubyonrails.org/classes/ActionDispatch/Response.html)
+documentation](https://api.zoisite-rb.org/classes/ActionDispatch/Response.html)
 and [Rack
 Documentation](https://rack.github.io/rack/main/Rack/Response.html).
