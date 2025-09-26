@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.license = "MIT"
 
   s.author   = "Rafael Mendonça França"
-  s.email    = "rafael@zoisite.org"
-  s.homepage = "https://zoisite.org"
+  s.email    = "rafael@zoisite-rb.org"
+  s.homepage = "https://zoisite-rb.org"
 
   s.files = Dir["lib/**/*", "test/**/*", "RAILS_VERSION"]
 

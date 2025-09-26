@@ -8,7 +8,7 @@
     "app/assets/javascripts/*.js",
     "src/*.js"
   ],
-  "homepage": "https://zoisite.org/",
+  "homepage": "https://zoisite-rb.org/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zoisite-rb/zoisite-rb.git"

@@ -46,15 +46,15 @@
 
   <div id="mobile-navigation-bar">
     <div class="wrapper">
-      <strong class="more-info-label">More at <a href="https://zoisite.org/">zoisite.org:</a> </strong>
+      <strong class="more-info-label">More at <a href="https://zoisite-rb.org/">zoisite-rb.org:</a> </strong>
       <button type="button" class="js-only red-button more-info-button" id="more-info" aria-controls="more-info-links" aria-expanded="false">
         More Zoisite
       </button>
       <ul id="more-info-links" class="more-info-links hidden">
-        <li class="more-info"><a href="https://zoisite.org/blog">Blog</a></li>
-        <li class="more-info"><a href="https://guides.zoisite.org/">Guides</a></li>
-        <li class="more-info"><a href="https://api.zoisite.org/">API</a></li>
-        <li class="more-info"><a href="https://discuss.zoisite.org/">Forum</a></li>
+        <li class="more-info"><a href="https://zoisite-rb.org/blog">Blog</a></li>
+        <li class="more-info"><a href="https://guides.zoisite-rb.org/">Guides</a></li>
+        <li class="more-info"><a href="https://api.zoisite-rb.org/">API</a></li>
+        <li class="more-info"><a href="https://discuss.zoisite-rb.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/zoisite-rb/zoisite-rb">Contribute on GitHub</a></li>
       </ul>
     </div>
@@ -68,15 +68,15 @@
           <span id="version-switcher" class="js-only">
             <label for="version-switcher-select">Version: <span class="visibly-hidden">pick from the list to go to that Zoisite version's guides</span></label>
             <select id="version-switcher-select" class="guides-version">
-              <option value="https://edgeguides.zoisite.org/"<%= " selected" if @edge %>>Edge</option>
+              <option value="https://edgeguides.zoisite-rb.org/"<%= " selected" if @edge %>>Edge</option>
               <% %w[8.0 7.2 7.1 7.0 6.1 6.0 5.2 5.1 5.0 4.2 4.1 4.0 3.2 3.1 3.0 2.3].each do |version| %>
-                <option value="https://guides.zoisite.org/v<%= version %>/<%= @path %>"<%= " selected" if @version&.start_with?("v#{version}") %>><%= version %></option>
+                <option value="https://guides.zoisite-rb.org/v<%= version %>/<%= @path %>"<%= " selected" if @version&.start_with?("v#{version}") %>><%= version %></option>
               <% end %>
             </select>
           </span>
         </div>
         <ul class="nav">
-          <li><a class="nav-item" id="home_nav" href="https://zoisite.org/">Home</a></li>
+          <li><a class="nav-item" id="home_nav" href="https://zoisite-rb.org/">Home</a></li>
           <li class="guides-index guides-index-large">
             <a href="index.html" id="guides-menu-button" role="button" aria-controls="guides" aria-expanded="false" class="guides-index-item nav-item">Guides Index</a>
             <div id="guides" class="clearfix" style="display: none;">
@@ -143,12 +143,12 @@
             </p>
             <p>
               Please contribute if you see any typos or factual errors.
-              To get started, you can read our <%= link_to 'documentation contributions', 'https://edgeguides.zoisite.org/contributing_to_zoisite.html#contributing-to-the-zoisite-documentation' %> section.
+              To get started, you can read our <%= link_to 'documentation contributions', 'https://edgeguides.zoisite-rb.org/contributing_to_zoisite.html#contributing-to-the-zoisite-documentation' %> section.
             </p>
             <p>
               You may also find incomplete content or stuff that is not up to date.
               Please do add any missing documentation for main. Make sure to check
-              <%= link_to 'Edge Guides', 'https://edgeguides.zoisite.org' %> first to verify
+              <%= link_to 'Edge Guides', 'https://edgeguides.zoisite-rb.org' %> first to verify
               if the issues are already fixed or not on the main branch.
               Check the <%= link_to 'Zoisite Guides Guidelines', 'zoisite_guides_guidelines.html' %>
               for style and conventions.
@@ -158,7 +158,7 @@
               <%= link_to 'open an issue', 'https://github.com/zoisite-rb/zoisite-rb/issues' %>.
             </p>
             <p>And last but not least, any kind of discussion regarding Zoisite
-              documentation is very welcome on the <%= link_to 'official Zoisite Forum', 'https://discuss.zoisite.org/c/zoisite-docs' %>.
+              documentation is very welcome on the <%= link_to 'official Zoisite Forum', 'https://discuss.zoisite-rb.org/c/zoisite-docs' %>.
             </p>
           </footer>
         </div>
