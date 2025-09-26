@@ -1,5 +1,5 @@
 {
-  "name": "@rails/activestorage",
+  "name": "@zoisite/activestorage",
   "version": "8.1.0-beta1",
   "description": "Attach cloud and local files in Zoisite applications",
   "module": "app/assets/javascripts/activestorage.esm.js",
@@ -8,13 +8,13 @@
     "app/assets/javascripts/*.js",
     "src/*.js"
   ],
-  "homepage": "https://rubyonrails.org/",
+  "homepage": "https://rubyonzoisite.org/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rails/rails.git"
+    "url": "git+https://github.com/zoisite/zoisite.git"
   },
   "bugs": {
-    "url": "https://github.com/rails/rails/issues"
+    "url": "https://github.com/zoisite/zoisite/issues"
   },
   "author": "Javan Makhmali <javan@javan.us>",
   "license": "MIT",

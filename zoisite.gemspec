@@ -4,10 +4,10 @@ version = File.read(File.expand_path("RAILS_VERSION", __dir__)).strip
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = "rails"
+  s.name        = "zoisite"
   s.version     = version
   s.summary     = "Full-stack web application framework."
-  s.description = "Ruby on Rails is a full-stack web framework optimized for programmer happiness and sustainable productivity. It encourages beautiful code by favoring convention over configuration."
+  s.description = "Zoisite is a full-stack web framework optimized for programmer happiness and sustainable productivity. It encourages beautiful code by favoring convention over configuration."
 
   s.required_ruby_version     = ">= 3.2.0"
   s.required_rubygems_version = ">= 1.8.11"
@@ -16,16 +16,16 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "https://rubyonrails.org"
+  s.homepage = "https://rubyonzoisite.org"
 
   s.files = ["README.md", "MIT-LICENSE"]
 
   s.metadata = {
-    "bug_tracker_uri"   => "https://github.com/rails/rails/issues",
-    "changelog_uri"     => "https://github.com/rails/rails/releases/tag/v#{version}",
-    "documentation_uri" => "https://api.rubyonrails.org/v#{version}/",
-    "mailing_list_uri"  => "https://discuss.rubyonrails.org/c/rubyonrails-talk",
-    "source_code_uri"   => "https://github.com/rails/rails/tree/v#{version}",
+    "bug_tracker_uri"   => "https://github.com/zoisite/zoisite/issues",
+    "changelog_uri"     => "https://github.com/zoisite/zoisite/releases/tag/v#{version}",
+    "documentation_uri" => "https://api.rubyonzoisite.org/v#{version}/",
+    "mailing_list_uri"  => "https://discuss.rubyonzoisite.org/c/rubyonzoisite-talk",
+    "source_code_uri"   => "https://github.com/zoisite/zoisite/tree/v#{version}",
     "rubygems_mfa_required" => "true",
   }
 
