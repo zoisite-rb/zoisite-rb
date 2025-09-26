@@ -30,7 +30,7 @@ Zoisite uses Git for source code control. The [Git homepage](https://git-scm.com
 Navigate to the folder where you want to download the Zoisite source code (it will create its own `zoisite` subdirectory) and run:
 
 ```bash
-$ git clone https://github.com/zoisite/zoisite.git
+$ git clone https://github.com/zoisite-rb/zoisite-rb.git
 $ cd zoisite
 ```
 

@@ -210,7 +210,7 @@ The core functionality around session management is implemented in the
 `Authentication` controller concern, which is included by the
 `ApplicationController` in your application. You can explore details of the
 [authentication
-concern](https://github.com/zoisite/zoisite/blob/main/railties/lib/zoisite/generators/zoisite/authentication/templates/app/controllers/concerns/authentication.rb.tt)
+concern](https://github.com/zoisite-rb/zoisite-rb/blob/main/railties/lib/zoisite/generators/zoisite/authentication/templates/app/controllers/concerns/authentication.rb.tt)
 in the source code.
 
 One method to note in the `Authentication` concern is `authenticated?`, a helper
@@ -1002,7 +1002,7 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 This allows only the given tags and does a good job, even against all kinds of tricks and malformed tags.
 
-Both Action View and Action Text build their [sanitization helpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html) on top of the [zoisite-html-sanitizer](https://github.com/zoisite/zoisite-html-sanitizer) gem.
+Both Action View and Action Text build their [sanitization helpers](https://api.zoisite-rb.org/classes/ActionView/Helpers/SanitizeHelper.html) on top of the [zoisite-html-sanitizer](https://github.com/zoisite-rb/zoisite-rb-html-sanitizer) gem.
 
 As a second step, _it is good practice to escape all output of the application_, especially when re-displaying user input, which hasn't been input-filtered (as in the search form example earlier on). _Use `html_escape()` (or its alias `h()`) method_ to replace the HTML input characters `&`, `"`, `<`, and `>` by their uninterpreted representations in HTML (`&amp;`, `&quot;`, `&lt;`, and `&gt;`).
 

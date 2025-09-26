@@ -9,7 +9,7 @@ class RouteHelperIntegrationTest < ActionDispatch::IntegrationTest
   # We define many routes in these modules after they have been included into
   # the controllers. For boot performance, it's important that we don't
   # duplicate these modules and make method cache invalidation expensive.
-  # https://github.com/zoisite/zoisite/pull/37927
+  # https://github.com/zoisite-rb/zoisite-rb/pull/37927
   test "only includes one module with route helpers" do
     url_helpers_module = SharedTestRoutes.named_routes.url_helpers_module
     path_helpers_module = SharedTestRoutes.named_routes.path_helpers_module

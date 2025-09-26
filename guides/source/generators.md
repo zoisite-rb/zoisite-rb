@@ -268,8 +268,8 @@ The contents of `app/views/posts/index.html.erb` is:
 <%= @posts.count %> Posts
 ```
 
-[scaffold controller template]: https://github.com/zoisite/zoisite/blob/main/railties/lib/zoisite/generators/zoisite/scaffold_controller/templates/controller.rb.tt
-[scaffold view templates]: https://github.com/zoisite/zoisite/tree/main/railties/lib/zoisite/generators/erb/scaffold/templates
+[scaffold controller template]: https://github.com/zoisite-rb/zoisite-rb/blob/main/railties/lib/zoisite/generators/zoisite/scaffold_controller/templates/controller.rb.tt
+[scaffold view templates]: https://github.com/zoisite-rb/zoisite-rb/tree/main/railties/lib/zoisite/generators/erb/scaffold/templates
 
 Overriding Zoisite Generators
 ---------------------------

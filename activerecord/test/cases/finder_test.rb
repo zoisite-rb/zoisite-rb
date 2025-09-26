@@ -359,7 +359,7 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   # Ensure +exists?+ runs without an error by excluding distinct value.
-  # See https://github.com/zoisite/zoisite/pull/26981.
+  # See https://github.com/zoisite-rb/zoisite-rb/pull/26981.
   def test_exists_with_order_and_distinct
     assert_equal true, Topic.order(:id).distinct.exists?
   end

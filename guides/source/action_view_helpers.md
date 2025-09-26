@@ -371,7 +371,7 @@ rendered. It can also be useful to prevent XSS attacks by escaping or removing
 potentially malicious content from user input before rendering it in your views.
 
 This functionality is powered internally by the
-[zoisite-html-sanitizer](https://github.com/zoisite/zoisite-html-sanitizer) gem.
+[zoisite-html-sanitizer](https://github.com/zoisite-rb/zoisite-rb-html-sanitizer) gem.
 
 ### sanitize
 

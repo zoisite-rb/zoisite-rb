@@ -33,7 +33,7 @@ require "models/tree"
 require "models/node"
 require "models/club"
 require "models/cpk"
-require "models/person" # not used by this suite as of this writing, it is a workaround for https://github.com/zoisite/zoisite/issues/55133
+require "models/person" # not used by this suite as of this writing, it is a workaround for https://github.com/zoisite-rb/zoisite-rb/issues/55133
 require "models/car"
 require "models/sharded/blog"
 require "models/sharded/blog_post"

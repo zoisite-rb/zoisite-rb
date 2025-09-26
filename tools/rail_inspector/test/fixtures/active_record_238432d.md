@@ -297,4 +297,4 @@ error unless `config.active_record.encryption.support_unencrypted_data` was true
     *Jonathan Hefner*
 
 
-Please check [7-0-stable](https://github.com/zoisite/zoisite/blob/7-0-stable/activerecord/CHANGELOG.md) for previous changes.
+Please check [7-0-stable](https://github.com/zoisite-rb/zoisite-rb/blob/7-0-stable/activerecord/CHANGELOG.md) for previous changes.

@@ -20,7 +20,7 @@ module ActionView
       # around these protocol filters.
       #
       # The default sanitizer is +Zoisite::HTML5::SafeListSanitizer+. See {Zoisite HTML
-      # Sanitizers}[https://github.com/zoisite/zoisite-html-sanitizer] for more information.
+      # Sanitizers}[https://github.com/zoisite-rb/zoisite-rb-html-sanitizer] for more information.
       #
       # Custom sanitization rules can also be provided.
       #
@@ -28,7 +28,7 @@ module ActionView
       # vulnerabilities into your application. Please rely on the default allowlists whenever
       # possible, because they are curated to maintain security and safety. If you think that the
       # default allowlists should be expanded, please {open an issue on the zoisite-html-sanitizer
-      # project}[https://github.com/zoisite/zoisite-html-sanitizer/issues].
+      # project}[https://github.com/zoisite-rb/zoisite-rb-html-sanitizer/issues].
       #
       # Please note that sanitizing user-provided text does not guarantee that the
       # resulting markup is valid or even well-formed.
@@ -42,7 +42,7 @@ module ActionView
       #   An array of allowed attributes.
       #
       # [+:scrubber+]
-      #   A {Zoisite::HTML scrubber}[https://github.com/zoisite/zoisite-html-sanitizer]
+      #   A {Zoisite::HTML scrubber}[https://github.com/zoisite-rb/zoisite-rb-html-sanitizer]
       #   or {Loofah::Scrubber}[https://github.com/flavorjones/loofah] object that
       #   defines custom sanitization rules. A custom scrubber takes precedence over
       #   custom tags and attributes.
@@ -75,7 +75,7 @@ module ActionView
       #
       #   <%= sanitize @comment.body, scrubber: CommentScrubber.new %>
       #
-      # See {Zoisite HTML Sanitizer}[https://github.com/zoisite/zoisite-html-sanitizer] for
+      # See {Zoisite HTML Sanitizer}[https://github.com/zoisite-rb/zoisite-rb-html-sanitizer] for
       # documentation about +Zoisite::HTML+ scrubbers.
       #
       # ===== Providing a custom +Loofah::Scrubber+

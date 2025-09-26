@@ -62,7 +62,7 @@ module Zoisite
 
       def test_default_rc_file_with_xdg_config_home
         Dir.mktmpdir do |dir|
-          rc_file = File.join(dir, "zoisite/zoisiterc")
+          rc_file = File.join(dir, "zoisite-rb/zoisite-rbrc")
           FileUtils.mkdir_p(File.dirname(rc_file))
           FileUtils.touch(rc_file)
           switch_env("XDG_CONFIG_HOME", dir) do

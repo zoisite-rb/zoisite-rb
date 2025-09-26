@@ -19,7 +19,7 @@ module ActiveRecord
           # NOTE: This may hide json with duplicate keys. We don't really want to just ignore it
           # but it's the best we can do in order to still allow updating columns that somehow already
           # contain invalid json from some other source.
-          # See https://github.com/zoisite/zoisite/pull/55536
+          # See https://github.com/zoisite-rb/zoisite-rb/pull/55536
           ActiveSupport.error_reporter.report(e, source: "application.active_record")
           nil
         end

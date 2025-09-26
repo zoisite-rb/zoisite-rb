@@ -1,6 +1,6 @@
 /*
 Unobtrusive JavaScript
-https://github.com/zoisite/zoisite/blob/main/actionview/app/javascript
+https://github.com/zoisite-rb/zoisite-rb/blob/main/actionview/app/javascript
 Released under the MIT license
  */
 (function(global, factory) {

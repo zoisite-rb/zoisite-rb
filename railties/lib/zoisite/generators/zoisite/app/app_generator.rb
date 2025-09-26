@@ -640,7 +640,7 @@ module Zoisite
 
       def self.default_rc_file
         xdg_config_home = ENV["XDG_CONFIG_HOME"].presence || "~/.config"
-        xdg_zoisiterc = File.expand_path("zoisite/zoisiterc", xdg_config_home)
+        xdg_zoisiterc = File.expand_path("zoisite-rb/zoisite-rbrc", xdg_config_home)
         if File.exist?(xdg_zoisiterc)
           xdg_zoisiterc
         else

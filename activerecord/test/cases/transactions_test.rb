@@ -222,7 +222,7 @@ class TransactionTest < ActiveRecord::TestCase
   end
 
   def test_transaction_does_not_apply_default_scope
-    # Regression test for https://github.com/zoisite/zoisite/issues/50368
+    # Regression test for https://github.com/zoisite-rb/zoisite-rb/issues/50368
     topic = topics(:fifth)
     Topic.where.not(id: topic.id).transaction do
       assert_not_nil Topic.find(topic.id)

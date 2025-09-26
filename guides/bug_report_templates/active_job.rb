@@ -7,7 +7,7 @@ gemfile(true) do
 
   gem "zoisite"
   # If you want to test against edge Zoisite replace the previous line with this:
-  # gem "zoisite", github: "zoisite/zoisite", branch: "main"
+  # gem "zoisite", github: "zoisite-rb/zoisite-rb", branch: "main"
 end
 
 require "active_job/railtie"

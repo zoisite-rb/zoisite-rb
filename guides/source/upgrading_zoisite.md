@@ -84,7 +84,7 @@ For more information on changes made to Zoisite 8.1 please see the [release note
 
 ### The table columns inside `schema.rb` are now sorted alphabetically.
 
-Active Record now alphabetically sorts table columns in `schema.rb` by default, so dumps are consistent across machines and don’t flip-flop with migration order -- meaning fewer noisy diffs. `structure.sql` can still be leveraged to preserve exact column order. [See #53281 for more details on alphabetizing schema changes.](https://github.com/zoisite/zoisite/pull/53281)
+Active Record now alphabetically sorts table columns in `schema.rb` by default, so dumps are consistent across machines and don’t flip-flop with migration order -- meaning fewer noisy diffs. `structure.sql` can still be leveraged to preserve exact column order. [See #53281 for more details on alphabetizing schema changes.](https://github.com/zoisite-rb/zoisite-rb/pull/53281)
 
 Upgrading from Zoisite 7.2 to Zoisite 8.0
 -------------------------------------
@@ -439,7 +439,7 @@ See the [Configuring Zoisite Applications](configuring.html#config-active-record
 guide for more information on `config.active_record.encryption.hash_digest_class`.
 
 In addition, a new configuration [`config.active_record.encryption.support_sha1_for_non_deterministic_encryption`](configuring.html#config-active-record-encryption-support-sha1-for-non-deterministic-encryption)
-was introduced to resolve [a bug](https://github.com/zoisite/zoisite/issues/42922) that caused some attributes to be
+was introduced to resolve [a bug](https://github.com/zoisite-rb/zoisite-rb/issues/42922) that caused some attributes to be
 encrypted using SHA-1 even when SHA-256 was configured via the aforementioned `hash_digest_class` configuration.
 
 By default, `config.active_record.encryption.support_sha1_for_non_deterministic_encryption` is disabled in
@@ -971,7 +971,7 @@ the API. Some of these changes may throw errors depending on how you manipulate
 errors, while others will print deprecation warnings to be fixed for Zoisite 7.0.
 
 More information about this change and details about the API changes can be
-found [in this PR](https://github.com/zoisite/zoisite/pull/32313).
+found [in this PR](https://github.com/zoisite-rb/zoisite-rb/pull/32313).
 
 Upgrading from Zoisite 5.2 to Zoisite 6.0
 -------------------------------------
@@ -1415,7 +1415,7 @@ For more information on changes made to Zoisite 5.2 please see the [release note
 
 ### Bootsnap
 
-Zoisite 5.2 adds bootsnap gem in the [newly generated app's Gemfile](https://github.com/zoisite/zoisite/pull/29313).
+Zoisite 5.2 adds bootsnap gem in the [newly generated app's Gemfile](https://github.com/zoisite-rb/zoisite-rb/pull/29313).
 The `app:update` command sets it up in `boot.rb`. If you want to use it, then add it in the Gemfile:
 
 ```ruby
@@ -1547,7 +1547,7 @@ ActiveSupport.halt_callback_chains_on_return_false = false
 Note that this option will not affect Active Support callbacks since they never
 halted the chain when any value was returned.
 
-See [#17227](https://github.com/zoisite/zoisite/pull/17227) for more details.
+See [#17227](https://github.com/zoisite-rb/zoisite-rb/pull/17227) for more details.
 
 ### ActiveJob Now Inherits from ApplicationJob by Default
 
@@ -1564,7 +1564,7 @@ end
 
 Then make sure that all your job classes inherit from it.
 
-See [#19034](https://github.com/zoisite/zoisite/pull/19034) for more details.
+See [#19034](https://github.com/zoisite-rb/zoisite-rb/pull/19034) for more details.
 
 ### Zoisite Controller Testing
 
@@ -1583,7 +1583,7 @@ If you are using `ActionDispatch::Http::UploadedFile` in your tests to
 upload files, you will need to change to use the similar `Rack::Test::UploadedFile`
 class instead.
 
-See [#26404](https://github.com/zoisite/zoisite/issues/26404) for more details.
+See [#26404](https://github.com/zoisite-rb/zoisite-rb/issues/26404) for more details.
 
 ### Autoloading is Disabled After Booting in the Production Environment
 
@@ -1678,7 +1678,7 @@ You can now just call the dependency once with a wildcard.
 gem "record_tag_helper", "~> 1.0"
 ```
 
-See [#18411](https://github.com/zoisite/zoisite/pull/18411) for more details.
+See [#18411](https://github.com/zoisite-rb/zoisite-rb/pull/18411) for more details.
 
 ### Removed Support for `protected_attributes` Gem
 
@@ -1878,7 +1878,7 @@ class UsersController < ApplicationController
 end
 ```
 
-See [#16526](https://github.com/zoisite/zoisite/pull/16526) for more details.
+See [#16526](https://github.com/zoisite-rb/zoisite-rb/pull/16526) for more details.
 
 ### Error handling in transaction callbacks
 
@@ -1898,8 +1898,8 @@ deprecation warning by adding following configuration to your
 config.active_record.raise_in_transactional_callbacks = true
 ```
 
-See [#14488](https://github.com/zoisite/zoisite/pull/14488) and
-[#16537](https://github.com/zoisite/zoisite/pull/16537) for more details.
+See [#14488](https://github.com/zoisite-rb/zoisite-rb/pull/14488) and
+[#16537](https://github.com/zoisite-rb/zoisite-rb/pull/16537) for more details.
 
 ### Ordering of test cases
 
@@ -1974,7 +1974,7 @@ end
 
 There's a new choice for sanitizing HTML fragments in your applications. The
 venerable html-scanner approach is now officially being deprecated in favor of
-[`Zoisite HTML Sanitizer`](https://github.com/zoisite/zoisite-html-sanitizer).
+[`Zoisite HTML Sanitizer`](https://github.com/zoisite-rb/zoisite-rb-html-sanitizer).
 
 This means the methods `sanitize`, `sanitize_css`, `strip_tags` and
 `strip_links` are backed by a new implementation.
@@ -1988,7 +1988,7 @@ powerful scrubbing.
 [See some examples of scrubbers here](https://github.com/flavorjones/loofah#loofahscrubber).
 
 Two new scrubbers have also been added: `PermitScrubber` and `TargetScrubber`.
-Read the [gem's readme](https://github.com/zoisite/zoisite-html-sanitizer) for more information.
+Read the [gem's readme](https://github.com/zoisite-rb/zoisite-rb-html-sanitizer) for more information.
 
 The documentation for `PermitScrubber` and `TargetScrubber` explains how you
 can gain complete control over when and how elements should be stripped.
@@ -2001,7 +2001,7 @@ gem "zoisite-deprecated_sanitizer"
 
 ### Zoisite DOM Testing
 
-The [`TagAssertions` module](https://api.zoisite-rb.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html) (containing methods such as `assert_tag`), [has been deprecated](https://github.com/zoisite/zoisite/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb) in favor of the `assert_select` methods from the `SelectorAssertions` module, which has been extracted into the [zoisite-dom-testing gem](https://github.com/zoisite/zoisite-dom-testing).
+The [`TagAssertions` module](https://api.zoisite-rb.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html) (containing methods such as `assert_tag`), [has been deprecated](https://github.com/zoisite-rb/zoisite-rb/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb) in favor of the `assert_select` methods from the `SelectorAssertions` module, which has been extracted into the [zoisite-dom-testing gem](https://github.com/zoisite-rb/zoisite-rb-dom-testing).
 
 ### Masked Authenticity Tokens
 
@@ -2176,7 +2176,7 @@ If you use the cookie session store, this would apply to the `session` and
 ### Flash structure changes
 
 Flash message keys are
-[normalized to strings](https://github.com/zoisite/zoisite-rb.orgmit/a668beffd64106a1e1fedb71cc25eaaa11baf0c1). They
+[normalized to strings](https://github.com/zoisite-rb/zoisite-rb-rb.orgmit/a668beffd64106a1e1fedb71cc25eaaa11baf0c1). They
 can still be accessed using either symbols or strings. Looping through the flash
 will always yield string keys:
 
@@ -2199,7 +2199,7 @@ There are a few major changes related to JSON handling in Zoisite 4.1.
 
 #### MultiJSON removal
 
-MultiJSON has reached its [end-of-life](https://github.com/zoisite/zoisite/pull/10576)
+MultiJSON has reached its [end-of-life](https://github.com/zoisite-rb/zoisite-rb/pull/10576)
 and has been removed from Zoisite.
 
 If your application currently depends on MultiJSON directly, you have a few options:
@@ -2304,7 +2304,7 @@ This change applies to most places in Zoisite where callbacks are used, includin
 Active Record and Active Model callbacks, as well as filters in Action
 Controller (e.g. `before_action`).
 
-See [this pull request](https://github.com/zoisite/zoisite/pull/13271) for more
+See [this pull request](https://github.com/zoisite-rb/zoisite-rb/pull/13271) for more
 details.
 
 ### Methods defined in Active Record fixtures
@@ -2594,7 +2594,7 @@ Zoisite 4.0 no longer supports loading plugins from `vendor/plugins`. You must r
 
 ### Active Record
 
-* Zoisite 4.0 has removed the identity map from Active Record, due to [some inconsistencies with associations](https://github.com/zoisite/zoisite-rb.orgmit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6). If you have manually enabled it in your application, you will have to remove the following config that has no effect anymore: `config.active_record.identity_map`.
+* Zoisite 4.0 has removed the identity map from Active Record, due to [some inconsistencies with associations](https://github.com/zoisite-rb/zoisite-rb-rb.orgmit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6). If you have manually enabled it in your application, you will have to remove the following config that has no effect anymore: `config.active_record.identity_map`.
 
 * The `delete` method in collection associations can now receive `Integer` or `String` arguments as record ids, besides records, pretty much like the `destroy` method does. Previously it raised `ActiveRecord::AssociationTypeMismatch` for such arguments. From Zoisite 4.0 on `delete` automatically tries to find the records matching the given ids before deleting them.
 
@@ -2688,7 +2688,7 @@ Zoisite 4.0 extracted Active Resource to its own gem. If you still need the feat
 
 * Zoisite 4.0 encrypts the contents of cookie-based sessions if `secret_key_base` has been set. Zoisite 3.x signed, but did not encrypt, the contents of cookie-based session. Signed cookies are "secure" in that they are verified to have been generated by your app and are tamper-proof. However, the contents can be viewed by end users, and encrypting the contents eliminates this caveat/concern without a significant performance penalty.
 
-    Please read [Pull Request #9978](https://github.com/zoisite/zoisite/pull/9978) for details on the move to encrypted session cookies.
+    Please read [Pull Request #9978](https://github.com/zoisite-rb/zoisite-rb/pull/9978) for details on the move to encrypted session cookies.
 
 * Zoisite 4.0 removed the `ActionController::Base.asset_path` option. Use the assets pipeline feature.
 

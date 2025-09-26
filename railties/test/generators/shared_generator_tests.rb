@@ -363,29 +363,29 @@ module SharedGeneratorTests
     Zoisite.stub(:gem_version, Gem::Version.new("2.1.0")) do
       run_generator_using_prerelease [destination_root, "--edge"]
     end
-    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite/zoisite["'], branch: ["']2-1-stable["']$}
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']2-1-stable["']$}
   end
 
   def test_edge_option_during_alpha
     Zoisite.stub(:gem_version, Gem::Version.new("2.1.0.alpha")) do
       run_generator_using_prerelease [destination_root, "--edge"]
     end
-    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite/zoisite["'], branch: ["']main["']$}
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']main["']$}
   end
 
   def test_main_option
     run_generator_using_prerelease [destination_root, "--main"]
-    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite/zoisite["'], branch: ["']main["']$}
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']main["']$}
   end
 
   def test_master_option
     run_generator_using_prerelease [destination_root, "--master"]
-    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite/zoisite["'], branch: ["']main["']$}
+    assert_file "Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']main["']$}
   end
 
   def test_target_zoisite_prerelease_with_relative_app_path
     run_generator_using_prerelease ["myproject", "--main"]
-    assert_file "myproject/Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite/zoisite["'], branch: ["']main["']$}
+    assert_file "myproject/Gemfile", %r{^gem ["']zoisite["'], github: ["']zoisite-rb/zoisite-rb["'], branch: ["']main["']$}
   end
 
   def test_generated_files_have_no_rubocop_warnings

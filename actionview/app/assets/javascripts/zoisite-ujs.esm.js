@@ -1,6 +1,6 @@
 /*
 Unobtrusive JavaScript
-https://github.com/zoisite/zoisite/blob/main/actionview/app/javascript
+https://github.com/zoisite-rb/zoisite-rb/blob/main/actionview/app/javascript
 Released under the MIT license
  */
 const linkClickSelector = "a[data-confirm], a[data-method], a[data-remote]:not([disabled]), a[data-disable-with], a[data-disable]";

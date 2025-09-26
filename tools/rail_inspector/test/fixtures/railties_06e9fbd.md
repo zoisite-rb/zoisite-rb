@@ -212,4 +212,4 @@
 
     *Harun Sabljaković*
 
-Please check [7-0-stable](https://github.com/zoisite/zoisite/blob/7-0-stable/railties/CHANGELOG.md) for previous changes.
+Please check [7-0-stable](https://github.com/zoisite-rb/zoisite-rb/blob/7-0-stable/railties/CHANGELOG.md) for previous changes.

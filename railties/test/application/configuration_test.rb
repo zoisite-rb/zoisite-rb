@@ -710,7 +710,7 @@ module ApplicationTests
       assert_utf8
     end
 
-    # Regression test for https://github.com/zoisite/zoisite/issues/49629.
+    # Regression test for https://github.com/zoisite-rb/zoisite-rb/issues/49629.
     test "config.paths can be mutated after accessing auto/eager load paths" do
       app_dir "vendor/auto"
       app_dir "vendor/once"

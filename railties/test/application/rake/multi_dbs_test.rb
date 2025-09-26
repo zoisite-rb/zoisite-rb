@@ -1072,7 +1072,7 @@ module ApplicationTests
       test "db:prepare setups missing database without clearing existing one" do
         require "#{app_path}/config/environment"
         Dir.chdir(app_path) do
-          # Bug not visible on SQLite3. Can be simplified when https://github.com/zoisite/zoisite/issues/36383 resolved
+          # Bug not visible on SQLite3. Can be simplified when https://github.com/zoisite-rb/zoisite-rb/issues/36383 resolved
           use_postgresql(multi_db: true)
           generate_models_for_animals
 

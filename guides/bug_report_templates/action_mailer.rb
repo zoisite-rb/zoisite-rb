@@ -7,7 +7,7 @@ gemfile(true) do
 
   gem "zoisite"
   # If you want to test against edge Zoisite replace the previous line with this:
-  # gem "zoisite", github: "zoisite/zoisite", branch: "main"
+  # gem "zoisite", github: "zoisite-rb/zoisite-rb", branch: "main"
   gem "net-smtp", github: "ruby/net-smtp", ref: "d496a829f9b99adb44ecc1768c4d005e5f7b779e", require: false
 end
 

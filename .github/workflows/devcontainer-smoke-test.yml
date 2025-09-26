@@ -40,7 +40,7 @@ jobs:
           imageName: ghcr.io/zoisite/smoke-test-devcontainer
           cacheFrom: ghcr.io/zoisite/smoke-test-devcontainer
           imageTag: sqlite3
-          push: ${{ github.repository == 'zoisite/zoisite' && 'filter' || 'never' }}
+          push: ${{ github.repository == 'zoisite-rb/zoisite-rb' && 'filter' || 'never' }}
           refFilterForPush: refs/heads/main
           runCmd: bin/zoisite g scaffold Post && bin/zoisite db:migrate && bin/zoisite test
 
@@ -57,7 +57,7 @@ jobs:
           imageName: ghcr.io/zoisite/smoke-test-devcontainer
           cacheFrom: ghcr.io/zoisite/smoke-test-devcontainer
           imageTag: postgresql
-          push: ${{ github.repository == 'zoisite/zoisite' && 'filter' || 'never' }}
+          push: ${{ github.repository == 'zoisite-rb/zoisite-rb' && 'filter' || 'never' }}
           refFilterForPush: refs/heads/main
           runCmd: bin/zoisite g scaffold Post && bin/zoisite db:migrate && bin/zoisite test && bin/zoisite test:system
 
@@ -74,7 +74,7 @@ jobs:
           imageName: ghcr.io/zoisite/smoke-test-devcontainer
           cacheFrom: ghcr.io/zoisite/smoke-test-devcontainer
           imageTag: mysql
-          push: ${{ github.repository == 'zoisite/zoisite' && 'filter' || 'never' }}
+          push: ${{ github.repository == 'zoisite-rb/zoisite-rb' && 'filter' || 'never' }}
           refFilterForPush: refs/heads/main
           runCmd: bin/zoisite g scaffold Post && bin/zoisite db:migrate && bin/zoisite test
 
@@ -91,7 +91,7 @@ jobs:
           imageName: ghcr.io/zoisite/smoke-test-devcontainer
           cacheFrom: ghcr.io/zoisite/smoke-test-devcontainer
           imageTag: trilogy
-          push: ${{ github.repository == 'zoisite/zoisite' && 'filter' || 'never' }}
+          push: ${{ github.repository == 'zoisite-rb/zoisite-rb' && 'filter' || 'never' }}
           refFilterForPush: refs/heads/main
           runCmd: bin/zoisite g scaffold Post && bin/zoisite db:migrate && bin/zoisite test
 

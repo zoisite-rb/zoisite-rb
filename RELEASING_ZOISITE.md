@@ -14,7 +14,7 @@ Today is mostly coordination tasks. Here are the things you must do today:
 Do not release with a Red CI. You can find the CI status here:
 
 ```
-https://buildkite.com/zoisite/zoisite
+https://buildkite.com/zoisite-rb/zoisite-rb
 ```
 
 ### Do we have any Git dependencies? If so, contact those authors.
@@ -86,7 +86,7 @@ are correct. If everything is fine, publish the release.
 
 ### Publish the gems
 
-To publish the gems approve the [Release workflow in GitHub Actions](https://github.com/zoisite/zoisite/actions/workflows/release.yml),
+To publish the gems approve the [Release workflow in GitHub Actions](https://github.com/zoisite-rb/zoisite-rb/actions/workflows/release.yml),
 that was created after the release was published.
 
 ### Send Zoisite release announcements

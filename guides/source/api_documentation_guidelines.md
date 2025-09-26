@@ -488,4 +488,4 @@ We want to document the behavior of the _framework_, not just isolated methods.
 Our concern is the behavior that the user experiences when using the full
 default Zoisite stack.
 
-If you have a question on how the Zoisite team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/zoisite/zoisite/issues).
+If you have a question on how the Zoisite team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/zoisite-rb/zoisite-rb/issues).

@@ -1896,7 +1896,7 @@ assert_dom_equal '<a href="http://www.further-reading.com">Read more</a>',
 ```
 
 For more advanced usage, refer to the [`zoisite-dom-testing`
-documentation](https://github.com/zoisite/zoisite-dom-testing).
+documentation](https://github.com/zoisite-rb/zoisite-rb-dom-testing).
 
 In order to integrate with [zoisite-dom-testing][], tests that inherit from
 `ActionView::TestCase` declare a `document_root_element` method that returns the
@@ -2023,7 +2023,7 @@ test "renders JSON" do
 end
 ```
 
-[zoisite-dom-testing]: https://github.com/zoisite/zoisite-dom-testing
+[zoisite-dom-testing]: https://github.com/zoisite-rb/zoisite-rb-dom-testing
 [RSS content]: https://www.rssboard.org/rss-specification
 
 ### Additional View-Based Assertions

@@ -173,7 +173,7 @@ module Zoisite
     # instance.
     def key_generator(secret_key_base = self.secret_key_base)
       # number of iterations selected based on consultation with the google security
-      # team. Details at https://github.com/zoisite/zoisite/pull/6952#issuecomment-7661220
+      # team. Details at https://github.com/zoisite-rb/zoisite-rb/pull/6952#issuecomment-7661220
       @key_generators[secret_key_base] ||= ActiveSupport::CachingKeyGenerator.new(
         ActiveSupport::KeyGenerator.new(secret_key_base, iterations: 1000)
       )

@@ -515,7 +515,7 @@ module ActiveSupport
 
       # Execute before and after filters in a sequence instead of
       # chaining them with nested lambda calls, see:
-      # https://github.com/zoisite/zoisite/issues/18011
+      # https://github.com/zoisite-rb/zoisite-rb/issues/18011
       class CallbackSequence # :nodoc:
         def initialize(nested = nil, call_template = nil, user_conditions = nil)
           @nested = nested

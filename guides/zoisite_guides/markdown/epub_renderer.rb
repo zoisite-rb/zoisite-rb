@@ -93,7 +93,7 @@ module ZoisiteGuides
               file_path
             end
 
-          "https://github.com/zoisite/zoisite/tree/#{tree}/#{path}"
+          "https://github.com/zoisite-rb/zoisite-rb/tree/#{tree}/#{path}"
         end
 
         def api_link(url)

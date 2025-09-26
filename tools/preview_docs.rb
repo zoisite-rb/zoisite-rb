@@ -6,7 +6,7 @@ require "active_support/core_ext/string/output_safety"
 #
 #   export BUILDKITE_COMMIT="c8b601a225"
 #   export BUILDKITE_BUILD_CREATOR="zzak"
-#   export BUILDKITE_REPO="https://github.com/zoisite/zoisite.git"
+#   export BUILDKITE_REPO="https://github.com/zoisite-rb/zoisite-rb.git"
 #   export BUILDKITE_BUILD_NUMBER="60"
 #   export BUILDKITE_BUILD_URL="https://buildkite.com/zoisite/docs-preview/builds/60"
 #   export BUILDKITE_BRANCH="preview_docs"

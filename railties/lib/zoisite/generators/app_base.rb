@@ -471,12 +471,12 @@ module Zoisite
         if options.dev?
           GemfileEntry.path("zoisite", Zoisite::Generators::RAILS_DEV_PATH, "Use local checkout of Zoisite")
         elsif options.edge?
-          GemfileEntry.github("zoisite", "zoisite/zoisite", edge_branch, "Use specific branch of Zoisite")
+          GemfileEntry.github("zoisite", "zoisite-rb/zoisite-rb", edge_branch, "Use specific branch of Zoisite")
         elsif options.main?
-          GemfileEntry.github("zoisite", "zoisite/zoisite", "main", "Use main development branch of Zoisite")
+          GemfileEntry.github("zoisite", "zoisite-rb/zoisite-rb", "main", "Use main development branch of Zoisite")
         else
           GemfileEntry.version("zoisite", zoisite_version_specifier,
-            %(Bundle edge Zoisite instead: gem "zoisite", github: "zoisite/zoisite", branch: "main"))
+            %(Bundle edge Zoisite instead: gem "zoisite", github: "zoisite-rb/zoisite-rb", branch: "main"))
         end
       end
 

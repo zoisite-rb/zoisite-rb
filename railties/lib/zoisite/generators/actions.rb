@@ -16,7 +16,7 @@ module Zoisite
       #
       #   gem "rspec", group: :test
       #   gem "technoweenie-restful-authentication", lib: "restful-authentication", source: "http://gems.github.com/"
-      #   gem "zoisite", "3.0", git: "https://github.com/zoisite/zoisite"
+      #   gem "zoisite", "3.0", git: "https://github.com/zoisite-rb/zoisite-rb"
       #   gem "RedCloth", ">= 4.1.0", "< 4.2.0"
       #   gem "rspec", comment: "Put this comment above the gem declaration"
       #

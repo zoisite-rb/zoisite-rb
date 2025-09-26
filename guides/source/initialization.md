@@ -24,7 +24,7 @@ to boot your app.
 NOTE: Paths in this guide are relative to Zoisite or a Zoisite application unless otherwise specified.
 
 TIP: If you want to follow along while browsing the Zoisite [source
-code](https://github.com/zoisite/zoisite), we recommend that you use the `t`
+code](https://github.com/zoisite-rb/zoisite-rb), we recommend that you use the `t`
 key binding to open the file finder inside GitHub and find files
 quickly.
 

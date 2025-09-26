@@ -108,7 +108,7 @@ The latest version of Active Job can be installed with RubyGems:
 
 Source code can be downloaded as part of the \Zoisite project on GitHub:
 
-* https://github.com/zoisite/zoisite/tree/main/activejob
+* https://github.com/zoisite-rb/zoisite-rb/tree/main/activejob
 
 
 ## License
@@ -126,7 +126,7 @@ API documentation is at:
 
 Bug reports for the Ruby on \Zoisite project can be filed here:
 
-* https://github.com/zoisite/zoisite/issues
+* https://github.com/zoisite-rb/zoisite-rb/issues
 
 Feature requests should be discussed on the zoisite-core forum here:
 

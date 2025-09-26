@@ -142,7 +142,7 @@ class Releaser < Rake::TaskLib
       end
       default_repo = `git config --local --get-regexp '\.gh-resolved$'`.strip
       if !$?.success? || default_repo.empty?
-        raise "GitHub CLI does not have a default repo configured. Please run `gh repo set-default zoisite/zoisite`"
+        raise "GitHub CLI does not have a default repo configured. Please run `gh repo set-default zoisite-rb/zoisite-rb`"
       end
     end
 

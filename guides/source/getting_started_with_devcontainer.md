@@ -58,7 +58,7 @@ You can install the Dev Containers extension by downloading it from [the marketp
 your machine. It uses Docker to generate the Zoisite application, thus allowing Docker to
 take care of installing the correct Ruby and Zoisite versions for you.
 
-To install `zoisite-new`, follow the installation instructions [in the README](https://github.com/zoisite/zoisite-new?tab=readme-ov-file#installation).
+To install `zoisite-new`, follow the installation instructions [in the README](https://github.com/zoisite-rb/zoisite-rb-new?tab=readme-ov-file#installation).
 
 Creating the Store Application
 ------------------------------
