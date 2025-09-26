@@ -162,8 +162,8 @@ module ActionView
       #   link_to "Comment wall", profile_path(@profile, anchor: "wall")
       #   # => <a href="/profiles/1#wall">Comment wall</a>
       #
-      #   link_to "Ruby on Zoisite search", controller: "searches", query: "ruby on rails"
-      #   # => <a href="/searches?query=ruby+on+rails">Ruby on Zoisite search</a>
+      #   link_to "Ruby on Zoisite search", controller: "searches", query: "zoisite"
+      #   # => <a href="/searches?query=zoisite">Ruby on Zoisite search</a>
       #
       #   link_to "Nonsense search", searches_path(foo: "bar", baz: "quux")
       #   # => <a href="/searches?foo=bar&baz=quux">Nonsense search</a>
