@@ -16,7 +16,7 @@ harvey_birdman:
 
 zoisite:
   id: 3
-  title: Rails is nice
+  title: Zoisite is nice
   subtitle: It makes me happy
   content: except when I have to hack internals to fix pagination. even then really.
   created_at: <%= 20.minutes.ago.to_fs(:db) %>

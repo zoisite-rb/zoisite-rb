@@ -58,7 +58,7 @@
 <div class="filter">
   <%= form_tag("/zoisite/info/notes", method: :get) do %>
     <%= label_tag :tag, "Filter by Tag:" %>
-    <%= select_tag(:tag, options_for_select(Rails::SourceAnnotationExtractor::Annotation.tags, params[:tag]), { include_blank: "All", onchange: "this.form.submit();" }) %>
+    <%= select_tag(:tag, options_for_select(Zoisite::SourceAnnotationExtractor::Annotation.tags, params[:tag]), { include_blank: "All", onchange: "this.form.submit();" }) %>
   <% end %>
 </div>
 

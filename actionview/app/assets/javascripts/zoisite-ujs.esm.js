@@ -307,7 +307,7 @@ const formElements = (form, selector) => {
   }
 };
 
-const handleConfirmWithRails = zoisite => function(e) {
+const handleConfirmWithZoisite = zoisite => function(e) {
   if (!allowAction(this, zoisite)) {
     stopEverything(e);
   }
@@ -438,7 +438,7 @@ var isXhrRedirect = function(event) {
   return xhr && xhr.getResponseHeader("X-Xhr-Redirect");
 };
 
-const handleMethodWithRails = zoisite => function(e) {
+const handleMethodWithZoisite = zoisite => function(e) {
   const link = this;
   const method = link.getAttribute("data-method");
   if (!method) {
@@ -471,7 +471,7 @@ const isRemote = function(element) {
   return value != null && value !== "false";
 };
 
-const handleRemoteWithRails = zoisite => function(e) {
+const handleRemoteWithZoisite = zoisite => function(e) {
   let data, method, url;
   const element = this;
   if (!isRemote(element)) {
@@ -571,7 +571,7 @@ const preventInsignificantClick = function(e) {
   }
 };
 
-const Rails = {
+const Zoisite = {
   $: $,
   ajax: ajax,
   buttonClickSelector: buttonClickSelector,
@@ -608,17 +608,17 @@ const Rails = {
   stopEverything: stopEverything
 };
 
-const handleConfirm = handleConfirmWithRails(Rails);
+const handleConfirm = handleConfirmWithZoisite(Zoisite);
 
-Rails.handleConfirm = handleConfirm;
+Zoisite.handleConfirm = handleConfirm;
 
-const handleMethod = handleMethodWithRails(Rails);
+const handleMethod = handleMethodWithZoisite(Zoisite);
 
-Rails.handleMethod = handleMethod;
+Zoisite.handleMethod = handleMethod;
 
-const handleRemote = handleRemoteWithRails(Rails);
+const handleRemote = handleRemoteWithZoisite(Zoisite);
 
-Rails.handleRemote = handleRemote;
+Zoisite.handleRemote = handleRemote;
 
 const start = function() {
   if (window._zoisite_loaded) {
@@ -669,13 +669,13 @@ const start = function() {
   return window._zoisite_loaded = true;
 };
 
-Rails.start = start;
+Zoisite.start = start;
 
 if (typeof jQuery !== "undefined" && jQuery && jQuery.ajax) {
   if (jQuery.zoisite) {
     throw new Error("If you load both jquery_ujs and zoisite-ujs, use zoisite-ujs only.");
   }
-  jQuery.zoisite = Rails;
+  jQuery.zoisite = Zoisite;
   jQuery.ajaxPrefilter((function(options, originalOptions, xhr) {
     if (!options.crossDomain) {
       return CSRFProtection(xhr);
@@ -683,4 +683,4 @@ if (typeof jQuery !== "undefined" && jQuery && jQuery.ajax) {
   }));
 }
 
-export { Rails as default };
+export { Zoisite as default };

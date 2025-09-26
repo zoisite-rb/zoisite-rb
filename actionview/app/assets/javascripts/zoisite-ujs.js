@@ -5,7 +5,7 @@ Released under the MIT license
  */
 (function(global, factory) {
   typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, 
-  global.Rails = factory());
+  global.Zoisite = factory());
 })(this, (function() {
   "use strict";
   const linkClickSelector = "a[data-confirm], a[data-method], a[data-remote]:not([disabled]), a[data-disable-with], a[data-disable]";
@@ -272,7 +272,7 @@ Released under the MIT license
       return toArray(form.querySelectorAll(selector));
     }
   };
-  const handleConfirmWithRails = zoisite => function(e) {
+  const handleConfirmWithZoisite = zoisite => function(e) {
     if (!allowAction(this, zoisite)) {
       stopEverything(e);
     }
@@ -390,7 +390,7 @@ Released under the MIT license
     const xhr = event.detail ? event.detail[0] : undefined;
     return xhr && xhr.getResponseHeader("X-Xhr-Redirect");
   };
-  const handleMethodWithRails = zoisite => function(e) {
+  const handleMethodWithZoisite = zoisite => function(e) {
     const link = this;
     const method = link.getAttribute("data-method");
     if (!method) {
@@ -421,7 +421,7 @@ Released under the MIT license
     const value = element.getAttribute("data-remote");
     return value != null && value !== "false";
   };
-  const handleRemoteWithRails = zoisite => function(e) {
+  const handleRemoteWithZoisite = zoisite => function(e) {
     let data, method, url;
     const element = this;
     if (!isRemote(element)) {
@@ -518,7 +518,7 @@ Released under the MIT license
       e.stopImmediatePropagation();
     }
   };
-  const Rails = {
+  const Zoisite = {
     $: $,
     ajax: ajax,
     buttonClickSelector: buttonClickSelector,
@@ -554,12 +554,12 @@ Released under the MIT license
     setData: setData,
     stopEverything: stopEverything
   };
-  const handleConfirm = handleConfirmWithRails(Rails);
-  Rails.handleConfirm = handleConfirm;
-  const handleMethod = handleMethodWithRails(Rails);
-  Rails.handleMethod = handleMethod;
-  const handleRemote = handleRemoteWithRails(Rails);
-  Rails.handleRemote = handleRemote;
+  const handleConfirm = handleConfirmWithZoisite(Zoisite);
+  Zoisite.handleConfirm = handleConfirm;
+  const handleMethod = handleMethodWithZoisite(Zoisite);
+  Zoisite.handleMethod = handleMethod;
+  const handleRemote = handleRemoteWithZoisite(Zoisite);
+  Zoisite.handleRemote = handleRemote;
   const start = function() {
     if (window._zoisite_loaded) {
       throw new Error("zoisite-ujs has already been loaded!");
@@ -608,12 +608,12 @@ Released under the MIT license
     document.addEventListener("DOMContentLoaded", loadCSPNonce);
     return window._zoisite_loaded = true;
   };
-  Rails.start = start;
+  Zoisite.start = start;
   if (typeof jQuery !== "undefined" && jQuery && jQuery.ajax) {
     if (jQuery.zoisite) {
       throw new Error("If you load both jquery_ujs and zoisite-ujs, use zoisite-ujs only.");
     }
-    jQuery.zoisite = Rails;
+    jQuery.zoisite = Zoisite;
     jQuery.ajaxPrefilter((function(options, originalOptions, xhr) {
       if (!options.crossDomain) {
         return CSRFProtection(xhr);
@@ -621,10 +621,10 @@ Released under the MIT license
     }));
   }
   if (typeof exports !== "object" && typeof module === "undefined") {
-    window.Rails = Rails;
+    window.Zoisite = Zoisite;
     if (fire(document, "zoisite:attachBindings")) {
       start();
     }
   }
-  return Rails;
+  return Zoisite;
 }));

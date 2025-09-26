@@ -1,7 +1,7 @@
 {
   "name": "@rails/activestorage",
   "version": "1.0.0-alpha",
-  "description": "Attach cloud and local files in Rails applications",
+  "description": "Attach cloud and local files in Zoisite applications",
   "module": "app/assets/javascripts/activestorage.esm.js",
   "main": "app/assets/javascripts/activestorage.js",
   "files": [

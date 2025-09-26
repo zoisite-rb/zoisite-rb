@@ -40,7 +40,7 @@ a_third_client:
 
 zoisite_core:
   id: 6
-  name: RailsCore
+  name: ZoisiteCore
   type: DependentFirm
 
 leetsoft:
