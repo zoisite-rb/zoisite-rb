@@ -8,13 +8,13 @@
     "app/assets/javascripts/*.js",
     "src/*.js"
   ],
-  "homepage": "https://rubyonzoisite.org/",
+  "homepage": "https://zoisite.org/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zoisite/zoisite.git"
+    "url": "git+https://github.com/zoisite-rb/zoisite-rb.git"
   },
   "bugs": {
-    "url": "https://github.com/zoisite/zoisite/issues"
+    "url": "https://github.com/zoisite-rb/zoisite-rb/issues"
   },
   "author": "Javan Makhmali <javan@javan.us>",
   "license": "MIT",

@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "https://rubyonzoisite.org"
+  s.homepage = "https://zoisite.org"
 
   s.files        = Dir["CHANGELOG.md", "README.rdoc", "MIT-LICENSE", "RDOC_MAIN.md", "exe/**/*", "lib/**/{*,.[a-z]*}"]
   s.require_path = "lib"
@@ -26,16 +26,16 @@ Gem::Specification.new do |s|
   s.rdoc_options << "--exclude" << "."
 
   s.metadata = {
-    "bug_tracker_uri"   => "https://github.com/zoisite/zoisite/issues",
-    "changelog_uri"     => "https://github.com/zoisite/zoisite/blob/v#{version}/railties/CHANGELOG.md",
-    "documentation_uri" => "https://api.rubyonzoisite.org/v#{version}/",
-    "mailing_list_uri"  => "https://discuss.rubyonzoisite.org/c/rubyonzoisite-talk",
-    "source_code_uri"   => "https://github.com/zoisite/zoisite/tree/v#{version}/railties",
+    "bug_tracker_uri"   => "https://github.com/zoisite-rb/zoisite-rb/issues",
+    "changelog_uri"     => "https://github.com/zoisite-rb/zoisite-rb/blob/v#{version}/railties/CHANGELOG.md",
+    "documentation_uri" => "https://api.zoisite.org/v#{version}/",
+    "mailing_list_uri"  => "https://discuss.zoisite.org/c/zoisite-talk",
+    "source_code_uri"   => "https://github.com/zoisite-rb/zoisite-rb/tree/v#{version}/railties",
     "rubygems_mfa_required" => "true",
   }
 
   # NOTE: Please read our dependency guidelines before updating versions:
-  # https://edgeguides.rubyonzoisite.org/security.html#dependency-management-and-cves
+  # https://edgeguides.zoisite.org/security.html#dependency-management-and-cves
 
   s.add_dependency "activesupport", version
   s.add_dependency "actionpack",    version

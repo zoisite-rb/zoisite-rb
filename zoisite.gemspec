@@ -16,16 +16,16 @@ Gem::Specification.new do |s|
 
   s.author   = "David Heinemeier Hansson"
   s.email    = "david@loudthinking.com"
-  s.homepage = "https://rubyonzoisite.org"
+  s.homepage = "https://zoisite.org"
 
   s.files = ["README.md", "MIT-LICENSE"]
 
   s.metadata = {
-    "bug_tracker_uri"   => "https://github.com/zoisite/zoisite/issues",
-    "changelog_uri"     => "https://github.com/zoisite/zoisite/releases/tag/v#{version}",
-    "documentation_uri" => "https://api.rubyonzoisite.org/v#{version}/",
-    "mailing_list_uri"  => "https://discuss.rubyonzoisite.org/c/rubyonzoisite-talk",
-    "source_code_uri"   => "https://github.com/zoisite/zoisite/tree/v#{version}",
+    "bug_tracker_uri"   => "https://github.com/zoisite-rb/zoisite-rb/issues",
+    "changelog_uri"     => "https://github.com/zoisite-rb/zoisite-rb/releases/tag/v#{version}",
+    "documentation_uri" => "https://api.zoisite.org/v#{version}/",
+    "mailing_list_uri"  => "https://discuss.zoisite.org/c/zoisite-talk",
+    "source_code_uri"   => "https://github.com/zoisite-rb/zoisite-rb/tree/v#{version}",
     "rubygems_mfa_required" => "true",
   }
 

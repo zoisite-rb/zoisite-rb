@@ -12,13 +12,13 @@ Gem::Specification.new do |s|
   s.license = "MIT"
 
   s.author   = "Rafael Mendonça França"
-  s.email    = "rafael@rubyonzoisite.org"
-  s.homepage = "https://rubyonzoisite.org"
+  s.email    = "rafael@zoisite.org"
+  s.homepage = "https://zoisite.org"
 
   s.files = Dir["lib/**/*", "test/**/*", "RAILS_VERSION"]
 
   s.metadata = {
-    "bug_tracker_uri" => "https://github.com/zoisite/zoisite/issues",
+    "bug_tracker_uri" => "https://github.com/zoisite-rb/zoisite-rb/issues",
   }
 
   s.add_dependency "rake", "~> 13.0"

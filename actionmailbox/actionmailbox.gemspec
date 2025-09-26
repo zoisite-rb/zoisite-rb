@@ -15,22 +15,22 @@ Gem::Specification.new do |s|
 
   s.authors  = ["David Heinemeier Hansson", "George Claghorn"]
   s.email    = ["david@loudthinking.com", "george@basecamp.com"]
-  s.homepage = "https://rubyonzoisite.org"
+  s.homepage = "https://zoisite.org"
 
   s.files        = Dir["CHANGELOG.md", "MIT-LICENSE", "README.md", "lib/**/*", "app/**/*", "config/**/*", "db/**/*"]
   s.require_path = "lib"
 
   s.metadata = {
-    "bug_tracker_uri"   => "https://github.com/zoisite/zoisite/issues",
-    "changelog_uri"     => "https://github.com/zoisite/zoisite/blob/v#{version}/actionmailbox/CHANGELOG.md",
-    "documentation_uri" => "https://api.rubyonzoisite.org/v#{version}/",
-    "mailing_list_uri"  => "https://discuss.rubyonzoisite.org/c/rubyonzoisite-talk",
-    "source_code_uri"   => "https://github.com/zoisite/zoisite/tree/v#{version}/actionmailbox",
+    "bug_tracker_uri"   => "https://github.com/zoisite-rb/zoisite-rb/issues",
+    "changelog_uri"     => "https://github.com/zoisite-rb/zoisite-rb/blob/v#{version}/actionmailbox/CHANGELOG.md",
+    "documentation_uri" => "https://api.zoisite.org/v#{version}/",
+    "mailing_list_uri"  => "https://discuss.zoisite.org/c/zoisite-talk",
+    "source_code_uri"   => "https://github.com/zoisite-rb/zoisite-rb/tree/v#{version}/actionmailbox",
     "rubygems_mfa_required" => "true",
   }
 
   # NOTE: Please read our dependency guidelines before updating versions:
-  # https://edgeguides.rubyonzoisite.org/security.html#dependency-management-and-cves
+  # https://edgeguides.zoisite.org/security.html#dependency-management-and-cves
 
   s.add_dependency "activesupport", version
   s.add_dependency "activerecord",  version
