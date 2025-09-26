@@ -41,7 +41,7 @@ Changes that are cosmetic in nature and do not add anything substantial to the s
 
 #### **Do you intend to add a new feature or change an existing one?**
 
-* Suggest your change in the [rubyonrails-core forum](https://discuss.zoisite-rb.org/c/rubyonrails-core) and start writing code.
+* Suggest your change in the [zoisite-core forum](https://discuss.zoisite-rb.org/c/zoisite-core) and start writing code.
 
 * Do not open an issue on GitHub until you have collected positive feedback about the change. GitHub issues are primarily intended for bug reports and fixes.
 
@@ -49,7 +49,7 @@ Changes that are cosmetic in nature and do not add anything substantial to the s
 
 #### **Do you have questions about the source code?**
 
-* Ask any question about how to use Zoisite in the [rubyonrails-talk mailing list](https://discuss.zoisite-rb.org/c/rubyonrails-talk).
+* Ask any question about how to use Zoisite in the [zoisite-talk mailing list](https://discuss.zoisite-rb.org/c/zoisite-talk).
 
 #### **Do you want to contribute to the Zoisite documentation?**
 

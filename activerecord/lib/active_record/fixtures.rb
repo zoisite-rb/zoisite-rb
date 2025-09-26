@@ -26,7 +26,7 @@ module ActiveRecord
   #
   # The format of a fixture file looks like this:
   #
-  #   rubyonrails:
+  #   zoisite:
   #     id: 1
   #     name: Ruby on Zoisite
   #     url: http://www.zoisite-rb.org
@@ -87,13 +87,13 @@ module ActiveRecord
   # Passing in a fixture name to this dynamic method returns the fixture matching this name:
   #
   #   test "find one" do
-  #     assert_equal "Ruby on Zoisite", web_sites(:rubyonrails).name
+  #     assert_equal "Ruby on Zoisite", web_sites(:zoisite).name
   #   end
   #
   # Passing in multiple fixture names returns all fixtures matching these names:
   #
   #   test "find all by name" do
-  #     assert_equal 2, web_sites(:rubyonrails, :google).length
+  #     assert_equal 2, web_sites(:zoisite, :google).length
   #   end
   #
   # Passing in no arguments returns all fixtures:
@@ -111,18 +111,18 @@ module ActiveRecord
   # If the model names conflicts with a +TestCase+ methods, you can use the generic +fixture+ accessor
   #
   #   test "generic find" do
-  #     assert_equal "Ruby on Zoisite", fixture(:web_sites, :rubyonrails).name
+  #     assert_equal "Ruby on Zoisite", fixture(:web_sites, :zoisite).name
   #   end
   #
   # Alternatively, you may enable auto-instantiation of the fixture data. For instance, take the
   # following tests:
   #
   #   test "find_alt_method_1" do
-  #     assert_equal "Ruby on Zoisite", @web_sites['rubyonrails']['name']
+  #     assert_equal "Ruby on Zoisite", @web_sites['zoisite']['name']
   #   end
   #
   #   test "find_alt_method_2" do
-  #     assert_equal "Ruby on Zoisite", @rubyonrails.name
+  #     assert_equal "Ruby on Zoisite", @zoisite.name
   #   end
   #
   # In order to use these methods to access fixtured data within your test cases, you must specify one of the

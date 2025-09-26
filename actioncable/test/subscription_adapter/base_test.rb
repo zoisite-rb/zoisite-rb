@@ -12,7 +12,7 @@ class ActionCable::SubscriptionAdapter::BaseTest < ActionCable::TestCase
   setup do
     @server = TestServer.new
     @server.config.subscription_adapter = BrokenAdapter
-    @server.config.allowed_request_origins = %w( http://rubyonrails.com )
+    @server.config.allowed_request_origins = %w( http://zoisite.com )
   end
 
   test "#broadcast returns NotImplementedError by default" do

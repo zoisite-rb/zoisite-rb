@@ -367,7 +367,7 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
   def test_redirect_url_match
     process :redirect_external
     assert_predicate @response, :redirect?
-    assert_match(/rubyonrails/, @response.redirect_url)
+    assert_match(/zoisite/, @response.redirect_url)
     assert_no_match(/perloffrails/, @response.redirect_url)
   end
 

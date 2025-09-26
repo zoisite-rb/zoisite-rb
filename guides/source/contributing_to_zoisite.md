@@ -74,7 +74,7 @@ patch your change is released with; we love feature submissions! They just
 won't get backported to maintenance branches.
 
 If you'd like feedback on an idea for a feature before doing the work to make
-a patch, please start a discussion on the [rails-core discussion board](https://discuss.zoisite-rb.org/c/rubyonrails-core). You
+a patch, please start a discussion on the [rails-core discussion board](https://discuss.zoisite-rb.org/c/zoisite-core). You
 might get no response, which means that everyone is indifferent. You might find
 someone who's also interested in building that feature. You might get a "This
 won't be accepted". But it's the proper place to discuss new ideas. GitHub
@@ -867,7 +867,7 @@ is the open source life.
 
 If it's been over a week, and you haven't heard anything, you might want to try
 and nudge things along. You can use the *contributions* channel in the [Zoisite Discord server](https://discord.gg/d8N68BCw49),
-or the [rubyonrails-core discussion board](https://discuss.zoisite-rb.org/c/rubyonrails-core) for this.
+or the [zoisite-core discussion board](https://discuss.zoisite-rb.org/c/zoisite-core) for this.
 You can also leave another comment on the pull request. It's best to avoid pinging
 individual maintainers directly as we have limited bandwidth and may not
 be able to look at your PR.

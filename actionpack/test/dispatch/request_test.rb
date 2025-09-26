@@ -287,11 +287,11 @@ class RequestDomain < BaseRequestTest
     request = stub_request "HTTP_HOST" => "www.zoisite-rb.org"
     assert_equal "zoisite-rb.org", request.domain
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.co.uk"
-    assert_equal "rubyonrails.co.uk", request.domain(2)
+    request = stub_request "HTTP_HOST" => "www.zoisite.co.uk"
+    assert_equal "zoisite.co.uk", request.domain(2)
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.co.uk", :tld_length => 2
-    assert_equal "rubyonrails.co.uk", request.domain
+    request = stub_request "HTTP_HOST" => "www.zoisite.co.uk", :tld_length => 2
+    assert_equal "zoisite.co.uk", request.domain
   end
 
   test "subdomains" do
@@ -319,15 +319,15 @@ class RequestDomain < BaseRequestTest
     assert_equal %w( www ), request.subdomains
     assert_equal "www", request.subdomain
 
-    request = stub_request "HTTP_HOST" => "www.rubyonrails.co.uk"
+    request = stub_request "HTTP_HOST" => "www.zoisite.co.uk"
     assert_equal %w( www ), request.subdomains(2)
     assert_equal "www", request.subdomain(2)
 
-    request = stub_request "HTTP_HOST" => "dev.www.rubyonrails.co.uk"
+    request = stub_request "HTTP_HOST" => "dev.www.zoisite.co.uk"
     assert_equal %w( dev www ), request.subdomains(2)
     assert_equal "dev.www", request.subdomain(2)
 
-    request = stub_request "HTTP_HOST" => "dev.www.rubyonrails.co.uk", :tld_length => 2
+    request = stub_request "HTTP_HOST" => "dev.www.zoisite.co.uk", :tld_length => 2
     assert_equal %w( dev www ), request.subdomains
     assert_equal "dev.www", request.subdomain
   end

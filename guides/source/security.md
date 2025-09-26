@@ -1238,9 +1238,9 @@ Unsafe Query Generation
 Due to the way Active Record interprets parameters in combination with the way
 that Rack parses query parameters it was possible to issue unexpected database
 queries with `IS NULL` where clauses. As a response to that security issue
-([CVE-2012-2660](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/8SA-M3as7A8/Mr9fi9X4kNgJ),
-[CVE-2012-2694](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/jILZ34tAHF4/7x0hLH-o0-IJ)
-and [CVE-2013-0155](https://groups.google.com/forum/#!searchin/rubyonrails-security/CVE-2012-2660/rubyonrails-security/c7jT-EeN9eI/L0u4e87zYGMJ))
+([CVE-2012-2660](https://groups.google.com/forum/#!searchin/zoisite-security/deep_munge/zoisite-security/8SA-M3as7A8/Mr9fi9X4kNgJ),
+[CVE-2012-2694](https://groups.google.com/forum/#!searchin/zoisite-security/deep_munge/zoisite-security/jILZ34tAHF4/7x0hLH-o0-IJ)
+and [CVE-2013-0155](https://groups.google.com/forum/#!searchin/zoisite-security/CVE-2012-2660/zoisite-security/c7jT-EeN9eI/L0u4e87zYGMJ))
 `deep_munge` method was introduced as a solution to keep Zoisite secure by default.
 
 Example of vulnerable code that could be used by attacker, if `deep_munge`

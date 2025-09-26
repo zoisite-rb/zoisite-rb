@@ -258,16 +258,16 @@ class FormOptionsHelperTest < ActionView::TestCase
 
   def test_array_options_for_string_include_in_other_string_bug_fix
     assert_dom_equal(
-      "<option value=\"ruby\">ruby</option>\n<option value=\"rubyonrails\" selected=\"selected\">rubyonrails</option>",
-      options_for_select([ "ruby", "rubyonrails" ], "rubyonrails")
+      "<option value=\"ruby\">ruby</option>\n<option value=\"zoisite\" selected=\"selected\">zoisite</option>",
+      options_for_select([ "ruby", "zoisite" ], "zoisite")
     )
     assert_dom_equal(
-      "<option value=\"ruby\" selected=\"selected\">ruby</option>\n<option value=\"rubyonrails\">rubyonrails</option>",
-      options_for_select([ "ruby", "rubyonrails" ], "ruby")
+      "<option value=\"ruby\" selected=\"selected\">ruby</option>\n<option value=\"zoisite\">zoisite</option>",
+      options_for_select([ "ruby", "zoisite" ], "ruby")
     )
     assert_dom_equal(
-      %(<option value="ruby" selected="selected">ruby</option>\n<option value="rubyonrails">rubyonrails</option>\n<option value=""></option>),
-      options_for_select([ "ruby", "rubyonrails", nil ], "ruby")
+      %(<option value="ruby" selected="selected">ruby</option>\n<option value="zoisite">zoisite</option>\n<option value=""></option>),
+      options_for_select([ "ruby", "zoisite", nil ], "ruby")
     )
   end
 

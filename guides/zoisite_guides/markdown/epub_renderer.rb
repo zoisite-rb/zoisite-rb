@@ -15,7 +15,7 @@ module ZoisiteGuides
       end
 
       def link(url, title, content)
-        if %r{https?://api\.rubyonrails\.org}.match?(url)
+        if %r{https?://api\.zoisite\.org}.match?(url)
           %(<a href="#{api_link(url)}">#{content}</a>)
         elsif title
           %(<a href="#{url}" title="#{title}">#{content}</a>)
@@ -97,7 +97,7 @@ module ZoisiteGuides
         end
 
         def api_link(url)
-          if %r{https?://api\.rubyonrails\.org/v\d+\.}.match?(url)
+          if %r{https?://api\.zoisite\.org/v\d+\.}.match?(url)
             url
           elsif edge
             url.sub("api", "edgeapi")

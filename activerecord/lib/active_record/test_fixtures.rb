@@ -113,8 +113,8 @@ module ActiveRecord
 
     # Generic fixture accessor for fixture names that may conflict with other methods.
     #
-    #   assert_equal "Ruby on Zoisite", web_sites(:rubyonrails).name
-    #   assert_equal "Ruby on Zoisite", fixture(:web_sites, :rubyonrails).name
+    #   assert_equal "Ruby on Zoisite", web_sites(:zoisite).name
+    #   assert_equal "Ruby on Zoisite", fixture(:web_sites, :zoisite).name
     def fixture(fixture_set_name, *fixture_names)
       active_record_fixture(fixture_set_name, *fixture_names)
     end

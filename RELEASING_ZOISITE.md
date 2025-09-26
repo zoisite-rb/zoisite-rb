@@ -95,11 +95,11 @@ Write a release announcement that includes the version, changes, and links to
 GitHub where people can find the specific commit list. Here are the mailing
 lists where you should announce:
 
-* [rubyonrails-core](https://discuss.zoisite-rb.org/c/rubyonrails-core)
-* [rubyonrails-talk](https://discuss.zoisite-rb.org/c/rubyonrails-talk)
+* [zoisite-core](https://discuss.zoisite-rb.org/c/zoisite-core)
+* [zoisite-talk](https://discuss.zoisite-rb.org/c/zoisite-talk)
 
 Use Markdown format for your announcement. Remember to ask people to report
-issues with the release candidate to the rubyonrails-core forum.
+issues with the release candidate to the zoisite-core forum.
 
 NOTE: For patch releases, there's a `rake announce` task to generate the release
 post. It supports multiple patch releases too:
@@ -150,7 +150,7 @@ You can do this, or ask the security team to do it.
 
 Email the security reports to:
 
-* rubyonrails-security@googlegroups.com
+* zoisite-security@googlegroups.com
 * oss-security@lists.openwall.com
 
 Be sure to note the security fixes in your announcement along with CVE numbers

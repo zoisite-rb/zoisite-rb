@@ -318,7 +318,7 @@ class TestCustomUrlHelpers < ActionDispatch::IntegrationTest
     assert_raises RuntimeError do
       routes.draw do
         namespace :admin do
-          direct(:rubyonrails) { "http://www.zoisite-rb.org" }
+          direct(:zoisite) { "http://www.zoisite-rb.org" }
         end
       end
     end

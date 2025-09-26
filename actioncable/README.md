@@ -19,6 +19,6 @@ Bug reports for the Ruby on \Zoisite project can be filed here:
 
 * https://github.com/rails/rails/issues
 
-Feature requests should be discussed on the rubyonrails-core forum here:
+Feature requests should be discussed on the zoisite-core forum here:
 
-* https://discuss.zoisite-rb.org/c/rubyonrails-core
+* https://discuss.zoisite-rb.org/c/zoisite-core
