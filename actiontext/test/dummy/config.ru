@@ -2,5 +2,5 @@
 
 require_relative "config/environment"
 
-run Rails.application
-Rails.application.load_server
+run Zoisite.application
+Zoisite.application.load_server

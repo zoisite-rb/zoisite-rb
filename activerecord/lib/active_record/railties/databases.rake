@@ -35,7 +35,7 @@ db_namespace = namespace :db do
     ActiveRecord::Tasks::DatabaseTasks.for_each(databases) do |name|
       desc "Create #{name} database for current environment"
       task name => :load_config do
-        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: name)
+        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: name)
         ActiveRecord::Tasks::DatabaseTasks.create(db_config)
       end
     end
@@ -54,7 +54,7 @@ db_namespace = namespace :db do
     ActiveRecord::Tasks::DatabaseTasks.for_each(databases) do |name|
       desc "Drop #{name} database for current environment"
       task name => [:load_config, :check_protected_environments] do
-        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: name)
+        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: name)
         ActiveRecord::Tasks::DatabaseTasks.drop(db_config)
       end
     end
@@ -120,7 +120,7 @@ db_namespace = namespace :db do
     ActiveRecord::Tasks::DatabaseTasks.for_each(databases) do |name|
       desc "Migrate #{name} database for current environment"
       task name => :load_config do
-        ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Rails.env, name: name) do
+        ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Zoisite.env, name: name) do
           ActiveRecord::Tasks::DatabaseTasks.migrate
         end
 
@@ -196,7 +196,7 @@ db_namespace = namespace :db do
         task name => :load_config do
           raise "VERSION is required" if !ENV["VERSION"] || ENV["VERSION"].empty?
 
-          ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Rails.env, name: name) do |pool|
+          ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Zoisite.env, name: name) do |pool|
             ActiveRecord::Tasks::DatabaseTasks.check_target_version
             pool.migration_context.run(:up, ActiveRecord::Tasks::DatabaseTasks.target_version)
           end
@@ -227,7 +227,7 @@ db_namespace = namespace :db do
         task name => :load_config do
           raise "VERSION is required" if !ENV["VERSION"] || ENV["VERSION"].empty?
 
-          ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Rails.env, name: name) do |pool|
+          ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Zoisite.env, name: name) do |pool|
             ActiveRecord::Tasks::DatabaseTasks.check_target_version
             pool.migration_context.run(:down, ActiveRecord::Tasks::DatabaseTasks.target_version)
           end
@@ -248,7 +248,7 @@ db_namespace = namespace :db do
       ActiveRecord::Tasks::DatabaseTasks.for_each(databases) do |name|
         desc "Display status of migrations for #{name} database"
         task name => :load_config do
-          ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Rails.env, name: name) do
+          ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Zoisite.env, name: name) do
             ActiveRecord::Tasks::DatabaseTasks.migrate_status
           end
         end
@@ -262,7 +262,7 @@ db_namespace = namespace :db do
       task name => :load_config do
         step = ENV["STEP"] ? ENV["STEP"].to_i : 1
 
-        ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Rails.env, name: name) do |pool|
+        ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Zoisite.env, name: name) do |pool|
           pool.migration_context.rollback(step)
         end
 
@@ -318,7 +318,7 @@ db_namespace = namespace :db do
 
   desc "Retrieve the current schema version number"
   task version: :load_config do
-    ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Rails.env) do |pool|
+    ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Zoisite.env) do |pool|
       puts "\ndatabase: #{pool.db_config.database}\n"
       puts "Current version: #{pool.migration_context.current_version}"
       puts
@@ -329,7 +329,7 @@ db_namespace = namespace :db do
     ActiveRecord::Tasks::DatabaseTasks.for_each(databases) do |name|
       desc "Retrieve the current schema version number for #{name} database"
       task name => :load_config do
-        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: name)
+        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: name)
         ActiveRecord::Tasks::DatabaseTasks.with_temporary_connection(db_config) do |connection|
           puts "Current version: #{connection.schema_version}"
         end
@@ -354,7 +354,7 @@ db_namespace = namespace :db do
         puts "  %4d %s" % [pending_migration.version, pending_migration.name]
       end
 
-      abort %{Run `bin/rails db:migrate` to update your database then try again.}
+      abort %{Run `bin/zoisite db:migrate` to update your database then try again.}
     end
   end
 
@@ -362,7 +362,7 @@ db_namespace = namespace :db do
     ActiveRecord::Tasks::DatabaseTasks.for_each(databases) do |name|
       # desc "Raise an error if there are pending migrations for #{name} database"
       task name => :load_config do
-        ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Rails.env, name: name) do |pool|
+        ActiveRecord::Tasks::DatabaseTasks.with_temporary_pool_for_each(env: Zoisite.env, name: name) do |pool|
           pending_migrations = pool.migration_context.open.pending_migrations
 
           if pending_migrations.any?
@@ -372,7 +372,7 @@ db_namespace = namespace :db do
               puts "  %4d %s" % [pending_migration.version, pending_migration.name]
             end
 
-            abort %{Run `bin/rails db:migrate:#{name}` to update your database then try again.}
+            abort %{Run `bin/zoisite db:migrate:#{name}` to update your database then try again.}
           end
         end
       end
@@ -594,7 +594,7 @@ namespace :railties do
     task migrations: :'db:load_config' do
       to_load = ENV["FROM"].blank? ? :all : ENV["FROM"].split(",").map(&:strip)
       railties = {}
-      Rails.application.migration_railties.each do |railtie|
+      Zoisite.application.migration_railties.each do |railtie|
         next unless to_load == :all || to_load.include?(railtie.railtie_name)
 
         if railtie.respond_to?(:paths) && (path = railtie.paths["db/migrate"].first)

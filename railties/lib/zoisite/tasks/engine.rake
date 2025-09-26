@@ -8,10 +8,10 @@ task "load_app" do
     task update: [ "update:bin" ]
 
     namespace :update do
-      require "rails/engine/updater"
+      require "zoisite/engine/updater"
       # desc "Adds new executables to the engine bin/ directory"
       task :bin do
-        Rails::Engine::Updater.run(:create_bin_files)
+        Zoisite::Engine::Updater.run(:create_bin_files)
       end
     end
   end
@@ -39,11 +39,11 @@ namespace :db do
   desc "Display status of migrations"
   app_task "migrate:status"
 
-  desc "Create the database from config/database.yml for the current Rails.env (use db:create:all to create all databases in the config)"
+  desc "Create the database from config/database.yml for the current Zoisite.env (use db:create:all to create all databases in the config)"
   app_task "create"
   app_task "create:all"
 
-  desc "Drop the database for the current Rails.env (use db:drop:all to drop all databases)"
+  desc "Drop the database for the current Zoisite.env (use db:drop:all to drop all databases)"
   app_task "drop"
   app_task "drop:all"
 
@@ -75,7 +75,7 @@ end
 def find_engine_path(path)
   return File.expand_path(Dir.pwd) if path.root?
 
-  if Rails::Engine.find(path)
+  if Zoisite::Engine.find(path)
     path.to_s
   else
     find_engine_path(path.join(".."))

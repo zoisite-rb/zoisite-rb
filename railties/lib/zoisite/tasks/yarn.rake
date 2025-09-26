@@ -6,7 +6,7 @@ namespace :yarn do
     # Install only production deps when for not usual envs.
     valid_node_envs = %w[test development production]
     node_env = ENV.fetch("NODE_ENV") do
-      valid_node_envs.include?(Rails.env) ? Rails.env : "production"
+      valid_node_envs.include?(Zoisite.env) ? Zoisite.env : "production"
     end
 
     yarn_flags =

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails/zeitwerk_checker"
+require "zoisite/zeitwerk_checker"
 
 report_unchecked = ->(unchecked) do
   puts
@@ -26,9 +26,9 @@ namespace :zeitwerk do
     puts "Hold on, I am eager loading the application."
 
     begin
-      unchecked = Rails::ZeitwerkChecker.check
+      unchecked = Zoisite::ZeitwerkChecker.check
     rescue Zeitwerk::NameError => e
-      abort e.message.sub(/#{Regexp.escape(Rails.root.to_s)}./, "")
+      abort e.message.sub(/#{Regexp.escape(Zoisite.root.to_s)}./, "")
     end
 
     if unchecked.empty?

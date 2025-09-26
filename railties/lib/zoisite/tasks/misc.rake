@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :time do
-  desc "List all time zones, list by two-letter country code (`bin/rails time:zones[US]`), or list by UTC offset (`bin/rails time:zones[-8]`)"
+  desc "List all time zones, list by two-letter country code (`bin/zoisite time:zones[US]`), or list by UTC offset (`bin/zoisite time:zones[-8]`)"
   task :zones, :country_or_offset do |t, args|
     zones, offset = ActiveSupport::TimeZone.all, nil
 
@@ -22,12 +22,12 @@ namespace :time do
       build_time_zone_list ActiveSupport::TimeZone.all
     end
 
-    # desc 'Display names of US time zones recognized by the Rails TimeZone class, grouped by offset. Results can be filtered with optional OFFSET parameter, e.g., OFFSET=-6'
+    # desc 'Display names of US time zones recognized by the Zoisite TimeZone class, grouped by offset. Results can be filtered with optional OFFSET parameter, e.g., OFFSET=-6'
     task :us do
       build_time_zone_list ActiveSupport::TimeZone.us_zones
     end
 
-    # desc 'Display names of time zones recognized by the Rails TimeZone class with the same offset as the system local time'
+    # desc 'Display names of time zones recognized by the Zoisite TimeZone class with the same offset as the system local time'
     task :local do
       require "active_support"
       require "active_support/time"

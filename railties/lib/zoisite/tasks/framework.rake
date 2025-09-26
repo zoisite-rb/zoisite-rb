@@ -5,19 +5,19 @@ namespace :app do
   task template: :environment do
     template = ENV["LOCATION"]
     raise "No LOCATION value given. Please set LOCATION either as path to a file or a URL" if template.blank?
-    require "rails/generators"
-    require "rails/generators/rails/app/app_generator"
-    Rails::Generators::AppGenerator.apply_rails_template(template, Rails.root)
+    require "zoisite/generators"
+    require "zoisite/generators/zoisite/app/app_generator"
+    Zoisite::Generators::AppGenerator.apply_zoisite_template(template, Zoisite.root)
   end
 
   namespace :templates do
-    # desc "Copy all the templates from rails to the application directory for customization. Already existing local copies will be overwritten"
+    # desc "Copy all the templates from zoisite to the application directory for customization. Already existing local copies will be overwritten"
     task :copy do
       generators_lib = File.expand_path("../generators", __dir__)
-      project_templates = "#{Rails.root}/lib/templates"
+      project_templates = "#{Zoisite.root}/lib/templates"
 
       default_templates = { "erb"   => %w{controller mailer scaffold},
-                            "rails" => %w{controller helper scaffold_controller} }
+                            "zoisite" => %w{controller helper scaffold_controller} }
 
       default_templates.each do |type, names|
         local_template_type_dir = File.join(project_templates, type)
