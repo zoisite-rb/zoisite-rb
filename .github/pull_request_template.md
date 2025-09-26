@@ -9,7 +9,7 @@ from the Zoisite team :).
 
 If your pull request affects documentation or any non-code
 changes, guidelines for those changes are [available
-here](https://edgeguides.zoisite-rb.org/contributing_to_ruby_on_zoisite.html#contributing-to-the-zoisite-documentation)
+here](https://edgeguides.zoisite-rb.org/contributing_to_zoisite.html#contributing-to-the-zoisite-documentation)
 
 About this template
 

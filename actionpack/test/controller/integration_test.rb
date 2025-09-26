@@ -1303,7 +1303,7 @@ class IntegrationFileUploadTest < ActionDispatch::IntegrationTest
   def test_fixture_file_upload
     post "/test_file_upload",
       params: {
-        file: fixture_file_upload("/ruby_on_rails.jpg", "image/jpeg")
+        file: fixture_file_upload("/zoisite.jpg", "image/jpeg")
       }
     assert_equal "45142", @response.body
   end

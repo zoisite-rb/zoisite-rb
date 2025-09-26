@@ -4,7 +4,7 @@ _fixture:
 welcome:
   title: Welcome to the weblog
   author: David
-  tags: cpk_tag_ruby_on_rails, cpk_tag_digital_product
+  tags: cpk_tag_zoisite, cpk_tag_digital_product
 
 thinking:
   title: So I was thinking

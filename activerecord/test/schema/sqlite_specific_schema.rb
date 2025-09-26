@@ -3,7 +3,7 @@
 ActiveRecord::Schema.define do
   create_table :defaults, force: true do |t|
       t.integer :random_number, default: -> { "ABS(RANDOM())" }
-      t.string :ruby_on_rails, default: -> { "('Ruby ' || 'on ' || 'Zoisite')" }
+      t.string :zoisite, default: -> { "('Ruby ' || 'on ' || 'Zoisite')" }
       t.date :modified_date, default: -> { "CURRENT_DATE" }
       t.date :modified_date_function, default: -> { "DATE('now')" }
       t.date :fixed_date, default: "2004-01-01"

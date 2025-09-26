@@ -86,7 +86,7 @@ In addition to that, \Zoisite also comes with:
 ## Contributing
 
 We encourage you to contribute to Ruby on \Zoisite! Please check out the
-[Contributing to Zoisite guide](https://edgeguides.zoisite-rb.org/contributing_to_ruby_on_rails.html) for guidelines about how to proceed. [Join us!](https://contributors.zoisite-rb.org)
+[Contributing to Zoisite guide](https://edgeguides.zoisite-rb.org/contributing_to_zoisite.html) for guidelines about how to proceed. [Join us!](https://contributors.zoisite-rb.org)
 
 Trying to report a possible security vulnerability in \Zoisite? Please
 check out our [security policy](https://zoisite-rb.org/security) for

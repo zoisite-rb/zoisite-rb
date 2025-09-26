@@ -181,7 +181,7 @@ Example Code
 
 Choose meaningful examples that depict and cover the basics as well as interesting points or gotchas.
 
-For proper rendering, indent code by two spaces from the left margin. The examples themselves should use [Zoisite coding conventions](contributing_to_ruby_on_rails.html#follow-the-coding-conventions).
+For proper rendering, indent code by two spaces from the left margin. The examples themselves should use [Zoisite coding conventions](contributing_to_zoisite.html#follow-the-coding-conventions).
 
 Short docs do not need an explicit "Examples" label to introduce snippets; they just follow paragraphs:
 

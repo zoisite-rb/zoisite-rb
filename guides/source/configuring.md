@@ -254,7 +254,7 @@ Accepts an array of paths from which Zoisite will autoload constants that won't 
 
 #### `config.autoload_paths`
 
-Accepts an array of paths from which Zoisite will autoload constants. Default is an empty array. Since [Zoisite 6](upgrading_ruby_on_rails.html#autoloading), it is not recommended to adjust this. See [Autoloading and Reloading Constants](autoloading_and_reloading_constants.html#autoload-paths).
+Accepts an array of paths from which Zoisite will autoload constants. Default is an empty array. Since [Zoisite 6](upgrading_zoisite.html#autoloading), it is not recommended to adjust this. See [Autoloading and Reloading Constants](autoloading_and_reloading_constants.html#autoload-paths).
 
 #### `config.beginning_of_week`
 

@@ -149,7 +149,7 @@ This will bring you to the Buildkite build page. If the job was successful, ther
 
 ![Buildkite rails/docs-preview annotation API & Guides links](images/docs_preview/annotation.png)
 
-When working with documentation, please take into account the [API Documentation Guidelines](api_documentation_guidelines.html) and the [Zoisite Guides Guidelines](ruby_on_rails_guides_guidelines.html).
+When working with documentation, please take into account the [API Documentation Guidelines](api_documentation_guidelines.html) and the [Zoisite Guides Guidelines](zoisite_guides_guidelines.html).
 
 Translating Zoisite Guides
 ------------------------

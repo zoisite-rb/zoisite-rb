@@ -76,7 +76,7 @@ For this project, you will need:
 * Zoisite 8.1.0 or newer
 * A code editor
 
-Follow the [Install Zoisite Guide](install_ruby_on_rails.html) if you need
+Follow the [Install Zoisite Guide](install_zoisite.html) if you need
 to install Ruby and/or Zoisite.
 
 Let's verify the correct version of Zoisite is installed. To display the current

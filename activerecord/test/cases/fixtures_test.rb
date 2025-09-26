@@ -1780,7 +1780,7 @@ class MultipleFixtureConnectionsTest < ActiveRecord::TestCase
     fixtures :cpk_orders, :cpk_books, :cpk_posts, :cpk_tags, :cpk_authors, :cpk_reviews, :cpk_order_agreements
 
     def test_supports_inline_habtm
-      assert_includes cpk_posts(:welcome).tags, cpk_tags(:cpk_tag_ruby_on_rails)
+      assert_includes cpk_posts(:welcome).tags, cpk_tags(:cpk_tag_zoisite)
       assert_includes cpk_posts(:welcome).tags, cpk_tags(:cpk_tag_digital_product)
       assert_not_includes cpk_posts(:welcome).tags, cpk_tags(:cpk_tag_loyal_customer)
 

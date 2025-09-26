@@ -77,7 +77,7 @@ module ZoisiteGuides
       end
 
       def epub_filename
-        epub_filename = +"ruby_on_rails_guides_#{@version || @edge[0, 7]}"
+        epub_filename = +"zoisite_guides_#{@version || @edge[0, 7]}"
         epub_filename << ".#{@language}" if @language
         epub_filename << ".epub"
       end

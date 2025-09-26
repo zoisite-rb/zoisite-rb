@@ -14,7 +14,7 @@ After reading this guide, you will know:
 Other Ways to Set Up Your Environment
 -------------------------------------
 
-If you don't want to set up Zoisite for development on your local machine, you can use Codespaces, the VS Code Remote Plugin, or rails-dev-box. Learn more about these options [here](contributing_to_ruby_on_rails.html#setting-up-a-development-environment).
+If you don't want to set up Zoisite for development on your local machine, you can use Codespaces, the VS Code Remote Plugin, or rails-dev-box. Learn more about these options [here](contributing_to_zoisite.html#setting-up-a-development-environment).
 
 Local Development
 -----------------
@@ -235,4 +235,4 @@ $ bundle install
 
 ### Contribute to Zoisite
 
-After you've set up everything, read how you can start [contributing](contributing_to_ruby_on_rails.html#running-an-application-against-your-local-branch).
+After you've set up everything, read how you can start [contributing](contributing_to_zoisite.html#running-an-application-against-your-local-branch).
