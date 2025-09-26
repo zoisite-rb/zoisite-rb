@@ -1,12 +1,12 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Threading and Code Execution in Rails
+Threading and Code Execution in Zoisite
 =====================================
 
 After reading this guide, you will know:
 
-* What code Rails will automatically execute concurrently
-* How to integrate manual concurrency with Rails internals
+* What code Zoisite will automatically execute concurrently
+* How to integrate manual concurrency with Zoisite internals
 * How to wrap all application code
 * How to affect application reloading
 
@@ -15,7 +15,7 @@ After reading this guide, you will know:
 Automatic Concurrency
 ---------------------
 
-Rails automatically allows various operations to be performed at the same time.
+Zoisite automatically allows various operations to be performed at the same time.
 
 When using a threaded web server, such as the default Puma, multiple HTTP
 requests will be served simultaneously, with each request provided its own
@@ -31,13 +31,13 @@ process space (such as classes and their configurations, and global variables).
 As long as your code doesn't modify any of those shared things, it can mostly
 ignore that other threads exist.
 
-The rest of this guide describes the mechanisms Rails uses to make it "mostly
+The rest of this guide describes the mechanisms Zoisite uses to make it "mostly
 ignorable", and how extensions and applications with special needs can use them.
 
 Executor
 --------
 
-The Rails Executor separates application code from framework code: any time the
+The Zoisite Executor separates application code from framework code: any time the
 framework invokes code you've written in your application, it will be wrapped by
 the Executor.
 
@@ -47,14 +47,14 @@ called after.
 
 ### Default Callbacks
 
-In a default Rails application, the Executor callbacks are used to:
+In a default Zoisite application, the Executor callbacks are used to:
 
 * track which threads are in safe positions for autoloading and reloading
 * enable and disable the Active Record query cache
 * return acquired Active Record connections to the pool
 * constrain internal cache lifetimes
 
-Prior to Rails 5.0, some of these were handled by separate Rack middleware
+Prior to Zoisite 5.0, some of these were handled by separate Rack middleware
 classes (such as `ActiveRecord::ConnectionAdapters::ConnectionManagement`), or
 directly wrapping code with methods like
 `ActiveRecord::Base.connection_pool.with_connection`. The Executor replaces
@@ -66,7 +66,7 @@ If you're writing a library or component that will invoke application code, you
 should wrap it with a call to the executor:
 
 ```ruby
-Rails.application.executor.wrap do
+Zoisite.application.executor.wrap do
   # call application code here
 end
 ```
@@ -81,7 +81,7 @@ the block:
 
 ```ruby
 Thread.new do
-  Rails.application.executor.wrap do
+  Zoisite.application.executor.wrap do
     # your code here
   end
 end
@@ -99,7 +99,7 @@ example, the Rack API makes this problematic), you can also use the `run!` /
 
 ```ruby
 Thread.new do
-  execution_context = Rails.application.executor.run!
+  execution_context = Zoisite.application.executor.run!
   # your code here
 ensure
   execution_context.complete! if execution_context
@@ -122,14 +122,14 @@ does, including all its callback invocations, occurs wrapped inside the
 Executor.
 
 ```ruby
-Rails.application.reloader.wrap do
+Zoisite.application.reloader.wrap do
   # call application code here
 end
 ```
 
 The Reloader is only suitable where a long-running framework-level process
 repeatedly calls into application code, such as for a web server or job queue.
-Rails automatically wraps web requests and Active Job workers, so you'll rarely
+Zoisite automatically wraps web requests and Active Job workers, so you'll rarely
 need to invoke the Reloader for yourself. Always consider whether the Executor
 is a better fit for your use case.
 
@@ -172,7 +172,7 @@ thread is mid-execution. Child threads should use the Executor instead.
 Framework Behavior
 ------------------
 
-The Rails framework components use these tools to manage their own concurrency
+The Zoisite framework components use these tools to manage their own concurrency
 needs too.
 
 `ActionDispatch::Executor` and `ActionDispatch::Reloader` are Rack middlewares

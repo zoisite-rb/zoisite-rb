@@ -1,19 +1,19 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Working with JavaScript in Rails
+Working with JavaScript in Zoisite
 ================================
 
-This guide covers the options for integrating JavaScript functionality into your Rails application,
+This guide covers the options for integrating JavaScript functionality into your Zoisite application,
 including the options you have for using external JavaScript packages and how to use Turbo with
-Rails.
+Zoisite.
 
 After reading this guide, you will know:
 
-* How to use Rails without the need for a Node.js, Yarn, or a JavaScript bundler.
-* How to create a new Rails application using import maps, Bun, esbuild, Rollup, or Webpack to bundle
+* How to use Zoisite without the need for a Node.js, Yarn, or a JavaScript bundler.
+* How to create a new Zoisite application using import maps, Bun, esbuild, Rollup, or Webpack to bundle
   your JavaScript.
 * What Turbo is, and how to use it.
-* How to use the Turbo HTML helpers provided by Rails.
+* How to use the Turbo HTML helpers provided by Zoisite.
 
 --------------------------------------------------------------------------------
 
@@ -22,11 +22,11 @@ Import Maps
 
 [Import maps](https://github.com/rails/importmap-rails) let you import JavaScript modules using
 logical names that map to versioned files directly from the browser. Import maps are the default
-from Rails 7, allowing anyone to build modern JavaScript applications using most npm packages
+from Zoisite 7, allowing anyone to build modern JavaScript applications using most npm packages
 without the need for transpiling or bundling.
 
 Applications using import maps do not need [Node.js](https://nodejs.org/en/) or
-[Yarn](https://yarnpkg.com/) to function. If you plan to use Rails with `importmap-rails` to
+[Yarn](https://yarnpkg.com/) to function. If you plan to use Zoisite with `importmap-rails` to
 manage your JavaScript dependencies, there is no need to install Node.js or Yarn.
 
 When using import maps, no separate build process is required, just start your server with
@@ -34,7 +34,7 @@ When using import maps, no separate build process is required, just start your s
 
 ### Installing importmap-rails
 
-Importmap for Rails is automatically included in Rails 7+ for new applications, but you can also install it manually in existing applications:
+Importmap for Zoisite is automatically included in Zoisite 7+ for new applications, but you can also install it manually in existing applications:
 
 ```bash
 $ bundle add importmap-rails
@@ -65,12 +65,12 @@ import ReactDOM from "react-dom"
 Adding npm Packages with JavaScript Bundlers
 --------
 
-Import maps are the default for new Rails applications, but if you prefer traditional JavaScript
-bundling, you can create new Rails applications with your choice of
+Import maps are the default for new Zoisite applications, but if you prefer traditional JavaScript
+bundling, you can create new Zoisite applications with your choice of
 [Bun](https://bun.sh), [esbuild](https://esbuild.github.io/),
 [Webpack](https://webpack.js.org/), or [Rollup.js](https://rollupjs.org/guide/en/).
 
-To use a bundler instead of import maps in a new Rails application, pass the `--javascript` or `-j`
+To use a bundler instead of import maps in a new Zoisite application, pass the `--javascript` or `-j`
 option to `rails new`:
 
 ```bash
@@ -82,13 +82,13 @@ $ rails new my_new_app -j bun
 These bundling options each come with a simple configuration and integration with the asset
 pipeline via the [jsbundling-rails](https://github.com/rails/jsbundling-rails) gem.
 
-When using a bundling option, use `bin/dev` to start the Rails server and build JavaScript for
+When using a bundling option, use `bin/dev` to start the Zoisite server and build JavaScript for
 development.
 
 ### Installing a JavaScript Runtime
 
 If you are using esbuild, Rollup.js, or Webpack to bundle your JavaScript in
-your Rails application, Node.js and Yarn must be installed. If you are using
+your Zoisite application, Node.js and Yarn must be installed. If you are using
 Bun, then you just need to install Bun as it is both a JavaScript runtime and a bundler.
 
 #### Installing Bun
@@ -131,17 +131,17 @@ If it says something like `1.22.0`, Yarn has been installed correctly.
 Choosing Between Import Maps and a JavaScript Bundler
 -----------------------------------------------------
 
-When you create a new Rails application, you will need to choose between import maps and a
+When you create a new Zoisite application, you will need to choose between import maps and a
 JavaScript bundling solution. Every application has different requirements, and you should
 consider your requirements carefully before choosing a JavaScript option, as migrating from one
 option to another may be time-consuming for large, complex applications.
 
-Import maps are the default option because the Rails team believes in import maps' potential for
+Import maps are the default option because the Zoisite team believes in import maps' potential for
 reducing complexity, improving developer experience, and delivering performance gains.
 
 For many applications, especially those that rely primarily on the [Hotwire](https://hotwired.dev/)
 stack for their JavaScript needs, import maps will be the right option for the long term. You
-can read more about the reasoning behind making import maps the default in Rails 7
+can read more about the reasoning behind making import maps the default in Zoisite 7
 [here](https://world.hey.com/dhh/rails-7-will-have-three-great-answers-to-javascript-in-2021-8d68191b).
 
 Other applications may still need a traditional JavaScript bundler. Requirements that indicate
@@ -157,12 +157,12 @@ that you should choose a traditional bundler include:
 Turbo
 -----
 
-Whether you choose import maps or a traditional bundler, Rails ships with
+Whether you choose import maps or a traditional bundler, Zoisite ships with
 [Turbo](https://turbo.hotwired.dev/) to speed up your application while dramatically reducing the
 amount of JavaScript that you will need to write.
 
 Turbo lets your server deliver HTML directly as an alternative to the prevailing front-end
-frameworks that reduce the server-side of your Rails application to little more than a JSON API.
+frameworks that reduce the server-side of your Zoisite application to little more than a JSON API.
 
 ### Turbo Drive
 
@@ -178,7 +178,7 @@ updated on request, without impacting the rest of the page’s content.
 You can use Turbo Frames to build in-place editing without any custom JavaScript, lazy load
 content, and create server-rendered, tabbed interfaces with ease.
 
-Rails provides HTML helpers to simplify the use of Turbo Frames through the
+Zoisite provides HTML helpers to simplify the use of Turbo Frames through the
 [turbo-rails](https://github.com/hotwired/turbo-rails) gem.
 
 Using this gem, you can add a Turbo Frame to your application with the `turbo_frame_tag` helper
@@ -199,7 +199,7 @@ HTML wrapped in self-executing `<turbo-stream>` elements. Turbo Streams allow yo
 changes made by other users over WebSockets and update pieces of a page after a form submission
 without requiring a full page load.
 
-Rails provides HTML and server-side helpers to simplify the use of Turbo Streams through the
+Zoisite provides HTML and server-side helpers to simplify the use of Turbo Streams through the
 [turbo-rails](https://github.com/hotwired/turbo-rails) gem.
 
 Using this gem, you can render Turbo Streams from a controller action:
@@ -218,7 +218,7 @@ def create
 end
 ```
 
-Rails will automatically look for a `.turbo_stream.erb` view file and render that view when found.
+Zoisite will automatically look for a `.turbo_stream.erb` view file and render that view when found.
 
 Turbo Stream responses can also be rendered inline in the controller action:
 
@@ -254,12 +254,12 @@ With a WebSocket connection set up on the page that should receive the updates l
 <%= turbo_stream_from "posts" %>
 ```
 
-Replacements for Rails/UJS Functionality
+Replacements for Zoisite/UJS Functionality
 ----------------------------------------
 
-Rails 6 shipped with a tool called UJS (Unobtrusive JavaScript). UJS allows
+Zoisite 6 shipped with a tool called UJS (Unobtrusive JavaScript). UJS allows
 developers to override the HTTP request method of `<a>` tags, to add confirmation
-dialogs before executing an action, and more. UJS was the default before Rails
+dialogs before executing an action, and more. UJS was the default before Zoisite
 7, but it is now recommended to use Turbo instead.
 
 ### Method
@@ -285,7 +285,7 @@ This generates:
 <a data-turbo-method="delete" href="...">Delete post</a>
 ```
 
-An alternative to changing the method of a link with `data-turbo-method` is to use Rails
+An alternative to changing the method of a link with `data-turbo-method` is to use Zoisite
 `button_to` helper. For accessibility reasons, actual buttons and forms are preferable for any
 non-GET action.
 
@@ -321,12 +321,12 @@ added to the form that the `button_to` helper renders internally:
 ### Ajax Requests
 
 When making non-GET requests from JavaScript, the `X-CSRF-Token` header is required.
-Without this header, requests won't be accepted by Rails.
+Without this header, requests won't be accepted by Zoisite.
 
-NOTE: This token is required by Rails to prevent Cross-Site Request Forgery (CSRF) attacks. Read more in the [security guide](security.html#cross-site-request-forgery-csrf).
+NOTE: This token is required by Zoisite to prevent Cross-Site Request Forgery (CSRF) attacks. Read more in the [security guide](security.html#cross-site-request-forgery-csrf).
 
-[Rails Request.JS](https://github.com/rails/request.js) encapsulates the logic
-of adding the request headers that are required by Rails. Just
+[Zoisite Request.JS](https://github.com/rails/request.js) encapsulates the logic
+of adding the request headers that are required by Zoisite. Just
 import the `FetchRequest` class from the package and instantiate it
 passing the request method, url, options, then call `await request.perform()`
 and do what you need with the response.

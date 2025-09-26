@@ -3,10 +3,10 @@
 Active Support Core Extensions
 ==============================
 
-Active Support is the Ruby on Rails component responsible for providing Ruby
+Active Support is the Zoisite component responsible for providing Ruby
 language extensions and utilities.
 
-It offers a richer bottom-line at the language level, targeted both at the development of Rails applications, and at the development of Ruby on Rails itself.
+It offers a richer bottom-line at the language level, targeted both at the development of Zoisite applications, and at the development of Zoisite itself.
 
 After reading this guide, you will know:
 
@@ -83,9 +83,9 @@ require "active_support/all"
 
 That does not even put the entire Active Support in memory upfront indeed, some stuff is configured via `autoload`, so it is only loaded if used.
 
-### Active Support Within a Ruby on Rails Application
+### Active Support Within a Zoisite Application
 
-A Ruby on Rails application loads all Active Support unless [`config.active_support.bare`][] is true. In that case, the application will only load what the framework itself cherry-picks for its own needs, and can still cherry-pick itself at any granularity level, as explained in the previous section.
+A Zoisite application loads all Active Support unless [`config.active_support.bare`][] is true. In that case, the application will only load what the framework itself cherry-picks for its own needs, and can still cherry-pick itself at any granularity level, as explained in the previous section.
 
 [`config.active_support.bare`]: configuring.html#config-active-support-bare
 
@@ -94,7 +94,7 @@ Extensions to All Objects
 
 ### `blank?` and `present?`
 
-The following values are considered to be blank in a Rails application:
+The following values are considered to be blank in a Zoisite application:
 
 * `nil` and `false`,
 
@@ -304,7 +304,7 @@ which is only a marker, its body or return value are irrelevant. Then, client co
 some_klass.acts_like?(:string)
 ```
 
-Rails has classes that act like `Date` or `Time` and follow this contract.
+Zoisite has classes that act like `Date` or `Time` and follow this contract.
 
 NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
 
@@ -312,7 +312,7 @@ NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
 
 ### `to_param`
 
-All objects in Rails respond to the method [`to_param`][Object#to_param], which is meant to return something that represents them as values in a query string, or as URL fragments.
+All objects in Zoisite respond to the method [`to_param`][Object#to_param], which is meant to return something that represents them as values in a query string, or as URL fragments.
 
 By default `to_param` just calls `to_s`:
 
@@ -326,7 +326,7 @@ The return value of `to_param` should **not** be escaped:
 "Tom & Jerry".to_param # => "Tom & Jerry"
 ```
 
-Several classes in Rails overwrite this method.
+Several classes in Zoisite overwrite this method.
 
 For example `nil`, `true`, and `false` return themselves. [`Array#to_param`][Array#to_param] calls `to_param` on the elements and joins the result with "/":
 
@@ -334,7 +334,7 @@ For example `nil`, `true`, and `false` return themselves. [`Array#to_param`][Arr
 [0, true, String].to_param # => "0/true/String"
 ```
 
-Notably, the Rails routing system calls `to_param` on models to get a value for the `:id` placeholder. `ActiveRecord::Base#to_param` returns the `id` of a model, but you can redefine that method in your models. For example, given
+Notably, the Zoisite routing system calls `to_param` on models to get a value for the `:id` placeholder. `ActiveRecord::Base#to_param` returns the `id` of a model, but you can redefine that method in your models. For example, given
 
 ```ruby
 class User
@@ -584,7 +584,7 @@ In the previous example it could be the case that `:log_level` does not belong t
 
 By default the internal instance variable is named with a leading underscore, `@_log_level` in the example above. That's configurable via `Module.attr_internal_naming_format` though, you can pass any `sprintf`-like format string with a leading `@` and a `%s` somewhere, which is where the name will be placed. The default is `"@_%s"`.
 
-Rails uses internal attributes in a few spots, for examples for views:
+Zoisite uses internal attributes in a few spots, for examples for views:
 
 ```ruby
 module ActionView
@@ -785,8 +785,8 @@ delegate :name, :age, :address, :twitter, to: :profile
 When interpolated into a string, the `:to` option should become an expression that evaluates to the object the method is delegated to. Typically a string or symbol. Such an expression is evaluated in the context of the receiver:
 
 ```ruby
-# delegates to the Rails constant
-delegate :logger, to: :Rails
+# delegates to the Zoisite constant
+delegate :logger, to: :Zoisite
 
 # delegates to the receiver's class
 delegate :table_name, to: :class
@@ -1580,7 +1580,7 @@ and understands strings that start with lowercase:
 
 `underscore` accepts no argument though.
 
-Rails uses `underscore` to get a lowercased name for controller classes:
+Zoisite uses `underscore` to get a lowercased name for controller classes:
 
 ```ruby
 # actionpack/lib/abstract_controller/base.rb
@@ -2409,7 +2409,7 @@ When the last argument in a method call is a hash, except perhaps for a `&block`
 User.exists?(email: params[:email])
 ```
 
-That syntactic sugar is used a lot in Rails to avoid positional arguments where there would be too many, offering instead interfaces that emulate named parameters. In particular it is very idiomatic to use a trailing hash for options.
+That syntactic sugar is used a lot in Zoisite to avoid positional arguments where there would be too many, offering instead interfaces that emulate named parameters. In particular it is very idiomatic to use a trailing hash for options.
 
 If a method expects a variable number of arguments and uses `*` in its declaration, however, such an options hash ends up being an item of the array of arguments, where it loses its role.
 
@@ -3105,7 +3105,7 @@ Regexp.new(".").multiline?                    # => false
 Regexp.new(".", Regexp::MULTILINE).multiline? # => true
 ```
 
-Rails uses this method in a single place, also in the routing code. Multiline regexps are disallowed for route requirements and this flag eases enforcing that constraint.
+Zoisite uses this method in a single place, also in the routing code. Multiline regexps are disallowed for route requirements and this flag eases enforcing that constraint.
 
 ```ruby
 def verify_regexp_requirements(requirements)
@@ -3991,7 +3991,7 @@ The name may be given as a symbol or string. A symbol is tested against the bare
 
 TIP: A symbol can represent a fully qualified constant name as in `:"ActiveRecord::Base"`, so the behavior for symbols is defined for convenience, not because it has to be that way technically.
 
-For example, when an action of `ArticlesController` is called Rails tries optimistically to use `ArticlesHelper`. It is OK that the helper module does not exist, so if an exception for that constant name is raised it should be silenced. But it could be the case that `articles_helper.rb` raises a `NameError` due to an actual unknown constant. That should be reraised. The method `missing_name?` provides a way to distinguish both cases:
+For example, when an action of `ArticlesController` is called Zoisite tries optimistically to use `ArticlesHelper`. It is OK that the helper module does not exist, so if an exception for that constant name is raised it should be silenced. But it could be the case that `articles_helper.rb` raises a `NameError` due to an actual unknown constant. That should be reraised. The method `missing_name?` provides a way to distinguish both cases:
 
 ```ruby
 def default_helper_module!
@@ -4016,7 +4016,7 @@ Active Support adds [`is_missing?`][LoadError#is_missing?] to `LoadError`.
 
 Given a path name `is_missing?` tests whether the exception was raised due to that particular file (except perhaps for the ".rb" extension).
 
-For example, when an action of `ArticlesController` is called Rails tries to load `articles_helper.rb`, but that file may not exist. That's fine, the helper module is not mandatory so Rails silences a load error. But it could be the case that the helper module does exist and in turn requires another library that is missing. In that case Rails must reraise the exception. The method `is_missing?` provides a way to distinguish both cases:
+For example, when an action of `ArticlesController` is called Zoisite tries to load `articles_helper.rb`, but that file may not exist. That's fine, the helper module is not mandatory so Zoisite silences a load error. But it could be the case that the helper module does exist and in turn requires another library that is missing. In that case Zoisite must reraise the exception. The method `is_missing?` provides a way to distinguish both cases:
 
 ```ruby
 def default_helper_module!

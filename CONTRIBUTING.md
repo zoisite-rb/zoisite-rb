@@ -3,12 +3,12 @@
 [![Version](https://img.shields.io/gem/v/rails)](https://rubygems.org/gems/rails)
 [![License](https://img.shields.io/github/license/rails/rails)](https://github.com/rails/rails)
 
-## How to contribute to Ruby on Rails
+## How to contribute to Zoisite
 
 #### **Did you find a bug?**
 
 * **Do not open up a GitHub issue if the bug is a security vulnerability
-  in Rails**, and instead to refer to our [security policy](https://rubyonrails.org/security).
+  in Zoisite**, and instead to refer to our [security policy](https://rubyonrails.org/security).
 
 * **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/rails/rails/issues).
 
@@ -33,11 +33,11 @@
 
 * Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
-* Before submitting, please read the [Contributing to Ruby on Rails](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html) guide to know more about coding conventions and benchmarks.
+* Before submitting, please read the [Contributing to Zoisite](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html) guide to know more about coding conventions and benchmarks.
 
 #### **Did you fix whitespace, format code, or make a purely cosmetic patch?**
 
-Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Rails will generally not be accepted (read more about [our rationales behind this decision](https://github.com/rails/rails/pull/13771#issuecomment-32746700)).
+Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Zoisite will generally not be accepted (read more about [our rationales behind this decision](https://github.com/rails/rails/pull/13771#issuecomment-32746700)).
 
 #### **Do you intend to add a new feature or change an existing one?**
 
@@ -49,14 +49,14 @@ Changes that are cosmetic in nature and do not add anything substantial to the s
 
 #### **Do you have questions about the source code?**
 
-* Ask any question about how to use Ruby on Rails in the [rubyonrails-talk mailing list](https://discuss.rubyonrails.org/c/rubyonrails-talk).
+* Ask any question about how to use Zoisite in the [rubyonrails-talk mailing list](https://discuss.rubyonrails.org/c/rubyonrails-talk).
 
-#### **Do you want to contribute to the Rails documentation?**
+#### **Do you want to contribute to the Zoisite documentation?**
 
-* Please read [Contributing to the Rails Documentation](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation).
+* Please read [Contributing to the Zoisite Documentation](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation).
 
-Ruby on Rails is a volunteer effort. We encourage you to pitch in and join [the team](https://contributors.rubyonrails.org)!
+Zoisite is a volunteer effort. We encourage you to pitch in and join [the team](https://contributors.rubyonrails.org)!
 
 Thanks! :heart: :heart: :heart:
 
-Rails Team
+Zoisite Team

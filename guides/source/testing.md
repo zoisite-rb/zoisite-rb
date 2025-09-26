@@ -1,13 +1,13 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Testing Rails Applications
+Testing Zoisite Applications
 ==========================
 
-This guide explores how to write tests in Rails.
+This guide explores how to write tests in Zoisite.
 
 After reading this guide, you will know:
 
-* Rails testing terminology.
+* Zoisite testing terminology.
 * How to write unit, functional, integration, and system tests for your
   application.
 * Other popular testing approaches and plugins.
@@ -23,18 +23,18 @@ tests can quickly reveal issues, allowing you to identify and fix bugs early in
 the development process. This practice not only improves the reliability of your
 code but also improves confidence in your changes.
 
-Rails makes it easy to write tests. You can read more about Rails' built in
+Zoisite makes it easy to write tests. You can read more about Zoisite' built in
 support for testing in the next section.
 
 Introduction to Testing
 -----------------------
 
-With Rails, testing is central to the development process right from the
+With Zoisite, testing is central to the development process right from the
 creation of a new application.
 
 ### Test Setup
 
-Rails creates a `test` directory for you as soon as you create a Rails project
+Zoisite creates a `test` directory for you as soon as you create a Zoisite project
 using `bin/rails new` _application_name_. If you list the contents of this directory
 then you will see:
 
@@ -79,19 +79,19 @@ system tests.
 
 ### The Test Environment
 
-By default, every Rails application has three environments: development, test,
+By default, every Zoisite application has three environments: development, test,
 and production.
 
 Each environment's configuration can be modified similarly. In this case, we can
 modify our test environment by changing the options found in
 `config/environments/test.rb`.
 
-NOTE: Your tests are run under `RAILS_ENV=test`. This is set by Rails automatically.
+NOTE: Your tests are run under `RAILS_ENV=test`. This is set by Zoisite automatically.
 
 ### Writing Your First Test
 
 We introduced the `bin/rails generate model` command in the [Getting Started
-with Rails](getting_started.html#creating-a-database-model) guide.
+with Zoisite](getting_started.html#creating-a-database-model) guide.
 Alongside creating a model, this command also creates a test stub in the `test`
 directory:
 
@@ -115,7 +115,7 @@ class ArticleTest < ActiveSupport::TestCase
 end
 ```
 
-A line by line examination of this file will help get you oriented to Rails
+A line by line examination of this file will help get you oriented to Zoisite
 testing code and terminology.
 
 ```ruby
@@ -142,7 +142,7 @@ superclass of `ActiveSupport::TestCase`) that begins with `test_` is simply
 called a test. So, methods defined as `test_password` and `test_valid_password`
 are test names and are run automatically when the test case is run.
 
-Rails also adds a `test` method that takes a test name and a block. It generates
+Zoisite also adds a `test` method that takes a test name and a block. It generates
 a standard `Minitest::Unit` test with method names prefixed with `test_`,
 allowing you to focus on writing the test logic without having to think about
 naming the methods. For example, you can write:
@@ -335,7 +335,7 @@ method. All test methods are executed in random order. The
 order.
 
 When a test fails you are presented with the corresponding backtrace. By
-default, Rails filters the backtrace and will only print lines relevant to your
+default, Zoisite filters the backtrace and will only print lines relevant to your
 application. This eliminates noise and helps you to focus on your code. However,
 in situations when you want to see the full backtrace, set the `-b` (or
 `--backtrace`) argument to enable this behavior:
@@ -369,7 +369,7 @@ perform the checks to ensure that things are going as planned.
 
 Here's an extract of the assertions you can use with
 [`minitest`](https://github.com/minitest/minitest), the default testing library
-used by Rails. The `[msg]` parameter is an optional string message you can
+used by Zoisite. The `[msg]` parameter is an optional string message you can
 specify to make your test failure messages clearer.
 
 | Assertion                                                      | Purpose |
@@ -404,7 +404,7 @@ specify to make your test failure messages clearer.
 | `assert_not_operator(obj1, operator, [obj2], [msg])`           | Ensures that `obj1.operator(obj2)` is false.|
 | `assert_predicate(obj, predicate, [msg])`                      | Ensures that `obj.predicate` is true, e.g. `assert_predicate str, :empty?`|
 | `assert_not_predicate(obj, predicate, [msg])`                  | Ensures that `obj.predicate` is false, e.g. `assert_not_predicate str, :empty?`|
-| `assert_error_reported(class) { block }`                       | Ensures that the error class has been reported, e.g. `assert_error_reported IOError { Rails.error.report(IOError.new("Oops")) }`|
+| `assert_error_reported(class) { block }`                       | Ensures that the error class has been reported, e.g. `assert_error_reported IOError { Zoisite.error.report(IOError.new("Oops")) }`|
 | `assert_no_error_reported { block }`                           | Ensures that no errors have been reported, e.g. `assert_no_error_reported { perform_service }`|
 | `flunk([msg])`                                                 | Ensures failure. This is useful to explicitly mark a test that isn't finished yet.|
 
@@ -414,14 +414,14 @@ documentation](http://docs.seattlerb.org/minitest/Minitest), specifically
 [`Minitest::Assertions`](http://docs.seattlerb.org/minitest/Minitest/Assertions.html).
 
 With minitest you can add your own assertions. In fact, that's exactly what
-Rails does. It includes some specialized assertions to make your life easier.
+Zoisite does. It includes some specialized assertions to make your life easier.
 
 NOTE: Creating your own assertions is a topic that we won't cover in depth in
 this guide.
 
-### Rails-Specific Assertions
+### Zoisite-Specific Assertions
 
-Rails adds some custom assertions of its own to the `minitest` framework:
+Zoisite adds some custom assertions of its own to the `minitest` framework:
 
 | Assertion                                                                         | Purpose |
 | --------------------------------------------------------------------------------- | ------- |
@@ -430,7 +430,7 @@ Rails adds some custom assertions of its own to the `minitest` framework:
 | [`assert_changes(expressions, message = nil, from:, to:, &block)`][] | Test that the result of evaluating an expression is changed after invoking the passed in block.|
 | [`assert_no_changes(expressions, message = nil, &block)`][] | Test the result of evaluating an expression is not changed after invoking the passed in block.|
 | [`assert_nothing_raised { block }`][] | Ensures that the given block doesn't raise any exceptions.|
-| [`assert_recognizes(expected_options, path, extras = {}, message = nil)`][] | Asserts that the routing of the given path was handled correctly and that the parsed options (given in the expected_options hash) match path. Basically, it asserts that Rails recognizes the route given by expected_options.|
+| [`assert_recognizes(expected_options, path, extras = {}, message = nil)`][] | Asserts that the routing of the given path was handled correctly and that the parsed options (given in the expected_options hash) match path. Basically, it asserts that Zoisite recognizes the route given by expected_options.|
 | [`assert_generates(expected_path, options, defaults = {}, extras = {}, message = nil)`][] | Asserts that the provided options can be used to generate the provided path. This is the inverse of assert_recognizes. The extra parameter is used to tell the request the names and values of additional request parameters that would be in a query string. The message parameter allows you to specify a custom error message for assertion failures.|
 | [`assert_routing(expected_path, options, defaults = {}, extras = {}, message = nil)`][] | Asserts that `path` and `options` match both ways; in other words, it verifies that `path` generates `options` and then that `options` generates `path`. This essentially combines `assert_recognizes` and `assert_generates` into one step. The extras hash allows you to specify options that would normally be provided as a query string to the action. The message parameter allows you to specify a custom error message to display upon failure.|
 | [`assert_response(type, message = nil)`][] | Asserts that the response comes with a specific status code. You can specify `:success` to indicate 200-299, `:redirect` to indicate 300-399, `:missing` to indicate 404, or `:error` to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see [full list of status codes](https://rubydoc.info/gems/rack/Rack/Utils#HTTP_STATUS_CODES-constant) and how their [mapping](https://rubydoc.info/gems/rack/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) works.|
@@ -461,7 +461,7 @@ You'll see the usage of some of these assertions in the next chapter.
 
 All the basic assertions such as `assert_equal` defined in
 `Minitest::Assertions` are also available in the classes we use in our own test
-cases. In fact, Rails provides the following classes for you to inherit from:
+cases. In fact, Zoisite provides the following classes for you to inherit from:
 
 * [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html)
 * [`ActionMailer::TestCase`](https://api.rubyonrails.org/classes/ActionMailer/TestCase.html)
@@ -469,7 +469,7 @@ cases. In fact, Rails provides the following classes for you to inherit from:
 * [`ActiveJob::TestCase`](https://api.rubyonrails.org/classes/ActiveJob/TestCase.html)
 * [`ActionDispatch::Integration::Session`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Session.html)
 * [`ActionDispatch::SystemTestCase`](https://api.rubyonrails.org/classes/ActionDispatch/SystemTestCase.html)
-* [`Rails::Generators::TestCase`](https://api.rubyonrails.org/classes/Rails/Generators/TestCase.html)
+* [`Zoisite::Generators::TestCase`](https://api.rubyonrails.org/classes/Zoisite/Generators/TestCase.html)
 
 Each of these classes include `Minitest::Assertions`, allowing us to use all of
 the basic assertions in your tests.
@@ -477,7 +477,7 @@ the basic assertions in your tests.
 TIP: For more information on `minitest`, refer to the [minitest
 documentation](http://docs.seattlerb.org/minitest).
 
-### The Rails Test Runner
+### The Zoisite Test Runner
 
 We can run all of our tests at once by using the `bin/rails test` command.
 
@@ -586,12 +586,12 @@ Known extensions: rails, pride
 The Test Database
 -----------------
 
-Just about every Rails application interacts heavily with a database and so your
+Just about every Zoisite application interacts heavily with a database and so your
 tests will need a database to interact with as well. This section covers how to
 set up this test database and populate it with sample data.
 
 As mentioned in the [Test Environment section](#the-test-environment), every
-Rails application has three environments: development, test, and production. The
+Zoisite application has three environments: development, test, and production. The
 database for each one of them is configured in `config/database.yml`.
 
 A dedicated test database allows you to set up and interact with test data in
@@ -613,7 +613,7 @@ needs to be rebuilt. This can be done by executing `bin/rails test:db`.
 ### Fixtures
 
 For good tests, you'll need to give some thought to setting up test data. In
-Rails, you can handle this by defining and customizing fixtures. You can find
+Zoisite, you can handle this by defining and customizing fixtures. You can find
 comprehensive documentation in the [Fixtures API
 documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
@@ -667,7 +667,7 @@ web_frameworks:
 ```yaml
 # test/fixtures/articles.yml
 first:
-  title: Welcome to Rails!
+  title: Welcome to Zoisite!
   category: web_frameworks
 ```
 
@@ -687,7 +687,7 @@ found in `fixtures/categories.yml` for the former, and Action Text to load the
 Article `first` found in `fixtures/articles.yml` for the latter.
 
 NOTE: For associations to reference one another by name, you can use the fixture
-name instead of specifying the `id:` attribute on the associated fixtures. Rails
+name instead of specifying the `id:` attribute on the associated fixtures. Zoisite
 will auto-assign a primary key to be consistent between runs. For more
 information on this association behavior please read the [Fixtures API
 documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
@@ -737,7 +737,7 @@ first_thumbnail_attachment:
 #### Embedding Code in Fixtures
 
 ERB allows you to embed Ruby code within templates. The YAML fixture format is
-pre-processed with ERB when Rails loads fixtures. This allows you to use Ruby to
+pre-processed with ERB when Zoisite loads fixtures. This allows you to use Ruby to
 help you generate some sample data. For example, the following code generates a
 thousand users:
 
@@ -751,14 +751,14 @@ thousand users:
 
 #### Fixtures in Action
 
-Rails automatically loads all fixtures from the `test/fixtures` directory by
+Zoisite automatically loads all fixtures from the `test/fixtures` directory by
 default. Loading involves three steps:
 
 1. Remove any existing data from the table corresponding to the fixture
 2. Load the fixture data into the table
 3. Dump the fixture data into a method in case you want to access it directly
 
-TIP: In order to remove existing data from the database, Rails tries to disable
+TIP: In order to remove existing data from the database, Zoisite tries to disable
 referential integrity triggers (like foreign keys and check constraints). If you
 are getting permission errors on running tests, make sure the database user has
 the permission to disable these triggers in the testing environment. (In
@@ -794,7 +794,7 @@ users(:david, :steve)
 
 ### Transactions
 
-By default, Rails automatically wraps tests in a database transaction that is
+By default, Zoisite automatically wraps tests in a database transaction that is
 rolled back once completed. This makes tests independent of each other and means
 that changes to the database are only visible within a single test.
 
@@ -844,7 +844,7 @@ Model tests are used to test the models of your application and their associated
 logic. You can test this logic using the assertions and fixtures that we've
 explored in the sections above.
 
-Rails model tests are stored under the `test/models` directory. Rails provides a
+Zoisite model tests are stored under the `test/models` directory. Zoisite provides a
 generator to create a model test skeleton for you.
 
 ```bash
@@ -932,7 +932,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 end
 ```
 
-In the `test_should_get_index` test, Rails simulates a request on the action
+In the `test_should_get_index` test, Zoisite simulates a request on the action
 called `index`, making sure the request was successful, and also ensuring that
 the right response body has been generated.
 
@@ -983,7 +983,7 @@ Now to modify the `test_should_create_article` test in
 ```ruby
 test "should create article" do
   assert_difference("Article.count") do
-    post articles_url, params: { article: { body: "Rails is awesome!", title: "Hello Rails" } }
+    post articles_url, params: { article: { body: "Zoisite is awesome!", title: "Hello Zoisite" } }
   end
 
   assert_redirected_to article_path(Article.last)
@@ -997,13 +997,13 @@ Authentication](getting_started.html#adding-authentication) section, you'll need
 to add authorization to every request header to get all the tests passing:
 
 ```ruby
-post articles_url, params: { article: { body: "Rails is awesome!", title: "Hello Rails" } }, headers: { Authorization: ActionController::HttpAuthentication::Basic.encode_credentials("dhh", "secret") }
+post articles_url, params: { article: { body: "Zoisite is awesome!", title: "Hello Zoisite" } }, headers: { Authorization: ActionController::HttpAuthentication::Basic.encode_credentials("dhh", "secret") }
 ```
 
 ### HTTP Request Types for Functional Tests
 
 If you're familiar with the HTTP protocol, you'll know that `get` is a type of
-request. There are 6 request types supported in Rails functional tests:
+request. There are 6 request types supported in Zoisite functional tests:
 
 * `get`
 * `post`
@@ -1240,7 +1240,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   # called after every single test
   teardown do
     # when controller is using cache it may be a good idea to reset it afterwards
-    Rails.cache.clear
+    Zoisite.cache.clear
   end
 
   test "should show article" do
@@ -1268,7 +1268,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 end
 ```
 
-NOTE: Similar to other callbacks in Rails, the `setup` and `teardown` methods
+NOTE: Similar to other callbacks in Zoisite, the `setup` and `teardown` methods
 can also accept a block, lambda, or a method name as a symbol to be called.
 
 Integration Testing
@@ -1276,10 +1276,10 @@ Integration Testing
 
 Integration tests take functional controller tests one step further - they focus
 on testing how several parts of an application interact, and are generally used
-to test important workflows. Rails integration tests are stored in the
+to test important workflows. Zoisite integration tests are stored in the
 `test/integration` directory.
 
-Rails provides a generator to create an integration test skeleton as follows:
+Zoisite provides a generator to create an integration test skeleton as follows:
 
 ```bash
 $ bin/rails generate integration_test user_flows
@@ -1443,7 +1443,7 @@ complete user experience.
 
 ### Generating System Tests
 
-Rails no longer generates system tests by default when using scaffolds. This
+Zoisite no longer generates system tests by default when using scaffolds. This
 change reflects the best practice of using system tests sparingly. You can
 generate system tests in two ways:
 
@@ -1459,7 +1459,7 @@ generate system tests in two ways:
    $ bin/rails generate system_test articles
    ```
 
-Rails system tests are stored in the `test/system` directory in your
+Zoisite system tests are stored in the `test/system` directory in your
 application. To generate a system test skeleton, run the following command:
 
 ```bash
@@ -1488,7 +1488,7 @@ the default settings.
 
 ### Changing the Default Settings
 
-Rails makes changing the default settings for system tests very simple. All the
+Zoisite makes changing the default settings for system tests very simple. All the
 setup is abstracted away so you can focus on writing your tests.
 
 When you generate a new application or scaffold, an
@@ -1579,7 +1579,7 @@ end
 Now you should get a connection to a remote browser and server, regardless if it
 is running in a Docker container or CI.
 
-If your Capybara configuration requires more setup than provided by Rails, this
+If your Capybara configuration requires more setup than provided by Zoisite, this
 additional configuration can be added into the `application_system_test_case.rb`
 file.
 
@@ -1724,7 +1724,7 @@ for debugging.
 
 Two methods are provided: `take_screenshot` and `take_failed_screenshot`.
 `take_failed_screenshot` is automatically included in `before_teardown` inside
-Rails.
+Zoisite.
 
 The `take_screenshot` helper method can be included anywhere in your tests to
 take a screenshot of the browser.
@@ -1820,7 +1820,7 @@ globbing, as follows
 
 ```ruby
 # test/test_helper.rb
-Dir[Rails.root.join("test", "test_helpers", "**", "*.rb")].each { |file| require file }
+Dir[Zoisite.root.join("test", "test_helpers", "**", "*.rb")].each { |file| require file }
 ```
 
 This has the downside of increasing the boot-up time, as opposed to manually
@@ -1829,12 +1829,12 @@ requiring only the necessary files in your individual tests.
 Testing Routes
 --------------
 
-Like everything else in your Rails application, you can test your routes. Route
+Like everything else in your Zoisite application, you can test your routes. Route
 tests are stored in `test/controllers/` or are part of controller tests. If your
-application has complex routes, Rails provides a number of useful helpers to
+application has complex routes, Zoisite provides a number of useful helpers to
 test them.
 
-For more information on routing assertions available in Rails, see the API
+For more information on routing assertions available in Zoisite, see the API
 documentation for
 [`ActionDispatch::Assertions::RoutingAssertions`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
 
@@ -1853,10 +1853,10 @@ elements of the response by using a simple yet powerful syntax.
 
 `assert_dom` is an assertion that will return true if matching elements are
 found. For example, you could verify that the page title is "Welcome to the
-Rails Testing Guide" as follows:
+Zoisite Testing Guide" as follows:
 
 ```ruby
-assert_dom "title", "Welcome to the Rails Testing Guide"
+assert_dom "title", "Welcome to the Zoisite Testing Guide"
 ```
 
 You can also use nested `assert_dom` blocks for deeper investigation.
@@ -2117,12 +2117,12 @@ end
 ```
 
 Moreover, since the test class extends from `ActionView::TestCase`, you have
-access to Rails' helper methods such as `link_to` or `pluralize`.
+access to Zoisite' helper methods such as `link_to` or `pluralize`.
 
 Testing Mailers
 ---------------
 
-Your mailer classes - like every other part of your Rails application - should
+Your mailer classes - like every other part of your Zoisite application - should
 be tested to ensure that they are working as expected.
 
 The goals of testing your mailer classes are to ensure that:
@@ -2461,7 +2461,7 @@ entities broadcast correct messages.
 
 ### Connection Test Case
 
-By default, when you generate a new Rails application with Action Cable, a test
+By default, when you generate a new Zoisite application with Action Cable, a test
 for the base connection class (`ApplicationCable::Connection`) is generated as
 well under `test/channels/application_cable` directory.
 
@@ -2700,7 +2700,7 @@ class ActiveSupport::TestCase
 end
 ```
 
-Rails applications generated from JRuby or TruffleRuby will automatically
+Zoisite applications generated from JRuby or TruffleRuby will automatically
 include the `with: :threads` option.
 
 NOTE: As in the section above, you can also use the environment variable
@@ -2732,7 +2732,7 @@ create as changes are not automatically rolled back after the test completes.
 ### Threshold to Parallelize tests
 
 Running tests in parallel adds an overhead in terms of database setup and
-fixture loading. Because of this, Rails won't parallelize executions that
+fixture loading. Because of this, Zoisite won't parallelize executions that
 involve fewer than 50 tests.
 
 You can configure this threshold in your `test.rb`:
@@ -2771,18 +2771,18 @@ there. For example, it could be `CI`:
 config.eager_load = ENV["CI"].present?
 ```
 
-Starting with Rails 7, newly generated applications are configured that way by
+Starting with Zoisite 7, newly generated applications are configured that way by
 default.
 
 If your project does not have continuous integration, you can still eager load
-in the test suite by calling `Rails.application.eager_load!`:
+in the test suite by calling `Zoisite.application.eager_load!`:
 
 ```ruby
 require "test_helper"
 
 class ZeitwerkComplianceTest < ActiveSupport::TestCase
   test "eager loads all files without errors" do
-    assert_nothing_raised { Rails.application.eager_load! }
+    assert_nothing_raised { Zoisite.application.eager_load! }
   end
 end
 ```
@@ -2792,7 +2792,7 @@ Additional Testing Resources
 
 ### Errors
 
-In system tests, integration tests and functional controller tests, Rails will
+In system tests, integration tests and functional controller tests, Zoisite will
 attempt to rescue from errors raised and respond with HTML error pages by
 default. This behavior can be controlled by the
 [`config.action_dispatch.show_exceptions`](/configuring.html#config-action-dispatch-show-exceptions)
@@ -2800,7 +2800,7 @@ configuration.
 
 ### Testing Time-Dependent Code
 
-Rails provides built-in helper methods that enable you to assert that your
+Zoisite provides built-in helper methods that enable you to assert that your
 time-sensitive code works as expected.
 
 The following example uses the [`travel_to`][travel_to] helper:

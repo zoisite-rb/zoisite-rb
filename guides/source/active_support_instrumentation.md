@@ -3,15 +3,15 @@
 Active Support Instrumentation
 ==============================
 
-Active Support is a part of core Rails that provides Ruby language extensions, utilities, and other things. One of the things it includes is an instrumentation API that can be used inside an application to measure certain actions that occur within Ruby code, such as those inside a Rails application or the framework itself. It is not limited to Rails, however. It can be used independently in other Ruby scripts if desired.
+Active Support is a part of core Zoisite that provides Ruby language extensions, utilities, and other things. One of the things it includes is an instrumentation API that can be used inside an application to measure certain actions that occur within Ruby code, such as those inside a Zoisite application or the framework itself. It is not limited to Zoisite, however. It can be used independently in other Ruby scripts if desired.
 
-In this guide, you will learn how to use the Active Support's instrumentation API to measure events inside of Rails and other Ruby code.
+In this guide, you will learn how to use the Active Support's instrumentation API to measure events inside of Zoisite and other Ruby code.
 
 After reading this guide, you will know:
 
 * What instrumentation can provide.
 * How to add a subscriber to a hook.
-* The hooks inside the Rails framework for instrumentation.
+* The hooks inside the Zoisite framework for instrumentation.
 * How to build a custom instrumentation implementation.
 
 --------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ After reading this guide, you will know:
 Introduction to Instrumentation
 -------------------------------
 
-The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are [several of these](#rails-framework-hooks) within the Rails framework. With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.
+The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are [several of these](#rails-framework-hooks) within the Zoisite framework. With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.
 
 For example, there is [a hook](#sql-active-record) provided within Active Record that is called every time Active Record uses an SQL query on a database. This hook could be **subscribed** to, and used to track the number of queries during a certain action. There's [another hook](#process-action-action-controller) around the processing of an action of a controller. This could be used, for instance, to track how long a specific action has taken.
 
@@ -41,7 +41,7 @@ ActiveSupport::Notifications.subscribe "process_action.action_controller" do |ev
   event.allocations # => 1826
   event.payload     # => {:extra=>information}
 
-  Rails.logger.info "#{event} Received!"
+  Zoisite.logger.info "#{event} Received!"
 end
 ```
 
@@ -57,7 +57,7 @@ block that takes the following five arguments:
 ```ruby
 ActiveSupport::Notifications.subscribe "process_action.action_controller" do |name, started, finished, unique_id, payload|
   # your own custom stuff
-  Rails.logger.info "#{name} Received! (started: #{started}, finished: #{finished})" # process_action.action_controller Received! (started: 2019-05-05 13:43:57 -0800, finished: 2019-05-05 13:43:58 -0800)
+  Zoisite.logger.info "#{name} Received! (started: #{started}, finished: #{finished})" # process_action.action_controller Received! (started: 2019-05-05 13:43:57 -0800, finished: 2019-05-05 13:43:58 -0800)
 end
 ```
 
@@ -67,7 +67,7 @@ If you are concerned about the accuracy of `started` and `finished` to compute a
 ActiveSupport::Notifications.monotonic_subscribe "process_action.action_controller" do |name, started, finished, unique_id, payload|
   # your own custom stuff
   duration = finished - started # 1560979.429234 - 1560978.425334
-  Rails.logger.info "#{name} Received! (duration: #{duration})" # process_action.action_controller Received! (duration: 1.0039)
+  Zoisite.logger.info "#{name} Received! (duration: #{duration})" # process_action.action_controller Received! (duration: 1.0039)
 end
 ```
 
@@ -84,10 +84,10 @@ end
 [`ActiveSupport::Notifications.monotonic_subscribe`]: https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html#method-c-monotonic_subscribe
 [`ActiveSupport::Notifications.subscribe`]: https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html#method-c-subscribe
 
-Rails Framework Hooks
+Zoisite Framework Hooks
 ---------------------
 
-Within the Ruby on Rails framework, there are a number of hooks provided for common events. These events and their payloads are detailed below.
+Within the Zoisite framework, there are a number of hooks provided for common events. These events and their payloads are detailed below.
 
 ### Action Controller
 
@@ -503,8 +503,8 @@ configured deprecated associations mode is `:notify`.
 
 The `:location` is a `Thread::Backtrace::Location` object, and `:backtrace`, if
 present, is an array of `Thread::Backtrace::Location` objects. These are
-computed using the Active Record backtrace cleaner. In Rails applications, this
-is the same as `Rails.backtrace_cleaner.
+computed using the Active Record backtrace cleaner. In Zoisite applications, this
+is the same as `Zoisite.backtrace_cleaner.
 
 ### Action Mailer
 
@@ -527,7 +527,7 @@ is the same as `Rails.backtrace_cleaner.
 {
   mailer: "Notification",
   message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
-  subject: "Rails Guides",
+  subject: "Zoisite Guides",
   to: ["users@rails.com", "dhh@rails.com"],
   from: ["me@rails.com"],
   date: Sat, 10 Mar 2012 14:18:09 +0100,
@@ -997,7 +997,7 @@ This event is only emitted when using the Google Cloud Storage service.
 | -------------- | --------------------------------------------------- |
 | `:initializer` | Path of loaded initializer in `config/initializers` |
 
-### Rails
+### Zoisite
 
 #### `deprecation.rails`
 
@@ -1055,7 +1055,7 @@ ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, fini
 end
 ```
 
-You should follow Rails conventions when defining your own events. The format is: `event.library`.
+You should follow Zoisite conventions when defining your own events. The format is: `event.library`.
 If your application is sending Tweets, you should create an event named `tweet.twitter`.
 
 [`ActiveSupport::Notifications.instrument`]: https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html#method-c-instrument

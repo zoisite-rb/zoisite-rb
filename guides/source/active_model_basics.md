@@ -6,7 +6,7 @@ Active Model Basics
 This guide will provide you with what you need to get started using Active
 Model. Active Model provides a way for Action Pack and Action View helpers to
 interact with plain Ruby objects. It also helps to build custom ORMs for use
-outside of the Rails framework.
+outside of the Zoisite framework.
 
 After reading this guide, you will know:
 
@@ -1000,10 +1000,10 @@ helpers and URL generation. This can be useful in situations where you want to
 use a more user-friendly name for the model, while still being able to reference
 it using its full namespace.
 
-For example, let's say you have a `Person` namespace in your Rails application,
+For example, let's say you have a `Person` namespace in your Zoisite application,
 and you want to create a form for a new `Person::Profile`.
 
-By default, Rails would generate the form with the URL `/person/profiles`, which
+By default, Zoisite would generate the form with the URL `/person/profiles`, which
 includes the namespace `person`. However, if you want the URL to simply point to
 `profiles` without the namespace, you can customize the `model_name` method like
 this:
@@ -1021,7 +1021,7 @@ end
 ```
 
 With this setup, when you use the `form_with` helper to create a form for
-creating a new `Person::Profile`, Rails will generate the form with the URL
+creating a new `Person::Profile`, Zoisite will generate the form with the URL
 `/profiles` instead of `/person/profiles`, because the `model_name` method has
 been overridden to return `Profile`.
 
@@ -1032,7 +1032,7 @@ define the routes for the `Person::Profile` model in your `config/routes.rb`
 file like this:
 
 ```ruby
-Rails.application.routes.draw do
+Zoisite.application.routes.draw do
   resources :profiles
 end
 ```
@@ -1327,7 +1327,7 @@ irb> person.name
 ### Translation
 
 [`ActiveModel::Translation`](https://api.rubyonrails.org/classes/ActiveModel/Translation.html)
-provides integration between your object and the [Rails internationalization
+provides integration between your object and the [Zoisite internationalization
 (i18n) framework](i18n.html).
 
 ```ruby

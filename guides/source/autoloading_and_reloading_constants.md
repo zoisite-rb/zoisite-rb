@@ -7,7 +7,7 @@ This guide documents how autoloading and reloading works in `zeitwerk` mode.
 
 After reading this guide, you will know:
 
-* Related Rails configuration
+* Related Zoisite configuration
 * Project structure
 * Autoloading, reloading, and eager loading
 * Single Table Inheritance
@@ -18,7 +18,7 @@ After reading this guide, you will know:
 Introduction
 ------------
 
-INFO. This guide documents autoloading, reloading, and eager loading in Rails applications.
+INFO. This guide documents autoloading, reloading, and eager loading in Zoisite applications.
 
 In an ordinary Ruby program, you explicitly load the files that define classes and modules you want to use. For example, the following controller refers to `ApplicationController` and `Post`, and you'd normally issue `require` calls for them:
 
@@ -35,7 +35,7 @@ class PostsController < ApplicationController
 end
 ```
 
-This is not the case in Rails applications, where application classes and modules are just available everywhere without `require` calls:
+This is not the case in Zoisite applications, where application classes and modules are just available everywhere without `require` calls:
 
 ```ruby
 class PostsController < ApplicationController
@@ -45,19 +45,19 @@ class PostsController < ApplicationController
 end
 ```
 
-Rails _autoloads_ them on your behalf if needed. This is possible thanks to a couple of [Zeitwerk](https://github.com/fxn/zeitwerk) loaders Rails sets up on your behalf, which provide autoloading, reloading, and eager loading.
+Zoisite _autoloads_ them on your behalf if needed. This is possible thanks to a couple of [Zeitwerk](https://github.com/fxn/zeitwerk) loaders Zoisite sets up on your behalf, which provide autoloading, reloading, and eager loading.
 
-On the other hand, those loaders do not manage anything else. In particular, they do not manage the Ruby standard library, gem dependencies, Rails components themselves, or even (by default) the application `lib` directory. That code has to be loaded as usual.
+On the other hand, those loaders do not manage anything else. In particular, they do not manage the Ruby standard library, gem dependencies, Zoisite components themselves, or even (by default) the application `lib` directory. That code has to be loaded as usual.
 
 
 Project Structure
 -----------------
 
-In a Rails application file names have to match the constants they define, with directories acting as namespaces.
+In a Zoisite application file names have to match the constants they define, with directories acting as namespaces.
 
 For example, the file `app/helpers/users_helper.rb` should define `UsersHelper` and the file `app/controllers/admin/payments_controller.rb` should define `Admin::PaymentsController`.
 
-By default, Rails configures Zeitwerk to inflect file names with `String#camelize`. For example, it expects that `app/controllers/users_controller.rb` defines the constant `UsersController` because that is what `"users_controller".camelize` returns.
+By default, Zoisite configures Zeitwerk to inflect file names with `String#camelize`. For example, it expects that `app/controllers/users_controller.rb` defines the constant `UsersController` because that is what `"users_controller".camelize` returns.
 
 The section _Customizing Inflections_ below documents ways to override this default.
 
@@ -81,13 +81,13 @@ $ bin/rails runner 'p UsersHelper'
 UsersHelper
 ```
 
-Rails adds custom directories under `app` to the autoload paths automatically. For example, if your application has `app/presenters`, you don't need to configure anything in order to autoload presenters; it works out of the box.
+Zoisite adds custom directories under `app` to the autoload paths automatically. For example, if your application has `app/presenters`, you don't need to configure anything in order to autoload presenters; it works out of the box.
 
 The array of default autoload paths can be extended by pushing to `config.autoload_paths`, in `config/application.rb` or `config/environments/*.rb`. For example:
 
 ```ruby
 module MyApplication
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     config.autoload_paths << "#{root}/extras"
   end
 end
@@ -99,7 +99,7 @@ WARNING. Please do not mutate `ActiveSupport::Dependencies.autoload_paths`; the 
 
 WARNING: You cannot autoload code in the autoload paths while the application boots. In particular, directly in `config/initializers/*.rb`. Please check [_Autoloading when the application boots_](#autoloading-when-the-application-boots) down below for valid ways to do that.
 
-The autoload paths are managed by the `Rails.autoloaders.main` autoloader.
+The autoload paths are managed by the `Zoisite.autoloaders.main` autoloader.
 
 config.autoload_lib(ignore:)
 ----------------------------
@@ -127,13 +127,13 @@ config.autoload_lib(ignore: %w(assets tasks templates generators middleware))
 ```ruby
 # config/application.rb
 module MyApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     lib = root.join("lib")
 
     config.autoload_paths << lib
     config.eager_load_paths << lib
 
-    Rails.autoloaders.main.ignore(
+    Zoisite.autoloaders.main.ignore(
       lib.join("assets"),
       lib.join("tasks"),
       lib.join("generators")
@@ -153,7 +153,7 @@ By default, this collection is empty, but you can extend it pushing to `config.a
 
 ```ruby
 module MyApplication
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     config.autoload_once_paths << "#{root}/app/serializers"
   end
 end
@@ -161,20 +161,20 @@ end
 
 Also, engines can push in body of the engine class and in their own `config/environments/*.rb`.
 
-INFO. If `app/serializers` is pushed to `config.autoload_once_paths`, Rails no longer considers this an autoload path, despite being a custom directory under `app`. This setting overrides that rule.
+INFO. If `app/serializers` is pushed to `config.autoload_once_paths`, Zoisite no longer considers this an autoload path, despite being a custom directory under `app`. This setting overrides that rule.
 
-This is key for classes and modules that are cached in places that survive reloads, like the Rails framework itself.
+This is key for classes and modules that are cached in places that survive reloads, like the Zoisite framework itself.
 
 For example, Active Job serializers are stored inside Active Job:
 
 ```ruby
 # config/initializers/custom_serializers.rb
-Rails.application.config.active_job.custom_serializers << MoneySerializer
+Zoisite.application.config.active_job.custom_serializers << MoneySerializer
 ```
 
 and Active Job itself is not reloaded when there's a reload, only application and engines code in the autoload paths is.
 
-Making `MoneySerializer` reloadable would be confusing, because reloading an edited version would have no effect on that class object stored in Active Job. Indeed, if `MoneySerializer` was reloadable, starting with Rails 7 such initializer would raise a `NameError`.
+Making `MoneySerializer` reloadable would be confusing, because reloading an edited version would have no effect on that class object stored in Active Job. Indeed, if `MoneySerializer` was reloadable, starting with Zoisite 7 such initializer would raise a `NameError`.
 
 Another use case is when engines decorate framework classes:
 
@@ -192,12 +192,12 @@ Classes and modules from the autoload once paths can be autoloaded in `config/in
 
 ```ruby
 # config/initializers/custom_serializers.rb
-Rails.application.config.active_job.custom_serializers << MoneySerializer
+Zoisite.application.config.active_job.custom_serializers << MoneySerializer
 ```
 
 INFO: Technically, you can autoload classes and modules managed by the `once` autoloader in any initializer that runs after `:bootstrap_hook`.
 
-The autoload once paths are managed by `Rails.autoloaders.once`.
+The autoload once paths are managed by `Zoisite.autoloaders.once`.
 
 config.autoload_lib_once(ignore:)
 ---------------------------------
@@ -211,13 +211,13 @@ By calling `config.autoload_lib_once`, classes and modules in `lib` can be autol
 ```ruby
 # config/application.rb
 module MyApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     lib = root.join("lib")
 
     config.autoload_once_paths << lib
     config.eager_load_paths << lib
 
-    Rails.autoloaders.once.ignore(
+    Zoisite.autoloaders.once.ignore(
       lib.join("assets"),
       lib.join("tasks"),
       lib.join("generators")
@@ -231,15 +231,15 @@ end
 Reloading
 ---------
 
-Rails automatically reloads classes and modules if application files in the autoload paths change.
+Zoisite automatically reloads classes and modules if application files in the autoload paths change.
 
-More precisely, if the web server is running and application files have been modified, Rails unloads all autoloaded constants managed by the `main` autoloader just before the next request is processed. That way, application classes or modules used during that request will be autoloaded again, thus picking up their current implementation in the file system.
+More precisely, if the web server is running and application files have been modified, Zoisite unloads all autoloaded constants managed by the `main` autoloader just before the next request is processed. That way, application classes or modules used during that request will be autoloaded again, thus picking up their current implementation in the file system.
 
-Reloading can be enabled or disabled. The setting that controls this behavior is [`config.enable_reloading`][], which is `true` by default in `development` mode, and `false` by default in `production` mode. For backwards compatibility, Rails also supports `config.cache_classes`, which is equivalent to `!config.enable_reloading`.
+Reloading can be enabled or disabled. The setting that controls this behavior is [`config.enable_reloading`][], which is `true` by default in `development` mode, and `false` by default in `production` mode. For backwards compatibility, Zoisite also supports `config.cache_classes`, which is equivalent to `!config.enable_reloading`.
 
-Rails uses an evented file monitor to detect files changes by default.  It can be configured instead to detect file changes by walking the autoload paths. This is controlled by the [`config.file_watcher`][] setting.
+Zoisite uses an evented file monitor to detect files changes by default.  It can be configured instead to detect file changes by walking the autoload paths. This is controlled by the [`config.file_watcher`][] setting.
 
-In a Rails console there is no file watcher active regardless of the value of `config.enable_reloading`. This is because, normally, it would be confusing to have code reloaded in the middle of a console session. Similar to an individual request, you generally want a console session to be served by a consistent, non-changing set of application classes and modules.
+In a Zoisite console there is no file watcher active regardless of the value of `config.enable_reloading`. This is because, normally, it would be confusing to have code reloaded in the middle of a console session. Similar to an individual request, you generally want a console session to be served by a consistent, non-changing set of application classes and modules.
 
 However, you can force a reload in the console by executing `reload!`:
 
@@ -262,7 +262,7 @@ As you can see, the class object stored in the `User` constant is different afte
 
 It is very important to understand that Ruby does not have a way to truly reload classes and modules in memory, and have that reflected everywhere they are already used. Technically, "unloading" the `User` class means removing the `User` constant via `Object.send(:remove_const, "User")`.
 
-For example, check out this Rails console session:
+For example, check out this Zoisite console session:
 
 ```irb
 irb> joe = User.new
@@ -311,7 +311,7 @@ Initializers cannot refer to reloadable constants, you need to wrap that in a `t
 
 ```ruby
 # config/initializers/api_gateway_setup.rb
-Rails.application.config.to_prepare do
+Zoisite.application.config.to_prepare do
   ApiGateway.endpoint = "https://example.com" # CORRECT
 end
 ```
@@ -326,7 +326,7 @@ Preflight checks are a use case for this:
 
 ```ruby
 # config/initializers/check_admin_presence.rb
-Rails.application.config.after_initialize do
+Zoisite.application.config.after_initialize do
   unless Role.where(name: "admin").exists?
     abort "The admin role is not present, please seed the database."
   end
@@ -349,7 +349,7 @@ Another example is Active Job serializers:
 
 ```ruby
 # config/initializers/custom_serializers.rb
-Rails.application.config.active_job.custom_serializers << MoneySerializer
+Zoisite.application.config.active_job.custom_serializers << MoneySerializer
 ```
 
 Whatever `MoneySerializer` evaluates to during initialization gets pushed to the custom serializers, and that object stays there on reloads.
@@ -417,7 +417,7 @@ Eager loading is controlled by the flag [`config.eager_load`][], which is disabl
 
 The order in which files are eager-loaded is undefined.
 
-During eager loading, Rails invokes `Zeitwerk::Loader.eager_load_all`. That ensures all gem dependencies managed by Zeitwerk are eager-loaded too.
+During eager loading, Zoisite invokes `Zeitwerk::Loader.eager_load_all`. That ensures all gem dependencies managed by Zeitwerk are eager-loaded too.
 
 
 [`config.eager_load`]: configuring.html#config-eager-load
@@ -458,12 +458,12 @@ In this example, we still want `app/models/shapes/circle.rb` to define `Circle`,
 ```ruby
 # config/initializers/preload_stis.rb
 
-shapes = "#{Rails.root}/app/models/shapes"
-Rails.autoloaders.main.collapse(shapes) # Not a namespace.
+shapes = "#{Zoisite.root}/app/models/shapes"
+Zoisite.autoloaders.main.collapse(shapes) # Not a namespace.
 
-unless Rails.application.config.eager_load
-  Rails.application.config.to_prepare do
-    Rails.autoloaders.main.eager_load_dir(shapes)
+unless Zoisite.application.config.eager_load
+  Zoisite.application.config.to_prepare do
+    Zoisite.autoloaders.main.eager_load_dir(shapes)
   end
 end
 ```
@@ -483,9 +483,9 @@ For this one, the initializer is the same except no collapsing is configured:
 ```ruby
 # config/initializers/preload_stis.rb
 
-unless Rails.application.config.eager_load
-  Rails.application.config.to_prepare do
-    Rails.autoloaders.main.eager_load_dir("#{Rails.root}/app/models/shapes")
+unless Zoisite.application.config.eager_load
+  Zoisite.application.config.to_prepare do
+    Zoisite.autoloaders.main.eager_load_dir("#{Zoisite.root}/app/models/shapes")
   end
 end
 ```
@@ -499,8 +499,8 @@ In this option we do not need to organize the files in any way, but we hit the d
 ```ruby
 # config/initializers/preload_stis.rb
 
-unless Rails.application.config.eager_load
-  Rails.application.config.to_prepare do
+unless Zoisite.application.config.eager_load
+  Zoisite.application.config.to_prepare do
     types = Shape.unscoped.select(:type).distinct.pluck(:type)
     types.compact.each(&:constantize)
   end
@@ -514,7 +514,7 @@ WARNING: If models are added, modified, or deleted from the STI, reloading works
 Customizing Inflections
 -----------------------
 
-By default, Rails uses `String#camelize` to know which constant a given file or directory name should define. For example, `posts_controller.rb` should define `PostsController` because that is what `"posts_controller".camelize` returns.
+By default, Zoisite uses `String#camelize` to know which constant a given file or directory name should define. For example, `posts_controller.rb` should define `PostsController` because that is what `"posts_controller".camelize` returns.
 
 It could be the case that some particular file or directory name does not get inflected as you want. For instance, `html_parser.rb` is expected to define `HtmlParser` by default. What if you prefer the class to be `HTMLParser`? There are a few ways to customize this.
 
@@ -530,7 +530,7 @@ end
 Doing so affects how Active Support inflects globally. That may be fine in some applications, but you can also customize how to camelize individual basenames independently from Active Support by passing a collection of overrides to the default inflectors:
 
 ```ruby
-Rails.autoloaders.each do |autoloader|
+Zoisite.autoloaders.each do |autoloader|
   autoloader.inflector.inflect(
     "html_parser" => "HTMLParser",
     "ssl_error"   => "SSLError"
@@ -541,7 +541,7 @@ end
 That technique still depends on `String#camelize`, though, because that is what the default inflectors use as fallback. If you instead prefer not to depend on Active Support inflections at all and have absolute control over inflections, configure the inflectors to be instances of `Zeitwerk::Inflector`:
 
 ```ruby
-Rails.autoloaders.each do |autoloader|
+Zoisite.autoloaders.each do |autoloader|
   autoloader.inflector = Zeitwerk::Inflector.new
   autoloader.inflector.inflect(
     "html_parser" => "HTMLParser",
@@ -565,7 +565,7 @@ Custom Namespaces
 
 As we saw above, autoload paths represent the top-level namespace: `Object`.
 
-Let's consider `app/services`, for example. This directory is not generated by default, but if it exists, Rails automatically adds it to the autoload paths.
+Let's consider `app/services`, for example. This directory is not generated by default, but if it exists, Zoisite automatically adds it to the autoload paths.
 
 By default, the file `app/services/users/signup.rb` is expected to define `Users::Signup`, but what if you prefer that entire subtree to be under a `Services` namespace? Well, with default settings, that can be accomplished by creating a subdirectory: `app/services/services`.
 
@@ -583,16 +583,16 @@ Zeitwerk supports [custom root namespaces](https://github.com/fxn/zeitwerk#custo
 # any case, `push_dir` expects a class or module object.
 module Services; end
 
-Rails.autoloaders.main.push_dir("#{Rails.root}/app/services", namespace: Services)
+Zoisite.autoloaders.main.push_dir("#{Zoisite.root}/app/services", namespace: Services)
 ```
 
-Rails < 7.1 did not support this feature, but you can still add this additional code in the same file and get it working:
+Zoisite < 7.1 did not support this feature, but you can still add this additional code in the same file and get it working:
 
 ```ruby
-# Additional code for applications running on Rails < 7.1.
-app_services_dir = "#{Rails.root}/app/services" # has to be a string
+# Additional code for applications running on Zoisite < 7.1.
+app_services_dir = "#{Zoisite.root}/app/services" # has to be a string
 ActiveSupport::Dependencies.autoload_paths.delete(app_services_dir)
-Rails.application.config.watchable_dirs[app_services_dir] = [:rb]
+Zoisite.application.config.watchable_dirs[app_services_dir] = [:rb]
 ```
 
 Custom namespaces are also supported for the `once` autoloader. However, since that one is set up earlier in the boot process, the configuration cannot be done in an application initializer. Instead, please put it in `config/application.rb`, for example.
@@ -602,7 +602,7 @@ Autoloading and Engines
 
 Engines run in the context of a parent application, and their code is autoloaded, reloaded, and eager loaded by the parent application. If the application runs in `zeitwerk` mode, the engine code is loaded by `zeitwerk` mode. If the application runs in `classic` mode, the engine code is loaded by `classic` mode.
 
-When Rails boots, engine directories are added to the autoload paths, and from the point of view of the autoloader, there's no difference. Autoloaders' main inputs are the autoload paths, and whether they belong to the application source tree or to some engine source tree is irrelevant.
+When Zoisite boots, engine directories are added to the autoload paths, and from the point of view of the autoloader, there's no difference. Autoloaders' main inputs are the autoload paths, and whether they belong to the application source tree or to some engine source tree is irrelevant.
 
 For example, this application uses [Devise](https://github.com/heartcombo/devise):
 
@@ -620,7 +620,7 @@ $ bin/rails runner 'pp ActiveSupport::Dependencies.autoload_paths'
 
 If the engine controls the autoloading mode of its parent application, the engine can be written as usual.
 
-However, if an engine supports Rails 6 or Rails 6.1 and does not control its parent applications, it has to be ready to run under either `classic` or `zeitwerk` mode. Things to take into account:
+However, if an engine supports Zoisite 6 or Zoisite 6.1 and does not control its parent applications, it has to be ready to run under either `classic` or `zeitwerk` mode. Things to take into account:
 
 1. If `classic` mode would need a `require_dependency` call to ensure some constant is loaded at some point, write it. While `zeitwerk` would not need it, it won't hurt, it will work in `zeitwerk` mode too.
 
@@ -647,7 +647,7 @@ There can be additional output depending on the application configuration, but t
 
 It is a good practice to verify in the test suite that the project eager loads correctly.
 
-That covers Zeitwerk naming compliance and other possible error conditions. Please check the [section about testing eager loading](testing.html#testing-eager-loading) in the [_Testing Rails Applications_](testing.html) guide.
+That covers Zeitwerk naming compliance and other possible error conditions. Please check the [section about testing eager loading](testing.html#testing-eager-loading) in the [_Testing Zoisite Applications_](testing.html) guide.
 
 Troubleshooting
 ---------------
@@ -657,7 +657,7 @@ The best way to follow what the loaders are doing is to inspect their activity.
 The easiest way to do that is to include
 
 ```ruby
-Rails.autoloaders.log!
+Zoisite.autoloaders.log!
 ```
 
 in `config/application.rb` after loading the framework defaults. That will print traces to standard output.
@@ -665,30 +665,30 @@ in `config/application.rb` after loading the framework defaults. That will print
 If you prefer logging to a file, configure this instead:
 
 ```ruby
-Rails.autoloaders.logger = Logger.new("#{Rails.root}/log/autoloading.log")
+Zoisite.autoloaders.logger = Logger.new("#{Zoisite.root}/log/autoloading.log")
 ```
 
-The Rails logger is not yet available when `config/application.rb` executes. If you prefer to use the Rails logger, configure this setting in an initializer instead:
+The Zoisite logger is not yet available when `config/application.rb` executes. If you prefer to use the Zoisite logger, configure this setting in an initializer instead:
 
 ```ruby
 # config/initializers/log_autoloaders.rb
-Rails.autoloaders.logger = Rails.logger
+Zoisite.autoloaders.logger = Zoisite.logger
 ```
 
-Rails.autoloaders
+Zoisite.autoloaders
 -----------------
 
 The Zeitwerk instances managing your application are available at
 
 ```ruby
-Rails.autoloaders.main
-Rails.autoloaders.once
+Zoisite.autoloaders.main
+Zoisite.autoloaders.once
 ```
 
 The predicate
 
 ```ruby
-Rails.autoloaders.zeitwerk_enabled?
+Zoisite.autoloaders.zeitwerk_enabled?
 ```
 
-is still available in Rails 7 applications, and returns `true`.
+is still available in Zoisite 7 applications, and returns `true`.

@@ -22,7 +22,7 @@ Introduction
 
 One of the most common features to add to any application is a sign up process
 for registering new users. The e-commerce application we've built so far only
-has authentication and users must be created in the Rails console or a script.
+has authentication and users must be created in the Zoisite console or a script.
 
 This feature is required before we can add other features. For example, to let
 users create wishlists, they will need to be able to sign up first before they
@@ -34,7 +34,7 @@ Adding Sign Up
 --------------
 
 We've already used the
-[Rails authentication generator in the Getting Started guide](/getting_started.html#adding-authentication)
+[Zoisite authentication generator in the Getting Started guide](/getting_started.html#adding-authentication)
 to allow users to login to their accounts. The generator created a `User` model
 with `email_address:string` and `password_digest:string` columns in the
 database. It also added `has_secure_password` to the `User` model which handles
@@ -247,7 +247,7 @@ Our application will be accessible on the internet so we're bound to have
 malicious bots and users trying to spam our application. We can add rate
 limiting to sign up to slow down anyone submitting too many requests.
 
-Rails makes this easy with the
+Zoisite makes this easy with the
 [`rate_limit`](https://api.rubyonrails.org/classes/ActionController/RateLimiting/ClassMethods.html)
 method in controllers.
 
@@ -271,7 +271,7 @@ expect to update their profile, password, email address, and other settings.
 
 ### Using Namespaces
 
-The Rails authentication generator already created a controller at
+The Zoisite authentication generator already created a controller at
 `app/controllers/passwords_controller.rb` for password resets. This means we
 need to use a different controller for editing passwords of authenticated users.
 
@@ -352,7 +352,7 @@ to process the form with the `update` action.
 TIP: `Current.user` comes from
 [CurrentAttributes](https://api.rubyonrails.org/classes/ActiveSupport/CurrentAttributes.html)
 which is a per-request attribute which resets automatically before and after
-each request. The Rails authentication generator uses this to keep track of the
+each request. The Zoisite authentication generator uses this to keep track of the
 logged in User.
 
 ### Safely Updating Passwords
@@ -396,7 +396,7 @@ password.
 ### Renaming The Password Challenge Attribute
 
 While `password_challenge` is a good name for our code, users are used to seeing
-"Current password" for this form field. We can rename this with locales in Rails
+"Current password" for this form field. We can rename this with locales in Zoisite
 to change how this attribute is displayed on the frontend.
 
 Add the following to `config/locales/en.yml`:
@@ -556,7 +556,7 @@ Let's create `app/views/layouts/settings.html.erb` and add the following:
 <%= render template: "layouts/application" %>
 ```
 
-In the settings layout, we're providing HTML for the sidebar and telling Rails
+In the settings layout, we're providing HTML for the sidebar and telling Zoisite
 to render the application layout as the parent.
 
 We need to modify the application layout to render the content from the nested
@@ -918,7 +918,7 @@ Confirm your email: <%= email_confirmation_url(token: @token) %>
 
 ### Email Confirmation Controller
 
-The confirmation email includes a link to our Rails app to verify the email
+The confirmation email includes a link to our Zoisite app to verify the email
 change.
 
 Let's add a route for this to `config/routes.rb`
@@ -981,7 +981,7 @@ Finally, let's add a link to Email in the settings layout sidebar:
 ```
 
 Test out this process by navigating to https://localhost:3000/settings/email and
-updating your email address. Watch the Rails server logs for the email contents
+updating your email address. Watch the Zoisite server logs for the email contents
 and open the confirm link in your browser to update the email in the database.
 
 Separating Admins & Users
@@ -1014,7 +1014,7 @@ This is easy enough by keeping the `:admin` attribute out of any permitted
 parameters list.
 
 Optionally, we can mark the admin attribute as readonly for added security. This
-will tell Rails to raise an error anytime the admin attribute is changed. It can
+will tell Zoisite to raise an error anytime the admin attribute is changed. It can
 still be set when creating a record, but provides an additional layer of
 security against unauthorized changes. You may want to skip this if you'll be
 changing the admin flag for users often but in our e-commerce store, it's a
@@ -1035,7 +1035,7 @@ class User < ApplicationRecord
 When `admin` is read-only, we have to directly update this in the database
 instead of using Active Record.
 
-Rails has a command called `dbconsole` that will open a database console where
+Zoisite has a command called `dbconsole` that will open a database console where
 we can directly interact with the database using SQL.
 
 ```bash
@@ -1552,7 +1552,7 @@ Let's add some tests to verify that our features work correctly.
 
 ### Authentication Test Helpers
 
-In our test suite, we'll need to sign in users in our tests. The Rails
+In our test suite, we'll need to sign in users in our tests. The Zoisite
 authentication generator has been updated to include helpers for authentication,
 but your application may have been created before this, so let's ensure these
 files exist before writing our tests.
@@ -1984,7 +1984,7 @@ UPDATE users SET admin=true WHERE users.email='you@example.org';
 .quit
 ```
 
-Otherwise, you can use the Rails console to update your account.
+Otherwise, you can use the Zoisite console to update your account.
 
 ```bash
 $ bin/kamal console

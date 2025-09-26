@@ -46,7 +46,7 @@ For example, it may be important to your application to ensure that every user
 provides a valid email address and mailing address. Model-level validations are
 the best way to ensure that only valid data is saved into your database. They
 can be used with any database, cannot be bypassed by end users, and are
-convenient to test and maintain. Rails provides built-in helpers for common
+convenient to test and maintain. Zoisite provides built-in helpers for common
 needs, and allows you to create your own validation methods as well.
 
 
@@ -72,7 +72,7 @@ controller-level validations. Here's a summary of the pros and cons:
   keep your controllers simple, as it will make working with your application
   easier in the long run.
 
-Rails recommends using model-level validations in most circumstances, however
+Zoisite recommends using model-level validations in most circumstances, however
 there may be specific cases where you want to complement them with alternate
 validations.
 
@@ -122,7 +122,7 @@ object in the database. You can choose to have specific validations run when an
 object is created, saved, or updated.
 
 WARNING: While validations usually prevent invalid data from being saved to the
-database, it's important to be aware that not all methods in Rails trigger
+database, it's important to be aware that not all methods in Zoisite trigger
 validations. Some methods allow changes to be made directly to the database
 without performing validations. As a result, if you're not careful, it’s
 possible to [bypass validations](#skipping-validations) and save an object in an
@@ -227,8 +227,8 @@ passed as an argument. This technique should be used with caution.
 
 ### Checking Validity
 
-Before saving an Active Record object, Rails runs your validations, and if these
-validations produce any validation errors, then Rails will not save the object.
+Before saving an Active Record object, Zoisite runs your validations, and if these
+validations produce any validation errors, then Zoisite will not save the object.
 
 You can also run the validations on your own. [`valid?`][] triggers your
 validations and returns true if no errors are found in the object, and false
@@ -357,21 +357,21 @@ easily access the errors related to any specific attribute. For instance, if you
 validate the `:name` attribute and the validation fails, you will find the error
 message under `errors[:name]`.
 
-In modern Rails applications, the more concise validate syntax is commonly used,
+In modern Zoisite applications, the more concise validate syntax is commonly used,
 for example:
 
 ```ruby
 validates :name, presence: true
 ```
 
-However, older versions of Rails used "helper" methods, such as:
+However, older versions of Zoisite used "helper" methods, such as:
 
 ```ruby
 validates_presence_of :name
 ```
 
 Both notations perform the same function, but the newer form is recommended for
-its readability and alignment with Rails' conventions.
+its readability and alignment with Zoisite' conventions.
 
 Each validation accepts an arbitrary number of attribute names, allowing you to
 apply the same type of validation to multiple attributes in a single line of
@@ -381,7 +381,7 @@ Additionally, all validations accept the `:on` and `:message` options. The `:on`
 option specifies when the validation should be triggered, with possible values
 being `:create` or `:update`. The `:message` option allows you to define a
 custom error message that will be added to the errors collection if the
-validation fails. If you do not specify a message, Rails will use a default
+validation fails. If you do not specify a message, Zoisite will use a default
 error message for that validation.
 
 INFO: To see a list of the available default helpers, take a look at
@@ -438,7 +438,7 @@ irb> line_item_with_order.valid?
 NOTE: For `belongs_to` the association presence is validated by default. If you
 don’t want to have association presence validated, use `optional: true`.
 
-Rails will usually infer the inverse association automatically. In cases where
+Zoisite will usually infer the inverse association automatically. In cases where
 you use a custom `:foreign_key` or a `:through` association, it's important to
 explicitly set the `:inverse_of` option to optimize the association lookup. This
 helps avoid unnecessary database queries during validation.
@@ -1904,10 +1904,10 @@ Once you've defined a model and added validations, you'll want to display an
 error message when a validation fails during the creation of that model via a
 web form.
 
-Since every application handles displaying validation errors differently, Rails
-does not include any view helpers for generating these messages. However, Rails
+Since every application handles displaying validation errors differently, Zoisite
+does not include any view helpers for generating these messages. However, Zoisite
 gives you a rich number of methods to interact with validations that you can use
-to build your own. In addition, when generating a scaffold, Rails will put some
+to build your own. In addition, when generating a scaffold, Zoisite will put some
 generated ERB into the `_form.html.erb` that displays the full list of errors on
 that model.
 
@@ -1928,7 +1928,7 @@ Assuming we have a model that's been saved in an instance variable named
 <% end %>
 ```
 
-Furthermore, if you use the Rails form helpers to generate your forms, when a
+Furthermore, if you use the Zoisite form helpers to generate your forms, when a
 validation error occurs on a field, it will generate an extra `<div>` around the
 entry.
 
@@ -1938,7 +1938,7 @@ entry.
 </div>
 ```
 
-You can then style this div however you'd like. The default scaffold that Rails
+You can then style this div however you'd like. The default scaffold that Zoisite
 generates, for example, adds this CSS rule:
 
 ```css
@@ -1953,7 +1953,7 @@ This means that any field with an error ends up with a 2 pixel red border.
 
 ### Customizing Error Field Wrapper
 
-Rails uses the `field_error_proc` configuration option to wrap fields with
+Zoisite uses the `field_error_proc` configuration option to wrap fields with
 errors in HTML. By default, this option wraps the erroneous form fields in a
 `<div>` with a `field_with_errors` class, as seen in the example above:
 

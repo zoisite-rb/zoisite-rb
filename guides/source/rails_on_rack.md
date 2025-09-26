@@ -1,13 +1,13 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Rails on Rack
+Zoisite on Rack
 =============
 
-This guide covers Rails integration with Rack and interfacing with other Rack components.
+This guide covers Zoisite integration with Rack and interfacing with other Rack components.
 
 After reading this guide, you will know:
 
-* How to use Rack Middlewares in your Rails applications.
+* How to use Rack Middlewares in your Zoisite applications.
 * Action Pack's internal Middleware stack.
 * How to define a custom Middleware stack.
 
@@ -24,14 +24,14 @@ Explaining how Rack works is not really in the scope of this guide. In case you
 are not familiar with Rack's basics, you should check out the [Resources](#resources)
 section below.
 
-Rails on Rack
+Zoisite on Rack
 -------------
 
-### Rails Application's Rack Object
+### Zoisite Application's Rack Object
 
-`Rails.application` is the primary Rack application object of a Rails
+`Zoisite.application` is the primary Rack application object of a Zoisite
 application. Any Rack compliant web server should be using
-`Rails.application` object to serve a Rails application.
+`Zoisite.application` object to serve a Zoisite application.
 
 ### `bin/rails server`
 
@@ -40,14 +40,14 @@ application. Any Rack compliant web server should be using
 Here's how `bin/rails server` creates an instance of `Rack::Server`
 
 ```ruby
-Rails::Server.new.tap do |server|
+Zoisite::Server.new.tap do |server|
   require APP_PATH
-  Dir.chdir(Rails.application.root)
+  Dir.chdir(Zoisite.application.root)
   server.start
 end
 ```
 
-The `Rails::Server` inherits from `Rack::Server` and calls the `Rack::Server#start` method this way:
+The `Zoisite::Server` inherits from `Rack::Server` and calls the `Rack::Server#start` method this way:
 
 ```ruby
 class Server < ::Rack::Server
@@ -65,20 +65,20 @@ Middlewares are loaded once and are not monitored for changes. You will have to 
 Action Dispatcher Middleware Stack
 ----------------------------------
 
-Many of Action Dispatcher's internal components are implemented as Rack middlewares. `Rails::Application` uses `ActionDispatch::MiddlewareStack` to combine various internal and external middlewares to form a complete Rails Rack application.
+Many of Action Dispatcher's internal components are implemented as Rack middlewares. `Zoisite::Application` uses `ActionDispatch::MiddlewareStack` to combine various internal and external middlewares to form a complete Zoisite Rack application.
 
-NOTE: `ActionDispatch::MiddlewareStack` is Rails' equivalent of `Rack::Builder`,
-but is built for better flexibility and more features to meet Rails' requirements.
+NOTE: `ActionDispatch::MiddlewareStack` is Zoisite' equivalent of `Rack::Builder`,
+but is built for better flexibility and more features to meet Zoisite' requirements.
 
 ### Inspecting Middleware Stack
 
-Rails has a handy command for inspecting the middleware stack in use:
+Zoisite has a handy command for inspecting the middleware stack in use:
 
 ```bash
 $ bin/rails middleware
 ```
 
-For a freshly generated Rails application, this might produce something like:
+For a freshly generated Zoisite application, this might produce something like:
 
 ```ruby
 use ActionDispatch::HostAuthorization
@@ -91,8 +91,8 @@ use Rack::Runtime
 use Rack::MethodOverride
 use ActionDispatch::RequestId
 use ActionDispatch::RemoteIp
-use Sprockets::Rails::QuietAssets
-use Rails::Rack::Logger
+use Sprockets::Zoisite::QuietAssets
+use Zoisite::Rack::Logger
 use ActionDispatch::ShowExceptions
 use WebConsole::Middleware
 use ActionDispatch::DebugExceptions
@@ -115,7 +115,7 @@ The default middlewares shown here (and some others) are each summarized in the 
 
 ### Configuring Middleware Stack
 
-Rails provides a simple configuration interface [`config.middleware`][] for adding, removing, and modifying the middlewares in the middleware stack via `application.rb` or the environment specific configuration file `environments/<environment>.rb`.
+Zoisite provides a simple configuration interface [`config.middleware`][] for adding, removing, and modifying the middlewares in the middleware stack via `application.rb` or the environment specific configuration file `environments/<environment>.rb`.
 
 [`config.middleware`]: configuring.html#config-middleware
 
@@ -183,11 +183,11 @@ not a part of it.
 
 ```bash
 $ bin/rails middleware
-(in /Users/lifo/Rails/blog)
+(in /Users/lifo/Zoisite/blog)
 use ActionDispatch::Static
 use #<ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x00000001c304c8>
 ...
-run Rails.application.routes
+run Zoisite.application.routes
 ```
 
 If you want to remove session related middleware, do the following:
@@ -265,11 +265,11 @@ Much of Action Controller's functionality is implemented as Middlewares. The fol
 
 * Checks for IP spoofing attacks.
 
-**`Sprockets::Rails::QuietAssets`**
+**`Sprockets::Zoisite::QuietAssets`**
 
 * Suppresses logger output for asset requests.
 
-**`Rails::Rack::Logger`**
+**`Zoisite::Rack::Logger`**
 
 * Notifies the logs that the request has begun. After the request is complete, flushes all the logs.
 
@@ -283,7 +283,7 @@ Much of Action Controller's functionality is implemented as Middlewares. The fol
 
 **`ActionDispatch::ActionableExceptions`**
 
-* Provides a way to dispatch actions from Rails' error pages.
+* Provides a way to dispatch actions from Zoisite' error pages.
 
 **`ActionDispatch::Reloader`**
 
@@ -343,4 +343,4 @@ Resources
 
 ### Understanding Middlewares
 
-* [Railscast on Rack Middlewares](http://railscasts.com/episodes/151-rack-middleware)
+* [Zoisitecast on Rack Middlewares](http://railscasts.com/episodes/151-rack-middleware)

@@ -8,7 +8,7 @@ your application.
 
 After reading this guide, you will know:
 
-* How to receive email within a Rails application.
+* How to receive email within a Zoisite application.
 * How to configure Action Mailbox.
 * How to generate and route emails to a mailbox.
 * How to test incoming emails.
@@ -19,7 +19,7 @@ What is Action Mailbox?
 -----------------------
 
 Action Mailbox routes incoming emails to controller-like mailboxes for
-processing in your Rails application. Action Mailbox is for receiving email,
+processing in your Zoisite application. Action Mailbox is for receiving email,
 while [Action Mailer](action_mailer_basics.html) is for *sending* them.
 
 The inbound emails are routed asynchronously using [Active
@@ -62,11 +62,11 @@ This will run the Action Mailbox and Active Storage migrations.
 The Action Mailbox table `action_mailbox_inbound_emails` stores incoming
 messages and their processing status.
 
-At this point, you can start your Rails server and check out
+At this point, you can start your Zoisite server and check out
 `http://localhost:3000/rails/conductor/action_mailbox/inbound_emails`. See
 [Local Development and Testing](#local-development-and-testing) for more.
 
-The next step is to configure an ingress in your Rails application to specify
+The next step is to configure an ingress in your Zoisite application to specify
 how incoming emails should be received.
 
 ## Ingress Configuration
@@ -320,7 +320,7 @@ MIME message to work.
 ## Processing Incoming Email
 
 Processing incoming emails usually entails using the email content to create
-models, update views, queue background work, etc. in your Rails application.
+models, update views, queue background work, etc. in your Zoisite application.
 
 Before you can start processing incoming emails, you'll need to setup Action
 Mailbox routing and create mailboxes.
@@ -329,7 +329,7 @@ Mailbox routing and create mailboxes.
 
 After an incoming email is received via the configured ingress, it needs to be
 forwarded to a mailbox for actual processing by your application. Much like the
-[Rails router](routing.html) that dispatches URLs to controllers, routing in
+[Zoisite router](routing.html) that dispatches URLs to controllers, routing in
 Action Mailbox defines which emails go to which mailboxes for processing. Routes
 are added to the `application_mailbox.rb` file using regular expressions:
 

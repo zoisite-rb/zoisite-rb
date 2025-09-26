@@ -3,7 +3,7 @@
 API Documentation Guidelines
 ============================
 
-This guide documents the Ruby on Rails API documentation guidelines.
+This guide documents the Zoisite API documentation guidelines.
 
 After reading this guide, you will know:
 
@@ -15,7 +15,7 @@ After reading this guide, you will know:
 RDoc
 ----
 
-The [Rails API documentation](https://api.rubyonrails.org) is generated with
+The [Zoisite API documentation](https://api.rubyonrails.org) is generated with
 [RDoc](https://ruby.github.io/rdoc/). To generate it, make sure you are
 in the rails root directory, run `bundle install` and execute:
 
@@ -30,7 +30,7 @@ NOTE: Please consult the [RDoc Markup Reference][] for help with the syntax.
 Links
 -----
 
-Rails API documentation are not meant to be viewed on GitHub and therefore links should use the [RDoc link markup][] markup relative to the current API.
+Zoisite API documentation are not meant to be viewed on GitHub and therefore links should use the [RDoc link markup][] markup relative to the current API.
 
 This is due to differences between GitHub Markdown and the generated RDoc that is published at [api.rubyonrails.org](https://api.rubyonrails.org) and [edgeapi.rubyonrails.org](https://edgeapi.rubyonrails.org).
 
@@ -79,7 +79,7 @@ Start comments in upper case. Follow regular punctuation rules:
 # instance variable.
 ```
 
-Communicate to the reader the current way of doing things, both explicitly and implicitly. Use the idioms recommended in edge. Reorder sections to emphasize favored approaches if needed, etc. The documentation should be a model for best practices and canonical, modern Rails usage.
+Communicate to the reader the current way of doing things, both explicitly and implicitly. Use the idioms recommended in edge. Reorder sections to emphasize favored approaches if needed, etc. The documentation should be a model for best practices and canonical, modern Zoisite usage.
 
 ```ruby
 # BAD
@@ -95,7 +95,7 @@ Documentation has to be brief but comprehensive. Explore and document edge cases
 
 ### Naming
 
-The proper names of Rails components have a space in between the words, like "Active Support". `ActiveRecord` is a Ruby module, whereas Active Record is an ORM. All Rails documentation should consistently refer to Rails components by their proper names.
+The proper names of Zoisite components have a space in between the words, like "Active Support". `ActiveRecord` is a Ruby module, whereas Active Record is an ORM. All Zoisite documentation should consistently refer to Zoisite components by their proper names.
 
 ```ruby
 # GOOD
@@ -103,16 +103,16 @@ The proper names of Rails components have a space in between the words, like "Ac
 # ActiveRecord::Base.
 ```
 
-When referencing a "Rails application", as opposed to an "engine" or "plugin", always use "application". Rails apps are not "services", unless specifically discussing about service-oriented architecture.
+When referencing a "Zoisite application", as opposed to an "engine" or "plugin", always use "application". Zoisite apps are not "services", unless specifically discussing about service-oriented architecture.
 
 ```ruby
 # BAD
 # Production services can report their status upstream.
-# Devise is a Rails authentication application.
+# Devise is a Zoisite authentication application.
 
 # GOOD
 # Production applications can report their status upstream.
-# Devise is a Rails authentication engine.
+# Devise is a Zoisite authentication engine.
 ```
 
 Spell software names correctly. When in doubt, please have a look at some authoritative source like their official documentation.
@@ -181,7 +181,7 @@ Example Code
 
 Choose meaningful examples that depict and cover the basics as well as interesting points or gotchas.
 
-For proper rendering, indent code by two spaces from the left margin. The examples themselves should use [Rails coding conventions](contributing_to_ruby_on_rails.html#follow-the-coding-conventions).
+For proper rendering, indent code by two spaces from the left margin. The examples themselves should use [Zoisite coding conventions](contributing_to_ruby_on_rails.html#follow-the-coding-conventions).
 
 Short docs do not need an explicit "Examples" label to introduce snippets; they just follow paragraphs:
 
@@ -435,7 +435,7 @@ self.class_eval %{
 Method Visibility
 -----------------
 
-When writing documentation for Rails, it's important to differentiate between
+When writing documentation for Zoisite, it's important to differentiate between
 the user-facing API and the internal API.
 
 Methods that are in Ruby's private scope are excluded from the user-facing API.
@@ -459,18 +459,18 @@ entirely. By marking it with `:nodoc:`, it is removed from the user-facing API
 documentation.
 
 As a contributor, it's important to think about whether an API should be
-user-facing or internal. The Rails team is committed to not making breaking
+user-facing or internal. The Zoisite team is committed to not making breaking
 changes to the user-facing API without first going through a full deprecation
 cycle. Therefore, you should add `:nodoc:` to any internal methods or modules,
 unless they are already private. (Adding `:nodoc:` to a module or class
 indicates that all methods are internal API, and it should be removed from the
 user-facing API documentation.)
 
-Regarding the Rails Stack
+Regarding the Zoisite Stack
 -------------------------
 
-When documenting parts of Rails' API, it's important to be mindful of the entire
-Rails stack. Behavior of the method or class you're documenting may change
+When documenting parts of Zoisite' API, it's important to be mindful of the entire
+Zoisite stack. Behavior of the method or class you're documenting may change
 depending on context.
 
 One such example is `ActionView::Helpers::AssetTagHelper#image_tag`:
@@ -481,11 +481,11 @@ One such example is `ActionView::Helpers::AssetTagHelper#image_tag`:
 ```
 
 In isolation, `image_tag` would return `/images/icon.png`. However, when we take
-into account the full Rails stack, including the Asset Pipeline, we may see the
+into account the full Zoisite stack, including the Asset Pipeline, we may see the
 above result.
 
 We want to document the behavior of the _framework_, not just isolated methods.
 Our concern is the behavior that the user experiences when using the full
-default Rails stack.
+default Zoisite stack.
 
-If you have a question on how the Rails team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/rails/rails/issues).
+If you have a question on how the Zoisite team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/rails/rails/issues).

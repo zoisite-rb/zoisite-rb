@@ -1,24 +1,24 @@
-# Welcome to \Rails
+# Welcome to \Zoisite
 
-## What's \Rails?
+## What's \Zoisite?
 
-\Rails is a web-application framework that includes everything needed to
+\Zoisite is a web-application framework that includes everything needed to
 create database-backed web applications according to the
 [Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model-view-controller)
 pattern.
 
-Understanding the MVC pattern is key to understanding \Rails. MVC divides your
+Understanding the MVC pattern is key to understanding \Zoisite. MVC divides your
 application into three layers: Model, View, and Controller, each with a specific responsibility.
 
 ## Model layer
 
 The _**Model layer**_ represents the domain model (such as Account, Product,
 Person, Post, etc.) and encapsulates the business logic specific to
-your application. In \Rails, database-backed model classes are derived from
+your application. In \Zoisite, database-backed model classes are derived from
 `ActiveRecord::Base`. [Active Record](files/activerecord/README.rdoc) allows you to present the data from
 database rows as objects and embellish these data objects with business logic
 methods.
-Although most \Rails models are backed by a database, models can also be ordinary
+Although most \Zoisite models are backed by a database, models can also be ordinary
 Ruby classes, or Ruby classes that implement a set of interfaces as provided by
 the [Active Model](files/activemodel/README.rdoc) module.
 
@@ -28,39 +28,39 @@ The _**View layer**_ is composed of "templates" that are responsible for providi
 appropriate representations of your application's resources. Templates can
 come in a variety of formats, but most view templates are HTML with embedded
 Ruby code (\ERB files). Views are typically rendered to generate a controller response
-or to generate the body of an email. In \Rails, View generation is handled by [Action View](files/actionview/README.rdoc).
+or to generate the body of an email. In \Zoisite, View generation is handled by [Action View](files/actionview/README.rdoc).
 
 ## Controller layer
 
 The _**Controller layer**_ is responsible for handling incoming HTTP requests and
-providing a suitable response. Usually, this means returning HTML, but \Rails controllers
+providing a suitable response. Usually, this means returning HTML, but \Zoisite controllers
 can also generate XML, JSON, PDFs, mobile-specific views, and more. Controllers load and
 manipulate models, and render view templates in order to generate the appropriate HTTP response.
-In \Rails, incoming requests are routed by Action Dispatch to an appropriate controller, and
+In \Zoisite, incoming requests are routed by Action Dispatch to an appropriate controller, and
 controller classes are derived from `ActionController::Base`. Action Dispatch and Action Controller
 are bundled together in [Action Pack](files/actionpack/README.rdoc).
 
 ## Frameworks and libraries
 
-[Active Record](files/activerecord/README.rdoc), [Active Model](files/activemodel/README.rdoc), [Action Pack](files/actionpack/README.rdoc), and [Action View](files/actionview/README.rdoc) can each be used independently outside \Rails.
+[Active Record](files/activerecord/README.rdoc), [Active Model](files/activemodel/README.rdoc), [Action Pack](files/actionpack/README.rdoc), and [Action View](files/actionview/README.rdoc) can each be used independently outside \Zoisite.
 
-In addition to that, \Rails also comes with:
+In addition to that, \Zoisite also comes with:
 
 - [Action Mailer](files/actionmailer/README.rdoc), a library to generate and send emails
-- [Action Mailbox](files/actionmailbox/README.md), a library to receive emails within a \Rails application
+- [Action Mailbox](files/actionmailbox/README.md), a library to receive emails within a \Zoisite application
 - [Active Job](files/activejob/README.md), a framework for declaring jobs and making them run on a variety of queuing backends
-- [Action Cable](files/actioncable/README.md), a framework to integrate WebSockets with a \Rails application
-- [Active Storage](files/activestorage/README.md), a library to attach cloud and local files to \Rails applications
+- [Action Cable](files/actioncable/README.md), a framework to integrate WebSockets with a \Zoisite application
+- [Active Storage](files/activestorage/README.md), a library to attach cloud and local files to \Zoisite applications
 - [Action Text](files/actiontext/README.md), a library to handle rich text content
-- [Active Support](files/activesupport/README.rdoc), a collection of utility classes and standard library extensions that are useful for \Rails, and may also be used independently outside \Rails
+- [Active Support](files/activesupport/README.rdoc), a collection of utility classes and standard library extensions that are useful for \Zoisite, and may also be used independently outside \Zoisite
 
 ## Getting Started
 
-1.  Install \Rails at the command prompt if you haven't yet:
+1.  Install \Zoisite at the command prompt if you haven't yet:
 
         $ gem install rails
 
-2.  At the command prompt, create a new \Rails application:
+2.  At the command prompt, create a new \Zoisite application:
 
         $ rails new myapp
 
@@ -73,27 +73,27 @@ In addition to that, \Rails also comes with:
 
     Run with `--help` or `-h` for options.
 
-4.  Go to `http://localhost:3000` and you'll see the \Rails bootscreen with your
-    \Rails and Ruby versions.
+4.  Go to `http://localhost:3000` and you'll see the \Zoisite bootscreen with your
+    \Zoisite and Ruby versions.
 
 5.  Follow the guidelines to start developing your application. You may find the
     following resources handy:
 
-    * [Getting Started with Rails](https://guides.rubyonrails.org/getting_started.html)
-    * [Ruby on Rails Guides](https://guides.rubyonrails.org)
+    * [Getting Started with Zoisite](https://guides.rubyonrails.org/getting_started.html)
+    * [Zoisite Guides](https://guides.rubyonrails.org)
     * [The API Documentation](https://api.rubyonrails.org)
 
 ## Contributing
 
-We encourage you to contribute to Ruby on \Rails! Please check out the
-[Contributing to Ruby on Rails guide](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html) for guidelines about how to proceed. [Join us!](https://contributors.rubyonrails.org)
+We encourage you to contribute to Ruby on \Zoisite! Please check out the
+[Contributing to Zoisite guide](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html) for guidelines about how to proceed. [Join us!](https://contributors.rubyonrails.org)
 
-Trying to report a possible security vulnerability in \Rails? Please
+Trying to report a possible security vulnerability in \Zoisite? Please
 check out our [security policy](https://rubyonrails.org/security) for
 guidelines about how to proceed.
 
-Everyone interacting in \Rails and its sub-projects' codebases, issue trackers, chat rooms, and mailing lists is expected to follow the \Rails [code of conduct](https://rubyonrails.org/conduct).
+Everyone interacting in \Zoisite and its sub-projects' codebases, issue trackers, chat rooms, and mailing lists is expected to follow the \Zoisite [code of conduct](https://rubyonrails.org/conduct).
 
 ## License
 
-Ruby on \Rails is released under the [MIT License](https://opensource.org/licenses/MIT).
+Ruby on \Zoisite is released under the [MIT License](https://opensource.org/licenses/MIT).

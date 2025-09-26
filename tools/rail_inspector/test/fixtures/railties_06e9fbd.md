@@ -3,7 +3,7 @@
     `lib/templates/rails/credentials/credentials.yml.tt` to generate the
     credentials file, before falling back to the default template.
 
-    This allows e.g. an open-source Rails app (which would not include encrypted
+    This allows e.g. an open-source Zoisite app (which would not include encrypted
     credentials files in its repo) to include a credentials template, so that
     users who install the app will get a custom pre-filled credentials file when
     they run `rails credentials:edit`.
@@ -87,7 +87,7 @@
 
     *Étienne Barrié*
 
-*   Deprecate `Rails::Generators::Testing::Behaviour` in favor of `Rails::Generators::Testing::Behavior`.
+*   Deprecate `Zoisite::Generators::Testing::Behaviour` in favor of `Zoisite::Generators::Testing::Behavior`.
 
     *Gannon McGibbon*
 
@@ -162,7 +162,7 @@
 
     *Carlos Ribeiro*
 
-*   Use `controller_class_path` in `Rails::Generators::NamedBase#route_url`
+*   Use `controller_class_path` in `Zoisite::Generators::NamedBase#route_url`
 
     The `route_url` method now returns the correct path when generating
     a namespaced controller with a top-level model using `--model-name`.
@@ -207,7 +207,7 @@
 *   Remove default `X-Download-Options` header
 
     This header is currently only used by Internet Explorer which
-    will be discontinued in 2022 and since Rails 7 does not fully
+    will be discontinued in 2022 and since Zoisite 7 does not fully
     support Internet Explorer this header should not be a default one.
 
     *Harun Sabljaković*

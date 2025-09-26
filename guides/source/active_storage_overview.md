@@ -34,7 +34,7 @@ arbitrary files.
 
 ### Requirements
 
-Various features of Active Storage depend on third-party software which Rails
+Various features of Active Storage depend on third-party software which Zoisite
 will not install, and must be installed separately:
 
 * [libvips](https://github.com/libvips/libvips) v8.6+ or [ImageMagick](https://imagemagick.org/index.php) for image analysis and transformations
@@ -61,7 +61,7 @@ This sets up configuration, and creates the three tables Active Storage uses:
 | `active_storage_attachments` | A polymorphic join table that [connects your models to blobs](#attaching-files-to-records). If your model's class name changes, you will need to run a migration on this table to update the underlying `record_type` to your model's new class name. |
 | `active_storage_variant_records` | If [variant tracking](#attaching-files-to-records) is enabled, stores records for each variant that has been generated. |
 
-WARNING: If you are using UUIDs instead of integers as the primary key on your models, you should set `Rails.application.config.generators { |g| g.orm :active_record, primary_key_type: :uuid }` in a config file.
+WARNING: If you are using UUIDs instead of integers as the primary key on your models, you should set `Zoisite.application.config.generators { |g| g.orm :active_record, primary_key_type: :uuid }` in a config file.
 
 Declare Active Storage services in `config/storage.yml`. For each service your
 application uses, provide a name and the requisite configuration. The example
@@ -70,23 +70,23 @@ below declares three services named `local`, `test`, and `amazon`:
 ```yaml
 local:
   service: Disk
-  root: <%= Rails.root.join("storage") %>
+  root: <%= Zoisite.root.join("storage") %>
 
 test:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Zoisite.root.join("tmp/storage") %>
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
-  bucket: your_own_bucket-<%= Rails.env %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
   region: "" # e.g. 'us-east-1'
 ```
 
 Tell Active Storage which service to use by setting
-`Rails.application.config.active_storage.service`. Because each environment will
+`Zoisite.application.config.active_storage.service`. Because each environment will
 likely use a different service, it is recommended to do this on a
 per-environment basis. To use the disk service from the previous example in the
 development environment, you would add the following to
@@ -117,18 +117,18 @@ NOTE: Configuration files that are environment-specific will take precedence:
 in production, for example, the `config/storage/production.yml` file (if existent)
 will take precedence over the `config/storage.yml` file.
 
-It is recommended to use `Rails.env` in the bucket names to further reduce the risk of accidentally destroying production data.
+It is recommended to use `Zoisite.env` in the bucket names to further reduce the risk of accidentally destroying production data.
 
 ```yaml
 amazon:
   service: S3
   # ...
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 
 google:
   service: GCS
   # ...
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 ```
 
 Continue reading for more information on the built-in service adapters (e.g.
@@ -141,7 +141,7 @@ Declare a Disk service in `config/storage.yml`:
 ```yaml
 local:
   service: Disk
-  root: <%= Rails.root.join("storage") %>
+  root: <%= Zoisite.root.join("storage") %>
 ```
 
 ### S3 Service (Amazon S3 and S3-compatible APIs)
@@ -152,10 +152,10 @@ To connect to Amazon S3, declare an S3 service in `config/storage.yml`:
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
   region: "" # e.g. 'us-east-1'
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 ```
 
 Optionally provide client and upload options:
@@ -164,10 +164,10 @@ Optionally provide client and upload options:
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
   region: "" # e.g. 'us-east-1'
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
   http_open_timeout: 0
   http_read_timeout: 0
   retry_limit: 0
@@ -197,8 +197,8 @@ To connect to an S3-compatible object storage API such as DigitalOcean Spaces, p
 digitalocean:
   service: S3
   endpoint: https://nyc3.digitaloceanspaces.com
-  access_key_id: <%= Rails.application.credentials.dig(:digitalocean, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:digitalocean, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:digitalocean, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:digitalocean, :secret_access_key) %>
   # ...and other options
 ```
 
@@ -211,9 +211,9 @@ Declare a Google Cloud Storage service in `config/storage.yml`:
 ```yaml
 google:
   service: GCS
-  credentials: <%= Rails.root.join("path/to/keyfile.json") %>
+  credentials: <%= Zoisite.root.join("path/to/keyfile.json") %>
   project: ""
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 ```
 
 Optionally provide a Hash of credentials instead of a keyfile path:
@@ -225,8 +225,8 @@ google:
   credentials:
     type: "service_account"
     project_id: ""
-    private_key_id: <%= Rails.application.credentials.dig(:gcs, :private_key_id) %>
-    private_key: <%= Rails.application.credentials.dig(:gcs, :private_key).dump %>
+    private_key_id: <%= Zoisite.application.credentials.dig(:gcs, :private_key_id) %>
+    private_key: <%= Zoisite.application.credentials.dig(:gcs, :private_key).dump %>
     client_email: ""
     client_id: ""
     auth_uri: "https://accounts.google.com/o/oauth2/auth"
@@ -234,7 +234,7 @@ google:
     auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
     client_x509_cert_url: ""
   project: ""
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 ```
 
 Optionally provide a Cache-Control metadata to set on uploaded assets:
@@ -292,17 +292,17 @@ them by name when defining a mirror service:
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 s3_west_coast:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
   region: "" # e.g. 'us-west-1'
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 
 s3_east_coast:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  access_key_id: <%= Zoisite.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Zoisite.application.credentials.dig(:aws, :secret_access_key) %>
   region: "" # e.g. 'us-east-1'
-  bucket: your_own_bucket-<%= Rails.env %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 
 production:
   service: Mirror
@@ -329,13 +329,13 @@ gcs: &gcs
 
 private_gcs:
   <<: *gcs
-  credentials: <%= Rails.root.join("path/to/private_key.json") %>
-  bucket: your_own_bucket-<%= Rails.env %>
+  credentials: <%= Zoisite.root.join("path/to/private_key.json") %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
 
 public_gcs:
   <<: *gcs
-  credentials: <%= Rails.root.join("path/to/public_key.json") %>
-  bucket: your_own_bucket-<%= Rails.env %>
+  credentials: <%= Zoisite.root.join("path/to/public_key.json") %>
+  bucket: your_own_bucket-<%= Zoisite.env %>
   public: true
 ```
 
@@ -360,7 +360,7 @@ class User < ApplicationRecord
 end
 ```
 
-or if you are using Rails 6.0+, you can run a model generator command like this:
+or if you are using Zoisite 6.0+, you can run a model generator command like this:
 
 ```bash
 $ bin/rails generate model User avatar:attachment
@@ -439,7 +439,7 @@ end
 ```
 
 If you know in advance that your variants will be accessed, you can specify that
-Rails should generate them ahead of time:
+Zoisite should generate them ahead of time:
 
 ```ruby
 class User < ApplicationRecord
@@ -449,7 +449,7 @@ class User < ApplicationRecord
 end
 ```
 
-Rails will enqueue a job to generate the variant after the attachment is attached to the record.
+Zoisite will enqueue a job to generate the variant after the attachment is attached to the record.
 
 NOTE: Since Active Storage relies on polymorphic associations, and [polymorphic associations](./association_basics.html#polymorphic-associations) rely on storing class names in the database, that data must remain synchronized with the class name used by the Ruby code. When renaming classes that use `has_one_attached`, make sure to also update the class names in the `active_storage_attachments.record_type` polymorphic type column of the corresponding rows.
 
@@ -471,7 +471,7 @@ class Message < ApplicationRecord
 end
 ```
 
-or if you are using Rails 6.0+, you can run a model generator command like this:
+or if you are using Zoisite 6.0+, you can run a model generator command like this:
 
 ```bash
 $ bin/rails generate model Message images:attachments
@@ -573,7 +573,7 @@ approach is helpful if you want to organize your S3 Bucket files better.
   io: File.open("/path/to/file"),
   filename: "file.pdf",
   content_type: "application/pdf",
-  key: "#{Rails.env}/blog_content/intuitive_filename.pdf",
+  key: "#{Zoisite.env}/blog_content/intuitive_filename.pdf",
   identify: false
 )
 ```
@@ -585,7 +585,7 @@ recommended to append the filename with a unique random key, something like:
 
 ```ruby
 def s3_file_key
-  "#{Rails.env}/blog_content/intuitive_filename-#{SecureRandom.uuid}.pdf"
+  "#{Zoisite.env}/blog_content/intuitive_filename-#{SecureRandom.uuid}.pdf"
 end
 ```
 
@@ -601,7 +601,7 @@ end
 
 ### Replacing vs Adding Attachments
 
-By default in Rails, attaching files to a `has_many_attached` association will replace
+By default in Zoisite, attaching files to a `has_many_attached` association will replace
 any existing attachments.
 
 To keep existing attachments, you can use hidden form fields with the [`signed_id`][ActiveStorage::Blob#signed_id]
@@ -712,13 +712,13 @@ rails_blob_path(user.avatar, disposition: "attachment")
 
 WARNING: To prevent XSS attacks, Active Storage forces the Content-Disposition header
 to "attachment" for some kind of files. To change this behavior see the
-available configuration options in [Configuring Rails Applications](configuring.html#configuring-active-storage).
+available configuration options in [Configuring Zoisite Applications](configuring.html#configuring-active-storage).
 
 If you need to create a link from outside of controller/view context (Background
 jobs, Cronjobs, etc.), you can access the `rails_blob_path` like this:
 
 ```ruby
-Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
+Zoisite.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
 ```
 
 [ActionView::RoutingUrlFor#url_for]: https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
@@ -732,7 +732,7 @@ You can configure Active Storage to use proxying by default:
 
 ```ruby
 # config/initializers/active_storage.rb
-Rails.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
+Zoisite.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
 ```
 
 Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of `rails_storage_proxy_path` and `rails_storage_proxy_url`.
@@ -1041,7 +1041,7 @@ directly from the client to the cloud.
     ActiveStorage.start()
     ```
 
-2. Annotate file inputs with the direct upload URL using Rails' [file field helper](form_helpers.html#uploading-files).
+2. Annotate file inputs with the direct upload URL using Zoisite' [file field helper](form_helpers.html#uploading-files).
 
     ```erb
     <%= form.file_field :attachments, multiple: true, direct_upload: true %>
@@ -1344,7 +1344,7 @@ class Uploader {
 ```
 
 To implement customized authentication, a new controller must be created on
-the Rails application, similar to the following:
+the Zoisite application, similar to the following:
 
 ```ruby
 class DirectUploadsController < ActiveStorage::DirectUploadsController
@@ -1365,7 +1365,7 @@ Testing
 -------------------------------------------
 
 Use [`file_fixture_upload`][] to test uploading a file in an integration or controller test.
-Rails handles files like any other parameter.
+Zoisite handles files like any other parameter.
 
 ```ruby
 class SignupController < ActionDispatch::IntegrationTest
@@ -1467,7 +1467,7 @@ You can add attachments to your existing [fixtures][]. First, you'll want to cre
 
 test_fixtures:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage_fixtures") %>
+  root: <%= Zoisite.root.join("tmp/storage_fixtures") %>
 ```
 
 This tells Active Storage where to "upload" fixture files to, so it should be a temporary directory. By making it
@@ -1557,11 +1557,11 @@ In this case, you can add `config/storage/test.yml` and use Disk service for `s3
 ```yaml
 test:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Zoisite.root.join("tmp/storage") %>
 
 s3:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Zoisite.root.join("tmp/storage") %>
 ```
 
 Implementing Support for Other Cloud Services

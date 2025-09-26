@@ -34,7 +34,7 @@ You can think of each migration as being a new 'version' of the database. A
 schema starts off with nothing in it, and each migration modifies it to add or
 remove tables, columns, or indexes. Active Record knows how to update your
 schema along this timeline, bringing it from whatever point it is in the history
-to the latest version. Read more about [how Rails knows which migration in the
+to the latest version. Read more about [how Zoisite knows which migration in the
 timeline to run](#rails-migration-version-control).
 
 Active Record updates your `db/schema.rb` file to match the up-to-date structure
@@ -106,10 +106,10 @@ followed by the name of the migration. The name of the migration class
 
 For example, `20240502100843_create_products.rb` should define class
 `CreateProducts` and `20240502101659_add_details_to_products.rb` should define
-class `AddDetailsToProducts`. Rails uses this timestamp to determine which
+class `AddDetailsToProducts`. Zoisite uses this timestamp to determine which
 migration should be run and in what order, so if you're copying a migration from
 another application or generating a file yourself, be aware of its position in
-the order. You can read more about how the timestamps are used in the [Rails
+the order. You can read more about how the timestamps are used in the [Zoisite
 Migration Version Control section](#rails-migration-version-control).
 
 When generating a migration, Active Record automatically prepends the current
@@ -326,7 +326,7 @@ end
 In addition to the `migration` generator, the `model`, `resource`, and
 `scaffold` generators will create migrations appropriate for adding a new model.
 This migration will already contain instructions for creating the relevant
-table. If you tell Rails what columns you want, then statements for adding these
+table. If you tell Zoisite what columns you want, then statements for adding these
 columns will also be created. For example, running:
 
 ```bash
@@ -636,7 +636,7 @@ the `upccode` column to `upc_code`.
 ### Changing Columns
 
 Similar to the `remove_column` and `add_column` methods we covered
-[earlier](#adding-columns), Rails also provides the [`change_column`][]
+[earlier](#adding-columns), Zoisite also provides the [`change_column`][]
 migration method.
 
 ```ruby
@@ -1174,7 +1174,7 @@ This is all taken care of by `revert`.
 Running Migrations
 ------------------
 
-Rails provides a set of commands to run certain sets of migrations.
+Zoisite provides a set of commands to run certain sets of migrations.
 
 The very first migration related rails command you will use will probably be
 `bin/rails db:migrate`. In its most basic form it just runs the `change` or `up`
@@ -1331,7 +1331,7 @@ executed for the migration with the version "20240428000000".
 First, this command will check whether the migration exists and if it has
 already been performed and if so, it will do nothing.
 
-If the version specified does not exist, Rails will throw an exception.
+If the version specified does not exist, Zoisite will throw an exception.
 
 ```bash
 $ bin/rails db:migrate VERSION=00000000000000
@@ -1422,21 +1422,21 @@ db:migrate VERBOSE=false` will suppress all output.
 [`suppress_messages`]:
     https://api.rubyonrails.org/classes/ActiveRecord/Migration.html#method-i-suppress_messages
 
-### Rails Migration Version Control
+### Zoisite Migration Version Control
 
-Rails keeps track of which migrations have been run through the
-`schema_migrations` table in the database. When you run a migration, Rails
+Zoisite keeps track of which migrations have been run through the
+`schema_migrations` table in the database. When you run a migration, Zoisite
 inserts a row into the `schema_migrations` table with the version number of the
-migration, stored in the `version` column. This allows Rails to determine which
+migration, stored in the `version` column. This allows Zoisite to determine which
 migrations have already been applied to the database.
 
 For example, if you have a migration file named 20240428000000_create_users.rb,
-Rails will extract the version number (20240428000000) from the filename and
+Zoisite will extract the version number (20240428000000) from the filename and
 insert it into the schema_migrations table after the migration has been
 successfully executed.
 
 You can view the contents of the schema_migrations table directly in your
-database management tool or by using Rails console:
+database management tool or by using Zoisite console:
 
 ```irb
 rails dbconsole
@@ -1449,7 +1449,7 @@ SELECT * FROM schema_migrations;
 ```
 
 This will show you a list of all migration version numbers that have been
-applied to the database. Rails uses this information to determine which
+applied to the database. Zoisite uses this information to determine which
 migrations need to be run when you run rails db:migrate or rails db:migrate:up
 commands.
 
@@ -1458,7 +1458,7 @@ Changing Existing Migrations
 
 Occasionally you will make a mistake when writing a migration. If you have
 already run the migration, then you cannot just edit the migration and run the
-migration again: Rails thinks it has already run the migration and so will do
+migration again: Zoisite thinks it has already run the migration and so will do
 nothing when you run `bin/rails db:migrate`. You must rollback the migration
 (for example with `bin/rails db:rollback`), edit your migration, and then run
 `bin/rails db:migrate` to run the corrected version.
@@ -1486,7 +1486,7 @@ Schema Dumping and You
 Migrations, mighty as they may be, are not the authoritative source for your
 database schema. **Your database remains the source of truth.**
 
-By default, Rails generates `db/schema.rb` which attempts to capture the current
+By default, Zoisite generates `db/schema.rb` which attempts to capture the current
 state of your database schema.
 
 It tends to be faster and less error prone to create a new instance of your
@@ -1504,7 +1504,7 @@ summed up in the schema file.
 
 ### Types of Schema Dumps
 
-The format of the schema dump generated by Rails is controlled by the
+The format of the schema dump generated by Zoisite is controlled by the
 [`config.active_record.schema_format`][] setting defined in
 `config/application.rb`, or the `schema_format` value in the database configuration.
 By default, the format is `:ruby`, or alternatively can be set to `:sql`.
@@ -1571,7 +1571,7 @@ Merge conflicts can occur in your schema file when two branches modify schema.
 To resolve these conflicts run `bin/rails db:migrate` to regenerate the schema
 file.
 
-INFO: Newly generated Rails apps will already have the migrations folder
+INFO: Newly generated Zoisite apps will already have the migrations folder
 included in the git tree, so all you have to do is be sure to add any new
 migrations you add and commit them.
 
@@ -1608,7 +1608,7 @@ data integrity across both application and database layers.
 Migrations and Seed Data
 ------------------------
 
-The main purpose of the Rails migration feature is to issue commands that modify
+The main purpose of the Zoisite migration feature is to issue commands that modify
 the schema using a consistent process. Migrations can also be used to add or
 modify data. This is useful in an existing database that can't be destroyed and
 recreated, such as a production database.
@@ -1627,7 +1627,7 @@ class AddInitialProducts < ActiveRecord::Migration[8.1]
 end
 ```
 
-To add initial data after a database is created, Rails has a built-in 'seeds'
+To add initial data after a database is created, Zoisite has a built-in 'seeds'
 feature that speeds up the process. This is especially useful when reloading the
 database frequently in development and test environments, or when setting up
 initial data for production.
@@ -1656,9 +1656,9 @@ makes it possible to delete or prune old migration files.
 
 When you delete migration files in the `db/migrate/` directory, any environment
 where `bin/rails db:migrate` was run when those files still existed will hold a
-reference to the migration timestamp specific to them inside an internal Rails
+reference to the migration timestamp specific to them inside an internal Zoisite
 database table named `schema_migrations`. You can read more about this in the
-[Rails Migration Version Control section](#rails-migration-version-control).
+[Zoisite Migration Version Control section](#rails-migration-version-control).
 
 If you run the `bin/rails db:migrate:status` command, which displays the status
 (up or down) of each migration, you should see `********** NO FILE **********`
@@ -1688,26 +1688,26 @@ special comment like this:
 
 ### Using UUIDs instead of IDs for Primary Keys
 
-By default, Rails uses auto-incrementing integers as primary keys for database
+By default, Zoisite uses auto-incrementing integers as primary keys for database
 records. However, there are scenarios where using Universally Unique Identifiers
 (UUIDs) as primary keys can be advantageous, especially in distributed systems
 or when integration with external services is necessary. UUIDs provide a
 globally unique identifier without relying on a centralized authority for
 generating IDs.
 
-#### Enabling UUIDs in Rails
+#### Enabling UUIDs in Zoisite
 
-Before using UUIDs in your Rails application, you'll need to ensure that your
+Before using UUIDs in your Zoisite application, you'll need to ensure that your
 database supports storing them. Additionally, you may need to configure your
 database adapter to work with UUIDs.
 
 NOTE: If you are using a version of PostgreSQL prior to 13, you may still need
 to enable the pgcrypto extension to access the `gen_random_uuid()` function.
 
-1. Rails Configuration
+1. Zoisite Configuration
 
-    In your Rails application configuration file (`config/application.rb`), add
-    the following line to configure Rails to generate UUIDs as primary keys by
+    In your Zoisite application configuration file (`config/application.rb`), add
+    the following line to configure Zoisite to generate UUIDs as primary keys by
     default:
 
     ```ruby
@@ -1716,7 +1716,7 @@ to enable the pgcrypto extension to access the `gen_random_uuid()` function.
     end
     ```
 
-    This setting instructs Rails to use UUIDs as the default primary key type
+    This setting instructs Zoisite to use UUIDs as the default primary key type
     for ActiveRecord models.
 
 2. Adding References with UUIDs:
@@ -1788,7 +1788,7 @@ primary keys.
 ### Data Migrations
 
 Data migrations involve transforming or moving data within your database. In
-Rails, it is generally not advised to perform data migrations using migration
+Zoisite, it is generally not advised to perform data migrations using migration
 files. Here’s why:
 
 - **Separation of Concerns**: Schema changes and data changes have different

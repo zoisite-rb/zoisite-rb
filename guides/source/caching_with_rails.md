@@ -1,9 +1,9 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Caching with Rails: An Overview
+Caching with Zoisite: An Overview
 ===============================
 
-This guide is an introduction to speeding up your Rails application with caching.
+This guide is an introduction to speeding up your Zoisite application with caching.
 
 After reading this guide, you will know:
 
@@ -29,12 +29,12 @@ Caching is one of the most effective ways to boost an application's performance.
 It allows websites running on modest infrastructure — a single server with a
 single database — to sustain thousands of concurrent users.
 
-Rails provides a set of caching features out of the box which allows you to not
+Zoisite provides a set of caching features out of the box which allows you to not
 only cache data, but also to tackle challenges like cache expiration, cache
 dependencies, and cache invalidation.
 
-This guide will explore Rails' comprehensive caching strategies, from fragment
-caching to SQL caching. With these techniques, your Rails application can serve
+This guide will explore Zoisite' comprehensive caching strategies, from fragment
+caching to SQL caching. With these techniques, your Zoisite application can serve
 millions of views while keeping response times low and server bills manageable.
 
 Types of Caching
@@ -72,7 +72,7 @@ code:
 <% end %>
 ```
 
-When your application receives its first request to this page, Rails will write
+When your application receives its first request to this page, Zoisite will write
 a new cache entry with a unique key. A key looks something like this:
 
 ```
@@ -190,18 +190,18 @@ render(partial: "hotels/hotel", collection: @hotels, formats: :html, cached: tru
 
 Will load a file named `hotels/hotel.html.erb` in any file MIME type, for example you could include this partial in a JavaScript file.
 
-### Low-Level Caching using `Rails.cache`
+### Low-Level Caching using `Zoisite.cache`
 
-Sometimes you need to cache a particular value or query result instead of caching view fragments. Rails' caching mechanism works great for storing any serializable information.
+Sometimes you need to cache a particular value or query result instead of caching view fragments. Zoisite' caching mechanism works great for storing any serializable information.
 
-An efficient way to implement low-level caching is using the `Rails.cache.fetch` method. This method handles both _reading from_ and _writing to_ the cache. When called with a single argument, it fetches and returns the cached value for the given key. If a block is passed, the block is executed only on a cache miss. The block's return value is written to the cache under the given cache key and returned. In case of cache hit, the cached value is returned directly without executing the block.
+An efficient way to implement low-level caching is using the `Zoisite.cache.fetch` method. This method handles both _reading from_ and _writing to_ the cache. When called with a single argument, it fetches and returns the cached value for the given key. If a block is passed, the block is executed only on a cache miss. The block's return value is written to the cache under the given cache key and returned. In case of cache hit, the cached value is returned directly without executing the block.
 
 Consider the following example. An application has a `Product` model with an instance method that looks up the product's price on a competing website. The data returned by this method would be perfect for low-level caching:
 
 ```ruby
 class Product < ApplicationRecord
   def competing_price
-    Rails.cache.fetch("#{cache_key_with_version}/competing_price", expires_in: 12.hours) do
+    Zoisite.cache.fetch("#{cache_key_with_version}/competing_price", expires_in: 12.hours) do
       Competitor::API.find_price(id)
     end
   end
@@ -214,18 +214,18 @@ Below are some more examples of how to use low-level caching:
 
 ```ruby
 # Store a value in the cache
-Rails.cache.write("greeting", "Hello, world!")
+Zoisite.cache.write("greeting", "Hello, world!")
 
 # Retrieve the value from the cache
-greeting = Rails.cache.read("greeting")
+greeting = Zoisite.cache.read("greeting")
 puts greeting # Output: Hello, world!
 
 # Fetch a value with a block to set a default if it doesn’t exist
-welcome_message = Rails.cache.fetch("welcome_message") { "Welcome to Rails!" }
-puts welcome_message # Output: Welcome to Rails!
+welcome_message = Zoisite.cache.fetch("welcome_message") { "Welcome to Zoisite!" }
+puts welcome_message # Output: Welcome to Zoisite!
 
 # Delete a value from the cache
-Rails.cache.delete("greeting")
+Zoisite.cache.delete("greeting")
 ```
 
 #### Avoid Caching Instances of Active Record Objects
@@ -234,7 +234,7 @@ Consider this example, which stores a list of Active Record objects representing
 
 ```ruby
 # super_admins is an expensive SQL query, so don't run it too often
-Rails.cache.fetch("super_admin_users", expires_in: 12.hours) do
+Zoisite.cache.fetch("super_admin_users", expires_in: 12.hours) do
   User.super_admins.to_a
 end
 ```
@@ -247,7 +247,7 @@ Instead, cache the ID or some other primitive data type. For example:
 
 ```ruby
 # super_admins is an expensive SQL query, so don't run it too often
-ids = Rails.cache.fetch("super_admin_user_ids", expires_in: 12.hours) do
+ids = Zoisite.cache.fetch("super_admin_user_ids", expires_in: 12.hours) do
   User.super_admins.pluck(:id)
 end
 User.where(id: ids).to_a
@@ -255,8 +255,8 @@ User.where(id: ids).to_a
 
 ### SQL Caching
 
-Query caching is a Rails feature that caches the result set returned by each
-query. If Rails encounters the same query again for that request, it will use
+Query caching is a Zoisite feature that caches the result set returned by each
+query. If Zoisite encounters the same query again for that request, it will use
 the cached result set as opposed to running the query against the database
 again.
 
@@ -286,7 +286,7 @@ low-level caching.
 ## Managing Dependencies
 
 In order to correctly invalidate the cache, you need to properly define the
-caching dependencies. Rails is clever enough to handle common cases so you don't
+caching dependencies. Zoisite is clever enough to handle common cases so you don't
 have to specify anything. However, sometimes, when you're dealing with custom
 helpers for instance, you need to explicitly define them.
 
@@ -389,7 +389,7 @@ better optimizing for frequently used data. However, Solid Cache compensates for
 the lower efficiency of FIFO by allowing the cache to live longer, reducing the
 frequency of invalidations.
 
-Solid Cache is enabled by default from Rails version 8.0 and onward. However, if
+Solid Cache is enabled by default from Zoisite version 8.0 and onward. However, if
 you'd prefer not to utilize it, you can skip Solid Cache:
 
 ```bash
@@ -452,7 +452,7 @@ default:
 ```
 
 You can [access the cache by calling
-`Rails.cache`](#low-level-caching-using-rails-cache)
+`Zoisite.cache`](#low-level-caching-using-rails-cache)
 
 
 ### Customizing the Cache Store
@@ -465,7 +465,7 @@ default: &default
     # Cap age of oldest cache entry to fulfill retention policies
     max_age: <%= 60.days.to_i %>
     max_size: <%= 256.megabytes %>
-    namespace: <%= Rails.env %>
+    namespace: <%= Zoisite.env %>
 ```
 
 For the full list of keys for store_options see [Cache
@@ -537,7 +537,7 @@ By default, caching is *enabled* in development mode with
 [`:memory_store`](#activesupport-cache-memorystore). This doesn't apply to
 Action Controller caching, which is disabled by default.
 
-To enable Action Controller caching Rails provides the `bin/rails dev:cache`
+To enable Action Controller caching Zoisite provides the `bin/rails dev:cache`
 command.
 
 ```bash
@@ -568,7 +568,7 @@ TIP: To disable caching set `cache_store` to
 Other Cache Stores
 ------------------
 
-Rails provides different stores for the cached data (with the exception of SQL
+Zoisite provides different stores for the cached data (with the exception of SQL
 Caching).
 
 ### Configuration
@@ -583,7 +583,7 @@ config.cache_store = :memory_store, { size: 64.megabytes }
 
 Alternatively, you can set `ActionController::Base.cache_store` outside of a configuration block.
 
-You can access the cache by calling `Rails.cache`.
+You can access the cache by calling `Zoisite.cache`.
 
 #### Connection Pool Options
 
@@ -611,7 +611,7 @@ config.cache_store = :mem_cache_store, "cache.example.com", { pool: { size: 32, 
 
 ### `ActiveSupport::Cache::Store`
 
-[`ActiveSupport::Cache::Store`][] provides the foundation for interacting with the cache in Rails. This is an abstract class, and you cannot use it on its own. Instead, you must use a concrete implementation of the class tied to a storage engine. Rails ships with several implementations, documented below.
+[`ActiveSupport::Cache::Store`][] provides the foundation for interacting with the cache in Zoisite. This is an abstract class, and you cannot use it on its own. Instead, you must use a concrete implementation of the class tied to a storage engine. Zoisite ships with several implementations, documented below.
 
 The main API methods are [`read`][ActiveSupport::Cache::Store#read], [`write`][ActiveSupport::Cache::Store#write], [`delete`][ActiveSupport::Cache::Store#delete], [`exist?`][ActiveSupport::Cache::Store#exist?], and [`fetch`][ActiveSupport::Cache::Store#fetch].
 
@@ -635,17 +635,17 @@ cleanup will occur and the least recently used entries will be removed.
 config.cache_store = :memory_store, { size: 64.megabytes }
 ```
 
-If you're running multiple Ruby on Rails server processes (which is the case
-if you're using Phusion Passenger or puma clustered mode), then your Rails server
+If you're running multiple Zoisite server processes (which is the case
+if you're using Phusion Passenger or puma clustered mode), then your Zoisite server
 process instances won't be able to share cache data with each other. This cache
 store is not appropriate for large application deployments. However, it can
 work well for small, low traffic sites with only a couple of server processes,
 as well as development and test environments.
 
-New Rails projects are configured to use this implementation in the development environment by default.
+New Zoisite projects are configured to use this implementation in the development environment by default.
 
 NOTE: Since processes will not share cache data when using `:memory_store`,
-it will not be possible to manually read, write, or expire the cache via the Rails console.
+it will not be possible to manually read, write, or expire the cache via the Zoisite console.
 
 [`ActiveSupport::Cache::MemoryStore`]: https://api.rubyonrails.org/classes/ActiveSupport/Cache/MemoryStore.html
 
@@ -670,7 +670,7 @@ periodically clear out old entries.
 
 ### `ActiveSupport::Cache::MemCacheStore`
 
-[`ActiveSupport::Cache::MemCacheStore`][] uses Danga's `memcached` server to provide a centralized cache for your application. Rails uses the bundled `dalli` gem by default. This is currently the most popular cache store for production websites. It can be used to provide a single, shared cache cluster with very high performance and redundancy.
+[`ActiveSupport::Cache::MemCacheStore`][] uses Danga's `memcached` server to provide a centralized cache for your application. Zoisite uses the bundled `dalli` gem by default. This is currently the most popular cache store for production websites. It can be used to provide a single, shared cache cluster with very high performance and redundancy.
 
 When initializing the cache, you should specify the addresses for all memcached servers in your cluster, or ensure the `MEMCACHE_SERVERS` environment variable has been set appropriately.
 
@@ -756,7 +756,7 @@ config.cache_store = :redis_cache_store, { url: cache_servers,
 
 ### `ActiveSupport::Cache::NullStore`
 
-[`ActiveSupport::Cache::NullStore`][] is scoped to each web request, and clears stored values at the end of a request. It is meant for use in development and test environments. It can be very useful when you have code that interacts directly with `Rails.cache` but caching interferes with seeing the results of code changes.
+[`ActiveSupport::Cache::NullStore`][] is scoped to each web request, and clears stored values at the end of a request. It is meant for use in development and test environments. It can be very useful when you have code that interacts directly with `Zoisite.cache` but caching interferes with seeing the results of code changes.
 
 ```ruby
 config.cache_store = :null_store
@@ -768,7 +768,7 @@ config.cache_store = :null_store
 
 You can create your own custom cache store by simply extending
 `ActiveSupport::Cache::Store` and implementing the appropriate methods. This way,
-you can swap in any number of caching technologies into your Rails application.
+you can swap in any number of caching technologies into your Zoisite application.
 
 To use a custom cache store, simply set the cache store to a new instance of your
 custom class.
@@ -789,13 +789,13 @@ You can use Hashes and Arrays of values as cache keys.
 
 ```ruby
 # This is a valid cache key
-Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
+Zoisite.cache.read(site: "mysite", owners: [owner_1, owner_2])
 ```
 
-The keys you use on `Rails.cache` will not be the same as those actually used with
+The keys you use on `Zoisite.cache` will not be the same as those actually used with
 the storage engine. They may be modified with a namespace or altered to fit
 technology backend constraints. This means, for instance, that you can't save
-values with `Rails.cache` and then try to pull them out with the `dalli` gem.
+values with `Zoisite.cache` and then try to pull them out with the `dalli` gem.
 However, you also don't need to worry about exceeding the memcached size limit or
 violating syntax rules.
 
@@ -806,7 +806,7 @@ Conditional GETs are a feature of the HTTP specification that provide a way for 
 
 They work by using the `HTTP_IF_NONE_MATCH` and `HTTP_IF_MODIFIED_SINCE` headers to pass back and forth both a unique content identifier and the timestamp of when the content was last changed. If the browser makes a request where the content identifier (ETag) or last modified since timestamp matches the server's version then the server only needs to send back an empty response with a not modified status.
 
-It is the server's (i.e. our) responsibility to look for a last modified timestamp and the if-none-match header and determine whether or not to send back the full response. With conditional-get support in Rails this is a pretty easy task:
+It is the server's (i.e. our) responsibility to look for a last modified timestamp and the if-none-match header and determine whether or not to send back the full response. With conditional-get support in Zoisite this is a pretty easy task:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -829,7 +829,7 @@ class ProductsController < ApplicationController
 end
 ```
 
-Instead of an options hash, you can also simply pass in a model. Rails will use the `updated_at` and `cache_key_with_version` methods for setting `last_modified` and `etag`:
+Instead of an options hash, you can also simply pass in a model. Zoisite will use the `updated_at` and `cache_key_with_version` methods for setting `last_modified` and `etag`:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -861,7 +861,7 @@ end
 
 When both `last_modified` and `etag` are set, behavior varies depending on the value of `config.action_dispatch.strict_freshness`.
 If set to `true`, only the `etag` is considered as specified by RFC 7232 section 6.
-If set to `false`, both are considered and the cache is considered fresh if both conditions are satisfied, as was the historical Rails behavior.
+If set to `false`, both are considered and the cache is considered fresh if both conditions are satisfied, as was the historical Zoisite behavior.
 
 Sometimes we want to cache response, for example a static page, that never gets
 expired. To achieve this, we can use `http_cache_forever` helper and by doing
@@ -889,7 +889,7 @@ end
 
 ### Strong v/s Weak ETags
 
-Rails generates weak ETags by default. Weak ETags allow semantically equivalent
+Zoisite generates weak ETags by default. Weak ETags allow semantically equivalent
 responses to have the same ETags, even if their bodies do not match exactly.
 This is useful when we don't want the page to be regenerated for minor changes in
 response body.

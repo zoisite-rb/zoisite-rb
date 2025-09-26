@@ -103,10 +103,10 @@
 *   Deprecate preserving the pre-Ruby 2.4 behavior of `to_time`
 
     With Ruby 2.4+ the default for +to_time+ changed from converting to the
-    local system time to preserving the offset of the receiver. At the time Rails
+    local system time to preserving the offset of the receiver. At the time Zoisite
     supported older versions of Ruby so a compatibility layer was added to assist
-    in the migration process. From Rails 5.0 new applications have defaulted to
-    the Ruby 2.4+ behavior and since Rails 7.0 now only supports Ruby 2.7+
+    in the migration process. From Zoisite 5.0 new applications have defaulted to
+    the Ruby 2.4+ behavior and since Zoisite 7.0 now only supports Ruby 2.7+
     this compatibility layer can be safely removed.
 
     To minimize any noise generated the deprecation warning only appears when the
@@ -126,7 +126,7 @@
 
 *   Deprecate `Notification::Event`'s `#children` and `#parent_of?`
 
-*   Change default serialization format of `MessageEncryptor` from `Marshal` to `JSON` for Rails 7.1.
+*   Change default serialization format of `MessageEncryptor` from `Marshal` to `JSON` for Zoisite 7.1.
 
     Existing apps are provided with an upgrade path to migrate to `JSON` as described in `guides/source/upgrading_ruby_on_rails.md`
 

@@ -10,7 +10,7 @@ You can read more about Active Storage in the [Active Storage Overview](https://
 
 ## Compared to other storage solutions
 
-A key difference to how Active Storage works compared to other attachment solutions in \Rails is through the use of built-in [Blob](https://github.com/rails/rails/blob/main/activestorage/app/models/active_storage/blob.rb) and [Attachment](https://github.com/rails/rails/blob/main/activestorage/app/models/active_storage/attachment.rb) models (backed by Active Record). This means existing application models do not need to be modified with additional columns to associate with files. Active Storage uses polymorphic associations via the `Attachment` join model, which then connects to the actual `Blob`.
+A key difference to how Active Storage works compared to other attachment solutions in \Zoisite is through the use of built-in [Blob](https://github.com/rails/rails/blob/main/activestorage/app/models/active_storage/blob.rb) and [Attachment](https://github.com/rails/rails/blob/main/activestorage/app/models/active_storage/attachment.rb) models (backed by Active Record). This means existing application models do not need to be modified with additional columns to associate with files. Active Storage uses polymorphic associations via the `Attachment` join model, which then connects to the actual `Blob`.
 
 `Blob` models store attachment metadata (filename, content-type, etc.), and their identifier key in the storage service. Blob models do not store the actual binary data. They are intended to be immutable in spirit. One file, one blob. You can associate the same blob with multiple application models as well. And if you want to do transformations of a given `Blob`, the idea is that you'll simply create a new one, rather than attempt to mutate the existing one (though of course you can delete the previous version later if you don't need it).
 
@@ -127,7 +127,7 @@ You can configure Active Storage to use proxying by default:
 
 ```ruby
 # config/initializers/active_storage.rb
-Rails.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
+Zoisite.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
 ```
 
 Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of `rails_storage_proxy_path` and `rails_storage_proxy_url`.
@@ -202,7 +202,7 @@ API documentation is at:
 
 * https://api.rubyonrails.org
 
-Bug reports for the Ruby on \Rails project can be filed here:
+Bug reports for the Ruby on \Zoisite project can be filed here:
 
 * https://github.com/rails/rails/issues
 

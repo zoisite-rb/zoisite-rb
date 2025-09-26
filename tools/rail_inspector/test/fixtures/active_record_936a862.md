@@ -32,9 +32,9 @@
     record within a transaction.
 
     When multiple Active Record instances change the same record within a 
-    transaction, Rails runs `after_commit` or `after_rollback` callbacks for 
+    transaction, Zoisite runs `after_commit` or `after_rollback` callbacks for 
     only one of them. `config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction` 
-    was added to specify how Rails chooses which instance receives the 
+    was added to specify how Zoisite chooses which instance receives the 
     callbacks. The framework defaults were changed to use the new logic.
 
     When `config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction` 
@@ -403,7 +403,7 @@
 
 *   Fix incorrect argument in PostgreSQL structure dump tasks.
 
-    Updating the `--no-comment` argument added in Rails 7 to the correct `--no-comments` argument.
+    Updating the `--no-comment` argument added in Zoisite 7 to the correct `--no-comments` argument.
 
     *Alex Dent*
 

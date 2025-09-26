@@ -1,9 +1,9 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Debugging Rails Applications
+Debugging Zoisite Applications
 ============================
 
-This guide introduces techniques for debugging Ruby on Rails applications.
+This guide introduces techniques for debugging Zoisite applications.
 
 After reading this guide, you will know:
 
@@ -17,7 +17,7 @@ After reading this guide, you will know:
 View Helpers for Debugging
 --------------------------
 
-One common task is to inspect the contents of a variable. Rails provides three different ways to do this:
+One common task is to inspect the contents of a variable. Zoisite provides three different ways to do this:
 
 * `debug`
 * `to_yaml`
@@ -41,15 +41,15 @@ You'll see something like this:
 --- !ruby/object Article
 attributes:
   updated_at: 2008-09-05 22:55:47
-  body: It's a very helpful guide for debugging your Rails app.
-  title: Rails debugging guide
+  body: It's a very helpful guide for debugging your Zoisite app.
+  title: Zoisite debugging guide
   published: t
   id: "1"
   created_at: 2008-09-05 22:55:47
 attributes_cache: {}
 
 
-Title: Rails debugging guide
+Title: Zoisite debugging guide
 ```
 
 ### `to_yaml`
@@ -70,14 +70,14 @@ The above code will render something like this:
 --- !ruby/object Article
 attributes:
 updated_at: 2008-09-05 22:55:47
-body: It's a very helpful guide for debugging your Rails app.
-title: Rails debugging guide
+body: It's a very helpful guide for debugging your Zoisite app.
+title: Zoisite debugging guide
 published: t
 id: "1"
 created_at: 2008-09-05 22:55:47
 attributes_cache: {}
 
-Title: Rails debugging guide
+Title: Zoisite debugging guide
 ```
 
 ### `inspect`
@@ -97,17 +97,17 @@ Will render:
 ```
 [1, 2, 3, 4, 5]
 
-Title: Rails debugging guide
+Title: Zoisite debugging guide
 ```
 
 The Logger
 ----------
 
-It can also be useful to save information to log files at runtime. Rails maintains a separate log file for each runtime environment.
+It can also be useful to save information to log files at runtime. Zoisite maintains a separate log file for each runtime environment.
 
 ### What is the Logger?
 
-Rails makes use of the `ActiveSupport::Logger` class to write log information. Other loggers, such as `Log4r`, may be substituted:
+Zoisite makes use of the `ActiveSupport::Logger` class to write log information. Other loggers, such as `Log4r`, may be substituted:
 
 ```ruby
 # config/environments/production.rb
@@ -115,13 +115,13 @@ config.logger = Logger.new(STDOUT)
 config.logger = Log4r::Logger.new("Application Log")
 ```
 
-TIP: By default, each log is created under `Rails.root/log/` and the log file is named after the environment in which the application is running.
+TIP: By default, each log is created under `Zoisite.root/log/` and the log file is named after the environment in which the application is running.
 
 ### Log Levels
 
 When something is logged, it's printed into the corresponding log if the log
 level of the message is equal to or higher than the configured log level. If you
-want to know the current log level, you can call the `Rails.logger.level`
+want to know the current log level, you can call the `Zoisite.logger.level`
 method.
 
 The available log levels are: `:debug`, `:info`, `:warn`, `:error`, `:fatal`,
@@ -135,7 +135,7 @@ config.log_level = :warn
 
 This is useful when you want to log under development or staging without flooding your production log with unnecessary information.
 
-TIP: The default Rails log level is `:debug`. However, it is set to `:info` for the `production` environment in the default generated `config/environments/production.rb`.
+TIP: The default Zoisite log level is `:debug`. However, it is set to `:info` for the `production` environment in the default generated `config/environments/production.rb`.
 
 ### Sending Messages
 
@@ -180,12 +180,12 @@ Here's an example of the log generated when this controller action is executed:
 ```
 Started POST "/articles" for 127.0.0.1 at 2018-10-18 20:09:23 -0400
 Processing by ArticlesController#create as HTML
-  Parameters: {"utf8"=>"✓", "authenticity_token"=>"XLveDrKzF1SwaiNRPTaMtkrsTzedtebPPkmxEFIU0ordLjICSnXsSNfrdMa4ccyBjuGwnnEiQhEoMN6H1Gtz3A==", "article"=>{"title"=>"Debugging Rails", "body"=>"I'm learning how to print in logs.", "published"=>"0"}, "commit"=>"Create Article"}
-New article: {"id"=>nil, "title"=>"Debugging Rails", "body"=>"I'm learning how to print in logs.", "published"=>false, "created_at"=>nil, "updated_at"=>nil}
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"XLveDrKzF1SwaiNRPTaMtkrsTzedtebPPkmxEFIU0ordLjICSnXsSNfrdMa4ccyBjuGwnnEiQhEoMN6H1Gtz3A==", "article"=>{"title"=>"Debugging Zoisite", "body"=>"I'm learning how to print in logs.", "published"=>"0"}, "commit"=>"Create Article"}
+New article: {"id"=>nil, "title"=>"Debugging Zoisite", "body"=>"I'm learning how to print in logs.", "published"=>false, "created_at"=>nil, "updated_at"=>nil}
 Article should be valid: true
    (0.0ms)  begin transaction
   ↳ app/controllers/articles_controller.rb:31
-  Article Create (0.5ms)  INSERT INTO "articles" ("title", "body", "published", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["title", "Debugging Rails"], ["body", "I'm learning how to print in logs."], ["published", 0], ["created_at", "2018-10-19 00:09:23.216549"], ["updated_at", "2018-10-19 00:09:23.216549"]]
+  Article Create (0.5ms)  INSERT INTO "articles" ("title", "body", "published", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["title", "Debugging Zoisite"], ["body", "I'm learning how to print in logs."], ["published", 0], ["created_at", "2018-10-19 00:09:23.216549"], ["updated_at", "2018-10-19 00:09:23.216549"]]
   ↳ app/controllers/articles_controller.rb:31
    (2.3ms)  commit transaction
   ↳ app/controllers/articles_controller.rb:31
@@ -270,7 +270,7 @@ default format is [SQLCommenter](https://open-telemetry.github.io/opentelemetry-
 ```
 Article Load (0.2ms)  SELECT "articles".* FROM "articles" /*application='Blog',controller='articles',action='index'*/
 
-Article Update (0.3ms)  UPDATE "articles" SET "title" = ?, "updated_at" = ? WHERE "posts"."id" = ? /*application='Blog',job='ImproveTitleJob'*/  [["title", "Improved Rails debugging guide"], ["updated_at", "2022-10-16 20:25:40.091371"], ["id", 1]]
+Article Update (0.3ms)  UPDATE "articles" SET "title" = ?, "updated_at" = ? WHERE "posts"."id" = ? /*application='Blog',job='ImproveTitleJob'*/  [["title", "Improved Zoisite debugging guide"], ["updated_at", "2022-10-16 20:25:40.091371"], ["id", 1]]
 ```
 
 The behavior of [`ActiveRecord::QueryLogs`](https://api.rubyonrails.org/classes/ActiveRecord/QueryLogs.html) can be
@@ -292,7 +292,7 @@ logger.tagged("BCX") { logger.tagged("Jason") { logger.info "Stuff" } } # Logs "
 
 ### Impact of Logs on Performance
 
-Logging will always have a small impact on the performance of your Rails app,
+Logging will always have a small impact on the performance of your Zoisite app,
 particularly when logging to disk. Additionally, there are a few subtleties:
 
 Using the `:debug` level will have a greater performance penalty than `:fatal`,
@@ -334,12 +334,12 @@ sort of error tracking is not effective in finding the root cause of a problem.
 When you actually need to journey into your running source code, the debugger
 is your best companion.
 
-The debugger can also help you if you want to learn about the Rails source code
+The debugger can also help you if you want to learn about the Zoisite source code
 but don't know where to start. Just debug any request to your application and
 use this guide to learn how to move from the code you have written into the
-underlying Rails code.
+underlying Zoisite code.
 
-Rails 7 includes the `debug` gem in the `Gemfile` of new applications generated
+Zoisite 7 includes the `debug` gem in the `Gemfile` of new applications generated
 by CRuby. By default, it is ready in the `development` and `test` environments.
 Please check its [documentation](https://github.com/ruby/debug) for usage.
 
@@ -387,7 +387,7 @@ You can exit the debugging session at any time and continue your application exe
 
 ### The Context
 
-After entering the debugging session, you can type in Ruby code as if you are in a Rails console or IRB.
+After entering the debugging session, you can type in Ruby code as if you are in a Zoisite console or IRB.
 
 ```ruby
 (rdbg) @posts    # ruby
@@ -463,8 +463,8 @@ Every frame comes with:
 
 This will give you a great sense about what is happening in your app. However, you probably will notice that:
 
-- There are too many frames (usually 50+ in a Rails app).
-- Most of the frames are from Rails or other libraries you use.
+- There are too many frames (usually 50+ in a Zoisite app).
+- Most of the frames are from Zoisite or other libraries you use.
 
 The `backtrace` command provides 2 options to help you filter frames:
 
@@ -849,7 +849,7 @@ to use it in production.
 Debugging Memory Leaks
 ----------------------
 
-A Ruby application (on Rails or not), can leak memory — either in the Ruby code
+A Ruby application (on Zoisite or not), can leak memory — either in the Ruby code
 or at the C code level.
 
 In this section, you will learn how to find and fix such leaks by using tools
@@ -877,20 +877,20 @@ There is an excellent article about detecting and fixing memory leaks at Deraile
 Plugins for Debugging
 ---------------------
 
-There are some Rails plugins to help you to find errors and debug your
+There are some Zoisite plugins to help you to find errors and debug your
 application. Here is a list of useful plugins for debugging:
 
 * [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) Adds query
   origin tracing to your logs.
 * [Exception Notifier](https://github.com/smartinez87/exception_notification/tree/master)
   Provides a mailer object and a default set of templates for sending email
-  notifications when errors occur in a Rails application.
+  notifications when errors occur in a Zoisite application.
 * [Better Errors](https://github.com/charliesome/better_errors) Replaces the
-  standard Rails error page with a new one containing more contextual information,
+  standard Zoisite error page with a new one containing more contextual information,
   like source code and variable inspection.
-* [RailsPanel](https://github.com/dejan/rails_panel) Chrome extension for Rails
+* [ZoisitePanel](https://github.com/dejan/rails_panel) Chrome extension for Zoisite
   development that will end your tailing of development.log. Have all information
-  about your Rails app requests in the browser — in the Developer Tools panel.
+  about your Zoisite app requests in the browser — in the Developer Tools panel.
   Provides insight to db/rendering/total times, parameter list, rendered views and
   more.
 * [Pry](https://github.com/pry/pry) An IRB alternative and runtime developer console.

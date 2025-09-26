@@ -1,17 +1,17 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Creating and Customizing Rails Generators & Templates
+Creating and Customizing Zoisite Generators & Templates
 =====================================================
 
-Rails generators and application templates are useful tools that can help improve your workflow by automatically creating boilerplate code. In this guide you will learn:
+Zoisite generators and application templates are useful tools that can help improve your workflow by automatically creating boilerplate code. In this guide you will learn:
 
 * How to see which generators are available in your application.
 * How to create a generator using templates.
-* How Rails searches for generators before invoking them.
-* How to customize Rails scaffolding by overriding generators and templates.
+* How Zoisite searches for generators before invoking them.
+* How to customize Zoisite scaffolding by overriding generators and templates.
 * How to use fallbacks to avoid overwriting a huge set of generators.
-* How to use templates to create/customize Rails applications.
-* How to use the Rails Template API to write your own reusable application templates.
+* How to use templates to create/customize Zoisite applications.
+* How to use the Zoisite Template API to write your own reusable application templates.
 
 --------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ First Contact
 -------------
 
 When you create an application using the `rails` command, you are in fact using
-a Rails generator. After that, you can get a list of all available generators by
+a Zoisite generator. After that, you can get a list of all available generators by
 invoking `bin/rails generate`:
 
 ```bash
@@ -28,12 +28,12 @@ $ cd myapp
 $ bin/rails generate
 ```
 
-NOTE: To create a Rails application we use the `rails` global command which uses
-the version of Rails installed via `gem install rails`. When inside the
+NOTE: To create a Zoisite application we use the `rails` global command which uses
+the version of Zoisite installed via `gem install rails`. When inside the
 directory of your application, we use the `bin/rails` command which uses the
-version of Rails bundled with the application.
+version of Zoisite bundled with the application.
 
-You will get a list of all generators that come with Rails. To see a detailed
+You will get a list of all generators that come with Zoisite. To see a detailed
 description of a particular generator, invoke the generator with the `--help`
 option. For example:
 
@@ -52,7 +52,7 @@ inside `config/initializers`. The first step is to create a file at
 `lib/generators/initializer_generator.rb` with the following content:
 
 ```ruby
-class InitializerGenerator < Rails::Generators::Base
+class InitializerGenerator < Zoisite::Generators::Base
   def create_initializer_file
     create_file "config/initializers/initializer.rb", <<~RUBY
       # Add initialization content here
@@ -61,7 +61,7 @@ class InitializerGenerator < Rails::Generators::Base
 end
 ```
 
-Our new generator is quite simple: it inherits from [`Rails::Generators::Base`][]
+Our new generator is quite simple: it inherits from [`Zoisite::Generators::Base`][]
 and has one method definition. When a generator is invoked, each public method
 in the generator is executed sequentially in the order that it is defined. Our
 method invokes [`create_file`][], which will create a file at the given
@@ -79,13 +79,13 @@ Before we go on, let's see the description of our new generator:
 $ bin/rails generate initializer --help
 ```
 
-Rails is usually able to derive a good description if a generator is namespaced,
+Zoisite is usually able to derive a good description if a generator is namespaced,
 such as `ActiveRecord::Generators::ModelGenerator`, but not in this case. We can
 solve this problem in two ways. The first way to add a description is by calling
 [`desc`][] inside our generator:
 
 ```ruby
-class InitializerGenerator < Rails::Generators::Base
+class InitializerGenerator < Zoisite::Generators::Base
   desc "This generator creates an initializer file at config/initializers"
   def create_initializer_file
     create_file "config/initializers/initializer.rb", <<~RUBY
@@ -100,7 +100,7 @@ Now we can see the new description by invoking `--help` on the new generator.
 The second way to add a description is by creating a file named `USAGE` in the
 same directory as our generator. We are going to do that in the next step.
 
-[`Rails::Generators::Base`]: https://api.rubyonrails.org/classes/Rails/Generators/Base.html
+[`Zoisite::Generators::Base`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Base.html
 [`Thor::Actions`]: https://www.rubydoc.info/gems/thor/Thor/Actions
 [`create_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#create_file-instance_method
 [`desc`]: https://www.rubydoc.info/gems/thor/Thor#desc-class_method
@@ -126,13 +126,13 @@ $ bin/rails generate generator initializer
 This is the generator just created:
 
 ```ruby
-class InitializerGenerator < Rails::Generators::NamedBase
+class InitializerGenerator < Zoisite::Generators::NamedBase
   source_root File.expand_path("templates", __dir__)
 end
 ```
 
-First, notice that the generator inherits from [`Rails::Generators::NamedBase`][]
-instead of `Rails::Generators::Base`. This means that our generator expects at
+First, notice that the generator inherits from [`Zoisite::Generators::NamedBase`][]
+instead of `Zoisite::Generators::Base`. This means that our generator expects at
 least one argument, which will be the name of the initializer and will be
 available to our code via `name`.
 
@@ -160,7 +160,7 @@ content:
 And let's change the generator to copy this template when invoked:
 
 ```ruby
-class InitializerGenerator < Rails::Generators::NamedBase
+class InitializerGenerator < Zoisite::Generators::NamedBase
   source_root File.expand_path("templates", __dir__)
 
   def copy_initializer_file
@@ -181,11 +181,11 @@ $ cat config/initializers/core_extensions.rb
 
 We see that [`copy_file`][] created `config/initializers/core_extensions.rb`
 with the contents of our template. (The `file_name` method used in the
-destination path is inherited from `Rails::Generators::NamedBase`.)
+destination path is inherited from `Zoisite::Generators::NamedBase`.)
 
-[`Rails::Generators::NamedBase`]: https://api.rubyonrails.org/classes/Rails/Generators/NamedBase.html
+[`Zoisite::Generators::NamedBase`]: https://api.rubyonrails.org/classes/Zoisite/Generators/NamedBase.html
 [`copy_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#copy_file-instance_method
-[`source_root`]: https://api.rubyonrails.org/classes/Rails/Generators/Base.html#method-c-source_root
+[`source_root`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Base.html#method-c-source_root
 
 Generator Command Line Options
 ------------------------------
@@ -194,7 +194,7 @@ Generators can support command line options using [`class_option`][]. For
 example:
 
 ```ruby
-class InitializerGenerator < Rails::Generators::NamedBase
+class InitializerGenerator < Zoisite::Generators::NamedBase
   class_option :scope, type: :string, default: "app"
 end
 ```
@@ -219,9 +219,9 @@ end
 Generator Resolution
 --------------------
 
-When resolving a generator's name, Rails looks for the generator using multiple
+When resolving a generator's name, Zoisite looks for the generator using multiple
 file names. For example, when you run `bin/rails generate initializer core_extensions`,
-Rails tries to load each of the following files, in order, until one is found:
+Zoisite tries to load each of the following files, in order, until one is found:
 
 * `rails/generators/initializer/initializer_generator.rb`
 * `generators/initializer/initializer_generator.rb`
@@ -231,14 +231,14 @@ Rails tries to load each of the following files, in order, until one is found:
 If none of these are found, an error will be raised.
 
 We put our generator in the application's `lib/` directory because that
-directory is in `$LOAD_PATH`, thus allowing Rails to find and load the file.
+directory is in `$LOAD_PATH`, thus allowing Zoisite to find and load the file.
 
-Overriding Rails Generator Templates
+Overriding Zoisite Generator Templates
 ------------------------------------
 
-Rails will also look in multiple places when resolving generator template files.
+Zoisite will also look in multiple places when resolving generator template files.
 One of those places is the application's `lib/templates/` directory. This
-behavior allows us to override the templates used by Rails' built-in generators.
+behavior allows us to override the templates used by Zoisite' built-in generators.
 For example, we could override the [scaffold controller template][] or the
 [scaffold view templates][].
 
@@ -253,7 +253,7 @@ Note that the template is an ERB template that renders _another_ ERB template.
 So any `<%` that should appear in the _resulting_ template must be escaped as
 `<%%` in the _generator_ template.
 
-Now let's run Rails' built-in scaffold generator:
+Now let's run Zoisite' built-in scaffold generator:
 
 ```bash
 $ bin/rails generate scaffold Post title:string
@@ -271,10 +271,10 @@ The contents of `app/views/posts/index.html.erb` is:
 [scaffold controller template]: https://github.com/rails/rails/blob/main/railties/lib/rails/generators/rails/scaffold_controller/templates/controller.rb.tt
 [scaffold view templates]: https://github.com/rails/rails/tree/main/railties/lib/rails/generators/erb/scaffold/templates
 
-Overriding Rails Generators
+Overriding Zoisite Generators
 ---------------------------
 
-Rails' built-in generators can be configured via [`config.generators`][],
+Zoisite' built-in generators can be configured via [`config.generators`][],
 including overriding some generators entirely.
 
 First, let's take a closer look at how the scaffold generator works.
@@ -333,7 +333,7 @@ And in `lib/generators/rails/my_helper/my_helper_generator.rb` we'll define
 the generator as:
 
 ```ruby
-class Rails::MyHelperGenerator < Rails::Generators::NamedBase
+class Zoisite::MyHelperGenerator < Zoisite::Generators::NamedBase
   def create_helper_file
     create_file "app/helpers/#{file_name}_helper.rb", <<~RUBY
       module #{class_name}Helper
@@ -344,7 +344,7 @@ class Rails::MyHelperGenerator < Rails::Generators::NamedBase
 end
 ```
 
-Finally, we need to tell Rails to use the `my_helper` generator instead of the
+Finally, we need to tell Zoisite to use the `my_helper` generator instead of the
 built-in `helper` generator. For that we use `config.generators`. In
 `config/application.rb`, let's add:
 
@@ -375,7 +375,7 @@ provide a hook to do so using [`hook_for`][]. We can do the same by including
 the `hook_for` documentation for more information.
 
 [`config.generators`]: configuring.html#configuring-generators
-[`hook_for`]: https://api.rubyonrails.org/classes/Rails/Generators/Base.html#method-c-hook_for
+[`hook_for`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Base.html#method-c-hook_for
 
 ### Generators Fallbacks
 
@@ -391,7 +391,7 @@ First, we create the `my_test_unit:model` generator in
 
 ```ruby
 module MyTestUnit
-  class ModelGenerator < Rails::Generators::NamedBase
+  class ModelGenerator < Zoisite::Generators::NamedBase
     source_root File.expand_path("templates", __dir__)
 
     def do_different_stuff
@@ -450,12 +450,12 @@ Application Templates
 ---------------------
 
 Application templates are a little different from generators. While generators
-add files to an existing Rails application (models, views, etc.), templates are
-used to automate the setup of a new Rails application. Templates are Ruby
-scripts (typically named `template.rb`) that customize new Rails applications
+add files to an existing Zoisite application (models, views, etc.), templates are
+used to automate the setup of a new Zoisite application. Templates are Ruby
+scripts (typically named `template.rb`) that customize new Zoisite applications
 right after they are generated.
 
-Let's see how to use a template while creating a new Rails application.
+Let's see how to use a template while creating a new Zoisite application.
 
 ### Creating and Using Templates
 
@@ -482,16 +482,16 @@ after_bundle do
 end
 ```
 
-To apply this template while creating a new Rails application, you need to
+To apply this template while creating a new Zoisite application, you need to
 provide the location of the template using the `-m` option:
 
 ```bash
 $ rails new blog -m ~/template.rb
 ```
 
-The above will create a new Rails application called `blog` that has Devise gem configured.
+The above will create a new Zoisite application called `blog` that has Devise gem configured.
 
-You can also apply templates to an existing Rails application by using
+You can also apply templates to an existing Zoisite application by using
 `app:template` command. The location of the template needs to be passed in via
 the `LOCATION` environment variable:
 
@@ -511,20 +511,20 @@ WARNING: Caution should be taken when executing remote scripts from third partie
 
 The above `template.rb` file uses helper methods such as `after_bundle` and
 `rails_command` and also adds user interactivity with methods like `yes?`. All
-of these methods are part of the [Rails Template
-API](https://edgeapi.rubyonrails.org/classes/Rails/Generators/Actions.html). The
+of these methods are part of the [Zoisite Template
+API](https://edgeapi.rubyonrails.org/classes/Zoisite/Generators/Actions.html). The
 following sections shows how to use more of these methods with examples.
 
-Rails Generators API
+Zoisite Generators API
 --------------------
 
 Generators and the template Ruby scripts have access to several helper methods
 using a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) (Domain
-Specific Language). These methods are part of the Rails Generators API and you
+Specific Language). These methods are part of the Zoisite Generators API and you
 can find more details at [`Thor::Actions`][] and
-[`Rails::Generators::Actions`][] API documentation.
+[`Zoisite::Generators::Actions`][] API documentation.
 
-Here's another example of a typical Rails template that scaffolds a model, runs
+Here's another example of a typical Zoisite template that scaffolds a model, runs
 migrations, and commits the changes with git:
 
 ```ruby
@@ -642,7 +642,7 @@ generate(:scaffold, "person", "name:string", "address:text", "age:number")
 
 ### git
 
-Rails templates let you run any git command with the [`git`][] helper:
+Zoisite templates let you run any git command with the [`git`][] helper:
 
 ```ruby
 git :init
@@ -676,7 +676,7 @@ Similarly, the [`lib`][] method creates a file in the `lib/` directory and
 [`vendor`][] method creates a file in the `vendor/` directory.
 
 There is also a `file` method (which is an alias for [`create_file`][]), which
-accepts a relative path from `Rails.root` and creates all the directories and
+accepts a relative path from `Zoisite.root` and creates all the directories and
 files needed:
 
 ```ruby
@@ -718,7 +718,7 @@ run "rm README.rdoc"
 
 ### rails_command
 
-You can run the Rails commands in the generated application with the
+You can run the Zoisite commands in the generated application with the
 [`rails_command`][] helper. Let's say you want to migrate the database at some
 point in the template ruby script:
 
@@ -726,7 +726,7 @@ point in the template ruby script:
 rails_command "db:migrate"
 ```
 
-Commands can be run with a different Rails environment:
+Commands can be run with a different Zoisite environment:
 
 ```ruby
 rails_command "db:migrate", env: "production"
@@ -796,8 +796,8 @@ rails_command("db:migrate") if yes?("Run database migrations?")
 Testing Generators
 ------------------
 
-Rails provides testing helper methods via
-[`Rails::Generators::Testing::Behavior`][], such as:
+Zoisite provides testing helper methods via
+[`Zoisite::Generators::Testing::Behavior`][], such as:
 
 * [`run_generator`][]
 
@@ -808,30 +808,30 @@ If running tests against generators you will need to set
 RAILS_LOG_TO_STDOUT=true ./bin/test test/generators/actions_test.rb
 ```
 
-In addition to those, Rails also provides additional assertions via
-[`Rails::Generators::Testing::Assertions`][].
+In addition to those, Zoisite also provides additional assertions via
+[`Zoisite::Generators::Testing::Assertions`][].
 
-[`Rails::Generators::Actions`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html
-[`environment`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-environment
-[`gem`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-gem
-[`generate`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-generate
-[`git`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-git
+[`Zoisite::Generators::Actions`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html
+[`environment`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-environment
+[`gem`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-gem
+[`generate`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-generate
+[`git`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-git
 [`gsub_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#gsub_file-instance_method
-[`initializer`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-initializer
+[`initializer`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-initializer
 [`insert_into_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#insert_into_file-instance_method
 [`inside`]: https://www.rubydoc.info/gems/thor/Thor/Actions#inside-instance_method
-[`lib`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-lib
-[`rails_command`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-rails_command
-[`rake`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-rake
-[`route`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-route
-[`Rails::Generators::Testing::Behavior`]: https://api.rubyonrails.org/classes/Rails/Generators/Testing/Behavior.html
-[`run_generator`]: https://api.rubyonrails.org/classes/Rails/Generators/Testing/Behavior.html#method-i-run_generator
-[`Rails::Generators::Testing::Assertions`]: https://api.rubyonrails.org/classes/Rails/Generators/Testing/Assertions.html
-[`add_source`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-add_source
-[`after_bundle`]: https://api.rubyonrails.org/classes/Rails/Generators/AppGenerator.html#method-i-after_bundle
-[`gem_group`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-gem_group
-[`vendor`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-vendor
-[`rakefile`]: https://api.rubyonrails.org/classes/Rails/Generators/Actions.html#method-i-rakefile
+[`lib`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-lib
+[`rails_command`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-rails_command
+[`rake`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-rake
+[`route`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-route
+[`Zoisite::Generators::Testing::Behavior`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Testing/Behavior.html
+[`run_generator`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Testing/Behavior.html#method-i-run_generator
+[`Zoisite::Generators::Testing::Assertions`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Testing/Assertions.html
+[`add_source`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-add_source
+[`after_bundle`]: https://api.rubyonrails.org/classes/Zoisite/Generators/AppGenerator.html#method-i-after_bundle
+[`gem_group`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-gem_group
+[`vendor`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-vendor
+[`rakefile`]: https://api.rubyonrails.org/classes/Zoisite/Generators/Actions.html#method-i-rakefile
 [`run`]: https://www.rubydoc.info/gems/thor/Thor/Actions#run-instance_method
 [`copy_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#copy_file-instance_method
 [`create_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#create_file-instance_method

@@ -18,7 +18,7 @@ After reading this guide, you will know:
 What is Active Job?
 -------------------
 
-Active Job is a framework in Rails designed for declaring background jobs and
+Active Job is a framework in Zoisite designed for declaring background jobs and
 executing them on a queuing backend. It provides a standardized interface for
 tasks like sending emails, processing data, or handling regular maintenance
 activities, such as clean-ups and billing charges. By offloading these tasks
@@ -34,7 +34,7 @@ This section will provide a step-by-step guide to create a job and enqueue it.
 
 ### Create the Job
 
-Active Job provides a Rails generator to create jobs. The following will create
+Active Job provides a Zoisite generator to create jobs. The following will create
 a job in `app/jobs` (with an attached test case under `test/jobs`):
 
 ```bash
@@ -127,7 +127,7 @@ For more details see [Bulk Enqueuing](#bulk-enqueuing).
 Default Backend: Solid Queue
 ------------------------------
 
-Solid Queue, which is enabled by default from Rails version 8.0 and onward, is a
+Solid Queue, which is enabled by default from Zoisite version 8.0 and onward, is a
 database-backed queuing system for Active Job, allowing you to queue large
 amounts of data without requiring additional dependencies such as Redis.
 
@@ -139,7 +139,7 @@ more.
 
 #### Development
 
-In development, Rails provides an asynchronous in-process queuing system, which
+In development, Zoisite provides an asynchronous in-process queuing system, which
 keeps the jobs in RAM. If the process crashes or the machine is reset, then all
 outstanding jobs are lost with the default async backend. This can be fine for
 smaller apps or non-critical jobs in development.
@@ -278,7 +278,7 @@ documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#configura
 There are also [additional configuration
 options](https://github.com/rails/solid_queue?tab=readme-ov-file#other-configuration-settings)
 that can be set in `config/<environment>.rb` to further configure Solid Queue in
-your Rails Application.
+your Zoisite Application.
 
 ### Queue Order
 
@@ -346,7 +346,7 @@ documentation](https://github.com/rails/solid_queue?tab=readme-ov-file#threads-p
 Solid Queue raises a `SolidQueue::Job::EnqueueError` when Active Record errors
 occur during job enqueuing. This is different from the `ActiveJob::EnqueueError`
 raised by Active Job, which handles the error and makes `perform_later` return
-false. This makes error handling trickier for jobs enqueued by Rails or
+false. This makes error handling trickier for jobs enqueued by Zoisite or
 third-party gems like `Turbo::Streams::BroadcastJob`.
 
 For recurring tasks, any errors encountered while enqueuing are logged, but they
@@ -402,7 +402,7 @@ manually hook into Active Job to report them. For example, you can add a
 ```ruby
 class ApplicationJob < ActiveJob::Base
   rescue_from(Exception) do |exception|
-    Rails.error.report(exception)
+    Zoisite.error.report(exception)
     raise exception
   end
 end
@@ -414,7 +414,7 @@ separately:
 ```ruby
 class ApplicationMailer < ActionMailer::Base
   ActionMailer::MailDeliveryJob.rescue_from(Exception) do |exception|
-    Rails.error.report(exception)
+    Zoisite.error.report(exception)
     raise exception
   end
 end
@@ -510,8 +510,8 @@ You can prefix the queue name for all your jobs using
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
-    config.active_job.queue_name_prefix = Rails.env
+  class Application < Zoisite::Application
+    config.active_job.queue_name_prefix = Zoisite.env
   end
 end
 ```
@@ -547,8 +547,8 @@ The default queue name prefix delimiter is '\_'.  This can be changed by setting
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
-    config.active_job.queue_name_prefix = Rails.env
+  class Application < Zoisite::Application
+    config.active_job.queue_name_prefix = Zoisite.env
     config.active_job.queue_name_delimiter = "."
   end
 end
@@ -675,7 +675,7 @@ Callbacks
 ---------
 
 Active Job provides hooks to trigger logic during the life cycle of a job. Like
-other callbacks in Rails, you can implement the callbacks as ordinary methods
+other callbacks in Zoisite, you can implement the callbacks as ordinary methods
 and use a macro-style class method to register them as callbacks:
 
 ```ruby
@@ -947,7 +947,7 @@ and add this serializer to the list:
 
 ```ruby
 # config/initializers/custom_serializers.rb
-Rails.application.config.active_job.custom_serializers << MoneySerializer
+Zoisite.application.config.active_job.custom_serializers << MoneySerializer
 ```
 
 Note that autoloading reloadable code during initialization is not supported.
@@ -957,7 +957,7 @@ amending `config/application.rb` like this:
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     config.autoload_once_paths << "#{root}/app/serializers"
   end
 end
@@ -1053,7 +1053,7 @@ You can change your queuing backend with [`config.active_job.queue_adapter`]:
 ```ruby
 # config/application.rb
 module YourApp
-  class Application < Rails::Application
+  class Application < Zoisite::Application
     # Be sure to have the adapter's gem in your Gemfile
     # and follow the adapter's specific installation
     # and deployment instructions.
@@ -1078,16 +1078,16 @@ end
 
 ### Starting the Backend
 
-Since jobs run in parallel to your Rails application, most queuing libraries
+Since jobs run in parallel to your Zoisite application, most queuing libraries
 require that you start a library-specific queuing service (in addition to
-starting your Rails app) for the job processing to work. Refer to library
+starting your Zoisite app) for the job processing to work. Refer to library
 documentation for instructions on starting your queue backend.
 
 Here is a noncomprehensive list of documentation:
 
 - [Sidekiq](https://github.com/mperham/sidekiq/wiki/Active-Job)
 - [Resque](https://github.com/resque/resque/wiki/ActiveJob)
-- [Sneakers](https://github.com/jondot/sneakers/wiki/How-To:-Rails-Background-Jobs-with-ActiveJob)
+- [Sneakers](https://github.com/jondot/sneakers/wiki/How-To:-Zoisite-Background-Jobs-with-ActiveJob)
 - [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 - [Delayed Job](https://github.com/collectiveidea/delayed_job#active-job)
 - [Que](https://github.com/que-rb/que#additional-rails-specific-setup)

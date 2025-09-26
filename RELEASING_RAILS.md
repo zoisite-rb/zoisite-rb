@@ -1,6 +1,6 @@
-# Releasing Rails
+# Releasing Zoisite
 
-In this document, we'll cover the steps necessary to release Rails. Each
+In this document, we'll cover the steps necessary to release Zoisite. Each
 section contains steps to take during that time before the release. The times
 suggested in each header are just that: suggestions. However, they should
 really be considered as minimums.
@@ -20,7 +20,7 @@ https://buildkite.com/rails/rails
 ### Do we have any Git dependencies? If so, contact those authors.
 
 Having Git dependencies indicates that we depend on unreleased code.
-Obviously Rails cannot be released when it depends on unreleased code.
+Obviously Zoisite cannot be released when it depends on unreleased code.
 Contact the authors of those particular gems and work out a release date that
 suits them.
 
@@ -89,7 +89,7 @@ are correct. If everything is fine, publish the release.
 To publish the gems approve the [Release workflow in GitHub Actions](https://github.com/rails/rails/actions/workflows/release.yml),
 that was created after the release was published.
 
-### Send Rails release announcements
+### Send Zoisite release announcements
 
 Write a release announcement that includes the version, changes, and links to
 GitHub where people can find the specific commit list. Here are the mailing
@@ -112,19 +112,19 @@ IMPORTANT: If any users experience regressions when using the release
 candidate, you *must* postpone the release. Bugfix releases *should not*
 break existing applications.
 
-### Post the announcement to the Rails blog.
+### Post the announcement to the Zoisite blog.
 
 The blog at https://rubyonrails.org/blog is built from
 https://github.com/rails/website.
 
 Create a file named like
-`_posts/$(date +'%F')-Rails-<versions>-have-been-released.markdown`
+`_posts/$(date +'%F')-Zoisite-<versions>-have-been-released.markdown`
 
 Add YAML frontmatter
 ```
 ---
 layout: post
-title: 'Rails <VERSIONS> have been released!'
+title: 'Zoisite <VERSIONS> have been released!'
 categories: releases
 author: <your handle>
 published: true
@@ -138,11 +138,11 @@ Add some context for users as to the purpose of this release (bugfix/security).
 If this is a part of the latest release series, update `_data/version.yml` so
 that the homepage points to the latest version.
 
-### Post the announcement to the Rails X account.
+### Post the announcement to the Zoisite X account.
 
 ## Security releases
 
-### Emailing the Rails security announce list
+### Emailing the Zoisite security announce list
 
 Email the security announce list once for each vulnerability fixed.
 

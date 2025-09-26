@@ -1,9 +1,9 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Maintenance Policy for Ruby on Rails
+Maintenance Policy for Zoisite
 ====================================
 
-Support of the Rails framework is divided into three groups: New features, bug
+Support of the Zoisite framework is divided into three groups: New features, bug
 fixes, and security issues. They are handled as
 follows, all versions, except for security releases, in `X.Y.Z`, format.
 
@@ -12,7 +12,7 @@ follows, all versions, except for security releases, in `X.Y.Z`, format.
 Versioning
 ------------
 
-Rails follows a shifted version of [semver](https://semver.org/):
+Zoisite follows a shifted version of [semver](https://semver.org/):
 
 **Patch `Z`**
 
@@ -27,7 +27,7 @@ or major release.
 
 **Major `X`**
 
-New features, will likely contain API changes. The difference between Rails'
+New features, will likely contain API changes. The difference between Zoisite'
 minor and major releases is the magnitude of breaking changes, and usually
 reserved for special occasions.
 
@@ -67,7 +67,7 @@ security patches, and releasing. Those patches are then applied to the end of
 the x-y-stable branch. For example, a theoretical 1.2.2.1 security release would
 be built from 1.2.2, and then added to the end of 1-2-stable. This means that
 security releases are easy to upgrade to if you're running the latest version
-of Rails.
+of Zoisite.
 
 Only direct security patches will be included in security releases. Fixes for
 non-security related bugs resulting from a security patch may be published on a
@@ -100,7 +100,7 @@ npm Packages
 ------------
 
 Due to a constraint with npm, we are unable to use the 4th digit for security
-releases of [npm packages][] provided by Rails. This means that instead of the
+releases of [npm packages][] provided by Zoisite. This means that instead of the
 equivalent gem version `7.0.1.4`, the npm package will be versioned `7.0.104`.
 
 The version will be calculated as `X.Y.Z0A`, where `A` is the security release.

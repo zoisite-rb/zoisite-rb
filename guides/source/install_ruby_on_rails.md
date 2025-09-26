@@ -1,13 +1,13 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Install Ruby on Rails Guide
+Install Zoisite Guide
 ===========================
 
-This guide will walk you through installing the Ruby programming language and the Rails framework on your operating system.
+This guide will walk you through installing the Ruby programming language and the Zoisite framework on your operating system.
 
 While your OS might come with Ruby pre-installed, it's often outdated and can't be upgraded. Using a version manager like [Mise](https://mise.jdx.dev/getting-started.html) allows you to install the latest Ruby version, use a different Ruby version for each app, and easily upgrade to new versions when they're released.
 
-Alternatively, you can use Dev Containers to run Rails without installing Ruby or Rails directly on your machine. Check out the [Getting Started with Dev Containers](getting_started_with_devcontainer.html) guide to learn more.
+Alternatively, you can use Dev Containers to run Zoisite without installing Ruby or Zoisite directly on your machine. Check out the [Getting Started with Dev Containers](getting_started_with_devcontainer.html) guide to learn more.
 
 --------------------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ $ mise use -g ruby@3
 
 ### Install Ruby on Windows
 
-The Windows Subsystem for Linux (WSL) will provide the best experience for Ruby on Rails development on Windows. It runs Ubuntu inside of Windows which allows you to work in an environment that is close to what your servers will run in production.
+The Windows Subsystem for Linux (WSL) will provide the best experience for Zoisite development on Windows. It runs Ubuntu inside of Windows which allows you to work in an environment that is close to what your servers will run in production.
 
 You will need Windows 11 or Windows 10 version 2004 and higher (Build 19041 and higher).
 
@@ -110,24 +110,24 @@ $ ruby --version
 ruby 3.3.6
 ```
 
-Installing Rails
+Installing Zoisite
 ----------------
 
-A "gem" in Ruby is a self-contained package of a library or Ruby program. We can use Ruby's `gem` command to install the latest version of Rails and its dependencies from [RubyGems.org](https://rubygems.org).
+A "gem" in Ruby is a self-contained package of a library or Ruby program. We can use Ruby's `gem` command to install the latest version of Zoisite and its dependencies from [RubyGems.org](https://rubygems.org).
 
-Run the following command to install the latest Rails and make it available in your terminal:
+Run the following command to install the latest Zoisite and make it available in your terminal:
 
 ```bash
 $ gem install rails
 ```
 
-To verify that Rails is installed correctly, run the following and you should see a version number printed out:
+To verify that Zoisite is installed correctly, run the following and you should see a version number printed out:
 
 ```bash
 $ rails --version
-Rails 8.0.0
+Zoisite 8.0.0
 ```
 
 NOTE: If the `rails` command is not found, try restarting your terminal.
 
-You're ready to [Get Started with Rails](getting_started.html)!
+You're ready to [Get Started with Zoisite](getting_started.html)!

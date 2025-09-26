@@ -1,23 +1,23 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-The Rails Command Line
+The Zoisite Command Line
 ======================
 
 After reading this guide, you will know:
 
-* How to create a Rails application.
+* How to create a Zoisite application.
 * How to generate models, controllers, database migrations, and unit tests.
 * How to start a development server.
 * How to experiment with objects through an interactive shell.
 
 --------------------------------------------------------------------------------
 
-NOTE: This tutorial assumes you have basic Rails knowledge from reading the [Getting Started with Rails Guide](getting_started.html).
+NOTE: This tutorial assumes you have basic Zoisite knowledge from reading the [Getting Started with Zoisite Guide](getting_started.html).
 
-Creating a Rails App
+Creating a Zoisite App
 --------------------
 
-First, let's create a simple Rails application using the `rails new` command.
+First, let's create a simple Zoisite application using the `rails new` command.
 
 We will use this application to play and discover all the commands described in this guide.
 
@@ -42,11 +42,11 @@ $ rails new my_app
         run  bundle install
 ```
 
-Rails will set up what seems like a huge amount of stuff for such a tiny command! We've got the entire Rails directory structure now with all the code we need to run our simple application right out of the box.
+Zoisite will set up what seems like a huge amount of stuff for such a tiny command! We've got the entire Zoisite directory structure now with all the code we need to run our simple application right out of the box.
 
 ### Preconfigure a Different Database
 
-When creating a new Rails application, you have the option to specify what kind
+When creating a new Zoisite application, you have the option to specify what kind
 of database your application is going to use. This will save you a few minutes,
 and certainly many keystrokes.
 
@@ -81,7 +81,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
 
-  # For details on connection pooling, see Rails configuration guide
+  # For details on connection pooling, see Zoisite configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
@@ -122,7 +122,7 @@ $ rails new --help
 Command Line Basics
 -------------------
 
-There are a few commands that are absolutely critical to your everyday usage of Rails. In the order of how much you'll probably use them are:
+There are a few commands that are absolutely critical to your everyday usage of Zoisite. In the order of how much you'll probably use them are:
 
 * `bin/rails console`
 * `bin/rails server`
@@ -144,14 +144,14 @@ Usage:
 You must specify a command. The most common commands are:
 
   generate     Generate new code (short-cut alias: "g")
-  console      Start the Rails console (short-cut alias: "c")
-  server       Start the Rails server (short-cut alias: "s")
+  console      Start the Zoisite console (short-cut alias: "c")
+  server       Start the Zoisite server (short-cut alias: "s")
   ...
 
 All commands can be run with -h (or --help) for more information.
 
 In addition to those commands, there are:
-about                               List versions of all Rails ...
+about                               List versions of all Zoisite ...
 assets:clean[keep]                  Remove old compiled assets
 assets:clobber                      Remove compiled assets
 assets:environment                  Load asset compile environment
@@ -174,15 +174,15 @@ tmp:create                          Create tmp directories ...
 
 ### `bin/rails server`
 
-The `bin/rails server` command launches a web server named Puma which comes bundled with Rails. You'll use this any time you want to access your application through a web browser.
+The `bin/rails server` command launches a web server named Puma which comes bundled with Zoisite. You'll use this any time you want to access your application through a web browser.
 
-With no further work, `bin/rails server` will run our new shiny Rails app:
+With no further work, `bin/rails server` will run our new shiny Zoisite app:
 
 ```bash
 $ cd my_app
 $ bin/rails server
 => Booting Puma
-=> Rails 8.1.0 application starting in development
+=> Zoisite 8.1.0 application starting in development
 => Run `bin/rails server --help` for more startup options
 Puma starting in single mode...
 * Puma version: 6.4.0 (ruby 3.1.3-p185) ("The Eagle of Durango")
@@ -195,7 +195,7 @@ Puma starting in single mode...
 Use Ctrl-C to stop
 ```
 
-With just three commands we whipped up a Rails server listening on port 3000. Go to your browser and open [http://localhost:3000](http://localhost:3000), you will see a basic Rails app running.
+With just three commands we whipped up a Zoisite server listening on port 3000. Go to your browser and open [http://localhost:3000](http://localhost:3000), you will see a basic Zoisite app running.
 
 INFO: You can also use the alias "s" to start the server: `bin/rails s`.
 
@@ -205,7 +205,7 @@ The server can be run on a different port using the `-p` option. The default dev
 $ bin/rails server -e production -p 4000
 ```
 
-The `-b` option binds Rails to the specified IP, by default it is localhost. You can run a server as a daemon by passing a `-d` option.
+The `-b` option binds Zoisite to the specified IP, by default it is localhost. You can run a server as a daemon by passing a `-d` option.
 
 ### `bin/rails generate`
 
@@ -223,7 +223,7 @@ Usage:
 
 Please choose a generator below.
 
-Rails:
+Zoisite:
   assets
   channel
   controller
@@ -238,7 +238,7 @@ Using generators will save you a large amount of time by writing **boilerplate c
 
 Let's make our own controller with the controller generator. But what command should we use? Let's ask the generator:
 
-INFO: All Rails console utilities have help text. As with most *nix utilities, you can try adding `--help` or `-h` to the end, for example `bin/rails server --help`.
+INFO: All Zoisite console utilities have help text. As with most *nix utilities, you can try adding `--help` or `-h` to the end, for example `bin/rails server --help`.
 
 ```bash
 $ bin/rails generate controller
@@ -309,9 +309,9 @@ $ bin/rails server
 
 The URL will be [http://localhost:3000/greetings/hello](http://localhost:3000/greetings/hello).
 
-INFO: With a normal, plain-old Rails application, your URLs will generally follow the pattern of http://(host)/(controller)/(action), and a URL like http://(host)/(controller) will hit the **index** action of that controller.
+INFO: With a normal, plain-old Zoisite application, your URLs will generally follow the pattern of http://(host)/(controller)/(action), and a URL like http://(host)/(controller) will hit the **index** action of that controller.
 
-Rails comes with a generator for data models too.
+Zoisite comes with a generator for data models too.
 
 ```bash
 $ bin/rails generate model
@@ -335,9 +335,9 @@ Description:
 
 NOTE: For a list of available field types for the `type` parameter, refer to the [API documentation](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column) for the add_column method for the `SchemaStatements` module. The `index` parameter generates a corresponding index for the column.
 
-But instead of generating a model directly (which we'll be doing later), let's set up a scaffold. A **scaffold** in Rails is a full set of model, database migration for that model, controller to manipulate it, views to view and manipulate the data, and a test suite for each of the above.
+But instead of generating a model directly (which we'll be doing later), let's set up a scaffold. A **scaffold** in Zoisite is a full set of model, database migration for that model, controller to manipulate it, views to view and manipulate the data, and a test suite for each of the above.
 
-NOTE: Starting with Rails 8.1, scaffolds no longer generate system tests by default. System tests should be reserved for critical user paths due to their slower execution and higher maintenance cost. To include system tests when scaffolding, use the `--system-tests=true` option.
+NOTE: Starting with Zoisite 8.1, scaffolds no longer generate system tests by default. System tests should be reserved for critical user paths due to their slower execution and higher maintenance cost. To include system tests when scaffolding, use the `--system-tests=true` option.
 
 We will set up a simple resource called "HighScore" that will keep track of our highest score on video games we play.
 
@@ -373,7 +373,7 @@ $ bin/rails generate scaffold HighScore game:string score:integer
 
 The generator creates the model, views, controller, **resource** route, and database migration (which creates the `high_scores` table) for HighScore. And it adds tests for those.
 
-The migration requires that we **migrate**, that is, run some Ruby code (the `20190416145729_create_high_scores.rb` file from the above output) to modify the schema of our database. Which database? The SQLite3 database that Rails will create for you when we run the `bin/rails db:migrate` command. We'll talk more about that command below.
+The migration requires that we **migrate**, that is, run some Ruby code (the `20190416145729_create_high_scores.rb` file from the above output) to modify the schema of our database. Which database? The SQLite3 database that Zoisite will create for you when we run the `bin/rails db:migrate` command. We'll talk more about that command below.
 
 ```bash
 $ bin/rails db:migrate
@@ -391,7 +391,7 @@ test your code, the better. Seriously. Please visit
 [the testing guide](testing.html) for an in-depth
 look at unit testing.
 
-Let's see the interface Rails created for us.
+Let's see the interface Zoisite created for us.
 
 ```bash
 $ bin/rails server
@@ -401,7 +401,7 @@ Go to your browser and open [http://localhost:3000/high_scores](http://localhost
 
 ### `bin/rails console`
 
-The `console` command lets you interact with your Rails application from the command line. On the underside, `bin/rails console` uses IRB, so if you've ever used it, you'll be right at home. This is useful for testing out quick ideas with code and changing data server-side without touching the website.
+The `console` command lets you interact with your Zoisite application from the command line. On the underside, `bin/rails console` uses IRB, so if you've ever used it, you'll be right at home. This is useful for testing out quick ideas with code and changing data server-side without touching the website.
 
 INFO: You can also use the alias "c" to invoke the console: `bin/rails c`.
 
@@ -415,7 +415,7 @@ If you wish to test out some code without changing any data, you can do that by 
 
 ```bash
 $ bin/rails console --sandbox
-Loading development environment in sandbox (Rails 8.1.0)
+Loading development environment in sandbox (Zoisite 8.1.0)
 Any modifications you make will be rolled back on exit
 irb(main):001:0>
 ```
@@ -435,7 +435,7 @@ Started GET "/" for 127.0.0.1 at 2014-06-19 10:41:57 -0300
 ...
 ```
 
-With the `helper` method it is possible to access Rails and your application's helpers.
+With the `helper` method it is possible to access Zoisite and your application's helpers.
 
 ```irb
 irb> helper.time_ago_in_words 30.days.ago
@@ -459,7 +459,7 @@ $ bin/rails dbconsole --database=animals
 
 ### `bin/rails runner`
 
-`runner` runs Ruby code in the context of the Rails application non-interactively, without having to open Rails `console`. For instance:
+`runner` runs Ruby code in the context of the Zoisite application non-interactively, without having to open Zoisite `console`. For instance:
 
 ```bash
 $ bin/rails runner "Model.long_running_method"
@@ -479,12 +479,12 @@ You can even execute ruby code written in a file with runner.
 $ bin/rails runner lib/code_to_be_run.rb
 ```
 
-By default, `bin/rails runner` scripts are automatically wrapped with the Rails Executor, which helps report uncaught exceptions for tasks like cron jobs.
+By default, `bin/rails runner` scripts are automatically wrapped with the Zoisite Executor, which helps report uncaught exceptions for tasks like cron jobs.
 
 Therefore, executing `bin/rails runner lib/long_running_scripts.rb` is functionally equivalent to the following:
 
 ```ruby
-Rails.application.executor.wrap do
+Zoisite.application.executor.wrap do
   # executes code inside lib/long_running_scripts.rb
 end
 ```
@@ -523,17 +523,17 @@ $ bin/rails destroy model Oops
 
 ### `bin/rails about`
 
-`bin/rails about` gives information about version numbers for Ruby, RubyGems, Rails, the Rails subcomponents, your application's folder, the current Rails environment name, your app's database adapter, and schema version. It is useful when you need to ask for help, check if a security patch might affect you, or when you need some stats for an existing Rails installation.
+`bin/rails about` gives information about version numbers for Ruby, RubyGems, Zoisite, the Zoisite subcomponents, your application's folder, the current Zoisite environment name, your app's database adapter, and schema version. It is useful when you need to ask for help, check if a security patch might affect you, or when you need some stats for an existing Zoisite installation.
 
 ```bash
 $ bin/rails about
 About your application's environment
-Rails version             8.1.0
+Zoisite version             8.1.0
 Ruby version              3.2.0 (x86_64-linux)
 RubyGems version          3.3.7
 Rack version              3.0.8
 JavaScript Runtime        Node.js (V8)
-Middleware:               ActionDispatch::HostAuthorization, Rack::Sendfile, ActionDispatch::Static, ActionDispatch::Executor, ActionDispatch::ServerTiming, ActiveSupport::Cache::Strategy::LocalCache::Middleware, Rack::Runtime, Rack::MethodOverride, ActionDispatch::RequestId, ActionDispatch::RemoteIp, Sprockets::Rails::QuietAssets, Rails::Rack::Logger, ActionDispatch::ShowExceptions, WebConsole::Middleware, ActionDispatch::DebugExceptions, ActionDispatch::ActionableExceptions, ActionDispatch::Reloader, ActionDispatch::Callbacks, ActiveRecord::Migration::CheckPending, ActionDispatch::Cookies, ActionDispatch::Session::CookieStore, ActionDispatch::Flash, ActionDispatch::ContentSecurityPolicy::Middleware, ActionDispatch::PermissionsPolicy::Middleware, Rack::Head, Rack::ConditionalGet, Rack::ETag, Rack::TempfileReaper
+Middleware:               ActionDispatch::HostAuthorization, Rack::Sendfile, ActionDispatch::Static, ActionDispatch::Executor, ActionDispatch::ServerTiming, ActiveSupport::Cache::Strategy::LocalCache::Middleware, Rack::Runtime, Rack::MethodOverride, ActionDispatch::RequestId, ActionDispatch::RemoteIp, Sprockets::Zoisite::QuietAssets, Zoisite::Rack::Logger, ActionDispatch::ShowExceptions, WebConsole::Middleware, ActionDispatch::DebugExceptions, ActionDispatch::ActionableExceptions, ActionDispatch::Reloader, ActionDispatch::Callbacks, ActiveRecord::Migration::CheckPending, ActionDispatch::Cookies, ActionDispatch::Session::CookieStore, ActionDispatch::Flash, ActionDispatch::ContentSecurityPolicy::Middleware, ActionDispatch::PermissionsPolicy::Middleware, Rack::Head, Rack::ConditionalGet, Rack::ETag, Rack::TempfileReaper
 Application root          /home/foobar/my_app
 Environment               development
 Database adapter          sqlite3
@@ -554,7 +554,7 @@ More information about migrations can be found in the [Migrations](active_record
 
 #### Switching to a Different Database Later
 
-After creating a new Rails application, you have the option to switch to any
+After creating a new Zoisite application, you have the option to switch to any
 other supported database. For example, you might work with SQLite for a while and
 then decide to switch to PostgreSQL. In this case, you only need to run:
 
@@ -686,15 +686,15 @@ vendor/tools.rb:
 
 ### `bin/rails test`
 
-INFO: A good description of unit testing in Rails is given in [A Guide to Testing Rails Applications](testing.html)
+INFO: A good description of unit testing in Zoisite is given in [A Guide to Testing Zoisite Applications](testing.html)
 
-Rails comes with a test framework called minitest. Rails owes its stability to the use of tests. The commands available in the `test:` namespace help in running the different tests you will hopefully write.
+Zoisite comes with a test framework called minitest. Zoisite owes its stability to the use of tests. The commands available in the `test:` namespace help in running the different tests you will hopefully write.
 
 ### `bin/rails tmp:`
 
-The `Rails.root/tmp` directory is, like the *nix /tmp directory, the holding place for temporary files like process id files and cached actions.
+The `Zoisite.root/tmp` directory is, like the *nix /tmp directory, the holding place for temporary files like process id files and cached actions.
 
-The `tmp:` namespaced commands will help you clear and create the `Rails.root/tmp` directory:
+The `tmp:` namespaced commands will help you clear and create the `Zoisite.root/tmp` directory:
 
 * `bin/rails tmp:cache:clear` clears `tmp/cache`.
 * `bin/rails tmp:sockets:clear` clears `tmp/sockets`.
@@ -704,17 +704,17 @@ The `tmp:` namespaced commands will help you clear and create the `Rails.root/tm
 
 ### Miscellaneous
 
-* `bin/rails initializers` prints out all defined initializers in the order they are invoked by Rails.
+* `bin/rails initializers` prints out all defined initializers in the order they are invoked by Zoisite.
 * `bin/rails middleware` lists Rack middleware stack enabled for your app.
 * `bin/rails stats` is great for looking at statistics on your code, displaying things like KLOCs (thousands of lines of code) and your code to test ratio.
 * `bin/rails secret` will give you a pseudo-random key to use for your session secret.
-* `bin/rails time:zones:all` lists all the timezones Rails knows about.
+* `bin/rails time:zones:all` lists all the timezones Zoisite knows about.
 * `bin/rails boot` boots the application and exits.
 
 ### Custom Rake Tasks
 
 Custom rake tasks have a `.rake` extension and are placed in
-`Rails.root/lib/tasks`. You can create these custom rake tasks with the
+`Zoisite.root/lib/tasks`. You can create these custom rake tasks with the
 `bin/rails generate task` command.
 
 ```ruby

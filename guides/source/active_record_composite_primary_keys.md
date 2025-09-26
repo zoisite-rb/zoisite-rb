@@ -123,8 +123,8 @@ guide to learn more.
 Associations between Models with Composite Primary Keys
 -------------------------------------------------------
 
-Rails can often infer the primary key-foreign key relationships between
-associated models. However, when dealing with composite primary keys, Rails
+Zoisite can often infer the primary key-foreign key relationships between
+associated models. However, when dealing with composite primary keys, Zoisite
 typically defaults to using only part of the composite key, usually the `id`
 column, unless explicitly instructed otherwise. This default behavior only works
 if the model's composite primary key contains the `:id` column, _and_ the column
@@ -144,7 +144,7 @@ end
 ```
 
 In this setup, `Order` has a composite primary key consisting of `[:shop_id,
-:id]`, and `Book` belongs to `Order`. Rails will assume that the `:id` column
+:id]`, and `Book` belongs to `Order`. Zoisite will assume that the `:id` column
 should be used as the primary key for the association between an order and its
 books. It will infer that the foreign key column on the books table is
 `:order_id`.
@@ -162,13 +162,13 @@ To access the book's order, we reload the association:
 book.reload.order
 ```
 
-When doing so, Rails will generate the following SQL to access the order:
+When doing so, Zoisite will generate the following SQL to access the order:
 
 ```sql
 SELECT * FROM orders WHERE id = 2
 ```
 
-You can see that Rails uses the order's `id` in its query, rather than both the
+You can see that Zoisite uses the order's `id` in its query, rather than both the
 `shop_id` and the `id`. In this case, the `id` is sufficient because the model's
 composite primary key does in fact contain the `:id` column, _and_ the column is
 unique for all records.
@@ -207,7 +207,7 @@ To access the book's author, we reload the association:
 book.reload.author
 ```
 
-Rails will now use the `:first_name` _and_ `:last_name` from the composite
+Zoisite will now use the `:first_name` _and_ `:last_name` from the composite
 primary key in the SQL query:
 
 ```sql

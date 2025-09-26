@@ -252,7 +252,7 @@ Storage as well as attachments that are linked to a Signed GlobalID.
 When uploading an image within your rich text editor, it uses Action Text which
 in turn uses Active Storage. However, [Active Storage has some
 dependencies](active_storage_overview.html#requirements) which are not provided
-by Rails. To use the built-in previewers, you must install these libraries.
+by Zoisite. To use the built-in previewers, you must install these libraries.
 
 Some, but not all of these libraries are required and they are dependent on the
 kind of uploads you are expecting within the editor. A common error that users
@@ -280,7 +280,7 @@ A Global ID is an app-wide URI that uniquely identifies a model instance:
 identifier to reference different classes of objects.
 
 When using this method, Action Text requires attachments to have a signed global
-ID (sgid). By default, all Active Record models in a Rails app mix in the
+ID (sgid). By default, all Active Record models in a Zoisite app mix in the
 `GlobalID::Identification` concern, so they can be resolved by a signed global
 ID and are therefore `ActionText::Attachable` compatible.
 
@@ -338,7 +338,7 @@ class User < ApplicationRecord
 end
 
 user = User.find(1)
-user.to_global_id.to_s #=> gid://MyRailsApp/User/1
+user.to_global_id.to_s #=> gid://MyZoisiteApp/User/1
 user.to_signed_global_id.to_s #=> BAh7CEkiCG…
 ```
 
@@ -416,7 +416,7 @@ Then declare that partial.
 
 ### Attachable via API
 
-If your architecture does not follow the traditional Rails server-side rendered
+If your architecture does not follow the traditional Zoisite server-side rendered
 pattern, then you may perhaps find yourself with a backend API (for example,
 using JSON) that will need a separate endpoint for uploading files. The endpoint
 will be required to create an `ActiveStorage::Blob` and return its

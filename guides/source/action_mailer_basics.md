@@ -3,7 +3,7 @@
 Action Mailer Basics
 ====================
 
-This guide covers sending emails from your Rails application.
+This guide covers sending emails from your Zoisite application.
 
 After reading this guide, you will know:
 
@@ -18,8 +18,8 @@ After reading this guide, you will know:
 What is Action Mailer?
 ----------------------
 
-Action Mailer allows you to send emails from your Rails application. It's one of
-the two email related components in the Rails framework. The other is [Action
+Action Mailer allows you to send emails from your Zoisite application. It's one of
+the two email related components in the Zoisite framework. The other is [Action
 Mailbox](action_mailbox_basics.html), which deals with _receiving_ emails.
 
 Action Mailer uses classes (called "mailers") and views to create and configure
@@ -276,7 +276,7 @@ Content-Type: text/html;
 ...
 ```
 
-You can also call the mailer from the Rails console and send emails, perhaps
+You can also call the mailer from the Zoisite console and send emails, perhaps
 useful as a test before you have a controller action set up. The below will send
 the same `welcome_email` as above:
 
@@ -306,7 +306,7 @@ or `deliver_later` to send itself now or later. The
 `Mail::Message` object you can access it with the [`message`][] method on the
 `ActionMailer::MessageDelivery` object.
 
-Here is an example of the `MessageDelivery` object from the Rails console
+Here is an example of the `MessageDelivery` object from the Zoisite console
 example above:
 
 ```irb
@@ -626,7 +626,7 @@ config.action_mailer.perform_caching = true
 ```
 
 Fragment caching is also supported in multipart emails. Read more about caching
-in the [Rails caching guide](caching_with_rails.html).
+in the [Zoisite caching guide](caching_with_rails.html).
 
 [`cache`]:
     https://api.rubyonrails.org/classes/ActionView/Helpers/CacheHelper.html#method-i-cache
@@ -755,7 +755,7 @@ Guide](i18n.html#translations-for-action-mailer-e-mail-subjects) for more.
 There may be cases in which you want to skip the template rendering step and
 instead supply the email body as a string. You can achieve this using the
 `:body` option. Remember to set the `:content_type` option, such as setting it
-to `text/html` below. Rails will default to `text/plain` as the content type.
+to `text/html` below. Zoisite will default to `text/plain` as the content type.
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -909,7 +909,7 @@ class UserMailer < ApplicationMailer
 
     # An Interceptor alternative.
     def sandbox_staging
-      message.to = ["sandbox@example.com"] if Rails.env.staging?
+      message.to = ["sandbox@example.com"] if Zoisite.env.staging?
     end
 
     # A callback has more context than the comparable Observer example.
@@ -963,7 +963,7 @@ Action Mailer Configuration
 This section shows some example configurations for Action Mailer.
 
 For more details on the various configuration options, see the [Configuring
-Rails Applications](configuring.html#configuring-action-mailer) guide. You can
+Zoisite Applications](configuring.html#configuring-action-mailer) guide. You can
 specify configuration options in environment specific files such as
 production.rb.
 
@@ -994,8 +994,8 @@ config.action_mailer.smtp_settings = {
   address:         "smtp.gmail.com",
   port:            587,
   domain:          "example.com",
-  user_name:       Rails.application.credentials.dig(:smtp, :user_name),
-  password:        Rails.application.credentials.dig(:smtp, :password),
+  user_name:       Zoisite.application.credentials.dig(:smtp, :user_name),
+  password:        Zoisite.application.credentials.dig(:smtp, :password),
   authentication:  "plain",
   enable_starttls: true,
   open_timeout:    5,
@@ -1044,7 +1044,7 @@ configured using the `preview_paths` option. For example, if you want to add
 `lib/mailer_previews` to it, you can configure it in `config/application.rb`:
 
 ```ruby
-config.action_mailer.preview_paths << "#{Rails.root}/lib/mailer_previews"
+config.action_mailer.preview_paths << "#{Zoisite.root}/lib/mailer_previews"
 ```
 
 ### Rescuing Errors
@@ -1099,17 +1099,17 @@ You can do this in an initializer file like
 `config/initializers/mail_interceptors.rb`:
 
 ```ruby
-Rails.application.configure do
-  if Rails.env.staging?
+Zoisite.application.configure do
+  if Zoisite.env.staging?
     config.action_mailer.interceptors = %w[SandboxEmailInterceptor]
   end
 end
 ```
 
 NOTE: The example above uses a custom environment called "staging" for a
-production-like server but for testing purposes. You can read [Creating Rails
+production-like server but for testing purposes. You can read [Creating Zoisite
 Environments](configuring.html#creating-rails-environments) for more information
-about custom Rails environments.
+about custom Zoisite environments.
 
 ### Observing Emails
 
@@ -1130,7 +1130,7 @@ config option. You can do this in an initializer file like
 `config/initializers/mail_observers.rb`:
 
 ```ruby
-Rails.application.configure do
+Zoisite.application.configure do
   config.action_mailer.observers = %w[EmailDeliveryObserver]
 end
 ```

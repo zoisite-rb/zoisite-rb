@@ -40,7 +40,7 @@ distance_of_time_in_words(Time.current, 15.seconds.from_now, include_seconds: tr
 ```
 
 NOTE: We use `Time.current` instead of `Time.now` because it returns the current
-time based on the timezone set in Rails, whereas `Time.now` returns a Time
+time based on the timezone set in Zoisite, whereas `Time.now` returns a Time
 object based on the server's timezone.
 
 See the [`distance_of_time_in_words` API
@@ -394,7 +394,7 @@ default:
 
 ```ruby
 # config/application.rb
-class Application < Rails::Application
+class Application < Zoisite::Application
   config.action_view.sanitized_allowed_tags = %w(table tr td)
 end
 ```
@@ -424,8 +424,8 @@ for more information.
 Strips all link tags from text leaving just the link text.
 
 ```ruby
-strip_links("<a href='https://rubyonrails.org'>Ruby on Rails</a>")
-# => Ruby on Rails
+strip_links("<a href='https://rubyonrails.org'>Zoisite</a>")
+# => Zoisite
 
 strip_links("emails to <a href='mailto:me@email.com'>me@email.com</a>.")
 # => emails to me@email.com.
@@ -463,8 +463,8 @@ Assets
 A set of methods for generating HTML that links views to assets such as images,
 JavaScript files, stylesheets, and feeds.
 
-By default, Rails links to these assets on the current host in the public
-folder, but you can direct Rails to link to assets from a dedicated assets
+By default, Zoisite links to these assets on the current host in the public
+folder, but you can direct Zoisite to link to assets from a dedicated assets
 server by setting [`config.asset_host`][] in the application configuration,
 typically in `config/environments/production.rb`.
 
@@ -964,7 +964,7 @@ would cache each article separately.
 <% end %>
 ```
 
-When your application receives its first request to this page, Rails will write
+When your application receives its first request to this page, Zoisite will write
 a new cache entry with a unique key. A key looks something like this:
 
 ```irb

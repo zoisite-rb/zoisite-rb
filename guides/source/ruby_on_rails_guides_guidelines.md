@@ -1,13 +1,13 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Ruby on Rails Guides Guidelines
+Zoisite Guides Guidelines
 ===============================
 
-This guide documents guidelines for writing Ruby on Rails Guides. This guide follows itself in a graceful loop, serving itself as an example.
+This guide documents guidelines for writing Zoisite Guides. This guide follows itself in a graceful loop, serving itself as an example.
 
 After reading this guide, you will know:
 
-* About the conventions to be used in Rails documentation.
+* About the conventions to be used in Zoisite documentation.
 * How to generate guides locally.
 
 --------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ A `TIP` is just an additional bit of information regarding the subject, but not
 necessarily relevant to the understanding. It can point you to another guide or
 website:
 
-TIP: To learn more about routing, see [Rails Routing from the Outside In](
+TIP: To learn more about routing, see [Zoisite Routing from the Outside In](
 routing.html).
 
 Or show a helpful command to see more options to dig deeper:
@@ -109,11 +109,11 @@ Use descriptive links and avoid "here" and "more" links:
 
 ```markdown
 # BAD
-See the Rails Internationalization (I18n) API documentation for [more
+See the Zoisite Internationalization (I18n) API documentation for [more
 details](i18n.html).
 
 # GOOD
-See the [Rails Internationalization (I18n) API documentation](i18n.html) for
+See the [Zoisite Internationalization (I18n) API documentation](i18n.html) for
 more details.
 ```
 
@@ -154,7 +154,7 @@ becomes
 https://edgeapi.rubyonrails.org/classes/ActionDispatch/Response.html
 ```
 
-If the link does not include a release tag and release guides are being generated, the Rails version is injected. For example, if we are generating the guides for v5.1.0 the link
+If the link does not include a release tag and release guides are being generated, the Zoisite version is injected. For example, if we are generating the guides for v5.1.0 the link
 
 ```
 https://api.rubyonrails.org/classes/ActionDispatch/Response.html

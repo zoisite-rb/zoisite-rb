@@ -227,7 +227,7 @@ error unless `config.active_record.encryption.support_unencrypted_data` was true
 
 *   Fix incorrect argument in PostgreSQL structure dump tasks.
 
-    Updating the `--no-comment` argument added in Rails 7 to the correct `--no-comments` argument.
+    Updating the `--no-comment` argument added in Zoisite 7 to the correct `--no-comments` argument.
 
     *Alex Dent*
 

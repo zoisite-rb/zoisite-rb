@@ -3,7 +3,7 @@
 Multiple Databases with Active Record
 =====================================
 
-This guide covers using multiple databases with your Rails application.
+This guide covers using multiple databases with your Zoisite application.
 
 After reading this guide you will know:
 
@@ -16,7 +16,7 @@ After reading this guide you will know:
 
 As an application grows in popularity and usage, you'll need to scale the application
 to support your new users and their data. One way in which your application may need
-to scale is on the database level. Rails supports using multiple databases, so you don't
+to scale is on the database level. Zoisite supports using multiple databases, so you don't
 have to store your data all in one place.
 
 At this time the following features are supported:
@@ -24,7 +24,7 @@ At this time the following features are supported:
 * Multiple writer databases and a replica for each
 * Automatic connection switching for the model you're working with
 * Automatic swapping between the writer and replica depending on the HTTP verb and recent writes
-* Rails tasks for creating, dropping, migrating, and interacting with the multiple databases
+* Zoisite tasks for creating, dropping, migrating, and interacting with the multiple databases
 
 The following features are not (yet) supported:
 
@@ -32,7 +32,7 @@ The following features are not (yet) supported:
 
 ## Setting up Your Application
 
-While Rails tries to do most of the work for you, there are still some steps you'll
+While Zoisite tries to do most of the work for you, there are still some steps you'll
 need to do to get your application ready for multiple databases.
 
 Let's say we have an application with a single writer database, and we need to add a
@@ -54,8 +54,8 @@ well. To do this, we need to change our `config/database.yml` from a 2-tier to a
 3-tier config.
 
 If a `primary` configuration key is provided, it will be used as the "default" configuration. If
-there is no configuration named `primary`, Rails will use the first configuration as default
-for each environment. The default configurations will use the default Rails filenames. For example,
+there is no configuration named `primary`, Zoisite will use the first configuration as default
+for each environment. The default configurations will use the default Zoisite filenames. For example,
 primary configurations will use `db/schema.rb` for the schema file, whereas all the other entries
 will use `db/[CONFIGURATION_NAMESPACE]_schema.rb` for the filename.
 
@@ -102,8 +102,8 @@ Second, the username for the writers and replicas should be different, and the
 replica user's database permissions should be set to only read and not write.
 
 When using a replica database, you need to add a `replica: true` entry to the replica in
-`config/database.yml`. This is because Rails otherwise has no way of knowing which one is a replica
-and which one is the writer. Rails will not run certain tasks, such as migrations, against replicas.
+`config/database.yml`. This is because Zoisite otherwise has no way of knowing which one is a replica
+and which one is the writer. Zoisite will not run certain tasks, such as migrations, against replicas.
 
 Lastly, for new writer databases, you need to set the `migrations_paths` key to the directory
 where you will store migrations for that database. We'll look more at `migrations_paths`
@@ -125,7 +125,7 @@ end
 ```
 
 If you use a differently named class for your application record you need to
-set `primary_abstract_class` instead, so that Rails knows which class `ActiveRecord::Base`
+set `primary_abstract_class` instead, so that Zoisite knows which class `ActiveRecord::Base`
 should share a connection with.
 
 ```ruby
@@ -137,7 +137,7 @@ end
 ```
 
 In that case, classes that connect to `primary`/`primary_replica` can inherit
-from your primary abstract class like standard Rails applications do with
+from your primary abstract class like standard Zoisite applications do with
 `ApplicationRecord`:
 
 ```ruby
@@ -163,7 +163,7 @@ class Dog < AnimalsRecord
 end
 ```
 
-By default, Rails expects the database roles to be `writing` and `reading` for the primary
+By default, Zoisite expects the database roles to be `writing` and `reading` for the primary
 and replica respectively. If you have a legacy system you may already have roles set up that
 you don't want to change. In that case you can set a new role name in your application config.
 
@@ -175,11 +175,11 @@ config.active_record.reading_role = :readonly
 It's important to connect to your database in a single model and then inherit from that model
 for the tables rather than connect multiple individual models to the same database. Database
 clients have a limit to the number of open connections there can be, and if you do this, it will
-multiply the number of connections you have since Rails uses the model class name for the
+multiply the number of connections you have since Zoisite uses the model class name for the
 connection specification name.
 
 Now that we have the `config/database.yml` and the new model set up, it's time
-to create the databases. Rails ships with all the commands you need to use
+to create the databases. Zoisite ships with all the commands you need to use
 multiple databases.
 
 You can run `bin/rails --help` to see all the commands you're able to run. You should see the following:
@@ -246,17 +246,17 @@ Migrations for multiple databases should live in their own folders prefixed with
 name of the database key in the configuration.
 
 You also need to set `migrations_paths` in the database configurations to tell
-Rails where to find the migrations.
+Zoisite where to find the migrations.
 
 For example the `animals` database would look for migrations in the `db/animals_migrate` directory and
-`primary` would look in `db/migrate`. Rails generators now take a `--database` option
+`primary` would look in `db/migrate`. Zoisite generators now take a `--database` option
 so that the file is generated in the correct directory. The command can be run like so:
 
 ```bash
 $ bin/rails generate migration CreateDogs name:string --database animals
 ```
 
-If you are using Rails generators, the scaffold and model generators will create the abstract
+If you are using Zoisite generators, the scaffold and model generators will create the abstract
 class for you. Simply pass the database key to the command line.
 
 ```bash
@@ -281,10 +281,10 @@ class Dog < AnimalsRecord
 end
 ```
 
-NOTE: Since Rails doesn't know which database is the replica for your writer you will need to
+NOTE: Since Zoisite doesn't know which database is the replica for your writer you will need to
 add this to the abstract class after you're done.
 
-Rails will only generate `AnimalsRecord` once. It will not be overwritten by new
+Zoisite will only generate `AnimalsRecord` once. It will not be overwritten by new
 scaffolds or deleted if the scaffold is deleted.
 
 If you already have an abstract class and its name differs from `AnimalsRecord`, you can pass
@@ -294,7 +294,7 @@ the `--parent` option to indicate you want a different abstract class:
 $ bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
 ```
 
-This will skip generating `AnimalsRecord` since you've indicated to Rails that you want to
+This will skip generating `AnimalsRecord` since you've indicated to Zoisite that you want to
 use a different parent class.
 
 ## Activating Automatic Role Switching
@@ -320,24 +320,24 @@ $ bin/rails g active_record:multi_db
 And then uncomment the following lines:
 
 ```ruby
-Rails.application.configure do
+Zoisite.application.configure do
   config.active_record.database_selector = { delay: 2.seconds }
   config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
 ```
 
-Rails guarantees "read your own write" and will send your GET or HEAD request to the
+Zoisite guarantees "read your own write" and will send your GET or HEAD request to the
 writer if it's within the `delay` window. By default the delay is set to 2 seconds. You
-should change this based on your database infrastructure. Rails doesn't guarantee "read
+should change this based on your database infrastructure. Zoisite doesn't guarantee "read
 a recent write" for other users within the delay window and will send GET and HEAD requests
 to the replicas unless they wrote recently.
 
-The automatic connection switching in Rails is relatively primitive and deliberately doesn't
+The automatic connection switching in Zoisite is relatively primitive and deliberately doesn't
 do a whole lot. The goal is a system that demonstrates how to do automatic connection
 switching that is flexible enough to be customizable by app developers.
 
-The setup in Rails allows you to easily change how the switching is done and what
+The setup in Zoisite allows you to easily change how the switching is done and what
 parameters it's based on. Let's say you want to use a cookie instead of a session to
 decide when to swap connections. You can write your own class:
 
@@ -381,7 +381,7 @@ and the automatic connection switching isn't adequate. For example, you may know
 particular request you always want to send the request to a replica, even when you are in a
 POST request path.
 
-To do this Rails provides a `connected_to` method that will switch to the connection you
+To do this Zoisite provides a `connected_to` method that will switch to the connection you
 need.
 
 ```ruby
@@ -399,13 +399,13 @@ using the connection specification name. This means that if you pass an unknown 
 like `connected_to(role: :nonexistent)` you will get an error that says
 `ActiveRecord::ConnectionNotEstablished (No connection pool for 'ActiveRecord::Base' found for the 'nonexistent' role.)`
 
-If you want Rails to ensure any queries performed are read-only, pass `prevent_writes: true`.
+If you want Zoisite to ensure any queries performed are read-only, pass `prevent_writes: true`.
 This just prevents queries that look like writes from being sent to the database.
 You should also configure your replica database to run in read-only mode.
 
 ```ruby
 ActiveRecord::Base.connected_to(role: :reading, prevent_writes: true) do
-  # Rails will check each query to ensure it's a read query.
+  # Zoisite will check each query to ensure it's a read query.
 end
 ```
 
@@ -415,8 +415,8 @@ Horizontal sharding is when you split up your database to reduce the number of r
 database server, but maintain the same schema across "shards". This is commonly called "multi-tenant"
 sharding.
 
-The API for supporting horizontal sharding in Rails is similar to the multiple database / vertical
-sharding API that's existed since Rails 6.0.
+The API for supporting horizontal sharding in Zoisite is similar to the multiple database / vertical
+sharding API that's existed since Zoisite 6.0.
 
 Shards are declared in the three-tier config like this:
 
@@ -517,7 +517,7 @@ $ bin/rails g active_record:multi_db
 Then in the generated `config/initializers/multi_db.rb` uncomment and modify the following code:
 
 ```ruby
-Rails.application.configure do
+Zoisite.application.configure do
   config.active_record.shard_selector = { lock: true }
   config.active_record.shard_resolver = ->(request) { Tenant.find_by!(host: request.host).shard }
 end
@@ -555,7 +555,7 @@ config.active_record.shard_selector = { lock: true, class_name: "AnimalsRecord" 
 
 ## Granular Database Connection Switching
 
-Starting from Rails 6.1, it's possible to switch connections for one database
+Starting from Zoisite 6.1, it's possible to switch connections for one database
 instead of all databases globally.
 
 With granular database connection switching, any abstract connection class
@@ -597,7 +597,7 @@ connections globally.
 
 ### Handling Associations with Joins across Databases
 
-As of Rails 7.0+, Active Record has an option for handling associations that would perform
+As of Zoisite 7.0+, Active Record has an option for handling associations that would perform
 a join across multiple databases. If you have a has many through or a has one through association
 that you want to disable joining and perform 2 or more queries, pass the `disable_joins: true` option.
 
@@ -624,7 +624,7 @@ end
 
 Previously calling `@dog.treats` without `disable_joins` or `@dog.yard` without `disable_joins`
 would raise an error because databases are unable to handle joins across clusters. With the
-`disable_joins` option, Rails will generate multiple select queries
+`disable_joins` option, Zoisite will generate multiple select queries
 to avoid attempting joining across clusters. For the above association, `@dog.treats` would generate the
 following SQL:
 
@@ -648,8 +648,8 @@ There are some important things to be aware of with this option:
 2. Since we are no longer performing joins, a query with an order or limit is now sorted in-memory since
    order from one table cannot be applied to another table.
 3. This setting must be added to all associations where you want joining to be disabled.
-   Rails can't guess this for you because association loading is lazy, to load `treats` in `@dog.treats`
-   Rails already needs to know what SQL should be generated.
+   Zoisite can't guess this for you because association loading is lazy, to load `treats` in `@dog.treats`
+   Zoisite already needs to know what SQL should be generated.
 
 ### Schema Caching
 
@@ -663,7 +663,7 @@ connections are established.
 
 ### Load Balancing Replicas
 
-Rails doesn't support automatic load balancing of replicas. This is very
+Zoisite doesn't support automatic load balancing of replicas. This is very
 dependent on your infrastructure. We may implement basic, primitive load
 balancing in the future, but for an application at scale this should be
-something your application handles outside of Rails.
+something your application handles outside of Zoisite.

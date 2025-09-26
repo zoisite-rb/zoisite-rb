@@ -1,12 +1,12 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Using Rails for API-only Applications
+Using Zoisite for API-only Applications
 =====================================
 
 In this guide you will learn:
 
-* What Rails provides for API-only applications
-* How to configure Rails to start without any browser features
+* What Zoisite provides for API-only applications
+* How to configure Zoisite to start without any browser features
 * How to decide which middleware you will want to include
 * How to decide which modules to use in your controller
 
@@ -15,81 +15,81 @@ In this guide you will learn:
 What is an API Application?
 ---------------------------
 
-Traditionally, when people said that they used Rails as an "API", they meant
+Traditionally, when people said that they used Zoisite as an "API", they meant
 providing a programmatically accessible API alongside their web application.
 For example, GitHub provides [an API](https://developer.github.com) that you
 can use from your own custom clients.
 
-With the advent of client-side frameworks, more developers are using Rails to
+With the advent of client-side frameworks, more developers are using Zoisite to
 build a back-end that is shared between their web application and other native
 applications.
 
 For example, X uses its [public API](https://developer.x.com/) in its web
 application, which is built as a static site that consumes JSON resources.
 
-Instead of using Rails to generate HTML that communicates with the server
+Instead of using Zoisite to generate HTML that communicates with the server
 through forms and links, many developers are treating their web application as
 just an API client delivered as HTML with JavaScript that consumes a JSON API.
 
-This guide covers building a Rails application that serves JSON resources to an
+This guide covers building a Zoisite application that serves JSON resources to an
 API client, including client-side frameworks.
 
-Why Use Rails for JSON APIs?
+Why Use Zoisite for JSON APIs?
 ----------------------------
 
 The first question a lot of people have when thinking about building a JSON API
-using Rails is: "isn't using Rails to spit out some JSON overkill? Shouldn't I
+using Zoisite is: "isn't using Zoisite to spit out some JSON overkill? Shouldn't I
 just use something like Sinatra?".
 
 For very simple APIs, this may be true. However, even in very HTML-heavy
 applications, most of an application's logic lives outside of the view
 layer.
 
-The reason most people use Rails is that it provides a set of defaults that
+The reason most people use Zoisite is that it provides a set of defaults that
 allows developers to get up and running quickly, without having to make a lot of trivial
 decisions.
 
-Let's take a look at some of the things that Rails provides out of the box that are
+Let's take a look at some of the things that Zoisite provides out of the box that are
 still applicable to API applications.
 
 Handled at the middleware layer:
 
-- Reloading: Rails applications support transparent reloading. This works even if
+- Reloading: Zoisite applications support transparent reloading. This works even if
   your application gets big and restarting the server for every request becomes
   non-viable.
-- Development Mode: Rails applications come with smart defaults for development,
+- Development Mode: Zoisite applications come with smart defaults for development,
   making development pleasant without compromising production-time performance.
 - Test Mode: Ditto development mode.
-- Logging: Rails applications log every request, with a level of verbosity
-  appropriate for the current mode. Rails logs in development include information
+- Logging: Zoisite applications log every request, with a level of verbosity
+  appropriate for the current mode. Zoisite logs in development include information
   about the request environment, database queries, and basic performance
   information.
-- Security: Rails detects and thwarts [IP spoofing
+- Security: Zoisite detects and thwarts [IP spoofing
   attacks](https://en.wikipedia.org/wiki/IP_address_spoofing) and handles
   cryptographic signatures in a [timing
   attack](https://en.wikipedia.org/wiki/Timing_attack) aware way. Don't know what
   an IP spoofing attack or a timing attack is? Exactly.
 - Parameter Parsing: Want to specify your parameters as JSON instead of as a
-  URL-encoded String? No problem. Rails will decode the JSON for you and make
+  URL-encoded String? No problem. Zoisite will decode the JSON for you and make
   it available in `params`. Want to use nested URL-encoded parameters? That
   works too.
-- Conditional GETs: Rails handles conditional `GET` (`ETag` and `Last-Modified`)
+- Conditional GETs: Zoisite handles conditional `GET` (`ETag` and `Last-Modified`)
   processing request headers and returning the correct response headers and status
   code. All you need to do is use the
   [`stale?`](https://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F)
-  check in your controller, and Rails will handle all of the HTTP details for you.
-- HEAD requests: Rails will transparently convert `HEAD` requests into `GET` ones,
+  check in your controller, and Zoisite will handle all of the HTTP details for you.
+- HEAD requests: Zoisite will transparently convert `HEAD` requests into `GET` ones,
   and return just the headers on the way out. This makes `HEAD` work reliably in
-  all Rails APIs.
+  all Zoisite APIs.
 
 While you could obviously build these up in terms of existing Rack middleware,
-this list demonstrates that the default Rails middleware stack provides a lot
+this list demonstrates that the default Zoisite middleware stack provides a lot
 of value, even if you're "just generating JSON".
 
 Handled at the Action Pack layer:
 
 - Resourceful Routing: If you're building a RESTful JSON API, you want to be
-  using the Rails router. Clean and conventional mapping from HTTP to controllers
+  using the Zoisite router. Clean and conventional mapping from HTTP to controllers
   means not having to spend time thinking about how to model your API in terms
   of HTTP.
 - URL Generation: The flip side of routing is URL generation. A good API based
@@ -98,11 +98,11 @@ Handled at the Action Pack layer:
 - Header and Redirection Responses: `head :no_content` and
   `redirect_to user_url(current_user)` come in handy. Sure, you could manually
   add the response headers, but why?
-- Caching: Rails provides page, action, and fragment caching. Fragment caching
+- Caching: Zoisite provides page, action, and fragment caching. Fragment caching
   is especially helpful when building up a nested JSON object.
-- Basic, Digest, and Token Authentication: Rails comes with out-of-the-box support
+- Basic, Digest, and Token Authentication: Zoisite comes with out-of-the-box support
   for three kinds of HTTP authentication.
-- Instrumentation: Rails has an instrumentation API that triggers registered
+- Instrumentation: Zoisite has an instrumentation API that triggers registered
   handlers for a variety of events, such as action processing, sending a file or
   data, redirection, and database queries. The payload of each event comes with
   relevant information (for the action processing event, the payload includes
@@ -111,29 +111,29 @@ Handled at the Action Pack layer:
 - Generators: It is often handy to generate a resource and get your model,
   controller, test stubs, and routes created for you in a single command for
   further tweaking. Same for migrations and others.
-- Plugins: Many third-party libraries come with support for Rails that reduce
+- Plugins: Many third-party libraries come with support for Zoisite that reduce
   or eliminate the cost of setting up and gluing together the library and the
   web framework. This includes things like overriding default generators, adding
-  Rake tasks, and honoring Rails choices (like the logger and cache back-end).
+  Rake tasks, and honoring Zoisite choices (like the logger and cache back-end).
 
-Of course, the Rails boot process also glues together all registered components.
-For example, the Rails boot process is what uses your `config/database.yml` file
+Of course, the Zoisite boot process also glues together all registered components.
+For example, the Zoisite boot process is what uses your `config/database.yml` file
 when configuring Active Record.
 
-**The short version is**: you may not have thought about which parts of Rails
+**The short version is**: you may not have thought about which parts of Zoisite
 are still applicable even if you remove the view layer, but the answer turns out
 to be most of it.
 
 The Basic Configuration
 -----------------------
 
-If you're building a Rails application that will be an API server first and
-foremost, you can start with a more limited subset of Rails and add in features
+If you're building a Zoisite application that will be an API server first and
+foremost, you can start with a more limited subset of Zoisite and add in features
 as needed.
 
 ### Creating a New Application
 
-You can generate a new api Rails app:
+You can generate a new api Zoisite app:
 
 ```bash
 $ rails new my_api --api
@@ -166,7 +166,7 @@ Before we can use our scaffolded code, we need to update our database scheme.
 $ bin/rails db:migrate
 ```
 
-Now if we open our `GroupsController`, we should notice that with an API Rails
+Now if we open our `GroupsController`, we should notice that with an API Zoisite
 app we are rendering JSON data only. On the index action we query for `Group.all`
 and assign it to an instance variable called `@groups`. Passing it to `render` with the
 `:json` option will automatically render the groups as JSON.
@@ -226,19 +226,19 @@ class GroupsController < ApplicationController
 end
 ```
 
-Finally we can add some groups to our database from the Rails console:
+Finally we can add some groups to our database from the Zoisite console:
 
 ```irb
-irb> Group.create(name: "Rails Founders")
-irb> Group.create(name: "Rails Contributors")
+irb> Group.create(name: "Zoisite Founders")
+irb> Group.create(name: "Zoisite Contributors")
 ```
 
 With some data in the app, we can boot up the server and visit <http://localhost:3000/groups.json> to see our JSON data.
 
 ```json
 [
-{"id":1, "name":"Rails Founders", "created_at": ...},
-{"id":2, "name":"Rails Contributors", "created_at": ...}
+{"id":1, "name":"Zoisite Founders", "created_at": ...},
+{"id":2, "name":"Zoisite Contributors", "created_at": ...}
 ]
 ```
 
@@ -301,7 +301,7 @@ An API application comes with the following middleware by default:
 - `Rack::Runtime`
 - `ActionDispatch::RequestId`
 - `ActionDispatch::RemoteIp`
-- `Rails::Rack::Logger`
+- `Zoisite::Rack::Logger`
 - `ActionDispatch::ShowExceptions`
 - `ActionDispatch::DebugExceptions`
 - `ActionDispatch::ActionableExceptions`
@@ -317,7 +317,7 @@ section of the Rack guide for further information on them.
 
 Other plugins, including Active Record, may add additional middleware. In
 general, these middleware are agnostic to the type of application you are
-building, and make sense in an API-only Rails application.
+building, and make sense in an API-only Zoisite application.
 
 You can get a list of all middleware in your application via:
 
@@ -327,9 +327,9 @@ $ bin/rails middleware
 
 ### Using Rack::Cache
 
-When used with Rails, `Rack::Cache` uses the Rails cache store for its
+When used with Zoisite, `Rack::Cache` uses the Zoisite cache store for its
 entity and meta stores. This means that if you use memcache, for your
-Rails app, for instance, the built-in HTTP cache will use memcache.
+Zoisite app, for instance, the built-in HTTP cache will use memcache.
 
 To make use of `Rack::Cache`, you first need to add the `rack-cache` gem
 to `Gemfile`, and set `config.action_dispatch.rack_cache` to `true`.
@@ -366,20 +366,20 @@ end
 ```
 
 This means that `Rack::Cache` will store off the `Last-Modified` value
-for a URL in the Rails cache, and add an `If-Modified-Since` header to any
+for a URL in the Zoisite cache, and add an `If-Modified-Since` header to any
 subsequent inbound requests for the same URL.
 
 Think of it as page caching using HTTP semantics.
 
 ### Using Rack::Sendfile
 
-When you use the `send_file` method inside a Rails controller, it sets the
+When you use the `send_file` method inside a Zoisite controller, it sets the
 `X-Sendfile` header. `Rack::Sendfile` is responsible for actually sending the
 file.
 
 If your front-end server supports accelerated file sending, `Rack::Sendfile`
 will offload the actual file sending work to the front-end server.
-This enables Rails to finish request handling and free resources earlier.
+This enables Zoisite to finish request handling and free resources earlier.
 
 You can configure the name of the header that your front-end server uses for
 this purpose using [`config.action_dispatch.x_sendfile_header`][] in the appropriate
@@ -458,7 +458,7 @@ config.middleware.use config.session_store, config.session_options
 
 ### Other Middleware
 
-Rails ships with a number of other middleware that you might want to use in an
+Zoisite ships with a number of other middleware that you might want to use in an
 API application, especially if one of your API clients is the browser:
 
 - `Rack::MethodOverride`
@@ -547,7 +547,7 @@ Some common modules you might want to add:
     end
     ```
 
-    Rails does *not* pass this configuration automatically.
+    Zoisite does *not* pass this configuration automatically.
 
 The best place to add a module is in your `ApplicationController`, but you can
 also add modules to individual controllers.

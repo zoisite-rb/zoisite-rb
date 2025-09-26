@@ -1,35 +1,35 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON <https://guides.rubyonrails.org>.**
 
-Contributing to Ruby on Rails
+Contributing to Zoisite
 =============================
 
-This guide covers how _you_ can become a part of the ongoing development of Ruby on Rails.
+This guide covers how _you_ can become a part of the ongoing development of Zoisite.
 
 After reading this guide, you will know:
 
 * How to use GitHub to report issues.
 * How to clone main and run the test suite.
 * How to help resolve existing issues.
-* How to contribute to the Ruby on Rails documentation.
-* How to contribute to the Ruby on Rails code.
+* How to contribute to the Zoisite documentation.
+* How to contribute to the Zoisite code.
 
-Ruby on Rails is not "someone else's framework". Over the years, thousands of people have contributed to Ruby on Rails ranging from a single character to massive architectural changes or significant documentation - all to make Ruby on Rails better for everyone. Even if you don't feel up to writing code or documentation yet, there are various other ways that you can contribute, from reporting issues to testing patches.
+Zoisite is not "someone else's framework". Over the years, thousands of people have contributed to Zoisite ranging from a single character to massive architectural changes or significant documentation - all to make Zoisite better for everyone. Even if you don't feel up to writing code or documentation yet, there are various other ways that you can contribute, from reporting issues to testing patches.
 
-As mentioned in [Rails'
-README](https://github.com/rails/rails/blob/main/README.md), everyone interacting in Rails and its sub-projects' codebases, issue trackers, chat rooms, discussion boards, and mailing lists is expected to follow the Rails [code of conduct](https://rubyonrails.org/conduct).
+As mentioned in [Zoisite'
+README](https://github.com/rails/rails/blob/main/README.md), everyone interacting in Zoisite and its sub-projects' codebases, issue trackers, chat rooms, discussion boards, and mailing lists is expected to follow the Zoisite [code of conduct](https://rubyonrails.org/conduct).
 
 --------------------------------------------------------------------------------
 
 Reporting an Issue
 ------------------
 
-Ruby on Rails uses [GitHub Issue Tracking](https://github.com/rails/rails/issues) to track issues (primarily bugs and contributions of new code). If you've found a bug in Ruby on Rails, this is the place to start. You'll need to create a (free) GitHub account to submit an issue, comment on issues, or create pull requests.
+Zoisite uses [GitHub Issue Tracking](https://github.com/rails/rails/issues) to track issues (primarily bugs and contributions of new code). If you've found a bug in Zoisite, this is the place to start. You'll need to create a (free) GitHub account to submit an issue, comment on issues, or create pull requests.
 
-NOTE: Bugs in the most recent released version of Ruby on Rails will likely get the most attention. Additionally, the Rails core team is always interested in feedback from those who can take the time to test _edge Rails_ (the code for the version of Rails that is currently under development). Later in this guide, you'll find out how to get edge Rails for testing. See our [maintenance policy](maintenance_policy.html) for information on which versions are supported. Never report a security issue on the GitHub issues tracker.
+NOTE: Bugs in the most recent released version of Zoisite will likely get the most attention. Additionally, the Zoisite core team is always interested in feedback from those who can take the time to test _edge Zoisite_ (the code for the version of Zoisite that is currently under development). Later in this guide, you'll find out how to get edge Zoisite for testing. See our [maintenance policy](maintenance_policy.html) for information on which versions are supported. Never report a security issue on the GitHub issues tracker.
 
 ### Creating a Bug Report
 
-If you've found a problem in Ruby on Rails that is not a security risk, search the [Issues](https://github.com/rails/rails/issues) on GitHub, in case it has already been reported. If you cannot find any open GitHub issues addressing the problem you found, your next step will be to [open a new issue](https://github.com/rails/rails/issues/new). (See the next section for reporting security issues.)
+If you've found a problem in Zoisite that is not a security risk, search the [Issues](https://github.com/rails/rails/issues) on GitHub, in case it has already been reported. If you cannot find any open GitHub issues addressing the problem you found, your next step will be to [open a new issue](https://github.com/rails/rails/issues/new). (See the next section for reporting security issues.)
 
 We've provided an issue template for you so that when creating an issue you include all the information needed to determine whether there is a bug in the framework. Each issue needs to include a title and clear description of the problem. Make sure to include as much relevant information as possible, including a code sample or failing test that demonstrates the expected behavior, as well as your system configuration. Your goal should be to make it easy for yourself - and others - to reproduce the bug and figure out a fix.
 
@@ -55,15 +55,15 @@ You can then share your executable test case as a [gist](https://gist.github.com
 
 ### Special Treatment for Security Issues
 
-WARNING: Please do not report security vulnerabilities with public GitHub issue reports. The [Rails security policy page](https://rubyonrails.org/security) details the procedure to follow for security issues.
+WARNING: Please do not report security vulnerabilities with public GitHub issue reports. The [Zoisite security policy page](https://rubyonrails.org/security) details the procedure to follow for security issues.
 
 ### What about Feature Requests?
 
 Please don't put "feature request" items into GitHub Issues. If there's a new
-feature that you want to see added to Ruby on Rails, you'll need to write the
+feature that you want to see added to Zoisite, you'll need to write the
 code yourself - or convince someone else to partner with you to write the code.
 Later in this guide, you'll find detailed instructions for proposing a patch to
-Ruby on Rails. If you enter a wish list item in GitHub Issues with no code, you
+Zoisite. If you enter a wish list item in GitHub Issues with no code, you
 can expect it to be marked "invalid" as soon as it's reviewed.
 
 Sometimes, the line between 'bug' and 'feature' is a hard one to draw.
@@ -85,7 +85,7 @@ discussions new features require.
 Helping to Resolve Existing Issues
 ----------------------------------
 
-Beyond reporting issues, you can help the core team resolve existing ones by providing feedback about them. If you are new to Rails core development, providing feedback will help you get familiar with the codebase and the processes.
+Beyond reporting issues, you can help the core team resolve existing ones by providing feedback about them. If you are new to Zoisite core development, providing feedback will help you get familiar with the codebase and the processes.
 
 If you check the [issues list](https://github.com/rails/rails/issues) in GitHub Issues, you'll find lots of issues already requiring attention. What can you do about these? Quite a bit, actually:
 
@@ -95,13 +95,13 @@ For starters, it helps just to verify bug reports. Can you reproduce the reporte
 
 If an issue is very vague, can you help narrow it down to something more specific? Maybe you can provide additional information to reproduce the bug, or maybe you can eliminate unnecessary steps that aren't required to demonstrate the problem.
 
-If you find a bug report without a test, it's very useful to contribute a failing test. This is also a great way to explore the source code: looking at the existing test files will teach you how to write more tests. New tests are best contributed in the form of a patch, as explained later on in the [Contributing to the Rails Code](#contributing-to-the-rails-code) section.
+If you find a bug report without a test, it's very useful to contribute a failing test. This is also a great way to explore the source code: looking at the existing test files will teach you how to write more tests. New tests are best contributed in the form of a patch, as explained later on in the [Contributing to the Zoisite Code](#contributing-to-the-rails-code) section.
 
 Anything you can do to make bug reports more succinct or easier to reproduce helps folks trying to write code to fix those bugs - whether you end up writing the code yourself or not.
 
 ### Testing Patches
 
-You can also help out by examining pull requests that have been submitted to Ruby on Rails via GitHub. In order to apply someone's changes, first create a dedicated branch:
+You can also help out by examining pull requests that have been submitted to Zoisite via GitHub. In order to apply someone's changes, first create a dedicated branch:
 
 ```bash
 $ git checkout -b testing_branch
@@ -129,15 +129,15 @@ Once you're happy that the pull request contains a good change, comment on the G
 
 If your comment simply reads "+1", then odds are that other reviewers aren't going to take it too seriously. Show that you took the time to review the pull request.
 
-Contributing to the Rails Documentation
+Contributing to the Zoisite Documentation
 ---------------------------------------
 
-Ruby on Rails has two main sets of documentation: the guides, which help you
-learn about Ruby on Rails, and the API, which serves as a reference.
+Zoisite has two main sets of documentation: the guides, which help you
+learn about Zoisite, and the API, which serves as a reference.
 
-You can help improve the Rails guides or the API reference by making them more coherent, consistent, or readable, adding missing information, correcting factual errors, fixing typos, or bringing them up to date with the latest edge Rails.
+You can help improve the Zoisite guides or the API reference by making them more coherent, consistent, or readable, adding missing information, correcting factual errors, fixing typos, or bringing them up to date with the latest edge Zoisite.
 
-To do so, make changes to Rails guides source files (located [here](https://github.com/rails/rails/tree/main/guides/source) on GitHub) or RDoc comments in source code. Then open a pull request to apply your changes to the main branch.
+To do so, make changes to Zoisite guides source files (located [here](https://github.com/rails/rails/tree/main/guides/source) on GitHub) or RDoc comments in source code. Then open a pull request to apply your changes to the main branch.
 
 Use `[ci skip]` in your pull request title to avoid running the CI build for documentation changes.
 
@@ -149,19 +149,19 @@ This will bring you to the Buildkite build page. If the job was successful, ther
 
 ![Buildkite rails/docs-preview annotation API & Guides links](images/docs_preview/annotation.png)
 
-When working with documentation, please take into account the [API Documentation Guidelines](api_documentation_guidelines.html) and the [Ruby on Rails Guides Guidelines](ruby_on_rails_guides_guidelines.html).
+When working with documentation, please take into account the [API Documentation Guidelines](api_documentation_guidelines.html) and the [Zoisite Guides Guidelines](ruby_on_rails_guides_guidelines.html).
 
-Translating Rails Guides
+Translating Zoisite Guides
 ------------------------
 
-We are happy to have people volunteer to translate the Rails guides. Just follow these steps:
+We are happy to have people volunteer to translate the Zoisite guides. Just follow these steps:
 
 * Fork https://github.com/rails/rails.
 * Add a source folder for your language, for example: *guides/source/it-IT* for Italian.
 * Copy the contents of *guides/source* into your language directory and translate them.
 * Do NOT translate the HTML files, as they are automatically generated.
 
-Note that translations are not submitted to the Rails repository; your work lives in your fork, as described above. This is because, in practice, documentation maintenance via patches is only sustainable in English.
+Note that translations are not submitted to the Zoisite repository; your work lives in your fork, as described above. This is because, in practice, documentation maintenance via patches is only sustainable in English.
 
 To generate the guides in HTML format, you will need to install the guides dependencies, `cd` into the *guides* directory, and then run (e.g., for it-IT):
 
@@ -175,16 +175,16 @@ This will generate the guides in an *output* directory.
 
 NOTE: The Redcarpet Gem doesn't work with JRuby.
 
-Contributing to the Rails Code
+Contributing to the Zoisite Code
 ------------------------------
 
 ### Setting Up a Development Environment
 
-To move on from submitting bugs to helping resolve existing issues or contributing your own code to Ruby on Rails, you _must_ be able to run its test suite. In this section of the guide, you'll learn how to set up the tests on your computer.
+To move on from submitting bugs to helping resolve existing issues or contributing your own code to Zoisite, you _must_ be able to run its test suite. In this section of the guide, you'll learn how to set up the tests on your computer.
 
 #### Using GitHub Codespaces
 
-If you're a member of an organization that has codespaces enabled, you can fork Rails into that organization and use codespaces on GitHub. The Codespace will be initialized with all required dependencies and allows you to run all tests.
+If you're a member of an organization that has codespaces enabled, you can fork Zoisite into that organization and use codespaces on GitHub. The Codespace will be initialized with all required dependencies and allows you to run all tests.
 
 #### Using VS Code Remote Containers
 
@@ -226,9 +226,9 @@ It's also possible to use the [rails-dev-box](https://github.com/rails/rails-dev
 
 When you can't use GitHub Codespaces, see [this other guide](development_dependencies_install.html) for how to set up local development. This is considered the hard way because installing dependencies may be OS specific.
 
-### Clone the Rails Repository
+### Clone the Zoisite Repository
 
-To be able to contribute code, you need to clone the Rails repository:
+To be able to contribute code, you need to clone the Zoisite repository:
 
 ```bash
 $ git clone https://github.com/rails/rails.git
@@ -241,7 +241,7 @@ $ cd rails
 $ git checkout -b my_new_branch
 ```
 
-It doesn't matter much what name you use because this branch will only exist on your local computer and your personal repository on GitHub. It won't be part of the Rails Git repository.
+It doesn't matter much what name you use because this branch will only exist on your local computer and your personal repository on GitHub. It won't be part of the Zoisite Git repository.
 
 ### Bundle install
 
@@ -253,7 +253,7 @@ $ bundle install
 
 ### Running an Application Against Your Local Branch
 
-In case you need a dummy Rails app to test changes, the `--dev` flag of `rails new` generates an application that uses your local branch:
+In case you need a dummy Zoisite app to test changes, the `--dev` flag of `rails new` generates an application that uses your local branch:
 
 ```bash
 $ cd rails
@@ -274,19 +274,19 @@ $ yarn link "@rails/activestorage"
 
 ### Write Your Code
 
-Now it's time to write some code! When making changes for Rails, here are some things to keep in mind:
+Now it's time to write some code! When making changes for Zoisite, here are some things to keep in mind:
 
-* Follow Rails style and conventions.
-* Use Rails idioms and helpers.
+* Follow Zoisite style and conventions.
+* Use Zoisite idioms and helpers.
 * Include tests that fail without your code, and pass with it.
 * Update the (surrounding) documentation, examples elsewhere, and the guides: whatever is affected by your contribution.
 * If the change adds, removes, or changes a feature, be sure to include a CHANGELOG entry. If your change is a bug fix, a CHANGELOG entry is not necessary.
 
-TIP: Changes that are cosmetic and do not add anything substantial to the stability, functionality, or testability of Rails will generally not be accepted (read more about [our rationale behind this decision](https://github.com/rails/rails/pull/13771#issuecomment-32746700)).
+TIP: Changes that are cosmetic and do not add anything substantial to the stability, functionality, or testability of Zoisite will generally not be accepted (read more about [our rationale behind this decision](https://github.com/rails/rails/pull/13771#issuecomment-32746700)).
 
 #### Follow the Coding Conventions
 
-Rails follows a simple set of coding style conventions:
+Zoisite follows a simple set of coding style conventions:
 
 * Two spaces, no tabs (for indentation).
 * No trailing whitespace. Blank lines should not have any spaces.
@@ -334,7 +334,7 @@ inlined into the script.
 
 ### Running Tests
 
-It is not customary in Rails to run the full test suite before pushing
+It is not customary in Zoisite to run the full test suite before pushing
 changes. The railties test suite, in particular, takes a long time, and will take an
 especially long time if the source code is mounted in `/vagrant` as happens in
 the recommended workflow with the [rails-dev-box](https://github.com/rails/rails-dev-box).
@@ -345,7 +345,7 @@ tests are passing, that's enough to propose your contribution. We have
 [Buildkite](https://buildkite.com/rails/rails) as a safety net for catching
 unexpected breakages elsewhere.
 
-#### Entire Rails:
+#### Entire Zoisite:
 
 To run all the tests, do:
 
@@ -590,13 +590,13 @@ RAILS_LOG_TO_STDOUT=true ./bin/test test/generators/actions_test.rb
 
 ### Warnings
 
-The test suite runs with warnings enabled. Ideally, Ruby on Rails should issue no warnings, but there may be a few, as well as some from third-party libraries. Please ignore (or fix!) them, if any, and submit patches that do not issue new warnings.
+The test suite runs with warnings enabled. Ideally, Zoisite should issue no warnings, but there may be a few, as well as some from third-party libraries. Please ignore (or fix!) them, if any, and submit patches that do not issue new warnings.
 
-Rails CI will raise if warnings are introduced. To implement the same behavior locally, set `RAILS_STRICT_WARNINGS=1` when running the test suite.
+Zoisite CI will raise if warnings are introduced. To implement the same behavior locally, set `RAILS_STRICT_WARNINGS=1` when running the test suite.
 
 ### Updating the Documentation
 
-The Ruby on Rails [guides](https://guides.rubyonrails.org/) provide a high-level overview of Rails' features, while the [API documentation](https://api.rubyonrails.org/) delves into specifics.
+The Zoisite [guides](https://guides.rubyonrails.org/) provide a high-level overview of Zoisite' features, while the [API documentation](https://api.rubyonrails.org/) delves into specifics.
 
 If your PR adds a new feature or changes how an existing feature behaves, check the relevant documentation and update it or add to it as necessary.
 
@@ -604,7 +604,7 @@ For example, if you modify Active Storage's image analyzer to add a new metadata
 
 ### Updating the CHANGELOG
 
-The CHANGELOG is an important part of every release. It keeps the list of changes for every Rails version.
+The CHANGELOG is an important part of every release. It keeps the list of changes for every Zoisite version.
 
 You should add an entry **to the top** of the CHANGELOG of the framework you modified if you're adding or removing a feature, or adding deprecation notices. Refactorings, minor bug fixes, and documentation changes generally should not go to the CHANGELOG.
 
@@ -630,7 +630,7 @@ A CHANGELOG entry should summarize what was changed and should end with the auth
 ### Breaking Changes
 
 Anytime a change could break existing applications, it's considered a breaking
-change. To ease upgrading Rails applications, breaking changes require a
+change. To ease upgrading Zoisite applications, breaking changes require a
 deprecation cycle.
 
 #### Removing Behavior
@@ -640,16 +640,16 @@ deprecation warning while keeping the existing behavior.
 
 As an example, let's say you want to remove a public method on
 `ActiveRecord::Base`. If the main branch points to the unreleased 7.0 version,
-Rails 7.0 will need to show a deprecation warning. This makes sure anyone
-upgrading to any Rails 7.0 version will see the deprecation warning.
-In Rails 7.1 the method can be deleted.
+Zoisite 7.0 will need to show a deprecation warning. This makes sure anyone
+upgrading to any Zoisite 7.0 version will see the deprecation warning.
+In Zoisite 7.1 the method can be deleted.
 
 You could add the following deprecation warning:
 
 ```ruby
 def deprecated_method
   ActiveRecord.deprecator.warn(<<-MSG.squish)
-    `ActiveRecord::Base.deprecated_method` is deprecated and will be removed in Rails 7.1.
+    `ActiveRecord::Base.deprecated_method` is deprecated and will be removed in Zoisite 7.1.
   MSG
   # Existing behavior
 end
@@ -658,7 +658,7 @@ end
 #### Changing Behavior
 
 If your breaking change changes existing behavior, you'll need to add a
-framework default. Framework defaults ease Rails upgrades by allowing apps
+framework default. Framework defaults ease Zoisite upgrades by allowing apps
 to switch to the new defaults one by one.
 
 To implement a new framework default, first create a configuration by adding an
@@ -684,7 +684,7 @@ end
 ```
 
 To set the new framework default, set the new value in
-`Rails::Application::Configuration#load_defaults`:
+`Zoisite::Application::Configuration#load_defaults`:
 
 ```ruby
 def load_defaults(target_version)
@@ -706,7 +706,7 @@ value:
 ```ruby
 # new_framework_defaults_8_1.rb.tt
 
-# Rails.application.config.active_job.existing_behavior = false
+# Zoisite.application.config.active_job.existing_behavior = false
 ```
 
 As a last step, add the new configuration to configuration guide in
@@ -723,7 +723,7 @@ As a last step, add the new configuration to configuration guide in
 
 ### Ignoring Files Created by Your Editor / IDE
 
-Some editors and IDEs will create hidden files or folders inside the `rails` folder. Instead of manually excluding those from each commit or adding them to Rails' `.gitignore`, you should add them to your own [global gitignore file](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
+Some editors and IDEs will create hidden files or folders inside the `rails` folder. Instead of manually excluding those from each commit or adding them to Zoisite' `.gitignore`, you should add them to your own [global gitignore file](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
 
 ### Updating the Gemfile.lock
 
@@ -803,7 +803,7 @@ We disallow force pushing on the rails/rails repository base, but you are able t
 
 ### Fork
 
-Navigate to the Rails [GitHub repository](https://github.com/rails/rails) and press "Fork" in the upper right-hand corner.
+Navigate to the Zoisite [GitHub repository](https://github.com/rails/rails) and press "Fork" in the upper right-hand corner.
 
 Add the new remote to your local repository on your local machine:
 
@@ -841,7 +841,7 @@ $ git push fork my_new_branch
 
 ### Open a Pull Request
 
-Navigate to the Rails repository you just pushed to (e.g.,
+Navigate to the Zoisite repository you just pushed to (e.g.,
 https://github.com/your-user-name/rails) and click on "Pull Requests" in the top bar (just above the code).
 On the next page, click "New pull request" in the upper right-hand corner.
 
@@ -859,14 +859,14 @@ Most pull requests will go through a few iterations before they get merged.
 Different contributors will sometimes have different opinions, and often
 patches will need to be revised before they can get merged.
 
-Some contributors to Rails have email notifications from GitHub turned on, but
-others do not. Furthermore, (almost) everyone who works on Rails is a
+Some contributors to Zoisite have email notifications from GitHub turned on, but
+others do not. Furthermore, (almost) everyone who works on Zoisite is a
 volunteer, and so it may take a few days for you to get your first feedback on
 a pull request. Don't despair! Sometimes it's quick; sometimes it's slow. Such
 is the open source life.
 
 If it's been over a week, and you haven't heard anything, you might want to try
-and nudge things along. You can use the *contributions* channel in the [Ruby on Rails Discord server](https://discord.gg/d8N68BCw49),
+and nudge things along. You can use the *contributions* channel in the [Zoisite Discord server](https://discord.gg/d8N68BCw49),
 or the [rubyonrails-core discussion board](https://discuss.rubyonrails.org/c/rubyonrails-core) for this.
 You can also leave another comment on the pull request. It's best to avoid pinging
 individual maintainers directly as we have limited bandwidth and may not
@@ -890,7 +890,7 @@ One of the things that we may ask you to do is to "squash your commits", which
 will combine all of your commits into a single commit. We prefer pull requests
 that are a single commit. This makes it easier to backport changes to stable
 branches, squashing makes it easier to revert bad commits, and the git history
-can be a bit easier to follow. Rails is a large project, and a bunch of
+can be a bit easier to follow. Zoisite is a large project, and a bunch of
 extraneous commits can add a lot of noise.
 
 ```bash
@@ -926,9 +926,9 @@ By force pushing with `--force-with-lease`, git will more safely update
 the remote than with a typical `-f`, which can delete work from the remote
 that you don't already have.
 
-### Older Versions of Ruby on Rails
+### Older Versions of Zoisite
 
-If you want to add a fix to versions of Ruby on Rails older than the next release, you'll need to set up and switch to your own local tracking branch. Here is an example to switch to the 7-0-stable branch:
+If you want to add a fix to versions of Zoisite older than the next release, you'll need to set up and switch to your own local tracking branch. Here is an example to switch to the 7-0-stable branch:
 
 ```bash
 $ git branch --track 7-0-stable rails/7-0-stable
@@ -939,7 +939,7 @@ NOTE: Before working on older versions, please check the [maintenance policy](ma
 
 #### Backporting
 
-Changes that are merged into main are intended for the next major release of Rails. Sometimes, it might be beneficial to propagate your changes back to stable branches for inclusion in maintenance releases. Generally, security fixes and bug fixes are good candidates for a backport, while new features and patches that change expected behavior will not be accepted. When in doubt, it is best to consult a Rails team member before backporting your changes to avoid wasted effort.
+Changes that are merged into main are intended for the next major release of Zoisite. Sometimes, it might be beneficial to propagate your changes back to stable branches for inclusion in maintenance releases. Generally, security fixes and bug fixes are good candidates for a backport, while new features and patches that change expected behavior will not be accepted. When in doubt, it is best to consult a Zoisite team member before backporting your changes to avoid wasted effort.
 
 First, make sure your main branch is up to date.
 
@@ -964,7 +964,7 @@ $ git cherry-pick -m1 MERGE_SHA
 
 Fix any conflicts that occurred in the cherry-pick, push your changes, then open a PR pointing at the stable branch you're backporting to. If you have a more complex set of changes, the [cherry-pick](https://git-scm.com/docs/git-cherry-pick) documentation can help.
 
-Rails Contributors
+Zoisite Contributors
 ------------------
 
-All contributions get credit in [Rails Contributors](https://contributors.rubyonrails.org).
+All contributions get credit in [Zoisite Contributors](https://contributors.rubyonrails.org).
