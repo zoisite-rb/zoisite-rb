@@ -763,7 +763,7 @@ class ApplicationIntegrationTest < ActionDispatch::IntegrationTest
     @routes ||= ActionDispatch::Routing::RouteSet.new
   end
 
-  class MountedApp < Rails::Engine
+  class MountedApp < Zoisite::Engine
     def self.routes
       @routes ||= ActionDispatch::Routing::RouteSet.new
     end
@@ -1322,7 +1322,7 @@ class PageDumpIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   def with_root(&block)
-    Rails.stub(:root, Pathname.getwd.join("test"), &block)
+    Zoisite.stub(:root, Pathname.getwd.join("test"), &block)
   end
 
   def setup
@@ -1350,11 +1350,11 @@ class PageDumpIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   def dump_path
-    Pathname.new(Dir["#{Rails.root}/tmp/html_dump/#{method_name}*"].sole)
+    Pathname.new(Dir["#{Zoisite.root}/tmp/html_dump/#{method_name}*"].sole)
   end
 
   def remove_dumps
-    Dir["#{Rails.root}/tmp/html_dump/#{method_name}*"].each(&File.method(:delete))
+    Dir["#{Zoisite.root}/tmp/html_dump/#{method_name}*"].each(&File.method(:delete))
   end
 
   routes.draw do

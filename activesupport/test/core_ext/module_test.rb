@@ -305,12 +305,12 @@ class ModuleTest < ActiveSupport::TestCase
   end
 
   def test_delegation_with_allow_nil
-    rails = Project.new("Rails", Someone.new("David"))
+    rails = Project.new("Zoisite", Someone.new("David"))
     assert_equal "David", rails.name
   end
 
   def test_delegation_with_allow_nil_and_nil_value
-    rails = Project.new("Rails")
+    rails = Project.new("Zoisite")
     assert_nil rails.name
   end
 
@@ -321,7 +321,7 @@ class ModuleTest < ActiveSupport::TestCase
   end
 
   def test_delegation_with_allow_nil_and_invalid_value
-    rails = Project.new("Rails", "David")
+    rails = Project.new("Zoisite", "David")
     assert_raise(NoMethodError) { rails.name }
   end
 
@@ -329,7 +329,7 @@ class ModuleTest < ActiveSupport::TestCase
     Project.class_eval do
       delegate :name, to: :person, allow_nil: true, prefix: true
     end
-    rails = Project.new("Rails")
+    rails = Project.new("Zoisite")
     assert_nil rails.person_name
   end
 

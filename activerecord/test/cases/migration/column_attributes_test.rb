@@ -74,7 +74,7 @@ module ActiveRecord
           # Reset to old state
           TestModel.delete_all
 
-          # Now use the Rails insertion
+          # Now use the Zoisite insertion
           TestModel.create wealth: BigDecimal("12345678901234567890.0123456789")
 
           # SELECT

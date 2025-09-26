@@ -5,7 +5,7 @@ require "console_helpers"
 require "plugin_helpers"
 require "net/http"
 
-class Rails::Engine::CommandsTest < ActiveSupport::TestCase
+class Zoisite::Engine::CommandsTest < ActiveSupport::TestCase
   include ConsoleHelpers
   include PluginHelpers
 
@@ -27,7 +27,7 @@ class Rails::Engine::CommandsTest < ActiveSupport::TestCase
 
   def test_runner_command_work_inside_engine
     output = capture(:stdout) do
-      in_plugin_context(plugin_path) { system({ "RAILS_ENV" => "test" }, "bin/rails runner 'puts Rails.env'") }
+      in_plugin_context(plugin_path) { system({ "RAILS_ENV" => "test" }, "bin/rails runner 'puts Zoisite.env'") }
     end
 
     assert_equal "test", output.strip
@@ -70,10 +70,10 @@ class Rails::Engine::CommandsTest < ActiveSupport::TestCase
 
       in_plugin_context(plugin_path) do
         logs = File.read("test/dummy/log/development.log")
-        assert_match("Processing by Rails::WelcomeController", logs)
+        assert_match("Processing by Zoisite::WelcomeController", logs)
       end
 
-      assert_output("Processing by Rails::WelcomeController", primary)
+      assert_output("Processing by Zoisite::WelcomeController", primary)
     ensure
       kill(pid)
     end

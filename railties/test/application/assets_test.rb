@@ -45,7 +45,7 @@ module ApplicationTests
     test "assets routes have higher priority" do
       app_file "app/assets/javascripts/demo-sha1_string.digested.js", "a = 1+1;"
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '*path', to: lambda { |env| [200, { "Content-Type" => "text/html" }, ["Not an asset"]] }
         end
       RUBY
@@ -126,7 +126,7 @@ module ApplicationTests
 
       app "production"
 
-      assert_equal Propshaft::Assembly, Rails.application.assets.class
+      assert_equal Propshaft::Assembly, Zoisite.application.assets.class
     end
 
     test "precompile creates a manifest file with all the assets listed" do
@@ -249,7 +249,7 @@ module ApplicationTests
       app_file "app/assets/javascripts/demo-sha1_digest.digested.js", "alert();"
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/omg', :to => "omg#index"
         end
       RUBY
@@ -271,8 +271,8 @@ module ApplicationTests
 
     test "initialization on the assets group should set assets_dir" do
       require "#{app_path}/config/application"
-      Rails.application.initialize!(:assets)
-      assert_not_nil Rails.application.config.action_controller.assets_dir
+      Zoisite.application.initialize!(:assets)
+      assert_not_nil Zoisite.application.config.action_controller.assets_dir
     end
 
     test "enhancements to assets:precompile should only run once" do
@@ -325,7 +325,7 @@ module ApplicationTests
         app_file "app/views/posts/index.html.erb", "<%= javascript_include_tag 'application' %>"
 
         app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/posts', :to => "posts#index"
         end
         RUBY

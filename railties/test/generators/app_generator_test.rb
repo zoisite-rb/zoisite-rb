@@ -90,7 +90,7 @@ DEFAULT_APP_FILES = %w(
   vendor/.keep
 )
 
-class AppGeneratorTest < Rails::Generators::TestCase
+class AppGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   arguments [destination_root]
 
@@ -127,7 +127,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
   def test_invalid_application_name_is_fixed
     run_generator [File.join(destination_root, "things-43")]
-    assert_file "things-43/config/environment.rb", /Rails\.application\.initialize!/
+    assert_file "things-43/config/environment.rb", /Zoisite\.application\.initialize!/
     assert_file "things-43/config/application.rb", /^module Things43$/
   end
 
@@ -142,7 +142,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     Dir.chdir(destination_root) do
       output = `#{File.expand_path("../../exe/rails", __dir__)} new mysecondapp`
     end
-    assert_equal "Can't initialize a new Rails application within the directory of another, please change to a non-Rails directory first.\nType 'rails' for help.\n", output
+    assert_equal "Can't initialize a new Zoisite application within the directory of another, please change to a non-Zoisite directory first.\nType 'rails' for help.\n", output
     assert_equal false, $?.success?
   end
 
@@ -163,13 +163,13 @@ class AppGeneratorTest < Rails::Generators::TestCase
     FileUtils.mv(app_root, app_moved_root)
     run_app_update(app_moved_root)
 
-    assert_file "#{app_moved_root}/config/environment.rb", /Rails\.application\.initialize!/
+    assert_file "#{app_moved_root}/config/environment.rb", /Zoisite\.application\.initialize!/
   end
 
   def test_app_update
     run_generator
 
-    defaults_path = "config/initializers/new_framework_defaults_#{Rails::VERSION::MAJOR}_#{Rails::VERSION::MINOR}.rb"
+    defaults_path = "config/initializers/new_framework_defaults_#{Zoisite::VERSION::MAJOR}_#{Zoisite::VERSION::MINOR}.rb"
 
     assert_no_file defaults_path
     assert_no_file "config/initializers/cors.rb"
@@ -203,7 +203,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
       assert_no_changes -> { File.readlines(config) } do
         run_app_update(flags: "--pretend --force")
       end
-      defaults_path = "config/initializers/new_framework_defaults_#{Rails::VERSION::MAJOR}_#{Rails::VERSION::MINOR}.rb"
+      defaults_path = "config/initializers/new_framework_defaults_#{Zoisite::VERSION::MAJOR}_#{Zoisite::VERSION::MINOR}.rb"
       assert_no_file defaults_path
     end
   end
@@ -395,7 +395,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
     FileUtils.cd(destination_root) do
       File.open("config/initializers/deprecation.rb", "a") do |file|
-        file.puts "Rails.deprecator.warn('test deprecation message')"
+        file.puts "Zoisite.deprecator.warn('test deprecation message')"
       end
 
       stderr = capture(:stderr) { run_app_update }
@@ -419,7 +419,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
     FileUtils.cd(destination_root) do
       config = "config/application.rb"
       content = File.read(config)
-      File.write(config, content.gsub(/config\.load_defaults #{Rails::VERSION::STRING.to_f}/, "config.load_defaults 5.1"))
+      File.write(config, content.gsub(/config\.load_defaults #{Zoisite::VERSION::STRING.to_f}/, "config.load_defaults 5.1"))
     end
 
     run_app_update
@@ -451,7 +451,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
   def test_application_names_are_not_singularized
     run_generator [File.join(destination_root, "hats")]
-    assert_file "hats/config/environment.rb", /Rails\.application\.initialize!/
+    assert_file "hats/config/environment.rb", /Zoisite\.application\.initialize!/
   end
 
   def test_application_name_is_normalized_in_config
@@ -825,18 +825,18 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
   def test_usage_read_from_file
     assert_called(File, :read, returns: "USAGE FROM FILE") do
-      assert_equal "USAGE FROM FILE", Rails::Generators::AppGenerator.desc
+      assert_equal "USAGE FROM FILE", Zoisite::Generators::AppGenerator.desc
     end
   end
 
   def test_default_usage
-    assert_called(Rails::Generators::AppGenerator, :usage_path, returns: nil) do
-      assert_match(/Create rails files for app generator/, Rails::Generators::AppGenerator.desc)
+    assert_called(Zoisite::Generators::AppGenerator, :usage_path, returns: nil) do
+      assert_match(/Create rails files for app generator/, Zoisite::Generators::AppGenerator.desc)
     end
   end
 
   def test_default_namespace
-    assert_match "rails:app", Rails::Generators::AppGenerator.namespace
+    assert_match "rails:app", Zoisite::Generators::AppGenerator.namespace
   end
 
   def test_file_is_added_for_backwards_compatibility
@@ -1747,8 +1747,8 @@ class AppGeneratorTest < Rails::Generators::TestCase
       rails_mount = devcontainer_config["mounts"].sole
 
       assert_equal "bind", rails_mount["type"]
-      assert_equal Rails::Generators::RAILS_DEV_PATH, rails_mount["source"]
-      assert_equal Rails::Generators::RAILS_DEV_PATH, rails_mount["target"]
+      assert_equal Zoisite::Generators::RAILS_DEV_PATH, rails_mount["source"]
+      assert_equal Zoisite::Generators::RAILS_DEV_PATH, rails_mount["target"]
     end
   end
 
@@ -1762,7 +1762,7 @@ class AppGeneratorTest < Rails::Generators::TestCase
 
   private
     def assert_load_defaults
-      assert_file "config/application.rb", /\s+config\.load_defaults #{Rails::VERSION::STRING.to_f}/
+      assert_file "config/application.rb", /\s+config\.load_defaults #{Zoisite::VERSION::STRING.to_f}/
     end
 
     def assert_gem_for_active_storage

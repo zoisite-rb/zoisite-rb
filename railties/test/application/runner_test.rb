@@ -98,19 +98,19 @@ module ApplicationTests
         end
       RUBY
 
-      assert_match "true", rails("runner", "puts Rails.application.config.ran")
+      assert_match "true", rails("runner", "puts Zoisite.application.config.ran")
     end
 
     def test_default_environment
-      assert_match "development", rails("runner", "puts Rails.env")
+      assert_match "development", rails("runner", "puts Zoisite.env")
     end
 
     def test_environment_option
-      assert_match "production", rails("runner", "-e", "production", "puts Rails.env")
+      assert_match "production", rails("runner", "-e", "production", "puts Zoisite.env")
     end
 
     def test_environment_option_is_properly_expanded
-      assert_match "production", rails("runner", "-e", "prod", "puts Rails.env")
+      assert_match "production", rails("runner", "-e", "prod", "puts Zoisite.env")
     end
 
     def test_runner_detects_syntax_errors
@@ -127,13 +127,13 @@ module ApplicationTests
 
     def test_environment_with_rails_env
       with_rails_env "production" do
-        assert_match "production", rails("runner", "puts Rails.env")
+        assert_match "production", rails("runner", "puts Zoisite.env")
       end
     end
 
     def test_environment_with_rack_env
       with_rack_env "production" do
-        assert_match "production", rails("runner", "puts Rails.env")
+        assert_match "production", rails("runner", "puts Zoisite.env")
       end
     end
 

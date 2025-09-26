@@ -3,9 +3,9 @@
 require "generators/generators_test_helper"
 require "rails/generators/channel/channel_generator"
 
-class ChannelGeneratorTest < Rails::Generators::TestCase
+class ChannelGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::ChannelGenerator
+  tests Zoisite::Generators::ChannelGenerator
 
   setup do
     use_with_javascript

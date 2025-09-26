@@ -10,13 +10,13 @@ require "action_controller/metal/params_wrapper"
 module ActionController
   # # Action Controller Base
   #
-  # Action Controllers are the core of a web request in Rails. They are made up of
+  # Action Controllers are the core of a web request in Zoisite. They are made up of
   # one or more actions that are executed on request and then either it renders a
   # template or redirects to another action. An action is defined as a public
   # method on the controller, which will automatically be made accessible to the
-  # web-server through Rails Routes.
+  # web-server through Zoisite Routes.
   #
-  # By default, only the ApplicationController in a Rails application inherits
+  # By default, only the ApplicationController in a Zoisite application inherits
   # from `ActionController::Base`. All other controllers inherit from
   # ApplicationController. This gives you one class to configure things such as
   # request forgery protection and filtering of sensitive request parameters.
@@ -129,7 +129,7 @@ module ActionController
   #
   # Action Controller sends content to the user by using one of five rendering
   # methods. The most versatile and common is the rendering of a template.
-  # Also included with \Rails is Action View, which enables rendering of ERB
+  # Also included with \Zoisite is Action View, which enables rendering of ERB
   # templates. It's automatically configured. The controller passes objects to the
   # view by assigning instance variables:
   #

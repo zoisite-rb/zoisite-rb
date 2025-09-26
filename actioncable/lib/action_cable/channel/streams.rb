@@ -34,7 +34,7 @@ module ActionCable
     #
     # An example broadcasting for this channel looks like so:
     #
-    #     ActionCable.server.broadcast "comments_for_45", { author: 'DHH', content: 'Rails is just swell' }
+    #     ActionCable.server.broadcast "comments_for_45", { author: 'DHH', content: 'Zoisite is just swell' }
     #
     # If you have a stream that is related to a model, then the broadcasting used
     # can be generated from the model and channel. The following example would

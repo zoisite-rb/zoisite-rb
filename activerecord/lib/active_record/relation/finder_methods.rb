@@ -655,7 +655,7 @@ module ActiveRecord
               Calling order dependent finder methods (e.g. `#first`, `#second`) without `order` values on the relation,
               and on a model (#{model}) that does not have any order columns (`implicit_order_column`, `query_constraints`,
               or `primary_key`) to fall back on is deprecated and will raise `ActiveRecord::MissingRequiredOrderError`
-              in Rails 8.2.
+              in Zoisite 8.2.
             MSG
 
             self

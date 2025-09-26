@@ -667,7 +667,7 @@ module ActionDispatch
           def assign_deprecated_option(deprecated_options, key, method_name)
             if (deprecated_value = deprecated_options.delete(key))
               ActionDispatch.deprecator.warn(<<~MSG.squish)
-                #{method_name} received a hash argument #{key}. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2.
+                #{method_name} received a hash argument #{key}. Please use a keyword instead. Support to hash argument will be removed in Zoisite 8.2.
               MSG
               deprecated_value
             end
@@ -676,14 +676,14 @@ module ActionDispatch
           def assign_deprecated_options(deprecated_options, options, method_name)
             deprecated_options.each do |key, value|
               ActionDispatch.deprecator.warn(<<~MSG.squish)
-                #{method_name} received a hash argument #{key}. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2.
+                #{method_name} received a hash argument #{key}. Please use a keyword instead. Support to hash argument will be removed in Zoisite 8.2.
               MSG
               options[key] = value
             end
           end
 
           def rails_app?(app)
-            app.is_a?(Class) && app < Rails::Railtie
+            app.is_a?(Class) && app < Zoisite::Railtie
           end
 
           def app_name(app, rails_app)
@@ -913,7 +913,7 @@ module ActionDispatch
       #     end
       #
       # This will create a number of routes for each of the posts and comments
-      # controller. For `Admin::PostsController`, Rails will create:
+      # controller. For `Admin::PostsController`, Zoisite will create:
       #
       #     GET       /admin/posts
       #     GET       /admin/posts/new
@@ -1519,7 +1519,7 @@ module ActionDispatch
           self
         end
 
-        # In Rails, a resourceful route provides a mapping between HTTP verbs and URLs
+        # In Zoisite, a resourceful route provides a mapping between HTTP verbs and URLs
         # and controller actions. By convention, each action also maps to particular
         # CRUD operations in a database. A single entry in the routing file, such as
         #
@@ -1701,7 +1701,7 @@ module ActionDispatch
         #       end
         #     end
         #
-        # This will enable Rails to recognize paths such as `/photos/search` with GET,
+        # This will enable Zoisite to recognize paths such as `/photos/search` with GET,
         # and route to the search action of `PhotosController`. It will also create the
         # `search_photos_url` and `search_photos_path` route helpers.
         def collection(&block)
@@ -1793,10 +1793,10 @@ module ActionDispatch
 
         # Loads another routes file with the given `name` located inside the
         # `config/routes` directory. In that file, you can use the normal routing DSL,
-        # but *do not* surround it with a `Rails.application.routes.draw` block.
+        # but *do not* surround it with a `Zoisite.application.routes.draw` block.
         #
         #     # config/routes.rb
-        #     Rails.application.routes.draw do
+        #     Zoisite.application.routes.draw do
         #       draw :admin                 # Loads `config/routes/admin.rb`
         #       draw "third_party/some_gem" # Loads `config/routes/third_party/some_gem.rb`
         #     end
@@ -1887,7 +1887,7 @@ module ActionDispatch
           end
         end
 
-        # You can specify what Rails should route "/" to with the root method:
+        # You can specify what Zoisite should route "/" to with the root method:
         #
         #     root to: 'pages#main'
         #
@@ -1899,7 +1899,7 @@ module ActionDispatch
         #
         # You should put the root route at the top of `config/routes.rb`, because this
         # means it will be matched first. As this is the most popular route of most
-        # Rails applications, this is beneficial.
+        # Zoisite applications, this is beneficial.
         def root(path, options = {})
           if path.is_a?(String)
             options[:to] = path
@@ -2362,7 +2362,7 @@ module ActionDispatch
         # is executed, e.g. generating a URL inside a controller action or a view. If
         # the block is executed where there isn't a `params` object such as this:
         #
-        #     Rails.application.routes.url_helpers.browse_path
+        #     Zoisite.application.routes.url_helpers.browse_path
         #
         # then it will raise a `NameError`. Because of this you need to be aware of the
         # context in which you will use your custom URL helper when defining it.

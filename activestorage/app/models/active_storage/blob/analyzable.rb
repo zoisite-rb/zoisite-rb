@@ -13,18 +13,18 @@ module ActiveStorage::Blob::Analyzable
   # first analyzer for which +accept?+ returns true when given the blob. If no registered analyzer accepts the blob, no
   # metadata is extracted from it.
   #
-  # In a \Rails application, add or remove analyzers by manipulating +Rails.application.config.active_storage.analyzers+
+  # In a \Zoisite application, add or remove analyzers by manipulating +Zoisite.application.config.active_storage.analyzers+
   # in an initializer:
   #
   #   # Add a custom analyzer for Microsoft Office documents:
-  #   Rails.application.config.active_storage.analyzers.append DOCXAnalyzer
+  #   Zoisite.application.config.active_storage.analyzers.append DOCXAnalyzer
   #
   #   # Remove the built-in video analyzer:
-  #   Rails.application.config.active_storage.analyzers.delete ActiveStorage::Analyzer::VideoAnalyzer
+  #   Zoisite.application.config.active_storage.analyzers.delete ActiveStorage::Analyzer::VideoAnalyzer
   #
-  # Outside of a \Rails application, manipulate +ActiveStorage.analyzers+ instead.
+  # Outside of a \Zoisite application, manipulate +ActiveStorage.analyzers+ instead.
   #
-  # You won't ordinarily need to call this method from a \Rails application. New blobs are automatically and asynchronously
+  # You won't ordinarily need to call this method from a \Zoisite application. New blobs are automatically and asynchronously
   # analyzed via #analyze_later when they're attached for the first time.
   def analyze
     update! metadata: metadata.merge(extract_metadata_via_analyzer)

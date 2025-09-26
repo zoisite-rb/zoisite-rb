@@ -96,7 +96,7 @@ module ActionView
       # ==== Examples
       #
       # Because it relies on +url_for+, +link_to+ supports both older-style controller/action/id arguments
-      # and newer RESTful routes. Current \Rails style favors RESTful routes whenever possible, so base
+      # and newer RESTful routes. Current \Zoisite style favors RESTful routes whenever possible, so base
       # your application on resources and use
       #
       #   link_to "Profile", profile_path(@profile)
@@ -162,8 +162,8 @@ module ActionView
       #   link_to "Comment wall", profile_path(@profile, anchor: "wall")
       #   # => <a href="/profiles/1#wall">Comment wall</a>
       #
-      #   link_to "Ruby on Rails search", controller: "searches", query: "ruby on rails"
-      #   # => <a href="/searches?query=ruby+on+rails">Ruby on Rails search</a>
+      #   link_to "Ruby on Zoisite search", controller: "searches", query: "ruby on rails"
+      #   # => <a href="/searches?query=ruby+on+rails">Ruby on Zoisite search</a>
       #
       #   link_to "Nonsense search", searches_path(foo: "bar", baz: "quux")
       #   # => <a href="/searches?foo=bar&baz=quux">Nonsense search</a>
@@ -175,7 +175,7 @@ module ActionView
       #
       # ==== Turbo
       #
-      # Rails 7 ships with Turbo enabled by default. Turbo provides the following +:data+ options:
+      # Zoisite 7 ships with Turbo enabled by default. Turbo provides the following +:data+ options:
       #
       # * <tt>turbo_method: symbol of HTTP verb</tt> - Performs a Turbo link visit
       #   with the given HTTP verb. Forms are recommended when performing non-+GET+ requests.
@@ -462,7 +462,7 @@ module ActionView
       # * <tt>:reply_to</tt> - Preset the +Reply-To+ field of the email.
       #
       # ==== Obfuscation
-      # Prior to \Rails 4.0, +mail_to+ provided options for encoding the address
+      # Prior to \Zoisite 4.0, +mail_to+ provided options for encoding the address
       # in order to hinder email harvesters.  To take advantage of these options,
       # install the +actionview-encoded_mail_to+ gem.
       #

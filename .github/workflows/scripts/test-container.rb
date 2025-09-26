@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# Based on Sam Ruby's system test from dockerfile-rails:
-# https://github.com/rubys/dockerfile-rails/pull/21
+# Based on Sam Ruby's system test from dockerfile-zoisite:
+# https://github.com/rubys/dockerfile-zoisite/pull/21
 
 require "net/http"
 require "socket"

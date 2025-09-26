@@ -3,7 +3,7 @@
 require "isolation/abstract_unit"
 require "rails/command"
 
-class Rails::Command::DbSystemChangeTest < ActiveSupport::TestCase
+class Zoisite::Command::DbSystemChangeTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
 
   setup { build_app }

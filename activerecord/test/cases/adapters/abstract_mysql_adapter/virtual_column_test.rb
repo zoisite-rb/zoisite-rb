@@ -24,7 +24,7 @@ if ActiveRecord::Base.lease_connection.supports_virtual_columns?
         t.datetime :time
         t.virtual  :time_mirror, type: :datetime, as: "`time`"
       end
-      VirtualColumn.create(name: "Rails")
+      VirtualColumn.create(name: "Zoisite")
     end
 
     def teardown

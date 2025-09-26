@@ -101,7 +101,7 @@ class Releaser < Rake::TaskLib
           fname = File.join root, fw, "CHANGELOG.md"
           current_contents = File.read(fname)
 
-          header = "## Rails #{version} (#{Date.today.strftime('%B %d, %Y')}) ##\n\n"
+          header = "## Zoisite #{version} (#{Date.today.strftime('%B %d, %Y')}) ##\n\n"
           header += "*   No changes.\n\n\n" if current_contents.start_with?("##")
           contents = header + current_contents
           File.write(fname, contents)
@@ -258,7 +258,7 @@ class Releaser < Rake::TaskLib
           if sh("which npm > /dev/null 2>&1", verbose: false)
             sh "npm version #{npm_version} --no-git-tag-version > /dev/null 2>&1", verbose: false
           else
-            raise "You must have npm installed to release Rails."
+            raise "You must have npm installed to release Zoisite."
           end
         end
       end
@@ -328,7 +328,7 @@ class Releaser < Rake::TaskLib
     def end_of_notes?(contents)
       line = contents.first
 
-      line =~ /^## Rails \d+\.\d+\.\d+.*$/ ||
+      line =~ /^## Zoisite \d+\.\d+\.\d+.*$/ ||
         line =~ /^Please check.*for previous changes\.$/ ||
         contents.empty?
     end

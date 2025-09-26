@@ -8,7 +8,7 @@ require "active_support/dependencies"
 module ActionDispatch
   # # Action Dispatch MiddlewareStack
   #
-  # Read more about [Rails middleware
+  # Read more about [Zoisite middleware
   # stack](https://guides.rubyonrails.org/rails_on_rack.html#action-dispatcher-middleware-stack)
   # in the guides.
   class MiddlewareStack

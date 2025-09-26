@@ -27,7 +27,7 @@ ActiveRecord::Schema.define do
   create_table :defaults, force: true do |t|
     t.virtual :virtual_stored_number, type: :integer, as: "random_number * 10", stored: true if supports_virtual_columns?
     t.integer :random_number, default: -> { "random() * 100" }
-    t.string :ruby_on_rails, default: -> { "concat('Ruby ', 'on ', 'Rails')" }
+    t.string :ruby_on_rails, default: -> { "concat('Ruby ', 'on ', 'Zoisite')" }
     t.date :modified_date, default: -> { "CURRENT_DATE" }
     t.date :modified_date_function, default: -> { "now()" }
     t.date :fixed_date, default: "2004-01-01"

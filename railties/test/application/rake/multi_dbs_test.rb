@@ -49,9 +49,9 @@ module ApplicationTests
 
       def assert_match_namespace(namespace, output)
         if namespace == "primary"
-          assert_match(/#{Rails.env}.sqlite3/, output)
+          assert_match(/#{Zoisite.env}.sqlite3/, output)
         else
-          assert_match(/#{Rails.env}_#{namespace}.sqlite3/, output)
+          assert_match(/#{Zoisite.env}_#{namespace}.sqlite3/, output)
         end
       end
 
@@ -254,7 +254,7 @@ module ApplicationTests
           rails "db:drop"
           output = rails("db:setup")
           assert_match(/Created database/, output)
-          ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+          ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
             assert_match_namespace(db_config.name, output)
             assert File.exist?(db_config.database)
           end
@@ -278,7 +278,7 @@ module ApplicationTests
           output = rails("db:reset")
           assert_match(/Dropped database/, output)
           assert_match(/Created database/, output)
-          ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+          ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
             assert_match_namespace(db_config.name, output)
             assert File.exist?(db_config.database)
           end
@@ -387,7 +387,7 @@ module ApplicationTests
           generate_models_for_animals
           output = rails("db:prepare")
 
-          ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+          ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
             if db_config.name == "primary"
               assert_match(/CreateBooks: migrated/, output)
             else
@@ -435,14 +435,14 @@ module ApplicationTests
 
       test "db:create and db:drop works on all databases for env" do
         require "#{app_path}/config/environment"
-        ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+        ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
           db_create_and_drop db_config.name, db_config.database
         end
       end
 
       test "db:create:namespace and db:drop:namespace works on specified databases" do
         require "#{app_path}/config/environment"
-        ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+        ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
           db_create_and_drop_namespace db_config.name, db_config.database
         ensure
           # secondary databases might have been created by check_protected_environments task
@@ -775,7 +775,7 @@ module ApplicationTests
 
       test "db:migrate:namespace works" do
         require "#{app_path}/config/environment"
-        ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+        ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
           db_migrate_namespaced db_config.name
         end
       end
@@ -903,7 +903,7 @@ module ApplicationTests
       test "db:migrate:status:namespace works" do
         remove_from_config("config.active_record.timestamped_migrations = false")
         require "#{app_path}/config/environment"
-        ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+        ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
           db_migrate_namespaced db_config.name
           db_migrate_status_namespaced db_config.name
         end
@@ -1015,7 +1015,7 @@ module ApplicationTests
 
       test "db:setup:namespace works" do
         require "#{app_path}/config/environment"
-        ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+        ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
           db_setup_namespaced db_config.name, db_config.database
         end
       end
@@ -1027,7 +1027,7 @@ module ApplicationTests
 
       test "db:reset:namespace works" do
         require "#{app_path}/config/environment"
-        ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
+        ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env).each do |db_config|
           db_reset_namespaced db_config.name, db_config.database
         end
       end
@@ -1135,7 +1135,7 @@ module ApplicationTests
           development:
             primary:
               database: <%=
-                Rails.application.config.database
+                Zoisite.application.config.database
               %>
               adapter: sqlite3
             animals:
@@ -1144,7 +1144,7 @@ module ApplicationTests
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -1156,8 +1156,8 @@ module ApplicationTests
         app_file "config/database.yml", <<-YAML
           development:
             primary:
-            <% if Rails.application.config.database %>
-              database: <%= Rails.application.config.database %>
+            <% if Zoisite.application.config.database %>
+              database: <%= Zoisite.application.config.database %>
             <% else %>
               database: storage/default.sqlite3
             <% end %>
@@ -1169,7 +1169,7 @@ module ApplicationTests
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -1321,7 +1321,7 @@ module ApplicationTests
         app_file "config/database.yml", <<-YAML
           development:
             primary:
-              database: <% if Rails.application.config.database %><%= Rails.application.config.database %><% else %>storage/default.sqlite3<% end %>
+              database: <% if Zoisite.application.config.database %><%= Zoisite.application.config.database %><% else %>storage/default.sqlite3<% end %>
               adapter: sqlite3
             animals:
               database: storage/development_animals.sqlite3
@@ -1329,7 +1329,7 @@ module ApplicationTests
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -1341,7 +1341,7 @@ module ApplicationTests
         app_file "config/database.yml", <<-YAML
           development:
             primary:
-              <%= Rails.application.config.database ? 'database: storage/development.sqlite3' : 'database: storage/development.sqlite3' %>
+              <%= Zoisite.application.config.database ? 'database: storage/development.sqlite3' : 'database: storage/development.sqlite3' %>
               adapter: sqlite3
             animals:
               database: storage/development_animals.sqlite3
@@ -1349,7 +1349,7 @@ module ApplicationTests
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -1361,7 +1361,7 @@ module ApplicationTests
         app_file "config/database.yml", <<-YAML
           development:
             primary:
-              database: <%= Rails.application.config.database ? 'storage/development.sqlite3' : 'storage/development.sqlite3' %>
+              database: <%= Zoisite.application.config.database ? 'storage/development.sqlite3' : 'storage/development.sqlite3' %>
               custom_option: <%= ENV['CUSTOM_OPTION'] %>
               adapter: sqlite3
             animals:
@@ -1370,7 +1370,7 @@ module ApplicationTests
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY

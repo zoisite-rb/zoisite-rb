@@ -235,7 +235,7 @@ class DeprecationTest < ActiveSupport::TestCase
     assert_match "call stack!", output.string
   end
 
-  test ":log behavior without Rails.logger" do
+  test ":log behavior without Zoisite.logger" do
     @deprecator.behavior = :log
 
     output = capture(:stderr) do
@@ -545,15 +545,15 @@ class DeprecationTest < ActiveSupport::TestCase
     assert_match "foo", deprecator.messages.last
   end
 
-  test "default deprecation_horizon is greater than the current Rails version" do
+  test "default deprecation_horizon is greater than the current Zoisite version" do
     assert_operator ActiveSupport::Deprecation.new.deprecation_horizon, :>, ActiveSupport::VERSION::STRING
   end
 
-  test "default gem_name is Rails" do
+  test "default gem_name is Zoisite" do
     deprecator = ActiveSupport::Deprecation.new
 
     deprecator.send(:deprecated_method_warning, :deprecated_method, "You are calling deprecated method").tap do |message|
-      assert_match(/is deprecated and will be removed from Rails/, message)
+      assert_match(/is deprecated and will be removed from Zoisite/, message)
     end
   end
 
@@ -819,7 +819,7 @@ class DeprecationTest < ActiveSupport::TestCase
       application = Struct.new(:deprecators).new(ActiveSupport::Deprecation::Deprecators.new)
       rails = Struct.new(:application).new(application)
       rails.application.deprecators[:deprecator] = @deprecator
-      stub_const(Object, :Rails, rails, &block)
+      stub_const(Object, :Zoisite, rails, &block)
     end
 
     def deprecator_with_messages
@@ -832,17 +832,17 @@ class DeprecationTest < ActiveSupport::TestCase
       deprecator
     end
 
-    module ::Rails; end
+    module ::Zoisite; end
 
     def with_rails_logger(logger)
-      ::Rails.singleton_class.class_eval do
+      ::Zoisite.singleton_class.class_eval do
         alias_method :__original_logger, :logger if method_defined?(:logger)
         define_method(:logger) { logger }
       end
 
       yield logger
     ensure
-      ::Rails.singleton_class.class_eval do
+      ::Zoisite.singleton_class.class_eval do
         if method_defined?(:__original_logger)
           alias_method :logger, :__original_logger
           undef_method :__original_logger

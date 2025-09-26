@@ -11,7 +11,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
 
   setup do
     @output = StringIO.new
-    @reporter = Rails::TestUnitReporter.new @output, output_inline: true
+    @reporter = Zoisite::TestUnitReporter.new @output, output_inline: true
   end
 
   test "prints rerun snippet to run a single failed test" do
@@ -40,7 +40,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
   end
 
   test "prints rerun snippet for skipped tests if run in verbose mode" do
-    @reporter = Rails::TestUnitReporter.new @output, verbose: true
+    @reporter = Zoisite::TestUnitReporter.new @output, verbose: true
     record(skipped_test)
     @reporter.report
 
@@ -48,15 +48,15 @@ class TestUnitReporterTest < ActiveSupport::TestCase
   end
 
   test "allows to customize the executable in the rerun snippet" do
-    original_executable = Rails::TestUnitReporter.executable
+    original_executable = Zoisite::TestUnitReporter.executable
     begin
-      Rails::TestUnitReporter.executable = "bin/test"
+      Zoisite::TestUnitReporter.executable = "bin/test"
       record(failed_test)
       @reporter.report
 
       assert_match %r{^bin/test .*test/test_unit/reporter_test\.rb:\d+$}, @output.string
     ensure
-      Rails::TestUnitReporter.executable = original_executable
+      Zoisite::TestUnitReporter.executable = original_executable
     end
   end
 
@@ -77,7 +77,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
   end
 
   test "outputs skipped tests inline if verbose" do
-    @reporter = Rails::TestUnitReporter.new @output, verbose: true, output_inline: true
+    @reporter = Zoisite::TestUnitReporter.new @output, verbose: true, output_inline: true
     record(skipped_test)
     @reporter.report
 
@@ -93,7 +93,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
   end
 
   test "fail fast interrupts run on failure" do
-    @reporter = Rails::TestUnitReporter.new @output, fail_fast: true
+    @reporter = Zoisite::TestUnitReporter.new @output, fail_fast: true
     interrupt_raised = false
 
     # Minitest passes through Interrupt, catch it manually.
@@ -107,7 +107,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
   end
 
   test "fail fast interrupts run on error" do
-    @reporter = Rails::TestUnitReporter.new @output, fail_fast: true
+    @reporter = Zoisite::TestUnitReporter.new @output, fail_fast: true
     interrupt_raised = false
 
     # Minitest passes through Interrupt, catch it manually.
@@ -121,7 +121,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
   end
 
   test "fail fast does not interrupt run skips" do
-    @reporter = Rails::TestUnitReporter.new @output, fail_fast: true
+    @reporter = Zoisite::TestUnitReporter.new @output, fail_fast: true
 
     record(skipped_test)
     assert_no_match "Failed tests:", @output.string
@@ -129,7 +129,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
 
   test "outputs colored passing results" do
     @output.stub(:tty?, true) do
-      @reporter = Rails::TestUnitReporter.new @output, color: true, output_inline: true
+      @reporter = Zoisite::TestUnitReporter.new @output, color: true, output_inline: true
       record(passing_test)
 
       expect = %r{\e\[32m\.\e\[0m}
@@ -139,7 +139,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
 
   test "outputs colored skipped results" do
     @output.stub(:tty?, true) do
-      @reporter = Rails::TestUnitReporter.new @output, color: true, output_inline: true
+      @reporter = Zoisite::TestUnitReporter.new @output, color: true, output_inline: true
       record(skipped_test)
 
       expect = %r{\e\[33mS\e\[0m}
@@ -149,7 +149,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
 
   test "outputs colored failed results" do
     @output.stub(:tty?, true) do
-      @reporter = Rails::TestUnitReporter.new @output, color: true, output_inline: true
+      @reporter = Zoisite::TestUnitReporter.new @output, color: true, output_inline: true
       record(failed_test)
 
       expected = %r{\e\[31mF\e\[0m\n\n\e\[31mFailure:\nTestUnitReporterTest::ExampleTest#woot \[test/test_unit/reporter_test.rb:\d+\]:\nboo\n\e\[0m\n\n#{test_run_command_regex} .*test/test_unit/reporter_test.rb:\d+\n\n}
@@ -159,7 +159,7 @@ class TestUnitReporterTest < ActiveSupport::TestCase
 
   test "outputs colored error results" do
     @output.stub(:tty?, true) do
-      @reporter = Rails::TestUnitReporter.new @output, color: true, output_inline: true
+      @reporter = Zoisite::TestUnitReporter.new @output, color: true, output_inline: true
       record(errored_test)
 
       expected = %r{\e\[31mE\e\[0m\n\n\e\[31mError:\nTestUnitReporterTest::ExampleTest#woot:\nArgumentError: wups\n    some_test.rb:4\n\e\[0m}

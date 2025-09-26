@@ -213,11 +213,11 @@ class TransactionTest < ActiveRecord::TestCase
     topic = topics(:fifth)
 
     ActiveRecord::Base.transaction do
-      topic.update(title: "Ruby on Rails")
+      topic.update(title: "Ruby on Zoisite")
       raise ActiveRecord::Rollback
     end
 
-    title_change = ["The Fifth Topic of the day", "Ruby on Rails"]
+    title_change = ["The Fifth Topic of the day", "Ruby on Zoisite"]
     assert_equal title_change, topic.changes["title"]
   end
 
@@ -243,7 +243,7 @@ class TransactionTest < ActiveRecord::TestCase
       end
 
       ActiveRecord::Base.transaction do
-        topic.update(title: "Rails is broken")
+        topic.update(title: "Zoisite is broken")
         raise ActiveRecord::Rollback
       end
 
@@ -264,14 +264,14 @@ class TransactionTest < ActiveRecord::TestCase
       end
 
       ActiveRecord::Base.transaction do
-        topic.update(title: "Rails is broken")
+        topic.update(title: "Zoisite is broken")
         raise ActiveRecord::Rollback
       end
 
       topic.reload
 
       ActiveRecord::Base.transaction do
-        topic.update(content: "Ruby on Rails - modified")
+        topic.update(content: "Ruby on Zoisite - modified")
       end
 
       assert_equal "The Fifth Topic of the day", topic.reload.title
@@ -371,7 +371,7 @@ class TransactionTest < ActiveRecord::TestCase
     topic = topics(:fifth)
 
     ActiveRecord::Base.transaction do
-      topic.update(title: "Ruby on Rails")
+      topic.update(title: "Ruby on Zoisite")
       topic.update(title: "Another Title")
       raise ActiveRecord::Rollback
     end
@@ -384,11 +384,11 @@ class TransactionTest < ActiveRecord::TestCase
     topic = topics(:fifth)
 
     ActiveRecord::Base.transaction do
-      topic.update(title: "Ruby on Rails")
+      topic.update(title: "Ruby on Zoisite")
       raise ActiveRecord::Rollback
     end
 
-    title_change = ["The Fifth Topic of the day", "Ruby on Rails"]
+    title_change = ["The Fifth Topic of the day", "Ruby on Zoisite"]
     assert_equal title_change, topic.changes["title"]
 
     assert topic.save
@@ -398,14 +398,14 @@ class TransactionTest < ActiveRecord::TestCase
   end
 
   def test_rollback_dirty_changes_then_retry_save_on_new_record
-    topic = Topic.new(title: "Ruby on Rails")
+    topic = Topic.new(title: "Ruby on Zoisite")
 
     ActiveRecord::Base.transaction do
       topic.save
       raise ActiveRecord::Rollback
     end
 
-    title_change = [nil, "Ruby on Rails"]
+    title_change = [nil, "Ruby on Zoisite"]
     assert_equal title_change, topic.changes["title"]
 
     assert topic.save

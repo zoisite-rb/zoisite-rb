@@ -20,8 +20,8 @@ activestorage:
   - "activestorage/**/*"
 activesupport:
   - "activesupport/**/*"
-rails-ujs:
-  - "actionview/app/assets/javascripts/rails-ujs*/*"
+zoisite-ujs:
+  - "actionview/app/assets/javascripts/zoisite-ujs*/*"
 railties:
   - "railties/**/*"
 docs:

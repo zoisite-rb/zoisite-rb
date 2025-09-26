@@ -97,7 +97,7 @@ module ActiveSupport
           end
 
           def set_process_title(status)
-            Process.setproctitle("Rails test worker #{@number} - #{status}")
+            Process.setproctitle("Zoisite test worker #{@number} - #{status}")
           end
       end
     end

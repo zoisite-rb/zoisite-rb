@@ -20,7 +20,7 @@ module ApplicationTests
       teardown_app
     end
 
-    test "Rails app is present" do
+    test "Zoisite app is present" do
       assert File.exist?(app_path("config"))
     end
 
@@ -31,14 +31,14 @@ module ApplicationTests
       end
     end
 
-    test "Rails.application is available after config.ru has been racked up" do
+    test "Zoisite.application is available after config.ru has been racked up" do
       rackup
-      assert_kind_of Rails::Application, Rails.application
+      assert_kind_of Zoisite::Application, Zoisite.application
     end
 
     test "the config object is available on the application object" do
       rackup
-      assert_equal "UTC", Rails.application.config.time_zone
+      assert_equal "UTC", Zoisite.application.config.time_zone
     end
   end
 end

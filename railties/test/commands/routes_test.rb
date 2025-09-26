@@ -4,13 +4,13 @@ require "isolation/abstract_unit"
 require "rails/command"
 require "io/console/size"
 
-class Rails::Command::RoutesTest < ActiveSupport::TestCase
+class Zoisite::Command::RoutesTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 
   test "singular resource output in rails routes" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         resource :post
         resource :user_permission
       end
@@ -42,7 +42,7 @@ class Rails::Command::RoutesTest < ActiveSupport::TestCase
 
   test "rails routes with global search key" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/cart', to: 'cart#show'
         post '/cart', to: 'cart#create'
         get '/basketballs', to: 'basketball#index'
@@ -85,7 +85,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
 
   test "rails routes with matching path" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         resources :photos
         get '/cart', to: 'cart#show'
         post '/cart', to: 'cart#create'
@@ -114,13 +114,13 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
 
     assert_equal <<~MESSAGE, run_routes_command([ "-g", "/cats" ])
     No routes were found for this grep pattern.
-    For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html.
+    For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html.
     MESSAGE
   end
 
   test "rails routes with controller search key" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/cart', to: 'cart#show'
         get '/basketball', to: 'basketball#index'
         get '/user_permission', to: 'user_permission#index'
@@ -151,7 +151,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
 
   test "rails routes with namespaced controller search key" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         namespace :admin do
           resource :post
           resource :user_permission
@@ -199,7 +199,7 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
 
   test "rails routes displays message when no routes are defined" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
       end
     RUBY
 
@@ -233,7 +233,7 @@ rails_conductor_inbound_email_incinerate POST /rails/conductor/action_mailbox/:i
 
   test "rails routes with expanded option" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get '/cart', to: 'cart#show'
       end
     RUBY
@@ -398,7 +398,7 @@ rails_conductor_inbound_email_incinerate POST /rails/conductor/action_mailbox/:i
 
   test "rails routes with unused option" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
       end
     RUBY
 

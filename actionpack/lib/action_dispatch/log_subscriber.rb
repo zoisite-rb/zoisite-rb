@@ -11,7 +11,7 @@ module ActionDispatch
         status = payload[:status]
 
         message = +"Completed #{status} #{Rack::Utils::HTTP_STATUS_CODES[status]} in #{event.duration.round}ms"
-        message << "\n\n" if defined?(Rails.env) && Rails.env.development?
+        message << "\n\n" if defined?(Zoisite.env) && Zoisite.env.development?
 
         message
       end

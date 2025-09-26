@@ -20,7 +20,7 @@ if ActiveRecord::Base.lease_connection.supports_virtual_columns?
         t.virtual :mutated_name, type: :string, as: "REPLACE(name, 'l', 'L')"
         t.integer :column1
       end
-      VirtualColumn.create(name: "Rails", column1: 10)
+      VirtualColumn.create(name: "Zoisite", column1: 10)
     end
 
     def teardown
@@ -32,7 +32,7 @@ if ActiveRecord::Base.lease_connection.supports_virtual_columns?
       partial_inserts_was = VirtualColumn.partial_inserts
       VirtualColumn.partial_inserts = false
       assert_nothing_raised do
-        VirtualColumn.create!(name: "Rails")
+        VirtualColumn.create!(name: "Zoisite")
       end
     ensure
       VirtualColumn.partial_inserts = partial_inserts_was

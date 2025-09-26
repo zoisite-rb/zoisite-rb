@@ -7,10 +7,10 @@ module ApplicationTests
     include EnvHelpers
 
     setup do
-      @cleaner = Rails::BacktraceCleaner.new
+      @cleaner = Zoisite::BacktraceCleaner.new
     end
 
-    test "#clean silences Rails code from backtrace" do
+    test "#clean silences Zoisite code from backtrace" do
       backtrace = [
         "app/controllers/foo_controller.rb:4:in 'index'",
         "#{Gem.default_dir}/gems/railties-1.2.3/lib/rails/engine.rb:536:in `call"
@@ -34,7 +34,7 @@ module ApplicationTests
       end
     end
 
-    test "#clean_frame silences Rails code" do
+    test "#clean_frame silences Zoisite code" do
       frame = "#{Gem.default_dir}/gems/railties-1.2.3/lib/rails/engine.rb:536:in `call"
 
       cleaned = @cleaner.clean_frame(frame)

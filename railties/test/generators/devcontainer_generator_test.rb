@@ -3,9 +3,9 @@
 require "generators/generators_test_helper"
 require "rails/generators/rails/devcontainer/devcontainer_generator"
 
-module Rails
+module Zoisite
   module Generators
-    class DevcontainerGeneratorTest < Rails::Generators::TestCase
+    class DevcontainerGeneratorTest < Zoisite::Generators::TestCase
       include GeneratorsTestHelper
 
       def test_creates_devcontainer_files
@@ -226,8 +226,8 @@ module Rails
           mounts = devcontainer_json["mounts"].sole
 
           assert_equal "bind", mounts["type"]
-          assert_equal Rails::Generators::RAILS_DEV_PATH, mounts["source"]
-          assert_equal Rails::Generators::RAILS_DEV_PATH, mounts["target"]
+          assert_equal Zoisite::Generators::RAILS_DEV_PATH, mounts["source"]
+          assert_equal Zoisite::Generators::RAILS_DEV_PATH, mounts["target"]
         end
       end
 

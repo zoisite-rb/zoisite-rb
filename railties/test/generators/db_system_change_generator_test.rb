@@ -3,11 +3,11 @@
 require "generators/generators_test_helper"
 require "rails/generators/rails/db/system/change/change_generator"
 
-module Rails
+module Zoisite
   module Generators
     module Db
       module System
-        class ChangeGeneratorTest < Rails::Generators::TestCase
+        class ChangeGeneratorTest < Zoisite::Generators::TestCase
           include GeneratorsTestHelper
 
           setup do

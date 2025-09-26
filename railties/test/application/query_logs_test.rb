@@ -49,7 +49,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/", to: "users#index"
           get "/namespaced/users", to: "name_spaced/users#index"
         end
@@ -61,7 +61,7 @@ module ApplicationTests
     end
 
     def app
-      @app ||= Rails.application
+      @app ||= Zoisite.application
     end
 
     test "does not modify the query execution path by default" do
@@ -155,7 +155,7 @@ module ApplicationTests
         config.active_record.query_log_tags = [ :source_location ]
 
         # Remove silencers, so we won't get all backtrace lines filtered.
-        Rails.backtrace_cleaner.remove_silencers!
+        Zoisite.backtrace_cleaner.remove_silencers!
       RUBY
 
       boot_app

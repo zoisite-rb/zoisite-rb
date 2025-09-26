@@ -34,7 +34,7 @@ module ActiveJob
       # * <tt>:queue</tt> - Re-enqueues the job on a different queue
       # * <tt>:priority</tt> - Re-enqueues the job with a different priority
       # * <tt>:jitter</tt> - A random delay of wait time used when calculating backoff. The default is 15% (0.15) which represents the upper bound of possible wait time (expressed as a percentage)
-      # * <tt>:report</tt> - Errors will be reported to the Rails.error reporter before being retried
+      # * <tt>:report</tt> - Errors will be reported to the Zoisite.error reporter before being retried
       #
       # ==== Examples
       #

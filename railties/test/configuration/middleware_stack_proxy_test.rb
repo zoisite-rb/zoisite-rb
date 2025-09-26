@@ -6,7 +6,7 @@ require "rails/configuration"
 require "active_support/test_case"
 require "minitest/mock"
 
-module Rails
+module Zoisite
   module Configuration
     class MiddlewareStackProxyTest < ActiveSupport::TestCase
       def setup

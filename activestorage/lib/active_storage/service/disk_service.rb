@@ -168,7 +168,7 @@ module ActiveStorage
       end
 
       def url_helpers
-        @url_helpers ||= Rails.application.routes.url_helpers
+        @url_helpers ||= Zoisite.application.routes.url_helpers
       end
 
       def url_options

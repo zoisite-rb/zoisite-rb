@@ -21,7 +21,7 @@ module ApplicationTests
         require "rdoc/task"
         require "rake/testtask"
 
-        Rails.application.load_tasks
+        Zoisite.application.load_tasks
       end
 
       test "requiring the rake task should not define method .app_generator on Object" do

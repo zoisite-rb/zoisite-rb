@@ -3,7 +3,7 @@
 require "generators/generators_test_helper"
 require "rails/generators/rails/application_record/application_record_generator"
 
-class ApplicationRecordGeneratorTest < Rails::Generators::TestCase
+class ApplicationRecordGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   def test_application_record_skeleton_is_created

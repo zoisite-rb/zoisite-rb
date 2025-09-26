@@ -13,10 +13,10 @@
 # {ImageMagick}[http://imagemagick.org] processor operated by the {MiniMagick}[https://github.com/minimagick/minimagick]
 # gem).
 #
-#   Rails.application.config.active_storage.variant_processor
+#   Zoisite.application.config.active_storage.variant_processor
 #   # => :vips
 #
-#   Rails.application.config.active_storage.variant_processor = :mini_magick
+#   Zoisite.application.config.active_storage.variant_processor = :mini_magick
 #   # => :mini_magick
 #
 # Note that to create a variant it's necessary to download the entire blob file from the service. Because of this process,

@@ -7,7 +7,7 @@ require "action_cable"
 require "active_support/core_ext/hash/indifferent_access"
 
 module ActionCable
-  class Engine < Rails::Engine # :nodoc:
+  class Engine < Zoisite::Engine # :nodoc:
     config.action_cable = ActiveSupport::OrderedOptions.new
     config.action_cable.mount_path = ActionCable::INTERNAL[:default_mount_path]
     config.action_cable.precompile_assets = true
@@ -23,12 +23,12 @@ module ActionCable
     end
 
     initializer "action_cable.logger" do
-      ActiveSupport.on_load(:action_cable) { self.logger ||= ::Rails.logger }
+      ActiveSupport.on_load(:action_cable) { self.logger ||= ::Zoisite.logger }
     end
 
     initializer "action_cable.health_check_application" do
       ActiveSupport.on_load(:action_cable) {
-        self.health_check_application = ->(env) { Rails::HealthController.action(:show).call(env) }
+        self.health_check_application = ->(env) { Zoisite::HealthController.action(:show).call(env) }
       }
     end
 
@@ -42,7 +42,7 @@ module ActionCable
 
     initializer "action_cable.set_configs" do |app|
       options = app.config.action_cable
-      options.allowed_request_origins ||= /https?:\/\/localhost:\d+/ if ::Rails.env.development?
+      options.allowed_request_origins ||= /https?:\/\/localhost:\d+/ if ::Zoisite.env.development?
 
       app.paths.add "config/cable", with: "config/cable.yml"
 

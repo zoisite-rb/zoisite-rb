@@ -6,11 +6,11 @@ module ActiveModel
   module Validations
     module ClassMethods
       # This method is a shortcut to all default validators and any custom
-      # validator classes ending in 'Validator'. Note that \Rails default
+      # validator classes ending in 'Validator'. Note that \Zoisite default
       # validators can be overridden inside specific classes by creating
       # custom validator classes in their place such as PresenceValidator.
       #
-      # Examples of using the default Rails validators:
+      # Examples of using the default Zoisite validators:
       #
       #   validates :username, absence: true
       #   validates :terms, acceptance: true

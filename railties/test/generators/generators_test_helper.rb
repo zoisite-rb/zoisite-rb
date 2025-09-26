@@ -7,11 +7,11 @@ require "rails/generators"
 require "rails/generators/test_case"
 require "rails/generators/app_base"
 
-Rails.application.config.generators.templates = [File.expand_path("../fixtures/lib/templates", __dir__)]
+Zoisite.application.config.generators.templates = [File.expand_path("../fixtures/lib/templates", __dir__)]
 
 # Call configure to load the settings from
-# Rails.application.config.generators to Rails::Generators
-Rails.application.load_generators
+# Zoisite.application.config.generators to Zoisite::Generators
+Zoisite.application.load_generators
 
 require "active_record"
 require "action_dispatch"
@@ -26,13 +26,13 @@ module GeneratorsTestHelper
       destination File.expand_path("../fixtures/tmp", __dir__)
       setup :prepare_destination
 
-      setup { Rails.application.config.root = Pathname("../fixtures").expand_path(__dir__) }
+      setup { Zoisite.application.config.root = Pathname("../fixtures").expand_path(__dir__) }
 
       setup { @original_rakeopt, ENV["RAKEOPT"] = ENV["RAKEOPT"], "--silent" }
       teardown { ENV["RAKEOPT"] = @original_rakeopt }
 
       begin
-        base.tests Rails::Generators.const_get(base.name.delete_suffix("Test"))
+        base.tests Zoisite::Generators.const_get(base.name.delete_suffix("Test"))
       rescue
       end
     end

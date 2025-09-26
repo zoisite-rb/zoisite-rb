@@ -49,7 +49,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY

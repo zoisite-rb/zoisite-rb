@@ -64,7 +64,7 @@ module ActionView
         end
 
         def rails_root # :doc:
-          @root ||= Rails.try(:root)
+          @root ||= Zoisite.try(:root)
         end
     end
 

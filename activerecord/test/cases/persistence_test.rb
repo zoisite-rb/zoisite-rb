@@ -67,7 +67,7 @@ class PersistenceTest < ActiveRecord::TestCase
     def test_fills_auto_populated_columns_on_creation
       record = Default.create
       assert_not_nil record.id
-      assert_equal "Ruby on Rails", record.ruby_on_rails
+      assert_equal "Ruby on Zoisite", record.ruby_on_rails
 
       if supports_virtual_columns?
         assert_not_nil record.virtual_stored_number
@@ -95,7 +95,7 @@ class PersistenceTest < ActiveRecord::TestCase
     def test_fills_auto_populated_columns_on_creation
       record = Default.create
       assert_not_nil record.id
-      assert_equal "Ruby on Rails", record.ruby_on_rails
+      assert_equal "Ruby on Zoisite", record.ruby_on_rails
 
       assert_not_nil record.random_number
       assert_not_nil record.modified_date

@@ -10,17 +10,17 @@ module ActiveRecord
 
       ##
       # :singleton-method:
-      # Set the secret used for the signed id verifier instance when using Active Record outside of \Rails.
-      # Within \Rails, this is automatically set using the \Rails application key generator.
+      # Set the secret used for the signed id verifier instance when using Active Record outside of \Zoisite.
+      # Within \Zoisite, this is automatically set using the \Zoisite application key generator.
       class_attribute :signed_id_verifier_secret, instance_writer: false
       module DeprecateSignedIdVerifierSecret
         def signed_id_verifier_secret=(secret)
           ActiveRecord.deprecator.warn(<<~MSG)
-            ActiveRecord::Base.signed_id_verifier_secret is deprecated and will be removed in Rails 8.2.
+            ActiveRecord::Base.signed_id_verifier_secret is deprecated and will be removed in Zoisite 8.2.
 
             If the secret is model-specific, set Model.signed_id_verifier instead.
 
-            Otherwise, configure Rails.application.message_verifiers (or ActiveRecord.message_verifiers) with the secret.
+            Otherwise, configure Zoisite.application.message_verifiers (or ActiveRecord.message_verifiers) with the secret.
           MSG
 
           super

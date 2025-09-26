@@ -20,7 +20,7 @@ require "active_storage/service/registry"
 require "active_storage/reflection"
 
 module ActiveStorage
-  class Engine < Rails::Engine # :nodoc:
+  class Engine < Zoisite::Engine # :nodoc:
     isolate_namespace ActiveStorage
 
     config.active_storage = ActiveSupport::OrderedOptions.new
@@ -87,7 +87,7 @@ module ActiveStorage
       end
 
       config.after_initialize do |app|
-        ActiveStorage.logger            = app.config.active_storage.logger || Rails.logger
+        ActiveStorage.logger            = app.config.active_storage.logger || Zoisite.logger
         ActiveStorage.variant_processor = app.config.active_storage.variant_processor || :mini_magick
         ActiveStorage.previewers        = app.config.active_storage.previewers || []
         ActiveStorage.analyzers         = app.config.active_storage.analyzers || []
@@ -173,8 +173,8 @@ module ActiveStorage
       ActiveSupport.on_load(:active_storage_blob) do
         configs = app.config.active_storage.service_configurations ||=
           begin
-            config_file = Rails.root.join("config/storage/#{Rails.env}.yml")
-            config_file = Rails.root.join("config/storage.yml") unless config_file.exist?
+            config_file = Zoisite.root.join("config/storage/#{Zoisite.env}.yml")
+            config_file = Zoisite.root.join("config/storage.yml") unless config_file.exist?
             raise("Couldn't find Active Storage configuration in #{config_file}") unless config_file.exist?
 
             ActiveSupport::ConfigurationFile.parse(config_file)
@@ -223,7 +223,7 @@ module ActiveStorage
 
     initializer "active_storage.fixture_set" do
       ActiveSupport.on_load(:active_record_fixture_set) do
-        ActiveStorage::FixtureSet.file_fixture_path ||= Rails.root.join(*[
+        ActiveStorage::FixtureSet.file_fixture_path ||= Zoisite.root.join(*[
           ENV.fetch("FIXTURES_PATH") { File.join("test", "fixtures") },
           ENV["FIXTURES_DIR"],
           "files"

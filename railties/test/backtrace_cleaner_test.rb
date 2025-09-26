@@ -5,7 +5,7 @@ require "rails/backtrace_cleaner"
 
 class BacktraceCleanerTest < ActiveSupport::TestCase
   def setup
-    @cleaner = Rails::BacktraceCleaner.new
+    @cleaner = Zoisite::BacktraceCleaner.new
   end
 
   test "#clean should consider traces from irb lines as User code" do
@@ -36,7 +36,7 @@ class BacktraceCleanerTest < ActiveSupport::TestCase
     assert_equal 2, result.length
   end
 
-  test "#clean should consider traces that include dasherized Rails application name" do
+  test "#clean should consider traces that include dasherized Zoisite application name" do
     backtrace = [ "(my-app):1",
                   "/Path/to/rails/railties/lib/rails/commands/console.rb:77:in `start'",
                   "bin/rails:4:in `<main>'" ]

@@ -7,7 +7,7 @@ module ActionController # :nodoc:
   #
   # Allows views to be streamed back to the client as they are rendered.
   #
-  # By default, Rails renders views by first rendering the template and then the
+  # By default, Zoisite renders views by first rendering the template and then the
   # layout. The response is sent to the client after the whole template is
   # rendered, all queries are made, and the layout is processed.
   #
@@ -62,7 +62,7 @@ module ActionController # :nodoc:
   #
   # ## Communication between layout and template
   #
-  # When streaming, rendering happens top-down instead of inside-out. Rails starts
+  # When streaming, rendering happens top-down instead of inside-out. Zoisite starts
   # with the layout, and the template is rendered later, when its `yield` is
   # reached.
   #
@@ -154,7 +154,7 @@ module ActionController # :nodoc:
   # happens because part of the template was already rendered and streamed to the
   # client, making it impossible to render a whole exception page.
   #
-  # Currently, when an exception happens in development or production, Rails will
+  # Currently, when an exception happens in development or production, Zoisite will
   # automatically stream to the client:
   #
   #     "><script>window.location = "/500.html"</script></html>

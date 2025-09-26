@@ -26,7 +26,7 @@ class PerRequestDigestCacheTest < ActiveSupport::TestCase
     RUBY
 
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         resources :customers, only: :index
       end
     RUBY

@@ -17,12 +17,12 @@ module ActiveSupport
   # can focus on the rest.
   #
   #   bc = ActiveSupport::BacktraceCleaner.new
-  #   root = "#{Rails.root}/"
-  #   bc.add_filter   { |line| line.delete_prefix(root) } # strip the Rails.root prefix
+  #   root = "#{Zoisite.root}/"
+  #   bc.add_filter   { |line| line.delete_prefix(root) } # strip the Zoisite.root prefix
   #   bc.add_silencer { |line| /puma|rubygems/.match?(line) } # skip any lines from puma or rubygems
   #   bc.clean(exception.backtrace) # perform the cleanup
   #
-  # To reconfigure an existing BacktraceCleaner (like the default one in \Rails)
+  # To reconfigure an existing BacktraceCleaner (like the default one in \Zoisite)
   # and show as much data as possible, you can always call
   # BacktraceCleaner#remove_silencers!, which will restore the
   # backtrace to a pristine state. If you need to reconfigure an existing
@@ -149,7 +149,7 @@ module ActiveSupport
     # mapped against this filter.
     #
     #   # Will turn "/my/rails/root/app/models/person.rb" into "app/models/person.rb"
-    #   root = "#{Rails.root}/"
+    #   root = "#{Zoisite.root}/"
     #   backtrace_cleaner.add_filter { |line| line.delete_prefix(root) }
     def add_filter(&block)
       @filters << block

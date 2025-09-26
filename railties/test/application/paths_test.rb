@@ -17,7 +17,7 @@ module ApplicationTests
         end
       RUBY
       require "#{app_path}/config/environment"
-      @paths = Rails.application.config.paths
+      @paths = Zoisite.application.config.paths
     end
 
     def teardown
@@ -40,7 +40,7 @@ module ApplicationTests
       assert_not $:.any? { |p| File.expand_path(p) == root(*path) }, "Load path includes '#{root(*path)}'. They are:\n-----\n #{$:.join("\n")}\n-----"
     end
 
-    test "booting up Rails yields a valid paths object" do
+    test "booting up Zoisite yields a valid paths object" do
       assert_path @paths["app/models"],          "app/models"
       assert_path @paths["app/helpers"],         "app/helpers"
       assert_path @paths["app/views"],           "app/views"
@@ -58,7 +58,7 @@ module ApplicationTests
       assert_equal root("app", "controllers"), @paths["app/controllers"].expanded.first
     end
 
-    test "booting up Rails yields a list of paths that are eager" do
+    test "booting up Zoisite yields a list of paths that are eager" do
       eager_load = @paths.eager_load
       assert_includes eager_load, root("app/controllers")
       assert_includes eager_load, root("app/helpers")
@@ -66,7 +66,7 @@ module ApplicationTests
     end
 
     test "environments has a glob equal to the current environment" do
-      assert_equal "#{Rails.env}.rb", @paths["config/environments"].glob
+      assert_equal "#{Zoisite.env}.rb", @paths["config/environments"].glob
     end
 
     test "load path includes each of the paths in config.paths as long as the directories exist" do

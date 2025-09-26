@@ -7,7 +7,7 @@ require "json"
 
 module ActionText
   module Generators
-    class InstallGenerator < ::Rails::Generators::Base
+    class InstallGenerator < ::Zoisite::Generators::Base
       source_root File.expand_path("templates", __dir__)
 
       def install_javascript_dependencies

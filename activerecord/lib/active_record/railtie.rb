@@ -6,14 +6,14 @@ require "active_support/core_ext/object/try"
 require "active_model/railtie"
 
 # For now, action_controller must always be present with
-# Rails, so let's make sure that it gets required before
+# Zoisite, so let's make sure that it gets required before
 # here. This is needed for correctly setting up the middleware.
 # In the future, this might become an optional require.
 require "action_controller/railtie"
 
 module ActiveRecord
   # = Active Record Railtie
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Zoisite::Railtie # :nodoc:
     config.active_record = ActiveSupport::OrderedOptions.new
     config.active_record.encryption = ActiveSupport::OrderedOptions.new
 
@@ -49,7 +49,7 @@ module ActiveRecord
     rake_tasks do
       namespace :db do
         task :load_config do
-          if defined?(ENGINE_ROOT) && engine = Rails::Engine.find(ENGINE_ROOT)
+          if defined?(ENGINE_ROOT) && engine = Zoisite::Engine.find(ENGINE_ROOT)
             if engine.paths["db/migrate"].existent
               ActiveRecord::Tasks::DatabaseTasks.migrations_paths += engine.paths["db/migrate"].to_a
             end
@@ -66,10 +66,10 @@ module ActiveRecord
     console do |app|
       require "active_record/railties/console_sandbox" if app.sandbox?
       require "active_record/base"
-      unless ActiveSupport::Logger.logger_outputs_to?(Rails.logger, STDERR, STDOUT)
+      unless ActiveSupport::Logger.logger_outputs_to?(Zoisite.logger, STDERR, STDOUT)
         console = ActiveSupport::Logger.new(STDERR)
-        console.level = Rails.logger.level
-        Rails.logger.broadcast_to(console)
+        console.level = Zoisite.logger.level
+        Zoisite.logger.broadcast_to(console)
       end
       ActiveRecord.verbose_query_logs = false
       ActiveRecord::Base.attributes_for_inspect = :all
@@ -98,11 +98,11 @@ module ActiveRecord
     end
 
     initializer "active_record.logger" do
-      ActiveSupport.on_load(:active_record) { self.logger ||= ::Rails.logger }
+      ActiveSupport.on_load(:active_record) { self.logger ||= ::Zoisite.logger }
     end
 
     initializer "active_record.backtrace_cleaner" do
-      ActiveSupport.on_load(:active_record) { LogSubscriber.backtrace_cleaner = ::Rails.backtrace_cleaner }
+      ActiveSupport.on_load(:active_record) { LogSubscriber.backtrace_cleaner = ::Zoisite.backtrace_cleaner }
     end
 
     initializer "active_record.migration_error" do |app|
@@ -116,13 +116,13 @@ module ActiveRecord
     initializer "active_record.cache_versioning_support" do
       config.after_initialize do |app|
         ActiveSupport.on_load(:active_record) do
-          if app.config.active_record.cache_versioning && Rails.cache
-            unless Rails.cache.class.try(:supports_cache_versioning?)
+          if app.config.active_record.cache_versioning && Zoisite.cache
+            unless Zoisite.cache.class.try(:supports_cache_versioning?)
               raise <<-end_error
 
 You're using a cache store that doesn't support native cache versioning.
-Your best option is to upgrade to a newer version of #{Rails.cache.class}
-that supports cache versioning (#{Rails.cache.class}.supports_cache_versioning? #=> true).
+Your best option is to upgrade to a newer version of #{Zoisite.cache.class}
+that supports cache versioning (#{Zoisite.cache.class}.supports_cache_versioning? #=> true).
 
 Next best, switch to a different cache store that does support cache versioning:
 https://guides.rubyonrails.org/caching_with_rails.html#cache-stores.
@@ -146,7 +146,7 @@ To keep using the current cache store, you can turn off cache versioning entirel
     end
 
     initializer "active_record.define_attribute_methods" do |app|
-      # For resiliency, it is critical that a Rails application should be
+      # For resiliency, it is critical that a Zoisite application should be
       # able to boot without depending on the database (or any other service)
       # being responsive.
       #
@@ -169,7 +169,7 @@ To keep using the current cache store, you can turn off cache versioning entirel
           # likely as part of the first few requests or jobs. This isn't good for performance
           # but we unfortunately have to arbitrate between resiliency and performance, and chose
           # resiliency.
-          if !check_schema_cache_dump_version && app.config.eager_load && !Rails.env.local?
+          if !check_schema_cache_dump_version && app.config.eager_load && !Zoisite.env.local?
             begin
               descendants.each do |model|
                 if model.connection_pool.schema_reflection.cached?(model.table_name)
@@ -260,7 +260,7 @@ To keep using the current cache store, you can turn off cache versioning entirel
     # and then establishes the connection.
     initializer "active_record.initialize_database" do
       ActiveSupport.on_load(:active_record) do
-        self.configurations = Rails.application.config.database_configuration
+        self.configurations = Zoisite.application.config.database_configuration
 
         establish_connection
       end
@@ -327,7 +327,7 @@ To keep using the current cache store, you can turn off cache versioning entirel
 
     initializer "active_record.set_filter_attributes" do
       ActiveSupport.on_load(:active_record) do
-        self.filter_attributes += Rails.application.config.filter_parameters
+        self.filter_attributes += Zoisite.application.config.filter_parameters
       end
     end
 
@@ -392,7 +392,7 @@ To keep using the current cache store, you can turn off cache versioning entirel
         if app.config.active_record.query_log_tags_enabled
           ActiveRecord.query_transformers << ActiveRecord::QueryLogs
           ActiveRecord::QueryLogs.taggings = ActiveRecord::QueryLogs.taggings.merge(
-            application:  Rails.application.class.name.split("::").first,
+            application:  Zoisite.application.class.name.split("::").first,
             pid:          -> { Process.pid.to_s },
             socket:       ->(context) { context[:connection].pool.db_config.socket },
             db_host:      ->(context) { context[:connection].pool.db_config.host },
@@ -423,7 +423,7 @@ To keep using the current cache store, you can turn off cache versioning entirel
     initializer "active_record.unregister_current_scopes_on_unload" do |app|
       config.after_initialize do
         if app.config.reloading_enabled?
-          Rails.autoloaders.main.on_unload do |_cpath, value, _abspath|
+          Zoisite.autoloaders.main.on_unload do |_cpath, value, _abspath|
             # Conditions are written this way to be robust against custom
             # implementations of value#is_a? or value#<.
             if Class === value && ActiveRecord::Base > value

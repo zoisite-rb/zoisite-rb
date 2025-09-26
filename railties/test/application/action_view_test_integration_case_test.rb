@@ -17,14 +17,14 @@ class ActionViewTestCaseIntegrationTest < ActionView::TestCase
     build_app
 
     app_file "config/routes.rb", <<~RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         root to: "action_view_test_case_test/home#index"
       end
     RUBY
 
     require "#{app_path}/config/environment"
 
-    HomeController.include(Rails.application.routes.url_helpers)
+    HomeController.include(Zoisite.application.routes.url_helpers)
     @controller = HomeController.new
   end
 

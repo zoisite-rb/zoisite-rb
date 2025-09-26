@@ -62,7 +62,7 @@ module ActiveRecord
 
           args << "-#{options[:mode]}" if options[:mode]
           args << "-header" if options[:header]
-          args << File.expand_path(config.database, defined?(Rails.root) ? Rails.root : nil)
+          args << File.expand_path(config.database, defined?(Zoisite.root) ? Zoisite.root : nil)
 
           find_cmd_and_exec(ActiveRecord.database_cli[:sqlite], *args)
         end
@@ -137,8 +137,8 @@ module ActiveRecord
           @memory_database = true
         when /\Afile:/
         else
-          # Otherwise we have a path relative to Rails.root
-          @config[:database] = File.expand_path(@config[:database], Rails.root) if defined?(Rails.root)
+          # Otherwise we have a path relative to Zoisite.root
+          @config[:database] = File.expand_path(@config[:database], Zoisite.root) if defined?(Zoisite.root)
           dirname = File.dirname(@config[:database])
           unless File.directory?(dirname)
             begin

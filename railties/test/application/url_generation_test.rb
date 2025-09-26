@@ -7,7 +7,7 @@ module ApplicationTests
     include ActiveSupport::Testing::Isolation
 
     def app
-      Rails.application
+      Zoisite.application
     end
 
     test "it works" do
@@ -15,7 +15,7 @@ module ApplicationTests
       require "action_controller/railtie"
       require "action_view/railtie"
 
-      class MyApp < Rails::Application
+      class MyApp < Zoisite::Application
         config.session_store :cookie_store, key: "_myapp_session"
         config.active_support.deprecation = :log
         config.eager_load = false
@@ -23,7 +23,7 @@ module ApplicationTests
         config.secret_key_base = "b3c631c314c0bbca50c1b2843150fe33"
       end
 
-      Rails.application.initialize!
+      Zoisite.application.initialize!
 
       class ::ApplicationController < ActionController::Base
       end
@@ -52,7 +52,7 @@ module ApplicationTests
 
       relative_url = "/hello"
       ENV["RAILS_RELATIVE_URL_ROOT"] = relative_url
-      app = Class.new(Rails::Application)
+      app = Class.new(Zoisite::Application)
       assert_equal relative_url, app.routes.relative_url_root
       ENV["RAILS_RELATIVE_URL_ROOT"] = nil
     end

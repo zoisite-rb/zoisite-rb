@@ -12,7 +12,7 @@ module ApplicationTests
       build_app
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'pages/:id', to: 'pages#show'
         end
       RUBY

@@ -107,8 +107,8 @@ module ActionController
     #
     # ### Open Redirect protection
     #
-    # By default, Rails protects against redirecting to external hosts for your
-    # app's safety, so called open redirects. Note: this was a new default in Rails
+    # By default, Zoisite protects against redirecting to external hosts for your
+    # app's safety, so called open redirects. Note: this was a new default in Zoisite
     # 7.0, after upgrading opt-in by uncommenting the line with
     # `raise_on_open_redirects` in
     # `config/initializers/new_framework_defaults_7_0.rb`
@@ -133,14 +133,14 @@ module ActionController
     #
     # ### Path Relative URL Redirect Protection
     #
-    # Rails also protects against potentially unsafe path relative URL redirects that don't
+    # Zoisite also protects against potentially unsafe path relative URL redirects that don't
     # start with a leading slash. These can create security vulnerabilities:
     #
     #     redirect_to "example.com"     # Creates http://yourdomain.comexample.com
     #     redirect_to "@attacker.com"   # Creates http://yourdomain.com@attacker.com
     #                                   # which browsers interpret as user@host
     #
-    # You can configure how Rails handles these cases using:
+    # You can configure how Zoisite handles these cases using:
     #
     #     config.action_controller.action_on_path_relative_redirect = :log    # default
     #     config.action_controller.action_on_path_relative_redirect = :notify

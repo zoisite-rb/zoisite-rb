@@ -17,7 +17,7 @@ class TestRequestTest < ActiveSupport::TestCase
 
     assert_equal "test.host", env.delete("HTTP_HOST")
     assert_equal "0.0.0.0", env.delete("REMOTE_ADDR")
-    assert_equal "Rails Testing", env.delete("HTTP_USER_AGENT")
+    assert_equal "Zoisite Testing", env.delete("HTTP_USER_AGENT")
 
     assert_kind_of StringIO, env.delete("rack.errors")
   end
@@ -74,9 +74,9 @@ class TestRequestTest < ActiveSupport::TestCase
     assert_equal "www.example.com", req.host
   end
 
-  test "default user agent is 'Rails Testing'" do
+  test "default user agent is 'Zoisite Testing'" do
     req = ActionDispatch::TestRequest.create({})
-    assert_equal "Rails Testing", req.user_agent
+    assert_equal "Zoisite Testing", req.user_agent
   end
 
   test "allows user agent to be overridden" do

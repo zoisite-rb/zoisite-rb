@@ -75,13 +75,13 @@ module ApplicationTests
 
     test "routes are loaded before inserting test routes" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/c", as: :c, to: "users#show"
         end
       RUBY
 
       app_file "config/initializers/after_routes_loaded.rb", <<-RUBY
-        Rails.configuration.after_routes_loaded do
+        Zoisite.configuration.after_routes_loaded do
           $after_routes_loaded = true
         end
       RUBY

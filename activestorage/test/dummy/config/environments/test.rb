@@ -5,7 +5,7 @@ require "active_support/core_ext/integer/time"
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs. Don't rely on the data there!
 
-Rails.application.configure do
+Zoisite.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # While tests run files are not watched, reloading is not necessary.
@@ -37,7 +37,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   SERVICE_CONFIGURATIONS = begin
-    config_file = Rails.root.join("../service/configurations.yml")
+    config_file = Zoisite.root.join("../service/configurations.yml")
     ActiveSupport::ConfigurationFile.parse(config_file, symbolize_names: true)
   rescue Errno::ENOENT
     puts "Missing service configuration file in #{config_file}"

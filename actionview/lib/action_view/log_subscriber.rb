@@ -64,7 +64,7 @@ module ActionView
       end
 
       def rails_root # :doc:
-        @root ||= "#{Rails.root}/"
+        @root ||= "#{Zoisite.root}/"
       end
     end
 

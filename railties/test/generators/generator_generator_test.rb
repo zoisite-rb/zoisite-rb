@@ -3,7 +3,7 @@
 require "generators/generators_test_helper"
 require "rails/generators/rails/generator/generator_generator"
 
-class GeneratorGeneratorTest < Rails::Generators::TestCase
+class GeneratorGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(awesome)
 
@@ -17,9 +17,9 @@ class GeneratorGeneratorTest < Rails::Generators::TestCase
     ).each { |path| assert_file path }
 
     assert_file "lib/generators/awesome/awesome_generator.rb",
-                /class AwesomeGenerator < Rails::Generators::NamedBase/
+                /class AwesomeGenerator < Zoisite::Generators::NamedBase/
     assert_file "test/lib/generators/awesome_generator_test.rb",
-               /class AwesomeGeneratorTest < Rails::Generators::TestCase/,
+               /class AwesomeGeneratorTest < Zoisite::Generators::TestCase/,
                /require "generators\/awesome\/awesome_generator"/
   end
 
@@ -33,9 +33,9 @@ class GeneratorGeneratorTest < Rails::Generators::TestCase
     ).each { |path| assert_file path }
 
     assert_file "lib/generators/rails/awesome/awesome_generator.rb",
-                /class Rails::AwesomeGenerator < Rails::Generators::NamedBase/
+                /class Zoisite::AwesomeGenerator < Zoisite::Generators::NamedBase/
     assert_file "test/lib/generators/rails/awesome_generator_test.rb",
-               /class Rails::AwesomeGeneratorTest < Rails::Generators::TestCase/,
+               /class Zoisite::AwesomeGeneratorTest < Zoisite::Generators::TestCase/,
                /require "generators\/rails\/awesome\/awesome_generator"/
   end
 
@@ -49,9 +49,9 @@ class GeneratorGeneratorTest < Rails::Generators::TestCase
     ).each { |path| assert_file path }
 
     assert_file "lib/generators/awesome_generator.rb",
-                /class AwesomeGenerator < Rails::Generators::NamedBase/
+                /class AwesomeGenerator < Zoisite::Generators::NamedBase/
     assert_file "test/lib/generators/awesome_generator_test.rb",
-               /class AwesomeGeneratorTest < Rails::Generators::TestCase/,
+               /class AwesomeGeneratorTest < Zoisite::Generators::TestCase/,
                /require "generators\/awesome_generator"/
   end
 
@@ -65,9 +65,9 @@ class GeneratorGeneratorTest < Rails::Generators::TestCase
     ).each { |path| assert_file path }
 
     assert_file "lib/generators/rails/awesome_generator.rb",
-                /class Rails::AwesomeGenerator < Rails::Generators::NamedBase/
+                /class Zoisite::AwesomeGenerator < Zoisite::Generators::NamedBase/
     assert_file "test/lib/generators/rails/awesome_generator_test.rb",
-               /class Rails::AwesomeGeneratorTest < Rails::Generators::TestCase/,
+               /class Zoisite::AwesomeGeneratorTest < Zoisite::Generators::TestCase/,
                /require "generators\/rails\/awesome_generator"/
   end
 end

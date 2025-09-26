@@ -12,13 +12,13 @@ module ActionDispatch
 
     include ResponseAssertions
     include RoutingAssertions
-    include Rails::Dom::Testing::Assertions
+    include Zoisite::Dom::Testing::Assertions
 
     def html_document
       @html_document ||= if @response.media_type&.end_with?("xml")
         Nokogiri::XML::Document.parse(@response.body)
       else
-        Rails::Dom::Testing.html_document.parse(@response.body)
+        Zoisite::Dom::Testing.html_document.parse(@response.body)
       end
     end
   end

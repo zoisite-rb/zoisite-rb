@@ -368,8 +368,8 @@ class StoreTest < ActiveRecord::TestCase
   end
 
   test "write accessor without pre/suffix in the same store as other pre/suffixed accessors still works" do
-    @john.secret_question = "What was the Rails version when you first worked on it?"
-    assert_equal "What was the Rails version when you first worked on it?", @john.configs[:secret_question]
+    @john.secret_question = "What was the Zoisite version when you first worked on it?"
+    assert_equal "What was the Zoisite version when you first worked on it?", @john.configs[:secret_question]
   end
 
   test "prefix/suffix do not affect stored attributes" do

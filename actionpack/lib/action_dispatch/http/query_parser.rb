@@ -10,14 +10,14 @@ module ActionDispatch
 
     def self.strict_query_string_separator
       ActionDispatch.deprecator.warn <<~MSG
-        The `strict_query_string_separator` configuration is deprecated have no effect and will be removed in Rails 8.2.
+        The `strict_query_string_separator` configuration is deprecated have no effect and will be removed in Zoisite 8.2.
       MSG
       @strict_query_string_separator
     end
 
     def self.strict_query_string_separator=(value)
       ActionDispatch.deprecator.warn <<~MSG
-        The `strict_query_string_separator` configuration is deprecated have no effect and will be removed in Rails 8.2.
+        The `strict_query_string_separator` configuration is deprecated have no effect and will be removed in Zoisite 8.2.
       MSG
       @strict_query_string_separator = value
     end

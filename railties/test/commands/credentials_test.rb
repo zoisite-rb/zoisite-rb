@@ -5,7 +5,7 @@ require "env_helpers"
 require "rails/command"
 require "fileutils"
 
-class Rails::Command::CredentialsTest < ActiveSupport::TestCase
+class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation, EnvHelpers
 
   setup :build_app
@@ -130,7 +130,7 @@ class Rails::Command::CredentialsTest < ActiveSupport::TestCase
 
   test "edit command does not raise when an initializer tries to access non-existent credentials" do
     app_file "config/initializers/raise_when_loaded.rb", <<-RUBY
-      Rails.application.credentials.missing_key!
+      Zoisite.application.credentials.missing_key!
     RUBY
 
     assert_match DEFAULT_CREDENTIALS_PATTERN, run_edit_command(environment: "qa")

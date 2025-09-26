@@ -25,7 +25,7 @@ module ActionDispatch
     #
     # ## Usage within the framework
     #
-    # Polymorphic URL helpers are used in a number of places throughout the Rails
+    # Polymorphic URL helpers are used in a number of places throughout the Zoisite
     # framework:
     #
     # *   `url_for`, so you can use it with a record as the argument, e.g.

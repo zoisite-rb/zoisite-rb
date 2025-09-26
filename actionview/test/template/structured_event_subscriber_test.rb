@@ -19,9 +19,9 @@ module ActionView
       lookup_context = ActionView::LookupContext.new(view_paths, {}, ["test"])
       @view          = ActionView::Base.with_empty_template_cache.with_context(lookup_context)
 
-      unless Rails.respond_to?(:root)
+      unless Zoisite.respond_to?(:root)
         @defined_root = true
-        Rails.define_singleton_method(:root) { :defined_root } # Minitest `stub` expects the method to be defined.
+        Zoisite.define_singleton_method(:root) { :defined_root } # Minitest `stub` expects the method to be defined.
       end
     end
 
@@ -30,11 +30,11 @@ module ActionView
       ActionController::Base.view_paths.map(&:clear_cache)
 
       # We need to undef `root`, RenderTestCases don't want this to be defined
-      Rails.instance_eval { undef :root } if defined?(@defined_root)
+      Zoisite.instance_eval { undef :root } if defined?(@defined_root)
     end
 
     def test_render_template
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         with_debug_event_reporting do
           assert_event_reported("action_view.render_start", payload: { identifier: "test/hello_world.erb", layout: nil }) do
             event = assert_event_reported("action_view.render_template", payload: { identifier: "test/hello_world.erb", layout: nil }) do
@@ -49,7 +49,7 @@ module ActionView
     end
 
     def test_render_template_with_layout
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         with_debug_event_reporting do
           payload = { identifier: "test/hello_world.erb", layout: "layouts/yield" }
           assert_event_reported("action_view.render_start", payload:) do
@@ -65,7 +65,7 @@ module ActionView
     end
 
     def test_render_file_template
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         with_debug_event_reporting do
           assert_event_reported("action_view.render_start", payload: { identifier: "test/hello_world.erb", layout: nil }) do
             event = assert_event_reported("action_view.render_template", payload: { identifier: "test/hello_world.erb", layout: nil }) do
@@ -80,7 +80,7 @@ module ActionView
     end
 
     def test_render_text_template
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         with_debug_event_reporting do
           assert_event_reported("action_view.render_start", payload: { identifier: "text template", layout: nil }) do
             event = assert_event_reported("action_view.render_template", payload: { identifier: "text template", layout: nil }) do
@@ -95,7 +95,7 @@ module ActionView
     end
 
     def test_render_inline_template
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         with_debug_event_reporting do
           assert_event_reported("action_view.render_start", payload: { identifier: "inline template", layout: nil }) do
             event = assert_event_reported("action_view.render_template", payload: { identifier: "inline template", layout: nil }) do
@@ -110,7 +110,7 @@ module ActionView
     end
 
     def test_render_partial_with_implicit_path
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         with_debug_event_reporting do
           payload = { identifier: "customers/_customer.html.erb", layout: nil, cache_hit: nil }
           event = assert_event_reported("action_view.render_partial", payload:) do
@@ -124,7 +124,7 @@ module ActionView
     end
 
     def test_render_partial_with_cache_is_missed
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_view_cache_dependencies
         set_cache_controller
 
@@ -141,7 +141,7 @@ module ActionView
     end
 
     def test_render_partial_with_cache_is_hit
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_view_cache_dependencies
         set_cache_controller
 
@@ -161,7 +161,7 @@ module ActionView
     end
 
     def test_render_partial_as_layout
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_view_cache_dependencies
         set_cache_controller
 
@@ -177,7 +177,7 @@ module ActionView
     end
 
     def test_render_partial_with_layout
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_view_cache_dependencies
         set_cache_controller
 
@@ -194,7 +194,7 @@ module ActionView
     end
 
     def test_render_uncached_outer_partial_with_inner_cached_partial_wont_mix_cache_hits_or_misses
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_view_cache_dependencies
         set_cache_controller
 
@@ -219,7 +219,7 @@ module ActionView
     end
 
     def test_render_cached_outer_partial_with_cached_inner_partial
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_view_cache_dependencies
         set_cache_controller
 
@@ -241,7 +241,7 @@ module ActionView
     end
 
     def test_render_partial_with_cache_hit_and_missed
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_view_cache_dependencies
         set_cache_controller
 
@@ -261,7 +261,7 @@ module ActionView
     end
 
     def test_render_collection_template
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_cache_controller
 
         with_debug_event_reporting do
@@ -276,7 +276,7 @@ module ActionView
     end
 
     def test_render_collection_template_with_layout
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_cache_controller
 
         with_debug_event_reporting do
@@ -291,7 +291,7 @@ module ActionView
     end
 
     def test_render_collection_with_implicit_path
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_cache_controller
 
         with_debug_event_reporting do
@@ -306,7 +306,7 @@ module ActionView
     end
 
     def test_render_collection_template_without_path
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_cache_controller
 
         with_debug_event_reporting do
@@ -321,7 +321,7 @@ module ActionView
     end
 
     def test_render_collection_with_cached_set
-      Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+      Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
         set_view_cache_dependencies
         set_cache_controller
 

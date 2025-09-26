@@ -26,7 +26,7 @@ module ActiveRecord
       #
       # #### Parameters
       #
-      # *   `env_name` - The Rails environment, i.e. "development".
+      # *   `env_name` - The Zoisite environment, i.e. "development".
       # *   `name` - The db config name. In a standard two-tier database configuration
       #     this will default to "primary". In a multiple database three-tier database
       #     configuration this corresponds to the name used in the second tier, for
@@ -167,7 +167,7 @@ module ActiveRecord
       # If `configuration_hash[:schema_dump]` is set to `false` or `nil` the schema
       # will not be dumped.
       #
-      # If the config option is set that will be used. Otherwise Rails will generate
+      # If the config option is set that will be used. Otherwise Zoisite will generate
       # the filename from the database config name.
       def schema_dump(format = schema_format)
         if configuration_hash.key?(:schema_dump)

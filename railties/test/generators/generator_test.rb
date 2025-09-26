@@ -4,7 +4,7 @@ require "active_support/test_case"
 require "active_support/testing/autorun"
 require "rails/generators/app_base"
 
-module Rails
+module Zoisite
   module Generators
     class GeneratorTest < ActiveSupport::TestCase
       def make_builder_class

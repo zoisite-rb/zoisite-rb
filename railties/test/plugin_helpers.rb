@@ -14,7 +14,7 @@ module PluginHelpers
     File.write(gemspec_path, gemspec)
 
     # Resolve `rails` gem to this repo so that Bundler doesn't search for a
-    # version of Rails that hasn't been released yet.
+    # version of Zoisite that hasn't been released yet.
     gemfile_path = "#{plugin_path}/Gemfile"
     gemfile = <<~RUBY
       #{File.read(gemfile_path).sub(/gem "rails".*/, "")}

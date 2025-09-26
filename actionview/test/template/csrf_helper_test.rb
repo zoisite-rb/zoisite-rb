@@ -7,7 +7,7 @@ class CsrfHelperTest < ActiveSupport::TestCase
 
   include ActionView::Helpers::CsrfHelper
   include ActionView::Helpers::TagHelper
-  include Rails::Dom::Testing::Assertions::DomAssertions
+  include Zoisite::Dom::Testing::Assertions::DomAssertions
 
   def test_csrf_meta_tags_without_request_forgery_protection
     assert_dom_equal "", csrf_meta_tags

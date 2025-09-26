@@ -338,7 +338,7 @@ module ActionMailer
   #       end
   #
   #       def log_delivery
-  #         Rails.logger.info "Sent email with message id '#{message.message_id}' at #{Time.current}."
+  #         Zoisite.logger.info "Sent email with message id '#{message.message_id}' at #{Time.current}."
   #       end
   #   end
   #
@@ -391,7 +391,7 @@ module ActionMailer
   # mailer preview directories can be configured using the <tt>preview_paths</tt> option which has a default
   # of <tt>test/mailers/previews</tt>:
   #
-  #   config.action_mailer.preview_paths << "#{Rails.root}/lib/mailer_previews"
+  #   config.action_mailer.preview_paths << "#{Zoisite.root}/lib/mailer_previews"
   #
   # An overview of all previews is accessible at <tt>http://localhost:3000/rails/mailers</tt>
   # on a running development server instance.
@@ -779,7 +779,7 @@ module ActionMailer
     # the most used headers in an email message, these are:
     #
     # * +:subject+ - The subject of the message, if this is omitted, Action Mailer will
-    #   ask the \Rails I18n class for a translated +:subject+ in the scope of
+    #   ask the \Zoisite I18n class for a translated +:subject+ in the scope of
     #   <tt>[mailer_scope, action_name]</tt> or if this is missing, will translate the
     #   humanized version of the +action_name+
     # * +:to+ - Who the message is destined for, can be a string of addresses, or an array
@@ -925,7 +925,7 @@ module ActionMailer
         end
       end
 
-      # Translates the +subject+ using \Rails I18n class under <tt>[mailer_scope, action_name]</tt> scope.
+      # Translates the +subject+ using \Zoisite I18n class under <tt>[mailer_scope, action_name]</tt> scope.
       # If it does not find a translation for the +subject+ under the specified scope it will default to a
       # humanized version of the <tt>action_name</tt>.
       # If the subject has interpolations, you can pass them through the +interpolations+ parameter.

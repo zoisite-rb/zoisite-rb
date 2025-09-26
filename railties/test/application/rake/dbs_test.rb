@@ -42,7 +42,7 @@ module ApplicationTests
 
       test "db:create and db:drop without database URL" do
         require "#{app_path}/config/environment"
-        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: "primary")
+        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: "primary")
         db_create_and_drop db_config.database
       end
 
@@ -78,12 +78,12 @@ module ApplicationTests
         app_file "config/database.yml", <<-YAML
           <% 1 %>
           development:
-            database: <%= Rails.application.config.database %>
+            database: <%= Zoisite.application.config.database %>
             adapter: sqlite3
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -102,7 +102,7 @@ module ApplicationTests
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -114,13 +114,13 @@ module ApplicationTests
         app_file "config/database.yml", <<-YAML
           development:
             database: <%=
-              Rails.application.config.database
+              Zoisite.application.config.database
             %>
             adapter: sqlite3
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -133,11 +133,11 @@ module ApplicationTests
           development:
             database: storage/development.sqlite3
             adapter: sqlite3
-            other: <%= Rails.application.config.other.value %>
+            other: <%= Zoisite.application.config.other.value %>
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.other = Struct.new(:value).new(123)
           end
         RUBY
@@ -148,8 +148,8 @@ module ApplicationTests
       test "db:create and db:drop don't raise errors when loading YAML containing conditional statements in ERB" do
         app_file "config/database.yml", <<-YAML
           development:
-          <% if Rails.application.config.database %>
-            database: <%= Rails.application.config.database %>
+          <% if Zoisite.application.config.database %>
+            database: <%= Zoisite.application.config.database %>
           <% else %>
             database: db/default.sqlite3
           <% end %>
@@ -157,7 +157,7 @@ module ApplicationTests
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -168,12 +168,12 @@ module ApplicationTests
       test "db:create and db:drop don't raise errors when loading YAML containing multiple ERB statements on the same line" do
         app_file "config/database.yml", <<-YAML
           development:
-            database: <% if Rails.application.config.database %><%= Rails.application.config.database %><% else %>db/default.sqlite3<% end %>
+            database: <% if Zoisite.application.config.database %><%= Zoisite.application.config.database %><% else %>db/default.sqlite3<% end %>
             adapter: sqlite3
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -184,12 +184,12 @@ module ApplicationTests
       test "db:create and db:drop don't raise errors when loading YAML with single-line ERB" do
         app_file "config/database.yml", <<-YAML
           development:
-            <%= Rails.application.config.database ? 'database: storage/development.sqlite3' : 'database: storage/development.sqlite3' %>
+            <%= Zoisite.application.config.database ? 'database: storage/development.sqlite3' : 'database: storage/development.sqlite3' %>
             adapter: sqlite3
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -200,13 +200,13 @@ module ApplicationTests
       test "db:create and db:drop don't raise errors when loading YAML which contains a key's value as an ERB statement" do
         app_file "config/database.yml", <<-YAML
           development:
-            database: <%= Rails.application.config.database ? 'storage/development.sqlite3' : 'storage/development.sqlite3' %>
+            database: <%= Zoisite.application.config.database ? 'storage/development.sqlite3' : 'storage/development.sqlite3' %>
             custom_option: <%= ENV['CUSTOM_OPTION'] %>
             adapter: sqlite3
         YAML
 
         app_file "config/environments/development.rb", <<-RUBY
-          Rails.application.configure do
+          Zoisite.application.configure do
             config.database = "storage/development.sqlite3"
           end
         RUBY
@@ -341,7 +341,7 @@ module ApplicationTests
 
       test "db:migrate and db:migrate:status without database_url" do
         require "#{app_path}/config/environment"
-        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: "primary")
+        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: "primary")
         db_migrate_and_status db_config.database
       end
 
@@ -575,7 +575,7 @@ module ApplicationTests
 
       test "db:fixtures:load without database_url" do
         require "#{app_path}/config/environment"
-        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: "primary")
+        db_config = ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: "primary")
         db_fixtures_load db_config.database
       end
 
@@ -687,7 +687,7 @@ module ApplicationTests
 
         app_file "db/structure.sql", ""
         app_file "config/initializers/enable_sql_schema_format.rb", <<-RUBY
-          Rails.application.config.active_record.schema_format = :sql
+          Zoisite.application.config.active_record.schema_format = :sql
         RUBY
 
         rails "db:setup"
@@ -706,7 +706,7 @@ module ApplicationTests
 
         app_file "db/structure.sql", ""
         app_file "config/initializers/enable_sql_schema_format.rb", <<-RUBY
-          Rails.application.config.active_record.schema_format = :sql
+          Zoisite.application.config.active_record.schema_format = :sql
         RUBY
 
         rails "db:test:prepare"
@@ -828,7 +828,7 @@ module ApplicationTests
 
           app_file "db/schema.rb", "# Not touched"
           app_file "config/initializers/disable_dumping_schema.rb", <<-RUBY
-            Rails.application.config.active_record.dump_schema_after_migration = false
+            Zoisite.application.config.active_record.dump_schema_after_migration = false
           RUBY
 
           rails "db:prepare"
@@ -853,7 +853,7 @@ module ApplicationTests
       test "lazily loaded schema cache isn't read when reading the schema migrations table" do
         Dir.chdir(app_path) do
           app_file "config/initializers/lazy_load_schema_cache.rb", <<-RUBY
-            Rails.application.config.active_record.lazily_load_schema_cache = true
+            Zoisite.application.config.active_record.lazily_load_schema_cache = true
           RUBY
 
           rails "generate", "model", "recipe", "title:string"

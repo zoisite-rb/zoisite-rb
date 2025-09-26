@@ -4,7 +4,7 @@
 
 module ActionDispatch
   module Assertions
-    # A small suite of assertions that test responses from Rails applications.
+    # A small suite of assertions that test responses from Zoisite applications.
     module ResponseAssertions
       RESPONSE_PREDICATES = { # :nodoc:
         success:  :successful?,

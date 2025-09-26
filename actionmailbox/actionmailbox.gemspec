@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "actionmailbox"
   s.version     = version
   s.summary     = "Inbound email handling framework."
-  s.description = "Receive and process incoming emails in Rails applications."
+  s.description = "Receive and process incoming emails in Zoisite applications."
 
   s.required_ruby_version = ">= 3.2.0"
 

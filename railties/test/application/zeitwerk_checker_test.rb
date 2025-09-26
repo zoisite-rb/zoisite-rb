@@ -17,7 +17,7 @@ class ZeitwerkCheckerTest < ActiveSupport::TestCase
   test "returns an empty list for a default application" do
     boot
 
-    assert_empty Rails::ZeitwerkChecker.check
+    assert_empty Zoisite::ZeitwerkChecker.check
   end
 
   test "raises if there is a missing constants in autoload_paths" do
@@ -26,7 +26,7 @@ class ZeitwerkCheckerTest < ActiveSupport::TestCase
     boot
 
     e = assert_raises(Zeitwerk::NameError) do
-      Rails::ZeitwerkChecker.check
+      Zoisite::ZeitwerkChecker.check
     end
     assert_includes e.message, "expected file #{app_path}/app/models/user.rb to define constant User"
   end
@@ -35,49 +35,49 @@ class ZeitwerkCheckerTest < ActiveSupport::TestCase
     app_dir "extras"
     app_file "extras/x.rb", ""
 
-    add_to_config 'config.autoload_once_paths << "#{Rails.root}/extras"'
-    add_to_config 'config.eager_load_paths << "#{Rails.root}/extras"'
+    add_to_config 'config.autoload_once_paths << "#{Zoisite.root}/extras"'
+    add_to_config 'config.eager_load_paths << "#{Zoisite.root}/extras"'
 
     boot
 
     e = assert_raises(Zeitwerk::NameError) do
-      Rails::ZeitwerkChecker.check
+      Zoisite::ZeitwerkChecker.check
     end
-    assert_includes e.message, "expected file #{Rails.root}/extras/x.rb to define constant X"
+    assert_includes e.message, "expected file #{Zoisite.root}/extras/x.rb to define constant X"
   end
 
   test "returns an empty list unchecked directories do not exist" do
-    add_to_config 'config.autoload_paths << "#{Rails.root}/dir1"'
-    add_to_config 'config.autoload_once_paths << "#{Rails.root}/dir2"'
+    add_to_config 'config.autoload_paths << "#{Zoisite.root}/dir1"'
+    add_to_config 'config.autoload_once_paths << "#{Zoisite.root}/dir2"'
 
     boot
 
-    assert_empty Rails::ZeitwerkChecker.check
+    assert_empty Zoisite::ZeitwerkChecker.check
   end
 
   test "returns an empty list if unchecked directories are empty" do
     app_dir "dir1"
-    add_to_config 'config.autoload_paths << "#{Rails.root}/dir1"'
+    add_to_config 'config.autoload_paths << "#{Zoisite.root}/dir1"'
 
     app_dir "dir2"
-    add_to_config 'config.autoload_once_paths << "#{Rails.root}/dir2"'
+    add_to_config 'config.autoload_once_paths << "#{Zoisite.root}/dir2"'
 
     boot
 
-    assert_empty Rails::ZeitwerkChecker.check
+    assert_empty Zoisite::ZeitwerkChecker.check
   end
 
   test "returns unchecked directories" do
     app_dir "dir1"
     app_file "dir1/x.rb", "X = 1"
-    add_to_config 'config.autoload_paths << "#{Rails.root}/dir1"'
+    add_to_config 'config.autoload_paths << "#{Zoisite.root}/dir1"'
 
     app_dir "dir2"
     app_file "dir2/y.rb", "Y = 1"
-    add_to_config 'config.autoload_once_paths << "#{Rails.root}/dir2"'
+    add_to_config 'config.autoload_once_paths << "#{Zoisite.root}/dir2"'
 
     boot
 
-    assert_equal ["#{app_path}/dir1", "#{app_path}/dir2"], Rails::ZeitwerkChecker.check.sort
+    assert_equal ["#{app_path}/dir1", "#{app_path}/dir2"], Zoisite::ZeitwerkChecker.check.sort
   end
 end

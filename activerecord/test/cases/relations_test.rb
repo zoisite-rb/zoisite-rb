@@ -547,7 +547,7 @@ class RelationTest < ActiveRecord::TestCase
   end
 
   def test_finding_with_hash_conditions_on_joined_table
-    firms = DependentFirm.joins(:account).where(name: "RailsCore", accounts: { credit_limit: 55..60 }).to_a
+    firms = DependentFirm.joins(:account).where(name: "ZoisiteCore", accounts: { credit_limit: 55..60 }).to_a
     assert_equal 1, firms.size
     assert_equal companies(:rails_core), firms.first
   end

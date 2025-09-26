@@ -531,13 +531,13 @@ class HashToXmlTest < ActiveSupport::TestCase
 
   def test_one_level_with_yielding
     xml = { name: "David", street: "Paulina" }.to_xml(@xml_options) do |x|
-      x.creator("Rails")
+      x.creator("Zoisite")
     end
 
     assert_equal "<person>", xml.first(8)
     assert_includes xml, %(<street>Paulina</street>)
     assert_includes xml, %(<name>David</name>)
-    assert_includes xml, %(<creator>Rails</creator>)
+    assert_includes xml, %(<creator>Zoisite</creator>)
   end
 
   def test_two_levels

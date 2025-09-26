@@ -7,7 +7,7 @@ require "generators/generators_test_helper"
 require "rails/generators/test_case"
 
 module RailtiesTests
-  class GeneratorTest < Rails::Generators::TestCase
+  class GeneratorTest < Zoisite::Generators::TestCase
     include ActiveSupport::Testing::Isolation
 
     def destination_root

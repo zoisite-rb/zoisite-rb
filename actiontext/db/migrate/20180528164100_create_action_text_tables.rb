@@ -16,7 +16,7 @@ class CreateActionTextTables < ActiveRecord::Migration[6.0]
 
   private
     def primary_and_foreign_key_types
-      config = Rails.configuration.generators
+      config = Zoisite.configuration.generators
       setting = config.options[config.orm][:primary_key_type]
       primary_key_type = setting || :primary_key
       foreign_key_type = setting || :bigint

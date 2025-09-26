@@ -257,7 +257,7 @@ module JSONSharedTestCases
     attribute :payload, :json
 
     def self.filter_attributes
-      # Rails.application.config.filter_parameters += [:password]
+      # Zoisite.application.config.filter_parameters += [:password]
       super + [:password]
     end
   end

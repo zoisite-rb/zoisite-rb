@@ -12,7 +12,7 @@ require "active_support/test_case"
 
 require "rake/testtask"
 
-Rails::TestUnit::Runner.singleton_class.prepend Module.new {
+Zoisite::TestUnit::Runner.singleton_class.prepend Module.new {
    private
      def list_tests(patterns)
        tests = super
@@ -29,9 +29,9 @@ Rails::TestUnit::Runner.singleton_class.prepend Module.new {
      end
  }
 
-ActiveSupport::TestCase.extend Rails::LineFiltering
-Rails::TestUnitReporter.app_root = COMPONENT_ROOT
-Rails::TestUnitReporter.executable = "bin/test"
+ActiveSupport::TestCase.extend Zoisite::LineFiltering
+Zoisite::TestUnitReporter.app_root = COMPONENT_ROOT
+Zoisite::TestUnitReporter.executable = "bin/test"
 
-Rails::TestUnit::Runner.parse_options(ARGV)
-Rails::TestUnit::Runner.run(ARGV)
+Zoisite::TestUnit::Runner.parse_options(ARGV)
+Zoisite::TestUnit::Runner.run(ARGV)

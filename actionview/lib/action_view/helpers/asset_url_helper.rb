@@ -17,8 +17,8 @@ module ActionView
     #
     # === Using asset hosts
     #
-    # By default, \Rails links to these assets on the current host in the public
-    # folder, but you can direct \Rails to link to assets from a dedicated asset
+    # By default, \Zoisite links to these assets on the current host in the public
+    # folder, but you can direct \Zoisite to link to assets from a dedicated asset
     # server by setting <tt>ActionController::Base.asset_host</tt> in the application
     # configuration, typically in <tt>config/environments/production.rb</tt>.
     # For example, you'd define <tt>assets.example.com</tt> to be your asset
@@ -171,13 +171,13 @@ module ActionView
       # - If <tt>config.relative_url_root</tt> is specified, all assets will have that
       #   root prepended.
       #
-      #     Rails.application.config.relative_url_root = "bar"
+      #     Zoisite.application.config.relative_url_root = "bar"
       #     asset_path("foo.js", skip_pipeline: true) # => "bar/foo.js"
       #
       # - A different asset host can be specified via <tt>config.action_controller.asset_host</tt>
       #   this is commonly used in conjunction with a CDN.
       #
-      #     Rails.application.config.action_controller.asset_host = "assets.example.com"
+      #     Zoisite.application.config.action_controller.asset_host = "assets.example.com"
       #     asset_path("foo.js", skip_pipeline: true) # => "http://assets.example.com/foo.js"
       #
       # - An extension name can be specified manually with <tt>extname</tt>.
@@ -373,7 +373,7 @@ module ActionView
       #   image_path("http://www.example.com/img/edit.png")          # => "http://www.example.com/img/edit.png"
       #
       # If you have images as application resources this method may conflict with their named routes.
-      # The alias +path_to_image+ is provided to avoid that. \Rails uses the alias internally, and
+      # The alias +path_to_image+ is provided to avoid that. \Zoisite uses the alias internally, and
       # plugin authors are encouraged to do so.
       def image_path(source, options = {})
         path_to_asset(source, { type: :image }.merge!(options))

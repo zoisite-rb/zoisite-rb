@@ -10,7 +10,7 @@ module ActiveStorage
   #   ActiveStorage::Analyzer::AudioAnalyzer.new(blob).metadata
   #   # => { duration: 5.0, bit_rate: 320340, sample_rate: 44100, tags: { encoder: "Lavc57.64", ... } }
   #
-  # This analyzer requires the {FFmpeg}[https://www.ffmpeg.org] system library, which is not provided by \Rails.
+  # This analyzer requires the {FFmpeg}[https://www.ffmpeg.org] system library, which is not provided by \Zoisite.
   class Analyzer::AudioAnalyzer < Analyzer
     def self.accept?(blob)
       blob.audio?

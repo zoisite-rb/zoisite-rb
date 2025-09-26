@@ -10,7 +10,7 @@ silence_warnings do
   Encoding.default_external = Encoding::UTF_8
 end
 
-module Rails
+module Zoisite
   def self.root
     File.expand_path("..", __dir__)
   end

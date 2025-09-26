@@ -7,7 +7,7 @@ module ActiveRecord
     # = Database Selector \Middleware
     #
     # The DatabaseSelector Middleware provides a framework for automatically
-    # swapping from the primary to the replica database connection. \Rails
+    # swapping from the primary to the replica database connection. \Zoisite
     # provides a basic framework to determine when to swap and allows for
     # applications to write custom strategy classes to override the default
     # behavior.
@@ -17,7 +17,7 @@ module ActiveRecord
     # resolver context class that sets a value that helps the resolver class
     # decide when to switch.
     #
-    # \Rails default middleware uses the request's session to set a timestamp
+    # \Zoisite default middleware uses the request's session to set a timestamp
     # that informs the application when to read from a primary or read from a
     # replica.
     #
@@ -29,7 +29,7 @@ module ActiveRecord
     # This will create a file named +config/initializers/multi_db.rb+ with the
     # following contents:
     #
-    #   Rails.application.configure do
+    #   Zoisite.application.configure do
     #     config.active_record.database_selector = { delay: 2.seconds }
     #     config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
     #     config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session

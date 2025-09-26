@@ -56,7 +56,7 @@ module ActionController
     # Create a new test request with default `env` values.
     def self.create(controller_class)
       env = {}
-      env = Rails.application.env_config.merge(env) if defined?(Rails.application) && Rails.application
+      env = Zoisite.application.env_config.merge(env) if defined?(Zoisite.application) && Zoisite.application
       env["rack.request.cookie_hash"] = {}.with_indifferent_access
       new(default_env.merge(env), new_session, controller_class)
     end
@@ -251,10 +251,10 @@ module ActionController
   #
   # ## Use integration style controller tests over functional style controller tests.
   #
-  # Rails discourages the use of functional tests in favor of integration tests
+  # Zoisite discourages the use of functional tests in favor of integration tests
   # (use ActionDispatch::IntegrationTest).
   #
-  # New Rails applications no longer generate functional style controller tests
+  # New Zoisite applications no longer generate functional style controller tests
   # and they should only be used for backward compatibility. Integration style
   # controller tests perform actual requests, whereas functional style controller
   # tests merely simulate a request. Besides, integration tests are as fast as
@@ -372,7 +372,7 @@ module ActionController
       extend ActiveSupport::Concern
       include ActionDispatch::TestProcess
       include ActiveSupport::Testing::ConstantLookup
-      include Rails::Dom::Testing::Assertions
+      include Zoisite::Dom::Testing::Assertions
 
       attr_reader :response, :request
 
@@ -505,7 +505,7 @@ module ActionController
       #
       # It's not recommended to make more than one request in the same test. Instance
       # variables that are set in one request will not persist to the next request,
-      # but it's not guaranteed that all Rails internal state will be reset. Prefer
+      # but it's not guaranteed that all Zoisite internal state will be reset. Prefer
       # ActionDispatch::IntegrationTest for making multiple requests in the same test.
       #
       # Note that the request method is not verified.
@@ -625,8 +625,8 @@ module ActionController
         end
 
         def wrap_execution(&block)
-          if ActionController::TestCase.executor_around_each_request && defined?(Rails.application) && Rails.application
-            Rails.application.executor.wrap(&block)
+          if ActionController::TestCase.executor_around_each_request && defined?(Zoisite.application) && Zoisite.application
+            Zoisite.application.executor.wrap(&block)
           else
             yield
           end

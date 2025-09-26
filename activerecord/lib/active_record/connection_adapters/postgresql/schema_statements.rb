@@ -863,7 +863,7 @@ module ActiveRecord
           remove_constraint(table_name, unique_name_to_delete)
         end
 
-        # Maps logical Rails types to PostgreSQL-specific data types.
+        # Maps logical Zoisite types to PostgreSQL-specific data types.
         def type_to_sql(type, limit: nil, precision: nil, scale: nil, array: nil, enum_type: nil, **) # :nodoc:
           sql = \
             case type.to_s

@@ -315,9 +315,9 @@ module ActiveRecord
         skip unless current_adapter?(:SQLite3Adapter)
 
         add_column "test_models", "ruby_on_rails", :string
-        connection.change_column_default "test_models", "ruby_on_rails", -> { "('Ruby ' || 'on ' || 'Rails')" }
+        connection.change_column_default "test_models", "ruby_on_rails", -> { "('Ruby ' || 'on ' || 'Zoisite')" }
         TestModel.reset_column_information
-        assert_equal "'Ruby ' || 'on ' || 'Rails'", TestModel.columns_hash["ruby_on_rails"].default_function
+        assert_equal "'Ruby ' || 'on ' || 'Zoisite'", TestModel.columns_hash["ruby_on_rails"].default_function
       end
 
       def test_change_column_null_false

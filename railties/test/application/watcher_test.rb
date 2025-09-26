@@ -10,7 +10,7 @@ module ApplicationTests
     teardown :teardown_app
 
     def app
-      @app ||= Rails.application
+      @app ||= Zoisite.application
     end
 
     test "watchable_args does NOT include files in autoload path" do
@@ -21,7 +21,7 @@ module ApplicationTests
 
       require "#{rails_root}/config/environment"
 
-      files, _ = Rails.application.watchable_args
+      files, _ = Zoisite.application.watchable_args
       assert_not_includes files, "#{rails_root}/app/README.md"
     end
 
@@ -35,7 +35,7 @@ module ApplicationTests
 
       require "#{rails_root}/config/environment"
 
-      _, dirs = Rails.application.watchable_args
+      _, dirs = Zoisite.application.watchable_args
 
       assert_includes dirs, "#{rails_root}/app/automatically-specified-path"
       assert_includes dirs, "#{rails_root}/manually-specified-path"

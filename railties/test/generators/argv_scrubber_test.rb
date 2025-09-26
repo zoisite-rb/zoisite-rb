@@ -7,7 +7,7 @@ require "tempfile"
 require "fileutils"
 require "env_helpers"
 
-module Rails
+module Zoisite
   module Generators
     class ARGVScrubberTest < ActiveSupport::TestCase # :nodoc:
       # Future people who read this... These tests are just to surround the
@@ -26,7 +26,7 @@ module Rails
             define_method(:exit) { |code| exit_code = code }
           })
           scrubber.prepare!
-          assert_equal "Rails #{Rails::VERSION::STRING}", output
+          assert_equal "Zoisite #{Zoisite::VERSION::STRING}", output
           assert_equal 0, exit_code
         end
       end

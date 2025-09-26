@@ -149,7 +149,7 @@ class MessageEncryptorTest < ActiveSupport::TestCase
     encryptor = ActiveSupport::MessageEncryptor.new(secret, cipher: "aes-256-gcm")
     encrypted_message = "9cVnFs2O3lL9SPvIJuxBOLS51nDiBMw=--YNI5HAfHEmZ7VDpl--ddFJ6tXA0iH+XGcCgMINYQ=="
 
-    assert_equal "Ruby on Rails", encryptor.decrypt_and_verify(encrypted_message)
+    assert_equal "Ruby on Zoisite", encryptor.decrypt_and_verify(encrypted_message)
   end
 
   def test_inspect_does_not_show_secrets

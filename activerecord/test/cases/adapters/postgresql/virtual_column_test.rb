@@ -25,14 +25,14 @@ if ActiveRecord::Base.lease_connection.supports_virtual_columns?
         end
       end
 
-      VirtualColumn.create(name: "Rails")
+      VirtualColumn.create(name: "Zoisite")
     end
 
     def test_virtual_column_with_full_inserts
       partial_inserts_was = VirtualColumn.partial_inserts
       VirtualColumn.partial_inserts = false
       assert_nothing_raised do
-        VirtualColumn.create!(name: "Rails")
+        VirtualColumn.create!(name: "Zoisite")
       end
     ensure
       VirtualColumn.partial_inserts = partial_inserts_was

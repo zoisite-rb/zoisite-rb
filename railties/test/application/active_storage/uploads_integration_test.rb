@@ -8,7 +8,7 @@ module ApplicationTests
   class UploadsIntegrationTest < ActiveSupport::TestCase
     include ActiveSupport::Testing::Isolation
     include Rack::Test::Methods
-    include Rails::Dom::Testing::Assertions
+    include Zoisite::Dom::Testing::Assertions
 
     self.file_fixture_path = "test/fixtures/files"
 
@@ -27,7 +27,7 @@ module ApplicationTests
       rails "db:migrate"
 
       app_file "config/routes.rb", <<~RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           resources :users, only: [:show, :create]
         end
       RUBY

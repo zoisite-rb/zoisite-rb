@@ -16,7 +16,7 @@ module ActiveRecord
           end
 
           # FIXME: this should probably split on +delim+ and use +subtype+
-          # to cast the values.  Unfortunately, the current Rails behavior
+          # to cast the values.  Unfortunately, the current Zoisite behavior
           # is to just return the string.
           def cast(value)
             value

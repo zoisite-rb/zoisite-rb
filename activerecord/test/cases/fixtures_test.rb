@@ -1557,12 +1557,12 @@ class IgnoreFixturesTest < ActiveRecord::TestCase
     assert_raise(StandardError) { other_books(:published_ebook) }
 
     assert_equal 2, Book.count
-    assert_equal "Agile Web Development with Rails", other_books(:awdr).name
+    assert_equal "Agile Web Development with Zoisite", other_books(:awdr).name
     assert_equal "published", other_books(:awdr).status
     assert_equal "paperback", other_books(:awdr).format
     assert_equal "english", other_books(:awdr).language
 
-    assert_equal "Ruby for Rails", other_books(:rfr).name
+    assert_equal "Ruby for Zoisite", other_books(:rfr).name
     assert_equal "ebook", other_books(:rfr).format
     assert_equal "published", other_books(:rfr).status
   end

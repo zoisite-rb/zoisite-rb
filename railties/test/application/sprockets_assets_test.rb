@@ -77,7 +77,7 @@ module ApplicationTests
       app_file "app/assets/javascripts/demo.js.erb", "a = <%= image_path('rails.png').inspect %>;"
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '*path', to: lambda { |env| [200, { "Content-Type" => "text/html" }, ["Not an asset"]] }
         end
       RUBY
@@ -244,7 +244,7 @@ module ApplicationTests
       # Load app env
       app "production"
 
-      assert_equal Sprockets::CachedEnvironment, Rails.application.assets.class
+      assert_equal Sprockets::CachedEnvironment, Zoisite.application.assets.class
     end
 
     test "precompile creates a manifest file with all the assets listed" do
@@ -379,7 +379,7 @@ module ApplicationTests
       app_file "app/assets/javascripts/demo.js.erb", "<%= :alert %>();"
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/omg', :to => "omg#index"
         end
       RUBY
@@ -452,8 +452,8 @@ module ApplicationTests
 
     test "initialization on the assets group should set assets_dir" do
       require "#{app_path}/config/application"
-      Rails.application.initialize!(:assets)
-      assert_not_nil Rails.application.config.action_controller.assets_dir
+      Zoisite.application.initialize!(:assets)
+      assert_not_nil Zoisite.application.config.action_controller.assets_dir
     end
 
     test "enhancements to assets:precompile should only run once" do
@@ -548,7 +548,7 @@ module ApplicationTests
       @blog = engine "blog" do |plugin|
         plugin.write "lib/blog.rb", <<-RUBY
           module Blog
-            class Engine < ::Rails::Engine
+            class Engine < ::Zoisite::Engine
             end
           end
         RUBY
@@ -556,7 +556,7 @@ module ApplicationTests
 
       @plugin.write "lib/bukkits.rb", <<-RUBY
         module Bukkits
-          class Engine < ::Rails::Engine
+          class Engine < ::Zoisite::Engine
             isolate_namespace Bukkits
           end
         end
@@ -572,7 +572,7 @@ module ApplicationTests
         end
       RUBY
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/foo" => "main#foo"
           get "/bar" => "main#bar"
         end
@@ -630,7 +630,7 @@ module ApplicationTests
         JS
 
         app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/posts', :to => "posts#index"
         end
         RUBY
@@ -640,7 +640,7 @@ module ApplicationTests
         engine "bukkits" do |plugin|
           plugin.write "lib/bukkits.rb", <<-RUBY
             module Bukkits
-              class Engine < ::Rails::Engine
+              class Engine < ::Zoisite::Engine
                 railtie_name "bukkits"
               end
             end

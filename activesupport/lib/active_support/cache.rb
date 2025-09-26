@@ -238,7 +238,7 @@ module ActiveSupport
       #   The serializer for cached values. Must respond to +dump+ and +load+.
       #
       #   The default serializer depends on the cache format version (set via
-      #   +config.active_support.cache_format_version+ when using Rails). The
+      #   +config.active_support.cache_format_version+ when using Zoisite). The
       #   default serializer for each format version includes a fallback
       #   mechanism to deserialize values from any format version. This behavior
       #   makes it easy to migrate between format versions without invalidating

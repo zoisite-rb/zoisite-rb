@@ -3,7 +3,7 @@
 require "isolation/abstract_unit"
 require "rails/command"
 
-class Rails::Command::HelpIntegrationTest < ActiveSupport::TestCase
+class Zoisite::Command::HelpIntegrationTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 

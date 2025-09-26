@@ -43,7 +43,7 @@ module ApplicationTests
 
     test "allows me to configure default URL options for ActionMailer" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.action_mailer.default_url_options = { :host => "test.rails" }
         end
       RUBY
@@ -54,7 +54,7 @@ module ApplicationTests
 
     test "includes URL helpers as action methods" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/foo", :to => lambda { |env| [200, {}, []] }, :as => :foo
         end
       RUBY
@@ -116,7 +116,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/:controller(/:action)"
         end
       RUBY
@@ -148,7 +148,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/:controller(/:action)"
         end
       RUBY
@@ -176,7 +176,7 @@ module ApplicationTests
 
     test "URL builder is configured to use HTTPS when force_ssl is on" do
       app_file "config/environments/development.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.force_ssl = true
         end
       RUBY
@@ -342,25 +342,25 @@ module ApplicationTests
       end
     end
 
-    test "active record establish_connection uses Rails.env if DATABASE_URL is not set" do
+    test "active record establish_connection uses Zoisite.env if DATABASE_URL is not set" do
       app("development")
       orig_database_url = ENV.delete("DATABASE_URL")
-      orig_rails_env, Rails.env = Rails.env, "development"
+      orig_rails_env, Zoisite.env = Zoisite.env, "development"
       ActiveRecord::Base.establish_connection
       assert ActiveRecord::Base.lease_connection
-      assert_match(/#{ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: "primary").database}/, ActiveRecord::Base.connection_db_config.database)
-      db_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: "primary")
+      assert_match(/#{ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: "primary").database}/, ActiveRecord::Base.connection_db_config.database)
+      db_config = ActiveRecord::Base.configurations.configs_for(env_name: Zoisite.env, name: "primary")
       assert_match(/#{db_config.database}/, ActiveRecord::Base.connection_db_config.database)
     ensure
       ActiveRecord::Base.remove_connection
       ENV["DATABASE_URL"] = orig_database_url if orig_database_url
-      Rails.env = orig_rails_env if orig_rails_env
+      Zoisite.env = orig_rails_env if orig_rails_env
     end
 
-    test "active record establish_connection uses DATABASE_URL even if Rails.env is set" do
+    test "active record establish_connection uses DATABASE_URL even if Zoisite.env is set" do
       app("development")
       orig_database_url = ENV.delete("DATABASE_URL")
-      orig_rails_env, Rails.env = Rails.env, "development"
+      orig_rails_env, Zoisite.env = Zoisite.env, "development"
       database_url_db_name = "db/database_url_db.sqlite3"
       ENV["DATABASE_URL"] = "sqlite3:#{database_url_db_name}"
       ActiveRecord::Base.establish_connection
@@ -369,7 +369,7 @@ module ApplicationTests
     ensure
       ActiveRecord::Base.remove_connection
       ENV["DATABASE_URL"] = orig_database_url if orig_database_url
-      Rails.env = orig_rails_env if orig_rails_env
+      Zoisite.env = orig_rails_env if orig_rails_env
     end
 
     test "connections checked out during initialization are returned to the pool" do
@@ -423,12 +423,12 @@ module ApplicationTests
       app("development")
 
       assert Post
-      filter_parameters = Rails.application.config.filter_parameters.dup
+      filter_parameters = Zoisite.application.config.filter_parameters.dup
 
       reload
 
       assert Post
-      assert_equal filter_parameters, Rails.application.config.filter_parameters
+      assert_equal filter_parameters, Zoisite.application.config.filter_parameters
     end
 
     test "ActiveRecord::MessagePack extensions are installed when using ActiveSupport::MessagePack::CacheSerializer" do
@@ -442,8 +442,8 @@ module ApplicationTests
       app("development")
 
       post = Post.create!(title: "Hello World")
-      Rails.cache.write("hello", post)
-      assert_equal post, Rails.cache.read("hello")
+      Zoisite.cache.write("hello", post)
+      assert_equal post, Zoisite.cache.read("hello")
     end
   end
 end

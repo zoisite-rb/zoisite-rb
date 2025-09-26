@@ -21,24 +21,24 @@ module ApplicationTests
       RUBY
 
       require "#{app_path}/config/environment"
-      ::Rails.application.load_tasks
+      ::Zoisite.application.load_tasks
       assert $task_loaded
     end
 
     test "framework tasks are evaluated only once" do
-      assert_equal ["Rails version"], rails("about").scan(/^Rails version/)
+      assert_equal ["Zoisite version"], rails("about").scan(/^Zoisite version/)
     end
 
-    test "tasks can invoke framework tasks via Rails::Command.invoke" do
+    test "tasks can invoke framework tasks via Zoisite::Command.invoke" do
       add_to_config <<~RUBY
         rake_tasks do
           task :invoke_about do
-            Rails::Command.invoke :about
+            Zoisite::Command.invoke :about
           end
         end
       RUBY
 
-      assert_match(/^Rails version/, rails("invoke_about"))
+      assert_match(/^Zoisite version/, rails("invoke_about"))
     end
 
     test "help arguments describe rake tasks" do
@@ -90,11 +90,11 @@ module ApplicationTests
       app_file "config/environment.rb", <<-RUBY
         SuperMiddleware = Struct.new(:app)
 
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.middleware.use SuperMiddleware
         end
 
-        Rails.application.initialize!
+        Zoisite.application.initialize!
       RUBY
 
       assert_match("SuperMiddleware", rails("middleware"))
@@ -189,14 +189,14 @@ module ApplicationTests
       add_to_config <<-RUBY
         rake_tasks do
           task do_something: :environment do
-            Rails.application.reload_routes!
-            puts Rails.application.routes.named_routes.to_h.keys.join(" ")
+            Zoisite.application.reload_routes!
+            puts Zoisite.application.routes.named_routes.to_h.keys.join(" ")
           end
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "foo", to: "foo#bar", as: :my_great_route
         end
       RUBY

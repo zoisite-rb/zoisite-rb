@@ -4,20 +4,20 @@ require "generators/generators_test_helper"
 require "rails/generators/rails/app/app_generator"
 require "env_helpers"
 
-class ActionsTest < Rails::Generators::TestCase
+class ActionsTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   include EnvHelpers
 
-  tests Rails::Generators::AppGenerator
+  tests Zoisite::Generators::AppGenerator
   arguments [destination_root]
 
   def setup
-    Rails.application = TestApp::Application
+    Zoisite.application = TestApp::Application
     super
   end
 
   def teardown
-    Rails.application = TestApp::Application.instance
+    Zoisite.application = TestApp::Application.instance
   end
 
   def test_invoke_other_generator_with_shortcut
@@ -296,16 +296,16 @@ class ActionsTest < Rails::Generators::TestCase
 
   def test_environment_should_include_data_in_environment_initializer_block
     run_generator
-    autoload_paths = 'config.autoload_paths += %w["#{Rails.root}/app/extras"]'
+    autoload_paths = 'config.autoload_paths += %w["#{Zoisite.root}/app/extras"]'
     action :environment, autoload_paths
-    assert_file "config/application.rb", /  class Application < Rails::Application\n    #{Regexp.escape(autoload_paths)}\n/
+    assert_file "config/application.rb", /  class Application < Zoisite::Application\n    #{Regexp.escape(autoload_paths)}\n/
   end
 
   def test_environment_should_include_data_in_environment_initializer_block_with_env_option
     run_generator
-    autoload_paths = 'config.autoload_paths += %w["#{Rails.root}/app/extras"]'
+    autoload_paths = 'config.autoload_paths += %w["#{Zoisite.root}/app/extras"]'
     action :environment, autoload_paths, env: "development"
-    assert_file "config/environments/development.rb", /Rails\.application\.configure do\n  #{Regexp.escape(autoload_paths)}\n/
+    assert_file "config/environments/development.rb", /Zoisite\.application\.configure do\n  #{Regexp.escape(autoload_paths)}\n/
   end
 
   def test_environment_with_block_should_include_block_contents_in_environment_initializer_block
@@ -329,7 +329,7 @@ class ActionsTest < Rails::Generators::TestCase
       config.time_zone = "UTC"
     RUBY
     action(:environment) { data }
-    assert_file "config/application.rb", /  class Application < Rails::Application\n#{Regexp.escape(data.strip_heredoc.indent(4))}/
+    assert_file "config/application.rb", /  class Application < Zoisite::Application\n#{Regexp.escape(data.strip_heredoc.indent(4))}/
   end
 
   def test_environment_should_include_block_contents_with_multiline_data_in_environment_initializer_block_with_env_option
@@ -339,7 +339,7 @@ class ActionsTest < Rails::Generators::TestCase
       config.time_zone = "UTC"
     RUBY
     action(:environment, nil, env: "development") { data }
-    assert_file "config/environments/development.rb", /Rails\.application\.configure do\n#{Regexp.escape(data.strip_heredoc.indent(2))}/
+    assert_file "config/environments/development.rb", /Zoisite\.application\.configure do\n#{Regexp.escape(data.strip_heredoc.indent(2))}/
   end
 
   def test_git_with_symbol_should_run_command_using_git_scm
@@ -696,7 +696,7 @@ class ActionsTest < Rails::Generators::TestCase
 
   def test_readme
     run_generator
-    assert_called(Rails::Generators::AppGenerator, :source_root, times: 2, returns: destination_root) do
+    assert_called(Zoisite::Generators::AppGenerator, :source_root, times: 2, returns: destination_root) do
       assert_match "application up and running", action(:readme, "README.md")
     end
   end
@@ -704,7 +704,7 @@ class ActionsTest < Rails::Generators::TestCase
   def test_readme_with_quiet
     generator(default_arguments, quiet: true)
     run_generator
-    assert_called(Rails::Generators::AppGenerator, :source_root, times: 2, returns: destination_root) do
+    assert_called(Zoisite::Generators::AppGenerator, :source_root, times: 2, returns: destination_root) do
       assert_no_match "application up and running", action(:readme, "README.md")
     end
   end
@@ -765,7 +765,7 @@ class ActionsTest < Rails::Generators::TestCase
     def assert_routes(*route_commands)
       route_regexps = route_commands.flatten.map do |route_command|
         %r{
-          ^#{Regexp.escape("Rails.application.routes.draw do")}\n
+          ^#{Regexp.escape("Zoisite.application.routes.draw do")}\n
             (?:[ ]{2}.+\n|\n)*
             #{Regexp.escape(route_command.indent(2))}\n
             (?:[ ]{2}.+\n|\n)*

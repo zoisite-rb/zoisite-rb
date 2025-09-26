@@ -166,7 +166,7 @@ module ActiveRecord
     private
       def detailed_migration_message(pending_migrations)
         message = "Migrations are pending. To resolve this issue, run:\n\n        bin/rails db:migrate"
-        message += " RAILS_ENV=#{::Rails.env}" if defined?(Rails.env) && !Rails.env.local?
+        message += " RAILS_ENV=#{::Zoisite.env}" if defined?(Zoisite.env) && !Zoisite.env.local?
         message += "\n\n"
 
         message += "You have #{pending_migrations.size} pending #{pending_migrations.size > 1 ? 'migrations:' : 'migration:'}\n\n"
@@ -195,8 +195,8 @@ module ActiveRecord
   class NoEnvironmentInSchemaError < MigrationError # :nodoc:
     def initialize
       msg = "Environment data not found in the schema. To resolve this issue, run: \n\n        bin/rails db:environment:set"
-      if defined?(Rails.env)
-        super("#{msg} RAILS_ENV=#{::Rails.env}")
+      if defined?(Zoisite.env)
+        super("#{msg} RAILS_ENV=#{::Zoisite.env}")
       else
         super(msg)
       end
@@ -218,8 +218,8 @@ module ActiveRecord
       msg << "You are running in `#{ current }` environment. "
       msg << "If you are sure you want to continue, first set the environment using:\n\n"
       msg << "        bin/rails db:environment:set"
-      if defined?(Rails.env)
-        super("#{msg} RAILS_ENV=#{::Rails.env}\n\n")
+      if defined?(Zoisite.env)
+        super("#{msg} RAILS_ENV=#{::Zoisite.env}\n\n")
       else
         super("#{msg}\n\n")
       end
@@ -377,9 +377,9 @@ module ActiveRecord
   # Migrations of that kind should raise an ActiveRecord::IrreversibleMigration
   # exception in their +down+ method.
   #
-  # == Running migrations from within \Rails
+  # == Running migrations from within \Zoisite
   #
-  # The \Rails package has several tools to help create and apply migrations.
+  # The \Zoisite package has several tools to help create and apply migrations.
   #
   # To generate a new migration, you can use
   #
@@ -501,7 +501,7 @@ module ActiveRecord
   #
   # == Timestamped Migrations
   #
-  # By default, \Rails generates migrations that look like:
+  # By default, \Zoisite generates migrations that look like:
   #
   #    20080717013526_your_migration_name.rb
   #
@@ -775,7 +775,7 @@ module ActiveRecord
 
         def load_schema!
           # Roundtrip to Rake to allow plugins to hook into database initialization.
-          root = defined?(ENGINE_ROOT) ? ENGINE_ROOT : Rails.root
+          root = defined?(ENGINE_ROOT) ? ENGINE_ROOT : Zoisite.root
 
           FileUtils.cd(root) do
             Base.connection_handler.clear_all_connections!(:all)
@@ -1215,7 +1215,7 @@ module ActiveRecord
   # A migration context requires the path to the migrations is set
   # in the +migrations_paths+ parameter. Optionally a +schema_migration+
   # class can be provided. Multiple database applications will instantiate
-  # a +SchemaMigration+ object per database. From the Rake tasks, \Rails will
+  # a +SchemaMigration+ object per database. From the Rake tasks, \Zoisite will
   # handle this for you.
   class MigrationContext
     attr_reader :migrations_paths, :schema_migration, :internal_metadata

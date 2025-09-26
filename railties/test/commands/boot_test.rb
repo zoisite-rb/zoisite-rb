@@ -4,7 +4,7 @@ require "isolation/abstract_unit"
 require "rails/command"
 require "rails/commands/boot/boot_command"
 
-class Rails::Command::BootTest < ActiveSupport::TestCase
+class Zoisite::Command::BootTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
 
   setup :build_app
@@ -14,7 +14,7 @@ class Rails::Command::BootTest < ActiveSupport::TestCase
     test_file = "#{app_path}/tmp/test_file"
 
     app_file "config/initializers/write_test_file.rb", <<-RUBY
-      File.write(#{test_file.inspect}, Rails.env)
+      File.write(#{test_file.inspect}, Zoisite.env)
     RUBY
 
     rails "boot"
@@ -26,7 +26,7 @@ class Rails::Command::BootTest < ActiveSupport::TestCase
     test_file = "#{app_path}/tmp/test_file"
 
     app_file "config/initializers/write_test_file.rb", <<-RUBY
-      File.write(#{test_file.inspect}, Rails.env)
+      File.write(#{test_file.inspect}, Zoisite.env)
     RUBY
 
     rails "boot", "-e", "test"

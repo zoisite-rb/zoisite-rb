@@ -9,7 +9,7 @@ require "active_storage/engine"
 require "action_mailbox"
 
 module ActionMailbox
-  class Engine < Rails::Engine
+  class Engine < Zoisite::Engine
     isolate_namespace ActionMailbox
     config.eager_load_namespaces << ActionMailbox
 
@@ -28,7 +28,7 @@ module ActionMailbox
 
     initializer "action_mailbox.config" do
       config.after_initialize do |app|
-        ActionMailbox.logger = app.config.action_mailbox.logger || Rails.logger
+        ActionMailbox.logger = app.config.action_mailbox.logger || Zoisite.logger
         ActionMailbox.incinerate = app.config.action_mailbox.incinerate.nil? || app.config.action_mailbox.incinerate
         ActionMailbox.incinerate_after = app.config.action_mailbox.incinerate_after || 30.days
         ActionMailbox.queues = app.config.action_mailbox.queues || {}

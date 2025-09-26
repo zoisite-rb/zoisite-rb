@@ -10,7 +10,7 @@ module ApplicationTests
     include ActiveSupport::Testing::Isolation
     include Rack::Test::Methods
     include ERB::Util
-    include Rails::Dom::Testing::Assertions
+    include Zoisite::Dom::Testing::Assertions
 
     def setup
       build_app
@@ -48,7 +48,7 @@ module ApplicationTests
 
     test "/rails/mailers is accessible with globbing route present" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '*foo', to: 'foo#index'
         end
       RUBY
@@ -464,7 +464,7 @@ module ApplicationTests
     test "message header uses full display names" do
       mailer "notifier", <<-RUBY
         class Notifier < ActionMailer::Base
-          default from: "Ruby on Rails <core@rubyonrails.org>"
+          default from: "Ruby on Zoisite <core@rubyonrails.org>"
 
           def foo
             mail to: "Andrew White <andyw@pixeltrix.co.uk>",
@@ -489,7 +489,7 @@ module ApplicationTests
 
       get "/rails/mailers/notifier/foo"
       assert_equal 200, last_response.status
-      assert_match '<dd id="from">Ruby on Rails &lt;core@rubyonrails.org&gt;</dd>', last_response.body
+      assert_match '<dd id="from">Ruby on Zoisite &lt;core@rubyonrails.org&gt;</dd>', last_response.body
       assert_match '<dd id="to">Andrew White &lt;andyw@pixeltrix.co.uk&gt;</dd>', last_response.body
       assert_match '<dd id="cc">David Heinemeier Hansson &lt;david@heinemeierhansson.com&gt;</dd>', last_response.body
       assert_no_match '<dd id="smtp_from">', last_response.body
@@ -579,7 +579,7 @@ module ApplicationTests
 
     test "locale menu selects correct option" do
       app_file "config/initializers/available_locales.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.i18n.available_locales = %i[en ja]
         end
       RUBY
@@ -1105,7 +1105,7 @@ module ApplicationTests
         class NotifierPreview < ActionMailer::Preview
           def foo
             # This is meant to simulate how Action Text's renderer works. See #47072.
-            template = Rails::MailersController.renderer.render_to_string("notifier/bar")
+            template = Zoisite::MailersController.renderer.render_to_string("notifier/bar")
             Notifier.with(template: template).foo
           end
         end
@@ -1120,7 +1120,7 @@ module ApplicationTests
     private
       def build_app
         super
-        app_file "config/routes.rb", "Rails.application.routes.draw do; end"
+        app_file "config/routes.rb", "Zoisite.application.routes.draw do; end"
         app_dir "test/mailers/previews"
       end
 

@@ -3,7 +3,7 @@
 require "isolation/abstract_unit"
 require "rails/command"
 
-class Rails::RunnerTest < ActiveSupport::TestCase
+class Zoisite::RunnerTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
 
   setup :build_app
@@ -45,11 +45,11 @@ class Rails::RunnerTest < ActiveSupport::TestCase
   end
 
   def test_rails_runner_with_conditional_executor
-    assert_equal <<~OUTPUT, run_runner_command("puts Rails.application.executor.active?", allow_failure: true)
+    assert_equal <<~OUTPUT, run_runner_command("puts Zoisite.application.executor.active?", allow_failure: true)
       true
     OUTPUT
 
-    assert_equal <<~OUTPUT, run_runner_command("--skip-executor", "puts Rails.application.executor.active?", allow_failure: true)
+    assert_equal <<~OUTPUT, run_runner_command("--skip-executor", "puts Zoisite.application.executor.active?", allow_failure: true)
       false
     OUTPUT
   end

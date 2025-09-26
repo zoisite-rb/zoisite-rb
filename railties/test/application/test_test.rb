@@ -135,7 +135,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/initializers/disable_maintain_test_schema.rb", <<-RUBY
-        Rails.application.config.active_record.maintain_test_schema = false
+        Zoisite.application.config.active_record.maintain_test_schema = false
       RUBY
 
       assert_unsuccessful_run "models/user_test.rb", "Could not find table 'users'"
@@ -162,7 +162,7 @@ module ApplicationTests
 
       app_file "db/structure.sql", ""
       app_file "config/initializers/enable_sql_schema_format.rb", <<-RUBY
-        Rails.application.config.active_record.schema_format = :sql
+        Zoisite.application.config.active_record.schema_format = :sql
       RUBY
 
       assert_unsuccessful_run "models/user_test.rb", "Migrations are pending"
@@ -175,7 +175,7 @@ module ApplicationTests
       SQL
 
       app_file "config/initializers/disable_maintain_test_schema.rb", <<-RUBY
-        Rails.application.config.active_record.maintain_test_schema = false
+        Zoisite.application.config.active_record.maintain_test_schema = false
       RUBY
 
       assert_unsuccessful_run "models/user_test.rb", "Could not find table 'users'"
@@ -199,7 +199,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/initializers/enable_sql_schema_format.rb", <<-RUBY
-        Rails.application.config.active_record.schema_format = :sql
+        Zoisite.application.config.active_record.schema_format = :sql
       RUBY
 
       app_file "db/structure.sql", <<-SQL
@@ -333,7 +333,7 @@ Expected: ["id", "name"]
       RUBY
 
       app_file "config/initializers/enable_eager_load.rb", <<-RUBY
-        Rails.application.config.eager_load = true
+        Zoisite.application.config.eager_load = true
       RUBY
 
       app_file "app/models/user.rb", <<-RUBY
@@ -366,7 +366,7 @@ Expected: ["id", "name"]
       RUBY
 
       app_file "config/initializers/enable_eager_load.rb", <<~RUBY
-        Rails.application.config.eager_load = true
+        Zoisite.application.config.eager_load = true
       RUBY
 
       app_file "test/models/user_test.rb", <<~RUBY

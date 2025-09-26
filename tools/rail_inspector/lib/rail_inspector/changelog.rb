@@ -147,7 +147,7 @@ module RailInspector
 
         FOOTER_TEXT = "Please check"
 
-        RELEASE_HEADER = "## Rails"
+        RELEASE_HEADER = "## Zoisite"
 
         def peek_release_header?
           @buffer.peek(RELEASE_HEADER.length) == RELEASE_HEADER

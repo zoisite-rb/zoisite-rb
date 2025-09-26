@@ -6,11 +6,11 @@ module ActiveJob
     #
     # The test adapter should be used only in testing. Along with
     # ActiveJob::TestCase and ActiveJob::TestHelper
-    # it makes a great tool to test your \Rails application.
+    # it makes a great tool to test your \Zoisite application.
     #
     # To use the test adapter set +queue_adapter+ config to +:test+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :test
+    #   Zoisite.application.config.active_job.queue_adapter = :test
     class TestAdapter < AbstractAdapter
       attr_accessor(:perform_enqueued_jobs, :perform_enqueued_at_jobs, :filter, :reject, :queue, :at, :stopping)
       attr_writer(:enqueued_jobs, :performed_jobs)

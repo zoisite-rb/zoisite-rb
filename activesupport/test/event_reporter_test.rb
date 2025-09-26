@@ -150,7 +150,7 @@ module ActiveSupport
       end
 
       assert_match(
-        /Rails.event.notify accepts either an event object, a payload hash, or keyword arguments/,
+        /Zoisite.event.notify accepts either an event object, a payload hash, or keyword arguments/,
         error.message
       )
     end
@@ -193,7 +193,7 @@ module ActiveSupport
       end
 
       assert_match(
-        /Rails.event.notify accepts either an event object, a payload hash, or keyword arguments/,
+        /Zoisite.event.notify accepts either an event object, a payload hash, or keyword arguments/,
         error.message
       )
     end
@@ -202,12 +202,12 @@ module ActiveSupport
       event = TestEvent.new("value")
       error = assert_raises(ArgumentError) do
         @reporter.notify(event, { extra: "arg" })
-      rescue RailsStrictWarnings::WarningError => _e
+      rescue ZoisiteStrictWarnings::WarningError => _e
         # Expected warning
       end
 
       assert_match(
-        /Rails.event.notify accepts either an event object, a payload hash, or keyword arguments/,
+        /Zoisite.event.notify accepts either an event object, a payload hash, or keyword arguments/,
         error.message
       )
     end
@@ -224,7 +224,7 @@ module ActiveSupport
       end
 
       err = error_report.error.message
-      assert_match(/Rails.event.notify accepts either an event object, a payload hash, or keyword arguments/, err)
+      assert_match(/Zoisite.event.notify accepts either an event object, a payload hash, or keyword arguments/, err)
     end
 
     test "#notify warns about subscriber errors when raise_on_error is false" do

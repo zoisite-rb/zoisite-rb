@@ -9,7 +9,7 @@ module ActiveJob
     #
     # To use the Inline set the queue_adapter config to +:inline+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :inline
+    #   Zoisite.application.config.active_job.queue_adapter = :inline
     class InlineAdapter < AbstractAdapter
       def enqueue(job) # :nodoc:
         Base.execute(job.serialize)

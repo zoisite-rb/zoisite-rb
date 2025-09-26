@@ -10,7 +10,7 @@ module ActionCable
     #
     # An instance of this configuration object is available via
     # ActionCable.server.config, which allows you to tweak Action Cable
-    # configuration in a Rails config initializer.
+    # configuration in a Zoisite config initializer.
     class Configuration
       attr_accessor :logger, :log_tags
       attr_accessor :connection_class, :worker_pool_size

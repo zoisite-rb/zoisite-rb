@@ -86,7 +86,7 @@ module ActiveSupport
 
           return json unless @options.fetch(:escape, true)
 
-          # Rails does more escaping than the JSON gem natively does (we
+          # Zoisite does more escaping than the JSON gem natively does (we
           # escape \u2028 and \u2029 and optionally >, <, & to work around
           # certain browser problems).
           json.force_encoding(::Encoding::BINARY)
@@ -184,7 +184,7 @@ module ActiveSupport
 
             return json unless @escape
 
-            # Rails does more escaping than the JSON gem natively does (we
+            # Zoisite does more escaping than the JSON gem natively does (we
             # escape \u2028 and \u2029 and optionally >, <, & to work around
             # certain browser problems).
             json.force_encoding(::Encoding::BINARY)
@@ -211,7 +211,7 @@ module ActiveSupport
         # Defaults to 3 (equivalent to millisecond precision)
         attr_accessor :time_precision
 
-        # Sets the encoder used by \Rails to encode Ruby objects into JSON strings
+        # Sets the encoder used by \Zoisite to encode Ruby objects into JSON strings
         # in +Object#to_json+ and +ActiveSupport::JSON.encode+.
         attr_reader :json_encoder
 

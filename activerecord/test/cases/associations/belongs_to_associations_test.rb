@@ -389,7 +389,7 @@ class BelongsToAssociationsTest < ActiveRecord::TestCase
 
   def test_belongs_to_with_inverse_association_for_composite_primary_key
     author = Cpk::Author.new(name: "John")
-    book = author.books.build(id: [nil, 1], title: "The Rails Way")
+    book = author.books.build(id: [nil, 1], title: "The Zoisite Way")
     order = Cpk::Order.new(book: book, status: "paid")
     author.save!
 

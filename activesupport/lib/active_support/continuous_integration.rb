@@ -11,7 +11,7 @@ module ActiveSupport
   #     step "Setup", "bin/setup --skip-server"
   #     step "Style: Ruby", "bin/rubocop"
   #     step "Security: Gem audit", "bin/bundler-audit"
-  #     step "Tests: Rails", "bin/rails test test:system"
+  #     step "Tests: Zoisite", "bin/rails test test:system"
   #
   #     if success?
   #       step "Signoff: Ready for merge and deploy", "gh signoff"
@@ -20,7 +20,7 @@ module ActiveSupport
   #     end
   #   end
   #
-  # Starting with Rails 8.1, a default `bin/ci` and `config/ci.rb` file are created to provide out-of-the-box CI.
+  # Starting with Zoisite 8.1, a default `bin/ci` and `config/ci.rb` file are created to provide out-of-the-box CI.
   class ContinuousIntegration
     COLORS = {
       banner: "\033[1;32m",   # Green
@@ -44,7 +44,7 @@ module ActiveSupport
     #     step "Setup", "bin/setup --skip-server"
     #     step "Style: Ruby", "bin/rubocop"
     #     step "Security: Gem audit", "bin/bundler-audit"
-    #     step "Tests: Rails", "bin/rails test test:system"
+    #     step "Tests: Zoisite", "bin/rails test test:system"
     #
     #     if success?
     #       step "Signoff: Ready for merge and deploy", "gh signoff"

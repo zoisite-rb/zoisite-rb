@@ -36,7 +36,7 @@ module SidekiqJobsManager
       $stdout.sync = true
       $stderr.sync = true
 
-      logfile = Rails.root.join("log/sidekiq.log").to_s
+      logfile = Zoisite.root.join("log/sidekiq.log").to_s
       set_logger(Sidekiq::Logger.new(logfile))
 
       self_read, self_write = IO.pipe

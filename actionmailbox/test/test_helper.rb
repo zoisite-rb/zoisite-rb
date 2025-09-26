@@ -12,7 +12,7 @@ require "rails/test_help"
 require "webmock/minitest"
 
 require "rails/test_unit/reporter"
-Rails::TestUnitReporter.executable = "bin/test"
+Zoisite::TestUnitReporter.executable = "bin/test"
 
 if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
   ActiveSupport::TestCase.fixture_paths = [File.expand_path("fixtures", __dir__)]

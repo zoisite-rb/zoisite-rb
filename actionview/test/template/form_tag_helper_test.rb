@@ -1063,7 +1063,7 @@ class FormTagHelperTest < ActionView::TestCase
 
   private
     def root_elem(rendered_content)
-      Rails::Dom::Testing.html_document_fragment.parse(rendered_content).children.first # extract from nodeset
+      Zoisite::Dom::Testing.html_document_fragment.parse(rendered_content).children.first # extract from nodeset
     end
 
     def with_default_enforce_utf8(value)

@@ -161,7 +161,7 @@ module ActionController
     #         # => renders app/views/posts/new.html.erb with HTTP status code 422
     #
     # `:variants`
-    # :  This tells Rails to look for the first template matching any of the variations.
+    # :  This tells Zoisite to look for the first template matching any of the variations.
     #
     #         render "posts/index", variants: [:mobile]
     #         # => renders app/views/posts/index.html+mobile.erb

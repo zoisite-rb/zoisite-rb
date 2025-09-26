@@ -24,7 +24,7 @@ module TestGenerationPrefix
   end
 
   class WithMountedEngine < ActionDispatch::IntegrationTest
-    class BlogEngine < Rails::Engine
+    class BlogEngine < Zoisite::Engine
       routes.draw do
         get "/posts/:id", to: "inside_engine_generating#show", as: :post
         get "/posts", to: "inside_engine_generating#index", as: :posts
@@ -49,7 +49,7 @@ module TestGenerationPrefix
       end
     end
 
-    class RailsApplication < Rails::Engine
+    class ZoisiteApplication < Zoisite::Engine
       routes.draw do
         scope "/:omg", omg: "awesome" do
           mount BlogEngine => "/blog", :as => "blog_engine"
@@ -66,11 +66,11 @@ module TestGenerationPrefix
     end
 
     # force draw
-    RailsApplication.routes.define_mounted_helper(:main_app)
+    ZoisiteApplication.routes.define_mounted_helper(:main_app)
 
     class ::InsideEngineGeneratingController < ActionController::Base
       include BlogEngine.routes.url_helpers
-      include RailsApplication.routes.mounted_helpers
+      include ZoisiteApplication.routes.mounted_helpers
 
       def index
         render plain: posts_path
@@ -98,7 +98,7 @@ module TestGenerationPrefix
 
     class ::OutsideEngineGeneratingController < ActionController::Base
       include BlogEngine.routes.mounted_helpers
-      include RailsApplication.routes.url_helpers
+      include ZoisiteApplication.routes.url_helpers
 
       def index
         render plain: blog_engine.post_path(id: 1)
@@ -140,17 +140,17 @@ module TestGenerationPrefix
     class AppObject
       include KwObject
       include ActionDispatch::Routing::UrlFor
-      include RailsApplication.routes.url_helpers
+      include ZoisiteApplication.routes.url_helpers
     end
 
     def app
-      RailsApplication.instance
+      ZoisiteApplication.instance
     end
 
     attr_reader :engine_object, :app_object
 
     def setup
-      RailsApplication.routes.default_url_options = {}
+      ZoisiteApplication.routes.default_url_options = {}
       @engine_object = EngineObject.new(kw: 1)
       @app_object = AppObject.new(kw: 2)
     end
@@ -245,7 +245,7 @@ module TestGenerationPrefix
     end
 
     test "[APP] generating engine's route includes default_url_options[:script_name]" do
-      RailsApplication.routes.default_url_options = { script_name: "/something" }
+      ZoisiteApplication.routes.default_url_options = { script_name: "/something" }
       get "/generate"
       assert_equal "/something/awesome/blog/posts/1", response.body
     end
@@ -284,7 +284,7 @@ module TestGenerationPrefix
     end
 
     test "[OBJECT] generating engine's route includes default_url_options[:script_name]" do
-      RailsApplication.routes.default_url_options = { script_name: "/something" }
+      ZoisiteApplication.routes.default_url_options = { script_name: "/something" }
       assert_equal "/something/pure-awesomeness/blog/posts/3", engine_object.post_path(id: 3, omg: "pure-awesomeness")
     end
 
@@ -293,12 +293,12 @@ module TestGenerationPrefix
     end
 
     test "[OBJECT] generating application's route includes default_url_options[:script_name]" do
-      RailsApplication.routes.default_url_options = { script_name: "/something" }
+      ZoisiteApplication.routes.default_url_options = { script_name: "/something" }
       assert_equal "/something/", app_object.root_path
     end
 
     test "[OBJECT] generating application's route includes default_url_options[:trailing_slash]" do
-      RailsApplication.routes.default_url_options[:trailing_slash] = true
+      ZoisiteApplication.routes.default_url_options[:trailing_slash] = true
       assert_equal "/awesome/blog/posts", engine_object.posts_path
     end
 
@@ -368,7 +368,7 @@ module TestGenerationPrefix
       end
     end
 
-    class RailsApplication < Rails::Engine
+    class ZoisiteApplication < Zoisite::Engine
       routes.draw do
         mount BlogEngine => "/"
       end
@@ -376,7 +376,7 @@ module TestGenerationPrefix
 
     class ::PostsController < ActionController::Base
       include BlogEngine.routes.url_helpers
-      include RailsApplication.routes.mounted_helpers
+      include ZoisiteApplication.routes.mounted_helpers
 
       def show
         render plain: post_path(id: params[:id])
@@ -384,7 +384,7 @@ module TestGenerationPrefix
     end
 
     def app
-      RailsApplication.instance
+      ZoisiteApplication.instance
     end
 
     test "generating path inside engine" do

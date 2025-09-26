@@ -14,7 +14,7 @@ class CreateActiveStorageVariantRecords < ActiveRecord::Migration[6.0]
 
   private
     def primary_key_type
-      config = Rails.configuration.generators
+      config = Zoisite.configuration.generators
       config.options[config.orm][:primary_key_type] || :primary_key
     end
 

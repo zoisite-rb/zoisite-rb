@@ -4,7 +4,7 @@ require "isolation/abstract_unit"
 require "env_helpers"
 require "rails/command"
 
-class Rails::Command::EncryptedTest < ActiveSupport::TestCase
+class Zoisite::Command::EncryptedTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation, EnvHelpers
 
   setup :build_app
@@ -141,7 +141,7 @@ class Rails::Command::EncryptedTest < ActiveSupport::TestCase
 
   test "show command does not raise when an initializer tries to access non-existent credentials" do
     app_file "config/initializers/raise_when_loaded.rb", <<-RUBY
-      Rails.application.credentials.missing_key!
+      Zoisite.application.credentials.missing_key!
     RUBY
 
     run_edit_command(key: "config/tokens.key")

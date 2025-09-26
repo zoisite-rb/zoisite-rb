@@ -736,7 +736,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
         # to something else, `t.datetime` now means `:timestamptz`. To ensure that old columns
         # are still created as a `:timestamp` we need to change what is written to the schema dump.
         #
-        # Typically in Rails we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
+        # Typically in Zoisite we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
         # but that doesn't work here because the schema dumper is not aware of which migration
         # a column was added in.
         assert output.include?('t.timestamp "this_should_change_to_timestamp"')
@@ -887,7 +887,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
         # to something else, `t.datetime` now means `:timestamptz`. To ensure that old columns
         # are still created as a `:timestamp` we need to change what is written to the schema dump.
         #
-        # Typically in Rails we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
+        # Typically in Zoisite we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
         # but that doesn't work here because the schema dumper is not aware of which migration
         # a column was added in.
         assert output.include?('t.timestamp "this_should_change_to_timestamp"')
@@ -920,7 +920,7 @@ class SchemaDumperTest < ActiveRecord::TestCase
         # to something else, `t.datetime` now means `:timestamptz`. To ensure that old columns
         # are still created as a `:timestamp` we need to change what is written to the schema dump.
         #
-        # Typically in Rails we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
+        # Typically in Zoisite we handle this through Migration versioning (`ActiveRecord::Migration::Compatibility`)
         # but that doesn't work here because the schema dumper is not aware of which migration
         # a column was added in.
         assert output.include?('t.timestamp "this_should_change_to_timestamp"')

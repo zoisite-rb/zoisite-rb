@@ -123,7 +123,7 @@ module ActiveRecord
           MySQL::SchemaDumper.create(self, options)
         end
 
-        # Maps logical Rails types to MySQL-specific data types.
+        # Maps logical Zoisite types to MySQL-specific data types.
         def type_to_sql(type, limit: nil, precision: nil, scale: nil, size: limit_to_size(limit, type), unsigned: nil, **)
           sql =
             case type.to_s

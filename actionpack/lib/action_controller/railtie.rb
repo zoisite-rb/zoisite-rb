@@ -10,7 +10,7 @@ require "action_controller/railties/helpers"
 require "action_view/railtie"
 
 module ActionController
-  class Railtie < Rails::Railtie # :nodoc:
+  class Railtie < Zoisite::Railtie # :nodoc:
     config.action_controller = ActiveSupport::OrderedOptions.new
     config.action_controller.raise_on_open_redirects = false
     config.action_controller.action_on_open_redirect = :log
@@ -47,7 +47,7 @@ module ActionController
         action_on_unpermitted_parameters = options.action_on_unpermitted_parameters
 
         if action_on_unpermitted_parameters.nil?
-          action_on_unpermitted_parameters = Rails.env.local? ? :log : false
+          action_on_unpermitted_parameters = Zoisite.env.local? ? :log : false
         end
 
         ActionController::Parameters.action_on_unpermitted_parameters = action_on_unpermitted_parameters
@@ -58,9 +58,9 @@ module ActionController
       paths   = app.config.paths
       options = app.config.action_controller
 
-      options.logger = options.fetch(:logger, Rails.logger)
+      options.logger = options.fetch(:logger, Zoisite.logger)
 
-      options.cache_store ||= Rails.cache
+      options.cache_store ||= Zoisite.cache
 
       options.javascripts_dir ||= paths["public/javascripts"].first
       options.stylesheets_dir ||= paths["public/stylesheets"].first
@@ -109,7 +109,7 @@ module ActionController
       ActiveSupport.on_load(:action_controller, run_once: true) do
         if app.config.action_controller.raise_on_open_redirects != nil
           ActiveSupport.deprecator.warn(<<~MSG.squish)
-            `raise_on_open_redirects` is deprecated and will be removed in a future Rails version.
+            `raise_on_open_redirects` is deprecated and will be removed in a future Zoisite version.
             Use `config.action_controller.action_on_open_redirect = :raise` instead.
           MSG
         end

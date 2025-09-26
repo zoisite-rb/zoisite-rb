@@ -196,7 +196,7 @@ module ActionDispatch
             end
 
           unless engine
-            @buffer << "For more information about routes, see the Rails guide: https://guides.rubyonrails.org/routing.html."
+            @buffer << "For more information about routes, see the Zoisite guide: https://guides.rubyonrails.org/routing.html."
           end
         end
       end
@@ -329,8 +329,8 @@ module ActionDispatch
           <ul>
             <li>Please add some routes in <tt>config/routes.rb</tt>.</li>
             <li>
-              For more information about routes, please see the Rails guide
-              <a href="https://guides.rubyonrails.org/routing.html">Rails Routing from the Outside In</a>.
+              For more information about routes, please see the Zoisite guide
+              <a href="https://guides.rubyonrails.org/routing.html">Zoisite Routing from the Outside In</a>.
             </li>
           </ul>
         MESSAGE

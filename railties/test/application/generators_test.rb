@@ -15,7 +15,7 @@ module ApplicationTests
     end
 
     def app_const
-      @app_const ||= Class.new(Rails::Application)
+      @app_const ||= Class.new(Zoisite::Application)
     end
 
     def with_config
@@ -30,12 +30,12 @@ module ApplicationTests
       yield app_const.config
     end
 
-    test "allow running plugin new generator inside Rails app directory" do
+    test "allow running plugin new generator inside Zoisite app directory" do
       rails "plugin", "new", "vendor/plugins/bukkits"
       assert File.exist?(File.join(rails_root, "vendor/plugins/bukkits/test/dummy/config/application.rb"))
     end
 
-    test "allow generating plugin inside Rails app directory" do
+    test "allow generating plugin inside Zoisite app directory" do
       rails "generate", "plugin", "vendor/plugins/bukkits"
       assert File.exist?(File.join(rails_root, "vendor/plugins/bukkits/test/dummy/config/application.rb"))
     end
@@ -78,12 +78,12 @@ module ApplicationTests
 
       # Initialize the application
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Zoisite.application.load_generators
 
-      assert_equal :rspec, Rails::Generators.options[:rails][:test_framework]
-      assert_equal "-w", Rails::Generators.aliases[:rails][:test_framework]
-      assert_equal Hash[shoulda: :test_unit], Rails::Generators.fallbacks
-      assert_equal ["some/where"], Rails::Generators.templates_path
+      assert_equal :rspec, Zoisite::Generators.options[:rails][:test_framework]
+      assert_equal "-w", Zoisite::Generators.aliases[:rails][:test_framework]
+      assert_equal Hash[shoulda: :test_unit], Zoisite::Generators.fallbacks
+      assert_equal ["some/where"], Zoisite::Generators.templates_path
     end
 
     test "generators no color on initialization" do
@@ -93,7 +93,7 @@ module ApplicationTests
 
       # Initialize the application
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Zoisite.application.load_generators
 
       assert_equal Thor::Base.shell, Thor::Shell::Basic
     end
@@ -139,16 +139,16 @@ module ApplicationTests
 
       # Initialize the application
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Zoisite.application.load_generators
 
-      assert_includes Rails::Generators.hidden_namespaces, "assets"
-      assert_includes Rails::Generators.hidden_namespaces, "helper"
-      assert_includes Rails::Generators.hidden_namespaces, "js"
-      assert_includes Rails::Generators.hidden_namespaces, "css"
-      assert Rails::Generators.options[:rails][:api]
-      assert_equal false, Rails::Generators.options[:rails][:assets]
-      assert_equal false, Rails::Generators.options[:rails][:helper]
-      assert_nil Rails::Generators.options[:rails][:template_engine]
+      assert_includes Zoisite::Generators.hidden_namespaces, "assets"
+      assert_includes Zoisite::Generators.hidden_namespaces, "helper"
+      assert_includes Zoisite::Generators.hidden_namespaces, "js"
+      assert_includes Zoisite::Generators.hidden_namespaces, "css"
+      assert Zoisite::Generators.options[:rails][:api]
+      assert_equal false, Zoisite::Generators.options[:rails][:assets]
+      assert_equal false, Zoisite::Generators.options[:rails][:helper]
+      assert_nil Zoisite::Generators.options[:rails][:template_engine]
     end
 
     test "api only generators allow overriding generator options" do
@@ -160,11 +160,11 @@ module ApplicationTests
 
       # Initialize the application
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Zoisite.application.load_generators
 
-      assert Rails::Generators.options[:rails][:api]
-      assert Rails::Generators.options[:rails][:helper]
-      assert_equal :my_template, Rails::Generators.options[:rails][:template_engine]
+      assert Zoisite::Generators.options[:rails][:api]
+      assert Zoisite::Generators.options[:rails][:helper]
+      assert_equal :my_template, Zoisite::Generators.options[:rails][:template_engine]
     end
 
     test "api only generator generate mailer views" do
@@ -179,9 +179,9 @@ module ApplicationTests
 
     test "ARGV is populated" do
       require "#{app_path}/config/environment"
-      Rails.application.load_generators
+      Zoisite.application.load_generators
 
-      class Rails::Generators::CheckArgvGenerator < Rails::Generators::Base
+      class Zoisite::Generators::CheckArgvGenerator < Zoisite::Generators::Base
         def check_expected
           raise "ARGV.first is not expected" unless ARGV.first == "expected"
         end
@@ -189,7 +189,7 @@ module ApplicationTests
 
       quietly do
         assert_nothing_raised do
-          Rails::Command.invoke(:generate, ["check_argv", "expected"]) # should not raise
+          Zoisite::Command.invoke(:generate, ["check_argv", "expected"]) # should not raise
         end
       end
     end

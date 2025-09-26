@@ -15,7 +15,7 @@ module ActionDispatch
   # store the exception in `env["action_dispatch.exception"]`, rewrite the
   # `PATH_INFO` to the exception status code, and call the Rack app.
   #
-  # In Rails applications, the exceptions app can be configured with
+  # In Zoisite applications, the exceptions app can be configured with
   # `config.exceptions_app`, which defaults to ActionDispatch::PublicExceptions.
   #
   # If the application returns a response with the `X-Cascade` header set to

@@ -4,7 +4,7 @@ require_relative "abstract_unit"
 require "active_support/execution_context/test_helper"
 
 class ExecutionContextTest < ActiveSupport::TestCase
-  # ExecutionContext is automatically reset in Rails app via executor hooks set in railtie
+  # ExecutionContext is automatically reset in Zoisite app via executor hooks set in railtie
   # But not in Active Support's own test suite.
   include ActiveSupport::ExecutionContext::TestHelper
 

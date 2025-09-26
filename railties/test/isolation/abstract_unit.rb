@@ -3,11 +3,11 @@
 # Note:
 # It is important to keep this file as light as possible
 # the goal for tests that require this is to test booting up
-# Rails from an empty state, so anything added here could
+# Zoisite from an empty state, so anything added here could
 # hide potential failures
 #
 # It is also good to know what is the bare minimum to get
-# Rails booted up.
+# Zoisite booted up.
 require "fileutils"
 require "shellwords"
 
@@ -75,7 +75,7 @@ module TestHelpers
 
         require "#{app_path}/config/environment"
 
-        Rails.application
+        Zoisite.application
       end
     ensure
       ENV["RAILS_ENV"] = old_env
@@ -97,16 +97,16 @@ module TestHelpers
       assert_equal 200, resp[0]
       assert_match "text/html", resp[1]["Content-Type"]
       assert_match "charset=utf-8", resp[1]["Content-Type"]
-      assert extract_body(resp).match(/Rails version:/)
+      assert extract_body(resp).match(/Zoisite version:/)
     end
   end
 
   module Generation
     # Build an application by invoking the generator and going through the whole stack.
     def build_app(options = {})
-      @prev_rails_app_class = Rails.app_class
-      @prev_rails_application = Rails.application
-      Rails.app_class = Rails.application = nil
+      @prev_rails_app_class = Zoisite.app_class
+      @prev_rails_application = Zoisite.application
+      Zoisite.app_class = Zoisite.application = nil
 
       @prev_rails_env = ENV["RAILS_ENV"]
       ENV["RAILS_ENV"] = "development"
@@ -146,8 +146,8 @@ module TestHelpers
 
     def teardown_app
       ENV["RAILS_ENV"] = @prev_rails_env if @prev_rails_env
-      Rails.app_class = @prev_rails_app_class if @prev_rails_app_class
-      Rails.application = @prev_rails_application if @prev_rails_application
+      Zoisite.app_class = @prev_rails_app_class if @prev_rails_app_class
+      Zoisite.application = @prev_rails_application if @prev_rails_application
       FileUtils.rm_rf(tmp_path)
     end
 
@@ -254,7 +254,7 @@ module TestHelpers
       require "action_controller/railtie"
       require "action_view/railtie"
 
-      @app = Class.new(Rails::Application) do
+      @app = Class.new(Zoisite::Application) do
         def self.name; "RailtiesTestApp"; end
       end
       @app.config.hosts << proc { true }
@@ -286,7 +286,7 @@ module TestHelpers
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -377,7 +377,7 @@ module TestHelpers
             end
           end
 
-          Rails.instance_variable_set :@_env, nil
+          Zoisite.instance_variable_set :@_env, nil
 
           $-v = $-w = false
           Dir.chdir app_path unless Dir.pwd == app_path
@@ -416,7 +416,7 @@ module TestHelpers
 
     def add_to_top_of_config(str)
       environment = File.read("#{app_path}/config/application.rb")
-      if environment =~ /(Rails::Application\s*)/
+      if environment =~ /(Zoisite::Application\s*)/
         File.open("#{app_path}/config/application.rb", "w") do |f|
           f.puts $` + $1 + "\n#{str}\n" + $'
         end
@@ -478,7 +478,7 @@ module TestHelpers
 
     def routes(routes)
       app_file("config/routes.rb", <<~RUBY)
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           #{routes}
         end
       RUBY

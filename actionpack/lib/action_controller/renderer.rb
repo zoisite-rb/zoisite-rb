@@ -105,7 +105,7 @@ module ActionController
     # routes' `default_url_options`. In this case, the `https` boolean and the
     # `script_name` will also be derived from `default_url_options` if they were not
     # specified. Additionally, the `https` boolean will fall back to
-    # `Rails.application.config.force_ssl` if `default_url_options` does not specify
+    # `Zoisite.application.config.force_ssl` if `default_url_options` does not specify
     # a `protocol`.
     def initialize(controller, env, defaults)
       @controller = controller

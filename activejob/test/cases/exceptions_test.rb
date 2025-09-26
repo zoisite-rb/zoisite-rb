@@ -321,7 +321,7 @@ class ExceptionsTest < ActiveSupport::TestCase
 
     test "running a job enqueued by AJ 5.2" do
       job = RetryJob.new("DefaultsError", 6)
-      job.exception_executions = nil # This is how jobs from Rails 5.2 will look
+      job.exception_executions = nil # This is how jobs from Zoisite 5.2 will look
 
       assert_raises DefaultsError do
         job.enqueue

@@ -28,7 +28,7 @@ module ActiveSupport
   #   end
   #
   # ActiveRecord::LogSubscriber.logger must be set as well, but it is assigned
-  # automatically in a \Rails environment.
+  # automatically in a \Zoisite environment.
   #
   # After configured, whenever a <tt>"sql.active_record"</tt> notification is
   # published, it will properly dispatch the event
@@ -59,7 +59,7 @@ module ActiveSupport
   #
   # +ActiveSupport::LogSubscriber+ also has some helpers to deal with
   # logging. For example, ActiveSupport::LogSubscriber.flush_all! will ensure
-  # that all logs are flushed, and it is called in Rails::Rack::Logger after a
+  # that all logs are flushed, and it is called in Zoisite::Rack::Logger after a
   # request finishes.
   class LogSubscriber < Subscriber
     # ANSI sequence modes
@@ -91,8 +91,8 @@ module ActiveSupport
 
     class << self
       def logger
-        @logger ||= if defined?(Rails) && Rails.respond_to?(:logger)
-          Rails.logger
+        @logger ||= if defined?(Zoisite) && Zoisite.respond_to?(:logger)
+          Zoisite.logger
         end
       end
 

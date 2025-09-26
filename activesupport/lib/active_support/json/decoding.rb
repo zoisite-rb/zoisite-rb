@@ -40,7 +40,7 @@ module ActiveSupport
       #   begin
       #     obj = ActiveSupport::JSON.decode(some_string)
       #   rescue ActiveSupport::JSON.parse_error
-      #     Rails.logger.warn("Attempted to decode invalid JSON: #{some_string}")
+      #     Zoisite.logger.warn("Attempted to decode invalid JSON: #{some_string}")
       #   end
       def parse_error
         ::JSON::ParserError

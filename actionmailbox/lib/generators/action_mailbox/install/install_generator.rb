@@ -4,8 +4,8 @@ require "rails/generators/mailbox/mailbox_generator"
 
 module ActionMailbox
   module Generators
-    class InstallGenerator < ::Rails::Generators::Base
-      source_root Rails::Generators::MailboxGenerator.source_root
+    class InstallGenerator < ::Zoisite::Generators::Base
+      source_root Zoisite::Generators::MailboxGenerator.source_root
 
       def create_action_mailbox_files
         say "Copying application_mailbox.rb to app/mailboxes", :green

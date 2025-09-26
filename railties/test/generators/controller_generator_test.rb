@@ -3,7 +3,7 @@
 require "generators/generators_test_helper"
 require "rails/generators/rails/controller/controller_generator"
 
-class ControllerGeneratorTest < Rails::Generators::TestCase
+class ControllerGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(Account foo bar)
 

@@ -1,15 +1,15 @@
 <!--
-Thanks for contributing to Rails!
+Thanks for contributing to Zoisite!
 
 Please do not make *Draft* pull requests, as they still send
-notifications to everyone watching the Rails repo.
+notifications to everyone watching the Zoisite repo.
 
 Create a pull request when it is ready for review and feedback
-from the Rails team :).
+from the Zoisite team :).
 
 If your pull request affects documentation or any non-code
 changes, guidelines for those changes are [available
-here](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation)
+here](https://edgeguides.rubyonzoisite.org/contributing_to_ruby_on_zoisite.html#contributing-to-the-zoisite-documentation)
 
 About this template
 

@@ -8,7 +8,7 @@ require "rails/railtie/configuration"
 module RailtiesTest
   class DynamicOptionsTest < ActiveSupport::TestCase
     setup do
-      @config = Rails::Railtie::Configuration.dup.new
+      @config = Zoisite::Railtie::Configuration.dup.new
       @config.class.class_variable_set(:@@options, {})
     end
 

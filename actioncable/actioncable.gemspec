@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = "actioncable"
   s.version     = version
-  s.summary     = "WebSocket framework for Rails."
+  s.summary     = "WebSocket framework for Zoisite."
   s.description = "Structure many real-time application concerns into channels over a single WebSocket connection."
 
   s.required_ruby_version = ">= 3.2.0"

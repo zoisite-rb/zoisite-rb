@@ -11,9 +11,9 @@ module SharedGeneratorTests
   include EnvHelpers
 
   def setup
-    Rails.application = TestApp::Application
+    Zoisite.application = TestApp::Application
     super
-    Rails::Generators::AppGenerator.instance_variable_set("@desc", nil)
+    Zoisite::Generators::AppGenerator.instance_variable_set("@desc", nil)
 
     Kernel.silence_warnings do
       Thor::Base.shell.attr_accessor :always_force
@@ -24,8 +24,8 @@ module SharedGeneratorTests
 
   def teardown
     super
-    Rails::Generators::AppGenerator.instance_variable_set("@desc", nil)
-    Rails.application = TestApp::Application.instance
+    Zoisite::Generators::AppGenerator.instance_variable_set("@desc", nil)
+    Zoisite.application = TestApp::Application.instance
   end
 
   def application_path
@@ -236,7 +236,7 @@ module SharedGeneratorTests
     assert_file "#{application_path}/config/application.rb", /^# require\s+["']active_storage\/engine["']/
     assert_file "#{application_path}/config/application.rb", /^require\s+["']action_controller\/railtie["']/
     assert_file "#{application_path}/config/application.rb", /^# require\s+["']action_mailer\/railtie["']/
-    unless generator_class.name == "Rails::Generators::PluginGenerator"
+    unless generator_class.name == "Zoisite::Generators::PluginGenerator"
       assert_file "#{application_path}/config/application.rb", /^# require\s+["']action_mailbox\/engine["']/
       assert_file "#{application_path}/config/application.rb", /^# require\s+["']action_text\/engine["']/
     end
@@ -355,19 +355,19 @@ module SharedGeneratorTests
 
   def test_dev_option
     run_generator_using_prerelease [destination_root, "--dev"]
-    rails_path = File.expand_path("../../..", Rails.root)
+    rails_path = File.expand_path("../../..", Zoisite.root)
     assert_file "Gemfile", %r{^gem ["']rails["'], path: ["']#{Regexp.escape rails_path}["']$}
   end
 
   def test_edge_option
-    Rails.stub(:gem_version, Gem::Version.new("2.1.0")) do
+    Zoisite.stub(:gem_version, Gem::Version.new("2.1.0")) do
       run_generator_using_prerelease [destination_root, "--edge"]
     end
     assert_file "Gemfile", %r{^gem ["']rails["'], github: ["']rails/rails["'], branch: ["']2-1-stable["']$}
   end
 
   def test_edge_option_during_alpha
-    Rails.stub(:gem_version, Gem::Version.new("2.1.0.alpha")) do
+    Zoisite.stub(:gem_version, Gem::Version.new("2.1.0.alpha")) do
       run_generator_using_prerelease [destination_root, "--edge"]
     end
     assert_file "Gemfile", %r{^gem ["']rails["'], github: ["']rails/rails["'], branch: ["']main["']$}

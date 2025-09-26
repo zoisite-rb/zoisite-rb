@@ -11,7 +11,7 @@ module RailInspector
               .slice_before do |line|
                 [
                   "#### Default Values for Target Version",
-                  "### Rails General Configuration",
+                  "### Zoisite General Configuration",
                   "### Configuring Assets"
                 ].any? { |s| line.start_with?(s) }
               end

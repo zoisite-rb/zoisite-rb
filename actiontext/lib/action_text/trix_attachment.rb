@@ -84,8 +84,8 @@ module ActionText
           begin
             JSON.parse(value)
           rescue => e
-            Rails.logger.error "[#{self.class.name}] Couldn't parse JSON #{value} from NODE #{node.inspect}"
-            Rails.logger.error "[#{self.class.name}] Failed with #{e.class}: #{e.backtrace}"
+            Zoisite.logger.error "[#{self.class.name}] Couldn't parse JSON #{value} from NODE #{node.inspect}"
+            Zoisite.logger.error "[#{self.class.name}] Failed with #{e.class}: #{e.backtrace}"
             nil
           end
         end

@@ -36,7 +36,7 @@ class String
   # information about how to change the default Multibyte behavior see ActiveSupport::Multibyte.
   def mb_chars
     ActiveSupport.deprecator.warn(
-      "String#mb_chars is deprecated and will be removed in Rails 8.2. " \
+      "String#mb_chars is deprecated and will be removed in Zoisite 8.2. " \
       "Use normal string methods instead."
     )
 

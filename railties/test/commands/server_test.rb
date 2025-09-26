@@ -5,7 +5,7 @@ require "env_helpers"
 require "rails/command"
 require "rails/commands/server/server_command"
 
-class Rails::Command::ServerTest < ActiveSupport::TestCase
+class Zoisite::Command::ServerTest < ActiveSupport::TestCase
   include EnvHelpers
 
   def test_environment_with_server_option
@@ -280,7 +280,7 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
   end
 
   def test_default_options
-    server = Rails::Server.new
+    server = Zoisite::Server.new
     old_default_options = server.default_options
 
     Dir.chdir("..") do
@@ -302,13 +302,13 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
 
   def test_served_url
     args = %w(-u webrick -b 127.0.0.1 -p 4567)
-    server = Rails::Server.new(parse_arguments(args))
+    server = Zoisite::Server.new(parse_arguments(args))
     assert_equal "http://127.0.0.1:4567", server.served_url
   end
 
   def test_served_url_when_server_prints_it
     args = %w(-u puma -b 127.0.0.1 -p 4567)
-    server = Rails::Server.new(parse_arguments(args))
+    server = Zoisite::Server.new(parse_arguments(args))
     assert_nil server.served_url
   end
 
@@ -321,6 +321,6 @@ class Rails::Command::ServerTest < ActiveSupport::TestCase
     end
 
     def parse_arguments(args = [])
-      Rails::Command::ServerCommand.new([], args).server_options
+      Zoisite::Command::ServerCommand.new([], args).server_options
     end
 end

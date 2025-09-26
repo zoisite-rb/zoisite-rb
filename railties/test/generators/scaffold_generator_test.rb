@@ -5,7 +5,7 @@ require "generators/generators_test_helper"
 require "rails/generators/rails/scaffold/scaffold_generator"
 require "bcrypt"
 
-class ScaffoldGeneratorTest < Rails::Generators::TestCase
+class ScaffoldGeneratorTest < Zoisite::Generators::TestCase
   include PluginHelpers
   include GeneratorsTestHelper
   arguments %w(product_line title:string approved:boolean product:belongs_to user:references)

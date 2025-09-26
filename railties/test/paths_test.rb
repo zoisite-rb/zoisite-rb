@@ -6,22 +6,22 @@ require "minitest/mock"
 
 class PathsTest < ActiveSupport::TestCase
   def setup
-    @root = Rails::Paths::Root.new("/foo/bar")
+    @root = Zoisite::Paths::Root.new("/foo/bar")
   end
 
   test "the paths object is initialized with the root path" do
-    root = Rails::Paths::Root.new("/fiz/baz")
+    root = Zoisite::Paths::Root.new("/fiz/baz")
     assert_equal "/fiz/baz", root.path
   end
 
   test "the paths object can be initialized with nil" do
     assert_nothing_raised do
-      Rails::Paths::Root.new(nil)
+      Zoisite::Paths::Root.new(nil)
     end
   end
 
   test "a paths object initialized with nil can be updated" do
-    root = Rails::Paths::Root.new(nil)
+    root = Zoisite::Paths::Root.new(nil)
     root.add "app"
     root.path = "/root"
     assert_equal ["app"], root["app"].to_ary
@@ -39,7 +39,7 @@ class PathsTest < ActiveSupport::TestCase
   end
 
   test "raises exception if root path never set" do
-    root = Rails::Paths::Root.new(nil)
+    root = Zoisite::Paths::Root.new(nil)
     root.add "app"
     assert_raises RuntimeError do
       root["app"].to_a
@@ -305,7 +305,7 @@ class PathsIntegrationTest < ActiveSupport::TestCase
         File.symlink("foo/doesnotexist.rb", "foo/bar.rb")
         assert_equal true, File.symlink?("foo/bar.rb")
 
-        root = Rails::Paths::Root.new("foo")
+        root = Zoisite::Paths::Root.new("foo")
         root.add "bar.rb"
 
         exception = assert_raises(RuntimeError) do

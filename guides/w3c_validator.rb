@@ -31,7 +31,7 @@
 require "w3c_validators"
 include W3CValidators
 
-module RailsGuides
+module ZoisiteGuides
   class Validator
     def validate
       # https://github.com/w3c-validators/w3c_validators/issues/25
@@ -95,4 +95,4 @@ module RailsGuides
   end
 end
 
-RailsGuides::Validator.new.validate
+ZoisiteGuides::Validator.new.validate

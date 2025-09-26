@@ -6,7 +6,7 @@ require "active_support/core_ext/array/wrap"
 # :enddoc:
 
 module I18n
-  class Railtie < Rails::Railtie
+  class Railtie < Zoisite::Railtie
     config.i18n = ActiveSupport::OrderedOptions.new
     config.i18n.railties_load_path = []
     config.i18n.load_path = []
@@ -67,7 +67,7 @@ module I18n
       if app.config.reloading_enabled?
         directories = watched_dirs_with_extensions(reloadable_paths)
         reloader = app.config.file_watcher.new(I18n.load_path, directories) do
-          I18n.load_path.delete_if { |path| path.to_s.start_with?(Rails.root.to_s) && !File.exist?(path) }
+          I18n.load_path.delete_if { |path| path.to_s.start_with?(Zoisite.root.to_s) && !File.exist?(path) }
           I18n.load_path |= reloadable_paths.flat_map(&:existent)
         end
 

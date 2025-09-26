@@ -228,7 +228,7 @@ class Time
     result = to_datetime.since(seconds)
     ActiveSupport.deprecator.warn(
       "Passing an instance of #{seconds.class} to #{self.class}#since is deprecated. This behavior will raise " \
-      "a `TypeError` in Rails 8.1."
+      "a `TypeError` in Zoisite 8.1."
     )
     result
   end
@@ -331,7 +331,7 @@ class Time
     if other.class == Time
       compare_without_coercion(other)
     elsif other.is_a?(Time)
-      # also avoid ActiveSupport::TimeWithZone#to_time before Rails 8.0
+      # also avoid ActiveSupport::TimeWithZone#to_time before Zoisite 8.0
       if other.respond_to?(:comparable_time)
         compare_without_coercion(other.comparable_time)
       else

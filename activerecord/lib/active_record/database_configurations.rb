@@ -139,7 +139,7 @@ module ActiveRecord
     # no primary, the first configuration for an environment will be treated
     # as primary. This is used as the "default" configuration and is used
     # when the application needs to treat one configuration differently. For
-    # example, when Rails dumps the schema, the primary configuration's schema
+    # example, when Zoisite dumps the schema, the primary configuration's schema
     # file will be named `schema.rb` instead of `primary_schema.rb`.
     def primary?(name) # :nodoc:
       return true if name == "primary"

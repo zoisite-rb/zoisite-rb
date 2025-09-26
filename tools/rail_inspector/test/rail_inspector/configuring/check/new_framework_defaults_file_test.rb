@@ -22,7 +22,7 @@ class NewFrameworkDefaultsFileTest < ActiveSupport::TestCase
     check(defaults, <<~FILE).check
     ###
     # You must apply this in config/application.rb
-    # Rails.configuration.log_file_size = 100 * 1024 * 1024
+    # Zoisite.configuration.log_file_size = 100 * 1024 * 1024
     FILE
 
     assert_empty checker.errors

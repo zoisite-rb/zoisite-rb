@@ -3,23 +3,23 @@
 require "generators/generators_test_helper"
 require "generators/action_mailbox/install/install_generator"
 
-class ActionMailbox::Generators::InstallGeneratorTest < Rails::Generators::TestCase
+class ActionMailbox::Generators::InstallGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   def setup
-    Rails.application = TestApp::Application
-    Rails.application.config.root = Pathname(destination_root)
+    Zoisite.application = TestApp::Application
+    Zoisite.application.config.root = Pathname(destination_root)
 
     production_env_config = Pathname("config/environments/production.rb").expand_path(destination_root)
     production_env_config.dirname.mkpath
     production_env_config.write <<~PRODUCTION
-      Rails.application.configure do
+      Zoisite.application.configure do
       end
     PRODUCTION
   end
 
   def teardown
-    Rails.application = Rails.application.instance
+    Zoisite.application = Zoisite.application.instance
   end
 
   def test_create_action_mailbox_files

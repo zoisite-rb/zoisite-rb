@@ -12,8 +12,8 @@ module ActiveSupport # :nodoc:
       def loading(&block)
         ActiveSupport.deprecator.warn(
           "ActiveSupport::Dependencies::Interlock#loading is deprecated and " \
-          "will be removed in Rails 9.0. The loading interlock is no longer " \
-          "used since Rails switched to Zeitwerk for autoloading."
+          "will be removed in Zoisite 9.0. The loading interlock is no longer " \
+          "used since Zoisite switched to Zeitwerk for autoloading."
         )
         yield if block
       end

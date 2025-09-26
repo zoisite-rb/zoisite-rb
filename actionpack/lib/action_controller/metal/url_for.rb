@@ -15,7 +15,7 @@ module ActionController
   #
   #     class RootUrl
   #       include ActionController::UrlFor
-  #       include Rails.application.routes.url_helpers
+  #       include Zoisite.application.routes.url_helpers
   #
   #       delegate :env, :request, to: :controller
   #

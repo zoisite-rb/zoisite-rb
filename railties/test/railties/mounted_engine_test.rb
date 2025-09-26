@@ -18,7 +18,7 @@ module ApplicationTests
       @metrics_plugin = engine "metrics"
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           mount Weblog::Engine, :at => '/', :as => 'weblog'
           resources :posts
           get "/engine_route" => "application_generating#engine_route"
@@ -39,7 +39,7 @@ module ApplicationTests
 
       @simple_plugin.write "lib/weblog.rb", <<-RUBY
         module Weblog
-          class Engine < ::Rails::Engine
+          class Engine < ::Zoisite::Engine
           end
         end
       RUBY
@@ -65,7 +65,7 @@ module ApplicationTests
 
       @metrics_plugin.write "lib/metrics.rb", <<-RUBY
         module Metrics
-          class Engine < ::Rails::Engine
+          class Engine < ::Zoisite::Engine
             isolate_namespace(Metrics)
           end
         end
@@ -110,7 +110,7 @@ module ApplicationTests
 
       @plugin.write "lib/blog.rb", <<-RUBY
         module Blog
-          class Engine < ::Rails::Engine
+          class Engine < ::Zoisite::Engine
             isolate_namespace(Blog)
           end
         end
@@ -212,7 +212,7 @@ module ApplicationTests
     def app
       @app ||= begin
         require "#{app_path}/config/environment"
-        Rails.application
+        Zoisite.application
       end
     end
 

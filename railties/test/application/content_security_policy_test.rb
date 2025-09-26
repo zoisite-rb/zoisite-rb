@@ -20,13 +20,13 @@ module ApplicationTests
       controller :pages, <<-RUBY
         class PagesController < ApplicationController
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -41,18 +41,18 @@ module ApplicationTests
       controller :pages, <<-RUBY
         class PagesController < ApplicationController
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/content_security_policy.rb", <<-RUBY
-        Rails.application.config.content_security_policy do |p|
+        Zoisite.application.config.content_security_policy do |p|
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -67,19 +67,19 @@ module ApplicationTests
       controller :pages, <<-RUBY
         class PagesController < ApplicationController
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/content_security_policy.rb", <<-RUBY
-        Rails.application.config.content_security_policy do |p|
+        Zoisite.application.config.content_security_policy do |p|
           p.default_src :self, :https
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -94,21 +94,21 @@ module ApplicationTests
       controller :pages, <<-RUBY
         class PagesController < ApplicationController
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/content_security_policy.rb", <<-RUBY
-        Rails.application.config.content_security_policy do |p|
+        Zoisite.application.config.content_security_policy do |p|
           p.default_src :self, :https
         end
 
-        Rails.application.config.content_security_policy_report_only = true
+        Zoisite.application.config.content_security_policy_report_only = true
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -123,24 +123,24 @@ module ApplicationTests
       controller :pages, <<-RUBY
         class PagesController < ApplicationController
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/content_security_policy.rb", <<-RUBY
-        Rails.application.config.content_security_policy do |p|
+        Zoisite.application.config.content_security_policy do |p|
           p.default_src :self, :https
           p.script_src  :self, :https
           p.style_src   :self, :https
         end
 
-        Rails.application.config.content_security_policy_nonce_generator = proc { "iyhD0Yc0W+c=" }
-        Rails.application.config.content_security_policy_nonce_directives = %w(script-src)
+        Zoisite.application.config.content_security_policy_nonce_generator = proc { "iyhD0Yc0W+c=" }
+        Zoisite.application.config.content_security_policy_nonce_directives = %w(script-src)
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -159,19 +159,19 @@ module ApplicationTests
           end
 
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/content_security_policy.rb", <<-RUBY
-        Rails.application.config.content_security_policy do |p|
+        Zoisite.application.config.content_security_policy do |p|
           p.default_src :self, :https
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -188,19 +188,19 @@ module ApplicationTests
           content_security_policy_report_only
 
           def index
-            render html: "<h1>Welcome to Rails!</h1>"
+            render html: "<h1>Welcome to Zoisite!</h1>"
           end
         end
       RUBY
 
       app_file "config/initializers/content_security_policy.rb", <<-RUBY
-        Rails.application.config.content_security_policy do |p|
+        Zoisite.application.config.content_security_policy do |p|
           p.default_src :self, :https
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "pages#index"
         end
       RUBY
@@ -213,13 +213,13 @@ module ApplicationTests
 
     test "global content security policy added to rack app" do
       app_file "config/initializers/content_security_policy.rb", <<-RUBY
-        Rails.application.config.content_security_policy do |p|
+        Zoisite.application.config.content_security_policy do |p|
           p.default_src :self, :https
         end
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
 
           app = ->(env) {
             [200, { "Content-Type" => "text/html" }, ["<p>Hello, World!</p>"]]

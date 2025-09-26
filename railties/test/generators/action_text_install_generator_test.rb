@@ -3,12 +3,12 @@
 require "generators/generators_test_helper"
 require "generators/action_text/install/install_generator"
 
-class ActionText::Generators::InstallGeneratorTest < Rails::Generators::TestCase
+class ActionText::Generators::InstallGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   setup do
-    Rails.application = Rails.application.class
-    Rails.application.config.root = Pathname(destination_root)
+    Zoisite.application = Zoisite.application.class
+    Zoisite.application.config.root = Pathname(destination_root)
 
     FileUtils.mkdir_p("#{destination_root}/app/javascript")
     FileUtils.touch("#{destination_root}/app/javascript/application.js")
@@ -20,7 +20,7 @@ class ActionText::Generators::InstallGeneratorTest < Rails::Generators::TestCase
   end
 
   teardown do
-     Rails.application = Rails.application.instance
+     Zoisite.application = Zoisite.application.instance
    end
 
   test "installs JavaScript dependencies" do

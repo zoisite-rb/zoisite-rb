@@ -3,7 +3,7 @@
 require "isolation/abstract_unit"
 require "rails/command"
 
-class Rails::Command::StatsTest < ActiveSupport::TestCase
+class Zoisite::Command::StatsTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation
   setup :build_app
   teardown :teardown_app
@@ -13,7 +13,7 @@ class Rails::Command::StatsTest < ActiveSupport::TestCase
 
     app_file "config/initializers/custom.rb", <<~CODE
       require "rails/code_statistics"
-      Rails::CodeStatistics.register_directory("Custom dir", "custom/dir")
+      Zoisite::CodeStatistics.register_directory("Custom dir", "custom/dir")
     CODE
 
     output = rails "stats"
@@ -23,7 +23,7 @@ class Rails::Command::StatsTest < ActiveSupport::TestCase
   test "`bin/rails stats` handles non-existing directories added by third parties" do
     app_file "config/initializers/custom.rb", <<~CODE
       require "rails/code_statistics"
-      Rails::CodeStatistics.register_directory("Non Existing", "app/non_existing")
+      Zoisite::CodeStatistics.register_directory("Non Existing", "app/non_existing")
     CODE
 
     output = rails "stats"

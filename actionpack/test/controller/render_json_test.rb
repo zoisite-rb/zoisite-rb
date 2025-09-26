@@ -123,7 +123,7 @@ class RenderJsonTest < ActionController::TestCase
 
   def test_render_json_with_new_default_and_without_callback_does_not_escape_js_chars
     msg = <<~MSG.squish
-      Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Rails 8.2.
+      Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Zoisite 8.2.
       Set it to `false`, or remove the config.
     MSG
 
@@ -156,7 +156,7 @@ class RenderJsonTest < ActionController::TestCase
     @before_escape_json_responses = @controller.class.escape_json_responses
 
     msg = <<~MSG.squish
-      Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Rails 8.2.
+      Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Zoisite 8.2.
       Set it to `false`, or remove the config.
     MSG
 
@@ -177,7 +177,7 @@ class RenderJsonTest < ActionController::TestCase
     @before_escape_json_responses = @controller.class.escape_json_responses
 
     msg = <<~MSG.squish
-      Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Rails 8.2.
+      Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Zoisite 8.2.
       Set it to `false`, or remove the config.
     MSG
 
@@ -198,7 +198,7 @@ class RenderJsonTest < ActionController::TestCase
     @before_escape_json_responses = @controller.class.escape_json_responses
 
     msg = <<~MSG.squish
-      Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Rails 8.2.
+      Setting action_controller.escape_json_responses = true is deprecated and will have no effect in Zoisite 8.2.
       Set it to `false`, or remove the config.
     MSG
 

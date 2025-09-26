@@ -4,7 +4,7 @@ require "generators/generators_test_helper"
 require "rails/generators/rails/app/app_generator"
 require "rails/generators/rails/authentication/authentication_generator"
 
-class AuthenticationGeneratorTest < Rails::Generators::TestCase
+class AuthenticationGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
 
   def setup

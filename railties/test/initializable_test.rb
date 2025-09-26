@@ -5,7 +5,7 @@ require "rails/initializable"
 
 module InitializableTests
   class Foo
-    include Rails::Initializable
+    include Zoisite::Initializable
     attr_accessor :foo, :bar
 
     initializer :start do
@@ -22,7 +22,7 @@ module InitializableTests
   end
 
   class Parent
-    include Rails::Initializable
+    include Zoisite::Initializable
 
     initializer :one do
       $arr << 1
@@ -34,7 +34,7 @@ module InitializableTests
   end
 
   class Child < Parent
-    include Rails::Initializable
+    include Zoisite::Initializable
 
     initializer :three, before: :one do
       $arr << 3
@@ -52,7 +52,7 @@ module InitializableTests
   end
 
   class Instance
-    include Rails::Initializable
+    include Zoisite::Initializable
 
     initializer :one, group: :assets do
       $arr << 1
@@ -72,7 +72,7 @@ module InitializableTests
   end
 
   class WithArgs
-    include Rails::Initializable
+    include Zoisite::Initializable
 
     initializer :foo do |arg|
       $with_arg = arg
@@ -81,7 +81,7 @@ module InitializableTests
 
   class OverriddenInitializer
     class MoreInitializers
-      include Rails::Initializable
+      include Zoisite::Initializable
 
       initializer :startup, before: :last do
         $arr << 3
@@ -96,7 +96,7 @@ module InitializableTests
       end
     end
 
-    include Rails::Initializable
+    include Zoisite::Initializable
 
     initializer :first do
       $arr << 1
@@ -113,7 +113,7 @@ module InitializableTests
 
   module Interdependent
     class PluginA
-      include Rails::Initializable
+      include Zoisite::Initializable
 
       initializer "plugin_a.startup" do
         $arr << 1
@@ -125,7 +125,7 @@ module InitializableTests
     end
 
     class PluginB
-      include Rails::Initializable
+      include Zoisite::Initializable
 
       initializer "plugin_b.startup", after: "plugin_a.startup" do
         $arr << 2
@@ -137,7 +137,7 @@ module InitializableTests
     end
 
     class Application
-      include Rails::Initializable
+      include Zoisite::Initializable
       def self.initializers
         PluginB.initializers + PluginA.initializers
       end
@@ -146,7 +146,7 @@ module InitializableTests
 
   module Duplicate
     class PluginA
-      include Rails::Initializable
+      include Zoisite::Initializable
 
       initializer "plugin_a.startup" do
         $arr << 1
@@ -158,7 +158,7 @@ module InitializableTests
     end
 
     class PluginB
-      include Rails::Initializable
+      include Zoisite::Initializable
 
       initializer "plugin_b.startup", after: "plugin_a.startup" do
         $arr << 2
@@ -170,7 +170,7 @@ module InitializableTests
     end
 
     class Application
-      include Rails::Initializable
+      include Zoisite::Initializable
 
       def self.initializers
         @initializers ||= (PluginA.initializers + PluginB.initializers + PluginB.initializers)
@@ -207,7 +207,7 @@ module InitializableTests
     test "creating initializer without a block raises an error" do
       assert_raise(ArgumentError) do
         Class.new do
-          include Rails::Initializable
+          include Zoisite::Initializable
 
           initializer :foo
         end
@@ -281,7 +281,7 @@ module InitializableTests
   class CollectionTest < ActiveSupport::TestCase
     test "delegates missing to collection array" do
       initializable = Class.new do
-        include Rails::Initializable
+        include Zoisite::Initializable
       end
 
       Array.public_instance_methods.each do |method_name|
@@ -331,7 +331,7 @@ module InitializableTests
     private
       def collection(*names)
         Class.new do
-          include Rails::Initializable
+          include Zoisite::Initializable
           names.each { |name| initializer(name) { } }
         end
       end

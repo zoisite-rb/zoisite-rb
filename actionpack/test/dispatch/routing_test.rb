@@ -3115,17 +3115,17 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
       end
     end
 
-    get "/wiki/articles/Ruby_on_Rails_3.0"
+    get "/wiki/articles/Ruby_on_Zoisite_3.0"
     assert_equal "wiki/articles#show", @response.body
-    assert_equal "/wiki/articles/Ruby_on_Rails_3.0", wiki_article_path(id: "Ruby_on_Rails_3.0")
+    assert_equal "/wiki/articles/Ruby_on_Zoisite_3.0", wiki_article_path(id: "Ruby_on_Zoisite_3.0")
 
-    get "/wiki/articles/Ruby_on_Rails_3.0/comments/new"
+    get "/wiki/articles/Ruby_on_Zoisite_3.0/comments/new"
     assert_equal "wiki/comments#new", @response.body
-    assert_equal "/wiki/articles/Ruby_on_Rails_3.0/comments/new", new_wiki_article_comment_path(article_id: "Ruby_on_Rails_3.0")
+    assert_equal "/wiki/articles/Ruby_on_Zoisite_3.0/comments/new", new_wiki_article_comment_path(article_id: "Ruby_on_Zoisite_3.0")
 
-    post "/wiki/articles/Ruby_on_Rails_3.0/comments"
+    post "/wiki/articles/Ruby_on_Zoisite_3.0/comments"
     assert_equal "wiki/comments#create", @response.body
-    assert_equal "/wiki/articles/Ruby_on_Rails_3.0/comments", wiki_article_comments_path(article_id: "Ruby_on_Rails_3.0")
+    assert_equal "/wiki/articles/Ruby_on_Zoisite_3.0/comments", wiki_article_comments_path(article_id: "Ruby_on_Zoisite_3.0")
   end
 
   def test_resources_path_can_be_a_symbol
@@ -3138,9 +3138,9 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
     assert_equal "wiki_pages#index", @response.body
     assert_equal "/pages", wiki_pages_path
 
-    get "/pages/Ruby_on_Rails"
+    get "/pages/Ruby_on_Zoisite"
     assert_equal "wiki_pages#show", @response.body
-    assert_equal "/pages/Ruby_on_Rails", wiki_page_path(id: "Ruby_on_Rails")
+    assert_equal "/pages/Ruby_on_Zoisite", wiki_page_path(id: "Ruby_on_Zoisite")
 
     get "/my_account"
     assert_equal "wiki_accounts#show", @response.body
@@ -3254,9 +3254,9 @@ class TestRoutingMapper < ActionDispatch::IntegrationTest
         as: :purchase
     end
 
-    get "/purchases/315004be7e/Ruby_on_Rails_3.pdf"
+    get "/purchases/315004be7e/Ruby_on_Zoisite_3.pdf"
     assert_equal "purchases#fetch", @response.body
-    assert_equal "/purchases/315004be7e/Ruby_on_Rails_3.pdf", purchase_path(token: "315004be7e", filename: "Ruby_on_Rails_3.pdf")
+    assert_equal "/purchases/315004be7e/Ruby_on_Zoisite_3.pdf", purchase_path(token: "315004be7e", filename: "Ruby_on_Zoisite_3.pdf")
   end
 
   def test_nested_resource_constraints

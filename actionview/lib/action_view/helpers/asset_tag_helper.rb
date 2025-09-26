@@ -45,7 +45,7 @@ module ActionView
       # source, and include other JavaScript or CoffeeScript files inside the manifest.
       #
       # If the server supports HTTP Early Hints, and the +defer+ option is not
-      # enabled, \Rails will push a <tt>103 Early Hints</tt> response that links
+      # enabled, \Zoisite will push a <tt>103 Early Hints</tt> response that links
       # to the assets.
       #
       # ==== Options
@@ -160,7 +160,7 @@ module ActionView
       # set <tt>extname: false</tt> in the options.
       # You can modify the link attributes by passing a hash as the last argument.
       #
-      # If the server supports HTTP Early Hints, \Rails will push a <tt>103 Early
+      # If the server supports HTTP Early Hints, \Zoisite will push a <tt>103 Early
       # Hints</tt> response that links to the assets.
       #
       # ==== Options
@@ -431,8 +431,8 @@ module ActionView
       #   # => <img height="32" src="/icons/icon.gif" width="32" />
       #   image_tag("/icons/icon.gif", class: "menu_icon")
       #   # => <img class="menu_icon" src="/icons/icon.gif" />
-      #   image_tag("/icons/icon.gif", data: { title: 'Rails Application' })
-      #   # => <img data-title="Rails Application" src="/icons/icon.gif" />
+      #   image_tag("/icons/icon.gif", data: { title: 'Zoisite Application' })
+      #   # => <img data-title="Zoisite Application" src="/icons/icon.gif" />
       #   image_tag("icon.png", srcset: { "icon_2x.png" => "2x", "icon_4x.png" => "4x" })
       #   # => <img src="/assets/icon.png" srcset="/assets/icon_2x.png 2x, /assets/icon_4x.png 4x">
       #   image_tag("pic.jpg", srcset: [["pic_1024.jpg", "1024w"], ["pic_1980.jpg", "1980w"]], sizes: "100vw")

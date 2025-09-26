@@ -10,7 +10,7 @@ class RackCacheMetaStoreTest < ActiveSupport::TestCase
   end
 
   setup do
-    @store = ActionDispatch::RailsMetaStore.new(ReadWriteHash.new)
+    @store = ActionDispatch::ZoisiteMetaStore.new(ReadWriteHash.new)
   end
 
   test "stuff is deep duped" do

@@ -54,10 +54,10 @@ class PathGenerationTest < ActiveSupport::TestCase
   end
 
   def test_original_script_name
-    original_logger = Rails.logger
-    Rails.logger    = Logger.new nil
+    original_logger = Zoisite.logger
+    Zoisite.logger    = Logger.new nil
 
-    app = Class.new(Rails::Application) {
+    app = Class.new(Zoisite::Application) {
       def self.name; "ScriptNameTestApp"; end
 
       attr_accessor :controller
@@ -82,6 +82,6 @@ class PathGenerationTest < ActiveSupport::TestCase
     send_request(url, "GET", nil)
     assert_equal "/blogs", app.instance.controller.blogs_path
   ensure
-    Rails.logger = original_logger
+    Zoisite.logger = original_logger
   end
 end

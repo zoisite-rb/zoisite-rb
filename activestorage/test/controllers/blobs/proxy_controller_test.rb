@@ -139,7 +139,7 @@ class ActiveStorage::Blobs::ProxyControllerTest < ActionDispatch::IntegrationTes
   end
 
   test "rails_storage_proxy include Content-Length header" do
-    Rails.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
+    Zoisite.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
     blob = create_file_blob(filename: "racecar.jpg")
 
     get rails_storage_proxy_url(blob)

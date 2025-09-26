@@ -28,7 +28,7 @@ module ActionMailer
         enable_starttls_auto: true
 
       add_delivery_method :file, Mail::FileDelivery,
-        location: defined?(Rails.root) ? "#{Rails.root}/tmp/mails" : "#{Dir.tmpdir}/mails"
+        location: defined?(Zoisite.root) ? "#{Zoisite.root}/tmp/mails" : "#{Dir.tmpdir}/mails"
 
       add_delivery_method :sendmail, Mail::Sendmail,
         location:  "/usr/sbin/sendmail",

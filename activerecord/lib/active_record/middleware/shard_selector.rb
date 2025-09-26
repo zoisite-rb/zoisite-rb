@@ -5,7 +5,7 @@ module ActiveRecord
     # = Shard Selector \Middleware
     #
     # The ShardSelector Middleware provides a framework for automatically
-    # swapping shards. \Rails provides a basic framework to determine which
+    # swapping shards. \Zoisite provides a basic framework to determine which
     # shard to switch to and allows for applications to write custom strategies
     # for swapping if needed.
     #
@@ -13,12 +13,12 @@ module ActiveRecord
     #
     # Applications must provide a resolver that will provide application-specific logic for
     # selecting the appropriate shard. Setting +config.active_record.shard_resolver+ will cause
-    # Rails to add ShardSelector to the default middleware stack.
+    # Zoisite to add ShardSelector to the default middleware stack.
     #
     # The resolver, along with any configuration options, can be set in the application
     # configuration using an initializer like so:
     #
-    #   Rails.application.configure do
+    #   Zoisite.application.configure do
     #     config.active_record.shard_selector = { lock: false, class_name: "AnimalsRecord" }
     #     config.active_record.shard_resolver = ->(request) {
     #       subdomain = request.subdomain

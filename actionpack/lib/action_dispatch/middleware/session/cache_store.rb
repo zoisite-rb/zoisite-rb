@@ -13,7 +13,7 @@ module ActionDispatch
     # sessions and you don't need them to live for extended periods of time.
     #
     # #### Options
-    # *   `cache`         - The cache to use. If it is not specified, `Rails.cache`
+    # *   `cache`         - The cache to use. If it is not specified, `Zoisite.cache`
     #     will be used.
     # *   `expire_after`  - The length of time a session will be stored before
     #     automatically expiring. By default, the `:expires_in` option of the cache
@@ -25,7 +25,7 @@ module ActionDispatch
     #
     class CacheStore < AbstractSecureStore
       def initialize(app, options = {})
-        @cache = options[:cache] || Rails.cache
+        @cache = options[:cache] || Zoisite.cache
         options[:expire_after] ||= @cache.options[:expires_in]
         @check_collisions = options[:check_collisions] || false
         super

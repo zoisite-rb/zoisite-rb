@@ -258,7 +258,7 @@ class DebugExceptionsTest < ActionDispatch::IntegrationTest
     assert_equal "text/plain", response.media_type
     assert_match(/RuntimeError\npuke/, body)
 
-    Rails.stub :root, Pathname.new(".") do
+    Zoisite.stub :root, Pathname.new(".") do
       get "/", headers: xhr_request_env
 
       assert_response 500
@@ -764,7 +764,7 @@ class DebugExceptionsTest < ActionDispatch::IntegrationTest
 
   test "debug exceptions app shows user code that caused the error in source view" do
     @app = DevelopmentApp
-    Rails.stub :root, Pathname.new(".") do
+    Zoisite.stub :root, Pathname.new(".") do
       cleaner = ActiveSupport::BacktraceCleaner.new.tap do |bc|
         bc.add_silencer { |line| line.match?(/method_that_raises/) }
         bc.add_silencer { |line| !line.match?(%r{test/dispatch/debug_exceptions_test.rb}) }
@@ -818,7 +818,7 @@ class DebugExceptionsTest < ActionDispatch::IntegrationTest
 
   test "debug exceptions app shows all the nested exceptions in source view" do
     @app = DevelopmentApp
-    Rails.stub :root, Pathname.new(".") do
+    Zoisite.stub :root, Pathname.new(".") do
       cleaner = ActiveSupport::BacktraceCleaner.new.tap do |bc|
         bc.add_silencer { |line| !line.match?(%r{test/dispatch/debug_exceptions_test.rb}) }
       end
@@ -878,7 +878,7 @@ class DebugExceptionsTest < ActionDispatch::IntegrationTest
 
   test "shows a buttons for every action in an actionable error" do
     @app = DevelopmentApp
-    Rails.stub :root, Pathname.new(".") do
+    Zoisite.stub :root, Pathname.new(".") do
       cleaner = ActiveSupport::BacktraceCleaner.new.tap do |bc|
         bc.add_silencer { |line| !line.match?(%r{test/dispatch/debug_exceptions_test.rb}) }
       end

@@ -3,7 +3,7 @@
 require "isolation/abstract_unit"
 require "rails/command"
 
-class Rails::Command::RakeTest < ActiveSupport::TestCase
+class Zoisite::Command::RakeTest < ActiveSupport::TestCase
   setup :build_app
   teardown :teardown_app
 

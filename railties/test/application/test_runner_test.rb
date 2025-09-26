@@ -802,7 +802,7 @@ module ApplicationTests
     end
 
     def test_run_app_without_rails_loaded
-      # Simulate a real Rails app boot.
+      # Simulate a real Zoisite app boot.
       app_file "config/boot.rb", <<-RUBY
         ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 
@@ -1012,7 +1012,7 @@ module ApplicationTests
       create_scaffold
 
       app_file "config/environments/test.rb", <<-RUBY
-        Rails.application.configure do
+        Zoisite.application.configure do
           config.action_controller.allow_forgery_protection = true
           config.action_dispatch.show_exceptions = :none
         end
@@ -1033,7 +1033,7 @@ module ApplicationTests
       output = run_test_command("test/models/accnt.rb")
 
       expected = <<~MSG
-        bin/rails: Could not load test file: test/models/accnt.rb. (Rails::TestUnit::InvalidTestError)
+        bin/rails: Could not load test file: test/models/accnt.rb. (Zoisite::TestUnit::InvalidTestError)
 
         Did you mean?  test/models/account_test.rb
       MSG
@@ -1401,8 +1401,8 @@ module ApplicationTests
           Minitest.extensions << "json_reporter"
 
           # Minitest uses RubyGems to find plugins, and since RubyGems
-          # doesn't know about the Rails installation we're pointing at,
-          # Minitest won't require the Rails minitest plugin when we run
+          # doesn't know about the Zoisite installation we're pointing at,
+          # Minitest won't require the Zoisite minitest plugin when we run
           # these integration tests.  So we have to manually require the
           # Minitest plugin here.
           require "minitest/rails_plugin"
@@ -1519,7 +1519,7 @@ module ApplicationTests
 
           class EnvTest < ActiveSupport::TestCase
             def test_env
-              puts "Current Environment: \#{Rails.env}"
+              puts "Current Environment: \#{Zoisite.env}"
             end
           end
         RUBY

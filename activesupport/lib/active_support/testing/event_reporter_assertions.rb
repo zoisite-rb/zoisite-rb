@@ -84,7 +84,7 @@ module ActiveSupport
         end
       end
 
-      # Asserts that the block does not cause an event to be reported to +Rails.event+.
+      # Asserts that the block does not cause an event to be reported to +Zoisite.event+.
       #
       # If no name is provided, passes if evaluated code in the yielded block reports no events.
       #
@@ -115,12 +115,12 @@ module ActiveSupport
       end
 
       # Asserts that the block causes an event with the given name to be reported
-      # to +Rails.event+.
+      # to +Zoisite.event+.
       #
       # Passes if the evaluated code in the yielded block reports a matching event.
       #
       #   assert_event_reported("user.created") do
-      #     Rails.event.notify("user.created", { id: 123 })
+      #     Zoisite.event.notify("user.created", { id: 123 })
       #   end
       #
       # To test further details about the reported event, you can specify payload and tag matchers.
@@ -129,15 +129,15 @@ module ActiveSupport
       #     payload: { id: 123, name: "John Doe" },
       #     tags: { request_id: /[0-9]+/ }
       #   ) do
-      #     Rails.event.tagged(request_id: "123") do
-      #       Rails.event.notify("user.created", { id: 123, name: "John Doe" })
+      #     Zoisite.event.tagged(request_id: "123") do
+      #       Zoisite.event.notify("user.created", { id: 123, name: "John Doe" })
       #     end
       #   end
       #
       # The matchers support partial matching - only the specified keys need to match.
       #
       #   assert_event_reported("user.created", payload: { id: 123 }) do
-      #     Rails.event.notify("user.created", { id: 123, name: "John Doe" })
+      #     Zoisite.event.notify("user.created", { id: 123, name: "John Doe" })
       #   end
       def assert_event_reported(name, payload: nil, tags: {}, &block)
         events = EventCollector.record(&block)
@@ -177,7 +177,7 @@ module ActiveSupport
       #     },
       #     { name: "process.completed" }
       #   ]) do
-      #     Rails.event.tagged(request_id: "456") do
+      #     Zoisite.event.tagged(request_id: "456") do
       #       start_and_complete_process(123)
       #     end
       #   end
@@ -213,7 +213,7 @@ module ActiveSupport
         assert(true)
       end
 
-      # Allows debug events to be reported to +Rails.event+ for the duration of a given block.
+      # Allows debug events to be reported to +Zoisite.event+ for the duration of a given block.
       #
       #   with_debug_event_reporting do
       #     service_that_reports_debug_events.perform

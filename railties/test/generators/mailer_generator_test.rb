@@ -3,7 +3,7 @@
 require "generators/generators_test_helper"
 require "rails/generators/mailer/mailer_generator"
 
-class MailerGeneratorTest < Rails::Generators::TestCase
+class MailerGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(notifier foo bar)
 

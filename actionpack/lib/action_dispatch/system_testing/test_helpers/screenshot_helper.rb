@@ -88,7 +88,7 @@ module ActionDispatch
           end
 
           def absolute_path
-            Rails.root.join(screenshots_dir, image_name)
+            Zoisite.root.join(screenshots_dir, image_name)
           end
 
           def screenshots_dir
@@ -100,7 +100,7 @@ module ActionDispatch
           end
 
           def relative_image_path
-            "#{absolute_path.relative_path_from(Rails.root)}.png"
+            "#{absolute_path.relative_path_from(Zoisite.root)}.png"
           end
 
           def absolute_html_path

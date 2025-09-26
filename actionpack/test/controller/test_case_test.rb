@@ -1147,7 +1147,7 @@ class ResponseDefaultHeadersTest < ActionController::TestCase
 end
 
 module EngineControllerTests
-  class Engine < ::Rails::Engine
+  class Engine < ::Zoisite::Engine
     isolate_namespace EngineControllerTests
 
     routes.draw do

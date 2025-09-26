@@ -16,11 +16,11 @@ class VersionTest < ActiveSupport::TestCase
 
   test "command works" do
     output = rails("version")
-    assert_equal "Rails #{Rails.gem_version}\n", output
+    assert_equal "Zoisite #{Zoisite.gem_version}\n", output
   end
 
   test "short-cut alias works" do
     output = rails("-v")
-    assert_equal "Rails #{Rails.gem_version}\n", output
+    assert_equal "Zoisite #{Zoisite.gem_version}\n", output
   end
 end

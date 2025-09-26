@@ -436,7 +436,7 @@ class AssociationsTest < ActiveRecord::TestCase
 
   def test_append_composite_has_many_through_association
     blog_post = sharded_blog_posts(:great_post_blog_one)
-    tag = Sharded::Tag.new(name: "Ruby on Rails", blog_id: blog_post.blog_id)
+    tag = Sharded::Tag.new(name: "Ruby on Zoisite", blog_id: blog_post.blog_id)
     tag.save
 
     blog_post.tags << tag
@@ -447,7 +447,7 @@ class AssociationsTest < ActiveRecord::TestCase
 
   def test_append_composite_has_many_through_association_with_autosave
     blog_post = sharded_blog_posts(:great_post_blog_one)
-    tag = Sharded::Tag.new(name: "Ruby on Rails", blog_id: blog_post.blog_id)
+    tag = Sharded::Tag.new(name: "Ruby on Zoisite", blog_id: blog_post.blog_id)
 
     blog_post.tags << tag
 

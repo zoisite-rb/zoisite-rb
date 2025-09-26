@@ -4,14 +4,14 @@ module ActiveSupport
   # = \String Inquirer
   #
   # Wrapping a string in this class gives you a prettier way to test
-  # for equality. The value returned by <tt>Rails.env</tt> is wrapped
+  # for equality. The value returned by <tt>Zoisite.env</tt> is wrapped
   # in a StringInquirer object, so instead of calling this:
   #
-  #   Rails.env == 'production'
+  #   Zoisite.env == 'production'
   #
   # you can call this:
   #
-  #   Rails.env.production?
+  #   Zoisite.env.production?
   #
   # == Instantiating a new \StringInquirer
   #

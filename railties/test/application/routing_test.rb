@@ -44,7 +44,7 @@ module ApplicationTests
       app("development")
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '*foo', to: 'foo#index'
         end
       RUBY
@@ -73,7 +73,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           root to: "foo#index"
         end
       RUBY
@@ -92,10 +92,10 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
         end
 
-        Rails.application.routes.append do
+        Zoisite.application.routes.append do
           get "/", to: "foo#index"
         end
       RUBY
@@ -134,7 +134,7 @@ module ApplicationTests
       app("production")
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "up" => "rails/health#show", as: :rails_health_check
         end
       RUBY
@@ -170,7 +170,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -183,7 +183,7 @@ module ApplicationTests
 
     test "mount rack app" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           mount lambda { |env| [200, {}, [env["PATH_INFO"]]] }, at: "/blog"
           # The line below is required because mount sometimes
           # fails when a resource route is added.
@@ -207,7 +207,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           mount lambda { |env| [200, {}, [env["PATH_INFO"]]] }, at: "/blog", as: "my_blog"
           get '/foo' => 'foo#index'
         end
@@ -237,7 +237,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -271,7 +271,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'admin/foo', to: 'admin/foo#index'
           get 'foo', to: 'foo#index'
         end
@@ -288,7 +288,7 @@ module ApplicationTests
 
     test "routes appending blocks" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller/:action'
         end
       RUBY
@@ -305,7 +305,7 @@ module ApplicationTests
       assert_equal "WIN", last_response.body
 
       app_file "config/routes.rb", <<-R
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'lol' => 'hello#index'
         end
       R
@@ -316,7 +316,7 @@ module ApplicationTests
 
     test "routes appending blocks after reload" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller/:action'
         end
       RUBY
@@ -404,7 +404,7 @@ module ApplicationTests
         RUBY
 
         app_file "config/routes.rb", <<-RUBY
-          Rails.application.routes.draw do
+          Zoisite.application.routes.draw do
             draw :external
             get 'custom', to: 'foo#custom'
             get 'mapping', to: 'foo#mapping'
@@ -432,7 +432,7 @@ module ApplicationTests
         assert_equal "/profile", last_response.body
 
         app_file "config/routes.rb", <<-RUBY
-          Rails.application.routes.draw do
+          Zoisite.application.routes.draw do
             draw :another_external
             get 'custom', to: 'foo#custom'
             get 'mapping', to: 'foo#mapping'
@@ -468,7 +468,7 @@ module ApplicationTests
       end
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'foo', to: ::InitializeRackApp
         end
       RUBY
@@ -477,10 +477,10 @@ module ApplicationTests
       assert_equal "InitializeRackApp", last_response.body
     end
 
-    test "reload_routes! is part of Rails.application API" do
+    test "reload_routes! is part of Zoisite.application API" do
       app("development")
       assert_nothing_raised do
-        Rails.application.reload_routes!
+        Zoisite.application.reload_routes!
       end
     end
 
@@ -496,7 +496,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'foo', :to => 'foo#index'
           root :to => 'foo#index'
         end
@@ -551,23 +551,23 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'foo', to: 'foo#index'
         end
       RUBY
 
       get "/foo"
       assert_equal "foo", last_response.body
-      assert_equal "/foo", Rails.application.routes.url_helpers.foo_path
+      assert_equal "/foo", Zoisite.application.routes.url_helpers.foo_path
 
       get "/bar"
       assert_equal 404, last_response.status
       assert_raises NoMethodError do
-        Rails.application.routes.url_helpers.bar_path
+        Zoisite.application.routes.url_helpers.bar_path
       end
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'foo', to: 'foo#index'
           get 'bar', to: 'bar#index'
 
@@ -579,52 +579,52 @@ module ApplicationTests
         end
       RUBY
 
-      Rails.application.reload_routes!
+      Zoisite.application.reload_routes!
 
       get "/foo"
       assert_equal "foo", last_response.body
-      assert_equal "/foo", Rails.application.routes.url_helpers.foo_path
+      assert_equal "/foo", Zoisite.application.routes.url_helpers.foo_path
 
       get "/bar"
       assert_equal "bar", last_response.body
-      assert_equal "/bar", Rails.application.routes.url_helpers.bar_path
+      assert_equal "/bar", Zoisite.application.routes.url_helpers.bar_path
 
       get "/custom"
       assert_equal "http://www.apple.com", last_response.body
-      assert_equal "http://www.apple.com", Rails.application.routes.url_helpers.custom_url
+      assert_equal "http://www.apple.com", Zoisite.application.routes.url_helpers.custom_url
 
       get "/mapping"
       assert_equal "/profile", last_response.body
-      assert_equal "/profile", Rails.application.routes.url_helpers.polymorphic_path(User.new)
+      assert_equal "/profile", Zoisite.application.routes.url_helpers.polymorphic_path(User.new)
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get 'foo', to: 'foo#index'
         end
       RUBY
 
-      Rails.application.reload_routes!
+      Zoisite.application.reload_routes!
 
       get "/foo"
       assert_equal "foo", last_response.body
-      assert_equal "/foo", Rails.application.routes.url_helpers.foo_path
+      assert_equal "/foo", Zoisite.application.routes.url_helpers.foo_path
 
       get "/bar"
       assert_equal 404, last_response.status
       assert_raises NoMethodError do
-        Rails.application.routes.url_helpers.bar_path
+        Zoisite.application.routes.url_helpers.bar_path
       end
 
       get "/custom"
       assert_equal 404, last_response.status
       assert_raises NoMethodError do
-        Rails.application.routes.url_helpers.custom_url
+        Zoisite.application.routes.url_helpers.custom_url
       end
 
       get "/mapping"
       assert_equal 404, last_response.status
       assert_raises NoMethodError do
-        Rails.application.routes.url_helpers.polymorphic_path(User.new)
+        Zoisite.application.routes.url_helpers.polymorphic_path(User.new)
       end
     end
 
@@ -663,7 +663,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':locale/foo', to: 'foo#index', as: 'foo'
           get 'users', to: 'foo#users', as: 'users'
           direct(:microsoft) { 'http://www.microsoft.com' }
@@ -673,31 +673,31 @@ module ApplicationTests
 
       get "/en/foo"
       assert_equal "foo", last_response.body
-      assert_equal "/en/foo", Rails.application.routes.url_helpers.foo_path(locale: "en")
-      assert_equal "http://www.microsoft.com", Rails.application.routes.url_helpers.microsoft_url
-      assert_equal "/profile", Rails.application.routes.url_helpers.polymorphic_path(User.new)
+      assert_equal "/en/foo", Zoisite.application.routes.url_helpers.foo_path(locale: "en")
+      assert_equal "http://www.microsoft.com", Zoisite.application.routes.url_helpers.microsoft_url
+      assert_equal "/profile", Zoisite.application.routes.url_helpers.polymorphic_path(User.new)
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':locale/bar', to: 'bar#index', as: 'foo'
           get 'users', to: 'foo#users', as: 'users'
           direct(:apple) { 'http://www.apple.com' }
         end
       RUBY
 
-      Rails.application.reload_routes!
+      Zoisite.application.reload_routes!
 
       get "/en/foo"
       assert_equal 404, last_response.status
 
       get "/en/bar"
       assert_equal "bar", last_response.body
-      assert_equal "/en/bar", Rails.application.routes.url_helpers.foo_path(locale: "en")
-      assert_equal "http://www.apple.com", Rails.application.routes.url_helpers.apple_url
-      assert_equal "/users", Rails.application.routes.url_helpers.polymorphic_path(User.new)
+      assert_equal "/en/bar", Zoisite.application.routes.url_helpers.foo_path(locale: "en")
+      assert_equal "http://www.apple.com", Zoisite.application.routes.url_helpers.apple_url
+      assert_equal "/users", Zoisite.application.routes.url_helpers.polymorphic_path(User.new)
 
       assert_raises NoMethodError do
-        Rails.application.routes.url_helpers.microsoft_url
+        Zoisite.application.routes.url_helpers.microsoft_url
       end
     end
 
@@ -711,7 +711,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           resources :yazilar
         end
       RUBY
@@ -735,7 +735,7 @@ module ApplicationTests
       app("development")
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/url', to: 'url#index'
         end
       RUBY
@@ -751,7 +751,7 @@ module ApplicationTests
       app_file "app/models/context.rb", <<-RUBY
         class Context
           include UrlHelpers
-          include Rails.application.routes.url_helpers
+          include Zoisite.application.routes.url_helpers
         end
       RUBY
 
@@ -768,24 +768,24 @@ module ApplicationTests
       assert_equal "/foo", last_response.body
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/url', to: 'url#index'
           get '/bar', to: 'foo#index', as: 'foo'
         end
       RUBY
 
-      Rails.application.reload_routes!
+      Zoisite.application.reload_routes!
 
       get "/url"
       assert_equal "/bar", last_response.body
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/url', to: 'url#index'
         end
       RUBY
 
-      Rails.application.reload_routes!
+      Zoisite.application.reload_routes!
 
       get "/url"
       assert_equal "/foo", last_response.body

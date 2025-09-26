@@ -20,9 +20,9 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
 
     ActionView::LogSubscriber.attach_to :action_view
 
-    unless Rails.respond_to?(:root)
+    unless Zoisite.respond_to?(:root)
       @defined_root = true
-      Rails.define_singleton_method(:root) { :defined_root } # Minitest `stub` expects the method to be defined.
+      Zoisite.define_singleton_method(:root) { :defined_root } # Minitest `stub` expects the method to be defined.
     end
   end
 
@@ -33,7 +33,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
     ActiveSupport::LogSubscriber.log_subscribers.clear
 
     # We need to undef `root`, RenderTestCases don't want this to be defined
-    Rails.instance_eval { undef :root } if defined?(@defined_root)
+    Zoisite.instance_eval { undef :root } if defined?(@defined_root)
   end
 
   def set_logger(logger)
@@ -53,7 +53,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_template_template
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       @view.render(template: "test/hello_world")
       wait
 
@@ -65,7 +65,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_template_with_layout
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       @view.render(template: "test/hello_world", layout: "layouts/yield")
       wait
 
@@ -80,7 +80,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_file_template
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       @view.render(file: "#{FIXTURE_LOAD_PATH}/test/hello_world.erb")
       wait
 
@@ -92,7 +92,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_text_template
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       @view.render(plain: "TEXT")
       wait
 
@@ -104,7 +104,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_inline_template
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       @view.render(inline: "<%= 'TEXT' %>")
       wait
 
@@ -116,7 +116,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_partial_with_implicit_path
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       @view.render(Customer.new("david"), greeting: "hi")
       wait
 
@@ -126,7 +126,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_partial_with_cache_missed
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_view_cache_dependencies
       set_cache_controller
 
@@ -139,7 +139,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_partial_with_cache_hitted
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_view_cache_dependencies
       set_cache_controller
 
@@ -154,7 +154,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_partial_as_layout
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_view_cache_dependencies
       set_cache_controller
 
@@ -166,7 +166,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_partial_with_layout
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_view_cache_dependencies
       set_cache_controller
 
@@ -178,7 +178,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_uncached_outer_partial_with_inner_cached_partial_wont_mix_cache_hits_or_misses
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_view_cache_dependencies
       set_cache_controller
 
@@ -198,7 +198,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_cached_outer_partial_with_cached_inner_partial
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_view_cache_dependencies
       set_cache_controller
 
@@ -218,7 +218,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_partial_with_cache_hitted_and_missed
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_view_cache_dependencies
       set_cache_controller
 
@@ -237,7 +237,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_collection_template
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_cache_controller
 
       @view.render(partial: "test/customer", collection: [ Customer.new("david"), Customer.new("mary") ])
@@ -249,7 +249,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_collection_template_with_layout
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_cache_controller
 
       @view.render(partial: "test/customer", layout: "layouts/yield_only", collection: [ Customer.new("david"), Customer.new("mary") ])
@@ -261,7 +261,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_collection_with_implicit_path
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_cache_controller
 
       @view.render([ Customer.new("david"), Customer.new("mary") ], greeting: "hi")
@@ -273,7 +273,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_collection_template_without_path
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_cache_controller
 
       @view.render([ GoodCustomer.new("david"), Customer.new("mary") ], greeting: "hi")
@@ -285,7 +285,7 @@ class AVLogSubscriberTest < ActiveSupport::TestCase
   end
 
   def test_render_collection_with_cached_set
-    Rails.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
+    Zoisite.stub(:root, File.expand_path(FIXTURE_LOAD_PATH)) do
       set_view_cache_dependencies
       set_cache_controller
 

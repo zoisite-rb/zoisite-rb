@@ -96,7 +96,7 @@ module ActiveSupport
       # number of tests to run is above the +threshold+ param. The default value is
       # 50, and it's configurable via +config.active_support.test_parallelization_threshold+.
       #
-      # If you want to skip Rails default creation of one database per process in favor of
+      # If you want to skip Zoisite default creation of one database per process in favor of
       # writing your own implementation, you can set +parallelize_databases+, or configure it
       # via +config.active_support.parallelize_test_databases+.
       #

@@ -3,20 +3,20 @@
 require "generators/generators_test_helper"
 require "rails/generators/rails/model/model_generator"
 
-class ModelGeneratorTest < Rails::Generators::TestCase
+class ModelGeneratorTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
   arguments %w(Account name:string age:integer)
 
   def setup
     super
-    Rails::Generators::ModelHelpers.skip_warn = false
-    @old_belongs_to_required_by_default = Rails.application.config.active_record.belongs_to_required_by_default
+    Zoisite::Generators::ModelHelpers.skip_warn = false
+    @old_belongs_to_required_by_default = Zoisite.application.config.active_record.belongs_to_required_by_default
 
-    Rails.application.config.active_record.belongs_to_required_by_default = true
+    Zoisite.application.config.active_record.belongs_to_required_by_default = true
   end
 
   def teardown
-    Rails.application.config.active_record.belongs_to_required_by_default = @old_belongs_to_required_by_default
+    Zoisite.application.config.active_record.belongs_to_required_by_default = @old_belongs_to_required_by_default
   end
 
   def test_help_shows_invoked_generators_options
@@ -38,7 +38,7 @@ class ModelGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_migration_source_paths
-    template = File.join(Rails.root, "lib", "templates", "active_record", "migration", "create_table_migration.rb.tt")
+    template = File.join(Zoisite.root, "lib", "templates", "active_record", "migration", "create_table_migration.rb.tt")
 
     # Create template
     mkdir_p(File.dirname(template))
@@ -121,20 +121,20 @@ class ModelGeneratorTest < Rails::Generators::TestCase
 
   def test_unknown_inflection_rule_are_warned
     content = run_generator ["porsche"]
-    assert_match("[WARNING] Rails cannot recover singular form from its plural form 'porsches'.\nPlease setup custom inflection rules for this noun before running the generator in config/initializers/inflections.rb.", content)
+    assert_match("[WARNING] Zoisite cannot recover singular form from its plural form 'porsches'.\nPlease setup custom inflection rules for this noun before running the generator in config/initializers/inflections.rb.", content)
     assert_file "app/models/porsche.rb", /class Porsche < ApplicationRecord/
 
     uncountable_content = run_generator ["sheep"]
-    assert_no_match("[WARNING] Rails cannot recover singular form from its plural form", uncountable_content)
+    assert_no_match("[WARNING] Zoisite cannot recover singular form from its plural form", uncountable_content)
 
     regular_content = run_generator ["account"]
-    assert_no_match("[WARNING] Rails cannot recover singular form from its plural form", regular_content)
+    assert_no_match("[WARNING] Zoisite cannot recover singular form from its plural form", regular_content)
   end
 
   def test_impossible_inflection_rules_raises_an_error
     content = capture(:stderr) { run_generator ["BFF"] }
     message = <<~MESSAGE
-      Rails cannot recover the underscored form from its camelcase form 'BFF'.
+      Zoisite cannot recover the underscored form from its camelcase form 'BFF'.
       Please use an underscored name instead, either 'bff' or 'bf_f'.
       Or setup custom inflection rules for this noun before running the generator in config/initializers/inflections.rb.
     MESSAGE
@@ -284,14 +284,14 @@ class ModelGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_migration_with_configured_path
-    old_paths = Rails.application.config.paths["db/migrate"]
-    Rails.application.config.paths.add "db/migrate", with: "db2/migrate"
+    old_paths = Zoisite.application.config.paths["db/migrate"]
+    Zoisite.application.config.paths.add "db/migrate", with: "db2/migrate"
 
     run_generator
 
     assert_migration "db2/migrate/create_accounts.rb", /class CreateAccounts < ActiveRecord::Migration\[[0-9.]+\]/
   ensure
-    Rails.application.config.paths["db/migrate"] = old_paths
+    Zoisite.application.config.paths["db/migrate"] = old_paths
   end
 
   def test_model_with_references_attribute_generates_belongs_to_associations
@@ -510,7 +510,7 @@ class ModelGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_null_false_is_not_added_when_belongs_to_required_by_default_global_config_is_false
-    Rails.application.config.active_record.belongs_to_required_by_default = false
+    Zoisite.application.config.active_record.belongs_to_required_by_default = false
 
     run_generator ["account", "user:belongs_to"]
 

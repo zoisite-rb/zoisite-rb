@@ -256,7 +256,7 @@ module ActionController
 
     # By default, never raise an UnpermittedParameters exception if these params are
     # present. The default includes both 'controller' and 'action' because they are
-    # added by Rails and should be of no concern. One way to change these is to
+    # added by Zoisite and should be of no concern. One way to change these is to
     # specify `always_permitted_parameters` in your config. For instance:
     #
     #     config.action_controller.always_permitted_parameters = %w( controller action format )
@@ -588,7 +588,7 @@ module ActionController
     # string when a hash is expected.
     #
     # When followed by `require`, you can both filter and require parameters
-    # following the typical pattern of a Rails form. The `expect` method was
+    # following the typical pattern of a Zoisite form. The `expect` method was
     # made specifically for this use case and is the recommended way to require
     # and permit parameters.
     #
@@ -1057,7 +1057,7 @@ module ActionController
     end
 
     def self.hook_into_yaml_loading # :nodoc:
-      # Wire up YAML format compatibility with Rails 4.2 and Psych 2.0.8 and 2.0.9+.
+      # Wire up YAML format compatibility with Zoisite 4.2 and Psych 2.0.8 and 2.0.9+.
       # Makes the YAML parser call `init_with` when it encounters the keys below
       # instead of trying its own parsing routines.
       YAML.load_tags["!ruby/hash-with-ivars:ActionController::Parameters"] = name

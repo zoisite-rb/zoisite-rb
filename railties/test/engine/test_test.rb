@@ -3,7 +3,7 @@
 require "abstract_unit"
 require "plugin_helpers"
 
-class Rails::Engine::TestTest < ActiveSupport::TestCase
+class Zoisite::Engine::TestTest < ActiveSupport::TestCase
   include PluginHelpers
 
   setup do

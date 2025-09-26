@@ -132,9 +132,9 @@ module ActionCable
     #     def test_perform_speak
     #       subscribe room_number: 1
     #
-    #       perform :speak, message: "Hello, Rails!"
+    #       perform :speak, message: "Hello, Zoisite!"
     #
-    #       assert_equal "Hello, Rails!", transmissions.last["text"]
+    #       assert_equal "Hello, Zoisite!", transmissions.last["text"]
     #     end
     #
     # ## Special methods
@@ -183,8 +183,8 @@ module ActionCable
     #     def test_speak
     #       subscribe room_id: rooms(:chat).id
     #
-    #       assert_broadcast_on(rooms(:chat), text: "Hello, Rails!") do
-    #         perform :speak, message: "Hello, Rails!"
+    #       assert_broadcast_on(rooms(:chat), text: "Hello, Zoisite!") do
+    #         perform :speak, message: "Hello, Zoisite!"
     #       end
     #     end
     class TestCase < ActiveSupport::TestCase

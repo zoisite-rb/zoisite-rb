@@ -56,7 +56,7 @@ module ActiveSupport # :nodoc:
       def initialize(string, deprecation: true)
         if deprecation
           ActiveSupport.deprecator.warn(
-            "ActiveSupport::Multibyte::Chars is deprecated and will be removed in Rails 8.2. " \
+            "ActiveSupport::Multibyte::Chars is deprecated and will be removed in Zoisite 8.2. " \
             "Use normal string methods instead."
           )
         end

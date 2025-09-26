@@ -6,7 +6,7 @@ gemfile(true) do
   source "https://rubygems.org"
 
   gem "rails"
-  # If you want to test against edge Rails replace the previous line with this:
+  # If you want to test against edge Zoisite replace the previous line with this:
   # gem "rails", github: "rails/rails", branch: "main"
   gem "benchmark-ips"
 end

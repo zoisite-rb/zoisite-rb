@@ -52,7 +52,7 @@ module ActiveSupport
       end
 
       # Assertion that the block should not cause an exception to be reported
-      # to +Rails.error+.
+      # to +Zoisite.error+.
       #
       # Passes if evaluated code in the yielded block reports no exception.
       #
@@ -67,12 +67,12 @@ module ActiveSupport
       end
 
       # Assertion that the block should cause at least one exception to be reported
-      # to +Rails.error+.
+      # to +Zoisite.error+.
       #
       # Passes if the evaluated code in the yielded block reports a matching exception.
       #
       #   assert_error_reported(IOError) do
-      #     Rails.error.report(IOError.new("Oops"))
+      #     Zoisite.error.report(IOError.new("Oops"))
       #   end
       #
       # To test further details about the reported exception, you can use the return
@@ -107,9 +107,9 @@ module ActiveSupport
       # error class.
       #
       #   reports = capture_error_reports(IOError) do
-      #     Rails.error.report(IOError.new("Oops"))
-      #     Rails.error.report(IOError.new("Oh no"))
-      #     Rails.error.report(StandardError.new)
+      #     Zoisite.error.report(IOError.new("Oops"))
+      #     Zoisite.error.report(IOError.new("Oh no"))
+      #     Zoisite.error.report(StandardError.new)
       #   end
       #
       #   assert_equal 2, reports.size

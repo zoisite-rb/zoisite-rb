@@ -88,7 +88,7 @@ class InsertAllTest < ActiveRecord::TestCase
       Book.insert_all! [
         { name: "Rework", author_id: 1 },
         { name: "Patterns of Enterprise Application Architecture", author_id: 1 },
-        { name: "Agile Web Development with Rails", author_id: 1 },
+        { name: "Agile Web Development with Zoisite", author_id: 1 },
       ]
     end
   end
@@ -137,7 +137,7 @@ class InsertAllTest < ActiveRecord::TestCase
     skip unless supports_insert_on_duplicate_skip?
 
     assert_no_difference "Book.count" do
-      Book.insert_all [{ id: 1, name: "Agile Web Development with Rails" }]
+      Book.insert_all [{ id: 1, name: "Agile Web Development with Zoisite" }]
     end
   end
 
@@ -146,7 +146,7 @@ class InsertAllTest < ActiveRecord::TestCase
       skip unless supports_insert_on_duplicate_skip?
 
       assert_queries_match(/ON DUPLICATE KEY UPDATE/) do
-        Book.insert_all [{ id: 1, name: "Agile Web Development with Rails" }]
+        Book.insert_all [{ id: 1, name: "Agile Web Development with Zoisite" }]
       end
     end
 
@@ -211,7 +211,7 @@ class InsertAllTest < ActiveRecord::TestCase
     skip unless supports_insert_on_duplicate_skip? && supports_insert_conflict_target?
 
     assert_raise ActiveRecord::RecordNotUnique do
-      Book.insert_all [{ id: 1, name: "Agile Web Development with Rails" }],
+      Book.insert_all [{ id: 1, name: "Agile Web Development with Zoisite" }],
         unique_by: :index_books_on_author_id_and_name
     end
   end
@@ -396,7 +396,7 @@ class InsertAllTest < ActiveRecord::TestCase
   def test_upsert_all_updates_existing_records
     skip unless supports_insert_on_duplicate_update?
 
-    new_name = "Agile Web Development with Rails, 4th Edition"
+    new_name = "Agile Web Development with Zoisite, 4th Edition"
     Book.upsert_all [{ id: 1, name: new_name }]
     assert_equal new_name, Book.find(1).name
   end
@@ -461,7 +461,7 @@ class InsertAllTest < ActiveRecord::TestCase
   def test_upsert_all_does_not_update_readonly_attributes
     skip unless supports_insert_on_duplicate_update?
 
-    new_name = "Agile Web Development with Rails, 4th Edition"
+    new_name = "Agile Web Development with Zoisite, 4th Edition"
     ReadonlyNameBook.upsert_all [{ id: 1, name: new_name }]
     assert_not_equal new_name, Book.find(1).name
   end

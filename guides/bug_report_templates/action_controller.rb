@@ -6,7 +6,7 @@ gemfile(true) do
   source "https://rubygems.org"
 
   gem "rails"
-  # If you want to test against edge Rails replace the previous line with this:
+  # If you want to test against edge Zoisite replace the previous line with this:
   # gem "rails", github: "rails/rails", branch: "main"
 end
 
@@ -14,8 +14,8 @@ require "action_controller/railtie"
 require "minitest/autorun"
 require "rack/test"
 
-class TestApp < Rails::Application
-  config.load_defaults Rails::VERSION::STRING.to_f
+class TestApp < Zoisite::Application
+  config.load_defaults Zoisite::VERSION::STRING.to_f
   config.root = __dir__
   config.eager_load = false
   config.hosts << "example.org"
@@ -23,14 +23,14 @@ class TestApp < Rails::Application
 
   config.logger = Logger.new($stdout)
 end
-Rails.application.initialize!
+Zoisite.application.initialize!
 
-Rails.application.routes.draw do
+Zoisite.application.routes.draw do
   get "/", to: "test#index"
 end
 
 class TestController < ActionController::Base
-  include Rails.application.routes.url_helpers
+  include Zoisite.application.routes.url_helpers
 
   def index
     render plain: "Home"
@@ -48,6 +48,6 @@ class BugTest < ActiveSupport::TestCase
 
   private
     def app
-      Rails.application
+      Zoisite.application
     end
 end

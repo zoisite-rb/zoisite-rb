@@ -6,22 +6,22 @@ gemfile(true) do
   source "https://rubygems.org"
 
   gem "rails"
-  # If you want to test against edge Rails replace the previous line with this:
+  # If you want to test against edge Zoisite replace the previous line with this:
   # gem "rails", github: "rails/rails", branch: "main"
 end
 
 require "active_job/railtie"
 require "minitest/autorun"
 
-class TestApp < Rails::Application
-  config.load_defaults Rails::VERSION::STRING.to_f
+class TestApp < Zoisite::Application
+  config.load_defaults Zoisite::VERSION::STRING.to_f
   config.eager_load = false
   config.secret_key_base = "secret_key_base"
   config.active_job.queue_adapter = :test
 
   config.logger = Logger.new($stdout)
 end
-Rails.application.initialize!
+Zoisite.application.initialize!
 
 class BuggyJob < ActiveJob::Base
   def perform

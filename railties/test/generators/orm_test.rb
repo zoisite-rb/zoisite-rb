@@ -18,9 +18,9 @@ module ORMWithoutGenerators
   # No generators
 end
 
-class ScaffoldOrmTest < Rails::Generators::TestCase
+class ScaffoldOrmTest < Zoisite::Generators::TestCase
   include GeneratorsTestHelper
-  tests Rails::Generators::ScaffoldControllerGenerator
+  tests Zoisite::Generators::ScaffoldControllerGenerator
 
   def test_orm_class_returns_custom_generator_if_supported_custom_orm_set
     g = generator ["Foo"], orm: "ORMWithGenerators"
@@ -29,7 +29,7 @@ class ScaffoldOrmTest < Rails::Generators::TestCase
 
   def test_orm_class_returns_rails_generator_if_unsupported_custom_orm_set
     g = generator ["Foo"], orm: "ORMWithoutGenerators"
-    assert_equal Rails::Generators::ActiveModel, g.send(:orm_class)
+    assert_equal Zoisite::Generators::ActiveModel, g.send(:orm_class)
   end
 
   def test_orm_instance_returns_orm_class_instance_with_name
@@ -42,7 +42,7 @@ end
 
 module TestOrmWithDescription
   module Generators
-    class ModelGenerator < Rails::Generators::ModelGenerator
+    class ModelGenerator < Zoisite::Generators::ModelGenerator
       def self.usage_path
         true
       end
@@ -56,21 +56,21 @@ end
 
 class ModelOrmTest < ActiveSupport::TestCase
   def test_active_record_description_is_used_by_default
-    assert_match(/Description:.*/, Rails::Generators::ModelGenerator.desc)
+    assert_match(/Description:.*/, Zoisite::Generators::ModelGenerator.desc)
   end
 
   def test_orm_description_is_used_when_configured
     with_configured(:orm, :test_orm_with_description) do
-      assert_equal("My description", Rails::Generators::ModelGenerator.desc)
+      assert_equal("My description", Zoisite::Generators::ModelGenerator.desc)
     end
   end
 
   private
     def with_configured(hook, value)
-      previous_default = Rails::Generators::ModelGenerator.class_options[hook].default
-      Rails::Generators::ModelGenerator.class_options[hook].instance_variable_set(:@default, value)
+      previous_default = Zoisite::Generators::ModelGenerator.class_options[hook].default
+      Zoisite::Generators::ModelGenerator.class_options[hook].instance_variable_set(:@default, value)
       yield
     ensure
-      Rails::Generators::ModelGenerator.class_options[hook].instance_variable_set(:@default, previous_default)
+      Zoisite::Generators::ModelGenerator.class_options[hook].instance_variable_set(:@default, previous_default)
     end
 end

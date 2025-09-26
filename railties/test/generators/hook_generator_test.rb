@@ -3,7 +3,7 @@
 require "generators/generators_test_helper"
 
 class HookGeneratorTest < ActiveSupport::TestCase
-  class GeneratorWithHook < Rails::Generators::Base
+  class GeneratorWithHook < Zoisite::Generators::Base
     hook_for(:test_framework)
   end
 

@@ -6,13 +6,13 @@ require "rails/engine"
 class TestRoutingMount < ActionDispatch::IntegrationTest
   Router = ActionDispatch::Routing::RouteSet.new
 
-  class AppWithRoutes < Rails::Engine
+  class AppWithRoutes < Zoisite::Engine
     def self.routes
       @routes ||= ActionDispatch::Routing::RouteSet.new
     end
   end
 
-  # Test for mounting apps that respond to routes, but aren't Rails-like apps.
+  # Test for mounting apps that respond to routes, but aren't Zoisite-like apps.
   class SinatraLikeApp
     def self.routes; Object.new; end
 

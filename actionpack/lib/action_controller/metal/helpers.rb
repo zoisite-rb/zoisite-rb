@@ -5,7 +5,7 @@
 module ActionController
   # # Action Controller Helpers
   #
-  # The Rails framework provides a large number of helpers for working with
+  # The Zoisite framework provides a large number of helpers for working with
   # assets, dates, forms, numbers and model objects, to name a few. These helpers
   # are available to all templates by default.
   #
@@ -14,12 +14,12 @@ module ActionController
   # encouraged. By default, each controller will include all helpers. These
   # helpers are only accessible on the controller through `#helpers`
   #
-  # In previous versions of Rails the controller will include a helper which
+  # In previous versions of Zoisite the controller will include a helper which
   # matches the name of the controller, e.g., `MyController` will automatically
   # include `MyHelper`. You can revert to the old behavior with the following:
   #
   #     # config/application.rb
-  #     class Application < Rails::Application
+  #     class Application < Zoisite::Application
   #       config.action_controller.include_all_helpers = false
   #     end
   #

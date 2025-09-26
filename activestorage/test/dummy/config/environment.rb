@@ -1,5 +1,5 @@
-# Load the Rails application.
+# Load the Zoisite application.
 require_relative "application"
 
-# Initialize the Rails application.
-Rails.application.initialize!
+# Initialize the Zoisite application.
+Zoisite.application.initialize!

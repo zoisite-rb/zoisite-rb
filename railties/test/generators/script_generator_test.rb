@@ -3,9 +3,9 @@
 require "generators/generators_test_helper"
 require "rails/generators/rails/script/script_generator"
 
-module Rails
+module Zoisite
   module Generators
-    class ScriptGeneratorTest < Rails::Generators::TestCase
+    class ScriptGeneratorTest < Zoisite::Generators::TestCase
       include GeneratorsTestHelper
 
       def test_generate_script

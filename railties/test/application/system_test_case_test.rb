@@ -16,7 +16,7 @@ class SystemTestCaseTest < ActiveSupport::TestCase
 
   test "url helpers are delegated to a proxy class" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get 'foo', to: 'foo#index', as: 'test_foo'
       end
     RUBY
@@ -28,7 +28,7 @@ class SystemTestCaseTest < ActiveSupport::TestCase
 
   test "system tests use 127.0.0.1 in the url_options be default" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get 'foo', to: 'foo#index', as: 'test_foo'
       end
     RUBY
@@ -43,7 +43,7 @@ class SystemTestCaseTest < ActiveSupport::TestCase
 
   test "system tests use Capybara.app_host in the url_options if present" do
     app_file "config/routes.rb", <<-RUBY
-      Rails.application.routes.draw do
+      Zoisite.application.routes.draw do
         get 'foo', to: 'foo#index', as: 'test_foo'
       end
     RUBY

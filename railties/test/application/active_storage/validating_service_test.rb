@@ -8,7 +8,7 @@ module ApplicationTests
   class ValidatingServiceTest < ActiveSupport::TestCase
     include ActiveSupport::Testing::Isolation
     include Rack::Test::Methods
-    include Rails::Dom::Testing::Assertions
+    include Zoisite::Dom::Testing::Assertions
 
     self.file_fixture_path = "test/fixtures/files"
 
@@ -27,18 +27,18 @@ module ApplicationTests
       rails "db:migrate"
 
       app_file "config/routes.rb", <<~RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           _ = User
           resources :users, only: [:show, :create]
-          Rails.configuration.ok_to_proceed = true
+          Zoisite.configuration.ok_to_proceed = true
         end
       RUBY
 
       app_file "config/initializers/active_storage.rb", <<~RUBY
-        Rails.configuration.ok_to_proceed = false
+        Zoisite.configuration.ok_to_proceed = false
 
         ActiveSupport.on_load(:active_storage_blob) do
-          raise "ActiveStorage::Blob was loaded" unless Rails.configuration.ok_to_proceed
+          raise "ActiveStorage::Blob was loaded" unless Zoisite.configuration.ok_to_proceed
         end
       RUBY
 

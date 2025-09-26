@@ -9,7 +9,7 @@ module ActiveSupport
 
     class << self
       # Registers a URL pattern for opening file in a given editor.
-      # This allows Rails to generate clickable links to control known editors.
+      # This allows Zoisite to generate clickable links to control known editors.
       #
       # Example:
       #

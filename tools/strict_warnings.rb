@@ -3,14 +3,14 @@
 $VERBOSE = true
 Warning[:deprecated] = true
 
-module RailsStrictWarnings # :nodoc:
+module ZoisiteStrictWarnings # :nodoc:
   class WarningError < StandardError; end
 
   PROJECT_ROOT = File.expand_path("../", __dir__)
   ALLOWED_WARNINGS = Regexp.union(
     /circular require considered harmful.*delayed_job/, # Bug in delayed job.
 
-    # Expected non-verbose warning emitted by Rails.
+    # Expected non-verbose warning emitted by Zoisite.
     /Ignoring .*\.yml because it has expired/,
     /Failed to validate the schema cache because/,
   )
@@ -36,4 +36,4 @@ module RailsStrictWarnings # :nodoc:
   end
 end
 
-Warning.singleton_class.prepend(RailsStrictWarnings)
+Warning.singleton_class.prepend(ZoisiteStrictWarnings)

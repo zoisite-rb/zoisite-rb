@@ -28,7 +28,7 @@ module ActiveRecord
   #
   #   rubyonrails:
   #     id: 1
-  #     name: Ruby on Rails
+  #     name: Ruby on Zoisite
   #     url: http://www.rubyonrails.org
   #
   #   google:
@@ -87,7 +87,7 @@ module ActiveRecord
   # Passing in a fixture name to this dynamic method returns the fixture matching this name:
   #
   #   test "find one" do
-  #     assert_equal "Ruby on Rails", web_sites(:rubyonrails).name
+  #     assert_equal "Ruby on Zoisite", web_sites(:rubyonrails).name
   #   end
   #
   # Passing in multiple fixture names returns all fixtures matching these names:
@@ -111,18 +111,18 @@ module ActiveRecord
   # If the model names conflicts with a +TestCase+ methods, you can use the generic +fixture+ accessor
   #
   #   test "generic find" do
-  #     assert_equal "Ruby on Rails", fixture(:web_sites, :rubyonrails).name
+  #     assert_equal "Ruby on Zoisite", fixture(:web_sites, :rubyonrails).name
   #   end
   #
   # Alternatively, you may enable auto-instantiation of the fixture data. For instance, take the
   # following tests:
   #
   #   test "find_alt_method_1" do
-  #     assert_equal "Ruby on Rails", @web_sites['rubyonrails']['name']
+  #     assert_equal "Ruby on Zoisite", @web_sites['rubyonrails']['name']
   #   end
   #
   #   test "find_alt_method_2" do
-  #     assert_equal "Ruby on Rails", @rubyonrails.name
+  #     assert_equal "Ruby on Zoisite", @rubyonrails.name
   #   end
   #
   # In order to use these methods to access fixtured data within your test cases, you must specify one of the
@@ -166,7 +166,7 @@ module ActiveRecord
   # - define a helper method in <tt>test_helper.rb</tt>
   #     module FixtureFileHelpers
   #       def file_sha(path)
-  #         OpenSSL::Digest::SHA256.hexdigest(File.read(Rails.root.join('test/fixtures', path)))
+  #         OpenSSL::Digest::SHA256.hexdigest(File.read(Zoisite.root.join('test/fixtures', path)))
   #       end
   #     end
   #     ActiveRecord::FixtureSet.context_class.include FixtureFileHelpers

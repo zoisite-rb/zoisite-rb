@@ -76,7 +76,7 @@ module ActiveRecord
 
       def coder
         # This is to retain forward compatibility when loading records serialized with Marshal
-        # from a previous version of Rails.
+        # from a previous version of Zoisite.
         @coder ||= begin
           permitted_classes = defined?(@permitted_classes) ? @permitted_classes : []
           unsafe_load = defined?(@unsafe_load) && @unsafe_load.nil?

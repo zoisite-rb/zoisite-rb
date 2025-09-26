@@ -1,5 +1,5 @@
 services:
-  rails:
+  zoisite:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile

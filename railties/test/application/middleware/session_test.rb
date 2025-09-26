@@ -18,7 +18,7 @@ module ApplicationTests
     end
 
     def app
-      @app ||= Rails.application
+      @app ||= Zoisite.application
     end
 
     test "config.force_ssl sets cookie to secure only by default" do
@@ -56,7 +56,7 @@ module ApplicationTests
 
     test "session is empty and isn't saved on unverified request when using :null_session protect method" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get  ':controller(/:action)'
           post ':controller(/:action)'
         end
@@ -97,7 +97,7 @@ module ApplicationTests
 
     test "cookie jar is empty and isn't saved on unverified request when using :null_session protect method" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get  ':controller(/:action)'
           post ':controller(/:action)'
         end
@@ -138,7 +138,7 @@ module ApplicationTests
 
     test "session using encrypted cookie store with JSON serializer" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -190,7 +190,7 @@ module ApplicationTests
 
     test "session using encrypted cookie store with marshal serializer" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -242,7 +242,7 @@ module ApplicationTests
 
     test "session upgrading signature to encryption cookie store works the same way as encrypted cookie store" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -293,7 +293,7 @@ module ApplicationTests
 
     test "session upgrading from AES-CBC-HMAC encryption to AES-GCM encryption" do
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get ':controller(/:action)'
         end
       RUBY
@@ -328,7 +328,7 @@ module ApplicationTests
 
       add_to_config <<-RUBY
         # Use a static key
-        Rails.application.credentials.secret_key_base = "known key base"
+        Zoisite.application.credentials.secret_key_base = "known key base"
 
         # Enable AEAD cookies
         config.action_dispatch.use_authenticated_cookie_encryption = true
@@ -379,7 +379,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get '/dump_flash' => "test#dump_flash"
         end
       RUBY
@@ -391,7 +391,7 @@ module ApplicationTests
       assert_equal 200, last_response.status
       assert_equal "It worked!", last_response.body
 
-      assert_not_includes Rails.application.middleware, ActionDispatch::Flash
+      assert_not_includes Zoisite.application.middleware, ActionDispatch::Flash
     end
 
     test "disabled session allows reads and delete but fail on writes" do
@@ -416,7 +416,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/write_session" => "test#write_session"
           get "/read_session" => "test#read_session"
           get "/reset_session" => "test#reset_session"
@@ -463,7 +463,7 @@ module ApplicationTests
       RUBY
 
       app_file "config/routes.rb", <<-RUBY
-        Rails.application.routes.draw do
+        Zoisite.application.routes.draw do
           get "/test_action" => "test#test_action"
         end
       RUBY

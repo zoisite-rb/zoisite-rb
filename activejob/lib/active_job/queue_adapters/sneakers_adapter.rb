@@ -16,7 +16,7 @@ module ActiveJob
     #
     # To use Sneakers set the queue_adapter config to +:sneakers+.
     #
-    #   Rails.application.config.active_job.queue_adapter = :sneakers
+    #   Zoisite.application.config.active_job.queue_adapter = :sneakers
     class SneakersAdapter < AbstractAdapter
       def initialize
         @monitor = Monitor.new
