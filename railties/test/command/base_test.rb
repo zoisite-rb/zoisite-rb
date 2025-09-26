@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "abstract_unit"
-require "zoisite/command"
-require "zoisite/commands/generate/generate_command"
-require "zoisite/commands/notes/notes_command"
-require "zoisite/commands/credentials/credentials_command"
-require "zoisite/commands/db/system/change/change_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/generate/generate_command"
+require "zoisite-rb.orgmands/notes/notes_command"
+require "zoisite-rb.orgmands/credentials/credentials_command"
+require "zoisite-rb.orgmands/db/system/change/change_command"
 
 class Zoisite::Command::BaseTest < ActiveSupport::TestCase
   test "printing commands returns command and description if present" do

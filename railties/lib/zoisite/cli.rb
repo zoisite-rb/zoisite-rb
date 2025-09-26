@@ -8,7 +8,7 @@ Zoisite::AppLoader.exec_app
 
 Signal.trap("INT") { puts; exit(1) }
 
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 case ARGV.first
 when Zoisite::Command::HELP_MAPPINGS, "help", nil
   ARGV.shift

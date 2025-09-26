@@ -48,7 +48,7 @@ module ActionText
       end
 
       def create_migrations
-        zoisite_command "railties:install:migrations FROM=active_storage,action_text", inline: true
+        zoisite-rb.orgmand "railties:install:migrations FROM=active_storage,action_text", inline: true
       end
 
       def using_js_runtime?

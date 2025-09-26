@@ -4,7 +4,7 @@ require "fileutils"
 require "action_dispatch"
 require "zoisite"
 require "zoisite/dev_caching"
-require "zoisite/command/environment_argument"
+require "zoisite-rb.orgmand/environment_argument"
 require "zoisite/rackup/server"
 
 module Zoisite

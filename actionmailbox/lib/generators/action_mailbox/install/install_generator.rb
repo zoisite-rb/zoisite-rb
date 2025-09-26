@@ -21,7 +21,7 @@ module ActionMailbox
       end
 
       def create_migrations
-        zoisite_command "railties:install:migrations FROM=active_storage,action_mailbox", inline: true
+        zoisite-rb.orgmand "railties:install:migrations FROM=active_storage,action_mailbox", inline: true
       end
     end
   end

@@ -327,7 +327,7 @@ module TestHelpers
       end
     end
 
-    # Invoke a bin/zoisite command inside the app
+    # Invoke a bin/zoisite-rb.orgmand inside the app
     #
     # allow_failure:: true to return normally if the command exits with
     #   a non-zero status. By default, this method will raise.
@@ -409,7 +409,7 @@ module TestHelpers
         end
       end
 
-      raise "zoisite command failed (#{$?.exitstatus}): #{command}\n#{output}" unless allow_failure || $?.success?
+      raise "zoisite-rb.orgmand failed (#{$?.exitstatus}): #{command}\n#{output}" unless allow_failure || $?.success?
 
       output
     end

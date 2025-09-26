@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 
 class Zoisite::Command::DevcontainerTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation

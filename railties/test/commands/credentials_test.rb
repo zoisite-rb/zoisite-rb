@@ -2,7 +2,7 @@
 
 require "isolation/abstract_unit"
 require "env_helpers"
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 require "fileutils"
 
 class Zoisite::Command::CredentialsTest < ActiveSupport::TestCase

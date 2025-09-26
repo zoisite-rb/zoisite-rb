@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 
 aliases = {
   "g"  => "generate",

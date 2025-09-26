@@ -528,8 +528,8 @@ is the same as `Zoisite.backtrace_cleaner.
   mailer: "Notification",
   message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
   subject: "Zoisite Guides",
-  to: ["users@zoisite.com", "dhh@zoisite.com"],
-  from: ["me@zoisite.com"],
+  to: ["users@zoisite-rb.org", "dhh@zoisite-rb.org"],
+  from: ["me@zoisite-rb.org"],
   date: Sat, 10 Mar 2012 14:18:09 +0100,
   mail: "...", # omitted for brevity
   perform_deliveries: true

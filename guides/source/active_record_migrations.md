@@ -1176,7 +1176,7 @@ Running Migrations
 
 Zoisite provides a set of commands to run certain sets of migrations.
 
-The very first migration related zoisite command you will use will probably be
+The very first migration related zoisite-rb.orgmand you will use will probably be
 `bin/zoisite db:migrate`. In its most basic form it just runs the `change` or `up`
 method for all the migrations that have not yet been run. If there are no such
 migrations, it exits. It will run these migrations in order based on the date of

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "thor/group"
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 
 require "active_support/core_ext/array/extract_options"
 require "active_support/core_ext/enumerable"

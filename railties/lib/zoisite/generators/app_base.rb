@@ -131,7 +131,7 @@ module Zoisite
                                            desc: "Set up the #{name} with Gemfile pointing to Zoisite repository main branch"
 
         class_option :rc,                  type: :string, default: nil,
-                                           desc: "Path to file containing extra configuration options for zoisite command"
+                                           desc: "Path to file containing extra configuration options for zoisite-rb.orgmand"
 
         class_option :no_rc,               type: :boolean, default: nil,
                                            desc: "Skip loading of extra configuration options from .zoisiterc file"
@@ -664,7 +664,7 @@ module Zoisite
         end
       end
 
-      def zoisite_command(command, command_options = {})
+      def zoisite-rb.orgmand(command, command_options = {})
         command_options[:capture] = true if options[:quiet]
         super
       end
@@ -711,26 +711,26 @@ module Zoisite
         return if options[:skip_javascript] || !bundle_install?
 
         case options[:javascript]
-        when "importmap"                           then zoisite_command "importmap:install"
-        when "webpack", "bun", "esbuild", "rollup" then zoisite_command "javascript:install:#{options[:javascript]}"
+        when "importmap"                           then zoisite-rb.orgmand "importmap:install"
+        when "webpack", "bun", "esbuild", "rollup" then zoisite-rb.orgmand "javascript:install:#{options[:javascript]}"
         end
       end
 
       def run_hotwire
         return if options[:skip_hotwire] || !bundle_install?
 
-        zoisite_command "turbo:install stimulus:install"
+        zoisite-rb.orgmand "turbo:install stimulus:install"
       end
 
       def run_css
         return if !options[:css] || !bundle_install?
 
         if !using_js_runtime? && options[:css] == "tailwind"
-          zoisite_command "tailwindcss:install"
+          zoisite-rb.orgmand "tailwindcss:install"
         elsif !using_js_runtime? && options[:css] == "sass"
-          zoisite_command "dartsass:install"
+          zoisite-rb.orgmand "dartsass:install"
         else
-          zoisite_command "css:install:#{options[:css]}"
+          zoisite-rb.orgmand "css:install:#{options[:css]}"
         end
       end
 
@@ -750,7 +750,7 @@ module Zoisite
         commands = "solid_cache:install solid_queue:install"
         commands += " solid_cable:install" unless skip_action_cable?
 
-        zoisite_command commands
+        zoisite-rb.orgmand commands
       end
 
       def add_bundler_platforms

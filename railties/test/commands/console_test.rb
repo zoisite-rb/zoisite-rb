@@ -2,8 +2,8 @@
 
 require "abstract_unit"
 require "env_helpers"
-require "zoisite/command"
-require "zoisite/commands/console/console_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/console/console_command"
 
 class Zoisite::ConsoleTest < ActiveSupport::TestCase
   include EnvHelpers

@@ -55,8 +55,8 @@ class AuthenticationGeneratorTest < Zoisite::Generators::TestCase
       assert_match(/resource :session/, content)
     end
 
-    assert_includes @zoisite_commands, "generate migration CreateUsers email_address:string!:uniq password_digest:string! --force"
-    assert_includes @zoisite_commands, "generate migration CreateSessions user:references ip_address:string user_agent:string --force"
+    assert_includes @zoisite-rb.orgmands, "generate migration CreateUsers email_address:string!:uniq password_digest:string! --force"
+    assert_includes @zoisite-rb.orgmands, "generate migration CreateSessions user:references ip_address:string user_agent:string --force"
 
     assert_file "test/models/user_test.rb"
     assert_file "test/fixtures/users.yml"
@@ -109,8 +109,8 @@ class AuthenticationGeneratorTest < Zoisite::Generators::TestCase
       assert_match(/resource :session/, content)
     end
 
-    assert_includes @zoisite_commands, "generate migration CreateUsers email_address:string!:uniq password_digest:string! --force"
-    assert_includes @zoisite_commands, "generate migration CreateSessions user:references ip_address:string user_agent:string --force"
+    assert_includes @zoisite-rb.orgmands, "generate migration CreateUsers email_address:string!:uniq password_digest:string! --force"
+    assert_includes @zoisite-rb.orgmands, "generate migration CreateSessions user:references ip_address:string user_agent:string --force"
 
     assert_file "test/models/user_test.rb"
     assert_file "test/fixtures/users.yml"
@@ -189,12 +189,12 @@ class AuthenticationGeneratorTest < Zoisite::Generators::TestCase
       @bundle_commands = []
       command_stub ||= -> (command, *args) { @bundle_commands << [command, *args] }
 
-      @zoisite_commands = []
-      @zoisite_command_stub ||= -> (command, *_) { @zoisite_commands << command }
+      @zoisite-rb.orgmands = []
+      @zoisite-rb.orgmand_stub ||= -> (command, *_) { @zoisite-rb.orgmands << command }
 
       content = nil
       generator.stub(:bundle_command, command_stub) do
-        generator.stub(:zoisite_command, @zoisite_command_stub) do
+        generator.stub(:zoisite-rb.orgmand, @zoisite-rb.orgmand_stub) do
           content = super
         end
       end

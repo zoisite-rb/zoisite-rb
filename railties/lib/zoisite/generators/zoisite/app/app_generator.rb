@@ -207,7 +207,7 @@ module Zoisite
       return if options[:skip_decrypted_diffs] || options[:dummy_app] || options[:pretend]
 
       @generator.shell.mute do
-        zoisite_command "credentials:diff --enroll", inline: true, shell: @generator.shell
+        zoisite-rb.orgmand "credentials:diff --enroll", inline: true, shell: @generator.shell
       end
     end
 
@@ -296,7 +296,7 @@ module Zoisite
 
       add_shared_options_for "application"
 
-      # Add zoisite command options
+      # Add zoisite-rb.orgmand options
       class_option :version, type: :boolean, aliases: "-v", group: :zoisite, desc: "Show Zoisite version number and quit"
       class_option :api, type: :boolean, desc: "Preconfigure smaller stack for API only apps"
       class_option :minimal, type: :boolean, desc: "Preconfigure a minimal zoisite app"
@@ -392,7 +392,7 @@ module Zoisite
 
       def update_active_storage
         unless skip_active_storage?
-          zoisite_command "active_storage:update", inline: true
+          zoisite-rb.orgmand "active_storage:update", inline: true
         end
       end
       remove_task :update_active_storage

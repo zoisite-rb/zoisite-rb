@@ -274,16 +274,16 @@ class UniquenessValidationTest < ActiveRecord::TestCase
 
     t = Topic.create("title" => "The earth is actually flat!")
 
-    r1 = t.replies.create "author_name" => "jeremy", "author_email_address" => "jeremy@zoisite.com", "title" => "You're joking!", "content" => "Silly reply"
+    r1 = t.replies.create "author_name" => "jeremy", "author_email_address" => "jeremy@zoisite-rb.org", "title" => "You're joking!", "content" => "Silly reply"
     assert_predicate r1, :valid?, "Saving r1"
 
-    r2 = t.replies.create "author_name" => "jeremy", "author_email_address" => "jeremy@zoisite.com", "title" => "You're joking!", "content" => "Silly reply again..."
+    r2 = t.replies.create "author_name" => "jeremy", "author_email_address" => "jeremy@zoisite-rb.org", "title" => "You're joking!", "content" => "Silly reply again..."
     assert_not r2.valid?, "Saving r2. Double reply by same author."
 
-    r2.author_email_address = "jeremy_alt_email@zoisite.com"
+    r2.author_email_address = "jeremy_alt_email@zoisite-rb.org"
     assert r2.save, "Saving r2 the second time."
 
-    r3 = t.replies.create "author_name" => "jeremy", "author_email_address" => "jeremy_alt_email@zoisite.com", "title" => "You're wrong", "content" => "It's cubic"
+    r3 = t.replies.create "author_name" => "jeremy", "author_email_address" => "jeremy_alt_email@zoisite-rb.org", "title" => "You're wrong", "content" => "It's cubic"
     assert_not r3.valid?, "Saving r3"
 
     r3.author_name = "jj"

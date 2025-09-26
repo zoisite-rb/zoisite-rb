@@ -6,4 +6,4 @@ unless defined?(APP_PATH)
   end
 end
 
-require "zoisite/commands"
+require "zoisite-rb.orgmands"

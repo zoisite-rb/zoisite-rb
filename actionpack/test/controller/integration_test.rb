@@ -24,8 +24,8 @@ class SessionTest < ActiveSupport::TestCase
 
   def test_host!
     assert_not_equal "glu.ttono.us", @session.host
-    @session.host! "zoisite.com"
-    assert_equal "zoisite.com", @session.host
+    @session.host! "zoisite-rb.org"
+    assert_equal "zoisite-rb.org", @session.host
   end
 
   def test_follow_redirect_raises_when_no_redirect

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 require "io/console/size"
 
 class Zoisite::Command::UnusedRoutesTest < ActiveSupport::TestCase

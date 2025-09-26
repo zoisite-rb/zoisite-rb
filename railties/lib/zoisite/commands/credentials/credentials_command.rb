@@ -2,8 +2,8 @@
 
 require "pathname"
 require "active_support"
-require "zoisite/command/helpers/editor"
-require "zoisite/command/environment_argument"
+require "zoisite-rb.orgmand/helpers/editor"
+require "zoisite-rb.orgmand/environment_argument"
 
 module Zoisite
   module Command

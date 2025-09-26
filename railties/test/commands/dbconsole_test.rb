@@ -2,8 +2,8 @@
 
 require "abstract_unit"
 require "minitest/mock"
-require "zoisite/command"
-require "zoisite/commands/dbconsole/dbconsole_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/dbconsole/dbconsole_command"
 require "active_record/database_configurations"
 require "active_support/testing/method_call_assertions"
 require "active_record/connection_adapters/sqlite3_adapter"

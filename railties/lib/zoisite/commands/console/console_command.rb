@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "zoisite/command/environment_argument"
+require "zoisite-rb.orgmand/environment_argument"
 
 module Zoisite
   class Console
@@ -24,7 +24,7 @@ module Zoisite
       app.load_console
 
       @console = app.config.console || begin
-        require "zoisite/commands/console/irb_console"
+        require "zoisite-rb.orgmands/console/irb_console"
         IRBConsole.new(app)
       end
     end

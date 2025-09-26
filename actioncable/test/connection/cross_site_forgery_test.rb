@@ -4,7 +4,7 @@ require "test_helper"
 require "stubs/test_server"
 
 class ActionCable::Connection::CrossSiteForgeryTest < ActionCable::TestCase
-  HOST = "zoisite.com"
+  HOST = "zoisite-rb.org"
 
   class Connection < ActionCable::Connection::Base
     def send_async(method, *args)
@@ -14,7 +14,7 @@ class ActionCable::Connection::CrossSiteForgeryTest < ActionCable::TestCase
 
   setup do
     @server = TestServer.new
-    @server.config.allowed_request_origins = %w( http://zoisite.com )
+    @server.config.allowed_request_origins = %w( http://zoisite-rb.org )
     @server.config.allow_same_origin_as_host = false
   end
 
@@ -26,33 +26,33 @@ class ActionCable::Connection::CrossSiteForgeryTest < ActionCable::TestCase
 
   test "disable forgery protection" do
     @server.config.disable_request_forgery_protection = true
-    assert_origin_allowed "http://zoisite.com"
+    assert_origin_allowed "http://zoisite-rb.org"
     assert_origin_allowed "http://hax.com"
   end
 
   test "explicitly specified a single allowed origin" do
     @server.config.allowed_request_origins = "http://hax.com"
-    assert_origin_not_allowed "http://zoisite.com"
+    assert_origin_not_allowed "http://zoisite-rb.org"
     assert_origin_allowed "http://hax.com"
   end
 
   test "explicitly specified multiple allowed origins" do
-    @server.config.allowed_request_origins = %w( http://zoisite.com http://www.zoisite.com )
-    assert_origin_allowed "http://zoisite.com"
-    assert_origin_allowed "http://www.zoisite.com"
+    @server.config.allowed_request_origins = %w( http://zoisite-rb.org http://www.zoisite-rb.org )
+    assert_origin_allowed "http://zoisite-rb.org"
+    assert_origin_allowed "http://www.zoisite-rb.org"
     assert_origin_not_allowed "http://hax.com"
   end
 
   test "explicitly specified a single regexp allowed origin" do
     @server.config.allowed_request_origins = /.*ha.*/
-    assert_origin_not_allowed "http://zoisite.com"
+    assert_origin_not_allowed "http://zoisite-rb.org"
     assert_origin_allowed "http://hax.com"
   end
 
   test "explicitly specified multiple regexp allowed origins" do
     @server.config.allowed_request_origins = [/http:\/\/ruby.*/, /.*rai.s.*com/, "string" ]
-    assert_origin_allowed "http://zoisite.com"
-    assert_origin_allowed "http://www.zoisite.com"
+    assert_origin_allowed "http://zoisite-rb.org"
+    assert_origin_allowed "http://www.zoisite-rb.org"
     assert_origin_not_allowed "http://hax.com"
     assert_origin_not_allowed "http://zoisite.co.uk"
   end

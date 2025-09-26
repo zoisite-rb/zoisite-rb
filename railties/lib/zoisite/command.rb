@@ -155,7 +155,7 @@ module Zoisite
         end
 
         def lookup_paths # :doc:
-          @lookup_paths ||= %w( zoisite/commands commands )
+          @lookup_paths ||= %w( zoisite-rb.orgmands commands )
         end
 
         def file_lookup_paths # :doc:

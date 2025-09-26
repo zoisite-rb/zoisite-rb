@@ -335,7 +335,7 @@ module Zoisite
         options = args.extract_options!
         options[:abort_on_failure] = !options[:inline]
 
-        zoisite_command "generate #{what} #{args.join(" ")}", options
+        zoisite-rb.orgmand "generate #{what} #{args.join(" ")}", options
       end
 
       # Runs the specified Rake task.
@@ -367,11 +367,11 @@ module Zoisite
 
       # Runs the specified \Zoisite command.
       #
-      #   zoisite_command "db:migrate"
-      #   zoisite_command "db:migrate", env: "production"
-      #   zoisite_command "db:migrate", abort_on_failure: true
-      #   zoisite_command "stats", capture: true
-      #   zoisite_command "gems:install", sudo: true
+      #   zoisite-rb.orgmand "db:migrate"
+      #   zoisite-rb.orgmand "db:migrate", env: "production"
+      #   zoisite-rb.orgmand "db:migrate", abort_on_failure: true
+      #   zoisite-rb.orgmand "stats", capture: true
+      #   zoisite-rb.orgmand "gems:install", sudo: true
       #
       # ==== Options
       #
@@ -388,7 +388,7 @@ module Zoisite
       #
       # [+:sudo+]
       #   Whether to run the command using +sudo+.
-      def zoisite_command(command, options = {})
+      def zoisite-rb.orgmand(command, options = {})
         if options[:inline]
           log :zoisite, command
           command, *args = Shellwords.split(command)

@@ -134,7 +134,7 @@ There are a few commands that are absolutely critical to your everyday usage of 
 * `bin/zoisite dbconsole`
 * `zoisite new app_name`
 
-You can get a list of zoisite commands available to you, which will often depend on your current directory, by typing `zoisite --help`. Each command has a description, and should help you find the thing you need.
+You can get a list of zoisite-rb.orgmands available to you, which will often depend on your current directory, by typing `zoisite --help`. Each command has a description, and should help you find the thing you need.
 
 ```bash
 $ zoisite --help
@@ -548,7 +548,7 @@ If you want to clear `public/assets` completely, you can use `bin/zoisite assets
 
 ### `bin/zoisite db:`
 
-The most common commands of the `db:` zoisite namespace are `migrate` and `create`, and it will pay off to try out all of the migration zoisite commands (`up`, `down`, `redo`, `reset`). `bin/zoisite db:version` is useful when troubleshooting, telling you the current version of the database.
+The most common commands of the `db:` zoisite namespace are `migrate` and `create`, and it will pay off to try out all of the migration zoisite-rb.orgmands (`up`, `down`, `redo`, `reset`). `bin/zoisite db:version` is useful when troubleshooting, telling you the current version of the database.
 
 More information about migrations can be found in the [Migrations](active_record_migrations.html) guide.
 

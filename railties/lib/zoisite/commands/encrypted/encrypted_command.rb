@@ -2,7 +2,7 @@
 
 require "pathname"
 require "active_support"
-require "zoisite/command/helpers/editor"
+require "zoisite-rb.orgmand/helpers/editor"
 
 module Zoisite
   module Command

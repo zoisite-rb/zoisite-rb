@@ -1325,7 +1325,7 @@ module ApplicationTests
       assert_match "0 runs, 0 assertions, 0 failures, 0 errors, 0 skips", run_test_command("")
     end
 
-    def test_can_exclude_files_from_being_tested_via_default_zoisite_command_by_setting_DEFAULT_TEST_EXCLUDE_env_var
+    def test_can_exclude_files_from_being_tested_via_default_zoisite-rb.orgmand_by_setting_DEFAULT_TEST_EXCLUDE_env_var
       create_test_file "smoke", "smoke_foo"
 
       switch_env "DEFAULT_TEST_EXCLUDE", "test/smoke/**/*_test.rb" do

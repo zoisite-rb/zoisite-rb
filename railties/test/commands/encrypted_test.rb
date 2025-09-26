@@ -2,7 +2,7 @@
 
 require "isolation/abstract_unit"
 require "env_helpers"
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 
 class Zoisite::Command::EncryptedTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation, EnvHelpers

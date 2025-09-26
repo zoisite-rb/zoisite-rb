@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 
 module Zoisite
   module Command

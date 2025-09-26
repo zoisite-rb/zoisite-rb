@@ -2,8 +2,8 @@
 
 require "isolation/abstract_unit"
 require "env_helpers"
-require "zoisite/command"
-require "zoisite/commands/server/server_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/server/server_command"
 
 class Zoisite::Command::ServerTest < ActiveSupport::TestCase
   include EnvHelpers

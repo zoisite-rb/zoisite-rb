@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "isolation/abstract_unit"
-require "zoisite/command"
-require "zoisite/commands/boot/boot_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/boot/boot_command"
 
 class Zoisite::Command::BootTest < ActiveSupport::TestCase
   include ActiveSupport::Testing::Isolation

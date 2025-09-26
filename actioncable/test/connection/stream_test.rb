@@ -32,7 +32,7 @@ class ActionCable::Connection::StreamTest < ActionCable::TestCase
 
   setup do
     @server = TestServer.new
-    @server.config.allowed_request_origins = %w( http://zoisite.com )
+    @server.config.allowed_request_origins = %w( http://zoisite-rb.org )
   end
 
   [ EOFError, Errno::ECONNRESET ].each do |closed_exception|
@@ -57,7 +57,7 @@ class ActionCable::Connection::StreamTest < ActionCable::TestCase
     def open_connection(io)
       env = Rack::MockRequest.env_for "/test",
         "HTTP_CONNECTION" => "upgrade", "HTTP_UPGRADE" => "websocket",
-        "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://zoisite.com"
+        "HTTP_HOST" => "localhost", "HTTP_ORIGIN" => "http://zoisite-rb.org"
       env["rack.hijack"] = -> { env["rack.hijack_io"] = io }
 
       Connection.new(@server, env).tap do |connection|

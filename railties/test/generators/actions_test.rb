@@ -498,81 +498,81 @@ class ActionsTest < Zoisite::Generators::TestCase
     end
   end
 
-  test "zoisite_command should run zoisite with the default environment" do
+  test "zoisite-rb.orgmand should run zoisite with the default environment" do
     assert_runs "zoisite log:clear", env: { "RAILS_ENV" => "development" } do
       with_zoisite_env nil do
-        action :zoisite_command, "log:clear"
+        action :zoisite-rb.orgmand, "log:clear"
       end
     end
   end
 
-  test "zoisite_command with env option should run zoisite with the env environment" do
+  test "zoisite-rb.orgmand with env option should run zoisite with the env environment" do
     assert_runs "zoisite log:clear", env: { "RAILS_ENV" => "production" } do
-      action :zoisite_command, "log:clear", env: "production"
+      action :zoisite-rb.orgmand, "log:clear", env: "production"
     end
   end
 
-  test "zoisite_command with RAILS_ENV set should run zoisite with the RAILS_ENV environment" do
+  test "zoisite-rb.orgmand with RAILS_ENV set should run zoisite with the RAILS_ENV environment" do
     assert_runs "zoisite log:clear", env: { "RAILS_ENV" => "production" } do
       with_zoisite_env "production" do
-        action :zoisite_command, "log:clear"
+        action :zoisite-rb.orgmand, "log:clear"
       end
     end
   end
 
-  test "zoisite_command with env option and RAILS_ENV set should run zoisite with the env environment" do
+  test "zoisite-rb.orgmand with env option and RAILS_ENV set should run zoisite with the env environment" do
     assert_runs "zoisite log:clear", env: { "RAILS_ENV" => "production" } do
       with_zoisite_env "staging" do
-        action :zoisite_command, "log:clear", env: "production"
+        action :zoisite-rb.orgmand, "log:clear", env: "production"
       end
     end
   end
 
-  test "zoisite_command with sudo option should run zoisite with sudo" do
+  test "zoisite-rb.orgmand with sudo option should run zoisite with sudo" do
     assert_runs "sudo zoisite log:clear" do
       with_zoisite_env nil do
-        action :zoisite_command, "log:clear", sudo: true
+        action :zoisite-rb.orgmand, "log:clear", sudo: true
       end
     end
   end
 
-  test "zoisite_command with capture option should run zoisite with capture" do
+  test "zoisite-rb.orgmand with capture option should run zoisite with capture" do
     assert_runs "zoisite log:clear", capture: true do
       with_zoisite_env nil do
-        action :zoisite_command, "log:clear", capture: true
+        action :zoisite-rb.orgmand, "log:clear", capture: true
       end
     end
   end
 
-  test "zoisite_command with abort_on_failure option should raise on failure" do
+  test "zoisite-rb.orgmand with abort_on_failure option should raise on failure" do
     run_generator
     capture(:stderr) do
       assert_raises SystemExit do
-        action :zoisite_command, "invalid", abort_on_failure: true
+        action :zoisite-rb.orgmand, "invalid", abort_on_failure: true
       end
     end
   end
 
-  test "zoisite_command with inline option" do
+  test "zoisite-rb.orgmand with inline option" do
     run_generator
     assert_not_called(generator, :run) do
-      action :zoisite_command, "generate model MyModel", inline: true
+      action :zoisite-rb.orgmand, "generate model MyModel", inline: true
     end
     assert_file "app/models/my_model.rb", /MyModel/
   end
 
-  test "zoisite_command with inline option should raise on failure" do
+  test "zoisite-rb.orgmand with inline option should raise on failure" do
     run_generator
     error = assert_raises do
-      action :zoisite_command, "generate model 1234567890", inline: true
+      action :zoisite-rb.orgmand, "generate model 1234567890", inline: true
     end
     assert_match(/1234567890/, error.message)
   end
 
-  test "zoisite_command with quiet option" do
+  test "zoisite-rb.orgmand with quiet option" do
     generator(default_arguments, quiet: true)
     assert_runs "zoisite new myapp", capture: true do
-      action :zoisite_command, "new myapp"
+      action :zoisite-rb.orgmand, "new myapp"
     end
   end
 

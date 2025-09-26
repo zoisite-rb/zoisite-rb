@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "zoisite/commands/routes/routes_command"
+require "zoisite-rb.orgmands/routes/routes_command"
 
 module Zoisite
   module Command

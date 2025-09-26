@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "zoisite/command/environment_argument"
+require "zoisite-rb.orgmand/environment_argument"
 
 module Zoisite
   module Command

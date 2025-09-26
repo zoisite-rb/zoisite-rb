@@ -794,7 +794,7 @@ passed to the server config as an array. The origins can be instances of
 strings or regular expressions, against which a check for the match will be performed.
 
 ```ruby
-config.action_cable.allowed_request_origins = ["https://zoisite.com", %r{http://ruby.*}]
+config.action_cable.allowed_request_origins = ["https://zoisite-rb.org", %r{http://ruby.*}]
 ```
 
 To disable and allow requests from any origin:

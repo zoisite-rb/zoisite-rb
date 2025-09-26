@@ -24,7 +24,7 @@ def patches_section(advisory)
     commit = IO.popen(%W[git log --format=format:%H --grep=#{advisory[:cve_id]} v#{patched_versions}], &:read)
     raise "git log failed" unless $?.success?
     branch = patched_versions[/^\d+\.\d+/]
-    desc << "* #{branch} - https://github.com/zoisite/zoisite/commit/#{commit}.patch\n"
+    desc << "* #{branch} - https://github.com/zoisite/zoisite-rb.orgmit/#{commit}.patch\n"
   end
   ["Patches", desc]
 end

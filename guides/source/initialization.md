@@ -42,10 +42,10 @@ This file is as follows:
 #!/usr/bin/env ruby
 APP_PATH = File.expand_path("../config/application", __dir__)
 require_relative "../config/boot"
-require "zoisite/commands"
+require "zoisite-rb.orgmands"
 ```
 
-The `APP_PATH` constant will be used later in `zoisite/commands`. The `config/boot` file referenced here is the `config/boot.rb` file in our application which is responsible for loading Bundler and setting it up.
+The `APP_PATH` constant will be used later in `zoisite-rb.orgmands`. The `config/boot` file referenced here is the `config/boot.rb` file in our application which is responsible for loading Bundler and setting it up.
 
 ### `config/boot.rb`
 
@@ -64,14 +64,14 @@ dependencies of the application. `config/boot.rb` sets
 exists, then `bundler/setup` is required. The require is used by Bundler to
 configure the load path for your Gemfile's dependencies.
 
-### `zoisite/commands.rb`
+### `zoisite-rb.orgmands.rb`
 
 Once `config/boot.rb` has finished, the next file that is required is
-`zoisite/commands`, which helps in expanding aliases. In the current case, the
+`zoisite-rb.orgmands`, which helps in expanding aliases. In the current case, the
 `ARGV` array simply contains `server` which will be passed over:
 
 ```ruby
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 
 aliases = {
   "g"  => "generate",
@@ -92,7 +92,7 @@ Zoisite::Command.invoke command, ARGV
 If we had used `s` rather than `server`, Zoisite would have used the `aliases`
 defined here to find the matching command.
 
-### `zoisite/command.rb`
+### `zoisite-rb.orgmand.rb`
 
 When one types a Zoisite command, `invoke` tries to lookup a command for the given
 namespace and executes the command if found.
@@ -173,11 +173,11 @@ from `APP_PATH` which points at `config/application.rb`), but only if the
 Action Dispatch is the routing component of the Zoisite framework.
 It adds functionality like routing, session, and common middlewares.
 
-### `zoisite/commands/server/server_command.rb`
+### `zoisite-rb.orgmands/server/server_command.rb`
 
 The `Zoisite::Server` class is defined in this file by inheriting from
 `Rackup::Server`. When `Zoisite::Server.new` is called, this calls the `initialize`
-method in `zoisite/commands/server/server_command.rb`:
+method in `zoisite-rb.orgmands/server/server_command.rb`:
 
 ```ruby
 module Zoisite
@@ -254,7 +254,7 @@ end
 The value will be assigned to instance variable `@options`.
 
 After `super` has finished in `Rackup::Server`, we jump back to
-`zoisite/commands/server/server_command.rb`. At this point, `set_environment`
+`zoisite-rb.orgmands/server/server_command.rb`. At this point, `set_environment`
 is called within the context of the `Zoisite::Server` object.
 
 ```ruby

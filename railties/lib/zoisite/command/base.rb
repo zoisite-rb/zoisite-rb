@@ -5,7 +5,7 @@ require "erb"
 
 require "active_support/core_ext/string/inflections"
 
-require "zoisite/command/actions"
+require "zoisite-rb.orgmand/actions"
 
 module Zoisite
   module Command
@@ -49,7 +49,7 @@ module Zoisite
         end
 
         # Convenience method to hide this command from the available ones when
-        # running zoisite command.
+        # running zoisite-rb.orgmand.
         def hide_command!
           Zoisite::Command.hidden_commands << self
         end
@@ -132,7 +132,7 @@ module Zoisite
         # Default file root to place extra files a command might need, placed
         # one folder above the command file.
         #
-        # For a Zoisite::Command::TestCommand placed in <tt>zoisite/command/test_command.rb</tt>
+        # For a Zoisite::Command::TestCommand placed in <tt>zoisite-rb.orgmand/test_command.rb</tt>
         # would return <tt>zoisite/test</tt>.
         def default_command_root
           @default_command_root = resolve_path(".") unless defined?(@default_command_root)

@@ -56,7 +56,7 @@ EOS
             $stderr.puts(BUNDLER_WARNING)
             Object.const_set(:APP_PATH, File.expand_path("config/application", Dir.pwd))
             require File.expand_path("../boot", APP_PATH)
-            require "zoisite/commands"
+            require "zoisite-rb.orgmands"
             break
           end
         end

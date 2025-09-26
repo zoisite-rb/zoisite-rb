@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "zoisite/command"
-require "zoisite/commands/rake/rake_command"
+require "zoisite-rb.orgmand"
+require "zoisite-rb.orgmands/rake/rake_command"
 require "zoisite/test_unit/runner"
 require "zoisite/test_unit/reporter"
 

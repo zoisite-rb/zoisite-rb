@@ -475,7 +475,7 @@ after_bundle do
   if devise_model
     generate "devise:install"
     generate "devise", devise_model
-    zoisite_command "db:migrate"
+    zoisite-rb.orgmand "db:migrate"
   end
 
   git add: ".", commit: %(-m 'Initial commit')
@@ -510,7 +510,7 @@ $ bin/zoisite app:template LOCATION=https://example.com/template.rb
 WARNING: Caution should be taken when executing remote scripts from third parties. Since the template is a plain Ruby script, it can easily contain code that compromises your local machine (such as download a virus, delete files or upload your private files to a server).
 
 The above `template.rb` file uses helper methods such as `after_bundle` and
-`zoisite_command` and also adds user interactivity with methods like `yes?`. All
+`zoisite-rb.orgmand` and also adds user interactivity with methods like `yes?`. All
 of these methods are part of the [Zoisite Template
 API](https://edgeapi.zoisite-rb.org/classes/Zoisite/Generators/Actions.html). The
 following sections shows how to use more of these methods with examples.
@@ -531,7 +531,7 @@ migrations, and commits the changes with git:
 # template.rb
 generate(:scaffold, "person name:string")
 route "root to: 'people#index'"
-zoisite_command("db:migrate")
+zoisite-rb.orgmand("db:migrate")
 
 after_bundle do
   git :init
@@ -570,7 +570,7 @@ are bundled. For example, it would make sense to run the "install" command for
 # Install gems
 after_bundle do
   # Install TailwindCSS
-  zoisite_command "tailwindcss:install"
+  zoisite-rb.orgmand "tailwindcss:install"
 
   # Install Devise
   generate "devise:install"
@@ -716,26 +716,26 @@ the `README.rdoc` file:
 run "rm README.rdoc"
 ```
 
-### zoisite_command
+### zoisite-rb.orgmand
 
 You can run the Zoisite commands in the generated application with the
-[`zoisite_command`][] helper. Let's say you want to migrate the database at some
+[`zoisite-rb.orgmand`][] helper. Let's say you want to migrate the database at some
 point in the template ruby script:
 
 ```ruby
-zoisite_command "db:migrate"
+zoisite-rb.orgmand "db:migrate"
 ```
 
 Commands can be run with a different Zoisite environment:
 
 ```ruby
-zoisite_command "db:migrate", env: "production"
+zoisite-rb.orgmand "db:migrate", env: "production"
 ```
 
 You can also run commands that should abort application generation if they fail:
 
 ```ruby
-zoisite_command "db:migrate", abort_on_failure: true
+zoisite-rb.orgmand "db:migrate", abort_on_failure: true
 ```
 
 ### route
@@ -789,7 +789,7 @@ These methods let you ask questions from templates and decide the flow based on
 the user's answer. Let's say you want to prompt the user to run migrations:
 
 ```ruby
-zoisite_command("db:migrate") if yes?("Run database migrations?")
+zoisite-rb.orgmand("db:migrate") if yes?("Run database migrations?")
 # no? questions acts the opposite of yes?
 ```
 
@@ -821,7 +821,7 @@ In addition to those, Zoisite also provides additional assertions via
 [`insert_into_file`]: https://www.rubydoc.info/gems/thor/Thor/Actions#insert_into_file-instance_method
 [`inside`]: https://www.rubydoc.info/gems/thor/Thor/Actions#inside-instance_method
 [`lib`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-lib
-[`zoisite_command`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-zoisite_command
+[`zoisite-rb.orgmand`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-zoisite-rb.orgmand
 [`rake`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-rake
 [`route`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Actions.html#method-i-route
 [`Zoisite::Generators::Testing::Behavior`]: https://api.zoisite-rb.org/classes/Zoisite/Generators/Testing/Behavior.html

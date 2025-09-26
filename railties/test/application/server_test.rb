@@ -2,7 +2,7 @@
 
 require "isolation/abstract_unit"
 require "console_helpers"
-require "zoisite/command"
+require "zoisite-rb.orgmand"
 
 module ApplicationTests
   class ServerTest < ActiveSupport::TestCase

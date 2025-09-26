@@ -426,11 +426,11 @@ module SharedGeneratorTests
       @bundle_commands = []
       @bundle_command_stub ||= -> (command, *) { @bundle_commands << command }
 
-      @zoisite_commands = []
-      @zoisite_command_stub ||= -> (command, *_) { @zoisite_commands << command }
+      @zoisite-rb.orgmands = []
+      @zoisite-rb.orgmand_stub ||= -> (command, *_) { @zoisite-rb.orgmands << command }
 
       generator.stub(:bundle_command, @bundle_command_stub) do
-        generator.stub(:zoisite_command, @zoisite_command_stub) do
+        generator.stub(:zoisite-rb.orgmand, @zoisite-rb.orgmand_stub) do
           super
         end
       end

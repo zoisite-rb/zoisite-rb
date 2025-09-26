@@ -922,7 +922,7 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
     generator([destination_root], skip_solid: true)
     run_generator_instance
 
-    assert_not_includes @zoisite_commands, "solid_cache:install solid_queue:install solid_cable:install", "`solid_cache:install solid_queue:install solid_cable:install` expected to not be called."
+    assert_not_includes @zoisite-rb.orgmands, "solid_cache:install solid_queue:install solid_cable:install", "`solid_cache:install solid_queue:install solid_cable:install` expected to not be called."
     assert_no_gem "solid_cache"
     assert_no_gem "solid_queue"
     assert_no_gem "solid_cable"
@@ -933,8 +933,8 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
 
     run_generator_instance
 
-    assert_not_includes @zoisite_commands, "importmap:install", "`importmap:install` expected to not be called."
-    assert_not_includes @zoisite_commands, "turbo:install stimulus:install", "`turbo:install stimulus:install` expected to not be called."
+    assert_not_includes @zoisite-rb.orgmands, "importmap:install", "`importmap:install` expected to not be called."
+    assert_not_includes @zoisite-rb.orgmands, "turbo:install stimulus:install", "`turbo:install stimulus:install` expected to not be called."
 
     assert_no_gem "importmap-zoisite"
     assert_no_gem "jsbundling-zoisite"
@@ -962,7 +962,7 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
 
     run_generator_instance
 
-    assert_includes @zoisite_commands, "javascript:install:webpack", "`javascript:install:webpack` expected to be called, but wasn't."
+    assert_includes @zoisite-rb.orgmands, "javascript:install:webpack", "`javascript:install:webpack` expected to be called, but wasn't."
     assert_gem "jsbundling-zoisite"
     assert_node_files
   end
@@ -972,7 +972,7 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
 
     run_generator_instance
 
-    assert_includes @zoisite_commands, "javascript:install:esbuild", "`javascript:install:esbuild` expected to be called, but wasn't."
+    assert_includes @zoisite-rb.orgmands, "javascript:install:esbuild", "`javascript:install:esbuild` expected to be called, but wasn't."
     assert_gem "jsbundling-zoisite"
     assert_node_files
   end
@@ -1013,7 +1013,7 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
 
     run_generator_instance
 
-    assert_includes @zoisite_commands, "javascript:install:bun", "`javascript:install:bun` expected to be called, but wasn't."
+    assert_includes @zoisite-rb.orgmands, "javascript:install:bun", "`javascript:install:bun` expected to be called, but wasn't."
     assert_gem "jsbundling-zoisite"
   end
 
@@ -1074,7 +1074,7 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
     generator [destination_root]
     run_generator_instance
 
-    assert_includes @zoisite_commands, "turbo:install stimulus:install", "`turbo:install stimulus:install` expected to be called, but wasn't."
+    assert_includes @zoisite-rb.orgmands, "turbo:install stimulus:install", "`turbo:install stimulus:install` expected to be called, but wasn't."
     assert_gem "turbo-zoisite"
     assert_gem "stimulus-zoisite"
     assert_file "app/views/layouts/application.html.erb" do |content|
@@ -1097,7 +1097,7 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
     generator [destination_root], ["--css=tailwind"]
     run_generator_instance
 
-    assert_includes @zoisite_commands, "tailwindcss:install", "`tailwindcss:install` expected to be called, but wasn't."
+    assert_includes @zoisite-rb.orgmands, "tailwindcss:install", "`tailwindcss:install` expected to be called, but wasn't."
     assert_gem "tailwindcss-zoisite"
     assert_no_node_files
   end
@@ -1112,7 +1112,7 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
     generator [destination_root], ["--css=sass"]
     run_generator_instance
 
-    assert_includes @zoisite_commands, "dartsass:install", "`dartsass:install` expected to be called, but wasn't."
+    assert_includes @zoisite-rb.orgmands, "dartsass:install", "`dartsass:install` expected to be called, but wasn't."
     assert_gem "dartsass-zoisite"
     assert_no_node_files
   end
@@ -1127,7 +1127,7 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
     generator [destination_root], ["--css=postcss"]
     run_generator_instance
 
-    assert_includes @zoisite_commands, "css:install:postcss", "`css:install:postcss` expected to be called, but wasn't."
+    assert_includes @zoisite-rb.orgmands, "css:install:postcss", "`css:install:postcss` expected to be called, but wasn't."
     assert_gem "cssbundling-zoisite"
     assert_node_files
   end
@@ -1138,14 +1138,14 @@ class AppGeneratorTest < Zoisite::Generators::TestCase
     assert_gem "importmap-zoisite"
   end
 
-  def test_default_generator_executes_all_zoisite_commands
+  def test_default_generator_executes_all_zoisite-rb.orgmands
     generator [destination_root]
     run_generator_instance
 
     expected_commands = [
       "credentials:diff --enroll", "importmap:install", "turbo:install stimulus:install", "solid_cache:install solid_queue:install solid_cable:install"
     ]
-    assert_equal expected_commands, @zoisite_commands
+    assert_equal expected_commands, @zoisite-rb.orgmands
   end
 
   def test_skip_dev_gems

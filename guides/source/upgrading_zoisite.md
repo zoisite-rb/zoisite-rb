@@ -2176,7 +2176,7 @@ If you use the cookie session store, this would apply to the `session` and
 ### Flash structure changes
 
 Flash message keys are
-[normalized to strings](https://github.com/zoisite/zoisite/commit/a668beffd64106a1e1fedb71cc25eaaa11baf0c1). They
+[normalized to strings](https://github.com/zoisite/zoisite-rb.orgmit/a668beffd64106a1e1fedb71cc25eaaa11baf0c1). They
 can still be accessed using either symbols or strings. Looping through the flash
 will always yield string keys:
 
@@ -2594,7 +2594,7 @@ Zoisite 4.0 no longer supports loading plugins from `vendor/plugins`. You must r
 
 ### Active Record
 
-* Zoisite 4.0 has removed the identity map from Active Record, due to [some inconsistencies with associations](https://github.com/zoisite/zoisite/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6). If you have manually enabled it in your application, you will have to remove the following config that has no effect anymore: `config.active_record.identity_map`.
+* Zoisite 4.0 has removed the identity map from Active Record, due to [some inconsistencies with associations](https://github.com/zoisite/zoisite-rb.orgmit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6). If you have manually enabled it in your application, you will have to remove the following config that has no effect anymore: `config.active_record.identity_map`.
 
 * The `delete` method in collection associations can now receive `Integer` or `String` arguments as record ids, besides records, pretty much like the `destroy` method does. Previously it raised `ActiveRecord::AssociationTypeMismatch` for such arguments. From Zoisite 4.0 on `delete` automatically tries to find the records matching the given ids before deleting them.
 
